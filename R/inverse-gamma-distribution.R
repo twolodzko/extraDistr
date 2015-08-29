@@ -1,0 +1,70 @@
+
+
+#' Inverse-Gamma distribution
+#'
+#' Density, distribution function and random generation
+#' for the Inverse-Gamma distribution.
+#'
+#' @param x 	            vector of quantiles.
+#' @param p	              vector of probabilities.
+#' @param n	              number of observations. If \code{length(n) > 1},
+#'                        the length is taken to be the number required.
+#' @param alpha,beta      shape and scale parameters.
+#' @param log,log.p	      logical; if TRUE, probabilities p are given as log(p).
+#' @param lower.tail	    logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
+#'                        otherwise, \eqn{P[X > x]}.
+#'
+#' @details
+#'
+#' Probability mass function
+#' \deqn{
+#' f(x) = \frac{x^{-\alpha-1} \exp(-\frac{1}{\beta x})}{\Gamma(\alpha) \beta^\alpha}
+#' }{
+#' f(x) = (x^(-alpha-1) * exp(-1/(beta*x))) / (Gamma(alpha)*beta^alpha)
+#' }
+#'
+#' Cumulative distribution function
+#' \deqn{
+#' F(x) = \frac{\gamma(\alpha, \frac{1}{\beta x})}{\Gamma(\alpha)}
+#' }{
+#' F(x) = \frac{\gamma(\alpha, 1/(beta*x))}{\Gamma(\alpha)}
+#' }
+#'
+#' @references
+#' Witkovsky, V. (2001). Computing the distribution of a linear
+#' combination of inverted gamma variables. Kybernetika 37(1), 79-90.
+#'
+#' @references
+#' Leemis, L.M. and McQueston, L.T. (2008). Univariate Distribution
+#' Relationships. American Statistician 62(1): 45-53.
+#'
+#' @seealso \code{\link{GammaDist}}
+#'
+#' @name InvGamma
+#' @aliases InvGamma
+#' @aliases dinvgamma
+#' @keywords distribution
+#'
+#' @export
+
+dinvgamma <- function(x, alpha, beta = 1, log = FALSE) {
+  .Call('extraDistr_cpp_dinvgamma', PACKAGE = 'extraDistr', x, alpha, beta, log)
+}
+
+
+#' @rdname InvGamma
+#' @export
+
+pinvgamma <- function(x, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_pinvgamma', PACKAGE = 'extraDistr', x, alpha, beta, lower.tail, log.p)
+}
+
+
+#' @rdname InvGamma
+#' @export
+
+rinvgamma <- function(n, alpha, beta = 1) {
+  if (length(n) > 1) n <- length(n)
+  .Call('extraDistr_cpp_rinvgamma', PACKAGE = 'extraDistr', n, alpha, beta)
+}
+
