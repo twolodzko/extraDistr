@@ -17,29 +17,36 @@ using namespace Rcpp;
 *
 */
 
-double pmf_bnbinom(int k, int r, double alpha, double beta) {
+double pmf_bnbinom(double k, double r, double alpha, double beta) {
+  if (std::floor(k) != k)
+    return 0;
+  if (alpha <= 0 || beta <= 0 || std::floor(r) != r)
+    return NAN;
   return (R::gammafn(r+k) / (R::gammafn(k+1) * R::gammafn(r))) *
           R::beta(alpha+r, beta+k) / R::beta(alpha, beta);
 }
 
-double rng_bnbinom(int r, double alpha, double beta) {
+double rng_bnbinom(double r, double alpha, double beta) {
+  if (alpha <= 0 || beta <= 0 || std::floor(r) != r)
+    return NAN;
   double prob = R::rbeta(alpha, beta);
   return R::rnbinom(r, prob);
 }
 
-double logpmf_bnbinom(int k, int r, double alpha, double beta) {
+double logpmf_bnbinom(double k, double r, double alpha, double beta) {
+  if (std::floor(k) != k)
+    return -INFINITY;
+  if (alpha <= 0 || beta <= 0 || std::floor(r) != r)
+    return NAN;
   return (R::lgammafn(r+k) - (R::lgammafn(k+1) + R::lgammafn(r))) +
          R::lbeta(alpha+r, beta+k) - R::lbeta(alpha, beta);
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dbnbinom(IntegerVector x,
-                           IntegerVector size, NumericVector alpha, NumericVector beta,
+NumericVector cpp_dbnbinom(NumericVector x,
+                           NumericVector size, NumericVector alpha, NumericVector beta,
                            bool log_prob = false) {
-
-  if (is_true(any(alpha <= 0)) || is_true(any(beta <= 0)))
-    throw Rcpp::exception("Values of alpha and beta should be > 0.");
 
   int n = x.length();
   int nn = size.length();
@@ -53,19 +60,16 @@ NumericVector cpp_dbnbinom(IntegerVector x,
 
   if (!log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = exp(p[i]);
+      p[i] = std::exp(p[i]);
 
   return p;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pnbbinom(IntegerVector x,
-                           IntegerVector size, NumericVector alpha, NumericVector beta,
+NumericVector cpp_pbnbinom(NumericVector x,
+                           NumericVector size, NumericVector alpha, NumericVector beta,
                            bool lower_tail = true, bool log_prob = false) {
-
-  if (is_true(any(alpha <= 0)) || is_true(any(beta <= 0)))
-    throw Rcpp::exception("Values of alpha and beta should be > 0.");
 
   int n = x.length();
   int nn = size.length();
@@ -77,7 +81,7 @@ NumericVector cpp_pnbbinom(IntegerVector x,
   for (int i = 0; i < Nmax; i++) {
     double p_tmp = 0;
     for (int j = 0; j < x[i % n]+1; j++)
-      p_tmp += exp(logpmf_bnbinom(j, size[i % nn], alpha[i % na], beta[i % nb]));
+      p_tmp += std::exp(logpmf_bnbinom(j, size[i % nn], alpha[i % na], beta[i % nb]));
     p[i] = p_tmp;
   }
 
@@ -87,7 +91,7 @@ NumericVector cpp_pnbbinom(IntegerVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return p;
 }
@@ -95,10 +99,7 @@ NumericVector cpp_pnbbinom(IntegerVector x,
 
 // [[Rcpp::export]]
 NumericVector cpp_rbnbinom(int n,
-                           IntegerVector size, NumericVector alpha, NumericVector beta) {
-
-  if (is_true(any(alpha <= 0)) || is_true(any(beta <= 0)))
-    throw Rcpp::exception("Values of alpha and beta should be > 0.");
+                           NumericVector size, NumericVector alpha, NumericVector beta) {
 
   int nn = size.length();
   int na = alpha.length();

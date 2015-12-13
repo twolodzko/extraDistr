@@ -21,25 +21,31 @@ using namespace Rcpp;
  */
 
 double pdf_frechet(double x, double lambda, double mu, double sigma) {
+  if (lambda <= 0 || sigma <= 0)
+    return NAN;
   if (x > mu) {
     double z = (x-mu)/sigma;
-    return lambda/sigma * pow(z, -1-lambda) * exp(-pow(z, -lambda));
+    return lambda/sigma * std::pow(z, -1-lambda) * std::exp(-std::pow(z, -lambda));
   } else {
     return 0;
   }
 }
 
 double cdf_frechet(double x, double lambda, double mu, double sigma) {
+  if (lambda <= 0 || sigma <= 0)
+    return NAN;
   if (x > mu) {
     double z = (x-mu)/sigma;
-    return exp(pow(-z, -lambda));
+    return std::exp(std::pow(-z, -lambda));
   } else {
     return 0;
   }
 }
 
 double invcdf_frechet(double p, double lambda, double mu, double sigma) {
-  return mu + sigma * pow(-log(p), -1/lambda);
+  if (lambda <= 0 || sigma <= 0 || p < 0 || p > 1)
+    return NAN;
+  return mu + sigma * std::pow(-std::log(p), -1/lambda);
 }
 
 
@@ -47,9 +53,6 @@ double invcdf_frechet(double p, double lambda, double mu, double sigma) {
 NumericVector cpp_dfrechet(NumericVector x,
                            NumericVector lambda, NumericVector mu, NumericVector sigma,
                            bool log_prob = false) {
-
-  if (is_true(any(lambda <= 0)) || is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of lambda and sigma should be > 0.");
 
   double z;
   int n  = x.length();
@@ -64,7 +67,7 @@ NumericVector cpp_dfrechet(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return p;
 }
@@ -74,9 +77,6 @@ NumericVector cpp_dfrechet(NumericVector x,
 NumericVector cpp_pfrechet(NumericVector x,
                            NumericVector lambda, NumericVector mu, NumericVector sigma,
                            bool lower_tail = true, bool log_prob = false) {
-
-  if (is_true(any(lambda <= 0)) || is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of lambda and sigma should be > 0.");
 
   double z;
   int n  = x.length();
@@ -95,7 +95,7 @@ NumericVector cpp_pfrechet(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return p;
 }
@@ -106,11 +106,6 @@ NumericVector cpp_qfrechet(NumericVector p,
                            NumericVector lambda, NumericVector mu, NumericVector sigma,
                            bool lower_tail = true, bool log_prob = false) {
 
-  if (is_true(any(p < 0)) || is_true(any(p > 1)))
-    throw Rcpp::exception("Probabilities should range from 0 to 1.");
-  if (is_true(any(lambda <= 0)) || is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of lambda and sigma should be > 0.");
-
   int n  = p.length();
   int nl = lambda.length();
   int nm = mu.length();
@@ -120,7 +115,7 @@ NumericVector cpp_qfrechet(NumericVector p,
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      p[i] = std::exp(p[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
@@ -136,9 +131,6 @@ NumericVector cpp_qfrechet(NumericVector p,
 // [[Rcpp::export]]
 NumericVector cpp_rfrechet(int n,
                            NumericVector lambda, NumericVector mu, NumericVector sigma) {
-
-  if (is_true(any(lambda <= 0)) || is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of lambda and sigma should be > 0.");
 
   double u;
   int nl = lambda.length();

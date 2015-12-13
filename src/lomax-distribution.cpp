@@ -19,26 +19,34 @@ using namespace Rcpp;
 */
 
 double pdf_lomax(double x, double lambda, double kappa) {
+  if (lambda <= 0 || kappa <= 0)
+    return NAN;
   if (x > 0)
-    return lambda*kappa / pow(1+lambda*x, kappa+1);
+    return lambda*kappa / std::pow(1+lambda*x, kappa+1);
   else
     return 0;
 }
 
 double cdf_lomax(double x, double lambda, double kappa) {
+  if (lambda <= 0 || kappa <= 0)
+    return NAN;
   if (x > 0)
-    return 1-pow(1+lambda*x, -kappa);
+    return 1-std::pow(1+lambda*x, -kappa);
   else
     return 0;
 }
 
 double invcdf_lomax(double p, double lambda, double kappa) {
-  return (pow(1-p, -1/kappa)-1) / lambda;
+  if (lambda <= 0 || kappa <= 0 || p < 0 || p > 1)
+    return NAN;
+  return (std::pow(1-p, -1/kappa)-1) / lambda;
 }
 
 double logpdf_lomax(double x, double lambda, double kappa) {
+  if (lambda <= 0 || kappa <= 0)
+    return NAN;
   if (x > 0)
-    return log(lambda) + log(kappa) - log(1+lambda*x)*(kappa+1);
+    return std::log(lambda) + std::log(kappa) - std::log(1+lambda*x)*(kappa+1);
   else
     return -INFINITY;
 }
@@ -48,9 +56,6 @@ double logpdf_lomax(double x, double lambda, double kappa) {
 NumericVector cpp_dlomax(NumericVector x,
                          NumericVector lambda, NumericVector kappa,
                          bool log_prob = false) {
-
-  if (is_true(any(lambda <= 0)) || is_true(any(kappa <= 0)))
-    throw Rcpp::exception("Values of x, lambda and kappa should be > 0.");
 
   int n = x.length();
   int nl = lambda.length();
@@ -63,7 +68,7 @@ NumericVector cpp_dlomax(NumericVector x,
 
   if (!log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = exp(p[i]);
+      p[i] = std::exp(p[i]);
 
   return p;
 }
@@ -73,9 +78,6 @@ NumericVector cpp_dlomax(NumericVector x,
 NumericVector cpp_plomax(NumericVector x,
                          NumericVector lambda, NumericVector kappa,
                          bool lower_tail = true, bool log_prob = false) {
-
-  if (is_true(any(lambda <= 0)) || is_true(any(kappa <= 0)))
-    throw Rcpp::exception("Values of x, lambda and kappa should be > 0.");
 
   int n  = x.length();
   int nl = lambda.length();
@@ -92,7 +94,7 @@ NumericVector cpp_plomax(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return p;
 }
@@ -103,9 +105,6 @@ NumericVector cpp_qlomax(NumericVector p,
                          NumericVector lambda, NumericVector kappa,
                          bool lower_tail = true, bool log_prob = false) {
 
-  if (is_true(any(lambda <= 0)) || is_true(any(kappa <= 0)))
-    throw Rcpp::exception("Values of x, lambda and kappa should be > 0.");
-
   int n  = p.length();
   int nl = lambda.length();
   int nk = kappa.length();
@@ -114,7 +113,7 @@ NumericVector cpp_qlomax(NumericVector p,
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      p[i] = std::exp(p[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
@@ -130,9 +129,6 @@ NumericVector cpp_qlomax(NumericVector p,
 // [[Rcpp::export]]
 NumericVector cpp_rlomax(int n,
                          NumericVector lambda, NumericVector kappa) {
-
-  if (is_true(any(lambda <= 0)) || is_true(any(kappa <= 0)))
-    throw Rcpp::exception("Values of x, lambda and kappa should be > 0.");
 
   double u;
   int nl = lambda.length();

@@ -21,36 +21,39 @@ using namespace Rcpp;
 *
 */
 
-double pdf_dweibull(int x, double q, double beta) {
+double pdf_dweibull(double x, double q, double beta) {
+  if (std::floor(x) != x)
+    return 0;
+  if (q <= 0 || q >= 1 || beta <= 0)
+    return NAN;
   if (x >= 0) {
-    return pow(q, pow(x, beta)) - pow(q, pow(x+1, beta));
+    return std::pow(q, std::pow(x, beta)) - std::pow(q, std::pow(x+1, beta));
   } else {
     return 0;
   }
 }
 
-double cdf_dweibull(int x, double q, double beta) {
+double cdf_dweibull(double x, double q, double beta) {
+  if (q <= 0 || q >= 1 || beta <= 0)
+    return NAN;
   if (x >= 0) {
-    return 1-pow(q, pow(x+1, beta));
+    return 1-std::pow(q, std::pow(x+1, beta));
   } else {
     return 0;
   }
 }
 
 double invcdf_dweibull(double p, double q, double beta) {
-  return std::ceil(pow(log(1-p)/log(q), 1/beta) - 1);
+  if (q <= 0 || q >= 1 || beta <= 0 || p < 0 || p > 1)
+    return NAN;
+  return std::ceil(std::pow(std::log(1-p)/std::log(q), 1/beta) - 1);
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_ddweibull(IntegerVector x,
+NumericVector cpp_ddweibull(NumericVector x,
                             NumericVector q, NumericVector beta,
                             bool log_prob = false) {
-
-  if (is_true(any(q <= 0)) || is_true(any(q >= 1)))
-    throw Rcpp::exception("Values of q should be 0 < q < 1.");
-  if (is_true(any(beta <= 0)))
-    throw Rcpp::exception("Values of beta should be > 0.");
 
   int n  = x.length();
   int nq = q.length();
@@ -63,21 +66,16 @@ NumericVector cpp_ddweibull(IntegerVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return p;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pdweibull(IntegerVector x,
+NumericVector cpp_pdweibull(NumericVector x,
                             NumericVector q, NumericVector beta,
                             bool lower_tail = true, bool log_prob = false) {
-
-  if (is_true(any(q <= 0)) || is_true(any(q >= 1)))
-    throw Rcpp::exception("Values of q should be 0 < q < 1.");
-  if (is_true(any(beta <= 0)))
-    throw Rcpp::exception("Values of beta should be > 0.");
 
   int n  = x.length();
   int nq = q.length();
@@ -94,7 +92,7 @@ NumericVector cpp_pdweibull(IntegerVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return p;
 }
@@ -105,11 +103,6 @@ NumericVector cpp_qdweibull(NumericVector p,
                             NumericVector q, NumericVector beta,
                             bool lower_tail = true, bool log_prob = false) {
 
-  if (is_true(any(q <= 0)) || is_true(any(q >= 1)))
-    throw Rcpp::exception("Values of q should be 0 < q < 1.");
-  if (is_true(any(beta <= 0)))
-    throw Rcpp::exception("Values of beta should be > 0.");
-
   int n  = p.length();
   int nq = q.length();
   int nb = beta.length();
@@ -118,7 +111,7 @@ NumericVector cpp_qdweibull(NumericVector p,
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      p[i] = std::exp(p[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
@@ -134,11 +127,6 @@ NumericVector cpp_qdweibull(NumericVector p,
 // [[Rcpp::export]]
 NumericVector cpp_rdweibull(int n,
                             NumericVector q, NumericVector beta) {
-
-  if (is_true(any(q <= 0)) || is_true(any(q >= 1)))
-    throw Rcpp::exception("Values of q should be 0 < q < 1.");
-  if (is_true(any(beta <= 0)))
-    throw Rcpp::exception("Values of beta should be > 0.");
 
   double u;
   int nq = q.length();

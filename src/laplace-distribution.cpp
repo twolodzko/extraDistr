@@ -22,28 +22,36 @@ using namespace Rcpp;
  */
 
 double pdf_laplace(double x, double mu, double sigma) {
+  if (sigma <= 0)
+    return NAN;
   double z = std::abs(x-mu)/sigma;
-  return 1/(2*sigma) * exp(-z);
+  return 1/(2*sigma) * std::exp(-z);
 }
 
 double cdf_laplace(double x, double mu, double sigma) {
+  if (sigma <= 0)
+    return NAN;
   double z = (x-mu)/sigma;
   if (x < mu)
-    return exp(z)/2;
+    return std::exp(z)/2;
   else
-    return 1 - exp(-z)/2;
+    return 1 - std::exp(-z)/2;
 }
 
 double invcdf_laplace(double p, double mu, double sigma) {
+  if (sigma <= 0 || p < 0 || p > 1)
+    return NAN;
   if (p < 0.5)
-    return mu + sigma * log(2*p);
+    return mu + sigma * std::log(2*p);
   else
-    return mu - sigma * log(2*(1-p));
+    return mu - sigma * std::log(2*(1-p));
 }
 
 double rng_laplace(double mu, double sigma) {
+  if (sigma <= 0)
+    return NAN;
   double u = R::runif(-0.5, 0.5);
-  return mu + sigma * R::sign(u) * log(1 - 2*std::abs(u));
+  return mu + sigma * R::sign(u) * std::log(1 - 2*std::abs(u));
 }
 
 
@@ -51,9 +59,6 @@ double rng_laplace(double mu, double sigma) {
 NumericVector cpp_dlaplace(NumericVector x,
                            NumericVector mu, NumericVector sigma,
                            bool log_prob = false) {
-
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of sigma be > 0.");
 
   int n  = x.length();
   int nm = mu.length();
@@ -67,7 +72,7 @@ NumericVector cpp_dlaplace(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return p;
 }
@@ -77,9 +82,6 @@ NumericVector cpp_dlaplace(NumericVector x,
 NumericVector cpp_plaplace(NumericVector x,
                            NumericVector mu, NumericVector sigma,
                            bool lower_tail = true, bool log_prob = false) {
-
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of sigma be > 0.");
 
   int n  = x.length();
   int nm = mu.length();
@@ -97,7 +99,7 @@ NumericVector cpp_plaplace(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return p;
 }
@@ -108,11 +110,6 @@ NumericVector cpp_qlaplace(NumericVector p,
                            NumericVector mu, NumericVector sigma,
                            bool lower_tail = true, bool log_prob = false) {
 
-  if (is_true(any(p < 0)) || is_true(any(p > 1)))
-    throw Rcpp::exception("Probabilities should range from 0 to 1.");
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of sigma be > 0.");
-
   int n  = p.length();
   int nm = mu.length();
   int ns = sigma.length();
@@ -121,7 +118,7 @@ NumericVector cpp_qlaplace(NumericVector p,
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      p[i] = std::exp(p[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
@@ -137,9 +134,6 @@ NumericVector cpp_qlaplace(NumericVector p,
 // [[Rcpp::export]]
 NumericVector cpp_rlaplace(int n,
                            NumericVector mu, NumericVector sigma) {
-
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of sigma be > 0.");
 
   int nm = mu.length();
   int ns = sigma.length();

@@ -1,0 +1,63 @@
+
+
+#' Multivariate hypergeometric distribution
+#'
+#' Probability mass function and random generation
+#' for the multivariate hypergeometric distribution.
+#'
+#' @param x 	 \eqn{m}-column matrix of quantiles.
+#' @param nn   number of observations. If \code{length(n) > 1},
+#'             the length is taken to be the number required.
+#' @param n    \eqn{m}-length vector or \eqn{m}-column matrix
+#'             of numbers of balls in \eqn{m} colors.
+#' @param k    the number of balls drawn from the urn.
+#' @param log  logical; if TRUE, probabilities p are given as log(p).
+#'
+#' @details
+#'
+#' Probability mass function
+#' \deqn{
+#' f(x) = \frac{\prod_{i=1}^m {n_i \choose x_i}}{{N \choose k}}
+#' }{
+#' f(x) = prod(choose(n, x)) / choose(N, k)
+#' }
+#' 
+#' @details
+#' The multivariate hypergeometric distribution is generalization of
+#' hypergeometric distribution. It is used for sampling \emph{without} replacement
+#' \eqn{k} out of \eqn{N} marbles in \eqn{m} colors, where each of the colors appears
+#' \eqn{n_i}{n[i]} times. Where \eqn{k=\sum_{i=1}^m x_i}{k=sum(x)},
+#' \eqn{N=\sum_{i=1}^m n_i}{N=sum(n)} and \eqn{k \le N}{k<=N}.
+#' 
+#' @references 
+#' Gentle, J.E. (2006). Random number generation and Monte Carlo methods. Springer.
+#'
+#' @seealso \code{\link{Hypergeometric}}
+#'
+#' @name MultiHypergeometric
+#' @aliases MultiHypergeometric
+#' @aliases dmvhyper
+#' @keywords distribution
+#'
+#' @export
+
+dmvhyper <- function(x, n, k, log = FALSE) {
+  if (!is.matrix(n))
+    n <- matrix(n, nrow = 1)
+  .Call('extraDistr_cpp_dmvhyper', PACKAGE = 'extraDistr', x, n, k, log)
+}
+
+
+#' @rdname MultiHypergeometric
+#' @export
+
+rmvhyper <- function(nn, n, k) {
+  if (length(nn) > 1)
+    nn <- length(nn)
+  if (!is.matrix(n))
+    n <- matrix(n, nrow = 1)
+  if (sum(n) == k)
+    return(matrix(rep(n, nn), nrow = nn, byrow = TRUE))
+  .Call('extraDistr_cpp_rmvhyper', PACKAGE = 'extraDistr', nn, n, k)
+}
+

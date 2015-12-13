@@ -5,16 +5,12 @@
 #' Density function, cumulative distribution function and random generation
 #' for the Dirichlet distribution.
 #'
-#' @param x               matrix of quantiles.
+#' @param x               \eqn{k}-column matrix of quantiles.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
-#' @param alpha           vector; concentration parameter.
-#' @param log,log.p	      logical; if TRUE, probabilities p are given as log(p).
-#' @param lower.tail	    logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
-#'                        otherwise, \eqn{P[X > x]}.
-#' @param nsim            number of samples in Monte Carlo simulation for calculating
-#'                        cumulative distribution function; the higher is more precise
-#'                        but slower.
+#' @param alpha           \eqn{k}-values vector or \eqn{k}-column matrix;
+#'                        concentration parameter.
+#' @param log     	      logical; if TRUE, probabilities p are given as log(p).
 #'
 #' @details
 #'
@@ -25,8 +21,6 @@
 #' f(x) = \Gamma(sum(\alpha[k])) / prod(\Gamma(\alpha[k])) * prod(x[k]^{k-1})
 #' }
 #'
-#' Cumulative distribution function is approximated using Monte Carlo simulation.
-#'
 #' @references
 #' Devroye, L. (1986). Non-Uniform Random Variate Generation. Springer-Verlag.
 #'
@@ -36,20 +30,18 @@
 #' @name Dirichlet
 #' @aliases Dirichlet
 #' @aliases ddirichlet
+#' @keywords distribution
+#' 
 #' @export
 
 ddirichlet <- function(x, alpha, log = FALSE) {
-  if (is.data.frame(x)) x <- as.matrix(x)
+  if (is.vector(alpha))
+    alpha <- matrix(alpha, nrow = 1)
+  else if (!is.matrix(alpha))
+    alpha <- as.matrix(alpha)
+  if (is.data.frame(x))
+    x <- as.matrix(x)
   .Call('extraDistr_cpp_ddirichlet', PACKAGE = 'extraDistr', x, alpha, log)
-}
-
-
-#' @rdname Dirichlet
-#' @export
-
-pdirichlet <- function(x, alpha, lower.tail = TRUE, log.p = FALSE, nsim = 10000L) {
-  if (is.data.frame(x)) x <- as.matrix(x)
-  .Call('extraDistr_cpp_pdirichlet', PACKAGE = 'extraDistr', x, alpha, lower.tail, log.p, nsim)
 }
 
 
@@ -58,6 +50,10 @@ pdirichlet <- function(x, alpha, lower.tail = TRUE, log.p = FALSE, nsim = 10000L
 
 rdirichlet <- function (n, alpha) {
   if (length(n) > 1) n <- length(n)
+  if (is.vector(alpha))
+    alpha <- matrix(alpha, nrow = 1)
+  else if (!is.matrix(alpha))
+    alpha <- as.matrix(alpha)
   .Call('extraDistr_cpp_rdirichlet', PACKAGE = 'extraDistr', n, alpha)
 }
 

@@ -1,7 +1,6 @@
 #include <Rcpp.h>
-#include <math.h>
+#include "shared.h"
 using namespace Rcpp;
-
 
 /*
 *  Truncated Normal distribution
@@ -26,42 +25,38 @@ using namespace Rcpp;
 
 const double pisq = sqrt(2*M_PI);
 
-double phi(double x) {
-  return R::dnorm(x, 0, 1, false);
-}
-
-double Phi(double x) {
-  return R::pnorm(x, 0, 1, true, false);
-}
-
-double InvPhi(double x) {
-  return R::qnorm(x, 0, 1, true, false);
-}
-
 double pdf_tnorm(double x, double mu, double sigma, double a, double b) {
+  if (sigma <= 0 || b < a)
+    return NAN;
   double Phi_a, Phi_b;
   if (x > a && x < b) {
     Phi_a = Phi((a-mu)/sigma);
     Phi_b = Phi((b-mu)/sigma);
-    return exp(-pow(x-mu, 2) / (2*pow(sigma, 2))) / (pisq*sigma * (Phi_b - Phi_a));
+    return std::exp(-std::pow(x-mu, 2) / (2*std::pow(sigma, 2))) / (pisq*sigma * (Phi_b - Phi_a));
   } else {
     return 0;
   }
 }
 
 double cdf_tnorm(double x, double mu, double sigma, double a, double b) {
+  if (sigma <= 0 || b < a)
+    return NAN;
   double Phi_x, Phi_a, Phi_b;
   if (x > a && x < b) {
     Phi_x = Phi((x-mu)/sigma);
     Phi_a = Phi((a-mu)/sigma);
     Phi_b = Phi((b-mu)/sigma);
     return (Phi_x - Phi_a) / (Phi_b - Phi_a);
+  } else if (x >= b) {
+    return 1;
   } else {
     return 0;
   }
 }
 
 double invcdf_tnorm(double p, double mu, double sigma, double a, double b) {
+  if (sigma <= 0 || b < a || p < 0 || p > 1)
+    return NAN;
   double Phi_a, Phi_b;
   Phi_a = Phi((a-mu)/sigma);
   Phi_b = Phi((b-mu)/sigma);
@@ -69,6 +64,8 @@ double invcdf_tnorm(double p, double mu, double sigma, double a, double b) {
 }
 
 double rng_tnorm(double mu, double sigma, double a, double b) {
+  if (sigma <= 0 || b < a)
+    return NAN;
 
   double r, u, za, zb;
   bool stop = false;
@@ -81,19 +78,19 @@ double rng_tnorm(double mu, double sigma, double a, double b) {
       while (!stop) {
         r = R::runif(za, zb);
         u = R::runif(0, 1);
-        stop = (u <= exp((pow(za, 2) - pow(r, 2))/2));
+        stop = (u <= std::exp((std::pow(za, 2) - std::pow(r, 2))/2));
       }
     } else if (zb < 0) {
       while (!stop) {
         r = R::runif(za, zb);
         u = R::runif(0, 1);
-        stop = (u <= exp((pow(zb, 2) - pow(r, 2))/2));
+        stop = (u <= std::exp((std::pow(zb, 2) - std::pow(r, 2))/2));
       }
     } else {
       while (!stop) {
         r = R::runif(za, zb);
         u = R::runif(0, 1);
-        stop = (u <= exp(-pow(r, 2)/2));
+        stop = (u <= std::exp(-std::pow(r, 2)/2));
       }
     }
   } else {
@@ -103,7 +100,7 @@ double rng_tnorm(double mu, double sigma, double a, double b) {
     }
   }
 
-  return mu + sigma*r;
+  return mu + sigma * r;
 }
 
 
@@ -112,11 +109,6 @@ NumericVector cpp_dtnorm(NumericVector x,
                          NumericVector mu, NumericVector sigma,
                          NumericVector a, NumericVector b,
                          bool log_prob = false) {
-
-  if (is_true(any(b < a)))
-    throw Rcpp::exception("Values of b have to be greater than a.");
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Value of sigma should > 0.");
 
   int n  = x.length();
   int nm = mu.length();
@@ -131,7 +123,7 @@ NumericVector cpp_dtnorm(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return p;
 }
@@ -142,11 +134,6 @@ NumericVector cpp_ptnorm(NumericVector x,
                          NumericVector mu, NumericVector sigma,
                          NumericVector a, NumericVector b,
                          bool lower_tail = true, bool log_prob = false) {
-
-  if (is_true(any(b < a)))
-    throw Rcpp::exception("Values of b have to be greater than a.");
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Value of sigma should > 0.");
 
   int n  = x.length();
   int nm = mu.length();
@@ -165,7 +152,7 @@ NumericVector cpp_ptnorm(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return p;
 }
@@ -176,13 +163,6 @@ NumericVector cpp_qtnorm(NumericVector p,
                          NumericVector mu, NumericVector sigma,
                          NumericVector a, NumericVector b,
                          bool lower_tail = true, bool log_prob = false) {
-
-  if (is_true(any(p < 0)) || is_true(any(p > 1)))
-    throw Rcpp::exception("Probabilities should range from 0 to 1.");
-  if (is_true(any(b < a)))
-    throw Rcpp::exception("Values of b have to be greater than a.");
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Value of sigma should > 0.");
 
   int n  = p.length();
   int nm = mu.length();
@@ -201,7 +181,7 @@ NumericVector cpp_qtnorm(NumericVector p,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return q;
 }
@@ -211,11 +191,6 @@ NumericVector cpp_qtnorm(NumericVector p,
 NumericVector cpp_rtnorm(int n,
                          NumericVector mu, NumericVector sigma,
                          NumericVector a, NumericVector b) {
-
-  if (is_true(any(b < a)))
-    throw Rcpp::exception("Values of b have to be greater than a.");
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Value of sigma should > 0.");
 
   int nm = mu.length();
   int ns = sigma.length();

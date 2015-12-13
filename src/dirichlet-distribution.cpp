@@ -18,100 +18,52 @@ using namespace Rcpp;
 
 // [[Rcpp::export]]
 NumericVector cpp_ddirichlet(NumericMatrix x,
-                             NumericVector alpha,
+                             NumericMatrix alpha,
                              bool log_prob = false) {
 
-  if (is_true(any(alpha <= 0)))
-    throw Rcpp::exception("Values of alpha be > 0.");
-  if (alpha.length() < 2 && x.ncol() < 2)
-    throw Rcpp::exception("Length of alpha and number of columns in x should be >= 2.");
-  if (alpha.length() == x.ncol())
-    throw Rcpp::exception("Length of alpha and number of columns in x should be the same.");
-
   int n = x.nrow();
-  int k = alpha.length();
-  NumericVector p(n);
+  int m = x.ncol();
+  int k = alpha.ncol();
+  int na = alpha.nrow();
+  int Nmax = Rcpp::max(IntegerVector::create(n, na));
+  k = std::min(m, k);
+  NumericVector p(Nmax);
+  
+  if (k < 2)
+    Rcpp::stop("Number of columns in 'alpha' should be >= 2.");
+  if (m != k)
+    Rcpp::stop("Number of columns in 'x' does not equal number of columns in 'alpha'.");
 
-  double prod_gamma = 0;
-  double sum_alpha = 0;
-  double p_tmp;
-
-  for (int j = 0; j < k; j++) {
-    prod_gamma += lgamma(alpha[j]);
-    sum_alpha += alpha[j];
-  }
-
-  double beta_const = prod_gamma - lgamma(sum_alpha);
-
-  for (int i = 0; i < n; i++) {
-    if (x[i % n] >= 0 && x[i % n] <= 1) {
-      p_tmp = 0;
-      for (int j = 0; j < k; j++) {
-        p_tmp += log(x(i, j)) * (alpha[j]-1);
-        if (alpha[j] == 1 && x(i, j) == 0)
-          p_tmp = -INFINITY;
+  for (int i = 0; i < Nmax; i++) {
+    double prod_gamma = 0;
+    double sum_alpha = 0;
+    double p_tmp = 0;
+    
+    for (int j = 0; j < m; j++) {
+      if (alpha(i % na, j) <= 0) {
+        p[i] = NAN;
+        break;
       }
-      p[i] = p_tmp - beta_const;
-    } else {
-      p[i] = 0;
+      if (x(i % n, j) < 0 || x(i % n, j) > 1) {
+        p[i] = -INFINITY;
+        break;
+      }
+      
+      prod_gamma += R::lgammafn(alpha(i % na, j));
+      sum_alpha += alpha(i % na, j);
+      p_tmp += std::log(x(i % n, j)) * (alpha(i % na, j)-1);
+      
+      if (alpha(i % na, j) == 1 && x(i % n, j) == 0)
+        p_tmp = -INFINITY;
     }
+    
+    double beta_const = prod_gamma - R::lgammafn(sum_alpha);
+    p[i] = p_tmp - beta_const;
   }
 
   if (!log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
-
-  return p;
-}
-
-
-// [[Rcpp::export]]
-NumericVector cpp_pdirichlet(NumericMatrix x,
-                             NumericVector alpha,
-                             bool lower_tail = true, bool log_prob = false,
-                             int nsim = 10000) {
-
-  if (is_true(any(alpha <= 0)))
-    throw Rcpp::exception("Values of alpha be > 0.");
-  if (alpha.length() < 2 && x.ncol() < 2)
-    throw Rcpp::exception("Length of alpha and number of columns should be >= 2.");
-  if (alpha.length() == x.ncol())
-    throw Rcpp::exception("Length of alpha and number of columns should be the same.");
-
-  double row_sum, p_tmp;
-  int n = x.nrow();
-  int k = alpha.length();
-  NumericVector p(n, 0.0), y(k);
-
-  for (int r = 0; r < nsim; r++) {
-    for (int i = 0; i < n; i++) {
-      row_sum = 0;
-      p_tmp = 1.0;
-
-      for (int j = 0; j < k; j++) {
-        y[j] = R::rgamma(alpha[j], 1);
-        row_sum += y[j];
-      }
-
-      for (int j = 0; j < k; j++) {
-        y[j] = y[j] / row_sum;
-
-        if (y[j] > x(i, j)) {
-          p_tmp = 0;
-          break;
-        }
-      }
-      p[i] += p_tmp/nsim;
-    }
-  }
-
-  if (!lower_tail)
-    for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
-
-  if (log_prob)
-    for (int i = 0; i < n; i++)
-      p[i] = log(p[i]);
+      p[i] = std::exp(p[i]);
 
   return p;
 }
@@ -119,27 +71,36 @@ NumericVector cpp_pdirichlet(NumericMatrix x,
 
 // [[Rcpp::export]]
 NumericMatrix cpp_rdirichlet(int n,
-                             NumericVector alpha) {
+                             NumericMatrix alpha) {
 
-  if (is_true(any(alpha <= 0)))
-    throw Rcpp::exception("Values of alpha be > 0.");
-  if (alpha.length() < 2)
-    throw Rcpp::exception("Length of alpha should be >= 2.");
-
-  int k = alpha.length();
+  int k = alpha.ncol();
+  int na = alpha.nrow();
   NumericMatrix x(n, k);
-  double row_sum;
+  
+  if (k < 2)
+    Rcpp::stop("Number of columns in 'alpha' should be >= 2.");
 
   for (int i = 0; i < n; i++) {
-    row_sum = 0;
+    double row_sum = 0;
+    bool wrong_alpha = false;
 
     for (int j = 0; j < k; j++) {
-      x(i, j) = R::rgamma(alpha[j], 1);
+      if (alpha(i % na, j) <= 0) {
+        wrong_alpha = true;
+        break;
+      }
+      
+      x(i, j) = R::rgamma(alpha(i % na, j), 1);
       row_sum += x(i, j);
     }
 
-    for (int j = 0; j < k; j++)
-      x(i, j) = x(i, j) / row_sum;
+    if (wrong_alpha) {
+      for (int j = 0; j < k; j++)
+        x(i, j) = NAN;
+    } else {
+      for (int j = 0; j < k; j++)
+        x(i, j) = x(i, j) / row_sum;
+    }
   }
 
   return x;

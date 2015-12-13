@@ -32,9 +32,9 @@
 #'
 #' Quantile function
 #' \deqn{
-#' F^{-1}(p) = \sigma \sqrt{-2\log(1-p)}
+#' F^{-1}(p) = \sqrt{-2\sigma^2 \log(1-p)}
 #' }{
-#' F^-1(p) = \sigma * sqrt(-2*log(1-p))
+#' F^-1(p) = sqrt(-2*\sigma^2 * log(1-p))
 #' }
 #'
 #' @references

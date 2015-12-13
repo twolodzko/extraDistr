@@ -20,17 +20,23 @@ using namespace Rcpp;
  */
 
 double pdf_gumbel(double x, double mu, double sigma) {
+  if (sigma <= 0)
+    return NAN;
   double z = (x-mu)/sigma;
-  return 1/sigma * exp(-(z+exp(-z)));
+  return 1/sigma * std::exp(-(z+std::exp(-z)));
 }
 
 double cdf_gumbel(double x, double mu, double sigma) {
+  if (sigma <= 0)
+    return NAN;
   double z = (x-mu)/sigma;
-  return exp(-exp(-z));
+  return std::exp(-std::exp(-z));
 }
 
 double invcdf_gumbel(double p, double mu, double sigma) {
-  return mu - sigma * log(-log(p));
+  if (sigma <= 0 || p < 0 || p > 1)
+    return NAN;
+  return mu - sigma * std::log(-std::log(p));
 }
 
 
@@ -38,9 +44,6 @@ double invcdf_gumbel(double p, double mu, double sigma) {
 NumericVector cpp_dgumbel(NumericVector x,
                           NumericVector mu, NumericVector sigma,
                           bool log_prob = false) {
-
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of sigma should be > 0.");
 
   double z;
   int n  = x.length();
@@ -54,7 +57,7 @@ NumericVector cpp_dgumbel(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return p;
 }
@@ -64,9 +67,6 @@ NumericVector cpp_dgumbel(NumericVector x,
 NumericVector cpp_pgumbel(NumericVector x,
                           NumericVector mu, NumericVector sigma,
                           bool lower_tail = true, bool log_prob = false) {
-
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of sigma should be > 0.");
 
   double z;
   int n  = x.length();
@@ -84,7 +84,7 @@ NumericVector cpp_pgumbel(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return p;
 }
@@ -95,11 +95,6 @@ NumericVector cpp_qgumbel(NumericVector p,
                           NumericVector mu, NumericVector sigma,
                           bool lower_tail = true, bool log_prob = false) {
 
-  if (is_true(any(p < 0)) || is_true(any(p > 1)))
-    throw Rcpp::exception("Probabilities should range from 0 to 1.");
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of sigma should be > 0.");
-
   int n  = p.length();
   int nm = mu.length();
   int ns = sigma.length();
@@ -108,7 +103,7 @@ NumericVector cpp_qgumbel(NumericVector p,
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      p[i] = std::exp(p[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
@@ -124,9 +119,6 @@ NumericVector cpp_qgumbel(NumericVector p,
 // [[Rcpp::export]]
 NumericVector cpp_rgumbel(int n,
                           NumericVector mu, NumericVector sigma) {
-
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of sigma should be > 0.");
 
   double u;
   int nm = mu.length();

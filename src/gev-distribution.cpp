@@ -26,34 +26,40 @@ using namespace Rcpp;
  */
 
 double pdf_gev(double x, double mu, double sigma, double xi) {
+  if (sigma <= 0)
+    return NAN;
   double z = (x-mu)/sigma;
   if (1+xi*z > 0) {
     if (xi != 0)
-      return 1/sigma * pow(1+xi*z, -1-(1/xi)) * exp(-pow(1+xi*z, -1/xi));
+      return 1/sigma * std::pow(1+xi*z, -1-(1/xi)) * std::exp(-std::pow(1+xi*z, -1/xi));
     else
-      return 1/sigma * exp(-z) * exp(-exp(-z));
+      return 1/sigma * std::exp(-z) * std::exp(-std::exp(-z));
   } else {
     return 0;
   }
 }
 
 double cdf_gev(double x, double mu, double sigma, double xi) {
+  if (sigma <= 0)
+    return NAN;
   double z = (x-mu)/sigma;
   if (1+xi*z > 0) {
     if (xi != 0)
-      return exp(-pow(1+xi*z, -1/xi));
+      return std::exp(-std::pow(1+xi*z, -1/xi));
     else
-      return exp(-exp(-z));
+      return std::exp(-std::exp(-z));
   } else {
     return 0;
   }
 }
 
 double invcdf_gev(double p, double mu, double sigma, double xi) {
+  if (sigma <= 0 || p < 0 || p > 1)
+    return NAN;
   if (xi != 0)
-    return mu - sigma/xi * (1 - pow(-log(1-p), -xi));
+    return mu - sigma/xi * (1 - std::pow(-std::log(1-p), -xi));
   else
-    return mu - sigma * log(-log(1-p));
+    return mu - sigma * std::log(-std::log(1-p));
 }
 
 
@@ -61,9 +67,6 @@ double invcdf_gev(double p, double mu, double sigma, double xi) {
 NumericVector cpp_dgev(NumericVector x,
                        NumericVector mu, NumericVector sigma, NumericVector xi,
                        bool log_prob = false) {
-
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of sigma should be > 0.");
 
   double z;
   int n  = x.length();
@@ -78,7 +81,7 @@ NumericVector cpp_dgev(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return p;
 }
@@ -88,9 +91,6 @@ NumericVector cpp_dgev(NumericVector x,
 NumericVector cpp_pgev(NumericVector x,
                        NumericVector mu, NumericVector sigma, NumericVector xi,
                        bool lower_tail = true, bool log_prob = false) {
-
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of sigma should be > 0.");
 
   double z;
   int n  = x.length();
@@ -109,7 +109,7 @@ NumericVector cpp_pgev(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return p;
 }
@@ -120,11 +120,6 @@ NumericVector cpp_qgev(NumericVector p,
                        NumericVector mu, NumericVector sigma, NumericVector xi,
                        bool lower_tail = true, bool log_prob = false) {
 
-  if (is_true(any(p < 0)) || is_true(any(p > 1)))
-    throw Rcpp::exception("Probabilities should range from 0 to 1.");
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of sigma should be > 0.");
-
   int n  = p.length();
   int nm = mu.length();
   int ns = sigma.length();
@@ -134,7 +129,7 @@ NumericVector cpp_qgev(NumericVector p,
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      p[i] = std::exp(p[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
@@ -150,9 +145,6 @@ NumericVector cpp_qgev(NumericVector p,
 // [[Rcpp::export]]
 NumericVector cpp_rgev(int n,
                        NumericVector mu, NumericVector sigma, NumericVector xi) {
-
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of sigma should be > 0.");
 
   double u;
   int nm = mu.length();

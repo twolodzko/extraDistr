@@ -25,26 +25,34 @@ using namespace Rcpp;
 
 
 double pdf_gompertz(double x, double a, double b) {
+  if (a <= 0 || b <= 0)
+    return NAN;
   if (x >= 0)
-    return a * exp(b*x - a/b * (exp(b*x) - 1));
+    return a * std::exp(b*x - a/b * (std::exp(b*x) - 1));
   else
     return 0;
 }
 
 double cdf_gompertz(double x, double a, double b) {
+  if (a <= 0 || b <= 0)
+    return NAN;
   if (x >= 0)
-    return 1 - exp(-a/b * (exp(b*x) - 1));
+    return 1 - std::exp(-a/b * (std::exp(b*x) - 1));
   else
     return 0;
 }
 
 double invcdf_gompertz(double p, double a, double b) {
-  return 1/b * log(1 - b/a * log(1-p));
+  if (a <= 0 || b <= 0 || p < 0 || p > 1)
+    return NAN;
+  return 1/b * std::log(1 - b/a * std::log(1-p));
 }
 
 double logpdf_gompertz(double x, double a, double b) {
+  if (a <= 0 || b <= 0)
+    return NAN;
   if (x >= 0)
-    return log(a) + (b*x - a/b * (exp(b*x) - 1));
+    return std::log(a) + (b*x - a/b * (std::exp(b*x) - 1));
   else
     return -INFINITY;
 }
@@ -54,9 +62,6 @@ double logpdf_gompertz(double x, double a, double b) {
 NumericVector cpp_dgompertz(NumericVector x,
                             NumericVector a, NumericVector b,
                             bool log_prob = false) {
-
-  if (is_true(any(a <= 0)) || is_true(any(b <= 0)))
-    throw Rcpp::exception("Values of a and b should be > 0.");
 
   int n  = x.length();
   int na = a.length();
@@ -69,7 +74,7 @@ NumericVector cpp_dgompertz(NumericVector x,
 
   if (!log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = exp(p[i]);
+      p[i] = std::exp(p[i]);
 
   return p;
 }
@@ -79,9 +84,6 @@ NumericVector cpp_dgompertz(NumericVector x,
 NumericVector cpp_pgompertz(NumericVector x,
                             NumericVector a, NumericVector b,
                             bool lower_tail = true, bool log_prob = false) {
-
-  if (is_true(any(a <= 0)) || is_true(any(b <= 0)))
-    throw Rcpp::exception("Values of a and b should be > 0.");
 
   int n  = x.length();
   int na = a.length();
@@ -98,7 +100,7 @@ NumericVector cpp_pgompertz(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return p;
 }
@@ -109,11 +111,6 @@ NumericVector cpp_qgompertz(NumericVector p,
                             NumericVector a, NumericVector b,
                             bool lower_tail = true, bool log_prob = false) {
 
-  if (is_true(any(p < 0)) || is_true(any(p > 1)))
-    throw Rcpp::exception("Probabilities should range from 0 to 1.");
-  if (is_true(any(a <= 0)) || is_true(any(b <= 0)))
-    throw Rcpp::exception("Values of a and b should be > 0.");
-
   int n  = p.length();
   int na = a.length();
   int nb = b.length();
@@ -122,7 +119,7 @@ NumericVector cpp_qgompertz(NumericVector p,
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      p[i] = std::exp(p[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
@@ -138,9 +135,6 @@ NumericVector cpp_qgompertz(NumericVector p,
 // [[Rcpp::export]]
 NumericVector cpp_rgompertz(int n,
                             NumericVector a, NumericVector b) {
-
-  if (is_true(any(a <= 0)) || is_true(any(b <= 0)))
-    throw Rcpp::exception("Values of a and b should be > 0.");
 
   double u;
   int na = a.length();

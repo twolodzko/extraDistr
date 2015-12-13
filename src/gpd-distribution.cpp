@@ -26,40 +26,46 @@ using namespace Rcpp;
 */
 
 double pdf_gpd(double x, double mu, double sigma, double xi) {
+  if (sigma <= 0)
+    return NAN;
   double z = (x-mu)/sigma;
   if (xi != 0) {
     if (x >= mu)
-      return 1-pow(1+xi*z, -1/xi);
+      return 1-std::pow(1+xi*z, -1/xi);
     else
       return 0;
   } else {
     if (x >= mu && x <= mu - sigma/xi)
-      return exp(-z);
+      return std::exp(-z);
     else
       return 0;
   }
 }
 
 double cdf_gpd(double x, double mu, double sigma, double xi) {
+  if (sigma <= 0)
+    return NAN;
   double z = (x-mu)/sigma;
   if (xi != 0) {
     if (x >= mu)
-      return 1-pow(1+xi*z, -1/xi);
+      return 1-std::pow(1+xi*z, -1/xi);
     else
       return 0;
   } else {
     if (x >= mu && x <= mu - sigma/xi)
-      return 1-exp(-z);
+      return 1-std::exp(-z);
     else
       return 0;
   }
 }
 
 double invcdf_gpd(double p, double mu, double sigma, double xi) {
+  if (sigma <= 0 || p < 0 || p > 1)
+    return NAN;
   if (xi != 0)
-    return mu + sigma * (pow(1-p, -xi)-1)/xi;
+    return mu + sigma * (std::pow(1-p, -xi)-1)/xi;
   else
-    return mu - sigma * log(1-p);
+    return mu - sigma * std::log(1-p);
 }
 
 
@@ -67,9 +73,6 @@ double invcdf_gpd(double p, double mu, double sigma, double xi) {
 NumericVector cpp_dgpd(NumericVector x,
                        NumericVector mu, NumericVector sigma, NumericVector xi,
                        bool log_prob = false) {
-
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of sigma should be > 0.");
 
   double z;
   int n  = x.length();
@@ -84,7 +87,7 @@ NumericVector cpp_dgpd(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return p;
 }
@@ -94,9 +97,6 @@ NumericVector cpp_dgpd(NumericVector x,
 NumericVector cpp_pgpd(NumericVector x,
                        NumericVector mu, NumericVector sigma, NumericVector xi,
                        bool lower_tail = true, bool log_prob = false) {
-
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of sigma should be > 0.");
 
   double z;
   int n  = x.length();
@@ -115,7 +115,7 @@ NumericVector cpp_pgpd(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return p;
 }
@@ -126,11 +126,6 @@ NumericVector cpp_qgpd(NumericVector p,
                        NumericVector mu, NumericVector sigma, NumericVector xi,
                        bool lower_tail = true, bool log_prob = false) {
 
-  if (is_true(any(p < 0)) || is_true(any(p > 1)))
-    throw Rcpp::exception("Probabilities should range from 0 to 1.");
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of sigma should be > 0.");
-
   int n  = p.length();
   int nm = mu.length();
   int ns = sigma.length();
@@ -140,7 +135,7 @@ NumericVector cpp_qgpd(NumericVector p,
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      p[i] = std::exp(p[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
@@ -156,9 +151,6 @@ NumericVector cpp_qgpd(NumericVector p,
 // [[Rcpp::export]]
 NumericVector cpp_rgpd(int n,
                        NumericVector mu, NumericVector sigma, NumericVector xi) {
-
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of sigma should be > 0.");
 
   double u;
   int nm = mu.length();

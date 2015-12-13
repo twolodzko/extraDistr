@@ -23,6 +23,8 @@ using namespace Rcpp;
 */
 
 double pdf_triangular(double x, double a, double b, double c) {
+  if (a > c || c > b)
+    return NAN;
   if (x < a || x > b) {
     return 0;
   } else if (x < c) {
@@ -35,21 +37,27 @@ double pdf_triangular(double x, double a, double b, double c) {
 }
 
 double cdf_triangular(double x, double a, double b, double c) {
-  if (x < a || x > b) {
+  if (a > c || c > b)
+    return NAN;
+  if (x < a) {
     return 0;
+  } else if (x >= b) {
+    return 1;
   } else if (x <= c) {
-    return pow(x-a, 2) / ((b-a)*(c-a));
+    return std::pow(x-a, 2) / ((b-a)*(c-a));
   } else {
-    return 1 - (pow(b-x, 2) / ((b-a)*(b-c)));
+    return 1 - (std::pow(b-x, 2) / ((b-a)*(b-c)));
   }
 }
 
 double invcdf_triangular(double p, double a, double b, double c) {
+  if (a > c || c > b || p < 0 || p > 1)
+    return NAN;
   double fc = (c-a)/(b-a);
   if (p < fc) {
-    return a + sqrt(p*(b-a)*(c-a));
+    return a + std::sqrt(p*(b-a)*(c-a));
   } else {
-    return b - sqrt((1-p)*(b-a)*(b-c));
+    return b - std::sqrt((1-p)*(b-a)*(b-c));
   }
 }
 
@@ -58,9 +66,6 @@ double invcdf_triangular(double p, double a, double b, double c) {
 NumericVector cpp_dtriang(NumericVector x,
                           NumericVector a, NumericVector b, NumericVector c,
                           bool log_prob = false) {
-
-  if (is_true(any(a > c)) || is_true(any(c > b)))
-    throw Rcpp::exception("Values of a,b and c should satisfy a <= c <= b.");
 
   int n = x.length();
   int na = a.length();
@@ -74,7 +79,7 @@ NumericVector cpp_dtriang(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return p;
 }
@@ -84,9 +89,6 @@ NumericVector cpp_dtriang(NumericVector x,
 NumericVector cpp_ptriang(NumericVector x,
                           NumericVector a, NumericVector b, NumericVector c,
                           bool lower_tail = true, bool log_prob = false) {
-
-  if (is_true(any(a > c)) || is_true(any(c > b)))
-    throw Rcpp::exception("Values of a,b and c should satisfy a <= c <= b.");
 
   int n  = x.length();
   int na = a.length();
@@ -104,7 +106,7 @@ NumericVector cpp_ptriang(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return p;
 }
@@ -115,11 +117,6 @@ NumericVector cpp_qtriang(NumericVector p,
                           NumericVector a, NumericVector b, NumericVector c,
                           bool lower_tail = true, bool log_prob = false) {
 
-  if (is_true(any(p < 0)) || is_true(any(p > 1)))
-    throw Rcpp::exception("Probabilities should range from 0 to 1.");
-  if (is_true(any(a > c)) || is_true(any(c > b)))
-    throw Rcpp::exception("Values of a,b and c should satisfy a <= c <= b.");
-
   int n  = p.length();
   int na = a.length();
   int nb = b.length();
@@ -129,7 +126,7 @@ NumericVector cpp_qtriang(NumericVector p,
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      p[i] = std::exp(p[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
@@ -145,9 +142,6 @@ NumericVector cpp_qtriang(NumericVector p,
 // [[Rcpp::export]]
 NumericVector cpp_rtriang(int n,
                           NumericVector a, NumericVector b, NumericVector c) {
-
-  if (is_true(any(a > c)) || is_true(any(c > b)))
-    throw Rcpp::exception("Values of a,b and c should satisfy a <= c <= b.");
 
   double u;
   int na = a.length();

@@ -1,19 +1,16 @@
 Package: extraDistr
 Type: Package
 Title: extraDistr
-Version: 0.8
-Date: 2015-09-01
+Version: 1.5.7
+Date: 2016-04-03
 Author: Tymoteusz Wolodzko
 Maintainer: Tymoteusz Wolodzko <twolodzko@gmail.com>
 Description: Extra distributions for R. Density, distribution function,
-             quantile function and random generation for: Beta-Binomial,
-             Beta-Negative Binomial, Bivariate Normal, Discrete Weibull,
-             Dirichlet, Frechet, Generalized Extreme Value, Gompertz,
-             Gamma-Poisson, Gumbel, Inverse-Gamma, Kumaraswamy, Laplace,
-             Logarythmic Series, Lomax, Pareto, Generalized Pareto, Power,
-             Triangular, and Rayleigh distributions. Implemented in C++
-             with Rcpp. All the functions are vectorized.
+    quantile function and random generation for a number of univariate
+    and multivariate distributions.
 License: GPL-2
 LazyData: TRUE
 LinkingTo: Rcpp
-Imports: Rcpp
+Imports:
+    Rcpp
+RoxygenNote: 5.0.1

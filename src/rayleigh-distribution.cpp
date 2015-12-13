@@ -17,21 +17,29 @@ using namespace Rcpp;
  */
 
 double pdf_rayleigh(double x, double sigma) {
+  if (sigma <= 0)
+    return NAN;
   if (x >= 0)
-    return x/pow(sigma, 2) * exp(-pow(x, 2) / (2*pow(sigma, 2)));
+    return x/std::pow(sigma, 2) * std::exp(-std::pow(x, 2) / (2*std::pow(sigma, 2)));
   else
     return 0;
 }
 
 double cdf_rayleigh(double x, double sigma) {
+  if (sigma <= 0)
+    return NAN;
   if (x >= 0)
-    return 1 - exp(-pow(x, 2) / pow(2*sigma, 2));
+    return 1 - std::exp(-std::pow(x, 2) / (2*std::pow(sigma, 2)));
   else
     return 0;
 }
 
 double invcdf_rayleigh(double p, double sigma) {
-  return sigma * sqrt(-2*log(1-p));
+  if (p < 0 || p > 1)
+    return NAN;
+  if (sigma <= 0)
+    return NAN;
+  return std::sqrt(-2*std::pow(sigma, 2) * std::log(1-p));
 }
 
 
@@ -39,9 +47,6 @@ double invcdf_rayleigh(double p, double sigma) {
 NumericVector cpp_drayleigh(NumericVector x,
                             NumericVector sigma,
                             bool log_prob = false) {
-
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of sigma should be > 0.");
 
   int n = x.length();
   int ns = sigma.length();
@@ -53,7 +58,7 @@ NumericVector cpp_drayleigh(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return p;
 }
@@ -63,9 +68,6 @@ NumericVector cpp_drayleigh(NumericVector x,
 NumericVector cpp_prayleigh(NumericVector x,
                             NumericVector sigma,
                             bool lower_tail = true, bool log_prob = false) {
-
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of sigma should be > 0.");
 
   int n = x.length();
   int ns = sigma.length();
@@ -81,7 +83,7 @@ NumericVector cpp_prayleigh(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+      p[i] = std::log(p[i]);
 
   return p;
 }
@@ -92,11 +94,6 @@ NumericVector cpp_qrayleigh(NumericVector p,
                             NumericVector sigma,
                             bool lower_tail = true, bool log_prob = false) {
 
-  if (is_true(any(p < 0)) || is_true(any(p > 1)))
-    throw Rcpp::exception("Probabilities should range from 0 to 1.");
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of sigma should be > 0.");
-
   int n  = p.length();
   int ns = sigma.length();
   int Nmax = std::max(n, ns);
@@ -104,7 +101,7 @@ NumericVector cpp_qrayleigh(NumericVector p,
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      p[i] = std::exp(p[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
@@ -120,9 +117,6 @@ NumericVector cpp_qrayleigh(NumericVector p,
 // [[Rcpp::export]]
 NumericVector cpp_rrayleigh(int n,
                             NumericVector sigma) {
-
-  if (is_true(any(sigma <= 0)))
-    throw Rcpp::exception("Values of sigma should be > 0.");
 
   double u;
   int ns = sigma.length();

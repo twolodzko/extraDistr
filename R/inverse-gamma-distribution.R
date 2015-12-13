@@ -20,14 +20,14 @@
 #' \deqn{
 #' f(x) = \frac{x^{-\alpha-1} \exp(-\frac{1}{\beta x})}{\Gamma(\alpha) \beta^\alpha}
 #' }{
-#' f(x) = (x^(-alpha-1) * exp(-1/(beta*x))) / (Gamma(alpha)*beta^alpha)
+#' f(x) = (x^(-\alpha-1) * exp(-1/(\beta*x))) / (\Gamma(\alpha)*\beta^\alpha)
 #' }
 #'
 #' Cumulative distribution function
 #' \deqn{
 #' F(x) = \frac{\gamma(\alpha, \frac{1}{\beta x})}{\Gamma(\alpha)}
 #' }{
-#' F(x) = \frac{\gamma(\alpha, 1/(beta*x))}{\Gamma(\alpha)}
+#' F(x) = \frac{\gamma(\alpha, 1/(\beta*x))}{\Gamma(\alpha)}
 #' }
 #'
 #' @references
@@ -48,7 +48,7 @@
 #' @export
 
 dinvgamma <- function(x, alpha, beta = 1, log = FALSE) {
-  .Call('extraDistr_cpp_dinvgamma', PACKAGE = 'extraDistr', x, alpha, beta, log)
+  .Call('extraDistr_cpp_dinvgamma', PACKAGE = 'extraDistr', x, alpha, 1/beta, log)
 }
 
 
@@ -56,7 +56,7 @@ dinvgamma <- function(x, alpha, beta = 1, log = FALSE) {
 #' @export
 
 pinvgamma <- function(x, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pinvgamma', PACKAGE = 'extraDistr', x, alpha, beta, lower.tail, log.p)
+  pgamma(1/x, alpha, beta, lower.tail = !lower.tail, log.p = log.p)
 }
 
 
@@ -64,7 +64,6 @@ pinvgamma <- function(x, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 rinvgamma <- function(n, alpha, beta = 1) {
-  if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rinvgamma', PACKAGE = 'extraDistr', n, alpha, beta)
+  1/rgamma(n, alpha, beta)
 }
 
