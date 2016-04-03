@@ -19,34 +19,42 @@ using namespace Rcpp;
 */
 
 double pdf_lomax(double x, double lambda, double kappa) {
-  if (lambda <= 0 || kappa <= 0)
+  if (lambda <= 0 || kappa <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   if (x > 0)
-    return lambda*kappa / std::pow(1+lambda*x, kappa+1);
+    return lambda*kappa / pow(1+lambda*x, kappa+1);
   else
     return 0;
 }
 
 double cdf_lomax(double x, double lambda, double kappa) {
-  if (lambda <= 0 || kappa <= 0)
+  if (lambda <= 0 || kappa <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   if (x > 0)
-    return 1-std::pow(1+lambda*x, -kappa);
+    return 1-pow(1+lambda*x, -kappa);
   else
     return 0;
 }
 
 double invcdf_lomax(double p, double lambda, double kappa) {
-  if (lambda <= 0 || kappa <= 0 || p < 0 || p > 1)
+  if (lambda <= 0 || kappa <= 0 || p < 0 || p > 1) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  return (std::pow(1-p, -1/kappa)-1) / lambda;
+  }
+  return (pow(1-p, -1/kappa)-1) / lambda;
 }
 
 double logpdf_lomax(double x, double lambda, double kappa) {
-  if (lambda <= 0 || kappa <= 0)
+  if (lambda <= 0 || kappa <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   if (x > 0)
-    return std::log(lambda) + std::log(kappa) - std::log(1+lambda*x)*(kappa+1);
+    return log(lambda) + log(kappa) - log(1+lambda*x)*(kappa+1);
   else
     return -INFINITY;
 }
@@ -68,7 +76,7 @@ NumericVector cpp_dlomax(NumericVector x,
 
   if (!log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
 
   return p;
 }
@@ -94,7 +102,7 @@ NumericVector cpp_plomax(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
 
   return p;
 }
@@ -113,7 +121,7 @@ NumericVector cpp_qlomax(NumericVector p,
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)

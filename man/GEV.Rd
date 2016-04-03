@@ -68,8 +68,20 @@ F^-1(p) = [if xi != 0:] \mu - \sigma/\xi * (1 - (-log(1-p))^\xi)
 
 where \eqn{ z = \frac{x-\mu}{\sigma} }{ z = (x-\mu)/\sigma }.
 }
+\examples{
+
+x <- rgev(1e5, 5, 2, .5)
+xx <- seq(0, 1000, by = 0.1)
+hist(x, 1000, freq = FALSE, xlim = c(0, 50))
+lines(xx, dgev(xx, 5, 2, .5), col = "red")
+hist(pgev(x, 5, 2, .5))
+plot(ecdf(x))
+lines(xx, pgev(xx, 5, 2, .5), col = "red", lwd = 2)
+
+}
 \references{
-Coles, S. (2001). An Introduction to Statistical Modeling of Extreme Values. Springer.
+Coles, S. (2001). An Introduction to Statistical Modeling of Extreme Values.
+Springer.
 }
 \keyword{distribution}
 

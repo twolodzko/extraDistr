@@ -16,8 +16,8 @@ using namespace Rcpp;
 *  z = (x-mu)/sigma
 *  where 1+xi*z > 0
 *
-*  f(x)    = { (1+xi*z)^{-(xi+1)/xi}             if xi != 0
-*            { exp(-z)                           otherwise
+*  f(x)    = { (1+xi*z)^{-(xi+1)/xi}/sigma       if xi != 0
+*            { exp(-z)/sigma                     otherwise
 *  F(x)    = { 1-(1+xi*z)^{-1/xi}                if xi != 0
 *            { 1-exp(-z)                         otherwise
 *  F^-1(p) = { mu + sigma * ((1-p)^{-xi}-1)/xi   if xi != 0
@@ -26,46 +26,52 @@ using namespace Rcpp;
 */
 
 double pdf_gpd(double x, double mu, double sigma, double xi) {
-  if (sigma <= 0)
+  if (sigma <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   double z = (x-mu)/sigma;
   if (xi != 0) {
     if (x >= mu)
-      return 1-std::pow(1+xi*z, -1/xi);
+      return pow(1+xi*z, -(xi+1)/xi)/sigma;
     else
       return 0;
   } else {
-    if (x >= mu && x <= mu - sigma/xi)
-      return std::exp(-z);
+    if (x >= mu && x <= (mu - sigma/xi))
+      return exp(-z)/sigma;
     else
       return 0;
   }
 }
 
 double cdf_gpd(double x, double mu, double sigma, double xi) {
-  if (sigma <= 0)
+  if (sigma <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   double z = (x-mu)/sigma;
   if (xi != 0) {
     if (x >= mu)
-      return 1-std::pow(1+xi*z, -1/xi);
+      return 1-pow(1+xi*z, -1/xi);
     else
       return 0;
   } else {
-    if (x >= mu && x <= mu - sigma/xi)
-      return 1-std::exp(-z);
+    if (x >= mu && x <= (mu - sigma/xi))
+      return 1-exp(-z);
     else
       return 0;
   }
 }
 
 double invcdf_gpd(double p, double mu, double sigma, double xi) {
-  if (sigma <= 0 || p < 0 || p > 1)
+  if (sigma <= 0 || p < 0 || p > 1) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   if (xi != 0)
-    return mu + sigma * (std::pow(1-p, -xi)-1)/xi;
+    return mu + sigma * (pow(1-p, -xi)-1)/xi;
   else
-    return mu - sigma * std::log(1-p);
+    return mu - sigma * log(1-p);
 }
 
 
@@ -87,7 +93,7 @@ NumericVector cpp_dgpd(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
 
   return p;
 }
@@ -115,7 +121,7 @@ NumericVector cpp_pgpd(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
 
   return p;
 }
@@ -135,7 +141,7 @@ NumericVector cpp_qgpd(NumericVector p,
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)

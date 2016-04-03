@@ -41,11 +41,19 @@ hypergeometric distribution. It is used for sampling \emph{without} replacement
 \eqn{n_i}{n[i]} times. Where \eqn{k=\sum_{i=1}^m x_i}{k=sum(x)},
 \eqn{N=\sum_{i=1}^m n_i}{N=sum(n)} and \eqn{k \le N}{k<=N}.
 }
+\examples{
+
+# Generating 10 random draws from multivariate hypergeometric
+# distribution parametrized using a vector
+
+rmvhyper(10, c(10, 12, 5, 8, 11), 33)
+
+}
 \references{
 Gentle, J.E. (2006). Random number generation and Monte Carlo methods. Springer.
 }
 \seealso{
-\code{\link{Hypergeometric}}
+\code{\link[stats]{Hypergeometric}}
 }
 \keyword{distribution}
 

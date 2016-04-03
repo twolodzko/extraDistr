@@ -3,10 +3,13 @@
 \name{BetaBinom}
 \alias{BetaBinom}
 \alias{dbbinom}
+\alias{pbbinom}
 \alias{rbbinom}
 \title{Beta-Binomial distribution}
 \usage{
 dbbinom(x, size, alpha = 1, beta = 1, log = FALSE)
+
+pbbinom(x, size, alpha = 1, beta = 1, lower.tail = TRUE, log.p = FALSE)
 
 rbbinom(n, size, alpha = 1, beta = 1)
 }
@@ -15,7 +18,10 @@ rbbinom(n, size, alpha = 1, beta = 1)
 
 \item{size, alpha, beta}{parameters.}
 
-\item{log}{logical; if TRUE, probabilities p are given as log(p).}
+\item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
+
+\item{lower.tail}{logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
+otherwise, \eqn{P[X > x]}.}
 
 \item{n}{number of observations. If \code{length(n) > 1},
 the length is taken to be the number required.}
@@ -32,8 +38,19 @@ f(x) = {n \choose x} \frac{\mathrm{B}(x+\alpha, n-x+\beta)}{\mathrm{B}(\alpha, \
 f(x) = choose(n, x) * (beta(x+alpha, n-x+beta)) / (beta(alpha, beta))
 }
 }
+\examples{
+
+x <- rbbinom(1e5, 1000, 5, 13)
+xx <- 0:1000
+hist(x, 100, freq = FALSE)
+lines(xx-0.5, dbbinom(xx, 1000, 5, 13), col = "red")
+hist(pbbinom(x, 1000, 5, 13))
+plot(ecdf(x))
+lines(xx, pbbinom(xx, 1000, 5, 13), col = "red", lwd = 2)
+
+}
 \seealso{
-\code{\link{Beta}}, \code{\link{Binomial}}
+\code{\link[stats]{Beta}}, \code{\link[stats]{Binomial}}
 }
 \keyword{distribution}
 

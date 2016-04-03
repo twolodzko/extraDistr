@@ -13,6 +13,16 @@
 #' @param log,log.p	      logical; if TRUE, probabilities p are given as log(p).
 #' @param lower.tail	    logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
 #'                        otherwise, \eqn{P[X > x]}.
+#'                        
+#' @examples 
+#' 
+#' x <- sample.int(10, 1e5, replace = TRUE) 
+#' xx <- -1:11
+#' plot(prop.table(table(x)), type = "h")
+#' lines(xx, ddunif(xx, 1, 10), col = "red")
+#' hist(pdunif(x, 1, 10))
+#' plot(ecdf(x))
+#' lines(xx, pdunif(xx, 1, 10), col = "red")
 #'
 #' @name DiscreteUniform
 #' @aliases DiscreteUniform

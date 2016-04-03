@@ -6,15 +6,20 @@
 \alias{rbvnorm}
 \title{Bivariate Normal distribution}
 \usage{
-dbvnorm(x, y, mu1 = 0, mu2 = mu1, sigma1 = 1, sigma2 = sigma1,
-  rho = 0, log = FALSE)
+dbvnorm(x, y = NULL, mean1 = 0, mean2 = mean1, sd1 = 1, sd2 = sd1,
+  cor = 0, log = FALSE)
 
-rbvnorm(n, mu1 = 0, mu2 = mu1, sigma1 = 1, sigma2 = sigma1, rho = 0)
+rbvnorm(n, mean1 = 0, mean2 = mean1, sd1 = 1, sd2 = sd1, cor = 0)
 }
 \arguments{
-\item{x, y}{vectors of quantiles.}
+\item{x, y}{vectors of quantiles; alternativelly x may be a two-column
+matrix (or data.frame) and y may be omitted.}
 
-\item{mu1, mu2, sigma1, sigma2, rho}{location, scale and correlation parameters.}
+\item{mean1, mean2}{vectors of means.}
+
+\item{sd1, sd2}{vectors of standard deviations.}
+
+\item{cor}{vector of correlations; \code{-1 < cor < 1}.}
 
 \item{log}{logical; if TRUE, probabilities p are given as log(p).}
 
@@ -31,7 +36,7 @@ Probability density function
 f(x) = \frac{1}{2\pi\sqrt{1-\rho^2}\sigma_1\sigma_2}
        \exp\left(-\frac{1}{2(1-\rho^2)} (z_1^2 - 2\rho z_1 z_2 + z_2^2)\right)
 }{
-f(x) = 1/(2*pi*sqrt(1-rho^2)*sigma1*sigma2) * exp(-(1/(2*(1-rho^2)*(z1^2 - 2*rho*z1*z2 * z2^2))))
+f(x) = 1/(2*\pi*sqrt(1-\rho^2)*\sigma1*\sigma2) * exp(-(1/(2*(1-\rho^2)*(z1^2 - 2*\rho*z1*z2 * z2^2))))
 }
 
 where \eqn{
@@ -49,6 +54,12 @@ For multivariate Normal and t distributions check \pkg{mvtnorm} package.
 \references{
 Krishnamoorthy, K. (2006). Handbook of Statistical Distributions
 with Applications. Chapman & Hall/CRC
+
+Mukhopadhyay, N. (2000). Probability and statistical inference.
+Chapman & Hall/CRC
+}
+\seealso{
+\code{\link[stats]{Normal}}
 }
 \keyword{distribution}
 

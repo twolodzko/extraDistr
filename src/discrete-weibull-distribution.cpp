@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include "shared.h"
 using namespace Rcpp;
 
 
@@ -22,31 +23,37 @@ using namespace Rcpp;
 */
 
 double pdf_dweibull(double x, double q, double beta) {
-  if (std::floor(x) != x)
-    return 0;
-  if (q <= 0 || q >= 1 || beta <= 0)
+  if (q <= 0 || q >= 1 || beta <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
+  if (!isInteger(x))
+    return 0;
   if (x >= 0) {
-    return std::pow(q, std::pow(x, beta)) - std::pow(q, std::pow(x+1, beta));
+    return pow(q, pow(x, beta)) - pow(q, pow(x+1, beta));
   } else {
     return 0;
   }
 }
 
 double cdf_dweibull(double x, double q, double beta) {
-  if (q <= 0 || q >= 1 || beta <= 0)
+  if (q <= 0 || q >= 1 || beta <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   if (x >= 0) {
-    return 1-std::pow(q, std::pow(x+1, beta));
+    return 1-pow(q, pow(x+1, beta));
   } else {
     return 0;
   }
 }
 
 double invcdf_dweibull(double p, double q, double beta) {
-  if (q <= 0 || q >= 1 || beta <= 0 || p < 0 || p > 1)
+  if (q <= 0 || q >= 1 || beta <= 0 || p < 0 || p > 1) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  return std::ceil(std::pow(std::log(1-p)/std::log(q), 1/beta) - 1);
+  }
+  return ceil(pow(log(1-p)/log(q), 1/beta) - 1);
 }
 
 
@@ -66,7 +73,7 @@ NumericVector cpp_ddweibull(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
 
   return p;
 }
@@ -92,7 +99,7 @@ NumericVector cpp_pdweibull(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
 
   return p;
 }
@@ -111,7 +118,7 @@ NumericVector cpp_qdweibull(NumericVector p,
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)

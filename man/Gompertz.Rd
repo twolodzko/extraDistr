@@ -57,6 +57,17 @@ F^{-1}(p) = \frac{1}{b} \log\left(1-\frac{b}{a}\log(1-p)\right)
 F^-1(p) = 1/b * log(1 - b/a * log(1-p))
 }
 }
+\examples{
+
+x <- rgompertz(1e5, 5, 2)
+xx <- seq(0, 1000, by = 0.1)
+hist(x, 100, freq = FALSE)
+lines(xx, dgompertz(xx, 5, 2), col = "red")
+hist(pgompertz(x, 5, 2))
+plot(ecdf(x))
+lines(xx, pgompertz(xx, 5, 2), col = "red", lwd = 2)
+
+}
 \references{
 Lenart, A. (2012). The Gompertz distribution and Maximum Likelihood Estimation
 of its parameters - a revision. MPIDR WORKING PAPER WP 2012-008.

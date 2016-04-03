@@ -38,12 +38,12 @@ for the Generalized Pareto distribution.
 \details{
 Probability density function
 \deqn{ f(x) = \left\{\begin{array}{ll}
-(1+\xi z)^{-(\xi+1)/\xi} & \xi \neq 0 \\
-\exp(-z)                 & \xi = 0
+\frac{1}{\sigma} (1+\xi z)^{-(\xi+1)/\xi} & \xi \neq 0 \\
+\frac{1}{\sigma} \exp(-z)                 & \xi = 0
 \end{array}\right.
 }{
-f(x) = [if \xi != 0:] (1+\xi*z)^{-(\xi+1)/\xi}
-       [else:] exp(-z)
+f(x) = [if \xi != 0:] (1+\xi*z)^{-(\xi+1)/\xi}/sigma
+       [else:] exp(-z)/sigma
 }
 
 Cumulative distribution function
@@ -59,7 +59,7 @@ F(x) = [if \xi != 0:] 1-(1+\xi*z)^{-1/\xi}
 Quantile function
 \deqn{ F^{-1}(x) = \left\{\begin{array}{ll}
 \mu + \sigma \frac{(1-p)^{-\xi}-1}{\xi} & \xi \neq 0 \\
-\mu - \sigma \log(1-p)            & \xi = 0
+\mu - \sigma \log(1-p)                  & \xi = 0
 \end{array}\right.
 }{
 F^-1(x) = [if \xi != 0:] \mu + \sigma * ((1-p)^{-\xi}-1)/\xi
@@ -68,8 +68,20 @@ F^-1(x) = [if \xi != 0:] \mu + \sigma * ((1-p)^{-\xi}-1)/\xi
 
 where \eqn{ z = \frac{x-\mu}{\sigma} }{ z = (x-\mu)/\sigma }.
 }
+\examples{
+
+x <- rgpd(1e5, 5, 2, .1)
+xx <- seq(0, 1000, by = 0.1)
+hist(x, 100, freq = FALSE, xlim = c(0, 50))
+lines(xx, dgpd(xx, 5, 2, .1), col = "red")
+hist(pgpd(x, 5, 2, .1))
+plot(ecdf(x))
+lines(xx, pgpd(xx, 5, 2, .1), col = "red", lwd = 2)
+
+}
 \references{
-Coles, S. (2001). An Introduction to Statistical Modeling of Extreme Values. Springer.
+Coles, S. (2001). An Introduction to Statistical Modeling of Extreme Values.
+Springer.
 }
 \keyword{distribution}
 

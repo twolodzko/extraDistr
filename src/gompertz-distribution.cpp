@@ -25,34 +25,42 @@ using namespace Rcpp;
 
 
 double pdf_gompertz(double x, double a, double b) {
-  if (a <= 0 || b <= 0)
+  if (a <= 0 || b <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   if (x >= 0)
-    return a * std::exp(b*x - a/b * (std::exp(b*x) - 1));
+    return a * exp(b*x - a/b * (exp(b*x) - 1));
   else
     return 0;
 }
 
 double cdf_gompertz(double x, double a, double b) {
-  if (a <= 0 || b <= 0)
+  if (a <= 0 || b <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   if (x >= 0)
-    return 1 - std::exp(-a/b * (std::exp(b*x) - 1));
+    return 1 - exp(-a/b * (exp(b*x) - 1));
   else
     return 0;
 }
 
 double invcdf_gompertz(double p, double a, double b) {
-  if (a <= 0 || b <= 0 || p < 0 || p > 1)
+  if (a <= 0 || b <= 0 || p < 0 || p > 1) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  return 1/b * std::log(1 - b/a * std::log(1-p));
+  }
+  return 1/b * log(1 - b/a * log(1-p));
 }
 
 double logpdf_gompertz(double x, double a, double b) {
-  if (a <= 0 || b <= 0)
+  if (a <= 0 || b <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   if (x >= 0)
-    return std::log(a) + (b*x - a/b * (std::exp(b*x) - 1));
+    return log(a) + (b*x - a/b * (exp(b*x) - 1));
   else
     return -INFINITY;
 }
@@ -74,7 +82,7 @@ NumericVector cpp_dgompertz(NumericVector x,
 
   if (!log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
 
   return p;
 }
@@ -100,7 +108,7 @@ NumericVector cpp_pgompertz(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
 
   return p;
 }
@@ -119,7 +127,7 @@ NumericVector cpp_qgompertz(NumericVector p,
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)

@@ -41,6 +41,7 @@ NumericVector cpp_ddirichlet(NumericMatrix x,
     
     for (int j = 0; j < m; j++) {
       if (alpha(i % na, j) <= 0) {
+        Rcpp::warning("NaNs produced");
         p[i] = NAN;
         break;
       }
@@ -51,7 +52,7 @@ NumericVector cpp_ddirichlet(NumericMatrix x,
       
       prod_gamma += R::lgammafn(alpha(i % na, j));
       sum_alpha += alpha(i % na, j);
-      p_tmp += std::log(x(i % n, j)) * (alpha(i % na, j)-1);
+      p_tmp += log(x(i % n, j)) * (alpha(i % na, j)-1);
       
       if (alpha(i % na, j) == 1 && x(i % n, j) == 0)
         p_tmp = -INFINITY;
@@ -63,7 +64,7 @@ NumericVector cpp_ddirichlet(NumericMatrix x,
 
   if (!log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
 
   return p;
 }
@@ -95,6 +96,7 @@ NumericMatrix cpp_rdirichlet(int n,
     }
 
     if (wrong_alpha) {
+      Rcpp::warning("NaNs produced");
       for (int j = 0; j < k; j++)
         x(i, j) = NAN;
     } else {

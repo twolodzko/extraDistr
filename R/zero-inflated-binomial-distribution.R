@@ -1,0 +1,77 @@
+
+
+#' Zero-inflated binomial distribution
+#'
+#' Probability mass function and random generation
+#' for the zero-inflated binomial distribution.
+#'
+#' @param x 	            vector of quantiles.
+#' @param n	              number of observations. If \code{length(n) > 1},
+#'                        the length is taken to be the number required.
+#' @param size	          number of trials (zero or more).
+#' @param prob            probability of success in each trial. \code{0 < prob <= 1}.
+#' @param pi              probability of extra zeros.
+#' @param log,log.p	      logical; if TRUE, probabilities p are given as log(p).
+#' @param lower.tail	    logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
+#'                        otherwise, \eqn{P[X > x]}.
+#'
+#' @details
+#'
+#' Probability density function
+#' \deqn{
+#' f(x) = \left\{\begin{array}{ll}
+#' \pi + (1 - \pi) (1-p)^n & x = 0 \\
+#' (1 - \pi) {n \choose x} p^x (1-p)^{n-x} & x > 0 \\
+#' \end{array}\right.
+#' }{
+#' f(x) = [if x = 0:] (1-\pi)+\pi * p^r [else:] (1-\pi) * dnbinom(x, size, prob)
+#' }
+#' 
+#' @seealso \code{\link[stats]{Binomial}}
+#' 
+#' @examples 
+#' 
+#' x <- rzib(1e5, 10, 0.6, 0.33)
+#' xx <- -2:20
+#' plot(prop.table(table(x)), type = "h")
+#' lines(xx, dzib(xx, 10, 0.6, 0.33), col = "red")
+#' plot(ecdf(x))
+#' lines(xx, pzib(xx, 10, 0.6, 0.33), col = "red")
+#'
+#' @name ZIB
+#' @aliases ZIB
+#' @aliases dzib
+#' @keywords distribution
+#'
+#' @export
+
+dzib <- function(x, size, prob, pi, log = FALSE) {
+  .Call('extraDistr_cpp_dzib', PACKAGE = 'extraDistr', x, size, prob, pi, log)
+}
+
+
+#' @rdname ZIB
+#' @export
+
+pzib <- function(x, size, prob, pi, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_pzib', PACKAGE = 'extraDistr', x, size, prob, pi, lower.tail, log.p)
+}
+
+
+#' @rdname ZIB
+#' @export
+
+qzib <- function(p, size, prob, pi, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_qzib', PACKAGE = 'extraDistr', p, size, prob, pi,
+        lower.tail, log.p)
+}
+
+
+#' @rdname ZIB
+#' @export
+
+rzib <- function(n, size, prob, pi) {
+  if (length(n) > 1) n <- length(n)
+  .Call('extraDistr_cpp_rzib', PACKAGE = 'extraDistr', n, size, prob, pi)
+}
+

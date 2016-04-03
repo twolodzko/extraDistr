@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include "const.h"
 #include "shared.h"
 using namespace Rcpp;
 
@@ -47,22 +48,22 @@ NumericVector cpp_dmnom(NumericMatrix x,
         wrong_p = true;
         break;
       }
-      if (x(i % n, j) < 0 || std::floor(x(i % n, j)) != x(i % n, j)) {
+      if (x(i % n, j) < 0 || !isInteger(x(i % n, j))) {
         wrong_x = true;
-        break;
+      } else {
+        sum_p += prob(i % np, j)*P_NORM_CONST;
+        sum_x += x(i % n, j);
+        prod_xfac += lfactorial(x(i % n, j));
+        prod_pow_px += log(prob(i % np, j)) * x(i % n, j);
       }
-      
-      sum_p += prob(i % np, j);
-      sum_x += x(i % n, j);
-      prod_xfac += lfactorial(x(i % n, j));
-      prod_pow_px += std::log(prob(i % np, j)) * x(i % n, j);
     }
 
-    if (std::floor(size[i % ns]) != size[i % ns] ||
+    if (!tol_equal(sum_p/P_NORM_CONST, 1) || wrong_p) {
+      Rcpp::warning("NaNs produced");
+      p[i] = NAN; 
+    } else if (floor(size[i % ns]) != size[i % ns] ||
         sum_x < 0 || sum_x != size[i % ns] || wrong_x) {
       p[i] = -INFINITY;
-    } else if (sum_p != 1 || wrong_p) {
-      p[i] = NAN;
     } else {
       p[i] = n_fac - prod_xfac + prod_pow_px;
     }
@@ -70,20 +71,20 @@ NumericVector cpp_dmnom(NumericMatrix x,
 
   if (!log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
   
   return p;
 }
 
 
 // [[Rcpp::export]]
-IntegerMatrix cpp_rmnom(int n, NumericVector size, NumericMatrix prob) {
+NumericMatrix cpp_rmnom(int n, NumericVector size, NumericMatrix prob) {
   
   int k = prob.ncol();
   int np = prob.nrow();
   int ns = size.length();
   
-  IntegerMatrix x(n, k);
+  NumericMatrix x(n, k);
   
   for (int i = 0; i < n; i++) {
     
@@ -96,16 +97,19 @@ IntegerMatrix cpp_rmnom(int n, NumericVector size, NumericMatrix prob) {
         wrong_p = true;
         break;
       }
-      sum_p += prob(i % np, j);
-      x(i, j) = R::rbinom(size_left, prob[i % np]);
+      sum_p += prob(i % np, j)*P_NORM_CONST;
+      x(i, j) = R::rbinom(size_left, prob(i % np, j));
       size_left -= x(i, j);
     }
     
     x(i, k-1) = size_left;
+    sum_p += prob(i % np, k-1)*P_NORM_CONST;
     
-    if (sum_p != 1 || wrong_p)
+    if (!tol_equal(sum_p/P_NORM_CONST, 1) || wrong_p) {
+      Rcpp::warning("NaNs produced");
       for (int j = 0; j < k; j++)
         x(i, j) = NAN;
+    }
   }
   
   return x;

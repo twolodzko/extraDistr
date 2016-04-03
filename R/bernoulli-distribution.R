@@ -13,6 +13,12 @@
 #' @param log,log.p	      logical; if TRUE, probabilities p are given as log(p).
 #' @param lower.tail	    logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
 #'                        otherwise, \eqn{P[X > x]}.
+#'                        
+#' @seealso \code{\link[stats]{Binomial}}
+#' 
+#' @examples 
+#' 
+#' prop.table(table(rbern(1e5, 0.5)))
 #'
 #' @name Bernoulli
 #' @aliases Bernoulli

@@ -57,6 +57,17 @@ F^{-1}(p) = \frac{b}{(1-p)^{1-a}}
 F^-1(p) = b/(1-p)^{1-a}
 }
 }
+\examples{
+
+x <- rpareto(1e5, 5, 16)
+xx <- seq(-100, 100, by = 0.001)
+hist(x, 100, freq = FALSE)
+lines(xx, dpareto(xx, 5, 16), col = "red")
+hist(ppareto(x, 5, 16))
+plot(ecdf(x))
+lines(xx, ppareto(xx, 5, 16), col = "red", lwd = 2)
+
+}
 \references{
 Krishnamoorthy, K. (2006). Handbook of Statistical Distributions
 with Applications. Chapman & Hall/CRC

@@ -57,6 +57,17 @@ F^{-1}(p) = \sqrt{-2\sigma^2 \log(1-p)}
 F^-1(p) = sqrt(-2*\sigma^2 * log(1-p))
 }
 }
+\examples{
+
+x <- rrayleigh(1e5, 13)
+xx <- seq(-100, 100, by = 0.001)
+hist(x, 100, freq = FALSE)
+lines(xx, drayleigh(xx, 13), col = "red")
+hist(prayleigh(x, 13)) 
+plot(ecdf(x))
+lines(xx, prayleigh(xx, 13), col = "red", lwd = 2) 
+
+}
 \references{
 Krishnamoorthy, K. (2006). Handbook of Statistical Distributions
 with Applications. Chapman & Hall/CRC.

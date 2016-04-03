@@ -2,10 +2,11 @@
 
 #' Logarythmic Series distribution
 #'
-#' Density function, cumulative distribution function and random generation
+#' Density, distribution function, quantile function and random generation
 #' for the Logarythmic Series distribution.
 #'
 #' @param x               matrix of quantiles.
+#' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
 #' @param theta           vector; concentration parameter.
@@ -29,7 +30,8 @@
 #' F(x) = -1/log(1-\theta) * sum((\theta^x)/x)
 #' }
 #'
-#' Random generation is done using algorithm described in Krishnamoorthy (2006).
+#' Quantile function and random generation are computed using
+#' algorithm described in Krishnamoorthy (2006).
 #'
 #' @references
 #' Krishnamoorthy, K. (2006). Handbook of Statistical Distributions
@@ -38,6 +40,19 @@
 #' @references
 #' Forbes, C., Evans, M. Hastings, N., & Peacock, B. (2011).
 #' Statistical Distributions. John Wiley & Sons.
+#' 
+#' @examples 
+#' 
+#' x <- rlgser(1e5, 0.66)
+#' xx <- seq(0, 100, by = 1)
+#' plot(prop.table(table(x)), type = "h")
+#' lines(xx, dlgser(xx, 0.66), col = "red")
+#' 
+#' # Notice: distribution of F(X) is far from uniform:
+#' hist(plgser(x, 0.66), 50)
+#' 
+#' plot(ecdf(x))
+#' lines(xx, plgser(xx, 0.66), col = "red", lwd = 2)
 #'
 #' @name LogSeries
 #' @aliases LogSeries
@@ -54,6 +69,14 @@ dlgser <- function(x, theta, log = FALSE) {
 
 plgser <- function(x, theta, lower.tail = TRUE, log.p = FALSE) {
   .Call('extraDistr_cpp_plgser', PACKAGE = 'extraDistr', x, theta, lower.tail, log.p)
+}
+
+
+#' @rdname LogSeries
+#' @export
+
+qlgser <- function(p, theta, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_qlgser', PACKAGE = 'extraDistr', p, theta, lower.tail, log.p)
 }
 
 

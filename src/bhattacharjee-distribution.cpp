@@ -22,8 +22,10 @@ double G(double x) {
 }
 
 double pdf_bhattacharjee(double x, double mu, double sigma, double a) {
-  if (sigma < 0 || a < 0)
+  if (sigma < 0 || a < 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   if (sigma == 0)
     return R::dunif(x, mu-a, mu+a, false);
   if (a == 0)
@@ -33,8 +35,10 @@ double pdf_bhattacharjee(double x, double mu, double sigma, double a) {
 }
 
 double cdf_bhattacharjee(double x, double mu, double sigma, double a) {
-  if (sigma < 0 || a < 0)
+  if (sigma < 0 || a < 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   if (sigma == 0)
     return R::punif(x, mu-a, mu+a, true, false);
   if (a == 0)
@@ -44,8 +48,10 @@ double cdf_bhattacharjee(double x, double mu, double sigma, double a) {
 }
 
 double rng_bhattacharjee(double mu, double sigma, double a) {
-  if (sigma < 0 || a < 0)
+  if (sigma < 0 || a < 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   if (sigma == 0)
     return R::runif(mu-a, mu+a);
   if (a == 0)
@@ -66,14 +72,13 @@ NumericVector cpp_dbhatt(NumericVector x,
   int na = a.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, na));
   NumericVector p(Nmax);
-  double z;
   
   for (int i = 0; i < Nmax; i++)
     p[i] = pdf_bhattacharjee(x[i % n], mu[i % nm], sigma[i % ns], a[i % na]);
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
   
   return p;
 }
@@ -90,7 +95,6 @@ NumericVector cpp_pbhatt(NumericVector x,
   int na = a.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, na));
   NumericVector p(Nmax);
-  double z;
   
   for (int i = 0; i < Nmax; i++)
     p[i] = cdf_bhattacharjee(x[i % n], mu[i % nm], sigma[i % ns], a[i % na]);
@@ -101,7 +105,7 @@ NumericVector cpp_pbhatt(NumericVector x,
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
   
   return p;
 }

@@ -18,6 +18,24 @@
 #'                        Number of labels needs to be the same as
 #'                        number of categories (number of columns in prob).
 #'
+#' @examples 
+#' 
+#' # Generating 10 random draws from categorical distribution
+#' # with k=3 categories occuring with equal probabilities
+#' # parametrized using a vector
+#' 
+#' rcat(10, c(1/3, 1/3, 1/3))
+#' 
+#' # or with k=5 categories parametrized using a matrix of probabilities
+#' # (generated from Dirichlet distribution)
+#' 
+#' p <- rdirichlet(10, c(1, 1, 1, 1, 1))
+#' rcat(10, p)
+#' 
+#' x <- rcat(1e5, c(.2, .4, .3, .1))
+#' plot(prop.table(table(x)), type = "h")
+#' lines(0:5, dcat(0:5, c(.2, .4, .3, .1)), col = "red")
+#'
 #' @name Categorical
 #' @aliases Categorical
 #' @aliases dcat
@@ -26,9 +44,11 @@
 #' @export
 
 dcat <- function(x, prob, log = FALSE) {
-  if (!is.matrix(prob))
+  if (is.vector(prob))
     prob <- matrix(prob, nrow = 1)
-  .Call('extraDistr_cpp_dcat', PACKAGE = 'extraDistr', x, prob, log)
+  else if (!is.matrix(prob))
+    prob <- as.matrix(prob)
+  .Call('extraDistr_cpp_dcat', PACKAGE = 'extraDistr', as.numeric(x), prob, log)
 }
 
 
@@ -40,7 +60,8 @@ pcat <- function(x, prob, lower.tail = TRUE, log.p = FALSE) {
     prob <- matrix(prob, nrow = 1)
   else if (!is.matrix(prob))
     prob <- as.matrix(prob)
-  .Call('extraDistr_cpp_pcat', PACKAGE = 'extraDistr', x, prob, lower.tail, log.p)
+  .Call('extraDistr_cpp_pcat', PACKAGE = 'extraDistr', as.numeric(x), prob,
+        lower.tail, log.p)
 }
 
 
@@ -53,7 +74,8 @@ qcat <- function(p, prob, lower.tail = TRUE, log.p = FALSE, labels) {
   else if (!is.matrix(prob))
     prob <- as.matrix(prob)
   
-  x <- .Call('extraDistr_cpp_qcat', PACKAGE = 'extraDistr', p, prob, lower.tail, log.p)
+  x <- .Call('extraDistr_cpp_qcat', PACKAGE = 'extraDistr', p, prob,
+             lower.tail, log.p)
   
   if (!missing(labels)) {
     if (length(labels) != ncol(prob))
@@ -72,9 +94,12 @@ qcat <- function(p, prob, lower.tail = TRUE, log.p = FALSE, labels) {
 rcat <- function(n, prob, labels) {
   if (length(n) > 1) n <- length(n)
   
-  if (!is.matrix(prob)) {
+  if (is.vector(prob)) {
     k <- length(prob)
-    x <- sample.int(length(prob), size = n, replace = TRUE, prob = prob)
+    if (sum(prob) == 1)
+      x <- sample.int(length(prob), size = n, replace = TRUE, prob = prob)
+    else
+      x <- rep(NaN, n)
   } else {
     k <- ncol(prob)
     x <- .Call('extraDistr_cpp_rcat', PACKAGE = 'extraDistr', n, prob)

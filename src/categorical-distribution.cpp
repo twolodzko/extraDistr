@@ -1,4 +1,6 @@
 #include <Rcpp.h>
+#include "const.h"
+#include "shared.h"
 using namespace Rcpp;
 
 
@@ -33,12 +35,13 @@ NumericVector cpp_dcat(NumericVector x, NumericMatrix prob,
         wrong_p = true;
         break;
       }
-      p_tot += prob(i % np, j);
+      p_tot += prob(i % np, j)*P_NORM_CONST;
     }
-    
-    if (p_tot != 1 || wrong_p) {
+
+    if (!tol_equal(p_tot/P_NORM_CONST, 1) || wrong_p) {
+      Rcpp::warning("NaNs produced");
       p[i] = NAN;
-    } else if (x[i] < 1 || x[i] > k || std::floor(x[i]) != x[i]) {
+    } else if (x[i] < 1 || x[i] > k || !isInteger(x[i])) {
       p[i] = 0;
     } else {
       p[i] = prob(i % np, x[i]-1);
@@ -47,7 +50,7 @@ NumericVector cpp_dcat(NumericVector x, NumericMatrix prob,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
     
     return p;
 }
@@ -77,7 +80,7 @@ NumericVector cpp_pcat(NumericVector x, NumericMatrix prob,
           wrong_p = true;
           break;
         }
-        p[i] += prob(i % np, j);
+        p[i] += prob(i % np, j)*P_NORM_CONST;
         j++;
       }
       double p_tot = p[i];
@@ -86,11 +89,15 @@ NumericVector cpp_pcat(NumericVector x, NumericMatrix prob,
           wrong_p = true;
           break;
         }
-        p_tot += prob(i % np, j);
+        p_tot += prob(i % np, j)*P_NORM_CONST;
         j++;
       }
-      if (p_tot != 1 || wrong_p)
+      if (!tol_equal(p_tot/P_NORM_CONST, 1) || wrong_p) {
+        Rcpp::warning("NaNs produced");
         p[i] = NAN;
+      } else {
+        p[i] = p[i]/P_NORM_CONST;
+      }
       
     }
   }
@@ -101,7 +108,7 @@ NumericVector cpp_pcat(NumericVector x, NumericMatrix prob,
     
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
       
   return p;
 }
@@ -119,7 +126,7 @@ IntegerVector cpp_qcat(NumericVector p, NumericMatrix prob,
   
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
     
   if (!lower_tail)
     for (int i = 0; i < n; i++)
@@ -127,17 +134,18 @@ IntegerVector cpp_qcat(NumericVector p, NumericMatrix prob,
     
   for (int i = 0; i < Nmax; i++) {
     if (p[i] < 0 || p[i] > 1) {
+      Rcpp::warning("NaNs produced");
       q[i] = NAN;
     } else {
       bool wrong_p = false;
       double cs_prob = 0;
       int j = 0;
-      while (cs_prob < p[i] && j < k) {
+      while (cs_prob < p[i]*P_NORM_CONST && j < k) {
         if (prob(i % np, j) < 0 || prob(i % np, j) > 1) {
           wrong_p = true;
           break;
         }
-        cs_prob += prob(i % np, j);
+        cs_prob += prob(i % np, j)*P_NORM_CONST;
         j++;
       }
       if (p[i] == 0)
@@ -150,11 +158,13 @@ IntegerVector cpp_qcat(NumericVector p, NumericMatrix prob,
           wrong_p = true;
           break;
         }
-        cs_prob += prob(i % np, j);
+        cs_prob += prob(i % np, j)*P_NORM_CONST;
         j++;
       } 
-      if (cs_prob != 1 || wrong_p)
+      if (!tol_equal(cs_prob/P_NORM_CONST, 1) || wrong_p) {
+        Rcpp::warning("NaNs produced");
         q[i] = NAN;
+      }
     }
   }
       
@@ -163,16 +173,16 @@ IntegerVector cpp_qcat(NumericVector p, NumericMatrix prob,
 
 
 // [[Rcpp::export]]
-IntegerVector cpp_rcat(int n, NumericMatrix prob) {
+NumericVector cpp_rcat(int n, NumericMatrix prob) {
   
   double u;
   int np = prob.nrow();
   int k = prob.ncol();
-  IntegerVector x(n);
+  NumericVector x(n);
 
   for (int i = 0; i < n; i++) {
     bool wrong_p = false;
-    u = R::runif(0, 1);
+    u = R::runif(0, P_NORM_CONST);
 
     double cs_prob = 0;
     int j = 0;
@@ -181,7 +191,7 @@ IntegerVector cpp_rcat(int n, NumericMatrix prob) {
         wrong_p = true;
         break;
       }
-      cs_prob += prob(i % np, j);
+      cs_prob += prob(i % np, j)*P_NORM_CONST;
       j++;
     }
     x[i] = j;
@@ -191,11 +201,14 @@ IntegerVector cpp_rcat(int n, NumericMatrix prob) {
         wrong_p = true;
         break;
       }
-      cs_prob += prob(i % np, j);
+      cs_prob += prob(i % np, j)*P_NORM_CONST;
       j++;
     } 
-    if (cs_prob != 1 || wrong_p)
+    
+    if (!tol_equal(cs_prob/P_NORM_CONST, 1) || wrong_p) {
+      Rcpp::warning("NaNs produced");
       x[i] = NAN;
+    }
   }
   
   return x;

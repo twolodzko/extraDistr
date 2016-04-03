@@ -1,0 +1,80 @@
+
+
+#' Zero-inflated nagative binomial distribution
+#'
+#' Probability mass function and random generation
+#' for the zero-inflated nagative binomial distribution.
+#'
+#' @param x 	            vector of quantiles.
+#' @param n	              number of observations. If \code{length(n) > 1},
+#'                        the length is taken to be the number required.
+#' @param size	          target for number of successful trials, or dispersion
+#'                        parameter (the shape parameter of the gamma mixing
+#'                        distribution). Must be strictly positive, need not be
+#'                        integer.
+#' @param prob            probability of success in each trial. \code{0 < prob <= 1}.
+#' @param pi              probability of extra zeros.
+#' @param log,log.p	      logical; if TRUE, probabilities p are given as log(p).
+#' @param lower.tail	    logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
+#'                        otherwise, \eqn{P[X > x]}.
+#'
+#' @details
+#'
+#' Probability density function
+#' \deqn{
+#' f(x) = \left\{\begin{array}{ll}
+#' \pi + (1 - \pi) p^r & x = 0 \\
+#' (1 - \pi) {x+r-1 \choose x} p^r (1-p)^x & x > 0 \\
+#' \end{array}\right.
+#' }{
+#' f(x) = [if x = 0:] (1-\pi)+\pi * p^r [else:] (1-\pi) * dnbinom(x, size, prob)
+#' }
+#' 
+#' @seealso \code{\link[stats]{NegBinomial}}
+#' 
+#' @examples 
+#' 
+#' x <- rzinb(1e5, 100, 0.6, 0.33)
+#' xx <- -2:200
+#' plot(prop.table(table(x)), type = "h")
+#' lines(xx, dzinb(xx, 100, 0.6, 0.33), col = "red")
+#' plot(ecdf(x))
+#' lines(xx, pzinb(xx, 100, 0.6, 0.33), col = "red")
+#'
+#' @name ZINB
+#' @aliases ZINB
+#' @aliases dzinb
+#' @keywords distribution
+#'
+#' @export
+
+dzinb <- function(x, size, prob, pi, log = FALSE) {
+  .Call('extraDistr_cpp_dzinb', PACKAGE = 'extraDistr', x, size, prob, pi, log)
+}
+
+
+#' @rdname ZINB
+#' @export
+
+pzinb <- function(x, size, prob, pi, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_pzinb', PACKAGE = 'extraDistr', x, size, prob, pi, lower.tail, log.p)
+}
+
+
+#' @rdname ZINB
+#' @export
+
+qzinb <- function(p, size, prob, pi, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_qzinb', PACKAGE = 'extraDistr', p, size, prob, pi,
+        lower.tail, log.p)
+}
+
+
+#' @rdname ZINB
+#' @export
+
+rzinb <- function(n, size, prob, pi) {
+  if (length(n) > 1) n <- length(n)
+  .Call('extraDistr_cpp_rzinb', PACKAGE = 'extraDistr', n, size, prob, pi)
+}
+

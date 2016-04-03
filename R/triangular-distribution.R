@@ -54,6 +54,16 @@
 #' @references
 #' Forbes, C., Evans, M. Hastings, N., & Peacock, B. (2011).
 #' Statistical Distributions. John Wiley & Sons.
+#' 
+#' @examples 
+#' 
+#' x <- rtriang(1e5, 5, 7, 6)
+#' xx <- seq(-10, 10, by = 0.001)
+#' hist(x, 100, freq = FALSE)
+#' lines(xx, dtriang(xx, 5, 7, 6), col = "red")
+#' hist(ptriang(x, 5, 7, 6))
+#' plot(ecdf(x))
+#' lines(xx, ptriang(xx, 5, 7, 6), col = "red", lwd = 2)
 #'
 #' @name Triangular
 #' @aliases Triangular

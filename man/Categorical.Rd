@@ -40,5 +40,24 @@ the length is taken to be the number required.}
 Probability mass function, distribution function, quantile function and random generation
 for the categorical distribution.
 }
+\examples{
+
+# Generating 10 random draws from categorical distribution
+# with k=3 categories occuring with equal probabilities
+# parametrized using a vector
+
+rcat(10, c(1/3, 1/3, 1/3))
+
+# or with k=5 categories parametrized using a matrix of probabilities
+# (generated from Dirichlet distribution)
+
+p <- rdirichlet(10, c(1, 1, 1, 1, 1))
+rcat(10, p)
+
+x <- rcat(1e5, c(.2, .4, .3, .1))
+plot(prop.table(table(x)), type = "h")
+lines(0:5, dcat(0:5, c(.2, .4, .3, .1)), col = "red")
+
+}
 \keyword{distribution}
 

@@ -65,6 +65,17 @@ F^-1(p) = [if p < 0.5:] \mu + \sigma * log(2*p)
 
 where \eqn{ z = \frac{x-\mu}{\sigma} }{ z = (x-\mu)/\sigma }.
 }
+\examples{
+
+x <- rlaplace(1e5, 5, 16)
+xx <- seq(-100, 100, by = 0.001)
+hist(x, 100, freq = FALSE)
+lines(xx, dlaplace(xx, 5, 16), col = "red")
+hist(plaplace(x, 5, 16))
+plot(ecdf(x))
+lines(xx, plaplace(xx, 5, 16), col = "red", lwd = 2)
+
+}
 \references{
 Krishnamoorthy, K. (2006). Handbook of Statistical Distributions
 with Applications. Chapman & Hall/CRC

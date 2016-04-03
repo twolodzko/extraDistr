@@ -80,6 +80,17 @@ so beta can be understood as a distribution of \eqn{k/n} proportions in
 1/(beta(n\mu, n(1-\mu))) * p^(n\mu+1) * (1-p)^(n(1-\mu)+1)
 }
 }
+\examples{
+
+x <- rprop(1e5, 100, 0.33)
+xx <- seq(0, 1, by = 0.01)
+hist(x, 100, freq = FALSE)
+lines(xx, dprop(xx, 100, 0.33), col = "red")
+hist(pprop(x, 100, 0.33))
+plot(ecdf(x))
+lines(xx, pprop(xx, 100, 0.33), col = "red", lwd = 2)
+                       
+}
 \references{
 Ferrari, S., & Cribari-Neto, F. (2004). Beta regression for modelling rates and proportions.
 Journal of Applied Statistics, 31(7), 799-815.

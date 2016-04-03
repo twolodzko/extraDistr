@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include "shared.h"
 using namespace Rcpp;
 
 /*
@@ -10,14 +11,20 @@ using namespace Rcpp;
  */
 
 double pmf_skellam(double x, double mu1, double mu2) {
-  if (mu1 < 0 || mu2 <= 0)
+  if (mu1 < 0 || mu2 <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  return std::exp(-(mu1+mu2)) * std::pow(mu1/mu2, x/2) * R::bessel_i(2*std::sqrt(mu1*mu2), x, 1);
+  }
+  if (!isInteger(x))
+    return 0;
+  return exp(-(mu1+mu2)) * pow(mu1/mu2, x/2) * R::bessel_i(2*sqrt(mu1*mu2), x, 1);
 }
 
 double rng_skellam(double mu1, double mu2) {
-  if (mu1 < 0 || mu2 <= 0)
+  if (mu1 < 0 || mu2 <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   return R::rpois(mu1) - R::rpois(mu2);
 }
 
@@ -39,7 +46,7 @@ NumericVector cpp_dskellam(NumericVector x,
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
   
   return p;
 }

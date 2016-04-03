@@ -145,6 +145,10 @@ cpp_dgpois <- function(x, alpha, beta, log_prob = FALSE) {
     .Call('extraDistr_cpp_dgpois', PACKAGE = 'extraDistr', x, alpha, beta, log_prob)
 }
 
+cpp_pgpois <- function(x, alpha, beta, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_pgpois', PACKAGE = 'extraDistr', x, alpha, beta, lower_tail, log_prob)
+}
+
 cpp_rgpois <- function(n, alpha, beta) {
     .Call('extraDistr_cpp_rgpois', PACKAGE = 'extraDistr', n, alpha, beta)
 }
@@ -213,8 +217,20 @@ cpp_rgumbel <- function(n, mu, sigma) {
     .Call('extraDistr_cpp_rgumbel', PACKAGE = 'extraDistr', n, mu, sigma)
 }
 
-cpp_dinvchisq <- function(x, nu, log_prob = FALSE) {
-    .Call('extraDistr_cpp_dinvchisq', PACKAGE = 'extraDistr', x, nu, log_prob)
+cpp_dhuber <- function(x, mu, sigma, epsilon, log_prob = FALSE) {
+    .Call('extraDistr_cpp_dhuber', PACKAGE = 'extraDistr', x, mu, sigma, epsilon, log_prob)
+}
+
+cpp_phuber <- function(x, mu, sigma, epsilon, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_phuber', PACKAGE = 'extraDistr', x, mu, sigma, epsilon, lower_tail, log_prob)
+}
+
+cpp_qhuber <- function(p, mu, sigma, epsilon, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_qhuber', PACKAGE = 'extraDistr', p, mu, sigma, epsilon, lower_tail, log_prob)
+}
+
+cpp_rhuber <- function(n, mu, sigma, epsilon) {
+    .Call('extraDistr_cpp_rhuber', PACKAGE = 'extraDistr', n, mu, sigma, epsilon)
 }
 
 cpp_dinvgamma <- function(x, alpha, beta, log_prob = FALSE) {
@@ -259,6 +275,10 @@ cpp_dlgser <- function(x, theta, log_prob = FALSE) {
 
 cpp_plgser <- function(x, theta, lower_tail = TRUE, log_prob = FALSE) {
     .Call('extraDistr_cpp_plgser', PACKAGE = 'extraDistr', x, theta, lower_tail, log_prob)
+}
+
+cpp_qlgser <- function(p, theta, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_qlgser', PACKAGE = 'extraDistr', p, theta, lower_tail, log_prob)
 }
 
 cpp_rlgser <- function(n, theta) {
@@ -313,6 +333,22 @@ cpp_rnst <- function(n, df, mu, sigma) {
     .Call('extraDistr_cpp_rnst', PACKAGE = 'extraDistr', n, df, mu, sigma)
 }
 
+cpp_dnsbeta <- function(x, alpha, beta, lower, upper, log_prob = FALSE) {
+    .Call('extraDistr_cpp_dnsbeta', PACKAGE = 'extraDistr', x, alpha, beta, lower, upper, log_prob)
+}
+
+cpp_pnsbeta <- function(x, alpha, beta, lower, upper, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_pnsbeta', PACKAGE = 'extraDistr', x, alpha, beta, lower, upper, lower_tail, log_prob)
+}
+
+cpp_qnsbeta <- function(p, alpha, beta, lower, upper, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_qnsbeta', PACKAGE = 'extraDistr', p, alpha, beta, lower, upper, lower_tail, log_prob)
+}
+
+cpp_rnsbeta <- function(n, alpha, beta, lower, upper) {
+    .Call('extraDistr_cpp_rnsbeta', PACKAGE = 'extraDistr', n, alpha, beta, lower, upper)
+}
+
 cpp_dpareto <- function(x, a, b, log_prob = FALSE) {
     .Call('extraDistr_cpp_dpareto', PACKAGE = 'extraDistr', x, a, b, log_prob)
 }
@@ -345,6 +381,22 @@ cpp_rpower <- function(n, alpha, beta) {
     .Call('extraDistr_cpp_rpower', PACKAGE = 'extraDistr', n, alpha, beta)
 }
 
+cpp_dprop <- function(x, size, mean, log_prob = FALSE) {
+    .Call('extraDistr_cpp_dprop', PACKAGE = 'extraDistr', x, size, mean, log_prob)
+}
+
+cpp_pprop <- function(x, size, mean, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_pprop', PACKAGE = 'extraDistr', x, size, mean, lower_tail, log_prob)
+}
+
+cpp_qprop <- function(p, size, mean, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_qprop', PACKAGE = 'extraDistr', p, size, mean, lower_tail, log_prob)
+}
+
+cpp_rprop <- function(n, size, mean) {
+    .Call('extraDistr_cpp_rprop', PACKAGE = 'extraDistr', n, size, mean)
+}
+
 cpp_drayleigh <- function(x, sigma, log_prob = FALSE) {
     .Call('extraDistr_cpp_drayleigh', PACKAGE = 'extraDistr', x, sigma, log_prob)
 }
@@ -359,10 +411,6 @@ cpp_qrayleigh <- function(p, sigma, lower_tail = TRUE, log_prob = FALSE) {
 
 cpp_rrayleigh <- function(n, sigma) {
     .Call('extraDistr_cpp_rrayleigh', PACKAGE = 'extraDistr', n, sigma)
-}
-
-cpp_dsinvchisq <- function(x, nu, tau, log_prob = FALSE) {
-    .Call('extraDistr_cpp_dsinvchisq', PACKAGE = 'extraDistr', x, nu, tau, log_prob)
 }
 
 cpp_dskellam <- function(x, mu1, mu2, log_prob = FALSE) {
@@ -415,5 +463,65 @@ cpp_qtnorm <- function(p, mu, sigma, a, b, lower_tail = TRUE, log_prob = FALSE) 
 
 cpp_rtnorm <- function(n, mu, sigma, a, b) {
     .Call('extraDistr_cpp_rtnorm', PACKAGE = 'extraDistr', n, mu, sigma, a, b)
+}
+
+cpp_dwald <- function(x, mu, lambda, log_prob = FALSE) {
+    .Call('extraDistr_cpp_dwald', PACKAGE = 'extraDistr', x, mu, lambda, log_prob)
+}
+
+cpp_pwald <- function(x, mu, lambda, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_pwald', PACKAGE = 'extraDistr', x, mu, lambda, lower_tail, log_prob)
+}
+
+cpp_rwald <- function(n, mu, lambda) {
+    .Call('extraDistr_cpp_rwald', PACKAGE = 'extraDistr', n, mu, lambda)
+}
+
+cpp_dzib <- function(x, size, prob, pi, log_prob = FALSE) {
+    .Call('extraDistr_cpp_dzib', PACKAGE = 'extraDistr', x, size, prob, pi, log_prob)
+}
+
+cpp_pzib <- function(x, size, prob, pi, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_pzib', PACKAGE = 'extraDistr', x, size, prob, pi, lower_tail, log_prob)
+}
+
+cpp_qzib <- function(p, size, prob, pi, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_qzib', PACKAGE = 'extraDistr', p, size, prob, pi, lower_tail, log_prob)
+}
+
+cpp_rzib <- function(n, size, prob, pi) {
+    .Call('extraDistr_cpp_rzib', PACKAGE = 'extraDistr', n, size, prob, pi)
+}
+
+cpp_dzinb <- function(x, size, prob, pi, log_prob = FALSE) {
+    .Call('extraDistr_cpp_dzinb', PACKAGE = 'extraDistr', x, size, prob, pi, log_prob)
+}
+
+cpp_pzinb <- function(x, size, prob, pi, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_pzinb', PACKAGE = 'extraDistr', x, size, prob, pi, lower_tail, log_prob)
+}
+
+cpp_qzinb <- function(p, size, prob, pi, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_qzinb', PACKAGE = 'extraDistr', p, size, prob, pi, lower_tail, log_prob)
+}
+
+cpp_rzinb <- function(n, size, prob, pi) {
+    .Call('extraDistr_cpp_rzinb', PACKAGE = 'extraDistr', n, size, prob, pi)
+}
+
+cpp_dzip <- function(x, lambda, pi, log_prob = FALSE) {
+    .Call('extraDistr_cpp_dzip', PACKAGE = 'extraDistr', x, lambda, pi, log_prob)
+}
+
+cpp_pzip <- function(x, lambda, pi, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_pzip', PACKAGE = 'extraDistr', x, lambda, pi, lower_tail, log_prob)
+}
+
+cpp_qzip <- function(p, lambda, pi, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_qzip', PACKAGE = 'extraDistr', p, lambda, pi, lower_tail, log_prob)
+}
+
+cpp_rzip <- function(n, lambda, pi) {
+    .Call('extraDistr_cpp_rzip', PACKAGE = 'extraDistr', n, lambda, pi)
 }
 

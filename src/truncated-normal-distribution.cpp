@@ -23,24 +23,28 @@ using namespace Rcpp;
 *
 */
 
-const double pisq = sqrt(2*M_PI);
+const double SQRTPI = sqrt(2*M_PI);
 
 double pdf_tnorm(double x, double mu, double sigma, double a, double b) {
-  if (sigma <= 0 || b < a)
+  if (sigma <= 0 || b < a) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   double Phi_a, Phi_b;
   if (x > a && x < b) {
     Phi_a = Phi((a-mu)/sigma);
     Phi_b = Phi((b-mu)/sigma);
-    return std::exp(-std::pow(x-mu, 2) / (2*std::pow(sigma, 2))) / (pisq*sigma * (Phi_b - Phi_a));
+    return exp(-pow(x-mu, 2) / (2*pow(sigma, 2))) / (SQRTPI*sigma * (Phi_b - Phi_a));
   } else {
     return 0;
   }
 }
 
 double cdf_tnorm(double x, double mu, double sigma, double a, double b) {
-  if (sigma <= 0 || b < a)
+  if (sigma <= 0 || b < a) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   double Phi_x, Phi_a, Phi_b;
   if (x > a && x < b) {
     Phi_x = Phi((x-mu)/sigma);
@@ -55,8 +59,10 @@ double cdf_tnorm(double x, double mu, double sigma, double a, double b) {
 }
 
 double invcdf_tnorm(double p, double mu, double sigma, double a, double b) {
-  if (sigma <= 0 || b < a || p < 0 || p > 1)
+  if (sigma <= 0 || b < a || p < 0 || p > 1) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   double Phi_a, Phi_b;
   Phi_a = Phi((a-mu)/sigma);
   Phi_b = Phi((b-mu)/sigma);
@@ -64,8 +70,10 @@ double invcdf_tnorm(double p, double mu, double sigma, double a, double b) {
 }
 
 double rng_tnorm(double mu, double sigma, double a, double b) {
-  if (sigma <= 0 || b < a)
+  if (sigma <= 0 || b < a) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
 
   double r, u, za, zb;
   bool stop = false;
@@ -73,24 +81,24 @@ double rng_tnorm(double mu, double sigma, double a, double b) {
   za = (a-mu)/sigma;
   zb = (b-mu)/sigma;
 
-  if (zb - za < pisq) {
+  if (zb - za < SQRTPI) {
     if (0 < za) {
       while (!stop) {
         r = R::runif(za, zb);
         u = R::runif(0, 1);
-        stop = (u <= std::exp((std::pow(za, 2) - std::pow(r, 2))/2));
+        stop = (u <= exp((pow(za, 2) - pow(r, 2))/2));
       }
     } else if (zb < 0) {
       while (!stop) {
         r = R::runif(za, zb);
         u = R::runif(0, 1);
-        stop = (u <= std::exp((std::pow(zb, 2) - std::pow(r, 2))/2));
+        stop = (u <= exp((pow(zb, 2) - pow(r, 2))/2));
       }
     } else {
       while (!stop) {
         r = R::runif(za, zb);
         u = R::runif(0, 1);
-        stop = (u <= std::exp(-std::pow(r, 2)/2));
+        stop = (u <= exp(-pow(r, 2)/2));
       }
     }
   } else {
@@ -123,7 +131,7 @@ NumericVector cpp_dtnorm(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
 
   return p;
 }
@@ -152,7 +160,7 @@ NumericVector cpp_ptnorm(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
 
   return p;
 }
@@ -181,7 +189,7 @@ NumericVector cpp_qtnorm(NumericVector p,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
 
   return q;
 }

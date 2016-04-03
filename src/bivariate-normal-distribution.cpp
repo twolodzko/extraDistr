@@ -26,15 +26,18 @@ double pdf_bnorm(double x, double y,
                  double sigma1, double sigma2,
                  double rho = 0) {
   
-  if (sigma1 <= 0 || sigma2 <= 0 || rho <= -1 || rho >= 1)
+  if (sigma1 <= 0 || sigma2 <= 0 || rho <= -1 || rho >= 1) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   
-  double c1 = 1/(2*M_PI*std::sqrt(1-std::pow(rho, 2))*sigma1*sigma2);
-  double c2 = -1/(2*(1-std::pow(rho, 2)));
   double z1 = (x - mu1)/sigma1;
   double z2 = (y - mu2)/sigma2;
   
-  return c1 * std::exp(c2 * (std::pow(z1, 2) - 2*rho*z1*z2 + std::pow(z2, 2)));
+  double c1 = 1/(2*M_PI*sqrt(1-pow(rho, 2))*sigma1*sigma2);
+  double c2 = -1/(2*(1-pow(rho, 2)));
+  
+  return c1 * exp(c2 * (pow(z1, 2) - 2*rho*z1*z2 + pow(z2, 2)));
 }
 
 
@@ -60,7 +63,7 @@ NumericVector rng_bnorm(double mu1, double mu2,
       double u = R::rnorm(0, 1);
       double v = R::rnorm(0, 1);
       x[0] = mu1 + sigma1 * u;
-      x[1] = mu2 + sigma2 * (rho*u + std::sqrt(1-std::pow(rho, 2))*v);
+      x[1] = mu2 + sigma2 * (rho*u + sqrt(1-pow(rho, 2))*v);
   } else {
       x[0] = R::rnorm(mu1, sigma1);
       x[1] = R::rnorm(mu2, sigma2);
@@ -96,7 +99,7 @@ NumericVector cpp_dbnorm(NumericVector x, NumericVector y,
 
   if (log_prob)
     for (int i = 0; i < nx; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
 
   return p;
 }
@@ -117,15 +120,15 @@ NumericMatrix cpp_rbnorm(int n,
   NumericMatrix x(n, 2);
 
   for (int i = 0; i < n; i++) {
-    if (sigma1[i % ns1] <= 0 || sigma2[i % ns2] <= 0 || rho[i % nr] < -1 || rho[i % nr] > 1) {
+    if (sigma1[i % ns1] <= 0 || sigma2[i % ns2] <= 0 ||
+        rho[i % nr] < -1 || rho[i % nr] > 1) {
+      Rcpp::warning("NaNs produced");
       x(i, 0) = NAN;
       x(i, 1) = NAN;
-    }
-    
-    if (rho[i % nr] != 0) {
+    } else if (rho[i % nr] != 0) {
       double u = R::rnorm(0, 1);
       double v = R::rnorm(0, 1);
-      double corr = (rho[i % nr]*u + std::sqrt(1-std::pow(rho[i % nr], 2))*v);
+      double corr = (rho[i % nr]*u + sqrt(1-pow(rho[i % nr], 2))*v);
       x(i, 0) = mu1[i % nm1] + sigma1[i % ns1] * u;
       x(i, 1) = mu2[i % nm2] + sigma2[i % ns2] * corr;
     } else {

@@ -52,6 +52,16 @@
 #' @references
 #' Forbes, C., Evans, M. Hastings, N., & Peacock, B. (2011).
 #' Statistical Distributions. John Wiley & Sons.
+#' 
+#' @examples 
+#' 
+#' x <- rlaplace(1e5, 5, 16)
+#' xx <- seq(-100, 100, by = 0.001)
+#' hist(x, 100, freq = FALSE)
+#' lines(xx, dlaplace(xx, 5, 16), col = "red")
+#' hist(plaplace(x, 5, 16))
+#' plot(ecdf(x))
+#' lines(xx, plaplace(xx, 5, 16), col = "red", lwd = 2)
 #'
 #' @name Laplace
 #' @aliases Laplace

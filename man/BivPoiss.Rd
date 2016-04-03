@@ -6,12 +6,13 @@
 \alias{rbvpois}
 \title{Bivariate Poisson distribution}
 \usage{
-dbvpois(x, y, a, b, c, log = FALSE)
+dbvpois(x, y = NULL, a, b, c, log = FALSE)
 
 rbvpois(n, a, b, c)
 }
 \arguments{
-\item{x, y}{vectors of quantiles.}
+\item{x, y}{vectors of quantiles; alternativelly x may be a two-column
+matrix (or data.frame) and y may be omitted.}
 
 \item{a, b, c}{parameters.}
 
@@ -48,6 +49,9 @@ Biometrika, 51(1-2), 241-287.
 
 Kawamura, K. (1984). Direct calculation of maximum likelihood estimator for the bivariate
 Poisson distribution. Kodai mathematical journal, 7(2), 211-221.
+}
+\seealso{
+\code{\link[stats]{Poisson}}
 }
 \keyword{distribution}
 

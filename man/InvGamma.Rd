@@ -11,6 +11,8 @@ dinvgamma(x, alpha, beta = 1, log = FALSE)
 
 pinvgamma(x, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE)
 
+pinvgamma(x, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE)
+
 rinvgamma(n, alpha, beta = 1)
 }
 \arguments{
@@ -47,6 +49,17 @@ F(x) = \frac{\gamma(\alpha, \frac{1}{\beta x})}{\Gamma(\alpha)}
 F(x) = \frac{\gamma(\alpha, 1/(\beta*x))}{\Gamma(\alpha)}
 }
 }
+\examples{
+
+x <- rinvgamma(1e5, 20, 3)
+xx <- seq(0, 1, by = 0.001)
+hist(x, 100, freq = FALSE)
+lines(xx, dinvgamma(xx, 20, 3), col = "red")
+hist(pinvgamma(x, 20, 3))
+plot(ecdf(x))
+lines(xx, pinvgamma(xx, 20, 3), col = "red", lwd = 2) 
+
+}
 \references{
 Witkovsky, V. (2001). Computing the distribution of a linear
 combination of inverted gamma variables. Kybernetika 37(1), 79-90.
@@ -55,7 +68,7 @@ Leemis, L.M. and McQueston, L.T. (2008). Univariate Distribution
 Relationships. American Statistician 62(1): 45-53.
 }
 \seealso{
-\code{\link{GammaDist}}
+\code{\link[stats]{GammaDist}}
 }
 \keyword{distribution}
 

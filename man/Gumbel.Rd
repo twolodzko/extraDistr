@@ -59,6 +59,17 @@ F^-1(p) = \mu - \sigma * log(-log(p))
 
 where \eqn{ z = \frac{x-\mu}{\sigma} }{ z = (x-\mu)/\sigma }.
 }
+\examples{
+
+x <- rgumbel(1e5, 5, 2)
+xx <- seq(0, 1000, by = 0.1)
+hist(x, 100, freq = FALSE)
+lines(xx, dgumbel(xx, 5, 2), col = "red")
+hist(pgumbel(x, 5, 2))
+plot(ecdf(x))
+lines(xx, pgumbel(xx, 5, 2), col = "red", lwd = 2)
+
+}
 \references{
 Bury, K. (1999). Statistical Distributions in Engineering.
 Cambridge University Press.

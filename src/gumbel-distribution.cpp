@@ -20,23 +20,29 @@ using namespace Rcpp;
  */
 
 double pdf_gumbel(double x, double mu, double sigma) {
-  if (sigma <= 0)
+  if (sigma <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   double z = (x-mu)/sigma;
-  return 1/sigma * std::exp(-(z+std::exp(-z)));
+  return 1/sigma * exp(-(z+exp(-z)));
 }
 
 double cdf_gumbel(double x, double mu, double sigma) {
-  if (sigma <= 0)
+  if (sigma <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   double z = (x-mu)/sigma;
-  return std::exp(-std::exp(-z));
+  return exp(-exp(-z));
 }
 
 double invcdf_gumbel(double p, double mu, double sigma) {
-  if (sigma <= 0 || p < 0 || p > 1)
+  if (sigma <= 0 || p < 0 || p > 1) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  return mu - sigma * std::log(-std::log(p));
+  }
+  return mu - sigma * log(-log(p));
 }
 
 
@@ -57,7 +63,7 @@ NumericVector cpp_dgumbel(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
 
   return p;
 }
@@ -84,7 +90,7 @@ NumericVector cpp_pgumbel(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
 
   return p;
 }
@@ -103,7 +109,7 @@ NumericVector cpp_qgumbel(NumericVector p,
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)

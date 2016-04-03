@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include "shared.h"
 using namespace Rcpp;
 
 
@@ -17,6 +18,54 @@ using namespace Rcpp;
 */
 
 
+double pdf_lgser(double x, double theta) {
+  if (theta <= 0 || theta >= 1) {
+    Rcpp::warning("NaNs produced");
+    return NAN;
+  }
+  if (x < 1 || !isInteger(x))
+    return 0;
+  double a = -1/log(1-theta);
+  return a * pow(theta, x) / x;
+}
+
+
+double cdf_lgser(double x, double theta) {
+  if (theta <= 0 || theta >= 1) {
+    Rcpp::warning("NaNs produced");
+    return NAN;
+  }
+  if (x < 1)
+    return 0;
+  
+  double a = -1/log(1-theta);
+  double b = 0;
+  
+  for (int k = 1; k < x+1; k++)
+    b += pow(theta, k) / k;
+  
+  return a * b;
+}
+
+
+double invcdf_lgser(double p, double theta) {
+  if (theta <= 0 || theta >= 1) {
+    Rcpp::warning("NaNs produced");
+    return NAN;
+  }
+  
+  double pk = -theta/log(1-theta);
+  int k = 1;
+  
+  while (p > pk) {
+    p -= pk;
+    pk *= theta * k/(k+1);
+    k++;
+  }
+  return k;
+}
+
+
 // [[Rcpp::export]]
 NumericVector cpp_dlgser(NumericVector x,
                          NumericVector theta,
@@ -25,26 +74,14 @@ NumericVector cpp_dlgser(NumericVector x,
   int n = x.length();
   int nt = theta.length();
   int Nmax = std::max(n, nt);
-  NumericVector p(Nmax), a(nt);
+  NumericVector p(Nmax);
 
-  for (int j = 0; j < nt; j++)
-    a[j] = -1/std::log(1-theta[j]);
-
-  for (int i = 0; i < Nmax; i++) {
-    if (std::floor(x[i % n]) != x[i % n]) {
-      p[i] = 0;
-    } else if (theta[i % nt] <= 0 || theta[i % nt] >= 1) {
-      p[i] = NAN;
-    } else if (x[i % n] >= 1) {
-      p[i] = a[i % nt] * std::pow(theta[i % nt], x[i % n]) / x[i % n];
-    } else {
-      p[i] = 0;
-    }
-  }
-
+  for (int i = 0; i < Nmax; i++)
+    p[i] = pdf_lgser(x[i % n], theta[i % nt]);
+ 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
 
   return p;
 }
@@ -58,24 +95,10 @@ NumericVector cpp_plgser(NumericVector x,
   int n = x.length();
   int nt = theta.length();
   int Nmax = std::max(n, nt);
-  NumericVector p(Nmax), a(nt);
-  double b;
+  NumericVector p(Nmax);
 
-  for (int j = 0; j < nt; j++)
-    a[j] = -1/std::log(1-theta[j]);
-
-  for (int i = 0; i < Nmax; i++) {
-    if (theta[i % nt] <= 0 || theta[i % nt] >= 1) {
-      p[i] = NAN;
-    } else if (x[i % n] >= 1) {
-      b = 0;
-      for (int k = 1; k < x[i % n]+1; k++)
-        b += std::pow(theta[i % nt], k) / k;
-      p[i] = a[i % nt] * b;
-    } else {
-      p[i] = 0;
-    }
-  }
+  for (int i = 0; i < Nmax; i++)
+    p[i] = cdf_lgser(x[i % n], theta[i % nt]);
 
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
@@ -83,9 +106,34 @@ NumericVector cpp_plgser(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
 
   return p;
+}
+
+
+// [[Rcpp::export]]
+NumericVector cpp_qlgser(NumericVector p,
+                         NumericVector theta,
+                         bool lower_tail = true, bool log_prob = false) {
+  
+  int n = p.length();
+  int nt = theta.length();
+  int Nmax = std::max(n, nt);
+  NumericVector x(Nmax);
+  
+  if (log_prob)
+    for (int i = 0; i < n; i++)
+      p[i] = exp(p[i]);
+  
+  if (!lower_tail)
+    for (int i = 0; i < n; i++)
+      p[i] = 1-p[i];
+  
+  for (int i = 0; i < Nmax; i++)
+    x[i] = invcdf_lgser(p[i % n], theta[i % nt]);
+  
+  return x;
 }
 
 
@@ -94,28 +142,11 @@ NumericVector cpp_rlgser(int n,
                          NumericVector theta) {
 
   int nt = theta.length();
-  NumericVector x(n), a(nt);
-  double pk, k, u;
-
-  for (int j = 0; j < nt; j++)
-    a[j] = -theta[j  % nt] / std::log(1-theta[j]);
-
-  pk = a[0];
+  NumericVector x(n);
 
   for (int i = 0; i < n; i++) {
-    if (theta[i % nt] <= 0 || theta[i % nt] >= 1) {
-      x[i] = NAN;
-    } else {
-      u = R::runif(0, 1);
-      k = 1;
-      while (u > pk) {
-        u -= pk;
-        pk = pk * theta[i % nt] * k/(k+1);
-        k++;
-      }
-      x[i] = k;
-      pk = a[i % nt]; 
-    }
+    double u = R::runif(0, 1);
+    x[i] = invcdf_lgser(u, theta[i % nt]);
   }
 
   return x;

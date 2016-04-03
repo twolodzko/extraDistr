@@ -3,10 +3,13 @@
 \name{GammaPoiss}
 \alias{GammaPoiss}
 \alias{dgpois}
+\alias{pgpois}
 \alias{rgpois}
 \title{Gamma-Poisson distribution}
 \usage{
 dgpois(x, shape, rate, scale = 1/rate, log = FALSE)
+
+pgpois(x, shape, rate, scale = 1/rate, lower.tail = TRUE, log.p = FALSE)
 
 rgpois(n, shape, rate, scale = 1/rate)
 }
@@ -18,7 +21,10 @@ scale strictly.}
 
 \item{rate}{an alternative way to specify the scale.}
 
-\item{log}{logical; if TRUE, probabilities p are given as log(p).}
+\item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
+
+\item{lower.tail}{logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
+otherwise, \eqn{P[X > x]}.}
 
 \item{n}{number of observations. If \code{length(n) > 1},
 the length is taken to be the number required.}
@@ -43,8 +49,19 @@ f(x) = \Gamma(\alpha+x) / (x!*\Gamma(\alpha)) * p^x * (1-p)^\alpha
 
 where \eqn{p = \frac{\beta}{1+\beta}}{p = \beta/(1+\beta)}.
 }
+\examples{
+
+x <- rgpois(1e5, 7, 0.002)
+xx <- seq(0, 12000, by = 1)
+hist(x, 100, freq = FALSE)
+lines(xx, dgpois(xx, 7, 0.002), col = "red")
+hist(pgpois(x, 7, 0.002))
+plot(ecdf(x))
+lines(xx, pgpois(xx, 7, 0.002), col = "red", lwd = 2)
+
+}
 \seealso{
-\code{\link{Gamma}}, \code{\link{Poisson}}
+\code{\link[stats]{Gamma}}, \code{\link[stats]{Poisson}}
 }
 \keyword{distribution}
 

@@ -3,10 +3,13 @@
 \name{BetaNegBinom}
 \alias{BetaNegBinom}
 \alias{dbnbinom}
+\alias{pbnbinom}
 \alias{rbnbinom}
 \title{Beta-Negative Binomial distribution}
 \usage{
 dbnbinom(x, size, alpha = 1, beta = 1, log = FALSE)
+
+pbnbinom(x, size, alpha = 1, beta = 1, lower.tail = TRUE, log.p = FALSE)
 
 rbnbinom(n, size, alpha = 1, beta = 1)
 }
@@ -15,7 +18,10 @@ rbnbinom(n, size, alpha = 1, beta = 1)
 
 \item{size, alpha, beta}{parameters.}
 
-\item{log}{logical; if TRUE, probabilities p are given as log(p).}
+\item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
+
+\item{lower.tail}{logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
+otherwise, \eqn{P[X > x]}.}
 
 \item{n}{number of observations. If \code{length(n) > 1},
 the length is taken to be the number required.}
@@ -33,8 +39,19 @@ f(x) = \frac{\Gamma(r+k)}{k! \Gamma(r)}
 f(x) = gamma(r+k)/(k! gamma(r)) * beta(alpha+r, beta+k)/beta(alpha, beta)
 }
 }
+\examples{
+
+x <- rbnbinom(1e5, 1000, 5, 13)
+xx <- 0:1e5
+hist(x, 100, freq = FALSE)
+lines(xx-0.5, dbnbinom(xx, 1000, 5, 13), col = "red")
+hist(pbnbinom(x, 1000, 5, 13))
+plot(ecdf(x))
+lines(xx, pbnbinom(xx, 1000, 5, 13), col = "red", lwd = 2)
+
+}
 \seealso{
-\code{\link{Beta}}, \code{\link{NegBinomial}}
+\code{\link[stats]{Beta}}, \code{\link[stats]{NegBinomial}}
 }
 \keyword{distribution}
 

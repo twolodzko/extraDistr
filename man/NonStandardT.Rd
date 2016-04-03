@@ -39,5 +39,19 @@ the length is taken to be the number required.}
 Probability mass function, distribution function and random generation
 for non-standard t-distribution.
 }
+\examples{
+
+x <- rnst(1e5, 1000, 5, 13)
+xx <- seq(-60, 60, by = 0.01)
+hist(x, 100, freq = FALSE)
+lines(xx-0.5, dnst(xx, 1000, 5, 13), col = "red")
+hist(pnst(x, 1000, 5, 13))
+plot(ecdf(x))
+lines(xx, pnst(xx, 1000, 5, 13), col = "red", lwd = 2)
+
+}
+\seealso{
+\code{\link[stats]{TDist}}
+}
 \keyword{distribution}
 

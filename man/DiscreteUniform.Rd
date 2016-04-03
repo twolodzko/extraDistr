@@ -35,5 +35,16 @@ the length is taken to be the number required.}
 Probability mass function, distribution function, quantile function and random generation
 for the Bernoulli distribution.
 }
+\examples{
+
+x <- sample.int(10, 1e5, replace = TRUE) 
+xx <- -1:11
+plot(prop.table(table(x)), type = "h")
+lines(xx, ddunif(xx, 1, 10), col = "red")
+hist(pdunif(x, 1, 10))
+plot(ecdf(x))
+lines(xx, pdunif(xx, 1, 10), col = "red")
+
+}
 \keyword{distribution}
 

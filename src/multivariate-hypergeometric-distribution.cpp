@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include "shared.h"
 using namespace Rcpp;
 
 
@@ -23,19 +24,26 @@ NumericVector cpp_dmvhyper(NumericMatrix x,
                            bool log_prob = false) {
   
   int nx = x.nrow();
-  int nn = n.nrow();
+  int nr = n.nrow();
   int m = n.ncol();
   int nk = k.length();
-  int Nmax = Rcpp::max(IntegerVector::create(nx, nn, nk));
+  int Nmax = Rcpp::max(IntegerVector::create(nx, nr, nk));
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++) {
     
+    bool wrong_n = false;
     int N = 0;
-    for (int j = 0; j < m; j++)
-      N += n(i % nn, j);
+    for (int j = 0; j < m; j++) {
+      N += n(i % nr, j);
+      if (floor(n(i % nr, j)) != n(i % nr, j)) {
+        wrong_n = true;
+        break;
+      }
+    }
     
-    if (k[i % nk] > N) {
+    if (k[i % nk] > N || floor(k[i % nk]) != k[i % nk] || wrong_n) {
+      Rcpp::warning("NaNs produced");
       p[i] = NAN;
     } else {
       
@@ -45,16 +53,16 @@ NumericVector cpp_dmvhyper(NumericMatrix x,
       bool wrong_x = false;
       
       for (int j = 0; j < m; j++) {
-        if (x(i % nx, j) > n(i % nn, j) || x(i % nx, j) < 0 ||
-            std::floor(x(i % nx, j)) != x(i % nx, j)) {
+        if (x(i % nx, j) > n(i % nr, j) || x(i % nx, j) < 0 || !isInteger(x(i % nx, j))) {
           wrong_x = true;
-          break;
+        } else {
+          lncx_prod += R::lchoose(n(i % nr, j), x(i % nx, j));
+          row_sum += x(i % nx, j);
         }
-        lncx_prod += R::lchoose(n(i % nn, j), x(i % nx, j));
-        row_sum += x(i % nx, j);
       }
       
       if (N < k[i % nk]) {
+        Rcpp::warning("NaNs produced");
         p[i] = NAN;
       } else if (wrong_x || row_sum != k[i % nk]) {
         p[i] = -INFINITY;
@@ -66,44 +74,61 @@ NumericVector cpp_dmvhyper(NumericMatrix x,
   
   if (!log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
   
   return p;
 }
 
 
 // [[Rcpp::export]]
-IntegerMatrix cpp_rmvhyper(int nn, NumericMatrix n, NumericVector k) {
+NumericMatrix cpp_rmvhyper(int nn, NumericMatrix n, NumericVector k) {
   
   int nr = n.nrow();
   int m = n.ncol();
   int nk = k.length();
-  IntegerMatrix x(nn, m);
+  NumericMatrix x(nn, m);
   IntegerVector n_otr(m);
 
   for (int i = 0; i < nn; i++) {
     
+    bool wrong_n = false;
     n_otr[0] = 0;
-    for (int j = 1; j < m; j++)
+    
+    for (int j = 1; j < m; j++) {
       n_otr[0] += n(i % nr, j);
-    
-    for (int j = 1; j < m; j++)
-      n_otr[j] = n_otr[j-1] - n(i % nr, j);
-    
-    int k_left = k[i % nk];
-    x(i, 0) = R::rhyper(n(i % nr, 0), n_otr[0], k_left);
-    k_left -= x(i, 0);
-
-    if (m > 2) {
-      for (int j = 1; j < m-1; j++) {
-        x(i, j) = R::rhyper(n(i % nr, j), n_otr[j], k_left);
-        k_left -= x(i, j);
+      if (floor(n(i % nr, j)) != n(i % nr, j)) {
+        wrong_n = true;
+        break;
       }
     }
-
-    x(i, m-1) = k_left;
+    
+    if (wrong_n || floor(k[i % nk]) != k[i % nk]) {
+      
+      Rcpp::warning("NaNs produced");
+      for (int j = 0; j < m; j++)
+        x(i, j) = NAN;
+    
+    } else {
+      
+      for (int j = 1; j < m; j++)
+        n_otr[j] = n_otr[j-1] - n(i % nr, j);
+      
+      int k_left = k[i % nk];
+      x(i, 0) = R::rhyper(n(i % nr, 0), n_otr[0], k_left);
+      k_left -= x(i, 0);
+      
+      if (m > 2) {
+        for (int j = 1; j < m-1; j++) {
+          x(i, j) = R::rhyper(n(i % nr, j), n_otr[j], k_left);
+          k_left -= x(i, j);
+        }
+      }
+      
+      x(i, m-1) = k_left;
+      
+    }
   }
-  
+
   return x;
 }
 

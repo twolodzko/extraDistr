@@ -20,9 +20,9 @@ using namespace Rcpp;
 
 double pdf_power(double x, double alpha, double beta) {
   if (x < 0)
-    return NAN;
+    return 0;
   if (x > 0 && x < alpha) {
-    return beta * std::pow(x, beta-1) / std::pow(alpha, beta);
+    return beta * pow(x, beta-1) / pow(alpha, beta);
   } else {
     return 0;
   }
@@ -30,9 +30,9 @@ double pdf_power(double x, double alpha, double beta) {
 
 double cdf_power(double x, double alpha, double beta) {
   if (x < 0)
-    return NAN;
+    return 0;
   if (x > 0 && x < alpha) {
-    return std::pow(x, beta) / std::pow(alpha, beta);
+    return pow(x, beta) / pow(alpha, beta);
   } else if (x >= alpha) {
     return 1;
   } else {
@@ -41,16 +41,18 @@ double cdf_power(double x, double alpha, double beta) {
 }
 
 double invcdf_power(double p, double alpha, double beta) {
-  if (p < 0 || p > 1)
+  if (p < 0 || p > 1) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  return alpha * std::pow(p, 1/beta);
+  }
+  return alpha * pow(p, 1/beta);
 }
 
 double logpdf_power(double x, double alpha, double beta) {
   if (x < 0)
-    return NAN;
+    return -INFINITY;
   if (x > 0 && x < alpha) {
-    return std::log(beta) + std::log(x)*(beta-1) - std::log(alpha)*beta;
+    return log(beta) + log(x)*(beta-1) - log(alpha)*beta;
   } else {
     return -INFINITY;
   }
@@ -58,9 +60,9 @@ double logpdf_power(double x, double alpha, double beta) {
 
 double logcdf_power(double x, double alpha, double beta) {
   if (x < 0)
-    return NAN;
+    return -INFINITY;
   if (x > 0 && x < alpha) {
-    return std::log(x)*beta - std::log(alpha)*beta;
+    return log(x)*beta - log(alpha)*beta;
   } else if (x >= alpha) {
     return 0;
   } else {
@@ -85,7 +87,7 @@ NumericVector cpp_dpower(NumericVector x,
 
   if (!log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
 
   return p;
 }
@@ -96,7 +98,6 @@ NumericVector cpp_ppower(NumericVector x,
                          NumericVector alpha, NumericVector beta,
                          bool lower_tail = true, bool log_prob = false) {
 
-  double z;
   int n  = x.length();
   int na = alpha.length();
   int nb = beta.length();
@@ -112,7 +113,7 @@ NumericVector cpp_ppower(NumericVector x,
 
   if (!log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
 
   return p;
 }
@@ -131,7 +132,7 @@ NumericVector cpp_qpower(NumericVector p,
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)

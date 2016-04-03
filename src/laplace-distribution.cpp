@@ -22,36 +22,44 @@ using namespace Rcpp;
  */
 
 double pdf_laplace(double x, double mu, double sigma) {
-  if (sigma <= 0)
+  if (sigma <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   double z = std::abs(x-mu)/sigma;
-  return 1/(2*sigma) * std::exp(-z);
+  return 1/(2*sigma) * exp(-z);
 }
 
 double cdf_laplace(double x, double mu, double sigma) {
-  if (sigma <= 0)
+  if (sigma <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   double z = (x-mu)/sigma;
   if (x < mu)
-    return std::exp(z)/2;
+    return exp(z)/2;
   else
-    return 1 - std::exp(-z)/2;
+    return 1 - exp(-z)/2;
 }
 
 double invcdf_laplace(double p, double mu, double sigma) {
-  if (sigma <= 0 || p < 0 || p > 1)
+  if (sigma <= 0 || p < 0 || p > 1) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   if (p < 0.5)
-    return mu + sigma * std::log(2*p);
+    return mu + sigma * log(2*p);
   else
-    return mu - sigma * std::log(2*(1-p));
+    return mu - sigma * log(2*(1-p));
 }
 
 double rng_laplace(double mu, double sigma) {
-  if (sigma <= 0)
+  if (sigma <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   double u = R::runif(-0.5, 0.5);
-  return mu + sigma * R::sign(u) * std::log(1 - 2*std::abs(u));
+  return mu + sigma * R::sign(u) * log(1 - 2*std::abs(u));
 }
 
 
@@ -65,14 +73,13 @@ NumericVector cpp_dlaplace(NumericVector x,
   int ns = sigma.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
   NumericVector p(Nmax);
-  double z;
 
   for (int i = 0; i < Nmax; i++)
     p[i] = pdf_laplace(x[i % n], mu[i % nm], sigma[i % ns]);
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
 
   return p;
 }
@@ -88,7 +95,6 @@ NumericVector cpp_plaplace(NumericVector x,
   int ns = sigma.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
   NumericVector p(Nmax);
-  double z;
 
   for (int i = 0; i < Nmax; i++)
     p[i] = cdf_laplace(x[i % n], mu[i % nm], sigma[i % ns]);
@@ -99,7 +105,7 @@ NumericVector cpp_plaplace(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
 
   return p;
 }
@@ -118,7 +124,7 @@ NumericVector cpp_qlaplace(NumericVector p,
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)

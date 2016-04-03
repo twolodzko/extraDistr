@@ -21,12 +21,19 @@
 #' \deqn{
 #' f(x) = e^{-(\mu_1\!+\!\mu_2)} \left(\frac{\mu_1}{\mu_2}\right)^{k/2}\!\!I_{k}(2\sqrt{\mu_1\mu_2})
 #' }{
-#' f(x) = exp(-(mu1+mu2)) * (mu1/mu2)^(x/2) * besselI(2*sqrt(mu1*mu2), x)
+#' f(x) = exp(-(\mu1+\mu2)) * (\mu1/\mu2)^(x/2) * besselI(2*sqrt(\mu1*\mu2), x)
 #' }
 #' 
 #' @references
 #' Karlis, D., & Ntzoufras, I. (2006). Bayesian analysis of the differences of count data.
 #' Statistics in medicine, 25(11), 1885-1905.
+#' 
+#' @examples 
+#' 
+#' x <- rskellam(1e5, 5, 13)
+#' xx <- -40:40
+#' plot(prop.table(table(x)), type = "h")
+#' lines(xx, dskellam(xx, 5, 13), col = "red")
 #'
 #' @name Skellam
 #' @aliases Skellam

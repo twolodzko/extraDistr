@@ -1,5 +1,10 @@
-#ifndef SHARED_H
-#define SHARED_H
+#ifndef EDCPP_SHARED_H
+#define EDCPP_SHARED_H
+
+// Basic functions
+
+bool tol_equal(double x, double y);
+bool isInteger(double x);
 
 // Standard normal
 

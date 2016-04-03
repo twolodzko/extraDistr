@@ -38,7 +38,17 @@
 #' Leemis, L.M. and McQueston, L.T. (2008). Univariate Distribution
 #' Relationships. American Statistician 62(1): 45-53.
 #'
-#' @seealso \code{\link{GammaDist}}
+#' @seealso \code{\link[stats]{GammaDist}}
+#' 
+#' @examples 
+#' 
+#' x <- rinvgamma(1e5, 20, 3)
+#' xx <- seq(0, 1, by = 0.001)
+#' hist(x, 100, freq = FALSE)
+#' lines(xx, dinvgamma(xx, 20, 3), col = "red")
+#' hist(pinvgamma(x, 20, 3))
+#' plot(ecdf(x))
+#' lines(xx, pinvgamma(xx, 20, 3), col = "red", lwd = 2) 
 #'
 #' @name InvGamma
 #' @aliases InvGamma
@@ -57,6 +67,14 @@ dinvgamma <- function(x, alpha, beta = 1, log = FALSE) {
 
 pinvgamma <- function(x, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE) {
   pgamma(1/x, alpha, beta, lower.tail = !lower.tail, log.p = log.p)
+}
+
+
+#' @rdname InvGamma
+#' @export
+
+pinvgamma <- function(x, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE) {
+  1/qgamma(p, alpha, beta, lower.tail = !lower.tail, log.p = log.p)
 }
 
 

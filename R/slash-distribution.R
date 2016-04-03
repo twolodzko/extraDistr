@@ -38,6 +38,16 @@
 #' F(x) = [if x != 0:] \Phi(x) - [\phi(0)-\phi(x)]/x [else:] 1/2
 #' }
 #' 
+#' @examples 
+#' 
+#' x <- rslash(1e5, 5, 3)
+#' xx <- seq(-100, 100, by = 0.001)
+#' hist(x, 1e5, freq = FALSE, xlim = c(-100, 100))
+#' lines(xx, dslash(xx, 5, 3), col = "red")
+#' hist(pslash(x, 5, 3))
+#' plot(ecdf(x), xlim = c(-100, 100))
+#' lines(xx, pslash(xx, 5, 3), col = "red", lwd = 2)
+#' 
 #' @name Slash
 #' @aliases Slash
 #' @aliases dslash

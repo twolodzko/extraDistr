@@ -4,7 +4,8 @@
 #'
 #' Probability mass function and random generation for the bivariate Poisson distribution.
 #'
-#' @param x,y	  vectors of quantiles.
+#' @param x,y	  vectors of quantiles; alternativelly x may be a two-column
+#'              matrix (or data.frame) and y may be omitted.
 #' @param n	    number of observations. If \code{length(n) > 1},
 #'              the length is taken to be the number required.
 #' @param a,b,c parameters.
@@ -41,6 +42,8 @@
 #' Kawamura, K. (1984). Direct calculation of maximum likelihood estimator for the bivariate
 #' Poisson distribution. Kodai mathematical journal, 7(2), 211-221.
 #'
+#' @seealso \code{\link[stats]{Poisson}}
+#'
 #' @name BivPoiss
 #' @aliases BivPoiss
 #' @aliases dbvpois
@@ -48,7 +51,15 @@
 #'
 #' @export
 
-dbvpois <- function(x, y, a, b, c, log = FALSE) {
+dbvpois <- function(x, y = NULL, a, b, c, log = FALSE) {
+  if (is.null(y)) {
+    if ((is.matrix(x) || is.data.frame(x)) && ncol(x) == 2) {
+      y <- x[, 2]
+      x <- x[, 1]
+    } else {
+      stop("y is not provided while x is not a two-column matrix")
+    }
+  }
   .Call('extraDistr_cpp_dbpois', PACKAGE = 'extraDistr', x, y, a, b, c, log)
 }
 

@@ -16,6 +16,18 @@
 #' @param lower.tail	    logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
 #'                        otherwise, \eqn{P[X > x]}.
 #' 
+#' @seealso \code{\link[stats]{TDist}}
+#' 
+#' @examples 
+#' 
+#' x <- rnst(1e5, 1000, 5, 13)
+#' xx <- seq(-60, 60, by = 0.01)
+#' hist(x, 100, freq = FALSE)
+#' lines(xx-0.5, dnst(xx, 1000, 5, 13), col = "red")
+#' hist(pnst(x, 1000, 5, 13))
+#' plot(ecdf(x))
+#' lines(xx, pnst(xx, 1000, 5, 13), col = "red", lwd = 2)
+#' 
 #' @name NonStandardT
 #' @aliases NonStandardT
 #' @aliases dnst

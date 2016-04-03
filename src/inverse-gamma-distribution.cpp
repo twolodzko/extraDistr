@@ -21,10 +21,12 @@ using namespace Rcpp;
 */
 
 double pdf_invgamma(double x, double alpha, double beta) {
-  if (alpha <= 0 || beta <= 0)
+  if (alpha <= 0 || beta <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   if (x > 0)
-    return (std::pow(x, -alpha-1) * std::exp(-1/(beta*x))) / (R::gammafn(alpha) * std::pow(beta, alpha));
+    return (pow(x, -alpha-1) * exp(-1/(beta*x))) / (R::gammafn(alpha) * pow(beta, alpha));
   else
     return 0;
 }
@@ -46,7 +48,7 @@ NumericVector cpp_dinvgamma(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
 
   return p;
 }

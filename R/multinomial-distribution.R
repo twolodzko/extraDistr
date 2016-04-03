@@ -5,11 +5,11 @@
 #' Probability mass function and random generation
 #' for the multinomial distribution.
 #'
-#' @param x 	 \eqn{m}-column matrix of quantiles.
+#' @param x 	 \eqn{k}-column matrix of quantiles.
 #' @param n   number of observations. If \code{length(n) > 1},
 #'             the length is taken to be the number required.
 #' @param size numeric vector; number of trials (zero or more).
-#' @param prob k-column numeric matrix; probability of success on each trial.
+#' @param prob \eqn{k}-column numeric matrix; probability of success on each trial.
 #' @param log  logical; if TRUE, probabilities p are given as log(p).
 #'
 #' @details
@@ -24,7 +24,19 @@
 #' @references 
 #' Gentle, J.E. (2006). Random number generation and Monte Carlo methods. Springer.
 #'
-#' @seealso \code{\link{Binomial}}
+#' @seealso \code{\link[stats]{Binomial}}, \code{\link[stats]{Multinomial}}
+#' 
+#' @examples 
+#' 
+#' # Generating 10 random draws from multinomial distribution
+#' # parametrized using a vector
+#' 
+#' (x <- rmnom(10, 3, c(1/3, 1/3, 1/3)))
+#' 
+#' # Results are consistent with dmultinom() from stats:
+#' 
+#' all.equal(dmultinom(x[1,], 3, c(1/3, 1/3, 1/3)),
+#'           dmnom(x[1, , drop = FALSE], 3, c(1/3, 1/3, 1/3)))
 #'
 #' @name Multinomial
 #' @aliases Multinomial
@@ -34,8 +46,16 @@
 #' @export
 
 dmnom <- function(x, size, prob, log = FALSE) {
-  if (!is.matrix(prob))
+  if (is.vector(prob))
     prob <- matrix(prob, nrow = 1)
+  else if (!is.matrix(prob))
+    prob <- as.matrix(prob)
+  
+  if (is.vector(x))
+    x <- matrix(x, nrow = 1)
+  else if (!is.matrix(x))
+    x <- as.matrix(x)
+  
   .Call('extraDistr_cpp_dmnom', PACKAGE = 'extraDistr', x, size, prob, log)
 }
 
@@ -46,8 +66,12 @@ dmnom <- function(x, size, prob, log = FALSE) {
 rmnom <- function(n, size, prob) {
   if (length(n) > 1)
     n <- length(n)
-  if (!is.matrix(prob))
+  
+  if (is.vector(prob))
     prob <- matrix(prob, nrow = 1)
+  else if (!is.matrix(prob))
+    prob <- as.matrix(prob)
+  
   .Call('extraDistr_cpp_rmnom', PACKAGE = 'extraDistr', n, size, prob)
 }
 

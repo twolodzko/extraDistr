@@ -4,22 +4,35 @@ using namespace Rcpp;
 
 double pmf_bpois(double x, double y, double a, double b, double c) {
   
-  if (std::floor(x) != x || std::floor(y) != y)
+  if (a < 0 || b < 0 || c < 0) {
+    Rcpp::warning("NaNs produced");
+    return NAN;
+  }
+  
+  if (!isInteger(x))
     return 0;
   
-  if (a < 0 || b < 0 || c < 0)
-    return NAN;
+  if (floor(y) != y) {
+    char msg[55];
+    int msg_len = sprintf(msg, "non-integer y = %f", y);
+    if (msg_len >= 55 - 1 || msg_len < 0)
+      Rcpp::warning("non-integer y");
+    else
+      Rcpp::warning(msg);
+    Rcpp::warning(msg);
+    return 0;
+  }
   
-  double tmp = std::exp(-(a+b+c)); 
-  tmp *= (std::pow(a, x) / factorial(x)) * (std::pow(b, y) / factorial(y));
+  double tmp = exp(-(a+b+c)); 
+  tmp *= (pow(a, x) / factorial(x)) * (pow(b, y) / factorial(y));
   double xy = 0;
   
   if (x < y) {
     for (int k = 0; k < x; k++)
-      xy += R::choose(x, k) * R::choose(y, k) * factorial(k) * std::pow(c/(a*b), k);
+      xy += R::choose(x, k) * R::choose(y, k) * factorial(k) * pow(c/(a*b), k);
   } else {
     for (int k = 0; k < y; k++)
-      xy += R::choose(x, k) * R::choose(y, k) * factorial(k) * std::pow(c/(a*b), k);
+      xy += R::choose(x, k) * R::choose(y, k) * factorial(k) * pow(c/(a*b), k);
   }
   
   return tmp * xy;
@@ -28,25 +41,34 @@ double pmf_bpois(double x, double y, double a, double b, double c) {
 
 double logpmf_bpois(double x, double y, double a, double b, double c) {
   
-  if (std::floor(x) != x || std::floor(y) != y)
+  if (a < 0 || b < 0 || c < 0) {
+    Rcpp::warning("NaNs produced");
+    return NAN;
+  }
+  
+  if (!isInteger(x))
     return -INFINITY;
   
-  if (a < 0 || b < 0 || c < 0)
-    return NAN;
+  if (floor(y) != y) {
+    char msg[55];
+    sprintf(msg, "non-integer y = %f", x);
+    Rcpp::warning(msg);
+    return -INFINITY;
+  }
   
   double tmp = -(a+b+c); 
-  tmp += std::log(std::pow(x, a) / lfactorial(x)) + std::log(pow(y, b) / lfactorial(y));
+  tmp += log(pow(x, a) / lfactorial(x)) + log(pow(y, b) / lfactorial(y));
   double xy = 0;
   
   if (x < y) {
     for (int k = 0; k < x; k++)
-      xy += R::choose(x, k) * R::choose(y, k) * lfactorial(k) * std::pow(c/(a*b), k);
+      xy += R::choose(x, k) * R::choose(y, k) * lfactorial(k) * pow(c/(a*b), k);
   } else {
     for (int k = 0; k < y; k++)
-      xy += R::choose(x, k) * R::choose(y, k) * lfactorial(k) * std::pow(c/(a*b), k);
+      xy += R::choose(x, k) * R::choose(y, k) * lfactorial(k) * pow(c/(a*b), k);
   }
   
-  return tmp + std::log(xy);
+  return tmp + log(xy);
 }
 
 
@@ -69,7 +91,7 @@ NumericVector cpp_dbpois(NumericVector x, NumericVector y,
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
   
   return p;
 }

@@ -18,42 +18,52 @@ using namespace Rcpp;
  */
 
 double pdf_pareto(double x, double a, double b) {
-  if (a <= 0 || b <= 0)
+  if (a <= 0 || b <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   if (x >= b)
-    return a * std::pow(b, a) / std::pow(x, a+1);
+    return a * pow(b, a) / pow(x, a+1);
   else
     return 0;
 }
 
 double cdf_pareto(double x, double a, double b) {
-  if (a <= 0 || b <= 0)
+  if (a <= 0 || b <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   if (x >= b)
-    return 1 - std::pow(b/x, a);
+    return 1 - pow(b/x, a);
   else
     return 0;
 }
 
 double invcdf_pareto(double p, double a, double b) {
-  if (a <= 0 || b <= 0 || p < 0 || p > 1)
+  if (a <= 0 || b <= 0 || p < 0 || p > 1) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  return b / std::pow(1-p, 1/a);
+  }
+  return b / pow(1-p, 1/a);
 }
 
 double logpdf_pareto(double x, double a, double b) {
-  if (a <= 0 || b <= 0)
+  if (a <= 0 || b <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   if (x >= b)
-    return std::log(a) + std::log(b)*a - std::log(x)*(a+1);
+    return log(a) + log(b)*a - log(x)*(a+1);
   else
     return -INFINITY;
 }
 
 double invcdf_pareto2(double p, double a, double b) {
-  if (a <= 0 || b <= 0)
+  if (a <= 0 || b <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  return std::exp(std::log(b) - std::log(1-p)*(1/a));
+  }
+  return exp(log(b) - log(1-p)*(1/a));
 }
 
 
@@ -73,7 +83,7 @@ NumericVector cpp_dpareto(NumericVector x,
 
   if (!log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
 
   return p;
 }
@@ -99,7 +109,7 @@ NumericVector cpp_ppareto(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
 
   return p;
 }
@@ -118,7 +128,7 @@ NumericVector cpp_qpareto(NumericVector p,
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)

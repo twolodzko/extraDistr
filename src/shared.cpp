@@ -1,6 +1,25 @@
 #include <Rcpp.h>
+#include "const.h"
 using namespace Rcpp;
 
+// Basic functions
+
+bool tol_equal(double x, double y) {
+  return std::abs(x - y) <= MIN_DIFF_EPS;
+}
+
+bool isInteger(double x) {
+  if (floor(x) != x) {
+    char msg[55];
+    int msg_len = sprintf(msg, "non-integer x = %f", x);
+    if (msg_len >= 55 - 1 || msg_len < 0)
+      Rcpp::warning("non-integer x");
+    else
+      Rcpp::warning(msg);
+    return false;
+  }
+  return true;
+}
 
 // Standard normal
 
@@ -19,15 +38,15 @@ double InvPhi(double x) {
 // Error function
 
 double erf(double x) {
-  return 2 * Phi(x * std::sqrt(2)) - 1;
+  return 2 * Phi(x * sqrt(2)) - 1;
 }
 
 double erfc(double x) {
-  return 2 * R::pnorm(x * std::sqrt(2), 0, 1, false, false);
+  return 2 * R::pnorm(x * sqrt(2), 0, 1, false, false);
 }
 
 double inv_erf(double x) {
-  return InvPhi((x+1)/2) / std::sqrt(2);
+  return InvPhi((x+1)/2) / sqrt(2);
 }
 
 // Factorial
@@ -51,6 +70,17 @@ int rng_bernoulli(double p = 0.5) {
   else
     return 1;
 }
+ 
+
+//  // Multivariate gamma function
+//  
+// double lmvgammafn(double p, double a) {
+//   double prod_gamma = 0;
+//   for (int j = 1; j <= p; j++)
+//     prod_gamma += R::lgammafn(a+(1-j)/2);
+//   return M_PI * (p*(p-1)/4) + prod_gamma;
+// }
+//  
  
 // /*
 //  * Incomplete gamma function

@@ -62,6 +62,16 @@
 #' @references
 #' Ferrari, S., & Cribari-Neto, F. (2004). Beta regression for modelling rates and proportions.
 #' Journal of Applied Statistics, 31(7), 799-815.
+#' 
+#' @examples 
+#' 
+#' x <- rprop(1e5, 100, 0.33)
+#' xx <- seq(0, 1, by = 0.01)
+#' hist(x, 100, freq = FALSE)
+#' lines(xx, dprop(xx, 100, 0.33), col = "red")
+#' hist(pprop(x, 100, 0.33))
+#' plot(ecdf(x))
+#' lines(xx, pprop(xx, 100, 0.33), col = "red", lwd = 2)
 #'                        
 #' @name PropBeta
 #' @aliases PropBeta
@@ -70,29 +80,32 @@
 #'
 #' @export
 
-
 dprop <- function(x, size, mean, log = FALSE) {
-  dbeta(x, size*mean+1, size*(1-mean)+1, log = log)
+  .Call('extraDistr_cpp_dprop', PACKAGE = 'extraDistr', x, size, mean, log)
 }
+
 
 #' @rdname PropBeta
 #' @export
 
 pprop <- function(x, size, mean, lower.tail = TRUE, log.p = FALSE) {
-  pbeta(x, size*mean+1, size*(1-mean)+1, lower.tail = lower.tail, log.p = log.p)
+  .Call('extraDistr_cpp_pprop', PACKAGE = 'extraDistr', x, size, mean, lower.tail, log.p)
 }
+
 
 #' @rdname PropBeta
 #' @export
 
 qprop <- function(p, size, mean, lower.tail = TRUE, log.p = FALSE) {
-  qbeta(p, size*mean+1, size*(1-mean)+1, lower.tail = lower.tail, log.p = log.p)
+  .Call('extraDistr_cpp_qprop', PACKAGE = 'extraDistr', p, size, mean, lower.tail, log.p)
 }
+
 
 #' @rdname PropBeta
 #' @export
 
 rprop <- function(n, size, mean) {
-  rbeta(n, size*mean+1, size*(1-mean)+1)
+  if (length(n) > 1) n <- length(n)
+  .Call('extraDistr_cpp_rprop', PACKAGE = 'extraDistr', n, size, mean)
 }
 

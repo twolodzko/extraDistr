@@ -41,6 +41,16 @@
 #' Lenart, A. (2012). The Gompertz distribution and Maximum Likelihood Estimation
 #' of its parameters - a revision. MPIDR WORKING PAPER WP 2012-008.
 #' \url{http://www.demogr.mpg.de/papers/working/wp-2012-008.pdf}
+#' 
+#' @examples 
+#' 
+#' x <- rgompertz(1e5, 5, 2)
+#' xx <- seq(0, 1000, by = 0.1)
+#' hist(x, 100, freq = FALSE)
+#' lines(xx, dgompertz(xx, 5, 2), col = "red")
+#' hist(pgompertz(x, 5, 2))
+#' plot(ecdf(x))
+#' lines(xx, pgompertz(xx, 5, 2), col = "red", lwd = 2)
 #'
 #' @name Gompertz
 #' @aliases Gompertz

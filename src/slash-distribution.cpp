@@ -14,15 +14,19 @@ using namespace Rcpp;
 
 
 double pdf_slash(double x, double mu, double sigma) {
-  if (sigma <= 0)
+  if (sigma <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   double z = (x - mu)/sigma;
-  return ((phi(0) - phi(z))/std::pow(z, 2))/sigma;
+  return ((phi(0) - phi(z))/pow(z, 2))/sigma;
 }
 
 double cdf_slash(double x, double mu, double sigma) {
-  if (sigma <= 0)
+  if (sigma <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   double z = (x - mu)/sigma;
   if (z == 0)
     return 0.5;
@@ -31,8 +35,10 @@ double cdf_slash(double x, double mu, double sigma) {
 }
 
 double rng_slash(double mu, double sigma) {
-  if (sigma <= 0)
+  if (sigma <= 0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   double z = R::rnorm(0, 1);
   double u = R::runif(0, 1);
   return z/u*sigma + mu;
@@ -45,7 +51,6 @@ NumericVector cpp_dslash(NumericVector x,
                        NumericVector mu, NumericVector sigma,
                        bool log_prob = false) {
   
-  double z;
   int n  = x.length();
   int nm = mu.length();
   int ns = sigma.length();
@@ -57,7 +62,7 @@ NumericVector cpp_dslash(NumericVector x,
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
   
   return p;
 }
@@ -68,7 +73,6 @@ NumericVector cpp_pslash(NumericVector x,
                        NumericVector mu, NumericVector sigma,
                        bool lower_tail = true, bool log_prob = false) {
   
-  double z;
   int n  = x.length();
   int nm = mu.length();
   int ns = sigma.length();
@@ -84,7 +88,7 @@ NumericVector cpp_pslash(NumericVector x,
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
   
   return p;
 }

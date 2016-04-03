@@ -44,6 +44,16 @@
 #' @references
 #' Forbes, C., Evans, M. Hastings, N., & Peacock, B. (2011).
 #' Statistical Distributions. John Wiley & Sons.
+#' 
+#' @examples 
+#' 
+#' x <- rrayleigh(1e5, 13)
+#' xx <- seq(-100, 100, by = 0.001)
+#' hist(x, 100, freq = FALSE)
+#' lines(xx, drayleigh(xx, 13), col = "red")
+#' hist(prayleigh(x, 13)) 
+#' plot(ecdf(x))
+#' lines(xx, prayleigh(xx, 13), col = "red", lwd = 2) 
 #'
 #' @name Rayleigh
 #' @aliases Rayleigh

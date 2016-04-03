@@ -4,12 +4,15 @@
 \alias{LogSeries}
 \alias{dlgser}
 \alias{plgser}
+\alias{qlgser}
 \alias{rlgser}
 \title{Logarythmic Series distribution}
 \usage{
 dlgser(x, theta, log = FALSE)
 
 plgser(x, theta, lower.tail = TRUE, log.p = FALSE)
+
+qlgser(p, theta, lower.tail = TRUE, log.p = FALSE)
 
 rlgser(n, theta)
 }
@@ -23,11 +26,13 @@ rlgser(n, theta)
 \item{lower.tail}{logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
 otherwise, \eqn{P[X > x]}.}
 
+\item{p}{vector of probabilities.}
+
 \item{n}{number of observations. If \code{length(n) > 1},
 the length is taken to be the number required.}
 }
 \description{
-Density function, cumulative distribution function and random generation
+Density, distribution function, quantile function and random generation
 for the Logarythmic Series distribution.
 }
 \details{
@@ -45,7 +50,22 @@ F(x) = \frac{-1}{\log(1-\theta)} \sum_{k=1}^x \frac{\theta^x}{x}
 F(x) = -1/log(1-\theta) * sum((\theta^x)/x)
 }
 
-Random generation is done using algorithm described in Krishnamoorthy (2006).
+Quantile function and random generation are computed using
+algorithm described in Krishnamoorthy (2006).
+}
+\examples{
+
+x <- rlgser(1e5, 0.66)
+xx <- seq(0, 100, by = 1)
+plot(prop.table(table(x)), type = "h")
+lines(xx, dlgser(xx, 0.66), col = "red")
+
+# Notice: distribution of F(X) is far from uniform:
+hist(plgser(x, 0.66), 50)
+
+plot(ecdf(x))
+lines(xx, plgser(xx, 0.66), col = "red", lwd = 2)
+
 }
 \references{
 Krishnamoorthy, K. (2006). Handbook of Statistical Distributions

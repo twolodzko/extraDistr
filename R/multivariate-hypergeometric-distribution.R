@@ -32,7 +32,14 @@
 #' @references 
 #' Gentle, J.E. (2006). Random number generation and Monte Carlo methods. Springer.
 #'
-#' @seealso \code{\link{Hypergeometric}}
+#' @seealso \code{\link[stats]{Hypergeometric}}
+#' 
+#' @examples 
+#' 
+#' # Generating 10 random draws from multivariate hypergeometric
+#' # distribution parametrized using a vector
+#' 
+#' rmvhyper(10, c(10, 12, 5, 8, 11), 33)
 #'
 #' @name MultiHypergeometric
 #' @aliases MultiHypergeometric
@@ -42,8 +49,16 @@
 #' @export
 
 dmvhyper <- function(x, n, k, log = FALSE) {
-  if (!is.matrix(n))
+  if (is.vector(n))
     n <- matrix(n, nrow = 1)
+  else if (!is.matrix(n))
+    n <- as.matrix(n)
+  
+  if (is.vector(x))
+    x <- matrix(x, nrow = 1)
+  else if (!is.matrix(x))
+    x <- as.matrix(x)
+  
   .Call('extraDistr_cpp_dmvhyper', PACKAGE = 'extraDistr', x, n, k, log)
 }
 
@@ -54,10 +69,15 @@ dmvhyper <- function(x, n, k, log = FALSE) {
 rmvhyper <- function(nn, n, k) {
   if (length(nn) > 1)
     nn <- length(nn)
-  if (!is.matrix(n))
-    n <- matrix(n, nrow = 1)
-  if (sum(n) == k)
+  
+  if (is.vector(n) && sum(n) == k)
     return(matrix(rep(n, nn), nrow = nn, byrow = TRUE))
+  
+  if (is.vector(n))
+    n <- matrix(n, nrow = 1)
+  else if (!is.matrix(n))
+    n <- as.matrix(n)
+  
   .Call('extraDistr_cpp_rmvhyper', PACKAGE = 'extraDistr', nn, n, k)
 }
 

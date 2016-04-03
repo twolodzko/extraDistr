@@ -57,5 +57,16 @@ F^{-1}(p) = \frac{(1-p)^{-1/\kappa} -1}{\lambda}
 F^-1(p) = ((1-p)^(-1/\kappa)-1) / \lambda
 }
 }
+\examples{
+
+x <- rlomax(1e5, 5, 16)
+xx <- seq(-100, 100, by = 0.001)
+hist(x, 100, freq = FALSE)
+lines(xx, dlomax(xx, 5, 16), col = "red")
+hist(plomax(x, 5, 16))
+plot(ecdf(x))
+lines(xx, plomax(xx, 5, 16), col = "red", lwd = 2)
+
+}
 \keyword{distribution}
 

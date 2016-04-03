@@ -71,6 +71,17 @@ F^-1(p) = [if p < (c-a)/(b-a):] a + sqrt(p*(b-a)*(c-a))
           [else:] b - sqrt((1-p)*(b-a)*(b-c))
 }
 }
+\examples{
+
+x <- rtriang(1e5, 5, 7, 6)
+xx <- seq(-10, 10, by = 0.001)
+hist(x, 100, freq = FALSE)
+lines(xx, dtriang(xx, 5, 7, 6), col = "red")
+hist(ptriang(x, 5, 7, 6))
+plot(ecdf(x))
+lines(xx, ptriang(xx, 5, 7, 6), col = "red", lwd = 2)
+
+}
 \references{
 Forbes, C., Evans, M. Hastings, N., & Peacock, B. (2011).
 Statistical Distributions. John Wiley & Sons.

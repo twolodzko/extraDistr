@@ -35,5 +35,13 @@ the length is taken to be the number required.}
 Probability mass function, distribution function, quantile function and random generation
 for the Bernoulli distribution.
 }
+\examples{
+
+prop.table(table(rbern(1e5, 0.5)))
+
+}
+\seealso{
+\code{\link[stats]{Binomial}}
+}
 \keyword{distribution}
 

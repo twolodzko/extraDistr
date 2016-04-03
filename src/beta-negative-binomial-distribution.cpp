@@ -1,6 +1,7 @@
 #include <Rcpp.h>
+#include "const.h"
+#include "shared.h"
 using namespace Rcpp;
-
 
 /*
 *  Beta-negative binomial distribution
@@ -18,28 +19,47 @@ using namespace Rcpp;
 */
 
 double pmf_bnbinom(double k, double r, double alpha, double beta) {
-  if (std::floor(k) != k)
-    return 0;
-  if (alpha <= 0 || beta <= 0 || std::floor(r) != r)
+  if (alpha <= 0 || beta <= 0 || floor(r) != r) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
+  if (!isInteger(k))
+    return 0;
   return (R::gammafn(r+k) / (R::gammafn(k+1) * R::gammafn(r))) *
           R::beta(alpha+r, beta+k) / R::beta(alpha, beta);
 }
 
-double rng_bnbinom(double r, double alpha, double beta) {
-  if (alpha <= 0 || beta <= 0 || std::floor(r) != r)
+double logpmf_bnbinom(double k, double r, double alpha, double beta) {
+  if (alpha <= 0 || beta <= 0 || floor(r) != r) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  double prob = R::rbeta(alpha, beta);
-  return R::rnbinom(r, prob);
+  }
+  if (!isInteger(k))
+    return -INFINITY;
+  return (R::lgammafn(r+k) - (R::lgammafn(k+1) + R::lgammafn(r))) +
+    R::lbeta(alpha+r, beta+k) - R::lbeta(alpha, beta);
 }
 
-double logpmf_bnbinom(double k, double r, double alpha, double beta) {
-  if (std::floor(k) != k)
-    return -INFINITY;
-  if (alpha <= 0 || beta <= 0 || std::floor(r) != r)
+double cdf_bnbinom(double k, double r, double alpha, double beta) {
+  if (alpha < 0 || beta < 0 || floor(r) != r) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  return (R::lgammafn(r+k) - (R::lgammafn(k+1) + R::lgammafn(r))) +
-         R::lbeta(alpha+r, beta+k) - R::lbeta(alpha, beta);
+  }
+  if (!isInteger(k))
+    return 0;
+  double p_tmp = 0;
+  for (int j = 0; j < k+1; j++)
+    p_tmp += exp(logpmf_bnbinom(j, r, alpha, beta))*P_NORM_CONST;
+  return p_tmp/P_NORM_CONST;
+}
+
+double rng_bnbinom(double r, double alpha, double beta) {
+  if (alpha <= 0 || beta <= 0 || floor(r) != r) {
+    Rcpp::warning("NaNs produced");
+    return NAN;
+  }
+  double prob = R::rbeta(alpha, beta);
+  return R::rnbinom(r, prob);
 }
 
 
@@ -60,7 +80,7 @@ NumericVector cpp_dbnbinom(NumericVector x,
 
   if (!log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
 
   return p;
 }
@@ -78,11 +98,34 @@ NumericVector cpp_pbnbinom(NumericVector x,
   int Nmax = Rcpp::max(IntegerVector::create(n, nn, na, nb));
   NumericVector p(Nmax);
 
-  for (int i = 0; i < Nmax; i++) {
-    double p_tmp = 0;
-    for (int j = 0; j < x[i % n]+1; j++)
-      p_tmp += std::exp(logpmf_bnbinom(j, size[i % nn], alpha[i % na], beta[i % nb]));
-    p[i] = p_tmp;
+  if (nn == 1 && na == 1 && nb == 1) {
+    
+    if (alpha[0] < 0 || beta[0] < 0 || floor(size[0]) != size[0]) {
+      Rcpp::warning("NaNs produced");
+      for (int i = 0; i < n; i++)
+        p[i] = NAN;
+      return p;
+    }
+    
+    double mx = (int)floor(max(x));
+    NumericVector p_tab(mx+1);
+    
+    p_tab[0] = exp(logpmf_bnbinom(0, size[0], alpha[0], beta[0]))*P_NORM_CONST;
+    for (int j = 1; j < mx+1; j++)
+      p_tab[j] = p_tab[j-1] + exp(logpmf_bnbinom(j, size[0], alpha[0], beta[0]))*P_NORM_CONST;
+    
+    for (int i = 0; i < n; i++) {
+      if (x[i] == floor(x[i]) && x[i] >= 0)
+        p[i] = p_tab[(int)x[i]]/P_NORM_CONST;
+      else
+        p[i] = 0;
+    }
+    
+  } else {
+    
+    for (int i = 0; i < Nmax; i++)
+      p[i] = cdf_bnbinom(x[i % n], size[i % nn], alpha[i % na], beta[i % nb]);
+    
   }
 
   if (!lower_tail)
@@ -91,7 +134,7 @@ NumericVector cpp_pbnbinom(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
 
   return p;
 }

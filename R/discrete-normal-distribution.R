@@ -26,6 +26,18 @@
 #' Roy, D. (2003). The discrete normal distribution.
 #' Communications in Statistics-Theory and Methods, 32, 1871-1883.
 #' 
+#' @seealso \code{\link[stats]{Normal}}
+#' 
+#' @examples 
+#' 
+#' x <- rdnorm(1e5, 7, 35)
+#' xx <- -150:150
+#' hist(x, 100, freq = FALSE)
+#' lines(xx-0.5, ddnorm(xx, 7, 35), col = "red")
+#' hist(pdnorm(x, 7, 35))
+#' plot(ecdf(x))
+#' lines(xx, pdnorm(xx, 7, 35), col = "red", lwd = 2)
+#' 
 #' @name DiscreteNormal
 #' @aliases DiscreteNormal
 #' @aliases ddnorm
@@ -49,5 +61,7 @@ pdnorm <- function(x, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @rdname DiscreteNormal
 #' @export
 
-rdnorm <- function(n, mean = 0, sd = 1) round(rnorm(n, mean, sd))
+rdnorm <- function(n, mean = 0, sd = 1) {
+  round(rnorm(n, mean, sd))
+}
 

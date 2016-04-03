@@ -33,6 +33,20 @@ f(x) = \frac{\Gamma(\sum_k \alpha_k)}{\prod_k \Gamma(\alpha_k)} \prod_k x_k^{k-1
 f(x) = \Gamma(sum(\alpha[k])) / prod(\Gamma(\alpha[k])) * prod(x[k]^{k-1})
 }
 }
+\examples{
+
+# Generating 10 random draws from Dirichlet distribution
+# parametrized using a vector
+
+rdirichlet(10, c(1,1,1,1))
+
+# or parametrized using a matrix where each row
+# is a vector of parameters
+
+alpha <- matrix(c(1,1,1,1:3, 7:9), ncol = 3, byrow = TRUE)
+rdirichlet(10, alpha)
+
+}
 \references{
 Devroye, L. (1986). Non-Uniform Random Variate Generation. Springer-Verlag.
 

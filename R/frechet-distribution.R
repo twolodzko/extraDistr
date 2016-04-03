@@ -42,6 +42,16 @@
 #' @references
 #' Bury, K. (1999). Statistical Distributions in Engineering.
 #' Cambridge University Press.
+#' 
+#' @examples 
+#' 
+#' x <- rfrechet(1e5, 5, 2, 1.5)
+#' xx <- seq(0, 1000, by = 0.1)
+#' hist(x, 200, freq = FALSE)
+#' lines(xx, dfrechet(xx, 5, 2, 1.5), col = "red") 
+#' hist(pfrechet(x, 5, 2, 1.5))
+#' plot(ecdf(x))
+#' lines(xx, pfrechet(xx, 5, 2, 1.5), col = "red", lwd = 2)
 #'
 #' @name Frechet
 #' @aliases Frechet

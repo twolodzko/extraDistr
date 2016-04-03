@@ -57,6 +57,17 @@ F^{-1}(p) = 1-(1-p^{1/b})^{1/a}
 F^-1(p) = 1-(1-p^{1/b})^{1/a}
 }
 }
+\examples{
+
+x <- rkumar(1e5, 5, 16)
+xx <- seq(0, 1, by = 0.001)
+hist(x, 100, freq = FALSE)
+lines(xx, dkumar(xx, 5, 16), col = "red")
+hist(pkumar(x, 5, 16))
+plot(ecdf(x))
+lines(xx, pkumar(xx, 5, 16), col = "red", lwd = 2)
+
+}
 \references{
 Jones, M. C. (2009). Kumaraswamy's distribution: A beta-type distribution with
 some tractability advantages. Statistical Methodology, 6, 70-81.

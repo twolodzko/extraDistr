@@ -15,30 +15,35 @@ using namespace Rcpp;
 */
 
 double pdf_bernoulli(double x, double prob) {
-  if (prob < 0 || prob > 1)
+  if (prob < 0 || prob > 1) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   if (x == 1)
     return prob;
   if (x == 0)
     return 1-prob;
-  else
-    return 0;
+  Rcpp::warning("improper value of x");
+  return 0;
 }
 
 double cdf_bernoulli(double x, double prob) {
-  if (prob < 0 || prob > 1)
+  if (prob < 0 || prob > 1) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   if (x < 0)
     return 0;
   if (x < 1)
     return 1-prob;
-  else
-    return 1;
+  return 1;
 }
 
 int invcdf_bernoulli(double p, double prob) {
-  if (prob < 0 || prob > 1 || p < 0 || p > 1)
+  if (prob < 0 || prob > 1 || p < 0 || p > 1) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   if (p <= 1-prob)
     return 0;
   else
@@ -60,7 +65,7 @@ NumericVector cpp_dbern(NumericVector x, NumericVector prob,
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
   
   return p;
 }
@@ -84,7 +89,7 @@ NumericVector cpp_pbern(NumericVector x, NumericVector prob,
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
   
   return p;
 }
@@ -101,7 +106,7 @@ IntegerVector cpp_qbern(NumericVector p, NumericVector prob,
   
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
   
   if (!lower_tail)
     for (int i = 0; i < n; i++)

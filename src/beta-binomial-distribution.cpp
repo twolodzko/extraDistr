@@ -1,4 +1,6 @@
 #include <Rcpp.h>
+#include "const.h"
+#include "shared.h"
 using namespace Rcpp;
 
 /*
@@ -17,26 +19,45 @@ using namespace Rcpp;
 */
 
 double pmf_bbinom(double k, double n, double alpha, double beta) {
-  if (std::floor(k) != k)
-    return 0;
-  if (alpha < 0 || beta < 0 || std::floor(n) != n)
+  if (alpha < 0 || beta < 0 || floor(n) != n) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
+  if (!isInteger(k))
+    return 0;
   return R::choose(n, k) * R::beta(k+alpha, n-k+beta) / R::beta(alpha, beta);
 }
 
-double rng_bbinom(double n, double alpha, double beta) {
-  if (alpha < 0 || beta < 0 || std::floor(n) != n)
+double logpmf_bbinom(double k, double n, double alpha, double beta) {
+  if (alpha < 0 || beta < 0 || floor(n) != n) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  double prob = R::rbeta(alpha, beta);
-  return R::rbinom(n, prob);
+  }
+  if (!isInteger(k))
+    return -INFINITY;
+  return R::lchoose(n, k) + R::lbeta(k+alpha, n-k+beta) - R::lbeta(alpha, beta);
 }
 
-double logpmf_bbinom(double k, double n, double alpha, double beta) {
-  if (std::floor(k) != k)
-    return -INFINITY;
-  if (alpha < 0 || beta < 0 || std::floor(n) != n)
+double cdf_bbinom(double k, double n, double alpha, double beta) {
+  if (alpha < 0 || beta < 0 || floor(n) != n) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  return R::lchoose(n, k) + R::lbeta(k+alpha, n-k+beta) - R::lbeta(alpha, beta);
+  }
+  if (!isInteger(k))
+    return 0;
+  double p_tmp = 0;
+  for (int j = 0; j < k+1; j++)
+    p_tmp += exp(logpmf_bbinom(j, n, alpha, beta))*P_NORM_CONST;
+  return p_tmp/P_NORM_CONST;
+}
+
+double rng_bbinom(double n, double alpha, double beta) {
+  if (alpha < 0 || beta < 0 || floor(n) != n) {
+    Rcpp::warning("NaNs produced");
+    return NAN;
+  }
+  double prob = R::rbeta(alpha, beta);
+  return R::rbinom(n, prob);
 }
 
 
@@ -57,7 +78,7 @@ NumericVector cpp_dbbinom(NumericVector x,
 
   if (!log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::exp(p[i]);
+      p[i] = exp(p[i]);
 
   return p;
 }
@@ -74,12 +95,35 @@ NumericVector cpp_pbbinom(NumericVector x,
   int nb = beta.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nn, na, nb));
   NumericVector p(Nmax);
-
-  for (int i = 0; i < Nmax; i++) {
-    double p_tmp = 0;
-    for (int j = 0; j < x[i % n]+1; j++)
-      p_tmp += std::exp(logpmf_bbinom(j, size[i % nn], alpha[i % na], beta[i % nb]));
-    p[i] = p_tmp;
+  
+  if (nn == 1 && na == 1 && nb == 1) {
+    
+    if (alpha[0] < 0 || beta[0] < 0 || floor(size[0]) != size[0]) {
+      Rcpp::warning("NaNs produced");
+      for (int i = 0; i < n; i++)
+        p[i] = NAN;
+      return p;
+    }
+    
+    double mx = (int)floor(max(x));
+    NumericVector p_tab(mx+1);
+    
+    p_tab[0] = exp(logpmf_bbinom(0, size[0], alpha[0], beta[0]))*P_NORM_CONST;
+    for (int j = 1; j < mx+1; j++)
+      p_tab[j] = p_tab[j-1] + exp(logpmf_bbinom(j, size[0], alpha[0], beta[0]))*P_NORM_CONST;
+    
+    for (int i = 0; i < n; i++) {
+      if (x[i] == floor(x[i]) && x[i] >= 0)
+        p[i] = p_tab[(int)x[i]]/P_NORM_CONST;
+      else
+        p[i] = 0;
+    }
+    
+  } else {
+    
+    for (int i = 0; i < Nmax; i++)
+      p[i] = cdf_bbinom(x[i % n], size[i % nn], alpha[i % na], beta[i % nb]);
+  
   }
 
   if (!lower_tail)
@@ -88,7 +132,7 @@ NumericVector cpp_pbbinom(NumericVector x,
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
-      p[i] = std::log(p[i]);
+      p[i] = log(p[i]);
 
   return p;
 }

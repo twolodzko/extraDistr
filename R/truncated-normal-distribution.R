@@ -36,8 +36,9 @@
 #'
 #' Quantile function
 #' \deqn{
-#' F^{-1}(p) = \Phi^{-1}\left(\Phi(\frac{a-\mu}{\sigma}) + p \times
-#'                      (\Phi(\frac{b-\mu}{\sigma}) - \Phi(\frac{a-\mu}{\sigma}))\right)
+#' F^{-1}(p) = \Phi^{-1}\left(\Phi\left(\frac{a-\mu}{\sigma}\right) + p \times
+#'                      \left[\Phi\left(\frac{b-\mu}{\sigma}\right) -
+#'                      \Phi\left(\frac{a-\mu}{\sigma}\right)\right]\right)
 #' }{
 #' F^-1(p) = \Phi^-1(\Phi((a-\mu)/\sigma) + p * (\Phi((b-\mu)/\sigma) - \Phi((a-\mu)/\sigma)))
 #' }
@@ -53,6 +54,16 @@
 #' @references
 #' Burkardt, J. (17 October 2014). The Truncated Normal Distribution. Florida State University.
 #' \url{http://people.sc.fsu.edu/~jburkardt/presentations/truncated_normal.pdf}
+#' 
+#' @examples 
+#' 
+#' x <- rtnorm(1e5, 5, 3, b = 7)
+#' xx <- seq(-10, 10, by = 0.001)
+#' hist(x, 100, freq = FALSE)
+#' lines(xx, dtnorm(xx, 5, 3, b = 7), col = "red")
+#' hist(ptnorm(x, 5, 3, b = 7))
+#' plot(ecdf(x))
+#' lines(xx, ptnorm(xx, 5, 3, b = 7), col = "red", lwd = 2)
 #'
 #' @name TruncNormal
 #' @aliases TruncNormal

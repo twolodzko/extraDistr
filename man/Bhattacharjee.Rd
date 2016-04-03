@@ -56,6 +56,17 @@ F(z) = \sigma/(2*a) * ((x-\mu)*\Phi((x-\mu+a)/\sigma) - (x-\mu)*\Phi((x-\mu-a)/\
                        \phi((x-\mu+a)/\sigma) - \phi((x-\mu-a)/\sigma))
 }
 }
+\examples{
+
+x <- rbhatt(1e5, 5, 3, 5)
+xx <- seq(-20, 20, by = 0.01)
+hist(x, 100, freq = FALSE)
+lines(xx, dbhatt(xx, 5, 3, 5), col = "red")
+hist(pbhatt(x, 5, 3, 5))
+plot(ecdf(x))
+lines(xx, pbhatt(xx, 5, 3, 5), col = "red", lwd = 2)
+
+}
 \references{
 Bhattacharjee, G.P., Pandit, S.N.N., and Mohan, R. (1963).
 Dimensional chains involving rectangular and normal error-distributions.
