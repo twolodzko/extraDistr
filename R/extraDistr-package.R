@@ -24,5 +24,9 @@
 #' 
 #' @useDynLib extraDistr
 #' @importFrom Rcpp sourceCpp
-#' @importFrom stats pgamma pnorm rchisq rgamma rnorm rpois
+#' 
+#' @importFrom stats pgamma qgamma rgamma
+#' @importFrom stats pnorm rnorm
+#' @importFrom stats rpois
+#' @importFrom stats qchisq rchisq
 NULL

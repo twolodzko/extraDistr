@@ -67,6 +67,19 @@ double invcdf_triangular(double p, double a, double b, double c) {
   }
 }
 
+double rng_triangular(double a, double b, double c) {
+  if (a > c || c > b) {
+    Rcpp::warning("NaNs produced");
+    return NAN;
+  }
+  double u, v, r, cc;
+  r = b - a;
+  cc = (c-a)/r;
+  u = R::runif(0, 1);
+  v = R::runif(0, 1);
+  return ((1-cc) * std::min(u, v) + cc * std::max(u, v)) * r + a;
+}
+
 
 // [[Rcpp::export]]
 NumericVector cpp_dtriang(NumericVector x,
@@ -149,16 +162,13 @@ NumericVector cpp_qtriang(NumericVector p,
 NumericVector cpp_rtriang(int n,
                           NumericVector a, NumericVector b, NumericVector c) {
 
-  double u;
   int na = a.length();
   int nb = b.length();
   int nc = c.length();
   NumericVector x(n);
 
-  for (int i = 0; i < n; i++) {
-    u = R::runif(0, 1);
-    x[i] = invcdf_triangular(u, a[i % na], b[i % nb], c[i % nc]);
-  }
+  for (int i = 0; i < n; i++)
+    x[i] = rng_triangular(a[i % na], b[i % nb], c[i % nc]);
 
   return x;
 }

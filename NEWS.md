@@ -1,4 +1,9 @@
 
+### 1.6.4
+
+* New algorithm for `rtriang`
+* Minor changes in documentation
+
 ### 1.6.3
 
 * Added quantile functions for: zero-inflated Poisson, zero-inflated binomial

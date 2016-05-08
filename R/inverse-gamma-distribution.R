@@ -27,7 +27,7 @@
 #' \deqn{
 #' F(x) = \frac{\gamma(\alpha, \frac{1}{\beta x})}{\Gamma(\alpha)}
 #' }{
-#' F(x) = \frac{\gamma(\alpha, 1/(\beta*x))}{\Gamma(\alpha)}
+#' F(x) = \gamma(\alpha, 1/(\beta*x)) / \Gamma(\alpha)
 #' }
 #'
 #' @references
@@ -73,7 +73,7 @@ pinvgamma <- function(x, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @rdname InvGamma
 #' @export
 
-pinvgamma <- function(x, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE) {
+qinvgamma <- function(p, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE) {
   1/qgamma(p, alpha, beta, lower.tail = !lower.tail, log.p = log.p)
 }
 

@@ -79,9 +79,9 @@ pinvchisq <- function(x, nu, tau, lower.tail = TRUE, log.p = FALSE) {
 
 qinvchisq <- function(p, nu, tau, lower.tail = TRUE, log.p = FALSE) {
   if (missing(tau))
-    1/rchisq(p, nu, lower.tail = !lower.tail, log.p = log.p)
+    1/qchisq(p, nu, lower.tail = !lower.tail, log.p = log.p)
   else
-    1/rgamma(p, nu/2, (nu*tau^2)/2, lower.tail = !lower.tail, log.p = log.p)
+    1/qgamma(p, nu/2, (nu*tau^2)/2, lower.tail = !lower.tail, log.p = log.p)
 }
 
 

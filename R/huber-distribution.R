@@ -1,6 +1,6 @@
 
 
-#' Huber Density
+#' "Huber Density" distribution
 #'
 #' Density, distribution function, quantile function and random generation
 #' for the "Huber density" distribution.

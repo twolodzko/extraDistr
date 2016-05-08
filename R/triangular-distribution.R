@@ -50,10 +50,18 @@
 #' F^-1(p) = [if p < (c-a)/(b-a):] a + sqrt(p*(b-a)*(c-a))
 #'           [else:] b - sqrt((1-p)*(b-a)*(b-c))
 #' }
+#' 
+#' For random generation MINMAX method described by
+#' Stein and Keblis (2009) is used.
 #'
 #' @references
 #' Forbes, C., Evans, M. Hastings, N., & Peacock, B. (2011).
 #' Statistical Distributions. John Wiley & Sons.
+#' 
+#' @references
+#' Stein, W. E., & Keblis, M. F. (2009).
+#' A new method to simulate the triangular distribution.
+#' Mathematical and computer modelling, 49(5), 1143-1147.
 #' 
 #' @examples 
 #' 
@@ -72,7 +80,7 @@
 #'
 #' @export
 
-dtriang <- function(x, a, b, c = (a+b)/2, log = FALSE) {
+dtriang <- function(x, a = -1, b = 1, c = (a+b)/2, log = FALSE) {
   .Call('extraDistr_cpp_dtriang', PACKAGE = 'extraDistr', x, a, b, c, log)
 }
 
@@ -80,7 +88,7 @@ dtriang <- function(x, a, b, c = (a+b)/2, log = FALSE) {
 #' @rdname Triangular
 #' @export
 
-ptriang <- function(x, a, b, c = (a+b)/2, lower.tail = TRUE, log.p = FALSE) {
+ptriang <- function(x, a = -1, b = 1, c = (a+b)/2, lower.tail = TRUE, log.p = FALSE) {
   .Call('extraDistr_cpp_ptriang', PACKAGE = 'extraDistr', x, a, b, c, lower.tail, log.p)
 }
 
@@ -88,7 +96,7 @@ ptriang <- function(x, a, b, c = (a+b)/2, lower.tail = TRUE, log.p = FALSE) {
 #' @rdname Triangular
 #' @export
 
-qtriang <- function(p, a, b, c = (a+b)/2, lower.tail = TRUE, log.p = FALSE) {
+qtriang <- function(p, a = -1, b = 1, c = (a+b)/2, lower.tail = TRUE, log.p = FALSE) {
   .Call('extraDistr_cpp_qtriang', PACKAGE = 'extraDistr', p, a, b, c, lower.tail, log.p)
 }
 
@@ -96,7 +104,7 @@ qtriang <- function(p, a, b, c = (a+b)/2, lower.tail = TRUE, log.p = FALSE) {
 #' @rdname Triangular
 #' @export
 
-rtriang <- function(n, a, b, c = (a+b)/2) {
+rtriang <- function(n, a = -1, b = 1, c = (a+b)/2) {
   if (length(n) > 1) n <- length(n)
   .Call('extraDistr_cpp_rtriang', PACKAGE = 'extraDistr', n, a, b, c)
 }

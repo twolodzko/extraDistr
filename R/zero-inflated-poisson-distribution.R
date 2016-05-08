@@ -6,6 +6,7 @@
 #' for the zero-inflated Poisson distribution.
 #'
 #' @param x 	            vector of quantiles.
+#' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
 #' @param lambda	        vector of (non-negative) means.

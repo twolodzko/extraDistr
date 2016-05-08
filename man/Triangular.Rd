@@ -8,13 +8,15 @@
 \alias{rtriang}
 \title{Triangular distribution}
 \usage{
-dtriang(x, a, b, c = (a + b)/2, log = FALSE)
+dtriang(x, a = -1, b = 1, c = (a + b)/2, log = FALSE)
 
-ptriang(x, a, b, c = (a + b)/2, lower.tail = TRUE, log.p = FALSE)
+ptriang(x, a = -1, b = 1, c = (a + b)/2, lower.tail = TRUE,
+  log.p = FALSE)
 
-qtriang(p, a, b, c = (a + b)/2, lower.tail = TRUE, log.p = FALSE)
+qtriang(p, a = -1, b = 1, c = (a + b)/2, lower.tail = TRUE,
+  log.p = FALSE)
 
-rtriang(n, a, b, c = (a + b)/2)
+rtriang(n, a = -1, b = 1, c = (a + b)/2)
 }
 \arguments{
 \item{x}{vector of quantiles.}
@@ -70,6 +72,9 @@ b - \sqrt{(1-p)(b-a)(b-c)}     & p > \frac{c-a}{b-a}
 F^-1(p) = [if p < (c-a)/(b-a):] a + sqrt(p*(b-a)*(c-a))
           [else:] b - sqrt((1-p)*(b-a)*(b-c))
 }
+
+For random generation MINMAX method described by
+Stein and Keblis (2009) is used.
 }
 \examples{
 
@@ -85,6 +90,10 @@ lines(xx, ptriang(xx, 5, 7, 6), col = "red", lwd = 2)
 \references{
 Forbes, C., Evans, M. Hastings, N., & Peacock, B. (2011).
 Statistical Distributions. John Wiley & Sons.
+
+Stein, W. E., & Keblis, M. F. (2009).
+A new method to simulate the triangular distribution.
+Mathematical and computer modelling, 49(5), 1143-1147.
 }
 \keyword{distribution}
 

@@ -6,6 +6,7 @@
 #' for the zero-inflated nagative binomial distribution.
 #'
 #' @param x 	            vector of quantiles.
+#' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
 #' @param size	          target for number of successful trials, or dispersion

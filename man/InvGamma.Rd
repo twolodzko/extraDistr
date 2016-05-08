@@ -4,6 +4,7 @@
 \alias{InvGamma}
 \alias{dinvgamma}
 \alias{pinvgamma}
+\alias{qinvgamma}
 \alias{rinvgamma}
 \title{Inverse-Gamma distribution}
 \usage{
@@ -11,7 +12,7 @@ dinvgamma(x, alpha, beta = 1, log = FALSE)
 
 pinvgamma(x, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE)
 
-pinvgamma(x, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE)
+qinvgamma(p, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE)
 
 rinvgamma(n, alpha, beta = 1)
 }
@@ -25,10 +26,10 @@ rinvgamma(n, alpha, beta = 1)
 \item{lower.tail}{logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
 otherwise, \eqn{P[X > x]}.}
 
+\item{p}{vector of probabilities.}
+
 \item{n}{number of observations. If \code{length(n) > 1},
 the length is taken to be the number required.}
-
-\item{p}{vector of probabilities.}
 }
 \description{
 Density, distribution function and random generation
@@ -46,7 +47,7 @@ Cumulative distribution function
 \deqn{
 F(x) = \frac{\gamma(\alpha, \frac{1}{\beta x})}{\Gamma(\alpha)}
 }{
-F(x) = \frac{\gamma(\alpha, 1/(\beta*x))}{\Gamma(\alpha)}
+F(x) = \gamma(\alpha, 1/(\beta*x)) / \Gamma(\alpha)
 }
 }
 \examples{
