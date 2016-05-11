@@ -1,4 +1,8 @@
 
+### 1.6.5
+
+* Added Birnbaum-Saunders (fatigue life) distribution
+
 ### 1.6.4
 
 * New algorithm for `rtriang`

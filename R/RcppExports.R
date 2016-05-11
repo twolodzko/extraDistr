@@ -53,6 +53,22 @@ cpp_rbhatt <- function(n, mu, sigma, a) {
     .Call('extraDistr_cpp_rbhatt', PACKAGE = 'extraDistr', n, mu, sigma, a)
 }
 
+cpp_dfatigue <- function(x, alpha, beta, mu, log_prob = FALSE) {
+    .Call('extraDistr_cpp_dfatigue', PACKAGE = 'extraDistr', x, alpha, beta, mu, log_prob)
+}
+
+cpp_pfatigue <- function(x, alpha, beta, mu, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_pfatigue', PACKAGE = 'extraDistr', x, alpha, beta, mu, lower_tail, log_prob)
+}
+
+cpp_qfatigue <- function(p, alpha, beta, mu, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_qfatigue', PACKAGE = 'extraDistr', p, alpha, beta, mu, lower_tail, log_prob)
+}
+
+cpp_rfatigue <- function(n, alpha, beta, mu) {
+    .Call('extraDistr_cpp_rfatigue', PACKAGE = 'extraDistr', n, alpha, beta, mu)
+}
+
 cpp_dbnorm <- function(x, y, mu1, mu2, sigma1, sigma2, rho, log_prob = FALSE) {
     .Call('extraDistr_cpp_dbnorm', PACKAGE = 'extraDistr', x, y, mu1, mu2, sigma1, sigma2, rho, log_prob)
 }

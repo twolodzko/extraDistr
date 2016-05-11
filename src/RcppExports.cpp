@@ -193,6 +193,67 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// cpp_dfatigue
+NumericVector cpp_dfatigue(NumericVector x, NumericVector alpha, NumericVector beta, NumericVector mu, bool log_prob);
+RcppExport SEXP extraDistr_cpp_dfatigue(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP muSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    __result = Rcpp::wrap(cpp_dfatigue(x, alpha, beta, mu, log_prob));
+    return __result;
+END_RCPP
+}
+// cpp_pfatigue
+NumericVector cpp_pfatigue(NumericVector x, NumericVector alpha, NumericVector beta, NumericVector mu, bool lower_tail, bool log_prob);
+RcppExport SEXP extraDistr_cpp_pfatigue(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP muSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    __result = Rcpp::wrap(cpp_pfatigue(x, alpha, beta, mu, lower_tail, log_prob));
+    return __result;
+END_RCPP
+}
+// cpp_qfatigue
+NumericVector cpp_qfatigue(NumericVector p, NumericVector alpha, NumericVector beta, NumericVector mu, bool lower_tail, bool log_prob);
+RcppExport SEXP extraDistr_cpp_qfatigue(SEXP pSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP muSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericVector >::type p(pSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    __result = Rcpp::wrap(cpp_qfatigue(p, alpha, beta, mu, lower_tail, log_prob));
+    return __result;
+END_RCPP
+}
+// cpp_rfatigue
+NumericVector cpp_rfatigue(int n, NumericVector alpha, NumericVector beta, NumericVector mu);
+RcppExport SEXP extraDistr_cpp_rfatigue(SEXP nSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP muSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mu(muSEXP);
+    __result = Rcpp::wrap(cpp_rfatigue(n, alpha, beta, mu));
+    return __result;
+END_RCPP
+}
 // cpp_dbnorm
 NumericVector cpp_dbnorm(NumericVector x, NumericVector y, NumericVector mu1, NumericVector mu2, NumericVector sigma1, NumericVector sigma2, NumericVector rho, bool log_prob);
 RcppExport SEXP extraDistr_cpp_dbnorm(SEXP xSEXP, SEXP ySEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigma1SEXP, SEXP sigma2SEXP, SEXP rhoSEXP, SEXP log_probSEXP) {
