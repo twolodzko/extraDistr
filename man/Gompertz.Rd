@@ -19,7 +19,7 @@ rgompertz(n, a = 1, b = 1)
 \arguments{
 \item{x}{vector of quantiles.}
 
-\item{a, b}{scale and location parameters.}
+\item{a, b}{positive valued scale and location parameters.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 

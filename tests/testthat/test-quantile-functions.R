@@ -1,0 +1,108 @@
+
+
+test_that("Zeros in quantile functions", {
+  
+  # expect_true(!is.nan(qbbinom(0, 10, 1, 1)))
+  # expect_true(!is.nan(qbnbinom(0, 10, 1, 1)))
+  # expect_true(!is.nan(qbhatt(0)))
+  expect_true(!is.nan(qfatigue(0, 1)))
+  expect_true(!is.nan(qcat(0, c(0.5, 0.5))))
+  # expect_true(!is.nan(qdnorm(0)))
+  expect_true(!is.nan(qdweibull(0, 0.5, 1)))  
+  expect_true(!is.nan(qfrechet(0)))
+  # expect_true(!is.nan(qgpois(0, 1, 1)))
+  expect_true(!is.nan(qgev(0, 1, 1, 1)))
+  expect_true(!is.nan(qgompertz(0, 1, 1)))
+  expect_true(!is.nan(qgpd(0, 1, 1, 1)))
+  expect_true(!is.nan(qgumbel(0)))
+  expect_true(!is.nan(qhuber(0)))
+  expect_true(!is.nan(qinvgamma(0, 1, 1)))
+  expect_true(!is.nan(qlaplace(0)))
+  expect_true(!is.nan(qlgser(0, 0.5)))
+  expect_true(!is.nan(qlomax(0, 1, 1)))
+  expect_true(!is.nan(qnst(0, df = 2)))
+  expect_true(!is.nan(qpareto(0)))
+  expect_true(!is.nan(qpower(0, 1, 1)))
+  expect_true(!is.nan(qprop(0, 10, 0.5)))
+  expect_true(!is.nan(qrayleigh(0)))
+  # expect_true(!is.nan(qslash(0)))
+  # expect_true(!is.nan(qwald(0, 1, 1)))
+  expect_true(!is.nan(qzip(0, 1, 0.5)))
+  expect_true(!is.nan(qzib(0, 1, 1, 0.5)))
+  expect_true(!is.nan(qzinb(0, 1, 1, 0.5)))
+  
+})
+
+test_that("Ones in quantile functions", {
+  
+  # expect_true(!is.nan(qbbinom(1, 10, 1, 1)))
+  # expect_true(!is.nan(qbnbinom(1, 10, 1, 1)))
+  # expect_true(!is.nan(qbhatt(1)))
+  expect_true(!is.nan(qfatigue(1, 1)))
+  expect_true(!is.nan(qcat(1, c(0.5, 0.5))))
+  # expect_true(!is.nan(qdnorm(1)))
+  expect_true(!is.nan(qdweibull(1, 0.5, 1)))  
+  expect_true(!is.nan(qfrechet(1)))
+  # expect_true(!is.nan(qgpois(1, 1, 1)))
+  expect_true(!is.nan(qgev(1, 1, 1, 1)))
+  expect_true(!is.nan(qgompertz(1, 1, 1)))
+  expect_true(!is.nan(qgpd(1, 1, 1, 1)))
+  expect_true(!is.nan(qgumbel(1)))
+  expect_true(!is.nan(qhuber(1)))
+  expect_true(!is.nan(qinvgamma(1, 1, 1)))
+  expect_true(!is.nan(qlaplace(1)))
+  expect_true(!is.nan(qlgser(1, 0.5)))
+  expect_true(!is.nan(qlomax(1, 1, 1)))
+  expect_true(!is.nan(qnst(1, df = 2)))
+  expect_true(!is.nan(qpareto(1)))
+  expect_true(!is.nan(qpower(1, 1, 1)))
+  expect_true(!is.nan(qprop(1, 10, 0.5)))
+  expect_true(!is.nan(qrayleigh(1)))
+  # expect_true(!is.nan(qslash(1)))
+  # expect_true(!is.nan(qwald(1, 1, 1)))
+  expect_true(!is.nan(qzip(1, 1, 0.5)))
+  expect_true(!is.nan(qzib(1, 1, 1, 0.5)))
+  expect_true(!is.nan(qzinb(1, 1, 1, 0.5)))
+  
+})
+
+
+
+test_that("Checking p = F(F^-1(p))", {
+  
+  pp <- seq(0, 1, by = 0.001)
+  
+  # expect_equal(pp, pbbinom(qbbinom(pp, 10, 1, 1), 10, 1, 1))
+  # expect_equal(pp, pbnbinom(qbnbinom(pp, 10, 1, 1), 10, 1, 1))
+  # expect_equal(pp, pbhatt(qbhatt(pp)))
+  expect_equal(pp, pfatigue(qfatigue(pp, 1), 1))
+  # expect_equal(pp, pcat(qcat(pp, c(0.5, 0.5)), c(0.5, 0.5)))
+  # expect_equal(pp, ppbbinom(qdnorm(pp)))
+  # expect_equal(pp, pdweibull(qdweibull(pp, 0.5, 1), 0.5, 1))  
+  expect_equal(pp, pfrechet(qfrechet(pp)))
+  # expect_equal(pp, ppbbinom(qgpois(pp, 1, 1)))
+  expect_equal(pp, pgev(qgev(pp, 1, 1, 1), 1, 1, 1))
+  expect_equal(pp, pgompertz(qgompertz(pp, 1, 1), 1, 1))
+  expect_equal(pp, pgpd(qgpd(pp, 1, 1, 1), 1, 1, 1))
+  expect_equal(pp, pgumbel(qgumbel(pp)))
+  expect_equal(pp, phuber(qhuber(pp)))
+  expect_equal(pp, pinvgamma(qinvgamma(pp, 1, 1), 1, 1))
+  expect_equal(pp, plaplace(qlaplace(pp)))
+  # expect_equal(pp, plgser(qlgser(pp, 0.5), 0.5))
+  expect_equal(pp, plomax(qlomax(pp, 1, 1), 1, 1))
+  expect_equal(pp, pnst(qnst(pp, df = 2), df = 2))
+  expect_equal(pp, ppareto(qpareto(pp)))
+  expect_equal(pp, ppower(qpower(pp, 1, 1), 1, 1))
+  expect_equal(pp, pprop(qprop(pp, 10, 0.5), 10, 0.5))
+  expect_equal(pp, prayleigh(qrayleigh(pp)))
+  # expect_equal(pp, ppbbinom(qslash(pp)))
+  # expect_equal(pp, ppbbinom(qwald(pp, 1, 1)))
+
+  # expect_equal(pp, pzip(qzip(pp, 1, 0.5), 1, 0.5))
+  # expect_equal(pp, pzib(qzib(pp, 1, 1, 0.5), 1, 1, 0.5))
+  # expect_equal(pp, pzinb(qzinb(pp, 1, 1, 0.5), 1, 1, 0.5))
+  
+})
+
+
+

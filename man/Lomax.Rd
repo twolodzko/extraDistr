@@ -19,7 +19,7 @@ rlomax(n, lambda, kappa)
 \arguments{
 \item{x}{vector of quantiles.}
 
-\item{lambda, kappa}{parameters.}
+\item{lambda, kappa}{positive valued parameters.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 

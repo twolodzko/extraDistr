@@ -29,10 +29,9 @@ double pdf_gompertz(double x, double a, double b) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x >= 0)
-    return a * exp(b*x - a/b * (exp(b*x) - 1));
-  else
+  if (x < 0 || std::isinf(x))
     return 0;
+  return a * exp(b*x - a/b * (exp(b*x) - 1));
 }
 
 double cdf_gompertz(double x, double a, double b) {
@@ -40,10 +39,11 @@ double cdf_gompertz(double x, double a, double b) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x >= 0)
-    return 1 - exp(-a/b * (exp(b*x) - 1));
-  else
+  if (std::isinf(x))
+    return 1;
+  if (x < 0)
     return 0;
+  return 1 - exp(-a/b * (exp(b*x) - 1));
 }
 
 double invcdf_gompertz(double p, double a, double b) {
@@ -59,10 +59,9 @@ double logpdf_gompertz(double x, double a, double b) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x >= 0)
-    return log(a) + (b*x - a/b * (exp(b*x) - 1));
-  else
+  if (x < 0 || std::isinf(x))
     return -INFINITY;
+  return log(a) + (b*x - a/b * (exp(b*x) - 1));
 }
 
 

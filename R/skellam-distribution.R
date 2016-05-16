@@ -8,7 +8,7 @@
 #' @param x 	            vector of quantiles.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
-#' @param mu1,mu2         parameters.
+#' @param mu1,mu2         positive valued parameters.
 #' @param log     	      logical; if TRUE, probabilities p are given as log(p).
 #'
 #' @details

@@ -9,7 +9,7 @@
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
 #' @param alpha           \eqn{k}-values vector or \eqn{k}-column matrix;
-#'                        concentration parameter.
+#'                        concentration parameter. Must be positive.
 #' @param log     	      logical; if TRUE, probabilities p are given as log(p).
 #'
 #' @details

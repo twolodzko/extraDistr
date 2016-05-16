@@ -25,12 +25,10 @@ double pdf_frechet(double x, double lambda, double mu, double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x > mu) {
-    double z = (x-mu)/sigma;
-    return lambda/sigma * pow(z, -1-lambda) * exp(-pow(z, -lambda));
-  } else {
+  if (x <= mu)
     return 0;
-  }
+  double z = (x-mu)/sigma;
+  return lambda/sigma * pow(z, -1-lambda) * exp(-pow(z, -lambda));
 }
 
 double cdf_frechet(double x, double lambda, double mu, double sigma) {
@@ -38,12 +36,10 @@ double cdf_frechet(double x, double lambda, double mu, double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x > mu) {
-    double z = (x-mu)/sigma;
-    return exp(pow(-z, -lambda));
-  } else {
+  if (x <= mu)
     return 0;
-  }
+  double z = (x-mu)/sigma;
+  return exp(pow(-z, -lambda));
 }
 
 double invcdf_frechet(double p, double lambda, double mu, double sigma) {
@@ -51,6 +47,8 @@ double invcdf_frechet(double p, double lambda, double mu, double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
+  if (p == 1)
+    return INFINITY;
   return mu + sigma * pow(-log(p), -1/lambda);
 }
 

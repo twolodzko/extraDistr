@@ -1,4 +1,11 @@
 
+### 1.6.6
+
+* Improvements in documentation
+* Added tests
+* Multiple minor bug fixes (e.g. functions returning `NaN`
+  instead of `0` for `Inf` values)
+
 ### 1.6.5
 
 * Added Birnbaum-Saunders (fatigue life) distribution

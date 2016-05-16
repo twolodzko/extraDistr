@@ -21,7 +21,8 @@ rfrechet(n, lambda = 1, mu = 0, sigma = 1)
 \arguments{
 \item{x}{vector of quantiles.}
 
-\item{lambda, sigma, mu}{shape, scale, and location parameters.}
+\item{lambda, sigma, mu}{shape, scale, and location parameters.
+Scale and shape must be positive.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 

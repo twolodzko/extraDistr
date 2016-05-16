@@ -51,11 +51,11 @@ NumericVector cpp_dmnom(NumericMatrix x,
       if (x(i % n, j) < 0 || !isInteger(x(i % n, j))) {
         wrong_x = true;
       } else {
-        sum_p += prob(i % np, j)*P_NORM_CONST;
         sum_x += x(i % n, j);
         prod_xfac += lfactorial(x(i % n, j));
         prod_pow_px += log(prob(i % np, j)) * x(i % n, j);
       }
+      sum_p += prob(i % np, j)*P_NORM_CONST;
     }
 
     if (!tol_equal(sum_p/P_NORM_CONST, 1) || wrong_p) {

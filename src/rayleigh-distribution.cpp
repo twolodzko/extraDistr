@@ -21,10 +21,9 @@ double pdf_rayleigh(double x, double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x >= 0)
-    return x/pow(sigma, 2) * exp(-pow(x, 2) / (2*pow(sigma, 2)));
-  else
+  if (x < 0 || std::isinf(x))
     return 0;
+  return x/pow(sigma, 2) * exp(-pow(x, 2) / (2*pow(sigma, 2)));
 }
 
 double cdf_rayleigh(double x, double sigma) {
@@ -32,6 +31,8 @@ double cdf_rayleigh(double x, double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
+  if (x == INFINITY)
+    return 1;
   if (x >= 0)
     return 1 - exp(-pow(x, 2) / (2*pow(sigma, 2)));
   else

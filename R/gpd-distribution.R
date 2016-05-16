@@ -9,7 +9,7 @@
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
-#' @param mu,sigma,xi	    location, scale, and shape parameters.
+#' @param mu,sigma,xi	    location, scale, and shape parameters. Scale must be positive.
 #' @param log,log.p	      logical; if TRUE, probabilities p are given as log(p).
 #' @param lower.tail	    logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
 #'                        otherwise, \eqn{P[X > x]}.

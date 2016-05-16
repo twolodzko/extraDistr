@@ -27,13 +27,9 @@ double pdf_dweibull(double x, double q, double beta) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (!isInteger(x))
+  if (!isInteger(x) || x < 0)
     return 0;
-  if (x >= 0) {
-    return pow(q, pow(x, beta)) - pow(q, pow(x+1, beta));
-  } else {
-    return 0;
-  }
+  return pow(q, pow(x, beta)) - pow(q, pow(x+1, beta));
 }
 
 double cdf_dweibull(double x, double q, double beta) {
@@ -41,11 +37,9 @@ double cdf_dweibull(double x, double q, double beta) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x >= 0) {
-    return 1-pow(q, pow(x+1, beta));
-  } else {
+  if (x < 0)
     return 0;
-  }
+  return 1-pow(q, pow(x+1, beta));
 }
 
 double invcdf_dweibull(double p, double q, double beta) {
@@ -53,6 +47,8 @@ double invcdf_dweibull(double p, double q, double beta) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
+  if (p == 0)
+    return 0;
   return ceil(pow(log(1-p)/log(q), 1/beta) - 1);
 }
 

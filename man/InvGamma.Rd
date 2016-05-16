@@ -19,7 +19,7 @@ rinvgamma(n, alpha, beta = 1)
 \arguments{
 \item{x}{vector of quantiles.}
 
-\item{alpha, beta}{shape and scale parameters.}
+\item{alpha, beta}{positive valued shape and scale parameters.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 

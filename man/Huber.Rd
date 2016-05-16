@@ -21,7 +21,8 @@ rhuber(n, mu = 0, sigma = 1, epsilon = 1.345)
 \arguments{
 \item{x}{vector of quantiles.}
 
-\item{mu, sigma, epsilon}{location, and scale, and shape parameters.}
+\item{mu, sigma, epsilon}{location, and scale, and shape parameters.
+Scale and shape must be positive.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 

@@ -16,7 +16,9 @@ rbbinom(n, size, alpha = 1, beta = 1)
 \arguments{
 \item{x}{vector of quantiles.}
 
-\item{size, alpha, beta}{parameters.}
+\item{size}{number of trials (zero or more).}
+
+\item{alpha, beta}{non-negative parameters of the Beta distribution.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 

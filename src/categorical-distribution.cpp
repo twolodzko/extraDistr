@@ -41,7 +41,7 @@ NumericVector cpp_dcat(NumericVector x, NumericMatrix prob,
     if (!tol_equal(p_tot/P_NORM_CONST, 1) || wrong_p) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
-    } else if (x[i] < 1 || x[i] > k || !isInteger(x[i])) {
+    } else if (!isInteger(x[i]) || x[i] < 1 || x[i] > k) {
       p[i] = 0;
     } else {
       p[i] = prob(i % np, x[i]-1);
@@ -115,14 +115,14 @@ NumericVector cpp_pcat(NumericVector x, NumericMatrix prob,
 
 
 // [[Rcpp::export]]
-IntegerVector cpp_qcat(NumericVector p, NumericMatrix prob,
+NumericVector cpp_qcat(NumericVector p, NumericMatrix prob,
                        bool lower_tail = true, bool log_prob = false) {
   
   int n  = p.length();
   int np = prob.nrow();
   int Nmax = Rcpp::max(IntegerVector::create(n, np));
   int k = prob.ncol();
-  IntegerVector q(Nmax);
+  NumericVector q(Nmax);
   
   if (log_prob)
     for (int i = 0; i < n; i++)

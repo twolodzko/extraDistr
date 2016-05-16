@@ -19,10 +19,10 @@ rinvchisq(n, nu, tau)
 \arguments{
 \item{x}{vector of quantiles.}
 
-\item{nu}{shape parameter.}
+\item{nu}{positive valued shape parameter.}
 
-\item{tau}{scaling parameter; if provided it returns values for
-scaled chi-squared distributions.}
+\item{tau}{positive valued scaling parameter; if provided it
+returns values for scaled chi-squared distributions.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 

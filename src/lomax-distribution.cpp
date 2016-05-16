@@ -23,10 +23,19 @@ double pdf_lomax(double x, double lambda, double kappa) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x > 0)
-    return lambda*kappa / pow(1+lambda*x, kappa+1);
-  else
+  if (x <= 0)
     return 0;
+  return lambda*kappa / pow(1+lambda*x, kappa+1);
+}
+
+double logpdf_lomax(double x, double lambda, double kappa) {
+  if (lambda <= 0 || kappa <= 0) {
+    Rcpp::warning("NaNs produced");
+    return NAN;
+  }
+  if (x <= 0)
+    return -INFINITY;
+  return log(lambda) + log(kappa) - log(1+lambda*x)*(kappa+1);
 }
 
 double cdf_lomax(double x, double lambda, double kappa) {
@@ -34,10 +43,9 @@ double cdf_lomax(double x, double lambda, double kappa) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x > 0)
-    return 1-pow(1+lambda*x, -kappa);
-  else
+  if (x <= 0)
     return 0;
+  return 1-pow(1+lambda*x, -kappa);
 }
 
 double invcdf_lomax(double p, double lambda, double kappa) {
@@ -46,17 +54,6 @@ double invcdf_lomax(double p, double lambda, double kappa) {
     return NAN;
   }
   return (pow(1-p, -1/kappa)-1) / lambda;
-}
-
-double logpdf_lomax(double x, double lambda, double kappa) {
-  if (lambda <= 0 || kappa <= 0) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
-  }
-  if (x > 0)
-    return log(lambda) + log(kappa) - log(1+lambda*x)*(kappa+1);
-  else
-    return -INFINITY;
 }
 
 

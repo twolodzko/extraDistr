@@ -21,7 +21,7 @@ rtnorm(n, mu = 0, sigma = 1, a = -Inf, b = Inf)
 \arguments{
 \item{x}{vector of quantiles.}
 
-\item{mu, sigma}{location and scale parameters.}
+\item{mu, sigma}{location and scale parameters. Scale must be positive.}
 
 \item{a, b}{minimal and maximal boundries for truncation
 (\code{-Inf} and \code{Inf} by default).}

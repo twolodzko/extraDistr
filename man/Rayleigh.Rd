@@ -19,7 +19,7 @@ rrayleigh(n, sigma = 1)
 \arguments{
 \item{x}{vector of quantiles.}
 
-\item{sigma}{parameter.}
+\item{sigma}{positive valued parameter.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 

@@ -19,7 +19,7 @@ double pdf_zip(double x, double lambda, double pi) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x < 0 || !isInteger(x))
+  if (x < 0 || !isInteger(x) || std::isinf(x))
     return 0;
   if (x == 0)
     return pi + (1-pi) * exp(-lambda);
@@ -34,8 +34,9 @@ double cdf_zip(double x, double lambda, double pi) {
   }
   if (x < 0)
     return 0;
-  else
-    return pi + (1-pi) * R::ppois(x, lambda, true, false);
+  if (std::isinf(x))
+    return 1;
+  return pi + (1-pi) * R::ppois(x, lambda, true, false);
 }
 
 double invcdf_zip(double p, double lambda, double pi) {

@@ -14,7 +14,7 @@ rdirichlet(n, alpha)
 \item{x}{\eqn{k}-column matrix of quantiles.}
 
 \item{alpha}{\eqn{k}-values vector or \eqn{k}-column matrix;
-concentration parameter.}
+concentration parameter. Must be positive.}
 
 \item{log}{logical; if TRUE, probabilities p are given as log(p).}
 

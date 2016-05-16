@@ -21,6 +21,26 @@ bool isInteger(double x) {
   return true;
 }
 
+// Dealing with Inf
+
+bool anyFinite(NumericVector x) {
+  int n = x.length();
+  for (int i = 0; i < n; i++)
+    if (!std::isinf(x[i]))
+      return true;
+  return false;
+}
+
+double finite_max(NumericVector x) {
+  double max_x = -INFINITY;
+  int n = x.length();
+  for (int i = 0; i < n; i++) {
+    if (!std::isinf(x[i]) && x[i] > max_x)
+      max_x = x[i];
+  }
+  return max_x;
+}
+
 // Standard normal
 
 double phi(double x) {
@@ -61,7 +81,7 @@ double factorial(double x) {
 
 // Random generation for Bernoulli
 
-int rng_bernoulli(double p = 0.5) {
+double rng_bernoulli(double p = 0.5) {
   if (p < 0 || p > 1)
     return NAN;
   double u = R::runif(0, 1);

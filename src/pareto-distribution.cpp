@@ -22,10 +22,19 @@ double pdf_pareto(double x, double a, double b) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x >= b)
-    return a * pow(b, a) / pow(x, a+1);
-  else
+  if (x < b)
     return 0;
+  return a * pow(b, a) / pow(x, a+1);
+}
+
+double logpdf_pareto(double x, double a, double b) {
+  if (a <= 0 || b <= 0) {
+    Rcpp::warning("NaNs produced");
+    return NAN;
+  }
+  if (x < b)
+    return -INFINITY;
+  return log(a) + log(b)*a - log(x)*(a+1);
 }
 
 double cdf_pareto(double x, double a, double b) {
@@ -33,10 +42,9 @@ double cdf_pareto(double x, double a, double b) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x >= b)
-    return 1 - pow(b/x, a);
-  else
+  if (x < b)
     return 0;
+  return 1 - pow(b/x, a);
 }
 
 double invcdf_pareto(double p, double a, double b) {
@@ -45,17 +53,6 @@ double invcdf_pareto(double p, double a, double b) {
     return NAN;
   }
   return b / pow(1-p, 1/a);
-}
-
-double logpdf_pareto(double x, double a, double b) {
-  if (a <= 0 || b <= 0) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
-  }
-  if (x >= b)
-    return log(a) + log(b)*a - log(x)*(a+1);
-  else
-    return -INFINITY;
 }
 
 double invcdf_pareto2(double p, double a, double b) {

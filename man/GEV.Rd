@@ -19,7 +19,7 @@ rgev(n, mu = 0, sigma = 1, xi = 0)
 \arguments{
 \item{x}{vector of quantiles.}
 
-\item{mu, sigma, xi}{location, scale, and shape parameters.}
+\item{mu, sigma, xi}{location, scale, and shape parameters. Scale must be positive.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 
@@ -58,12 +58,12 @@ F(x) = [if xi != 0:] exp(-(1+\xi*z)^{1/\xi})
 
 Quantile function
 \deqn{ F^{-1}(p) = \left\{\begin{array}{ll}
-\mu - \frac{\sigma}{\xi} (1 - (-\log(1-p))^\xi)  & \xi \neq 0 \\
-\mu - \sigma \log(-\log(1-p))                    & \xi = 0
+\mu - \frac{\sigma}{\xi} (1 - (-\log(p))^\xi)  & \xi \neq 0 \\
+\mu - \sigma \log(-\log(p))                    & \xi = 0
 \end{array}\right.
 }{
-F^-1(p) = [if xi != 0:] \mu - \sigma/\xi * (1 - (-log(1-p))^\xi)
-          [else:] \mu - \sigma * log(-log(1-p))
+F^-1(p) = [if xi != 0:] \mu - \sigma/\xi * (1 - (-log(p))^\xi)
+          [else:] \mu - \sigma * log(-log(p))
 }
 
 where \eqn{ z = \frac{x-\mu}{\sigma} }{ z = (x-\mu)/\sigma }.

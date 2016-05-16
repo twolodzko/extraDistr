@@ -18,7 +18,7 @@ rslash(n, mu = 0, sigma = 1)
 
 \item{mu}{vector of locations}
 
-\item{sigma}{vector of scale parameters.}
+\item{sigma}{vector of positive valued scale parameters.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 

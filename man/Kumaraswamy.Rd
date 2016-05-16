@@ -19,7 +19,7 @@ rkumar(n, a = 1, b = 1)
 \arguments{
 \item{x}{vector of quantiles.}
 
-\item{a, b}{parameters.}
+\item{a, b}{positive valued parameters.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 

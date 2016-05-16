@@ -23,7 +23,7 @@ double pmf_bnbinom(double k, double r, double alpha, double beta) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (!isInteger(k))
+  if (!isInteger(k) || k < 0 || std::isinf(k))
     return 0;
   return (R::gammafn(r+k) / (R::gammafn(k+1) * R::gammafn(r))) *
           R::beta(alpha+r, beta+k) / R::beta(alpha, beta);
@@ -34,7 +34,7 @@ double logpmf_bnbinom(double k, double r, double alpha, double beta) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (!isInteger(k))
+  if (!isInteger(k) || k < 0 || std::isinf(k))
     return -INFINITY;
   return (R::lgammafn(r+k) - (R::lgammafn(k+1) + R::lgammafn(r))) +
     R::lbeta(alpha+r, beta+k) - R::lbeta(alpha, beta);
@@ -45,8 +45,10 @@ double cdf_bnbinom(double k, double r, double alpha, double beta) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (!isInteger(k))
+  if (!isInteger(k) || k < 0)
     return 0;
+  if (std::isinf(k))
+    return 1;
   double p_tmp = 0;
   for (int j = 0; j < k+1; j++)
     p_tmp += exp(logpmf_bnbinom(j, r, alpha, beta))*P_NORM_CONST;
@@ -98,7 +100,7 @@ NumericVector cpp_pbnbinom(NumericVector x,
   int Nmax = Rcpp::max(IntegerVector::create(n, nn, na, nb));
   NumericVector p(Nmax);
 
-  if (nn == 1 && na == 1 && nb == 1) {
+  if (nn == 1 && na == 1 && nb == 1 && anyFinite(x)) {
     
     if (alpha[0] < 0 || beta[0] < 0 || floor(size[0]) != size[0]) {
       Rcpp::warning("NaNs produced");
@@ -107,7 +109,7 @@ NumericVector cpp_pbnbinom(NumericVector x,
       return p;
     }
     
-    double mx = (int)floor(max(x));
+    double mx = finite_max(x);
     NumericVector p_tab(mx+1);
     
     p_tab[0] = exp(logpmf_bnbinom(0, size[0], alpha[0], beta[0]))*P_NORM_CONST;
@@ -115,10 +117,13 @@ NumericVector cpp_pbnbinom(NumericVector x,
       p_tab[j] = p_tab[j-1] + exp(logpmf_bnbinom(j, size[0], alpha[0], beta[0]))*P_NORM_CONST;
     
     for (int i = 0; i < n; i++) {
-      if (x[i] == floor(x[i]) && x[i] >= 0)
+      if (std::isinf(x[i])) {
+        p[i] = 1;
+      } else if (x[i] == floor(x[i]) && x[i] >= 0) {
         p[i] = p_tab[(int)x[i]]/P_NORM_CONST;
-      else
+      } else {
         p[i] = 0;
+      }
     }
     
   } else {

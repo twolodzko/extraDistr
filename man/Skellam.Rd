@@ -13,7 +13,7 @@ rskellam(n, mu1, mu2)
 \arguments{
 \item{x}{vector of quantiles.}
 
-\item{mu1, mu2}{parameters.}
+\item{mu1, mu2}{positive valued parameters.}
 
 \item{log}{logical; if TRUE, probabilities p are given as log(p).}
 

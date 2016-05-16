@@ -19,7 +19,8 @@ rdweibull(n, q, beta)
 \arguments{
 \item{x}{vector of quantiles.}
 
-\item{q, beta}{parameters.}
+\item{q, beta}{parameters. Values of \code{beta} need to be positive
+and \code{0 < q < 1}.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 

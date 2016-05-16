@@ -62,10 +62,12 @@ double invcdf_gev(double p, double mu, double sigma, double xi) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
+  if (p == 1)
+    return INFINITY;
   if (xi != 0)
-    return mu - sigma/xi * (1 - pow(-log(1-p), -xi));
+    return mu - sigma/xi * (1 - pow(-log(p), -xi));
   else
-    return mu - sigma * log(-log(1-p));
+    return mu - sigma * log(-log(p));
 }
 
 

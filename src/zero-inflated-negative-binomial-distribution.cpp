@@ -19,7 +19,7 @@ double pdf_zinb(double x, double r, double p, double pi) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x < 0 || !isInteger(x))
+  if (x < 0 || !isInteger(x) || std::isinf(x))
     return 0;
   if (x == 0)
     return pi + (1-pi) * pow(p, r);
@@ -34,8 +34,9 @@ double cdf_zinb(double x, double r, double p, double pi) {
   }
   if (x < 0)
     return 0;
-  else
-    return pi + (1-pi) * R::pnbinom(x, r, p, true, false);
+  if (std::isinf(x))
+    return 1;
+  return pi + (1-pi) * R::pnbinom(x, r, p, true, false);
 }
 
 double invcdf_zinb(double pp, double r, double p, double pi) {
@@ -43,7 +44,7 @@ double invcdf_zinb(double pp, double r, double p, double pi) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (p < pi)
+  if (pp < pi)
     return 0;
   else
     return R::qnbinom((pp - pi) / (1-pi), r, p, true, false);

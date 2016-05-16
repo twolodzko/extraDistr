@@ -39,7 +39,7 @@ double cdf_bernoulli(double x, double prob) {
   return 1;
 }
 
-int invcdf_bernoulli(double p, double prob) {
+double invcdf_bernoulli(double p, double prob) {
   if (prob < 0 || prob > 1 || p < 0 || p > 1) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -96,13 +96,13 @@ NumericVector cpp_pbern(NumericVector x, NumericVector prob,
 
 
 // [[Rcpp::export]]
-IntegerVector cpp_qbern(NumericVector p, NumericVector prob,
+NumericVector cpp_qbern(NumericVector p, NumericVector prob,
                         bool lower_tail = true, bool log_prob = false) {
   
   int n  = p.length();
   int np = prob.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, np));
-  IntegerVector q(Nmax);
+  NumericVector q(Nmax);
   
   if (log_prob)
     for (int i = 0; i < n; i++)
@@ -120,10 +120,10 @@ IntegerVector cpp_qbern(NumericVector p, NumericVector prob,
 
 
 // [[Rcpp::export]]
-IntegerVector cpp_rbern(int n, NumericVector prob) {
+NumericVector cpp_rbern(int n, NumericVector prob) {
   
   int np = prob.length();
-  IntegerVector x(n);
+  NumericVector x(n);
   
   for (int i = 0; i < n; i++)
     x[i] = rng_bernoulli(prob[i % np]);

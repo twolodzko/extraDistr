@@ -24,6 +24,8 @@ double pdf_gumbel(double x, double mu, double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
+  if (std::isinf(x))
+    return 0;
   double z = (x-mu)/sigma;
   return 1/sigma * exp(-(z+exp(-z)));
 }
@@ -51,7 +53,6 @@ NumericVector cpp_dgumbel(NumericVector x,
                           NumericVector mu, NumericVector sigma,
                           bool log_prob = false) {
 
-  double z;
   int n  = x.length();
   int nm = mu.length();
   int ns = sigma.length();
@@ -74,7 +75,6 @@ NumericVector cpp_pgumbel(NumericVector x,
                           NumericVector mu, NumericVector sigma,
                           bool lower_tail = true, bool log_prob = false) {
 
-  double z;
   int n  = x.length();
   int nm = mu.length();
   int ns = sigma.length();
@@ -116,7 +116,7 @@ NumericVector cpp_qgumbel(NumericVector p,
       p[i] = 1-p[i];
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_gumbel(q[i % n], mu[i % nm], sigma[i % ns]);
+    q[i] = invcdf_gumbel(p[i % n], mu[i % nm], sigma[i % ns]);
 
   return q;
 }

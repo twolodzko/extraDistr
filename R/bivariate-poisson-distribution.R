@@ -8,7 +8,7 @@
 #'              matrix (or data.frame) and y may be omitted.
 #' @param n	    number of observations. If \code{length(n) > 1},
 #'              the length is taken to be the number required.
-#' @param a,b,c parameters.
+#' @param a,b,c positive valued parameters.
 #' @param log   logical; if TRUE, probabilities p are given as log(p).
 #'
 #' @details

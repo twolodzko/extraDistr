@@ -21,15 +21,25 @@ double logpmf_gpois(double x, double alpha, double beta) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (!isInteger(x))
-    return 0;
-  if (x >= 0) {
-    double p = beta/(1+beta);
-    return R::lgammafn(alpha+x) - (lfactorial(x) + R::lgammafn(alpha)) +
-           log(p)*x + log(1-p)*alpha;
-  } else {
-    return 0;
+  if (!isInteger(x) || x < 0 || std::isinf(x))
+    return -INFINITY;
+  
+  double p = beta/(1+beta);
+  return R::lgammafn(alpha+x) - (lfactorial(x) + R::lgammafn(alpha)) +
+    log(p)*x + log(1-p)*alpha;
+}
+
+double cdf_gpois(double x, double alpha, double beta) {
+  if (alpha <= 0 || beta <= 0) {
+    Rcpp::warning("NaNs produced");
+    return NAN;
   }
+  if (std::isinf(x))
+    return 1;
+  double p_tmp = 0;
+  for (int j = 0; j < x+1; j++)
+    p_tmp += exp(logpmf_gpois(j, alpha, beta))*P_NORM_CONST;
+  return p_tmp/P_NORM_CONST;
 }
 
 double rng_gpois(double alpha, double beta) {
@@ -75,9 +85,9 @@ NumericVector cpp_pgpois(NumericVector x,
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
   NumericVector p(Nmax);
 
-  if (na == 1 && nb == 1) {
+  if (na == 1 && nb == 1 && anyFinite(x)) {
     
-    double mx = (int)floor(max(x));
+    double mx = finite_max(x);
     NumericVector p_tab(mx+1);
     
     p_tab[0] = exp(logpmf_gpois(0, alpha[0], beta[0]))*P_NORM_CONST;
@@ -85,20 +95,19 @@ NumericVector cpp_pgpois(NumericVector x,
       p_tab[j] = p_tab[j-1] + exp(logpmf_gpois(j, alpha[0], beta[0]))*P_NORM_CONST;
     
     for (int i = 0; i < n; i++) {
-      if (x[i] == floor(x[i]) && x[i] >= 0)
+      if (std::isinf(x[i])) {
+        p[i] = 1;
+      } else if (x[i] == floor(x[i]) && x[i] >= 0) {
         p[i] = p_tab[(int)x[i]]/P_NORM_CONST;
-      else
+      } else {
         p[i] = 0;
+      }
     }
     
   } else {
     
-    for (int i = 0; i < Nmax; i++) {
-      double p_tmp = 0;
-      for (int j = 0; j < x[i % n]+1; j++)
-        p_tmp += exp(logpmf_gpois(j, alpha[i % na], beta[i % nb]))*P_NORM_CONST;
-      p[i] = p_tmp/P_NORM_CONST;
-    }
+    for (int i = 0; i < Nmax; i++)
+      p[i] = cdf_gpois(x[i % n], alpha[i % na], beta[i % nb]);
     
   }
   

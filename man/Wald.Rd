@@ -16,7 +16,7 @@ rwald(n, mu, lambda)
 \arguments{
 \item{x}{vector of quantiles.}
 
-\item{mu, lambda}{location and shape parameters.}
+\item{mu, lambda}{location and shape parameters. Scale must be positive.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 

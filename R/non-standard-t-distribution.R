@@ -10,7 +10,7 @@
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
 #' @param mu              vector of locations
-#' @param sigma           vector of scale parameters.
+#' @param sigma           vector of positive valued scale parameters.
 #' @param df              degrees of freedom (> 0, maybe non-integer). \code{df = Inf} is allowed.
 #' @param log,log.p	      logical; if TRUE, probabilities p are given as log(p).
 #' @param lower.tail	    logical; if TRUE (default), probabilities are \eqn{P[X \le x]}

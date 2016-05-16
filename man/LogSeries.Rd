@@ -19,7 +19,7 @@ rlgser(n, theta)
 \arguments{
 \item{x}{matrix of quantiles.}
 
-\item{theta}{vector; concentration parameter.}
+\item{theta}{vector; concentration parameter; (\code{0 < theta < 1}).}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 

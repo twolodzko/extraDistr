@@ -33,7 +33,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_qbern
-IntegerVector cpp_qbern(NumericVector p, NumericVector prob, bool lower_tail, bool log_prob);
+NumericVector cpp_qbern(NumericVector p, NumericVector prob, bool lower_tail, bool log_prob);
 RcppExport SEXP extraDistr_cpp_qbern(SEXP pSEXP, SEXP probSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
@@ -47,7 +47,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_rbern
-IntegerVector cpp_rbern(int n, NumericVector prob);
+NumericVector cpp_rbern(int n, NumericVector prob);
 RcppExport SEXP extraDistr_cpp_rbern(SEXP nSEXP, SEXP probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
@@ -332,7 +332,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_qcat
-IntegerVector cpp_qcat(NumericVector p, NumericMatrix prob, bool lower_tail, bool log_prob);
+NumericVector cpp_qcat(NumericVector p, NumericMatrix prob, bool lower_tail, bool log_prob);
 RcppExport SEXP extraDistr_cpp_qcat(SEXP pSEXP, SEXP probSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
@@ -426,7 +426,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_qdunif
-IntegerVector cpp_qdunif(NumericVector p, NumericVector min, NumericVector max, bool lower_tail, bool log_prob);
+NumericVector cpp_qdunif(NumericVector p, NumericVector min, NumericVector max, bool lower_tail, bool log_prob);
 RcppExport SEXP extraDistr_cpp_qdunif(SEXP pSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
@@ -441,7 +441,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_rdunif
-IntegerVector cpp_rdunif(int n, NumericVector min, NumericVector max);
+NumericVector cpp_rdunif(int n, NumericVector min, NumericVector max);
 RcppExport SEXP extraDistr_cpp_rdunif(SEXP nSEXP, SEXP minSEXP, SEXP maxSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;

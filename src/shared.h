@@ -6,6 +6,11 @@
 bool tol_equal(double x, double y);
 bool isInteger(double x);
 
+// Dealing with Inf
+
+bool anyFinite(Rcpp::NumericVector x);
+double finite_max(Rcpp::NumericVector x);
+
 // Standard normal
 
 double phi(double x);
@@ -25,6 +30,6 @@ double factorial(double x);
 
 // Random generation for Bernoulli
 
-int rng_bernoulli(double p);
+double rng_bernoulli(double p);
 
 #endif

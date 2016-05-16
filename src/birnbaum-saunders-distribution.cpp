@@ -21,7 +21,7 @@ double pdf_fatigue(double x, double alpha, double beta, double mu) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x <= mu)
+  if (x <= mu || std::isinf(x))
     return 0;
   double z, zb, bz;
   z = x-mu;
@@ -49,6 +49,8 @@ double invcdf_fatigue(double p, double alpha, double beta, double mu) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
+  if (p == 0)
+    return mu;
   double Zp = InvPhi(p);
   return pow(alpha/2*Zp + sqrt(pow(alpha/2*Zp, 2) + 1), 2) * beta + mu;
 }

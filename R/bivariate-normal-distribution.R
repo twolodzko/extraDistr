@@ -11,7 +11,7 @@
 #'                    the length is taken to be the number required.
 #' @param mean1,mean2 vectors of means.
 #' @param sd1,sd2     vectors of standard deviations.
-#' @param cor         vector of correlations; \code{-1 < cor < 1}.
+#' @param cor         vector of correlations (\code{-1 < cor < 1}).
 #' @param log     	  logical; if TRUE, probabilities p are given as log(p).
 #'
 #' @details

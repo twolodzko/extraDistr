@@ -23,7 +23,7 @@ double pdf_lgser(double x, double theta) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x < 1 || !isInteger(x))
+  if (!isInteger(x) || x < 1)
     return 0;
   double a = -1/log(1-theta);
   return a * pow(theta, x) / x;
@@ -37,6 +37,8 @@ double cdf_lgser(double x, double theta) {
   }
   if (x < 1)
     return 0;
+  if (std::isinf(x))
+    return 1;
   
   double a = -1/log(1-theta);
   double b = 0;
@@ -53,6 +55,9 @@ double invcdf_lgser(double p, double theta) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
+  
+  if (p == 1)
+    return INFINITY;
   
   double pk = -theta/log(1-theta);
   int k = 1;

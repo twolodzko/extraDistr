@@ -19,7 +19,7 @@ matrix (or data.frame) and y may be omitted.}
 
 \item{sd1, sd2}{vectors of standard deviations.}
 
-\item{cor}{vector of correlations; \code{-1 < cor < 1}.}
+\item{cor}{vector of correlations (\code{-1 < cor < 1}).}
 
 \item{log}{logical; if TRUE, probabilities p are given as log(p).}
 

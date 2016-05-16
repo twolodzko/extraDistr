@@ -37,7 +37,7 @@ double cdf_dunif(double x, double min, double max) {
   return (floor(x)-min+1)/(max-min+1);
 }
 
-int invcdf_dunif(double p, double min, double max) {
+double invcdf_dunif(double p, double min, double max) {
   if (min > max) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -49,7 +49,7 @@ int invcdf_dunif(double p, double min, double max) {
   return ceil( p*(max-min+1)+min-1 );
 }
 
-int rng_dunif(double min, double max) {
+double rng_dunif(double min, double max) {
   if (min > max) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -118,7 +118,7 @@ NumericVector cpp_pdunif(NumericVector x,
 
 
 // [[Rcpp::export]]
-IntegerVector cpp_qdunif(NumericVector p,
+NumericVector cpp_qdunif(NumericVector p,
                          NumericVector min, NumericVector max,
                          bool lower_tail = true, bool log_prob = false) {
   
@@ -126,7 +126,7 @@ IntegerVector cpp_qdunif(NumericVector p,
   int na = min.length();
   int nb = max.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
-  IntegerVector q(Nmax);
+  NumericVector q(Nmax);
   
   if (log_prob)
     for (int i = 0; i < n; i++)
@@ -144,12 +144,12 @@ IntegerVector cpp_qdunif(NumericVector p,
 
 
 // [[Rcpp::export]]
-IntegerVector cpp_rdunif(int n, NumericVector min, NumericVector max) {
+NumericVector cpp_rdunif(int n, NumericVector min, NumericVector max) {
   
   double u;
   int na = min.length();
   int nb = max.length();
-  IntegerVector x(n);
+  NumericVector x(n);
   
   for (int i = 0; i < n; i++)
     x[i] = rng_dunif(min[i % na], max[i % nb]);

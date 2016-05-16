@@ -19,7 +19,7 @@ rlaplace(n, mu = 0, sigma = 1)
 \arguments{
 \item{x}{vector of quantiles.}
 
-\item{mu, sigma}{location and scale parameters.}
+\item{mu, sigma}{location and scale parameters. Scale must be positive.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 

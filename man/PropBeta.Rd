@@ -21,7 +21,8 @@ rprop(n, size, mean)
 
 \item{size}{precision or number of binomial trials (zero or more).}
 
-\item{mean}{mean proportion or probability of success on each trial.}
+\item{mean}{mean proportion or probability of success on each trial;
+\code{0 < mean < 1}.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 

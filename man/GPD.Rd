@@ -19,7 +19,7 @@ rgpd(n, mu = 0, sigma = 1, xi = 0)
 \arguments{
 \item{x}{vector of quantiles.}
 
-\item{mu, sigma, xi}{location, scale, and shape parameters.}
+\item{mu, sigma, xi}{location, scale, and shape parameters. Scale must be positive.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 

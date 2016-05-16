@@ -20,6 +20,8 @@ double pdf_wald(double x, double mu, double lambda) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
+  if (x <= 0 || std::isinf(x))
+    return 0;
   return sqrt(lambda/(2*PI*pow(x, 3))) *
          exp((-lambda*pow(x-mu, 2))/(2*pow(mu, 2)*x));
 }
@@ -29,6 +31,10 @@ double cdf_wald(double x, double mu, double lambda) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
+  if (x <= 0)
+    return 0;
+  if (x == INFINITY)
+    return 1;
   return Phi(sqrt(lambda/x)*(x/mu-1)) +
          exp((2*lambda)/mu) *
          Phi(-sqrt(lambda/x)*(x/mu+1));

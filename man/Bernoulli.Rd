@@ -19,7 +19,7 @@ rbern(n, prob = 0.5)
 \arguments{
 \item{x}{vector of quantiles.}
 
-\item{prob}{probability of success.}
+\item{prob}{probability of success; (\code{0 < prob < 1}).}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 

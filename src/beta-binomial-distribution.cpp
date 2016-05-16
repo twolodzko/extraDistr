@@ -23,7 +23,7 @@ double pmf_bbinom(double k, double n, double alpha, double beta) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (!isInteger(k))
+  if (!isInteger(k) || k < 0 || k > n)
     return 0;
   return R::choose(n, k) * R::beta(k+alpha, n-k+beta) / R::beta(alpha, beta);
 }
@@ -33,7 +33,7 @@ double logpmf_bbinom(double k, double n, double alpha, double beta) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (!isInteger(k))
+  if (!isInteger(k) || k < 0 || k > n)
     return -INFINITY;
   return R::lchoose(n, k) + R::lbeta(k+alpha, n-k+beta) - R::lbeta(alpha, beta);
 }
@@ -43,8 +43,10 @@ double cdf_bbinom(double k, double n, double alpha, double beta) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (!isInteger(k))
+  if (!isInteger(k) || k < 0)
     return 0;
+  if (k > n)
+    return 1;
   double p_tmp = 0;
   for (int j = 0; j < k+1; j++)
     p_tmp += exp(logpmf_bbinom(j, n, alpha, beta))*P_NORM_CONST;
@@ -105,7 +107,8 @@ NumericVector cpp_pbbinom(NumericVector x,
       return p;
     }
     
-    double mx = (int)floor(max(x));
+    double mx = finite_max(x);
+    mx = std::max(mx, size[0]);
     NumericVector p_tab(mx+1);
     
     p_tab[0] = exp(logpmf_bbinom(0, size[0], alpha[0], beta[0]))*P_NORM_CONST;
@@ -113,10 +116,13 @@ NumericVector cpp_pbbinom(NumericVector x,
       p_tab[j] = p_tab[j-1] + exp(logpmf_bbinom(j, size[0], alpha[0], beta[0]))*P_NORM_CONST;
     
     for (int i = 0; i < n; i++) {
-      if (x[i] == floor(x[i]) && x[i] >= 0)
+      if (x[i] > size[0]) {
+        p[i] = 1;
+      } else if (x[i] == floor(x[i]) && x[i] >= 0) {
         p[i] = p_tab[(int)x[i]]/P_NORM_CONST;
-      else
+      } else {
         p[i] = 0;
+      }
     }
     
   } else {
