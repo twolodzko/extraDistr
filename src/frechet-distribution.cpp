@@ -54,9 +54,13 @@ double invcdf_frechet(double p, double lambda, double mu, double sigma) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dfrechet(NumericVector x,
-                           NumericVector lambda, NumericVector mu, NumericVector sigma,
-                           bool log_prob = false) {
+NumericVector cpp_dfrechet(
+    const NumericVector& x,
+    const NumericVector& lambda,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    bool log_prob = false
+  ) {
 
   int n  = x.length();
   int nl = lambda.length();
@@ -77,9 +81,13 @@ NumericVector cpp_dfrechet(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pfrechet(NumericVector x,
-                           NumericVector lambda, NumericVector mu, NumericVector sigma,
-                           bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_pfrechet(
+    const NumericVector& x,
+    const NumericVector& lambda,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = x.length();
   int nl = lambda.length();
@@ -104,9 +112,13 @@ NumericVector cpp_pfrechet(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qfrechet(NumericVector p,
-                           NumericVector lambda, NumericVector mu, NumericVector sigma,
-                           bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qfrechet(
+    const NumericVector& p,
+    const NumericVector& lambda,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = p.length();
   int nl = lambda.length();
@@ -114,25 +126,30 @@ NumericVector cpp_qfrechet(NumericVector p,
   int ns = sigma.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nl, nm, ns));
   NumericVector q(Nmax);
+  NumericVector pp = Rcpp::clone(p);
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      pp[i] = exp(pp[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
+      pp[i] = 1-pp[i];
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_frechet(p[i % n], lambda[i % nl], mu[i % nm], sigma[i % ns]);
+    q[i] = invcdf_frechet(pp[i % n], lambda[i % nl], mu[i % nm], sigma[i % ns]);
 
   return q;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rfrechet(int n,
-                           NumericVector lambda, NumericVector mu, NumericVector sigma) {
+NumericVector cpp_rfrechet(
+    const int n,
+    const NumericVector& lambda,
+    const NumericVector& mu,
+    const NumericVector& sigma
+  ) {
 
   double u;
   int nl = lambda.length();

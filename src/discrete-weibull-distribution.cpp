@@ -54,9 +54,12 @@ double invcdf_dweibull(double p, double q, double beta) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_ddweibull(NumericVector x,
-                            NumericVector q, NumericVector beta,
-                            bool log_prob = false) {
+NumericVector cpp_ddweibull(
+    const NumericVector& x,
+    const NumericVector& q,
+    const NumericVector& beta,
+    bool log_prob = false
+  ) {
 
   int n  = x.length();
   int nq = q.length();
@@ -76,9 +79,12 @@ NumericVector cpp_ddweibull(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pdweibull(NumericVector x,
-                            NumericVector q, NumericVector beta,
-                            bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_pdweibull(
+    const NumericVector& x,
+    const NumericVector& q,
+    const NumericVector& beta,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = x.length();
   int nq = q.length();
@@ -102,34 +108,41 @@ NumericVector cpp_pdweibull(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qdweibull(NumericVector p,
-                            NumericVector q, NumericVector beta,
-                            bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qdweibull(
+    const NumericVector& p,
+    const NumericVector& q,
+    const NumericVector& beta,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = p.length();
   int nq = q.length();
   int nb = beta.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nq, nb));
   NumericVector x(Nmax);
+  NumericVector pp = Rcpp::clone(p);
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      pp[i] = exp(pp[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
+      pp[i] = 1-pp[i];
 
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_dweibull(p[i % n], q[i % nq], beta[i % nb]);
+    x[i] = invcdf_dweibull(pp[i % n], q[i % nq], beta[i % nb]);
 
   return x;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rdweibull(int n,
-                            NumericVector q, NumericVector beta) {
+NumericVector cpp_rdweibull(
+    const int n,
+    const NumericVector& q,
+    const NumericVector& beta
+  ) {
 
   double u;
   int nq = q.length();

@@ -76,11 +76,14 @@ double invcdf_gpd(double p, double mu, double sigma, double xi) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dgpd(NumericVector x,
-                       NumericVector mu, NumericVector sigma, NumericVector xi,
-                       bool log_prob = false) {
+NumericVector cpp_dgpd(
+    const NumericVector& x,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    const NumericVector& xi,
+    bool log_prob = false
+  ) {
 
-  double z;
   int n  = x.length();
   int nm = mu.length();
   int ns = sigma.length();
@@ -100,11 +103,14 @@ NumericVector cpp_dgpd(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pgpd(NumericVector x,
-                       NumericVector mu, NumericVector sigma, NumericVector xi,
-                       bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_pgpd(
+    const NumericVector& x,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    const NumericVector& xi,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
-  double z;
   int n  = x.length();
   int nm = mu.length();
   int ns = sigma.length();
@@ -128,9 +134,13 @@ NumericVector cpp_pgpd(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qgpd(NumericVector p,
-                       NumericVector mu, NumericVector sigma, NumericVector xi,
-                       bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qgpd(
+    const NumericVector& p,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    const NumericVector& xi,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = p.length();
   int nm = mu.length();
@@ -138,25 +148,30 @@ NumericVector cpp_qgpd(NumericVector p,
   int nx = xi.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, nx));
   NumericVector q(Nmax);
+  NumericVector pp = Rcpp::clone(p);
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      pp[i] = exp(p[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
+      pp[i] = 1-pp[i];
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_gpd(p[i % n], mu[i % nm], sigma[i % ns], xi[i % nx]);
+    q[i] = invcdf_gpd(pp[i % n], mu[i % nm], sigma[i % ns], xi[i % nx]);
 
   return q;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rgpd(int n,
-                       NumericVector mu, NumericVector sigma, NumericVector xi) {
+NumericVector cpp_rgpd(
+    const int n,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    const NumericVector& xi
+  ) {
 
   double u;
   int nm = mu.length();

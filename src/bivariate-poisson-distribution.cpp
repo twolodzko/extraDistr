@@ -74,9 +74,14 @@ double logpmf_bpois(double x, double y, double a, double b, double c) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dbpois(NumericVector x, NumericVector y,
-                         NumericVector a, NumericVector b, NumericVector c,
-                         bool log_prob = false) {
+NumericVector cpp_dbpois(
+    const NumericVector& x,
+    const NumericVector& y,
+    const NumericVector& a,
+    const NumericVector& b,
+    const NumericVector& c,
+    bool log_prob = false
+  ) {
   
   int nx = x.length();
   int ny = y.length();

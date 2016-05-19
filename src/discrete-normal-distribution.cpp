@@ -28,9 +28,12 @@ double pmf_dnorm(double x, double mu, double sigma) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_ddnorm(NumericVector x,
-                         NumericVector mu, NumericVector sigma,
-                         bool log_prob = false) {
+NumericVector cpp_ddnorm(
+    const NumericVector& x,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    bool log_prob = false
+  ) {
   
   int n  = x.length();
   int nm = mu.length();

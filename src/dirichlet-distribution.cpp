@@ -17,9 +17,11 @@ using namespace Rcpp;
 
 
 // [[Rcpp::export]]
-NumericVector cpp_ddirichlet(NumericMatrix x,
-                             NumericMatrix alpha,
-                             bool log_prob = false) {
+NumericVector cpp_ddirichlet(
+    const NumericMatrix& x,
+    const NumericMatrix& alpha,
+    bool log_prob = false
+  ) {
 
   int n = x.nrow();
   int m = x.ncol();
@@ -71,8 +73,10 @@ NumericVector cpp_ddirichlet(NumericMatrix x,
 
 
 // [[Rcpp::export]]
-NumericMatrix cpp_rdirichlet(int n,
-                             NumericMatrix alpha) {
+NumericMatrix cpp_rdirichlet(
+    const int n,
+    const NumericMatrix& alpha
+  ) {
 
   int k = alpha.ncol();
   int na = alpha.nrow();

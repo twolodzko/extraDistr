@@ -64,9 +64,13 @@ double rng_zinb(double r, double p, double pi) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dzinb(NumericVector x,
-                        NumericVector size, NumericVector prob, NumericVector pi,
-                        bool log_prob = false) {
+NumericVector cpp_dzinb(
+    const NumericVector& x,
+    const NumericVector& size,
+    const NumericVector& prob,
+    const NumericVector& pi,
+    bool log_prob = false
+  ) {
   
   int n  = x.length();
   int npi = pi.length();
@@ -87,9 +91,13 @@ NumericVector cpp_dzinb(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pzinb(NumericVector x,
-                        NumericVector size, NumericVector prob, NumericVector pi,
-                        bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_pzinb(
+    const NumericVector& x,
+    const NumericVector& size,
+    const NumericVector& prob,
+    const NumericVector& pi,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n  = x.length();
   int npi = pi.length();
@@ -114,9 +122,13 @@ NumericVector cpp_pzinb(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qzinb(NumericVector p,
-                       NumericVector size, NumericVector prob, NumericVector pi,
-                       bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qzinb(
+    const NumericVector& p,
+    const NumericVector& size,
+    const NumericVector& prob,
+    const NumericVector& pi,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n  = p.length();
   int npi = pi.length();
@@ -124,25 +136,30 @@ NumericVector cpp_qzinb(NumericVector p,
   int np = prob.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, npi, ns, np));
   NumericVector x(Nmax);
+  NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      pp[i] = exp(pp[i]);
   
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
+      pp[i] = 1-pp[i];
   
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_zinb(p[i % n], size[i % ns], prob[i % np], pi[i % np]);
+    x[i] = invcdf_zinb(pp[i % n], size[i % ns], prob[i % np], pi[i % np]);
   
   return x;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rzinb(int n,
-                        NumericVector size, NumericVector prob, NumericVector pi) {
+NumericVector cpp_rzinb(
+    const int n,
+    const NumericVector& size,
+    const NumericVector& prob,
+    const NumericVector& pi
+  ) {
   
   int npi = pi.length();
   int ns = size.length();

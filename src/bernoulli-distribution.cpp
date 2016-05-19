@@ -52,8 +52,11 @@ double invcdf_bernoulli(double p, double prob) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dbern(NumericVector x, NumericVector prob,
-                        bool log_prob = false) {
+NumericVector cpp_dbern(
+    const NumericVector& x,
+    const NumericVector& prob,
+    bool log_prob = false
+  ) {
   
   int n  = x.length();
   int np = prob.length();
@@ -72,8 +75,11 @@ NumericVector cpp_dbern(NumericVector x, NumericVector prob,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pbern(NumericVector x, NumericVector prob,
-                        bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_pbern(
+    const NumericVector& x,
+    const NumericVector& prob,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n  = x.length();
   int np = prob.length();
@@ -96,31 +102,38 @@ NumericVector cpp_pbern(NumericVector x, NumericVector prob,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qbern(NumericVector p, NumericVector prob,
-                        bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qbern(
+    const NumericVector& p,
+    const NumericVector& prob,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n  = p.length();
   int np = prob.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, np));
   NumericVector q(Nmax);
+  NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      pp[i] = exp(pp[i]);
   
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
+      pp[i] = 1-pp[i];
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_bernoulli(p[i % n], prob[i % np]);
+    q[i] = invcdf_bernoulli(pp[i % n], prob[i % np]);
   
   return q;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rbern(int n, NumericVector prob) {
+NumericVector cpp_rbern(
+    const int n,
+    const NumericVector& prob
+  ) {
   
   int np = prob.length();
   NumericVector x(n);

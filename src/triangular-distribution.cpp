@@ -82,9 +82,13 @@ double rng_triangular(double a, double b, double c) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dtriang(NumericVector x,
-                          NumericVector a, NumericVector b, NumericVector c,
-                          bool log_prob = false) {
+NumericVector cpp_dtriang(
+    const NumericVector& x,
+    const NumericVector& a,
+    const NumericVector& b,
+    const NumericVector& c,
+    bool log_prob = false
+  ) {
 
   int n = x.length();
   int na = a.length();
@@ -105,9 +109,13 @@ NumericVector cpp_dtriang(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_ptriang(NumericVector x,
-                          NumericVector a, NumericVector b, NumericVector c,
-                          bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_ptriang(
+    const NumericVector& x,
+    const NumericVector& a,
+    const NumericVector& b,
+    const NumericVector& c,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = x.length();
   int na = a.length();
@@ -132,9 +140,13 @@ NumericVector cpp_ptriang(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qtriang(NumericVector p,
-                          NumericVector a, NumericVector b, NumericVector c,
-                          bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qtriang(
+    const NumericVector& p,
+    const NumericVector& a,
+    const NumericVector& b,
+    const NumericVector& c,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = p.length();
   int na = a.length();
@@ -142,25 +154,30 @@ NumericVector cpp_qtriang(NumericVector p,
   int nc = c.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb, nc));
   NumericVector q(Nmax);
+  NumericVector pp = Rcpp::clone(p);
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      pp[i] = exp(pp[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
+      pp[i] = 1-pp[i];
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_triangular(p[i % n], a[i % na], b[i % nb], c[i % nc]);
+    q[i] = invcdf_triangular(pp[i % n], a[i % na], b[i % nb], c[i % nc]);
 
   return q;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rtriang(int n,
-                          NumericVector a, NumericVector b, NumericVector c) {
+NumericVector cpp_rtriang(
+    const int n,
+    const NumericVector& a,
+    const NumericVector& b,
+    const NumericVector& c
+  ) {
 
   int na = a.length();
   int nb = b.length();

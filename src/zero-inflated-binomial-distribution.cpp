@@ -64,9 +64,13 @@ double rng_zib(double n, double p, double pi) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dzib(NumericVector x,
-                       NumericVector size, NumericVector prob, NumericVector pi,
-                       bool log_prob = false) {
+NumericVector cpp_dzib(
+    const NumericVector& x,
+    const NumericVector& size,
+    const NumericVector& prob,
+    const NumericVector& pi,
+    bool log_prob = false
+  ) {
   
   int n  = x.length();
   int npi = pi.length();
@@ -87,9 +91,13 @@ NumericVector cpp_dzib(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pzib(NumericVector x,
-                       NumericVector size, NumericVector prob, NumericVector pi,
-                       bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_pzib(
+    const NumericVector& x,
+    const NumericVector& size,
+    const NumericVector& prob,
+    const NumericVector& pi,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n  = x.length();
   int npi = pi.length();
@@ -114,9 +122,13 @@ NumericVector cpp_pzib(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qzib(NumericVector p,
-                       NumericVector size, NumericVector prob, NumericVector pi,
-                       bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qzib(
+    const NumericVector& p,
+    const NumericVector& size,
+    const NumericVector& prob,
+    const NumericVector& pi,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n  = p.length();
   int npi = pi.length();
@@ -124,25 +136,30 @@ NumericVector cpp_qzib(NumericVector p,
   int np = prob.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, npi, ns, np));
   NumericVector x(Nmax);
+  NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      pp[i] = exp(pp[i]);
   
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
+      pp[i] = 1-pp[i];
   
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_zib(p[i % n], size[i % ns], prob[i % np], pi[i % np]);
+    x[i] = invcdf_zib(pp[i % n], size[i % ns], prob[i % np], pi[i % np]);
   
   return x;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rzib(int n,
-                       NumericVector size, NumericVector prob, NumericVector pi) {
+NumericVector cpp_rzib(
+    const int n,
+    const NumericVector& size,
+    const NumericVector& prob,
+    const NumericVector& pi
+  ) {
   
   int npi = pi.length();
   int ns = size.length();

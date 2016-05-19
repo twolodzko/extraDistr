@@ -66,9 +66,12 @@ double logpdf_gompertz(double x, double a, double b) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dgompertz(NumericVector x,
-                            NumericVector a, NumericVector b,
-                            bool log_prob = false) {
+NumericVector cpp_dgompertz(
+    const NumericVector& x,
+    const NumericVector& a,
+    const NumericVector& b,
+    bool log_prob = false
+  ) {
 
   int n  = x.length();
   int na = a.length();
@@ -88,9 +91,12 @@ NumericVector cpp_dgompertz(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pgompertz(NumericVector x,
-                            NumericVector a, NumericVector b,
-                            bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_pgompertz(
+    const NumericVector& x,
+    const NumericVector& a,
+    const NumericVector& b,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = x.length();
   int na = a.length();
@@ -114,34 +120,41 @@ NumericVector cpp_pgompertz(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qgompertz(NumericVector p,
-                            NumericVector a, NumericVector b,
-                            bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qgompertz(
+    const NumericVector& p,
+    const NumericVector& a,
+    const NumericVector& b,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = p.length();
   int na = a.length();
   int nb = b.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
   NumericVector q(Nmax);
-
+  NumericVector pp = Rcpp::clone(p);
+  
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      pp[i] = exp(pp[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
+      pp[i] = 1-pp[i];
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_gompertz(p[i % n], a[i % na], b[i % nb]);
+    q[i] = invcdf_gompertz(pp[i % n], a[i % na], b[i % nb]);
 
   return q;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rgompertz(int n,
-                            NumericVector a, NumericVector b) {
+NumericVector cpp_rgompertz(
+    const int n,
+    const NumericVector& a,
+    const NumericVector& b
+  ) {
 
   double u;
   int na = a.length();

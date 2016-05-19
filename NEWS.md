@@ -1,4 +1,8 @@
 
+### 1.6.7
+
+* Improvements in the c++ code
+
 ### 1.6.6
 
 * Improvements in documentation

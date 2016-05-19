@@ -58,9 +58,12 @@ double invcdf_lomax(double p, double lambda, double kappa) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dlomax(NumericVector x,
-                         NumericVector lambda, NumericVector kappa,
-                         bool log_prob = false) {
+NumericVector cpp_dlomax(
+    const NumericVector& x,
+    const NumericVector& lambda,
+    const NumericVector& kappa,
+    bool log_prob = false
+  ) {
 
   int n = x.length();
   int nl = lambda.length();
@@ -80,9 +83,12 @@ NumericVector cpp_dlomax(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_plomax(NumericVector x,
-                         NumericVector lambda, NumericVector kappa,
-                         bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_plomax(
+    const NumericVector& x,
+    const NumericVector& lambda,
+    const NumericVector& kappa,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = x.length();
   int nl = lambda.length();
@@ -106,34 +112,41 @@ NumericVector cpp_plomax(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qlomax(NumericVector p,
-                         NumericVector lambda, NumericVector kappa,
-                         bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qlomax(
+    const NumericVector& p,
+    const NumericVector& lambda,
+    const NumericVector& kappa,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = p.length();
   int nl = lambda.length();
   int nk = kappa.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nl, nk));
   NumericVector q(Nmax);
+  NumericVector pp = Rcpp::clone(p);
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      pp[i] = exp(pp[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
+      pp[i] = 1-pp[i];
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_lomax(p[i % n], lambda[i % nl], kappa[i % nk]);
+    q[i] = invcdf_lomax(pp[i % n], lambda[i % nl], kappa[i % nk]);
 
   return q;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rlomax(int n,
-                         NumericVector lambda, NumericVector kappa) {
+NumericVector cpp_rlomax(
+    const int n,
+    const NumericVector& lambda,
+    const NumericVector& kappa
+  ) {
 
   double u;
   int nl = lambda.length();

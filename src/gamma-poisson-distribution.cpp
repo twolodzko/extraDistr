@@ -53,9 +53,12 @@ double rng_gpois(double alpha, double beta) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dgpois(NumericVector x,
-                         NumericVector alpha, NumericVector beta,
-                         bool log_prob = false) {
+NumericVector cpp_dgpois(
+    const NumericVector& x,
+    const NumericVector& alpha,
+    const NumericVector& beta,
+    bool log_prob = false
+  ) {
 
   int n  = x.length();
   int na = alpha.length();
@@ -75,9 +78,12 @@ NumericVector cpp_dgpois(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pgpois(NumericVector x,
-                         NumericVector alpha, NumericVector beta,
-                         bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_pgpois(
+    const NumericVector& x,
+    const NumericVector& alpha,
+    const NumericVector& beta,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = x.length();
   int na = alpha.length();
@@ -124,8 +130,11 @@ NumericVector cpp_pgpois(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rgpois(int n,
-                         NumericVector alpha, NumericVector beta) {
+NumericVector cpp_rgpois(
+    const int n,
+    const NumericVector& alpha,
+    const NumericVector& beta
+  ) {
 
   int na = alpha.length();
   int nb = beta.length();

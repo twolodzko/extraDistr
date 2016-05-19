@@ -49,9 +49,12 @@ double invcdf_gumbel(double p, double mu, double sigma) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dgumbel(NumericVector x,
-                          NumericVector mu, NumericVector sigma,
-                          bool log_prob = false) {
+NumericVector cpp_dgumbel(
+    const NumericVector& x,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    bool log_prob = false
+  ) {
 
   int n  = x.length();
   int nm = mu.length();
@@ -71,9 +74,12 @@ NumericVector cpp_dgumbel(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pgumbel(NumericVector x,
-                          NumericVector mu, NumericVector sigma,
-                          bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_pgumbel(
+    const NumericVector& x,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = x.length();
   int nm = mu.length();
@@ -97,34 +103,41 @@ NumericVector cpp_pgumbel(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qgumbel(NumericVector p,
-                          NumericVector mu, NumericVector sigma,
-                          bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qgumbel(
+    const NumericVector& p,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = p.length();
   int nm = mu.length();
   int ns = sigma.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
   NumericVector q(Nmax);
+  NumericVector pp = Rcpp::clone(p);
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      pp[i] = exp(pp[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
+      pp[i] = 1-pp[i];
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_gumbel(p[i % n], mu[i % nm], sigma[i % ns]);
+    q[i] = invcdf_gumbel(pp[i % n], mu[i % nm], sigma[i % ns]);
 
   return q;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rgumbel(int n,
-                          NumericVector mu, NumericVector sigma) {
+NumericVector cpp_rgumbel(
+    const int n,
+    const NumericVector& mu,
+    const NumericVector& sigma
+  ) {
 
   double u;
   int nm = mu.length();

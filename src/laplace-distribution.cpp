@@ -64,9 +64,12 @@ double rng_laplace(double mu, double sigma) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dlaplace(NumericVector x,
-                           NumericVector mu, NumericVector sigma,
-                           bool log_prob = false) {
+NumericVector cpp_dlaplace(
+    const NumericVector& x,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    bool log_prob = false
+  ) {
 
   int n  = x.length();
   int nm = mu.length();
@@ -86,9 +89,12 @@ NumericVector cpp_dlaplace(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_plaplace(NumericVector x,
-                           NumericVector mu, NumericVector sigma,
-                           bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_plaplace(
+    const NumericVector& x,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = x.length();
   int nm = mu.length();
@@ -112,34 +118,41 @@ NumericVector cpp_plaplace(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qlaplace(NumericVector p,
-                           NumericVector mu, NumericVector sigma,
-                           bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qlaplace(
+    const NumericVector& p,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = p.length();
   int nm = mu.length();
   int ns = sigma.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
   NumericVector q(Nmax);
+  NumericVector pp = Rcpp::clone(p);
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      pp[i] = exp(pp[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
+      pp[i] = 1-pp[i];
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_laplace(p[i % n], mu[i % nm], sigma[i % ns]);
+    q[i] = invcdf_laplace(pp[i % n], mu[i % nm], sigma[i % ns]);
 
   return q;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rlaplace(int n,
-                           NumericVector mu, NumericVector sigma) {
+NumericVector cpp_rlaplace(
+    const int n,
+    const NumericVector& mu,
+    const NumericVector& sigma
+  ) {
 
   int nm = mu.length();
   int ns = sigma.length();

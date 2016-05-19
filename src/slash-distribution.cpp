@@ -47,9 +47,12 @@ double rng_slash(double mu, double sigma) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dslash(NumericVector x,
-                       NumericVector mu, NumericVector sigma,
-                       bool log_prob = false) {
+NumericVector cpp_dslash(
+    const NumericVector& x,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    bool log_prob = false
+  ) {
   
   int n  = x.length();
   int nm = mu.length();
@@ -69,9 +72,12 @@ NumericVector cpp_dslash(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pslash(NumericVector x,
-                       NumericVector mu, NumericVector sigma,
-                       bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_pslash(
+    const NumericVector& x,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n  = x.length();
   int nm = mu.length();
@@ -95,10 +101,12 @@ NumericVector cpp_pslash(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rslash(int n,
-                         NumericVector mu, NumericVector sigma) {
+NumericVector cpp_rslash(
+    const int n,
+    const NumericVector& mu,
+    const NumericVector& sigma
+  ) {
   
-  double u;
   int nm = mu.length();
   int ns = sigma.length();
   NumericVector x(n);

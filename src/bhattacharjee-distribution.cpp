@@ -66,9 +66,13 @@ double rng_bhattacharjee(double mu, double sigma, double a) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dbhatt(NumericVector x,
-                         NumericVector mu, NumericVector sigma, NumericVector a,
-                         bool log_prob = false) {
+NumericVector cpp_dbhatt(
+    const NumericVector& x,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    const NumericVector& a,
+    bool log_prob = false
+  ) {
   
   int n  = x.length();
   int nm = mu.length();
@@ -89,9 +93,13 @@ NumericVector cpp_dbhatt(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pbhatt(NumericVector x,
-                         NumericVector mu, NumericVector sigma, NumericVector a,
-                         bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_pbhatt(
+    const NumericVector& x,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    const NumericVector& a,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n  = x.length();
   int nm = mu.length();
@@ -116,8 +124,12 @@ NumericVector cpp_pbhatt(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rbhatt(int n,
-                         NumericVector mu, NumericVector sigma, NumericVector a) {
+NumericVector cpp_rbhatt(
+    const int n,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    const NumericVector& a
+  ) {
   
   int nm = mu.length();
   int ns = sigma.length();

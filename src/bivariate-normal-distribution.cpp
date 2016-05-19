@@ -75,11 +75,16 @@ NumericVector rng_bnorm(double mu1, double mu2,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dbnorm(NumericVector x, NumericVector y,
-                         NumericVector mu1, NumericVector mu2,
-                         NumericVector sigma1, NumericVector sigma2,
-                         NumericVector rho,
-                         bool log_prob = false) {
+NumericVector cpp_dbnorm(
+    const NumericVector& x,
+    const NumericVector& y,
+    const NumericVector& mu1,
+    const NumericVector& mu2,
+    const NumericVector& sigma1,
+    const NumericVector& sigma2,
+    const NumericVector& rho,
+    bool log_prob = false
+  ) {
 
   int nx  = x.length();
   int ny  = y.length();
@@ -106,10 +111,14 @@ NumericVector cpp_dbnorm(NumericVector x, NumericVector y,
 
 
 // [[Rcpp::export]]
-NumericMatrix cpp_rbnorm(int n,
-                         NumericVector mu1, NumericVector mu2,
-                         NumericVector sigma1, NumericVector sigma2,
-                         NumericVector rho) {
+NumericMatrix cpp_rbnorm(
+    const int n,
+    const NumericVector& mu1,
+    const NumericVector& mu2,
+    const NumericVector& sigma1,
+    const NumericVector& sigma2,
+    const NumericVector& rho
+  ) {
 
   int nm1 = mu1.length();
   int nm2 = mu2.length();

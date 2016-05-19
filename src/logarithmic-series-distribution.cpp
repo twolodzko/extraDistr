@@ -72,9 +72,11 @@ double invcdf_lgser(double p, double theta) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dlgser(NumericVector x,
-                         NumericVector theta,
-                         bool log_prob = false) {
+NumericVector cpp_dlgser(
+    const NumericVector& x,
+    const NumericVector& theta,
+    bool log_prob = false
+  ) {
 
   int n = x.length();
   int nt = theta.length();
@@ -93,9 +95,11 @@ NumericVector cpp_dlgser(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_plgser(NumericVector x,
-                         NumericVector theta,
-                         bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_plgser(
+    const NumericVector& x,
+    const NumericVector& theta,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n = x.length();
   int nt = theta.length();
@@ -118,33 +122,38 @@ NumericVector cpp_plgser(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qlgser(NumericVector p,
-                         NumericVector theta,
-                         bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qlgser(
+    const NumericVector& p,
+    const NumericVector& theta,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n = p.length();
   int nt = theta.length();
   int Nmax = std::max(n, nt);
   NumericVector x(Nmax);
+  NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      pp[i] = exp(pp[i]);
   
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
+      pp[i] = 1-pp[i];
   
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_lgser(p[i % n], theta[i % nt]);
+    x[i] = invcdf_lgser(pp[i % n], theta[i % nt]);
   
   return x;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rlgser(int n,
-                         NumericVector theta) {
+NumericVector cpp_rlgser(
+    const int n,
+    const NumericVector& theta
+  ) {
 
   int nt = theta.length();
   NumericVector x(n);

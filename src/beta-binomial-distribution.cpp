@@ -64,9 +64,13 @@ double rng_bbinom(double n, double alpha, double beta) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dbbinom(NumericVector x,
-                          NumericVector size, NumericVector alpha, NumericVector beta,
-                          bool log_prob = false) {
+NumericVector cpp_dbbinom(
+    const NumericVector& x,
+    const NumericVector& size,
+    const NumericVector& alpha,
+    const NumericVector& beta,
+    bool log_prob = false
+  ) {
 
   int n = x.length();
   int nn = size.length();
@@ -87,9 +91,13 @@ NumericVector cpp_dbbinom(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pbbinom(NumericVector x,
-                          NumericVector size, NumericVector alpha, NumericVector beta,
-                          bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_pbbinom(
+    const NumericVector& x,
+    const NumericVector& size,
+    const NumericVector& alpha,
+    const NumericVector& beta,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n = x.length();
   int nn = size.length();
@@ -145,8 +153,12 @@ NumericVector cpp_pbbinom(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rbbinom(int n,
-                          NumericVector size, NumericVector alpha, NumericVector beta) {
+NumericVector cpp_rbbinom(
+    const int n,
+    const NumericVector& size,
+    const NumericVector& alpha,
+    const NumericVector& beta
+  ) {
 
   int nn = size.length();
   int na = alpha.length();

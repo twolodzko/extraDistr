@@ -72,9 +72,13 @@ double invcdf_gev(double p, double mu, double sigma, double xi) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dgev(NumericVector x,
-                       NumericVector mu, NumericVector sigma, NumericVector xi,
-                       bool log_prob = false) {
+NumericVector cpp_dgev(
+    const NumericVector& x,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    const NumericVector& xi,
+    bool log_prob = false
+  ) {
 
   int n  = x.length();
   int nm = mu.length();
@@ -95,9 +99,13 @@ NumericVector cpp_dgev(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pgev(NumericVector x,
-                       NumericVector mu, NumericVector sigma, NumericVector xi,
-                       bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_pgev(
+    const NumericVector& x,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    const NumericVector& xi,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = x.length();
   int nm = mu.length();
@@ -122,9 +130,13 @@ NumericVector cpp_pgev(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qgev(NumericVector p,
-                       NumericVector mu, NumericVector sigma, NumericVector xi,
-                       bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qgev(
+    const NumericVector& p,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    const NumericVector& xi,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = p.length();
   int nm = mu.length();
@@ -132,25 +144,30 @@ NumericVector cpp_qgev(NumericVector p,
   int nx = xi.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, nx));
   NumericVector q(Nmax);
+  NumericVector pp = Rcpp::clone(p);
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      pp[i] = exp(pp[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
+      pp[i] = 1-pp[i];
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_gev(p[i % n], mu[i % nm], sigma[i % ns], xi[i % nx]);
+    q[i] = invcdf_gev(pp[i % n], mu[i % nm], sigma[i % ns], xi[i % nx]);
 
   return q;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rgev(int n,
-                       NumericVector mu, NumericVector sigma, NumericVector xi) {
+NumericVector cpp_rgev(
+    const int n,
+    const NumericVector& mu,
+    const NumericVector& sigma,
+    const NumericVector& xi
+  ) {
 
   double u;
   int nm = mu.length();

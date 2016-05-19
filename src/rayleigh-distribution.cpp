@@ -49,9 +49,11 @@ double invcdf_rayleigh(double p, double sigma) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_drayleigh(NumericVector x,
-                            NumericVector sigma,
-                            bool log_prob = false) {
+NumericVector cpp_drayleigh(
+    const NumericVector& x,
+    const NumericVector& sigma,
+    bool log_prob = false
+  ) {
 
   int n = x.length();
   int ns = sigma.length();
@@ -70,9 +72,11 @@ NumericVector cpp_drayleigh(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_prayleigh(NumericVector x,
-                            NumericVector sigma,
-                            bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_prayleigh(
+    const NumericVector& x,
+    const NumericVector& sigma,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n = x.length();
   int ns = sigma.length();
@@ -95,33 +99,38 @@ NumericVector cpp_prayleigh(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qrayleigh(NumericVector p,
-                            NumericVector sigma,
-                            bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qrayleigh(
+    const NumericVector& p,
+    const NumericVector& sigma,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = p.length();
   int ns = sigma.length();
   int Nmax = std::max(n, ns);
   NumericVector q(Nmax);
+  NumericVector pp = Rcpp::clone(p);
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      pp[i] = exp(pp[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
+      pp[i] = 1-pp[i];
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_rayleigh(p[i % n], sigma[i % ns]);
+    q[i] = invcdf_rayleigh(pp[i % n], sigma[i % ns]);
 
   return q;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rrayleigh(int n,
-                            NumericVector sigma) {
+NumericVector cpp_rrayleigh(
+    const int n,
+    const NumericVector& sigma
+  ) {
 
   double u;
   int ns = sigma.length();

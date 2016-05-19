@@ -70,9 +70,12 @@ double rng_dunif(double min, double max) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_ddunif(NumericVector x,
-                         NumericVector min, NumericVector max,
-                         bool log_prob = false) {
+NumericVector cpp_ddunif(
+    const NumericVector& x,
+    const NumericVector& min,
+    const NumericVector& max,
+    bool log_prob = false
+  ) {
   
   int n  = x.length();
   int na = min.length();
@@ -92,9 +95,12 @@ NumericVector cpp_ddunif(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pdunif(NumericVector x,
-                         NumericVector min, NumericVector max,
-                         bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_pdunif(
+    const NumericVector& x,
+    const NumericVector& min,
+    const NumericVector& max,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n  = x.length();
   int na = min.length();
@@ -118,35 +124,42 @@ NumericVector cpp_pdunif(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qdunif(NumericVector p,
-                         NumericVector min, NumericVector max,
-                         bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qdunif(
+    const NumericVector& p,
+    const NumericVector& min,
+    const NumericVector& max,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n  = p.length();
   int na = min.length();
   int nb = max.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
   NumericVector q(Nmax);
+  NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      pp[i] = exp(pp[i]);
   
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
+      pp[i] = 1-pp[i];
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_dunif(p[i % n], min[i % na], max[i % nb]);
+    q[i] = invcdf_dunif(pp[i % n], min[i % na], max[i % nb]);
   
   return q;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rdunif(int n, NumericVector min, NumericVector max) {
+NumericVector cpp_rdunif(
+    const int n,
+    const NumericVector& min,
+    const NumericVector& max
+  ) {
   
-  double u;
   int na = min.length();
   int nb = max.length();
   NumericVector x(n);

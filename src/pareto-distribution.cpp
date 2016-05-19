@@ -65,9 +65,12 @@ double invcdf_pareto2(double p, double a, double b) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dpareto(NumericVector x,
-                          NumericVector a, NumericVector b,
-                          bool log_prob = false) {
+NumericVector cpp_dpareto(
+    const NumericVector& x,
+    const NumericVector& a,
+    const NumericVector& b,
+    bool log_prob = false
+  ) {
 
   int n = x.length();
   int na = a.length();
@@ -87,9 +90,12 @@ NumericVector cpp_dpareto(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_ppareto(NumericVector x,
-                          NumericVector a, NumericVector b,
-                          bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_ppareto(
+    const NumericVector& x,
+    const NumericVector& a,
+    const NumericVector& b,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = x.length();
   int na = a.length();
@@ -113,34 +119,41 @@ NumericVector cpp_ppareto(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qpareto(NumericVector p,
-                          NumericVector a, NumericVector b,
-                          bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qpareto(
+    const NumericVector& p,
+    const NumericVector& a,
+    const NumericVector& b,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = p.length();
   int na = a.length();
   int nb = b.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
   NumericVector q(Nmax);
-
+  NumericVector pp = Rcpp::clone(p);
+  
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      pp[i] = exp(pp[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
+      pp[i] = 1-pp[i];
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_pareto(p[i % n], a[i % na], b[i % nb]);
+    q[i] = invcdf_pareto(pp[i % n], a[i % na], b[i % nb]);
 
   return q;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rpareto(int n,
-                          NumericVector a, NumericVector b) {
+NumericVector cpp_rpareto(
+    const int n,
+    const NumericVector& a,
+    const NumericVector& b
+  ) {
 
   double u;
   int na = a.length();

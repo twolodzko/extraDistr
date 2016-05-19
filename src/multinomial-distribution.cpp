@@ -17,9 +17,12 @@ using namespace Rcpp;
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dmnom(NumericMatrix x,
-                        NumericVector size, NumericMatrix prob,
-                        bool log_prob = false) {
+NumericVector cpp_dmnom(
+    const NumericMatrix& x,
+    const NumericVector& size,
+    const NumericMatrix& prob,
+    bool log_prob = false
+  ) {
   
   int n = x.nrow();
   int m = x.ncol();
@@ -78,7 +81,11 @@ NumericVector cpp_dmnom(NumericMatrix x,
 
 
 // [[Rcpp::export]]
-NumericMatrix cpp_rmnom(int n, NumericVector size, NumericMatrix prob) {
+NumericMatrix cpp_rmnom(
+    const int n,
+    const NumericVector& size,
+    const NumericMatrix& prob
+  ) {
   
   int k = prob.ncol();
   int np = prob.nrow();

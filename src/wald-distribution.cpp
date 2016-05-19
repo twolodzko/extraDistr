@@ -57,16 +57,18 @@ double rng_wald(double mu, double lambda) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dwald(NumericVector x,
-                        NumericVector mu, NumericVector lambda,
-                        bool log_prob = false) {
+NumericVector cpp_dwald(
+    const NumericVector& x,
+    const NumericVector& mu,
+    const NumericVector& lambda,
+    bool log_prob = false
+  ) {
   
   int n  = x.length();
   int nm = mu.length();
   int nl = lambda.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, nl));
   NumericVector p(Nmax);
-  double z;
   
   for (int i = 0; i < Nmax; i++)
     p[i] = pdf_wald(x[i % n], mu[i % nm], lambda[i % nl]);
@@ -80,16 +82,18 @@ NumericVector cpp_dwald(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pwald(NumericVector x,
-                        NumericVector mu, NumericVector lambda,
-                        bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_pwald(
+    const NumericVector& x,
+    const NumericVector& mu,
+    const NumericVector& lambda,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n  = x.length();
   int nm = mu.length();
   int nl = lambda.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, nl));
   NumericVector p(Nmax);
-  double z;
   
   for (int i = 0; i < Nmax; i++)
     p[i] = cdf_wald(x[i % n], mu[i % nm], lambda[i % nl]);
@@ -107,8 +111,11 @@ NumericVector cpp_pwald(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rwald(int n,
-                        NumericVector mu, NumericVector lambda) {
+NumericVector cpp_rwald(
+    const int n,
+    const NumericVector& mu,
+    const NumericVector& lambda
+  ) {
   
   int nm = mu.length();
   int nl = lambda.length();

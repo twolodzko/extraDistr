@@ -31,9 +31,12 @@ double rng_skellam(double mu1, double mu2) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dskellam(NumericVector x,
-                           NumericVector mu1, NumericVector mu2,
-                           bool log_prob = false) {
+NumericVector cpp_dskellam(
+    const NumericVector& x,
+    const NumericVector& mu1,
+    const NumericVector& mu2,
+    bool log_prob = false
+  ) {
   
   int nx = x.length();
   int na = mu1.length();
@@ -53,8 +56,11 @@ NumericVector cpp_dskellam(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rskellam(int n,
-                           NumericVector mu1, NumericVector mu2) {
+NumericVector cpp_rskellam(
+    const int n,
+    const NumericVector& mu1,
+    const NumericVector& mu2
+  ) {
   
   int na = mu1.length();
   int nb = mu2.length();

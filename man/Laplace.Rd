@@ -68,7 +68,7 @@ where \eqn{ z = \frac{x-\mu}{\sigma} }{ z = (x-\mu)/\sigma }.
 \examples{
 
 x <- rlaplace(1e5, 5, 16)
-xx <- seq(-100, 100, by = 0.001)
+xx <- seq(-100, 100, by = 0.01)
 hist(x, 100, freq = FALSE)
 lines(xx, dlaplace(xx, 5, 16), col = "red")
 hist(plaplace(x, 5, 16))

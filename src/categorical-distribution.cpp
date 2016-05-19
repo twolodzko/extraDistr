@@ -18,8 +18,11 @@ using namespace Rcpp;
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dcat(NumericVector x, NumericMatrix prob,
-                       bool log_prob = false) {
+NumericVector cpp_dcat(
+    const NumericVector& x,
+    const NumericMatrix& prob,
+    bool log_prob = false
+  ) {
   
   int n  = x.length();
   int np = prob.nrow();
@@ -57,8 +60,11 @@ NumericVector cpp_dcat(NumericVector x, NumericMatrix prob,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pcat(NumericVector x, NumericMatrix prob,
-                       bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_pcat(
+    const NumericVector& x,
+    const NumericMatrix& prob,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n  = x.length();
   int np = prob.nrow();
@@ -115,32 +121,36 @@ NumericVector cpp_pcat(NumericVector x, NumericMatrix prob,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qcat(NumericVector p, NumericMatrix prob,
-                       bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qcat(
+    const NumericVector& p,
+    const NumericMatrix& prob,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n  = p.length();
   int np = prob.nrow();
   int Nmax = Rcpp::max(IntegerVector::create(n, np));
   int k = prob.ncol();
   NumericVector q(Nmax);
+  NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      pp[i] = exp(pp[i]);
     
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
+      pp[i] = 1-pp[i];
     
   for (int i = 0; i < Nmax; i++) {
-    if (p[i] < 0 || p[i] > 1) {
+    if (pp[i] < 0 || pp[i] > 1) {
       Rcpp::warning("NaNs produced");
       q[i] = NAN;
     } else {
       bool wrong_p = false;
       double cs_prob = 0;
       int j = 0;
-      while (cs_prob < p[i]*P_NORM_CONST && j < k) {
+      while (cs_prob < pp[i]*P_NORM_CONST && j < k) {
         if (prob(i % np, j) < 0 || prob(i % np, j) > 1) {
           wrong_p = true;
           break;
@@ -148,7 +158,7 @@ NumericVector cpp_qcat(NumericVector p, NumericMatrix prob,
         cs_prob += prob(i % np, j)*P_NORM_CONST;
         j++;
       }
-      if (p[i] == 0)
+      if (pp[i] == 0)
         q[i] = 1;
       else
         q[i] = j;
@@ -173,7 +183,10 @@ NumericVector cpp_qcat(NumericVector p, NumericMatrix prob,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rcat(int n, NumericMatrix prob) {
+NumericVector cpp_rcat(
+    const int n,
+    const NumericMatrix& prob
+  ) {
   
   double u;
   int np = prob.nrow();

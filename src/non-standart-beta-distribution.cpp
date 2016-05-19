@@ -54,10 +54,14 @@ double rng_nsbeta(double alpha, double beta, double l, double u) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dnsbeta(NumericVector x,
-                          NumericVector alpha, NumericVector beta,
-                          NumericVector lower, NumericVector upper,
-                          bool log_prob = false) {
+NumericVector cpp_dnsbeta(
+    const NumericVector& x,
+    const NumericVector& alpha,
+    const NumericVector& beta,
+    const NumericVector& lower,
+    const NumericVector& upper,
+    bool log_prob = false
+  ) {
   
   int n  = x.length();
   int na = beta.length();
@@ -75,10 +79,14 @@ NumericVector cpp_dnsbeta(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pnsbeta(NumericVector x,
-                          NumericVector alpha, NumericVector beta,
-                          NumericVector lower, NumericVector upper,
-                          bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_pnsbeta(
+    const NumericVector& x,
+    const NumericVector& alpha,
+    const NumericVector& beta,
+    const NumericVector& lower,
+    const NumericVector& upper,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n  = x.length();
   int na = beta.length();
@@ -96,10 +104,14 @@ NumericVector cpp_pnsbeta(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qnsbeta(NumericVector p,
-                          NumericVector alpha, NumericVector beta,
-                          NumericVector lower, NumericVector upper,
-                          bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qnsbeta(
+    const NumericVector& p,
+    const NumericVector& alpha,
+    const NumericVector& beta,
+    const NumericVector& lower,
+    const NumericVector& upper,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n  = p.length();
   int na = beta.length();
@@ -117,9 +129,13 @@ NumericVector cpp_qnsbeta(NumericVector p,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rnsbeta(int n,
-                          NumericVector alpha, NumericVector beta,
-                          NumericVector lower, NumericVector upper) {
+NumericVector cpp_rnsbeta(
+    const int n,
+    const NumericVector& alpha,
+    const NumericVector& beta,
+    const NumericVector& lower,
+    const NumericVector& upper
+  ) {
   
   int na = beta.length();
   int nb = alpha.length();

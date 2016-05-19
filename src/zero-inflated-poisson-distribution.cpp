@@ -64,9 +64,12 @@ double rng_zip(double lambda, double pi) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dzip(NumericVector x,
-                       NumericVector lambda, NumericVector pi,
-                       bool log_prob = false) {
+NumericVector cpp_dzip(
+    const NumericVector& x,
+    const NumericVector& lambda,
+    const NumericVector& pi,
+    bool log_prob = false
+  ) {
   
   int n  = x.length();
   int np = pi.length();
@@ -86,9 +89,12 @@ NumericVector cpp_dzip(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pzip(NumericVector x,
-                       NumericVector lambda, NumericVector pi,
-                       bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_pzip(
+    const NumericVector& x,
+    const NumericVector& lambda,
+    const NumericVector& pi,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n  = x.length();
   int np = pi.length();
@@ -112,34 +118,41 @@ NumericVector cpp_pzip(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qzip(NumericVector p,
-                       NumericVector lambda, NumericVector pi,
-                       bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qzip(
+    const NumericVector& p,
+    const NumericVector& lambda,
+    const NumericVector& pi,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n  = p.length();
   int np = pi.length();
   int nl = lambda.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, np, nl));
   NumericVector x(Nmax);
+  NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      pp[i] = exp(pp[i]);
   
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
+      pp[i] = 1-pp[i];
   
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_zip(p[i % n], lambda[i % nl], pi[i % np]);
+    x[i] = invcdf_zip(pp[i % n], lambda[i % nl], pi[i % np]);
   
   return x;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rzip(int n,
-                       NumericVector lambda, NumericVector pi) {
+NumericVector cpp_rzip(
+    const int n,
+    const NumericVector& lambda,
+    const NumericVector& pi
+  ) {
   
   int np = pi.length();
   int nl = lambda.length();

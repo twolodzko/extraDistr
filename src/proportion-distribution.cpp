@@ -48,9 +48,12 @@ double rng_prop(double size, double mean) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dprop(NumericVector x,
-                        NumericVector size, NumericVector mean,
-                        bool log_prob = false) {
+NumericVector cpp_dprop(
+    const NumericVector& x,
+    const NumericVector& size,
+    const NumericVector& mean,
+    bool log_prob = false
+  ) {
   
   int n  = x.length();
   int nm = mean.length();
@@ -66,9 +69,12 @@ NumericVector cpp_dprop(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pprop(NumericVector x,
-                        NumericVector size, NumericVector mean,
-                        bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_pprop(
+    const NumericVector& x,
+    const NumericVector& size,
+    const NumericVector& mean,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n  = x.length();
   int nm = mean.length();
@@ -84,9 +90,12 @@ NumericVector cpp_pprop(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qprop(NumericVector p,
-                        NumericVector size, NumericVector mean,
-                        bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qprop(
+    const NumericVector& p,
+    const NumericVector& size,
+    const NumericVector& mean,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n  = p.length();
   int nm = mean.length();
@@ -102,8 +111,11 @@ NumericVector cpp_qprop(NumericVector p,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rprop(int n,
-                        NumericVector size, NumericVector mean) {
+NumericVector cpp_rprop(
+    const int n,
+    const NumericVector& size,
+    const NumericVector& mean
+  ) {
   
   int nm = mean.length();
   int ns = size.length();

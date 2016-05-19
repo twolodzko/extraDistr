@@ -19,9 +19,12 @@ using namespace Rcpp;
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dmvhyper(NumericMatrix x,
-                           NumericMatrix n, NumericVector k,
-                           bool log_prob = false) {
+NumericVector cpp_dmvhyper(
+    const NumericMatrix& x,
+    const NumericMatrix& n,
+    const NumericVector& k,
+    bool log_prob = false
+  ) {
   
   int nx = x.nrow();
   int nr = n.nrow();
@@ -81,7 +84,11 @@ NumericVector cpp_dmvhyper(NumericMatrix x,
 
 
 // [[Rcpp::export]]
-NumericMatrix cpp_rmvhyper(int nn, NumericMatrix n, NumericVector k) {
+NumericMatrix cpp_rmvhyper(
+    const int nn,
+    const NumericMatrix& n,
+    const NumericVector& k
+  ) {
   
   int nr = n.nrow();
   int m = n.ncol();

@@ -61,9 +61,12 @@ double logpdf_kumar(double x, double a, double b) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dkumar(NumericVector x,
-                         NumericVector a, NumericVector b,
-                         bool log_prob = false) {
+NumericVector cpp_dkumar(
+    const NumericVector& x,
+    const NumericVector& a,
+    const NumericVector& b,
+    bool log_prob = false
+  ) {
 
   int n  = x.length();
   int na = a.length();
@@ -83,9 +86,12 @@ NumericVector cpp_dkumar(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pkumar(NumericVector x,
-                         NumericVector a, NumericVector b,
-                         bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_pkumar(
+    const NumericVector& x,
+    const NumericVector& a,
+    const NumericVector& b,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = x.length();
   int na = a.length();
@@ -109,34 +115,41 @@ NumericVector cpp_pkumar(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qkumar(NumericVector p,
-                         NumericVector a, NumericVector b,
-                         bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qkumar(
+    const NumericVector& p,
+    const NumericVector& a,
+    const NumericVector& b,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = p.length();
   int na = a.length();
   int nb = b.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
   NumericVector q(Nmax);
+  NumericVector pp = Rcpp::clone(p);
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      pp[i] = exp(pp[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
+      pp[i] = 1-pp[i];
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_kumar(p[i % n], a[i % na], b[i % nb]);
+    q[i] = invcdf_kumar(pp[i % n], a[i % na], b[i % nb]);
 
   return q;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rkumar(int n,
-                         NumericVector a, NumericVector b) {
+NumericVector cpp_rkumar(
+    const int n,
+    const NumericVector& a,
+    const NumericVector& b
+  ) {
 
   double u;
   int na = a.length();

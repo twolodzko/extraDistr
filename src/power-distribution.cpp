@@ -72,9 +72,12 @@ double logcdf_power(double x, double alpha, double beta) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dpower(NumericVector x,
-                         NumericVector alpha, NumericVector beta,
-                         bool log_prob = false) {
+NumericVector cpp_dpower(
+    const NumericVector& x,
+    const NumericVector& alpha,
+    const NumericVector& beta,
+    bool log_prob = false
+  ) {
 
   int n  = x.length();
   int na = alpha.length();
@@ -94,9 +97,12 @@ NumericVector cpp_dpower(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_ppower(NumericVector x,
-                         NumericVector alpha, NumericVector beta,
-                         bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_ppower(
+    const NumericVector& x,
+    const NumericVector& alpha,
+    const NumericVector& beta,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = x.length();
   int na = alpha.length();
@@ -120,34 +126,41 @@ NumericVector cpp_ppower(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qpower(NumericVector p,
-                         NumericVector alpha, NumericVector beta,
-                         bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qpower(
+    const NumericVector& p,
+    const NumericVector& alpha,
+    const NumericVector& beta,
+    bool lower_tail = true, bool log_prob = false
+  ) {
 
   int n  = p.length();
   int na = alpha.length();
   int nb = beta.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
   NumericVector q(Nmax);
+  NumericVector pp = Rcpp::clone(p);
 
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      pp[i] = exp(pp[i]);
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
+      pp[i] = 1-pp[i];
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_power(p[i % n], alpha[i % na], beta[i % nb]);
+    q[i] = invcdf_power(pp[i % n], alpha[i % na], beta[i % nb]);
 
   return q;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rpower(int n,
-                         NumericVector alpha, NumericVector beta) {
+NumericVector cpp_rpower(
+    const int n,
+    const NumericVector& alpha,
+    const NumericVector& beta
+  ) {
 
   double u;
   int na = alpha.length();

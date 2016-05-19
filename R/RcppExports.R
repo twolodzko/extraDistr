@@ -233,6 +233,22 @@ cpp_rgumbel <- function(n, mu, sigma) {
     .Call('extraDistr_cpp_rgumbel', PACKAGE = 'extraDistr', n, mu, sigma)
 }
 
+cpp_dhalf <- function(x, sigma, nu, log_prob = FALSE) {
+    .Call('extraDistr_cpp_dhalf', PACKAGE = 'extraDistr', x, sigma, nu, log_prob)
+}
+
+cpp_phalf <- function(x, sigma, nu, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_phalf', PACKAGE = 'extraDistr', x, sigma, nu, lower_tail, log_prob)
+}
+
+cpp_qhalf <- function(p, sigma, nu, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_qhalf', PACKAGE = 'extraDistr', p, sigma, nu, lower_tail, log_prob)
+}
+
+cpp_rhalf <- function(n, sigma, nu) {
+    .Call('extraDistr_cpp_rhalf', PACKAGE = 'extraDistr', n, sigma, nu)
+}
+
 cpp_dhuber <- function(x, mu, sigma, epsilon, log_prob = FALSE) {
     .Call('extraDistr_cpp_dhuber', PACKAGE = 'extraDistr', x, mu, sigma, epsilon, log_prob)
 }
@@ -333,20 +349,20 @@ cpp_rmvhyper <- function(nn, n, k) {
     .Call('extraDistr_cpp_rmvhyper', PACKAGE = 'extraDistr', nn, n, k)
 }
 
-cpp_dnst <- function(x, df, mu, sigma, log_prob = FALSE) {
-    .Call('extraDistr_cpp_dnst', PACKAGE = 'extraDistr', x, df, mu, sigma, log_prob)
+cpp_dnst <- function(x, nu, mu, sigma, log_prob = FALSE) {
+    .Call('extraDistr_cpp_dnst', PACKAGE = 'extraDistr', x, nu, mu, sigma, log_prob)
 }
 
-cpp_pnst <- function(x, df, mu, sigma, lower_tail = TRUE, log_prob = FALSE) {
-    .Call('extraDistr_cpp_pnst', PACKAGE = 'extraDistr', x, df, mu, sigma, lower_tail, log_prob)
+cpp_pnst <- function(x, nu, mu, sigma, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_pnst', PACKAGE = 'extraDistr', x, nu, mu, sigma, lower_tail, log_prob)
 }
 
-cpp_qnst <- function(p, df, mu, sigma, lower_tail = TRUE, log_prob = FALSE) {
-    .Call('extraDistr_cpp_qnst', PACKAGE = 'extraDistr', p, df, mu, sigma, lower_tail, log_prob)
+cpp_qnst <- function(p, nu, mu, sigma, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_qnst', PACKAGE = 'extraDistr', p, nu, mu, sigma, lower_tail, log_prob)
 }
 
-cpp_rnst <- function(n, df, mu, sigma) {
-    .Call('extraDistr_cpp_rnst', PACKAGE = 'extraDistr', n, df, mu, sigma)
+cpp_rnst <- function(n, nu, mu, sigma) {
+    .Call('extraDistr_cpp_rnst', PACKAGE = 'extraDistr', n, nu, mu, sigma)
 }
 
 cpp_dnsbeta <- function(x, alpha, beta, lower, upper, log_prob = FALSE) {

@@ -33,9 +33,12 @@ double pdf_invgamma(double x, double alpha, double beta) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dinvgamma(NumericVector x,
-                            NumericVector alpha, NumericVector beta,
-                            bool log_prob = false) {
+NumericVector cpp_dinvgamma(
+    const NumericVector& x,
+    const NumericVector& alpha,
+    const NumericVector& beta,
+    bool log_prob = false
+  ) {
 
   int n = x.length();
   int na = alpha.length();

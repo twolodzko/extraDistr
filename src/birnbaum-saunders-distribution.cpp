@@ -66,9 +66,13 @@ double rng_fatigue(double alpha, double beta, double mu) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dfatigue(NumericVector x,
-                           NumericVector alpha, NumericVector beta, NumericVector mu,
-                           bool log_prob = false) {
+NumericVector cpp_dfatigue(
+    const NumericVector& x,
+    const NumericVector& alpha,
+    const NumericVector& beta,
+    const NumericVector& mu,
+    bool log_prob = false
+  ) {
   
   int n  = x.length();
   int na = alpha.length();
@@ -89,9 +93,13 @@ NumericVector cpp_dfatigue(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pfatigue(NumericVector x,
-                           NumericVector alpha, NumericVector beta, NumericVector mu,
-                           bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_pfatigue(
+    const NumericVector& x,
+    const NumericVector& alpha,
+    const NumericVector& beta,
+    const NumericVector& mu,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n  = x.length();
   int na = alpha.length();
@@ -116,9 +124,13 @@ NumericVector cpp_pfatigue(NumericVector x,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qfatigue(NumericVector p,
-                           NumericVector alpha, NumericVector beta, NumericVector mu,
-                           bool lower_tail = true, bool log_prob = false) {
+NumericVector cpp_qfatigue(
+    const NumericVector& p,
+    const NumericVector& alpha,
+    const NumericVector& beta,
+    const NumericVector& mu,
+    bool lower_tail = true, bool log_prob = false
+  ) {
   
   int n  = p.length();
   int na = alpha.length();
@@ -126,25 +138,30 @@ NumericVector cpp_qfatigue(NumericVector p,
   int nm = mu.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb, nm));
   NumericVector q(Nmax);
+  NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
     for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+      pp[i] = exp(pp[i]);
   
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      p[i] = 1-p[i];
+      pp[i] = 1-pp[i];
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_fatigue(p[i % n], alpha[i % na], beta[i % nb], mu[i % nm]);
+    q[i] = invcdf_fatigue(pp[i % n], alpha[i % na], beta[i % nb], mu[i % nm]);
   
   return q;
 }
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rfatigue(int n,
-                           NumericVector alpha, NumericVector beta, NumericVector mu) {
+NumericVector cpp_rfatigue(
+    const int n,
+    const NumericVector& alpha,
+    const NumericVector& beta,
+    const NumericVector& mu
+  ) {
   
   double u;
   int na = alpha.length();
