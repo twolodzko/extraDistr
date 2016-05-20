@@ -850,59 +850,59 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dhalf
-NumericVector cpp_dhalf(const NumericVector& x, const NumericVector& sigma, const NumericVector& nu, bool log_prob);
-RcppExport SEXP extraDistr_cpp_dhalf(SEXP xSEXP, SEXP sigmaSEXP, SEXP nuSEXP, SEXP log_probSEXP) {
+NumericVector cpp_dhalf(const NumericVector& x, const NumericVector& nu, const NumericVector& sigma, bool log_prob);
+RcppExport SEXP extraDistr_cpp_dhalf(SEXP xSEXP, SEXP nuSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type nu(nuSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
-    __result = Rcpp::wrap(cpp_dhalf(x, sigma, nu, log_prob));
+    __result = Rcpp::wrap(cpp_dhalf(x, nu, sigma, log_prob));
     return __result;
 END_RCPP
 }
 // cpp_phalf
-NumericVector cpp_phalf(const NumericVector& x, const NumericVector& sigma, const NumericVector& nu, bool lower_tail, bool log_prob);
-RcppExport SEXP extraDistr_cpp_phalf(SEXP xSEXP, SEXP sigmaSEXP, SEXP nuSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+NumericVector cpp_phalf(const NumericVector& x, const NumericVector& nu, const NumericVector& sigma, bool lower_tail, bool log_prob);
+RcppExport SEXP extraDistr_cpp_phalf(SEXP xSEXP, SEXP nuSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type nu(nuSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
     Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
-    __result = Rcpp::wrap(cpp_phalf(x, sigma, nu, lower_tail, log_prob));
+    __result = Rcpp::wrap(cpp_phalf(x, nu, sigma, lower_tail, log_prob));
     return __result;
 END_RCPP
 }
 // cpp_qhalf
-NumericVector cpp_qhalf(const NumericVector& p, const NumericVector& sigma, const NumericVector& nu, bool lower_tail, bool log_prob);
-RcppExport SEXP extraDistr_cpp_qhalf(SEXP pSEXP, SEXP sigmaSEXP, SEXP nuSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+NumericVector cpp_qhalf(const NumericVector& p, const NumericVector& nu, const NumericVector& sigma, bool lower_tail, bool log_prob);
+RcppExport SEXP extraDistr_cpp_qhalf(SEXP pSEXP, SEXP nuSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type nu(nuSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
     Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
-    __result = Rcpp::wrap(cpp_qhalf(p, sigma, nu, lower_tail, log_prob));
+    __result = Rcpp::wrap(cpp_qhalf(p, nu, sigma, lower_tail, log_prob));
     return __result;
 END_RCPP
 }
 // cpp_rhalf
-NumericVector cpp_rhalf(const int n, const NumericVector& sigma, const NumericVector& nu);
-RcppExport SEXP extraDistr_cpp_rhalf(SEXP nSEXP, SEXP sigmaSEXP, SEXP nuSEXP) {
+NumericVector cpp_rhalf(const int n, const NumericVector& nu, const NumericVector& sigma);
+RcppExport SEXP extraDistr_cpp_rhalf(SEXP nSEXP, SEXP nuSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< const int >::type n(nSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type nu(nuSEXP);
-    __result = Rcpp::wrap(cpp_rhalf(n, sigma, nu));
+    Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
+    __result = Rcpp::wrap(cpp_rhalf(n, nu, sigma));
     return __result;
 END_RCPP
 }

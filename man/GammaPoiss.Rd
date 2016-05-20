@@ -9,12 +9,12 @@
 \usage{
 dgpois(x, shape, rate, scale = 1/rate, log = FALSE)
 
-pgpois(x, shape, rate, scale = 1/rate, lower.tail = TRUE, log.p = FALSE)
+pgpois(q, shape, rate, scale = 1/rate, lower.tail = TRUE, log.p = FALSE)
 
 rgpois(n, shape, rate, scale = 1/rate)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{shape, scale}{shape and scale parameters. Must be positive,
 scale strictly.}

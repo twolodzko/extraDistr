@@ -10,7 +10,7 @@
 \usage{
 dhuber(x, mu = 0, sigma = 1, epsilon = 1.345, log = FALSE)
 
-phuber(x, mu = 0, sigma = 1, epsilon = 1.345, lower.tail = TRUE,
+phuber(q, mu = 0, sigma = 1, epsilon = 1.345, lower.tail = TRUE,
   log.p = FALSE)
 
 qhuber(p, mu = 0, sigma = 1, epsilon = 1.345, lower.tail = TRUE,
@@ -19,7 +19,7 @@ qhuber(p, mu = 0, sigma = 1, epsilon = 1.345, lower.tail = TRUE,
 rhuber(n, mu = 0, sigma = 1, epsilon = 1.345)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{mu, sigma, epsilon}{location, and scale, and shape parameters.
 Scale and shape must be positive.}

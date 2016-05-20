@@ -10,14 +10,14 @@
 \usage{
 dprop(x, size, mean, log = FALSE)
 
-pprop(x, size, mean, lower.tail = TRUE, log.p = FALSE)
+pprop(q, size, mean, lower.tail = TRUE, log.p = FALSE)
 
 qprop(p, size, mean, lower.tail = TRUE, log.p = FALSE)
 
 rprop(n, size, mean)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{size}{precision or number of binomial trials (zero or more).}
 

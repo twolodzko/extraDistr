@@ -10,14 +10,14 @@
 \usage{
 dzib(x, size, prob, pi, log = FALSE)
 
-pzib(x, size, prob, pi, lower.tail = TRUE, log.p = FALSE)
+pzib(q, size, prob, pi, lower.tail = TRUE, log.p = FALSE)
 
 qzib(p, size, prob, pi, lower.tail = TRUE, log.p = FALSE)
 
 rzib(n, size, prob, pi)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{size}{number of trials (zero or more).}
 

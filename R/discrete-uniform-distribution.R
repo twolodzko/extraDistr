@@ -5,7 +5,7 @@
 #' Probability mass function, distribution function, quantile function and random generation
 #' for the Bernoulli distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
@@ -39,8 +39,8 @@ ddunif <- function(x, min, max, log = FALSE) {
 #' @rdname DiscreteUniform
 #' @export
 
-pdunif <- function(x, min, max, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pdunif', PACKAGE = 'extraDistr', x, min, max, lower.tail, log.p)
+pdunif <- function(q, min, max, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_pdunif', PACKAGE = 'extraDistr', q, min, max, lower.tail, log.p)
 }
 
 

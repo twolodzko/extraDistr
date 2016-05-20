@@ -27,6 +27,10 @@ test_that("Zero probabilities for values <0", {
   expect_equal(0, drayleigh(-1, 1))
   expect_equal(0, dwald(-1, 1, 1))
   
+  expect_equal(0, dhcauchy(-1, 1))
+  expect_equal(0, dhnorm(-1, 1))
+  expect_equal(0, dht(-1, 5, 1))
+  
 })
 
 test_that("Zero probabilities for values x < mean", {

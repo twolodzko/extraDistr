@@ -5,7 +5,7 @@
 #' Probability mass function and random generation
 #' for the zero-inflated binomial distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
@@ -54,8 +54,8 @@ dzib <- function(x, size, prob, pi, log = FALSE) {
 #' @rdname ZIB
 #' @export
 
-pzib <- function(x, size, prob, pi, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pzib', PACKAGE = 'extraDistr', x, size, prob, pi, lower.tail, log.p)
+pzib <- function(q, size, prob, pi, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_pzib', PACKAGE = 'extraDistr', q, size, prob, pi, lower.tail, log.p)
 }
 
 

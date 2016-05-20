@@ -5,7 +5,7 @@
 #' Density, distribution function, quantile function and random generation
 #' for the Truncated Normal distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
@@ -80,8 +80,8 @@ dtnorm <- function(x, mu = 0, sigma = 1, a = -Inf, b = Inf, log = FALSE) {
 #' @rdname TruncNormal
 #' @export
 
-ptnorm <- function(x, mu = 0, sigma = 1, a = -Inf, b = Inf, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_ptnorm', PACKAGE = 'extraDistr', x, mu, sigma, a, b, lower.tail, log.p)
+ptnorm <- function(q, mu = 0, sigma = 1, a = -Inf, b = Inf, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_ptnorm', PACKAGE = 'extraDistr', q, mu, sigma, a, b, lower.tail, log.p)
 }
 
 

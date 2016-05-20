@@ -5,7 +5,7 @@
 #' Density, distribution function, quantile function and random generation
 #' for the Frechet distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
@@ -69,8 +69,8 @@ dfrechet <- function(x, lambda = 1, mu = 0, sigma = 1, log = FALSE) {
 #' @rdname Frechet
 #' @export
 
-pfrechet <- function(x, lambda = 1, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pfrechet', PACKAGE = 'extraDistr', x, lambda, mu, sigma, lower.tail, log.p)
+pfrechet <- function(q, lambda = 1, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_pfrechet', PACKAGE = 'extraDistr', q, lambda, mu, sigma, lower.tail, log.p)
 }
 
 

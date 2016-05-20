@@ -10,14 +10,14 @@
 \usage{
 dpareto(x, a = 1, b = 1, log = FALSE)
 
-ppareto(x, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE)
+ppareto(q, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE)
 
 qpareto(p, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE)
 
 rpareto(n, a = 1, b = 1)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{a, b}{positive valued scale and location parameters.}
 

@@ -10,14 +10,14 @@
 \usage{
 dlomax(x, lambda, kappa, log = FALSE)
 
-plomax(x, lambda, kappa, lower.tail = TRUE, log.p = FALSE)
+plomax(q, lambda, kappa, lower.tail = TRUE, log.p = FALSE)
 
 qlomax(p, lambda, kappa, lower.tail = TRUE, log.p = FALSE)
 
 rlomax(n, lambda, kappa)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{lambda, kappa}{positive valued parameters.}
 

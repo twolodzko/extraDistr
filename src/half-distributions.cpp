@@ -55,7 +55,7 @@ double rng_hcauchy(double sigma) {
 
 // Half-t
 
-double pdf_ht(double x, double sigma, double nu) {
+double pdf_ht(double x, double nu, double sigma) {
   if (sigma <= 0 || nu <= 0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -65,17 +65,17 @@ double pdf_ht(double x, double sigma, double nu) {
   return 2 * R::dt(x/sigma, nu, false)/sigma;
 }
 
-double cdf_ht(double x, double sigma, double nu) {
+double cdf_ht(double x, double nu, double sigma) {
   if (sigma <= 0 || nu <= 0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   if (x < 0)
     return 0;
-  return 2 * R::pt(x/sigma, nu, true, false);
+  return 2 * R::pt(x/sigma, nu, true, false) - 1;
 }
 
-double invcdf_ht(double p, double sigma, double nu) {
+double invcdf_ht(double p, double nu, double sigma) {
   if (sigma <= 0 || nu <= 0 || p < 0 || p > 1) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -83,7 +83,7 @@ double invcdf_ht(double p, double sigma, double nu) {
   return R::qt((p+1)/2, nu, true, false) * sigma;
 }
 
-double rng_ht(double sigma, double nu) {
+double rng_ht(double nu, double sigma) {
   if (sigma <= 0 || nu <= 0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -133,8 +133,8 @@ double rng_hnorm(double sigma) {
 // [[Rcpp::export]]
 NumericVector cpp_dhalf(
     const NumericVector& x,
-    const NumericVector& sigma,
     const NumericVector& nu,
+    const NumericVector& sigma,
     bool log_prob = false
   ) {
   
@@ -150,7 +150,7 @@ NumericVector cpp_dhalf(
     } else if (nu[i % nn] == INFINITY) {
       p[i] = pdf_hnorm(x[i % n], sigma[i % ns]);
     } else {
-      p[i] = pdf_ht(x[i % n], sigma[i % ns], nu[i % nn]);
+      p[i] = pdf_ht(x[i % n], nu[i % nn], sigma[i % ns]);
     }
   }
   
@@ -165,8 +165,8 @@ NumericVector cpp_dhalf(
 // [[Rcpp::export]]
 NumericVector cpp_phalf(
     const NumericVector& x,
-    const NumericVector& sigma,
     const NumericVector& nu,
+    const NumericVector& sigma,
     bool lower_tail = true, bool log_prob = false
   ) {
   
@@ -182,7 +182,7 @@ NumericVector cpp_phalf(
     } else if (nu[i % nn] == INFINITY) {
       p[i] = cdf_hnorm(x[i % n], sigma[i % ns]);
     } else {
-      p[i] = cdf_ht(x[i % n], sigma[i % ns], nu[i % nn]);
+      p[i] = cdf_ht(x[i % n], nu[i % nn], sigma[i % ns]);
     }
   }
   
@@ -201,8 +201,8 @@ NumericVector cpp_phalf(
 // [[Rcpp::export]]
 NumericVector cpp_qhalf(
     const NumericVector& p,
-    const NumericVector& sigma,
     const NumericVector& nu,
+    const NumericVector& sigma,
     bool lower_tail = true, bool log_prob = false
   ) {
   
@@ -227,7 +227,7 @@ NumericVector cpp_qhalf(
     } else if (nu[i % nn] == INFINITY) {
       q[i] = invcdf_hnorm(pp[i % n], sigma[i % ns]);
     } else {
-      q[i] = invcdf_ht(pp[i % n], sigma[i % ns], nu[i % nn]);
+      q[i] = invcdf_ht(pp[i % n], nu[i % nn], sigma[i % ns]);
     }
   }
   
@@ -238,8 +238,8 @@ NumericVector cpp_qhalf(
 // [[Rcpp::export]]
 NumericVector cpp_rhalf(
     const int n,
-    const NumericVector& sigma,
-    const NumericVector& nu
+    const NumericVector& nu,
+    const NumericVector& sigma
   ) {
   
   int nn = nu.length();
@@ -252,7 +252,7 @@ NumericVector cpp_rhalf(
     } else if (nu[i % nn] == INFINITY) {
       x[i] = rng_hnorm(sigma[i % ns]);
     } else {
-      x[i] = rng_ht(sigma[i % ns], nu[i % nn]);
+      x[i] = rng_ht(nu[i % nn], sigma[i % ns]);
     }
   }
   

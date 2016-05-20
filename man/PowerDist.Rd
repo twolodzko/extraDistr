@@ -10,14 +10,14 @@
 \usage{
 dpower(x, alpha, beta, log = FALSE)
 
-ppower(x, alpha, beta, lower.tail = TRUE, log.p = FALSE)
+ppower(q, alpha, beta, lower.tail = TRUE, log.p = FALSE)
 
 qpower(p, alpha, beta, lower.tail = TRUE, log.p = FALSE)
 
 rpower(n, alpha, beta)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{alpha, beta}{parameters.}
 

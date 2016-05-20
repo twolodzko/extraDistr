@@ -10,14 +10,14 @@
 \usage{
 dgumbel(x, mu = 0, sigma = 1, log = FALSE)
 
-pgumbel(x, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE)
+pgumbel(q, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE)
 
 qgumbel(p, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE)
 
 rgumbel(n, mu = 0, sigma = 1)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{mu, sigma}{location and scale parameters. Scale must be positive.}
 

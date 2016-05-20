@@ -5,7 +5,7 @@
 #' Density, distribution function, quantile function and random generation
 #' for the Birnbaum-Saunders (fatigue life) distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
@@ -89,8 +89,8 @@ dfatigue <- function(x, alpha, beta = 1, mu = 0, log = FALSE) {
 #' @rdname BirnbaumSaunders
 #' @export
 
-pfatigue <- function(x, alpha, beta = 1, mu = 0, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pfatigue', PACKAGE = 'extraDistr', x, alpha, beta, mu, lower.tail, log.p)
+pfatigue <- function(q, alpha, beta = 1, mu = 0, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_pfatigue', PACKAGE = 'extraDistr', q, alpha, beta, mu, lower.tail, log.p)
 }
 
 

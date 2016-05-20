@@ -233,20 +233,20 @@ cpp_rgumbel <- function(n, mu, sigma) {
     .Call('extraDistr_cpp_rgumbel', PACKAGE = 'extraDistr', n, mu, sigma)
 }
 
-cpp_dhalf <- function(x, sigma, nu, log_prob = FALSE) {
-    .Call('extraDistr_cpp_dhalf', PACKAGE = 'extraDistr', x, sigma, nu, log_prob)
+cpp_dhalf <- function(x, nu, sigma, log_prob = FALSE) {
+    .Call('extraDistr_cpp_dhalf', PACKAGE = 'extraDistr', x, nu, sigma, log_prob)
 }
 
-cpp_phalf <- function(x, sigma, nu, lower_tail = TRUE, log_prob = FALSE) {
-    .Call('extraDistr_cpp_phalf', PACKAGE = 'extraDistr', x, sigma, nu, lower_tail, log_prob)
+cpp_phalf <- function(x, nu, sigma, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_phalf', PACKAGE = 'extraDistr', x, nu, sigma, lower_tail, log_prob)
 }
 
-cpp_qhalf <- function(p, sigma, nu, lower_tail = TRUE, log_prob = FALSE) {
-    .Call('extraDistr_cpp_qhalf', PACKAGE = 'extraDistr', p, sigma, nu, lower_tail, log_prob)
+cpp_qhalf <- function(p, nu, sigma, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_qhalf', PACKAGE = 'extraDistr', p, nu, sigma, lower_tail, log_prob)
 }
 
-cpp_rhalf <- function(n, sigma, nu) {
-    .Call('extraDistr_cpp_rhalf', PACKAGE = 'extraDistr', n, sigma, nu)
+cpp_rhalf <- function(n, nu, sigma) {
+    .Call('extraDistr_cpp_rhalf', PACKAGE = 'extraDistr', n, nu, sigma)
 }
 
 cpp_dhuber <- function(x, mu, sigma, epsilon, log_prob = FALSE) {

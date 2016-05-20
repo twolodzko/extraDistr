@@ -10,7 +10,7 @@
 \usage{
 dnsbeta(x, shape1, shape2, min = 0, max = 1, log = FALSE)
 
-pnsbeta(x, shape1, shape2, min = 0, max = 1, lower.tail = TRUE,
+pnsbeta(q, shape1, shape2, min = 0, max = 1, lower.tail = TRUE,
   log.p = FALSE)
 
 qnsbeta(p, shape1, shape2, min = 0, max = 1, lower.tail = TRUE,
@@ -19,7 +19,7 @@ qnsbeta(p, shape1, shape2, min = 0, max = 1, lower.tail = TRUE,
 rnsbeta(n, shape1, shape2, min = 0, max = 1)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{shape1, shape2}{non-negative parameters of the Beta distribution.}
 

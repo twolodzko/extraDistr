@@ -10,14 +10,14 @@
 \usage{
 dlaplace(x, mu = 0, sigma = 1, log = FALSE)
 
-plaplace(x, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE)
+plaplace(q, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE)
 
 qlaplace(p, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE)
 
 rlaplace(n, mu = 0, sigma = 1)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{mu, sigma}{location and scale parameters. Scale must be positive.}
 

@@ -5,7 +5,7 @@
 #' Density, distribution function, quantile function and random generation
 #' for the "Huber density" distribution.
 #'
-#' @param x 	             vector of quantiles.
+#' @param x,q	             vector of quantiles.
 #' @param p	               vector of probabilities.
 #' @param n	               number of observations. If \code{length(n) > 1},
 #'                         the length is taken to be the number required.
@@ -40,8 +40,8 @@ dhuber <- function(x, mu = 0, sigma = 1, epsilon = 1.345, log = FALSE) {
 #' @rdname Huber
 #' @export
 
-phuber <- function(x, mu = 0, sigma = 1, epsilon = 1.345, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_phuber', PACKAGE = 'extraDistr', x, mu, sigma, epsilon, lower.tail, log.p)
+phuber <- function(q, mu = 0, sigma = 1, epsilon = 1.345, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_phuber', PACKAGE = 'extraDistr', q, mu, sigma, epsilon, lower.tail, log.p)
 }
 
 

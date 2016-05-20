@@ -1,7 +1,15 @@
 
+### 1.6.8
+
+* Added half-t, half-normal and half-Cauchy distributions
+* Minor changes in documentation
+* Changed naming of data-variable from `x` to `q` for CDF's
+* Added inverse-CDF for discrete normal distribution, fixed 
+  random generation
+
 ### 1.6.7
 
-* Improvements in the c++ code
+* Improvements in the C++ code
 
 ### 1.6.6
 

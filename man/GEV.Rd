@@ -10,14 +10,14 @@
 \usage{
 dgev(x, mu = 0, sigma = 1, xi = 0, log = FALSE)
 
-pgev(x, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE)
+pgev(q, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE)
 
 qgev(p, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE)
 
 rgev(n, mu = 0, sigma = 1, xi = 0)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{mu, sigma, xi}{location, scale, and shape parameters. Scale must be positive.}
 

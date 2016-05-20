@@ -10,14 +10,14 @@
 \usage{
 dnst(x, df, mu = 0, sigma = 1, log = FALSE)
 
-pnst(x, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE)
+pnst(q, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE)
 
 qnst(p, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE)
 
 rnst(n, df, mu = 0, sigma = 1)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{df}{degrees of freedom (> 0, maybe non-integer). \code{df = Inf} is allowed.}
 

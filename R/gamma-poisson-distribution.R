@@ -5,7 +5,7 @@
 #' Probability mass function and random generation
 #' for the Gamma-Poisson distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
 #' @param rate	          an alternative way to specify the scale.
@@ -58,8 +58,8 @@ dgpois <- function(x, shape, rate, scale = 1/rate, log = FALSE) {
 #' @rdname GammaPoiss
 #' @export
 
-pgpois <- function(x, shape, rate, scale = 1/rate, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pgpois', PACKAGE = 'extraDistr', x, shape, scale, lower.tail, log.p)
+pgpois <- function(q, shape, rate, scale = 1/rate, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_pgpois', PACKAGE = 'extraDistr', q, shape, scale, lower.tail, log.p)
 }
 
 

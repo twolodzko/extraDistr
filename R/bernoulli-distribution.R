@@ -5,7 +5,7 @@
 #' Probability mass function, distribution function, quantile function and random generation
 #' for the Bernoulli distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
@@ -35,8 +35,8 @@ dbern <- function(x, prob = 0.5, log = FALSE) {
 #' @rdname Bernoulli
 #' @export
 
-pbern <- function(x, prob = 0.5, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pbern', PACKAGE = 'extraDistr', x, prob, lower.tail, log.p)
+pbern <- function(q, prob = 0.5, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_pbern', PACKAGE = 'extraDistr', q, prob, lower.tail, log.p)
 }
 
 

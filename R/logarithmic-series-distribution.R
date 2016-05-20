@@ -5,7 +5,7 @@
 #' Density, distribution function, quantile function and random generation
 #' for the Logarythmic Series distribution.
 #'
-#' @param x               matrix of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
@@ -67,8 +67,8 @@ dlgser <- function(x, theta, log = FALSE) {
 #' @rdname LogSeries
 #' @export
 
-plgser <- function(x, theta, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_plgser', PACKAGE = 'extraDistr', x, theta, lower.tail, log.p)
+plgser <- function(q, theta, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_plgser', PACKAGE = 'extraDistr', q, theta, lower.tail, log.p)
 }
 
 

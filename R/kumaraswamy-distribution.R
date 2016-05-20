@@ -5,7 +5,7 @@
 #' Density, distribution function, quantile function and random generation
 #' for the Kumaraswamy distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
@@ -70,8 +70,8 @@ dkumar <- function(x, a = 1, b = 1, log = FALSE) {
 #' @rdname Kumaraswamy
 #' @export
 
-pkumar <- function(x, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pkumar', PACKAGE = 'extraDistr', x, a, b, lower.tail, log.p)
+pkumar <- function(q, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_pkumar', PACKAGE = 'extraDistr', q, a, b, lower.tail, log.p)
 }
 
 

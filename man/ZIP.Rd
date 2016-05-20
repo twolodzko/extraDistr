@@ -10,14 +10,14 @@
 \usage{
 dzip(x, lambda, pi, log = FALSE)
 
-pzip(x, lambda, pi, lower.tail = TRUE, log.p = FALSE)
+pzip(q, lambda, pi, lower.tail = TRUE, log.p = FALSE)
 
 qzip(p, lambda, pi, lower.tail = TRUE, log.p = FALSE)
 
 rzip(n, lambda, pi)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{lambda}{vector of (non-negative) means.}
 

@@ -5,7 +5,7 @@
 #' Density, distribution function, quantile function and random generation
 #' for the Triangular distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
@@ -88,8 +88,8 @@ dtriang <- function(x, a = -1, b = 1, c = (a+b)/2, log = FALSE) {
 #' @rdname Triangular
 #' @export
 
-ptriang <- function(x, a = -1, b = 1, c = (a+b)/2, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_ptriang', PACKAGE = 'extraDistr', x, a, b, c, lower.tail, log.p)
+ptriang <- function(q, a = -1, b = 1, c = (a+b)/2, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_ptriang', PACKAGE = 'extraDistr', q, a, b, c, lower.tail, log.p)
 }
 
 

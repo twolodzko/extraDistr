@@ -9,12 +9,12 @@
 \usage{
 dbnbinom(x, size, alpha = 1, beta = 1, log = FALSE)
 
-pbnbinom(x, size, alpha = 1, beta = 1, lower.tail = TRUE, log.p = FALSE)
+pbnbinom(q, size, alpha = 1, beta = 1, lower.tail = TRUE, log.p = FALSE)
 
 rbnbinom(n, size, alpha = 1, beta = 1)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{size}{number of trials (zero or more).}
 

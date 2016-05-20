@@ -5,7 +5,7 @@
 #' Probability mass function, distribution function, quantile function and random generation
 #' for the categorical distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
@@ -55,12 +55,12 @@ dcat <- function(x, prob, log = FALSE) {
 #' @rdname Categorical
 #' @export
 
-pcat <- function(x, prob, lower.tail = TRUE, log.p = FALSE) {
+pcat <- function(q, prob, lower.tail = TRUE, log.p = FALSE) {
   if (is.vector(prob))
     prob <- matrix(prob, nrow = 1)
   else if (!is.matrix(prob))
     prob <- as.matrix(prob)
-  .Call('extraDistr_cpp_pcat', PACKAGE = 'extraDistr', as.numeric(x), prob,
+  .Call('extraDistr_cpp_pcat', PACKAGE = 'extraDistr', as.numeric(q), prob,
         lower.tail, log.p)
 }
 

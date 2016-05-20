@@ -10,7 +10,7 @@
 \usage{
 dfrechet(x, lambda = 1, mu = 0, sigma = 1, log = FALSE)
 
-pfrechet(x, lambda = 1, mu = 0, sigma = 1, lower.tail = TRUE,
+pfrechet(q, lambda = 1, mu = 0, sigma = 1, lower.tail = TRUE,
   log.p = FALSE)
 
 qfrechet(p, lambda = 1, mu = 0, sigma = 1, lower.tail = TRUE,
@@ -19,7 +19,7 @@ qfrechet(p, lambda = 1, mu = 0, sigma = 1, lower.tail = TRUE,
 rfrechet(n, lambda = 1, mu = 0, sigma = 1)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{lambda, sigma, mu}{shape, scale, and location parameters.
 Scale and shape must be positive.}

@@ -6,7 +6,7 @@
 \alias{pdweibull}
 \alias{qdweibull}
 \alias{rdweibull}
-\title{Discrete Weibull distribution}
+\title{Discrete Weibull distribution (type I)}
 \usage{
 ddweibull(x, q, beta, log = FALSE)
 
@@ -75,6 +75,15 @@ lines(xx, pdweibull(xx, .32, 1), col = "red", lwd = 2)
 \references{
 Nakagawa, T. and Osaki, S. (1975). The Discrete Weibull Distribution.
 IEEE Transactions on Reliability, R-24, 300-301.
+
+Kulasekera, K.B. (1994).
+Approximate MLE's of the parameters of a discrete Weibull distribution
+with type I censored data.
+Microelectronics Reliability, 34(7), 1185-1188.
+
+Khan, M.A., Khalique, A. and Abouammoh, A.M. (1989).
+On estimating parameters in a discrete Weibull distribution.
+IEEE Transactions on Reliability, 38(3), 348-350.
 }
 \seealso{
 \code{\link[stats]{Weibull}}

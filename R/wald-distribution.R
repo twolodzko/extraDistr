@@ -5,7 +5,7 @@
 #' Density, distribution function and random generation
 #' for the Wald distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
@@ -58,8 +58,8 @@ dwald <- function(x, mu, lambda, log = FALSE) {
 #' @rdname Wald
 #' @export
 
-pwald <- function(x, mu, lambda, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pwald', PACKAGE = 'extraDistr', x, mu, lambda, lower.tail, log.p)
+pwald <- function(q, mu, lambda, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_pwald', PACKAGE = 'extraDistr', q, mu, lambda, lower.tail, log.p)
 }
 
 

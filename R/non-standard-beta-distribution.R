@@ -5,7 +5,7 @@
 #' denoted as \code{min} and \code{max}. By default \code{min=0}
 #' and \code{max=1} what leads to standard beta distribution.
 #' 
-#' @param x             vector of quantiles.
+#' @param x,q	          vector of quantiles.
 #' @param p             vector of probabilities.
 #' @param n             number of observations. If \code{length(n) > 1},
 #'                      the length is taken to be the number required.
@@ -42,8 +42,8 @@ dnsbeta <- function(x, shape1, shape2, min = 0, max = 1, log = FALSE) {
 #' @rdname NSBeta
 #' @export
 
-pnsbeta <- function(x, shape1, shape2, min = 0, max = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pnsbeta', PACKAGE = 'extraDistr', x, shape1, shape2, min, max, lower.tail, log.p)
+pnsbeta <- function(q, shape1, shape2, min = 0, max = 1, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_pnsbeta', PACKAGE = 'extraDistr', q, shape1, shape2, min, max, lower.tail, log.p)
 }
 
 

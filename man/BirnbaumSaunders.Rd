@@ -10,14 +10,14 @@
 \usage{
 dfatigue(x, alpha, beta = 1, mu = 0, log = FALSE)
 
-pfatigue(x, alpha, beta = 1, mu = 0, lower.tail = TRUE, log.p = FALSE)
+pfatigue(q, alpha, beta = 1, mu = 0, lower.tail = TRUE, log.p = FALSE)
 
 qfatigue(p, alpha, beta = 1, mu = 0, lower.tail = TRUE, log.p = FALSE)
 
 rfatigue(n, alpha, beta = 1, mu = 0)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{alpha, beta, mu}{shape, scale and location parameters.
 Scale and shape must be positive.}

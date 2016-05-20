@@ -10,14 +10,14 @@
 \usage{
 dcat(x, prob, log = FALSE)
 
-pcat(x, prob, lower.tail = TRUE, log.p = FALSE)
+pcat(q, prob, lower.tail = TRUE, log.p = FALSE)
 
 qcat(p, prob, lower.tail = TRUE, log.p = FALSE, labels)
 
 rcat(n, prob, labels)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{prob}{vector of length \eqn{k}, or \eqn{k}-column matrix
 of probabilities. Probabilities need to sum up to 1.}

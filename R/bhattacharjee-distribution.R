@@ -5,7 +5,7 @@
 #' Density, distribution function, and random generation for the Bhattacharjee
 #' distribution.
 #'
-#' @param x   	          vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
 #' @param mu,sigma,a	    location, scale and shape parameters.
@@ -70,8 +70,8 @@ dbhatt <- function(x, mu = 0, sigma = 1, a = sigma, log = FALSE) {
 #' @rdname Bhattacharjee
 #' @export
 
-pbhatt <- function(x, mu = 0, sigma = 1, a = sigma, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pbhatt', PACKAGE = 'extraDistr', x, mu, sigma, a, lower.tail, log.p)
+pbhatt <- function(q, mu = 0, sigma = 1, a = sigma, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_pbhatt', PACKAGE = 'extraDistr', q, mu, sigma, a, lower.tail, log.p)
 }
 
 

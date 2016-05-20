@@ -5,7 +5,7 @@
 #' Density, distribution function, quantile function and random generation
 #' for the Rayleigh distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
@@ -70,8 +70,8 @@ drayleigh <- function(x, sigma = 1, log = FALSE) {
 #' @rdname Rayleigh
 #' @export
 
-prayleigh <- function(x, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_prayleigh', PACKAGE = 'extraDistr', x, sigma, lower.tail, log.p)
+prayleigh <- function(q, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_prayleigh', PACKAGE = 'extraDistr', q, sigma, lower.tail, log.p)
 }
 
 

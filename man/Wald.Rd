@@ -9,12 +9,12 @@
 \usage{
 dwald(x, mu, lambda, log = FALSE)
 
-pwald(x, mu, lambda, lower.tail = TRUE, log.p = FALSE)
+pwald(q, mu, lambda, lower.tail = TRUE, log.p = FALSE)
 
 rwald(n, mu, lambda)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{mu, lambda}{location and shape parameters. Scale must be positive.}
 

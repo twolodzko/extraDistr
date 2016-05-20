@@ -9,12 +9,12 @@
 \usage{
 dslash(x, mu = 0, sigma = 1, log = FALSE)
 
-pslash(x, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE)
+pslash(q, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE)
 
 rslash(n, mu = 0, sigma = 1)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{mu}{vector of locations}
 

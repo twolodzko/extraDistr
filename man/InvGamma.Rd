@@ -10,14 +10,14 @@
 \usage{
 dinvgamma(x, alpha, beta = 1, log = FALSE)
 
-pinvgamma(x, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE)
+pinvgamma(q, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE)
 
 qinvgamma(p, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE)
 
 rinvgamma(n, alpha, beta = 1)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{alpha, beta}{positive valued shape and scale parameters.}
 

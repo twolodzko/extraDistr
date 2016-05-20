@@ -5,7 +5,7 @@
 #' Density, distribution function, quantile function and random generation
 #' for the Lomax distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
@@ -62,8 +62,8 @@ dlomax <- function(x, lambda, kappa, log = FALSE) {
 #' @rdname Lomax
 #' @export
 
-plomax <- function(x, lambda, kappa, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_plomax', PACKAGE = 'extraDistr', x, lambda, kappa, lower.tail, log.p)
+plomax <- function(q, lambda, kappa, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_plomax', PACKAGE = 'extraDistr', q, lambda, kappa, lower.tail, log.p)
 }
 
 

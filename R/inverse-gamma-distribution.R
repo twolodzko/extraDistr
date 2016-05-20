@@ -5,7 +5,7 @@
 #' Density, distribution function and random generation
 #' for the Inverse-Gamma distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
@@ -65,8 +65,8 @@ dinvgamma <- function(x, alpha, beta = 1, log = FALSE) {
 #' @rdname InvGamma
 #' @export
 
-pinvgamma <- function(x, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE) {
-  pgamma(1/x, alpha, beta, lower.tail = !lower.tail, log.p = log.p)
+pinvgamma <- function(q, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE) {
+  pgamma(1/q, alpha, beta, lower.tail = !lower.tail, log.p = log.p)
 }
 
 

@@ -10,14 +10,14 @@
 \usage{
 drayleigh(x, sigma = 1, log = FALSE)
 
-prayleigh(x, sigma = 1, lower.tail = TRUE, log.p = FALSE)
+prayleigh(q, sigma = 1, lower.tail = TRUE, log.p = FALSE)
 
 qrayleigh(p, sigma = 1, lower.tail = TRUE, log.p = FALSE)
 
 rrayleigh(n, sigma = 1)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{sigma}{positive valued parameter.}
 

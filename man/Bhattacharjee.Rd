@@ -9,13 +9,13 @@
 \usage{
 dbhatt(x, mu = 0, sigma = 1, a = sigma, log = FALSE)
 
-pbhatt(x, mu = 0, sigma = 1, a = sigma, lower.tail = TRUE,
+pbhatt(q, mu = 0, sigma = 1, a = sigma, lower.tail = TRUE,
   log.p = FALSE)
 
 rbhatt(n, mu = 0, sigma = 1, a = sigma)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{mu, sigma, a}{location, scale and shape parameters.
 Scale and shape must be positive.}

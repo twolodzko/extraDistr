@@ -10,14 +10,14 @@
 \usage{
 dgompertz(x, a = 1, b = 1, log = FALSE)
 
-pgompertz(x, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE)
+pgompertz(q, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE)
 
 qgompertz(p, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE)
 
 rgompertz(n, a = 1, b = 1)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{a, b}{positive valued scale and location parameters.}
 

@@ -5,7 +5,7 @@
 #' Density, distribution function, quantile function and random generation
 #' for the Gumbel distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
@@ -68,8 +68,8 @@ dgumbel <- function(x, mu = 0, sigma = 1, log = FALSE) {
 #' @rdname Gumbel
 #' @export
 
-pgumbel <- function(x, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pgumbel', PACKAGE = 'extraDistr', x, mu, sigma, lower.tail, log.p)
+pgumbel <- function(q, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_pgumbel', PACKAGE = 'extraDistr', q, mu, sigma, lower.tail, log.p)
 }
 
 

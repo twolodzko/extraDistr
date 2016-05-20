@@ -5,7 +5,7 @@
 #' Probability mass function, distribution function and random generation
 #' for discrete normal distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
@@ -53,8 +53,16 @@ ddnorm <- function(x, mean = 0, sd = 1, log = FALSE) {
 #' @rdname DiscreteNormal
 #' @export
 
-pdnorm <- function(x, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE) {
-  pnorm(x, mean, sd, lower.tail, log.p)
+pdnorm <- function(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE) {
+  pnorm(q, mean, sd, lower.tail, log.p)
+}
+
+
+#' @rdname DiscreteNormal
+#' @export
+
+qdnorm <- function(p, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE) {
+  ceiling(qnorm(p, mean, sd, lower.tail, log.p))
 }
 
 
@@ -62,6 +70,6 @@ pdnorm <- function(x, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 rdnorm <- function(n, mean = 0, sd = 1) {
-  round(rnorm(n, mean, sd))
+  ceiling(rnorm(n, mean, sd))
 }
 

@@ -10,14 +10,14 @@
 \usage{
 dinvchisq(x, nu, tau, log = FALSE)
 
-pinvchisq(x, nu, tau, lower.tail = TRUE, log.p = FALSE)
+pinvchisq(q, nu, tau, lower.tail = TRUE, log.p = FALSE)
 
 qinvchisq(p, nu, tau, lower.tail = TRUE, log.p = FALSE)
 
 rinvchisq(n, nu, tau)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{nu}{positive valued shape parameter.}
 

@@ -10,14 +10,14 @@
 \usage{
 dzinb(x, size, prob, pi, log = FALSE)
 
-pzinb(x, size, prob, pi, lower.tail = TRUE, log.p = FALSE)
+pzinb(q, size, prob, pi, lower.tail = TRUE, log.p = FALSE)
 
 qzinb(p, size, prob, pi, lower.tail = TRUE, log.p = FALSE)
 
 rzinb(n, size, prob, pi)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{size}{target for number of successful trials, or dispersion
 parameter (the shape parameter of the gamma mixing

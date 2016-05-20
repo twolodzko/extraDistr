@@ -10,14 +10,14 @@
 \usage{
 dbern(x, prob = 0.5, log = FALSE)
 
-pbern(x, prob = 0.5, lower.tail = TRUE, log.p = FALSE)
+pbern(q, prob = 0.5, lower.tail = TRUE, log.p = FALSE)
 
 qbern(p, prob = 0.5, lower.tail = TRUE, log.p = FALSE)
 
 rbern(n, prob = 0.5)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{prob}{probability of success; (\code{0 < prob < 1}).}
 

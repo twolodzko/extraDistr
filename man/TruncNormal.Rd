@@ -10,7 +10,7 @@
 \usage{
 dtnorm(x, mu = 0, sigma = 1, a = -Inf, b = Inf, log = FALSE)
 
-ptnorm(x, mu = 0, sigma = 1, a = -Inf, b = Inf, lower.tail = TRUE,
+ptnorm(q, mu = 0, sigma = 1, a = -Inf, b = Inf, lower.tail = TRUE,
   log.p = FALSE)
 
 qtnorm(p, mu = 0, sigma = 1, a = -Inf, b = Inf, lower.tail = TRUE,
@@ -19,7 +19,7 @@ qtnorm(p, mu = 0, sigma = 1, a = -Inf, b = Inf, lower.tail = TRUE,
 rtnorm(n, mu = 0, sigma = 1, a = -Inf, b = Inf)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{mu, sigma}{location and scale parameters. Scale must be positive.}
 

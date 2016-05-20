@@ -5,7 +5,7 @@
 #' Density, distribution function, quantile function and random generation
 #' for the Pareto distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
@@ -62,8 +62,8 @@ dpower <- function(x, alpha, beta, log = FALSE) {
 #' @rdname PowerDist
 #' @export
 
-ppower <- function(x, alpha, beta, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_ppower', PACKAGE = 'extraDistr', x, alpha, beta, lower.tail, log.p)
+ppower <- function(q, alpha, beta, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_ppower', PACKAGE = 'extraDistr', q, alpha, beta, lower.tail, log.p)
 }
 
 

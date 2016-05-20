@@ -10,14 +10,14 @@
 \usage{
 dkumar(x, a = 1, b = 1, log = FALSE)
 
-pkumar(x, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE)
+pkumar(q, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE)
 
 qkumar(p, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE)
 
 rkumar(n, a = 1, b = 1)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{a, b}{positive valued parameters.}
 

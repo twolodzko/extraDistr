@@ -10,7 +10,7 @@
 \usage{
 dtriang(x, a = -1, b = 1, c = (a + b)/2, log = FALSE)
 
-ptriang(x, a = -1, b = 1, c = (a + b)/2, lower.tail = TRUE,
+ptriang(q, a = -1, b = 1, c = (a + b)/2, lower.tail = TRUE,
   log.p = FALSE)
 
 qtriang(p, a = -1, b = 1, c = (a + b)/2, lower.tail = TRUE,
@@ -19,7 +19,7 @@ qtriang(p, a = -1, b = 1, c = (a + b)/2, lower.tail = TRUE,
 rtriang(n, a = -1, b = 1, c = (a + b)/2)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{a, b, c}{minimum, maximum and shape parameters.}
 

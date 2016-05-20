@@ -10,14 +10,14 @@
 \usage{
 dlgser(x, theta, log = FALSE)
 
-plgser(x, theta, lower.tail = TRUE, log.p = FALSE)
+plgser(q, theta, lower.tail = TRUE, log.p = FALSE)
 
 qlgser(p, theta, lower.tail = TRUE, log.p = FALSE)
 
 rlgser(n, theta)
 }
 \arguments{
-\item{x}{matrix of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{theta}{vector; concentration parameter; (\code{0 < theta < 1}).}
 

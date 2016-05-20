@@ -5,7 +5,7 @@
 #' Density, distribution function and random generation
 #' for the inverse chi-squared distribution and scaled chi-squared distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
@@ -66,11 +66,11 @@ dinvchisq <- function(x, nu, tau, log = FALSE) {
 #' @rdname InvChiSq
 #' @export
 
-pinvchisq <- function(x, nu, tau, lower.tail = TRUE, log.p = FALSE) {
+pinvchisq <- function(q, nu, tau, lower.tail = TRUE, log.p = FALSE) {
   if (missing(tau))
-    pgamma(1/x, nu/2, 0.5, lower.tail = !lower.tail, log.p = log.p)
+    pgamma(1/q, nu/2, 0.5, lower.tail = !lower.tail, log.p = log.p)
   else
-    pgamma(1/x, nu/2, (nu*tau^2)/2, lower.tail = !lower.tail, log.p = log.p)
+    pgamma(1/q, nu/2, (nu*tau^2)/2, lower.tail = !lower.tail, log.p = log.p)
 }
 
 

@@ -5,7 +5,7 @@
 #' Density, distribution function, quantile function and random generation
 #' for the Pareto distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
@@ -66,8 +66,8 @@ dpareto <- function(x, a = 1, b = 1, log = FALSE) {
 #' @rdname Pareto
 #' @export
 
-ppareto <- function(x, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_ppareto', PACKAGE = 'extraDistr', x, a, b, lower.tail, log.p)
+ppareto <- function(q, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_ppareto', PACKAGE = 'extraDistr', q, a, b, lower.tail, log.p)
 }
 
 

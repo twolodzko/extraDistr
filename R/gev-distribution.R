@@ -5,7 +5,7 @@
 #' Density, distribution function, quantile function and random generation
 #' for the Generalized Extreme Value distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
@@ -77,8 +77,8 @@ dgev <- function(x, mu = 0, sigma = 1, xi = 0, log = FALSE) {
 #' @rdname GEV
 #' @export
 
-pgev <- function(x, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pgev', PACKAGE = 'extraDistr', x, mu, sigma, xi, lower.tail, log.p)
+pgev <- function(q, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_pgev', PACKAGE = 'extraDistr', q, mu, sigma, xi, lower.tail, log.p)
 }
 
 

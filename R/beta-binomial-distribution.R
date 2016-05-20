@@ -5,7 +5,7 @@
 #' Probability mass function and random generation
 #' for the Beta-binomial distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
 #' @param alpha,beta      non-negative parameters of the Beta distribution.
@@ -50,8 +50,8 @@ dbbinom <- function(x, size, alpha = 1, beta = 1, log = FALSE) {
 #' @rdname BetaBinom
 #' @export
 
-pbbinom <- function(x, size, alpha = 1, beta = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pbbinom', PACKAGE = 'extraDistr', x, size, alpha, beta, lower.tail, log.p)
+pbbinom <- function(q, size, alpha = 1, beta = 1, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_pbbinom', PACKAGE = 'extraDistr', q, size, alpha, beta, lower.tail, log.p)
 }
 
 

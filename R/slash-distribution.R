@@ -5,7 +5,7 @@
 #' Probability mass function, distribution function and random generation
 #' for slash distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
 #' @param mu              vector of locations
@@ -63,8 +63,8 @@ dslash <- function(x, mu = 0, sigma = 1, log = FALSE) {
 #' @rdname Slash
 #' @export
 
-pslash <- function(x, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pslash', PACKAGE = 'extraDistr', x, mu, sigma, lower.tail, log.p)
+pslash <- function(q, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_pslash', PACKAGE = 'extraDistr', q, mu, sigma, lower.tail, log.p)
 }
 
 

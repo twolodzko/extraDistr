@@ -5,7 +5,7 @@
 #' Probability mass function, distribution function and random generation
 #' for non-standard t-distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
@@ -43,8 +43,8 @@ dnst <- function(x, df, mu = 0, sigma = 1, log = FALSE) {
 #' @rdname NonStandardT
 #' @export
 
-pnst <- function(x, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pnst', PACKAGE = 'extraDistr', x, df, mu, sigma, lower.tail, log.p)
+pnst <- function(q, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_pnst', PACKAGE = 'extraDistr', q, df, mu, sigma, lower.tail, log.p)
 }
 
 

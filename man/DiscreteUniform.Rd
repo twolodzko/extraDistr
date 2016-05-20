@@ -10,14 +10,14 @@
 \usage{
 ddunif(x, min, max, log = FALSE)
 
-pdunif(x, min, max, lower.tail = TRUE, log.p = FALSE)
+pdunif(q, min, max, lower.tail = TRUE, log.p = FALSE)
 
 qdunif(p, min, max, lower.tail = TRUE, log.p = FALSE)
 
 rdunif(n, min, max)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
 \item{min, max}{lower and upper limits of the distribution. Must be finite.}
 
