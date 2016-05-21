@@ -304,6 +304,20 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// cpp_rbpois
+NumericMatrix cpp_rbpois(const int n, const NumericVector& a, const NumericVector& b, const NumericVector& c);
+RcppExport SEXP extraDistr_cpp_rbpois(SEXP nSEXP, SEXP aSEXP, SEXP bSEXP, SEXP cSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type a(aSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type c(cSEXP);
+    __result = Rcpp::wrap(cpp_rbpois(n, a, b, c));
+    return __result;
+END_RCPP
+}
 // cpp_dcat
 NumericVector cpp_dcat(const NumericVector& x, const NumericMatrix& prob, bool log_prob);
 RcppExport SEXP extraDistr_cpp_dcat(SEXP xSEXP, SEXP probSEXP, SEXP log_probSEXP) {

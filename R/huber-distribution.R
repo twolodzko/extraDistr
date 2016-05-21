@@ -1,6 +1,6 @@
 
 
-#' "Huber Density" distribution
+#' "Huber density" distribution
 #'
 #' Density, distribution function, quantile function and random generation
 #' for the "Huber density" distribution.
@@ -15,6 +15,46 @@
 #' @param lower.tail	     logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
 #'                         otherwise, \eqn{P[X > x]}.
 #'
+#' @details
+#' 
+#' Huber density is connected to Huber loss and can be defined as:
+#'
+#' \deqn{
+#' f(x) = \frac{1-\epsilon}{\sqrt{2\pi}} e^{-\rho_k(x)}
+#' }{
+#' f(x) = (1-\epsilon)/sqrt(2*\pi) * exp(-\rho(x, k))
+#' }
+#'
+#' where
+#'
+#' \deqn{
+#' \rho_k(x) =
+#' \begin{cases}
+#' \frac{1}{2} x^2       & |x|\le k \\
+#' k|x|- \frac{1}{2} k^2 & |x|>k
+#' \end{cases}
+#' }{
+#' \rho(x, k) = [if abs(x) <= k:] (x^2)/2 [else:] k*abs(x) - (k^2)/2
+#' }
+#'
+#' and \eqn{\epsilon} satisfies
+#'
+#' \deqn{
+#' \frac{2\phi(k)}{k} - 2\Phi(-k) = \frac{\epsilon}{1-\epsilon}
+#' }{
+#' (2 * \phi(k))/k - 2* \Phi(-k) = \epsilon/(1-\epsilon)
+#' }
+#' 
+#' @references
+#' Huber, P.J. (1964). Robust Estimation of a Location Parameter.
+#' Annals of Statistics, 53(1), 73-101.
+#' 
+#' @references
+#' Huber, P.J. (1981). Robust Statistics. Wiley.
+#' 
+#' @references
+#' Schumann, D. (2009). Robust Variable Selection. ProQuest.
+#' 
 #' @examples 
 #' 
 #' x <- rhuber(1e5, 5, 2, 3)

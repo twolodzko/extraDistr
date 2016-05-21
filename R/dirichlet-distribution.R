@@ -54,6 +54,8 @@ ddirichlet <- function(x, alpha, log = FALSE) {
     alpha <- as.matrix(alpha)
   if (is.data.frame(x))
     x <- as.matrix(x)
+  else if (is.vector(x))
+    x <- matrix(x, byrow = TRUE, nrow = 1)
   .Call('extraDistr_cpp_ddirichlet', PACKAGE = 'extraDistr', x, alpha, log)
 }
 

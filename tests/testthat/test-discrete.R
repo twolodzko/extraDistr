@@ -5,7 +5,7 @@ context("Non-integer values in discrete distributions")
 test_that("Zero probabilities for non-integers", {
   
   expect_warning(expect_equal(0, ddnorm(0.5)))
-  expect_warning(expect_equal(0, ddweibull(0.5, q = 0.5, beta = 1)))
+  expect_warning(expect_equal(0, ddweibull(0.5, 0.5, 1)))
   expect_warning(expect_equal(0, ddunif(0.5, 0, 5)))
   expect_warning(expect_equal(0, dcat(0.5, c(0.5, 0.5))))
   expect_warning(expect_equal(0, dmnom(c(0.5, 1), 5, c(0.5, 0.5))))

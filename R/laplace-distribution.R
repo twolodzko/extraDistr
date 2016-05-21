@@ -62,6 +62,11 @@
 #' hist(plaplace(x, 5, 16))
 #' plot(ecdf(x))
 #' lines(xx, plaplace(xx, 5, 16), col = "red", lwd = 2)
+#' 
+#' X <- rexp(1e5, 1/5)
+#' Y <- rbern(1e5, 0.5)
+#' hist(X*(Y*2 - 1), freq = F, 100)
+#' lines(xx, dlaplace(xx, 0, 5), col = "red")
 #'
 #' @name Laplace
 #' @aliases Laplace

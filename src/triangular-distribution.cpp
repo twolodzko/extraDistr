@@ -23,7 +23,7 @@ using namespace Rcpp;
 */
 
 double pdf_triangular(double x, double a, double b, double c) {
-  if (a > c || c > b) {
+  if (a > c || c > b || a == b) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -39,7 +39,7 @@ double pdf_triangular(double x, double a, double b, double c) {
 }
 
 double cdf_triangular(double x, double a, double b, double c) {
-  if (a > c || c > b) {
+  if (a > c || c > b || a == b) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -55,7 +55,7 @@ double cdf_triangular(double x, double a, double b, double c) {
 }
 
 double invcdf_triangular(double p, double a, double b, double c) {
-  if (a > c || c > b || p < 0 || p > 1) {
+  if (a > c || c > b || a == b || p < 0 || p > 1) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -68,7 +68,7 @@ double invcdf_triangular(double p, double a, double b, double c) {
 }
 
 double rng_triangular(double a, double b, double c) {
-  if (a > c || c > b) {
+  if (a > c || c > b || a == b) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }

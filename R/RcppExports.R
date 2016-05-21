@@ -81,6 +81,10 @@ cpp_dbpois <- function(x, y, a, b, c, log_prob = FALSE) {
     .Call('extraDistr_cpp_dbpois', PACKAGE = 'extraDistr', x, y, a, b, c, log_prob)
 }
 
+cpp_rbpois <- function(n, a, b, c) {
+    .Call('extraDistr_cpp_rbpois', PACKAGE = 'extraDistr', n, a, b, c)
+}
+
 cpp_dcat <- function(x, prob, log_prob = FALSE) {
     .Call('extraDistr_cpp_dcat', PACKAGE = 'extraDistr', x, prob, log_prob)
 }

@@ -6,7 +6,7 @@
 \alias{phuber}
 \alias{qhuber}
 \alias{rhuber}
-\title{"Huber Density" distribution}
+\title{"Huber density" distribution}
 \usage{
 dhuber(x, mu = 0, sigma = 1, epsilon = 1.345, log = FALSE)
 
@@ -38,6 +38,35 @@ the length is taken to be the number required.}
 Density, distribution function, quantile function and random generation
 for the "Huber density" distribution.
 }
+\details{
+Huber density is connected to Huber loss and can be defined as:
+
+\deqn{
+f(x) = \frac{1-\epsilon}{\sqrt{2\pi}} e^{-\rho_k(x)}
+}{
+f(x) = (1-\epsilon)/sqrt(2*\pi) * exp(-\rho(x, k))
+}
+
+where
+
+\deqn{
+\rho_k(x) =
+\begin{cases}
+\frac{1}{2} x^2       & |x|\le k \\
+k|x|- \frac{1}{2} k^2 & |x|>k
+\end{cases}
+}{
+\rho(x, k) = [if abs(x) <= k:] (x^2)/2 [else:] k*abs(x) - (k^2)/2
+}
+
+and \eqn{\epsilon} satisfies
+
+\deqn{
+\frac{2\phi(k)}{k} - 2\Phi(-k) = \frac{\epsilon}{1-\epsilon}
+}{
+(2 * \phi(k))/k - 2* \Phi(-k) = \epsilon/(1-\epsilon)
+}
+}
 \examples{
 
 x <- rhuber(1e5, 5, 2, 3)
@@ -48,6 +77,14 @@ hist(phuber(x, 5, 2, 3))
 plot(ecdf(x))
 lines(xx, phuber(xx, 5, 2, 3), col = "red", lwd = 2)
 
+}
+\references{
+Huber, P.J. (1964). Robust Estimation of a Location Parameter.
+Annals of Statistics, 53(1), 73-101.
+
+Huber, P.J. (1981). Robust Statistics. Wiley.
+
+Schumann, D. (2009). Robust Variable Selection. ProQuest.
 }
 \keyword{distribution}
 

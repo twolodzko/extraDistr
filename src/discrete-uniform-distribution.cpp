@@ -15,7 +15,7 @@ using namespace Rcpp;
 
 
 double pmf_dunif(double x, double min, double max) {
-  if (min > max) {
+  if (min > max || std::isinf(min) || std::isinf(max)) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -26,7 +26,7 @@ double pmf_dunif(double x, double min, double max) {
 
 
 double cdf_dunif(double x, double min, double max) {
-  if (min > max) {
+  if (min > max || std::isinf(min) || std::isinf(max)) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -38,7 +38,7 @@ double cdf_dunif(double x, double min, double max) {
 }
 
 double invcdf_dunif(double p, double min, double max) {
-  if (min > max) {
+  if (min > max || std::isinf(min) || std::isinf(max)) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -50,7 +50,7 @@ double invcdf_dunif(double p, double min, double max) {
 }
 
 double rng_dunif(double min, double max) {
-  if (min > max) {
+  if (min > max || std::isinf(min) || std::isinf(max)) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }

@@ -1,4 +1,11 @@
 
+### 1.6.9
+
+* Minor bug fixes
+* Minor improvements in documention
+* Additional tests
+* Truncated normal returns normal for infinite truncation points
+
 ### 1.6.8
 
 * Added half-t, half-normal and half-Cauchy distributions

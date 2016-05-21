@@ -8,19 +8,19 @@
 \alias{rdweibull}
 \title{Discrete Weibull distribution (type I)}
 \usage{
-ddweibull(x, q, beta, log = FALSE)
+ddweibull(x, shape1, shape2, log = FALSE)
 
-pdweibull(x, q, beta, lower.tail = TRUE, log.p = FALSE)
+pdweibull(q, shape1, shape2, lower.tail = TRUE, log.p = FALSE)
 
-qdweibull(p, q, beta, lower.tail = TRUE, log.p = FALSE)
+qdweibull(p, shape1, shape2, lower.tail = TRUE, log.p = FALSE)
 
-rdweibull(n, q, beta)
+rdweibull(n, shape1, shape2)
 }
 \arguments{
-\item{x}{vector of quantiles.}
+\item{x, q}{vector of quantiles.}
 
-\item{q, beta}{parameters. Values of \code{beta} need to be positive
-and \code{0 < q < 1}.}
+\item{shape1, shape2}{parameters (named q, \eqn{\beta}). Values of \code{shape2}
+need to be positive and \code{0 < shape1 < 1}.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 

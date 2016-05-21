@@ -37,7 +37,10 @@ the length is taken to be the number required.}
 }
 \description{
 Probability mass function, distribution function and random generation
-for non-standard t-distribution.
+for non-standard t-distribution. Non-standard t-distribution besides
+degrees of freedom \eqn{\nu}, is parametrized using additional parameters
+\eqn{\mu} for location and \eqn{\sigma} for scale (\eqn{\mu=0} and
+\eqn{\sigma = 1} for standard t-distribution).
 }
 \examples{
 

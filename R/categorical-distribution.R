@@ -96,10 +96,12 @@ rcat <- function(n, prob, labels) {
   
   if (is.vector(prob)) {
     k <- length(prob)
-    if (sum(prob) == 1)
+    if (sum(prob) == 1) {
       x <- sample.int(length(prob), size = n, replace = TRUE, prob = prob)
-    else
+    } else {
+      warning("NaNs produced")
       x <- rep(NaN, n)
+    }
   } else {
     k <- ncol(prob)
     x <- .Call('extraDistr_cpp_rcat', PACKAGE = 'extraDistr', n, prob)

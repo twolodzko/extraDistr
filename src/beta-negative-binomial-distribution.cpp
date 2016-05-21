@@ -19,7 +19,7 @@ using namespace Rcpp;
 */
 
 double pmf_bnbinom(double k, double r, double alpha, double beta) {
-  if (alpha <= 0 || beta <= 0 || floor(r) != r) {
+  if (alpha <= 0 || beta <= 0 || r < 0 || floor(r) != r) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -30,7 +30,7 @@ double pmf_bnbinom(double k, double r, double alpha, double beta) {
 }
 
 double logpmf_bnbinom(double k, double r, double alpha, double beta) {
-  if (alpha <= 0 || beta <= 0 || floor(r) != r) {
+  if (alpha <= 0 || beta <= 0 || r < 0 || floor(r) != r) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -41,7 +41,7 @@ double logpmf_bnbinom(double k, double r, double alpha, double beta) {
 }
 
 double cdf_bnbinom(double k, double r, double alpha, double beta) {
-  if (alpha < 0 || beta < 0 || floor(r) != r) {
+  if (alpha < 0 || beta < 0 || r < 0 || floor(r) != r) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -56,7 +56,7 @@ double cdf_bnbinom(double k, double r, double alpha, double beta) {
 }
 
 double rng_bnbinom(double r, double alpha, double beta) {
-  if (alpha <= 0 || beta <= 0 || floor(r) != r) {
+  if (alpha <= 0 || beta <= 0 || r < 0 || floor(r) != r) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -110,7 +110,7 @@ NumericVector cpp_pbnbinom(
 
   if (nn == 1 && na == 1 && nb == 1 && anyFinite(x)) {
     
-    if (alpha[0] < 0 || beta[0] < 0 || floor(size[0]) != size[0]) {
+    if (alpha[0] < 0 || beta[0] < 0 || size[0] < 0 || floor(size[0]) != size[0]) {
       Rcpp::warning("NaNs produced");
       for (int i = 0; i < n; i++)
         p[i] = NAN;

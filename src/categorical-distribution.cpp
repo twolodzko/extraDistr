@@ -199,6 +199,7 @@ NumericVector cpp_rcat(
 
     double cs_prob = 0;
     int j = 0;
+    
     while (cs_prob < u && j < k) {
       if (prob(i % np, j) < 0 || prob(i % np, j) > 1) {
         wrong_p = true;

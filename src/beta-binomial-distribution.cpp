@@ -19,7 +19,7 @@ using namespace Rcpp;
 */
 
 double pmf_bbinom(double k, double n, double alpha, double beta) {
-  if (alpha < 0 || beta < 0 || floor(n) != n) {
+  if (alpha < 0 || beta < 0 || n < 0 || floor(n) != n) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -29,7 +29,7 @@ double pmf_bbinom(double k, double n, double alpha, double beta) {
 }
 
 double logpmf_bbinom(double k, double n, double alpha, double beta) {
-  if (alpha < 0 || beta < 0 || floor(n) != n) {
+  if (alpha < 0 || beta < 0 || n < 0 || floor(n) != n) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -39,7 +39,7 @@ double logpmf_bbinom(double k, double n, double alpha, double beta) {
 }
 
 double cdf_bbinom(double k, double n, double alpha, double beta) {
-  if (alpha < 0 || beta < 0 || floor(n) != n) {
+  if (alpha < 0 || beta < 0 || n < 0 || floor(n) != n) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -54,7 +54,7 @@ double cdf_bbinom(double k, double n, double alpha, double beta) {
 }
 
 double rng_bbinom(double n, double alpha, double beta) {
-  if (alpha < 0 || beta < 0 || floor(n) != n) {
+  if (alpha < 0 || beta < 0 || n < 0 || floor(n) != n) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -108,7 +108,7 @@ NumericVector cpp_pbbinom(
   
   if (nn == 1 && na == 1 && nb == 1) {
     
-    if (alpha[0] < 0 || beta[0] < 0 || floor(size[0]) != size[0]) {
+    if (alpha[0] < 0 || beta[0] < 0 || size[0] < 0 || floor(size[0]) != size[0]) {
       Rcpp::warning("NaNs produced");
       for (int i = 0; i < n; i++)
         p[i] = NAN;

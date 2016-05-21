@@ -156,7 +156,6 @@ NumericVector cpp_rnst(
     const NumericVector& sigma
   ) {
   
-  double u;
   int nn = nu.length();
   int nm = mu.length();
   int ns = sigma.length();
