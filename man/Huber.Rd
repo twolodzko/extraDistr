@@ -51,10 +51,10 @@ where
 
 \deqn{
 \rho_k(x) =
-\begin{cases}
+\left\{\begin{array}{ll}
 \frac{1}{2} x^2       & |x|\le k \\
 k|x|- \frac{1}{2} k^2 & |x|>k
-\end{cases}
+\end{array}\right.
 }{
 \rho(x, k) = [if abs(x) <= k:] (x^2)/2 [else:] k*abs(x) - (k^2)/2
 }

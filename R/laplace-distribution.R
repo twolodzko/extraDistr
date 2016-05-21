@@ -65,7 +65,7 @@
 #' 
 #' X <- rexp(1e5, 1/5)
 #' Y <- rbern(1e5, 0.5)
-#' hist(X*(Y*2 - 1), freq = F, 100)
+#' hist(X*(Y*2 - 1), freq = FALSE, 100)
 #' lines(xx, dlaplace(xx, 0, 5), col = "red")
 #'
 #' @name Laplace
