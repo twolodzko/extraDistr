@@ -18,7 +18,7 @@ rbbinom(n, size, alpha = 1, beta = 1)
 
 \item{size}{number of trials (zero or more).}
 
-\item{alpha, beta}{non-negative parameters of the Beta distribution.}
+\item{alpha, beta}{non-negative parameters of the beta distribution.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 

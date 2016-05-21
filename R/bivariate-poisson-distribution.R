@@ -69,9 +69,6 @@ dbvpois <- function(x, y = NULL, a, b, c, log = FALSE) {
 
 rbvpois <- function(n, a, b, c) {
   if (length(n) > 1) n <- length(n)
-  x <- rpois(n, a)
-  y <- rpois(n, b)
-  z <- rpois(n, c)
-  cbind(x+z, y+z)
+  .Call('extraDistr_cpp_rbpois', PACKAGE = 'extraDistr', n, a, b, c)
 }
 

@@ -82,8 +82,10 @@ double factorial(double x) {
 // Random generation for Bernoulli
 
 double rng_bernoulli(double p = 0.5) {
-  if (p < 0 || p > 1)
+  if (p < 0 || p > 1) {
+    Rcpp::warning("NaNs produced");
     return NAN;
+  }
   double u = R::runif(0, 1);
   if (u <= 1-p)
     return 0;

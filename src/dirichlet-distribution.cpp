@@ -40,11 +40,11 @@ NumericVector cpp_ddirichlet(
     double prod_gamma = 0;
     double sum_alpha = 0;
     double p_tmp = 0;
+    bool wrong_alpha = false;
     
     for (int j = 0; j < m; j++) {
       if (alpha(i % na, j) <= 0) {
-        Rcpp::warning("NaNs produced");
-        p[i] = NAN;
+        wrong_alpha = true;
         break;
       }
       if (x(i % n, j) < 0 || x(i % n, j) > 1) {
@@ -60,8 +60,13 @@ NumericVector cpp_ddirichlet(
         p_tmp = -INFINITY;
     }
     
-    double beta_const = prod_gamma - R::lgammafn(sum_alpha);
-    p[i] = p_tmp - beta_const;
+    if (wrong_alpha) {
+      Rcpp::warning("NaNs produced");
+      p[i] = NAN;
+    } else {
+      double beta_const = prod_gamma - R::lgammafn(sum_alpha);
+      p[i] = p_tmp - beta_const;
+    }
   }
 
   if (!log_prob)

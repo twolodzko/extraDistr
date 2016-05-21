@@ -26,10 +26,14 @@ using namespace Rcpp;
 const double SQRTPI = sqrt(2*M_PI);
 
 double pdf_tnorm(double x, double mu, double sigma, double a, double b) {
-  if (sigma <= 0 || b < a) {
+  if (sigma <= 0 || b <= a) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
+  
+  if (a == -INFINITY && b == INFINITY)
+    return R::dnorm(x, mu, sigma, false);
+  
   double Phi_a, Phi_b;
   if (x > a && x < b) {
     Phi_a = Phi((a-mu)/sigma);
@@ -41,10 +45,14 @@ double pdf_tnorm(double x, double mu, double sigma, double a, double b) {
 }
 
 double cdf_tnorm(double x, double mu, double sigma, double a, double b) {
-  if (sigma <= 0 || b < a) {
+  if (sigma <= 0 || b <= a) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
+  
+  if (a == -INFINITY && b == INFINITY)
+    return R::pnorm(x, mu, sigma, true, false);
+  
   double Phi_x, Phi_a, Phi_b;
   if (x > a && x < b) {
     Phi_x = Phi((x-mu)/sigma);
@@ -59,10 +67,14 @@ double cdf_tnorm(double x, double mu, double sigma, double a, double b) {
 }
 
 double invcdf_tnorm(double p, double mu, double sigma, double a, double b) {
-  if (sigma <= 0 || b < a || p < 0 || p > 1) {
+  if (sigma <= 0 || b <= a || p < 0 || p > 1) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
+  
+  if (a == -INFINITY && b == INFINITY)
+    return R::qnorm(p, mu, sigma, true, false);
+  
   double Phi_a, Phi_b;
   Phi_a = Phi((a-mu)/sigma);
   Phi_b = Phi((b-mu)/sigma);
@@ -70,10 +82,13 @@ double invcdf_tnorm(double p, double mu, double sigma, double a, double b) {
 }
 
 double rng_tnorm(double mu, double sigma, double a, double b) {
-  if (sigma <= 0 || b < a) {
+  if (sigma <= 0 || b <= a) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
+  
+  if (a == -INFINITY && b == INFINITY)
+    return R::rnorm(mu, sigma);
 
   double r, u, za, zb;
   bool stop = false;

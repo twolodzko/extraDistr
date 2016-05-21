@@ -163,7 +163,6 @@ NumericVector cpp_rfatigue(
     const NumericVector& mu
   ) {
   
-  double u;
   int na = alpha.length();
   int nb = beta.length();
   int nm = mu.length();

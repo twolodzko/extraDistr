@@ -5,12 +5,12 @@
 #' Density, distribution function, quantile function and random generation
 #' for the Discrete Weibull distribution.
 #'
-#' @param x 	            vector of quantiles.
+#' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
-#' @param q,beta          parameters. Values of \code{beta} need to be positive
-#'                        and \code{0 < q < 1}.
+#' @param shape1,shape2   parameters (named q, \eqn{\beta}). Values of \code{shape2}
+#'                        need to be positive and \code{0 < shape1 < 1}.
 #' @param log,log.p	      logical; if TRUE, probabilities p are given as log(p).
 #' @param lower.tail	    logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
 #'                        otherwise, \eqn{P[X > x]}.
@@ -75,32 +75,32 @@
 #'
 #' @export
 
-ddweibull <- function(x, q, beta, log = FALSE) {
-  .Call('extraDistr_cpp_ddweibull', PACKAGE = 'extraDistr', x, q, beta, log)
+ddweibull <- function(x, shape1, shape2, log = FALSE) {
+  .Call('extraDistr_cpp_ddweibull', PACKAGE = 'extraDistr', x, shape1, shape2, log)
 }
 
 
 #' @rdname DiscrWeibull
 #' @export
 
-pdweibull <- function(x, q, beta, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pdweibull', PACKAGE = 'extraDistr', x, q, beta, lower.tail, log.p)
+pdweibull <- function(q, shape1, shape2, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_pdweibull', PACKAGE = 'extraDistr', q, shape1, shape2, lower.tail, log.p)
 }
 
 
 #' @rdname DiscrWeibull
 #' @export
 
-qdweibull <- function(p, q, beta, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qdweibull', PACKAGE = 'extraDistr', p, q, beta, lower.tail, log.p)
+qdweibull <- function(p, shape1, shape2, lower.tail = TRUE, log.p = FALSE) {
+  .Call('extraDistr_cpp_qdweibull', PACKAGE = 'extraDistr', p, shape1, shape2, lower.tail, log.p)
 }
 
 
 #' @rdname DiscrWeibull
 #' @export
 
-rdweibull <- function(n, q, beta) {
+rdweibull <- function(n, shape1, shape2) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rdweibull', PACKAGE = 'extraDistr', n, q, beta)
+  .Call('extraDistr_cpp_rdweibull', PACKAGE = 'extraDistr', n, shape1, shape2)
 }
 
