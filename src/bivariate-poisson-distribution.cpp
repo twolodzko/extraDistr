@@ -14,11 +14,7 @@ double pmf_bpois(double x, double y, double a, double b, double c) {
   
   if (floor(y) != y) {
     char msg[55];
-    int msg_len = sprintf(msg, "non-integer y = %f", y);
-    if (msg_len >= 55 - 1 || msg_len < 0)
-      Rcpp::warning("non-integer y");
-    else
-      Rcpp::warning(msg);
+    std::snprintf(msg, sizeof(msg), "non-integer y = %f", y);
     Rcpp::warning(msg);
     return 0;
   }
@@ -51,7 +47,7 @@ double logpmf_bpois(double x, double y, double a, double b, double c) {
   
   if (floor(y) != y) {
     char msg[55];
-    sprintf(msg, "non-integer y = %f", x);
+    std::snprintf(msg, sizeof(msg), "non-integer y = %f", y);
     Rcpp::warning(msg);
     return -INFINITY;
   }

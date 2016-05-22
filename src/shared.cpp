@@ -11,11 +11,8 @@ bool tol_equal(double x, double y) {
 bool isInteger(double x) {
   if (floor(x) != x) {
     char msg[55];
-    int msg_len = sprintf(msg, "non-integer x = %f", x);
-    if (msg_len >= 55 - 1 || msg_len < 0)
-      Rcpp::warning("non-integer x");
-    else
-      Rcpp::warning(msg);
+    std::snprintf(msg, sizeof(msg), "non-integer x = %f", x);
+    Rcpp::warning(msg);
     return false;
   }
   return true;
