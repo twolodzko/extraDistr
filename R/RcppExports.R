@@ -501,6 +501,22 @@ cpp_rtnorm <- function(n, mu, sigma, a, b) {
     .Call('extraDistr_cpp_rtnorm', PACKAGE = 'extraDistr', n, mu, sigma, a, b)
 }
 
+cpp_dtpois <- function(x, lambda, s, log_prob = FALSE) {
+    .Call('extraDistr_cpp_dtpois', PACKAGE = 'extraDistr', x, lambda, s, log_prob)
+}
+
+cpp_ptpois <- function(x, lambda, s, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_ptpois', PACKAGE = 'extraDistr', x, lambda, s, lower_tail, log_prob)
+}
+
+cpp_qtpois <- function(p, lambda, s, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_qtpois', PACKAGE = 'extraDistr', p, lambda, s, lower_tail, log_prob)
+}
+
+cpp_rtpois <- function(n, lambda, s) {
+    .Call('extraDistr_cpp_rtpois', PACKAGE = 'extraDistr', n, lambda, s)
+}
+
 cpp_dwald <- function(x, mu, lambda, log_prob = FALSE) {
     .Call('extraDistr_cpp_dwald', PACKAGE = 'extraDistr', x, mu, lambda, log_prob)
 }

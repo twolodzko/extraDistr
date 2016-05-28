@@ -1,4 +1,8 @@
 
+### 1.6.10
+
+* Added truncated Poisson distribution
+
 ### 1.6.9
 
 * Minor bug fixes
