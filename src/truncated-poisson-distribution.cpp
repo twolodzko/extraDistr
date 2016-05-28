@@ -52,7 +52,7 @@ double invcdf_tpois(double p, double lambda, double s) {
       return INFINITY;
     
     z = exp(-lambda);
-    return R::qpois((p+z)/(1-z), lambda, true, false);
+    return R::qpois(p*(1-z) + z, lambda, true, false);
   }
 
   if (p == 0)
