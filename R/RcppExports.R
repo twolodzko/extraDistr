@@ -337,6 +337,30 @@ cpp_rlomax <- function(n, lambda, kappa) {
     .Call('extraDistr_cpp_rlomax', PACKAGE = 'extraDistr', n, lambda, kappa)
 }
 
+cpp_dmixnorm <- function(x, mu, sigma, alpha, log_prob = FALSE) {
+    .Call('extraDistr_cpp_dmixnorm', PACKAGE = 'extraDistr', x, mu, sigma, alpha, log_prob)
+}
+
+cpp_pmixnorm <- function(x, mu, sigma, alpha, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_pmixnorm', PACKAGE = 'extraDistr', x, mu, sigma, alpha, lower_tail, log_prob)
+}
+
+cpp_rmixnorm <- function(n, mu, sigma, alpha) {
+    .Call('extraDistr_cpp_rmixnorm', PACKAGE = 'extraDistr', n, mu, sigma, alpha)
+}
+
+cpp_dmixpois <- function(x, lambda, alpha, log_prob = FALSE) {
+    .Call('extraDistr_cpp_dmixpois', PACKAGE = 'extraDistr', x, lambda, alpha, log_prob)
+}
+
+cpp_pmixpois <- function(x, lambda, alpha, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_pmixpois', PACKAGE = 'extraDistr', x, lambda, alpha, lower_tail, log_prob)
+}
+
+cpp_rmixpois <- function(n, lambda, alpha) {
+    .Call('extraDistr_cpp_rmixpois', PACKAGE = 'extraDistr', n, lambda, alpha)
+}
+
 cpp_dmnom <- function(x, size, prob, log_prob = FALSE) {
     .Call('extraDistr_cpp_dmnom', PACKAGE = 'extraDistr', x, size, prob, log_prob)
 }

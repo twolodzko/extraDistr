@@ -34,6 +34,9 @@ test_that("Zeros in quantile functions", {
   expect_true(!is.nan(qzib(0, 1, 1, 0.5)))
   expect_true(!is.nan(qzinb(0, 1, 1, 0.5)))
   
+  expect_true(!is.nan(qtpois(0, lambda = 5, s = 0)))
+  expect_true(!is.nan(qtpois(0, lambda = 5, s = 6)))
+  
 })
 
 test_that("Ones in quantile functions", {
@@ -69,6 +72,9 @@ test_that("Ones in quantile functions", {
   expect_true(!is.nan(qzip(1, 1, 0.5)))
   expect_true(!is.nan(qzib(1, 1, 1, 0.5)))
   expect_true(!is.nan(qzinb(1, 1, 1, 0.5)))
+  
+  expect_true(!is.nan(qtpois(1, lambda = 5, s = 0)))
+  expect_true(!is.nan(qtpois(1, lambda = 5, s = 6)))
   
 })
 
@@ -112,6 +118,9 @@ test_that("Checking p = F(F^-1(p))", {
   # expect_equal(pp, pzip(qzip(pp, 1, 0.5), 1, 0.5))
   # expect_equal(pp, pzib(qzib(pp, 1, 1, 0.5), 1, 1, 0.5))
   # expect_equal(pp, pzinb(qzinb(pp, 1, 1, 0.5), 1, 1, 0.5))
+  
+  # expect_equal(pp, ptpois(qtpois(pp, lambda = 5, s = 0), lambda = 5, s = 0))
+  # expect_equal(pp, ptpois(qtpois(pp, lambda = 5, s = 6), lambda = 5, s = 6))
   
 })
 

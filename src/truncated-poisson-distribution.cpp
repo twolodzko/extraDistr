@@ -4,12 +4,12 @@ using namespace Rcpp;
 
 
 double pdf_tpois(double x, double lambda, double s) {
-  if (lambda <= 0 || s < 0) {
+  if (lambda < 0 || s < 0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   if (!isInteger(x) || x < 0 || std::isinf(x))
-    return -INFINITY;
+    return 0;
   
   if (s == 0 && x <= s)
     return 0;
@@ -25,8 +25,11 @@ double cdf_tpois(double x, double lambda, double s) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (!isInteger(x) || x < 0 || std::isinf(x))
-    return -INFINITY;
+  
+  if (x < 0)
+    return 0;
+  if (x == INFINITY)
+    return 1;
   
   if (s == 0 && x <= s)
     return 0;
@@ -38,7 +41,7 @@ double cdf_tpois(double x, double lambda, double s) {
 }
 
 double invcdf_tpois(double p, double lambda, double s) {
-  if (lambda <= 0 || s < 0 || p < 0 || p > 1) {
+  if (lambda < 0 || s < 0 || p < 0 || p > 1) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -65,7 +68,7 @@ double invcdf_tpois(double p, double lambda, double s) {
 }
 
 double rng_tpois(double lambda, double s) {
-  if (lambda <= 0 || s < 0) {
+  if (lambda < 0 || s < 0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }

@@ -81,7 +81,7 @@ NumericVector cpp_pcat(
       bool wrong_p = false;
       p[i] = 0;
       int j = 0;
-      while (j < std::min((int)x[i], k)) {
+      while (j < x[i]) {
         if (prob(i % np, j) < 0 || prob(i % np, j) > 1) {
           wrong_p = true;
           break;

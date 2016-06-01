@@ -19,6 +19,7 @@ test_that("Zero probabilities for non-integers", {
   expect_warning(expect_equal(0, dzip(0.5, 1, 0.5)))
   expect_warning(expect_equal(0, dzib(0.5, 1, 0.5, 0.5)))
   expect_warning(expect_equal(0, dzinb(0.5, 1, 0.5, 0.5)))
+  expect_warning(expect_equal(0, dmixpois(0.5, c(1,2,3), c(1/3,1/3,1/3))))
   
 })
 

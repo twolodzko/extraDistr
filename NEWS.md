@@ -1,4 +1,8 @@
 
+### 1.6.11
+
+* Added mixtures of normal and of Poisson distributions
+
 ### 1.6.10
 
 * Added truncated Poisson distribution
