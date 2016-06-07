@@ -34,8 +34,6 @@
 #' z2 = (x2 - \mu2)/\sigma2
 #' }.
 #'
-#' For multivariate Normal and t distributions check \pkg{mvtnorm} package.
-#'
 #' @references
 #' Krishnamoorthy, K. (2006). Handbook of Statistical Distributions
 #' with Applications. Chapman & Hall/CRC

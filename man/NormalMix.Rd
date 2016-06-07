@@ -40,16 +40,16 @@ for the mixture of normal distributions.
 \details{
 Probability density function
 \deqn{
-f(x) = \alpha_1 f_1(\mu_1, \sigma_1) + \dots + \alpha_k f_k(\mu_k, \sigma_k)
+f(x) = \alpha_1 f_1(x; \mu_1, \sigma_1) + \dots + \alpha_k f_k(x; \mu_k, \sigma_k)
 }{
-f(x) = \alpha[1] * f1(\mu[1], \sigma[1]) + \dots + \alpha[k] * fk(\mu[k], \sigma[k])
+f(x) = \alpha[1] * f1(x; \mu[1], \sigma[1]) + \dots + \alpha[k] * fk(x; \mu[k], \sigma[k])
 }
 
 Cumulative distribution function
 \deqn{
-F(x) = \alpha_1 F_1(\mu_1, \sigma_1) + \dots + \alpha_k F_k(\mu_k, \sigma_k)
+F(x) = \alpha_1 F_1(x; \mu_1, \sigma_1) + \dots + \alpha_k F_k(x; \mu_k, \sigma_k)
 }{
-F(x) = \alpha[1] * F1(\mu[1], \sigma[1]) + \dots + \alpha[k] * Fk(\mu[k], \sigma[k])
+F(x) = \alpha[1] * F1(x; \mu[1], \sigma[1]) + \dots + \alpha[k] * Fk(x; \mu[k], \sigma[k])
 }
 
 where \eqn{\sum_i \alpha_i = 1}{sum(alpha[i]) == 1}.

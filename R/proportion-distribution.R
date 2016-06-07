@@ -60,6 +60,8 @@
 #' 1/(beta(n\mu, n(1-\mu))) * p^(n\mu+1) * (1-p)^(n(1-\mu)+1)
 #' }
 #' 
+#' Alternatively \eqn{n} may be understood as precision parameter.
+#' 
 #' @references
 #' Ferrari, S., & Cribari-Neto, F. (2004). Beta regression for modelling rates and proportions.
 #' Journal of Applied Statistics, 31(7), 799-815.

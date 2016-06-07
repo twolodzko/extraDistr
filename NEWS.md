@@ -1,4 +1,8 @@
 
+### 1.6.12
+
+* Minor improvements in documentation
+
 ### 1.6.11
 
 * Added mixtures of normal and of Poisson distributions

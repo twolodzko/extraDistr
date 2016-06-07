@@ -80,6 +80,8 @@ so beta can be understood as a distribution of \eqn{k/n} proportions in
 }{
 1/(beta(n\mu, n(1-\mu))) * p^(n\mu+1) * (1-p)^(n(1-\mu)+1)
 }
+
+Alternatively \eqn{n} may be understood as precision parameter.
 }
 \examples{
 

@@ -48,8 +48,6 @@ z_2 = \frac{x_2 - \mu_2}{\sigma_2}
 }{
 z2 = (x2 - \mu2)/\sigma2
 }.
-
-For multivariate Normal and t distributions check \pkg{mvtnorm} package.
 }
 \references{
 Krishnamoorthy, K. (2006). Handbook of Statistical Distributions

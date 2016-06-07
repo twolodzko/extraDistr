@@ -20,16 +20,16 @@
 #'
 #' Probability density function
 #' \deqn{
-#' f(x) = \alpha_1 f_1(\lambda_1) + \dots + \alpha_k f_k(\lambda_k)
+#' f(x) = \alpha_1 f_1(x; \lambda_1) + \dots + \alpha_k f_k(x; \lambda_k)
 #' }{
-#' f(x) = \alpha[1] * f1(\lambda[1]) + \dots + \alpha[k] * fk(\lambda[k])
+#' f(x) = \alpha[1] * f1(x; \lambda[1]) + \dots + \alpha[k] * fk(x; \lambda[k])
 #' }
 #'
 #' Cumulative distribution function
 #' \deqn{
-#' F(x) = \alpha_1 F_1(\lambda_1) + \dots + \alpha_k F_k(\lambda_k)
+#' F(x) = \alpha_1 F_1(x; \lambda_1) + \dots + \alpha_k F_k(x; \lambda_k)
 #' }{
-#' F(x) = \alpha[1] * F1(\lambda[1]) + \dots + \alpha[k] * Fk(\lambda[k])
+#' F(x) = \alpha[1] * F1(x; \lambda[1]) + \dots + \alpha[k] * Fk(x; \lambda[k])
 #' }
 #' 
 #' where \eqn{\sum_i \alpha_i = 1}{sum(alpha[i]) == 1}.
