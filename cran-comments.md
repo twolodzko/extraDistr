@@ -26,7 +26,7 @@ any redundant C++ libraries, so it's size is adequate to it's pourpose.
 
 Behavior of the functions was tested using testthat package (tests/)
 and additional checks are available through examples. Most of the random
-generation is done by invers transform, so valid quantile function leads
+generation is done by inverse transform, so valid quantile function leads
 to valid random generation.
 
 In several cases log's are used to prevent underflow. When summing
