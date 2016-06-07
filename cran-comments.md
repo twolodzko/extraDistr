@@ -1,4 +1,15 @@
 
+## Resubmission
+
+* cran-comments.Rd is now in .Rbuildignore
+
+## Test environments
+
+* Ubuntu 16.04, R 3.3.0
+* win-builder
+
+## Comments
+
 The package implements several univariate and multivariate distributions
 (density, distribution functions, quantile functions, random generation)
 that are not available, or are available across multiple other libraries.
@@ -15,10 +26,10 @@ probability mass functions for non-discrete values with warning.
 Checks using devtools check() and build_win() yield no errors or warnings
 besides the following note appears on linux:
 
-* checking installed package size ... NOTE
-  installed size is  8.9Mb
-  sub-directories of 1Mb or more:
-    libs   8.6Mb
+   * checking installed package size ... NOTE
+     installed size is  8.9Mb
+     sub-directories of 1Mb or more:
+       libs   8.6Mb
     
 It is similar to the one described recently [1]. This package depends
 only on Rcpp and some standard linux libraries (stl) and does not use
