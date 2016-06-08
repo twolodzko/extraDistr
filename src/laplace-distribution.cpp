@@ -1,5 +1,5 @@
 #include <Rcpp.h>
-using namespace Rcpp;
+#include "namespace.h"
 
 
 /*
@@ -26,7 +26,7 @@ double pdf_laplace(double x, double mu, double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  double z = std::abs(x-mu)/sigma;
+  double z = abs(x-mu)/sigma;
   return 1/(2*sigma) * exp(-z);
 }
 
@@ -59,7 +59,7 @@ double rng_laplace(double mu, double sigma) {
     return NAN;
   }
   double u = R::runif(-0.5, 0.5);
-  return mu + sigma * R::sign(u) * log(1 - 2*std::abs(u));
+  return mu + sigma * R::sign(u) * log(1 - 2*abs(u));
 }
 
 

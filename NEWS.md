@@ -1,4 +1,9 @@
 
+### 1.6.15
+
+* Cleaning namespace, now definitions in namespace.h
+* "using namespace Rcpp" was removed from all the files
+
 ### 1.6.14
 
 * Removed erf, erfc, inv_erf that are not used at this moment and

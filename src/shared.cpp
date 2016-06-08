@@ -1,11 +1,12 @@
 #include <Rcpp.h>
+#include "namespace.h"
 #include "const.h"
-using namespace Rcpp;
+
 
 // Basic functions
 
 bool tol_equal(double x, double y) {
-  return std::abs(x - y) <= MIN_DIFF_EPS;
+  return abs(x - y) <= MIN_DIFF_EPS;
 }
 
 bool isInteger(double x) {

@@ -1,6 +1,6 @@
 #include <Rcpp.h>
+#include "namespace.h"
 #include "shared.h"
-using namespace Rcpp;
 
 
 /*

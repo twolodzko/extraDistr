@@ -1,6 +1,6 @@
 #include <Rcpp.h>
+#include "namespace.h"
 #include "shared.h"
-using namespace Rcpp;
 
 
 double pdf_huber(double x, double mu, double sigma, double c) {
@@ -10,7 +10,7 @@ double pdf_huber(double x, double mu, double sigma, double c) {
   }
   
   double z, A, rho;
-  z = std::abs((x - mu)/sigma);
+  z = abs((x - mu)/sigma);
   A = 2*sqrt(2*M_PI) * (Phi(c) + phi(c)/c - 0.5);
 
   if (z <= c)
@@ -30,7 +30,7 @@ double cdf_huber(double x, double mu, double sigma, double c) {
   double A, z, az, p;
   A = 2*(phi(c)/c - Phi(-c) + 0.5);
   z = (x - mu)/sigma;
-  az = -std::abs(z);
+  az = -abs(z);
   
   if (az <= -c) 
     p = exp(pow(c, 2)/2)/c * exp(c*az) / sqrt(2*M_PI)/A;
@@ -56,7 +56,7 @@ double invcdf_huber(double p, double mu, double sigma, double c) {
   if (pm <= sqrt(2*M_PI) * phi(c)/(c*A))
     x = log(c*pm*A)/c - c/2;
   else
-    x = InvPhi(std::abs(1 - Phi(c) + pm*A/sqrt(2*M_PI) - phi(c)/c));
+    x = InvPhi(abs(1 - Phi(c) + pm*A/sqrt(2*M_PI) - phi(c)/c));
 
   if (p < 0.5)
     return mu + x*sigma;

@@ -1,6 +1,7 @@
 #include <Rcpp.h>
+#include "namespace.h"
 #include "shared.h"
-using namespace Rcpp;
+
 
 double pmf_bpois(double x, double y, double a, double b, double c) {
   

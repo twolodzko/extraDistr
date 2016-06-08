@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include "namespace.h"
 using namespace Rcpp;
 
 

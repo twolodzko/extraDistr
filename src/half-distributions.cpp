@@ -1,6 +1,7 @@
 #include <Rcpp.h>
+#include "namespace.h"
 #include "shared.h"
-using namespace Rcpp;
+
 
 /*
  * 
@@ -50,7 +51,7 @@ double rng_hcauchy(double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  return std::abs(R::rcauchy(0, sigma));
+  return abs(R::rcauchy(0, sigma));
 }
 
 // Half-t
@@ -88,7 +89,7 @@ double rng_ht(double nu, double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  return std::abs(R::rt(nu) * sigma);
+  return abs(R::rt(nu) * sigma);
 }
 
 // Half-normal
@@ -126,7 +127,7 @@ double rng_hnorm(double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  return std::abs(R::rnorm(0, sigma));
+  return abs(R::rnorm(0, sigma));
 }
 
 

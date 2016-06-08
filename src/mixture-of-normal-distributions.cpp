@@ -1,8 +1,7 @@
 #include <Rcpp.h>
+#include "namespace.h"
 #include "const.h"
 #include "shared.h"
-using namespace Rcpp;
-
 
 
 // [[Rcpp::export]]
