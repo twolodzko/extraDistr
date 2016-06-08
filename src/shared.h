@@ -17,12 +17,6 @@ double phi(double x);
 double Phi(double x);
 double InvPhi(double x);
 
-// Error function
-
-double erf(double x);
-double erfc(double x);
-double inv_erf(double x);
-
 // Factorial
 
 double lfactorial(double x);

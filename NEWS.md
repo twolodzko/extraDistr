@@ -1,4 +1,13 @@
 
+### 1.6.14
+
+* Removed erf, erfc, inv_erf that are not used at this moment and
+  caused problems when compiling on Fedora and Solaris
+
+### 1.6.13
+
+* cran-comments.Rd is now in .Rbuildignore
+
 ### 1.6.12
 
 * Minor improvements in documentation

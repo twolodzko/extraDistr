@@ -52,20 +52,6 @@ double InvPhi(double x) {
   return R::qnorm(x, 0, 1, true, false);
 }
 
-// Error function
-
-double erf(double x) {
-  return 2 * Phi(x * sqrt(2)) - 1;
-}
-
-double erfc(double x) {
-  return 2 * R::pnorm(x * sqrt(2), 0, 1, false, false);
-}
-
-double inv_erf(double x) {
-  return InvPhi((x+1)/2) / sqrt(2);
-}
-
 // Factorial
 
 double lfactorial(double x) {
@@ -90,7 +76,20 @@ double rng_bernoulli(double p = 0.5) {
     return 1;
 }
  
-
+ // // Error function
+ // 
+ // double erf(double x) {
+ //   return 2 * Phi(x * sqrt(2.0)) - 1;
+ // }
+ // 
+ // double erfc(double x) {
+ //   return 2 * R::pnorm(x * sqrt(2.0), 0, 1, false, false);
+ // }
+ // 
+ // double inv_erf(double x) {
+ //   return InvPhi((x+1)/2) / sqrt(2.0);
+ // }
+ 
 //  // Multivariate gamma function
 //  
 // double lmvgammafn(double p, double a) {
