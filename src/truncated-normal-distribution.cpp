@@ -1,6 +1,20 @@
 #include <Rcpp.h>
-#include "namespace.h"
 #include "shared.h"
+
+using std::pow;
+using std::sqrt;
+using std::abs;
+using std::exp;
+using std::log;
+using std::floor;
+using std::ceil;
+using std::sin;
+using std::cos;
+using std::tan;
+using std::atan;
+using Rcpp::IntegerVector;
+using Rcpp::NumericVector;
+using Rcpp::NumericMatrix;
 
 
 /*
@@ -39,7 +53,7 @@ double pdf_tnorm(double x, double mu, double sigma, double a, double b) {
   if (x > a && x < b) {
     Phi_a = Phi((a-mu)/sigma);
     Phi_b = Phi((b-mu)/sigma);
-    return exp(-pow(x-mu, 2) / (2*pow(sigma, 2))) / (SQRTPI*sigma * (Phi_b - Phi_a));
+    return exp(-pow(x-mu, 2.0) / (2*pow(sigma, 2.0))) / (SQRTPI*sigma * (Phi_b - Phi_a));
   } else {
     return 0;
   }
@@ -102,19 +116,19 @@ double rng_tnorm(double mu, double sigma, double a, double b) {
       while (!stop) {
         r = R::runif(za, zb);
         u = R::runif(0, 1);
-        stop = (u <= exp((pow(za, 2) - pow(r, 2))/2));
+        stop = (u <= exp((pow(za, 2.0) - pow(r, 2.0))/2));
       }
     } else if (zb < 0) {
       while (!stop) {
         r = R::runif(za, zb);
         u = R::runif(0, 1);
-        stop = (u <= exp((pow(zb, 2) - pow(r, 2))/2));
+        stop = (u <= exp((pow(zb, 2.0) - pow(r, 2.0))/2));
       }
     } else {
       while (!stop) {
         r = R::runif(za, zb);
         u = R::runif(0, 1);
-        stop = (u <= exp(-pow(r, 2)/2));
+        stop = (u <= exp(-pow(r, 2.0)/2));
       }
     }
   } else {

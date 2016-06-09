@@ -1,6 +1,20 @@
 #include <Rcpp.h>
-#include "namespace.h"
 #include "shared.h"
+
+using std::pow;
+using std::sqrt;
+using std::abs;
+using std::exp;
+using std::log;
+using std::floor;
+using std::ceil;
+using std::sin;
+using std::cos;
+using std::tan;
+using std::atan;
+using Rcpp::IntegerVector;
+using Rcpp::NumericVector;
+using Rcpp::NumericMatrix;
 
 
 /*
@@ -25,7 +39,7 @@ double pdf_hcauchy(double x, double sigma) {
   }
   if (x < 0)
     return 0;
-  return 2/(M_PI*(1 + pow(x/sigma, 2)))/sigma;
+  return 2/(M_PI*(1 + pow(x/sigma, 2.0)))/sigma;
 }
 
 double cdf_hcauchy(double x, double sigma) {
@@ -111,7 +125,7 @@ double cdf_hnorm(double x, double sigma) {
   }
   if (x < 0)
     return 0;
-  return 2 * R::pnorm(x, 0, sigma, true, false) - 1;
+  return 2 * R::pnorm(x, 0.0, sigma, true, false) - 1;
 }
 
 double invcdf_hnorm(double p, double sigma) {
@@ -119,7 +133,7 @@ double invcdf_hnorm(double p, double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  return R::qnorm((p+1)/2, 0, sigma, true, false);
+  return R::qnorm((p+1)/2, 0.0, sigma, true, false);
 }
 
 double rng_hnorm(double sigma) {
@@ -127,7 +141,7 @@ double rng_hnorm(double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  return abs(R::rnorm(0, sigma));
+  return abs(R::rnorm(0.0, sigma));
 }
 
 

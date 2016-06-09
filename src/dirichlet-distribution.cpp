@@ -1,5 +1,19 @@
 #include <Rcpp.h>
-#include "namespace.h"
+
+using std::pow;
+using std::sqrt;
+using std::abs;
+using std::exp;
+using std::log;
+using std::floor;
+using std::ceil;
+using std::sin;
+using std::cos;
+using std::tan;
+using std::atan;
+using Rcpp::IntegerVector;
+using Rcpp::NumericVector;
+using Rcpp::NumericMatrix;
 
 
 /*
@@ -100,7 +114,7 @@ NumericMatrix cpp_rdirichlet(
         break;
       }
       
-      x(i, j) = R::rgamma(alpha(i % na, j), 1);
+      x(i, j) = R::rgamma(alpha(i % na, j), 1.0);
       row_sum += x(i, j);
     }
 

@@ -1,7 +1,21 @@
 #include <Rcpp.h>
-#include "namespace.h"
 #include "const.h"
 #include "shared.h"
+
+using std::pow;
+using std::sqrt;
+using std::abs;
+using std::exp;
+using std::log;
+using std::floor;
+using std::ceil;
+using std::sin;
+using std::cos;
+using std::tan;
+using std::atan;
+using Rcpp::IntegerVector;
+using Rcpp::NumericVector;
+using Rcpp::NumericMatrix;
 
 
 /*
@@ -41,7 +55,7 @@ NumericVector cpp_dcat(
       p_tot += prob(i % np, j)*P_NORM_CONST;
     }
 
-    if (!tol_equal(p_tot/P_NORM_CONST, 1) || wrong_p) {
+    if (!tol_equal(p_tot/P_NORM_CONST, 1.0) || wrong_p) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
     } else if (!isInteger(x[i]) || x[i] < 1 || x[i] > k) {
@@ -98,7 +112,7 @@ NumericVector cpp_pcat(
         p_tot += prob(i % np, j)*P_NORM_CONST;
         j++;
       }
-      if (!tol_equal(p_tot/P_NORM_CONST, 1) || wrong_p) {
+      if (!tol_equal(p_tot/P_NORM_CONST, 1.0) || wrong_p) {
         Rcpp::warning("NaNs produced");
         p[i] = NAN;
       } else {
@@ -171,7 +185,7 @@ NumericVector cpp_qcat(
         cs_prob += prob(i % np, j)*P_NORM_CONST;
         j++;
       } 
-      if (!tol_equal(cs_prob/P_NORM_CONST, 1) || wrong_p) {
+      if (!tol_equal(cs_prob/P_NORM_CONST, 1.0) || wrong_p) {
         Rcpp::warning("NaNs produced");
         q[i] = NAN;
       }
@@ -219,7 +233,7 @@ NumericVector cpp_rcat(
       j++;
     } 
     
-    if (!tol_equal(cs_prob/P_NORM_CONST, 1) || wrong_p) {
+    if (!tol_equal(cs_prob/P_NORM_CONST, 1.0) || wrong_p) {
       Rcpp::warning("NaNs produced");
       x[i] = NAN;
     }

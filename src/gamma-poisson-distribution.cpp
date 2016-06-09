@@ -1,7 +1,21 @@
 #include <Rcpp.h>
-#include "namespace.h"
 #include "const.h"
 #include "shared.h"
+
+using std::pow;
+using std::sqrt;
+using std::abs;
+using std::exp;
+using std::log;
+using std::floor;
+using std::ceil;
+using std::sin;
+using std::cos;
+using std::tan;
+using std::atan;
+using Rcpp::IntegerVector;
+using Rcpp::NumericVector;
+using Rcpp::NumericMatrix;
 
 
 /*
@@ -38,7 +52,7 @@ double cdf_gpois(double x, double alpha, double beta) {
     return 1;
   double p_tmp = 0;
   for (int j = 0; j < x+1; j++)
-    p_tmp += exp(logpmf_gpois(j, alpha, beta))*P_NORM_CONST;
+    p_tmp += exp(logpmf_gpois(static_cast<double>(j), alpha, beta))*P_NORM_CONST;
   return p_tmp/P_NORM_CONST;
 }
 
@@ -94,17 +108,18 @@ NumericVector cpp_pgpois(
   if (na == 1 && nb == 1 && anyFinite(x)) {
     
     double mx = finite_max(x);
-    NumericVector p_tab(mx+1);
+    NumericVector p_tab(static_cast<int>(mx)+1);
     
     p_tab[0] = exp(logpmf_gpois(0, alpha[0], beta[0]))*P_NORM_CONST;
     for (int j = 1; j < mx+1; j++)
-      p_tab[j] = p_tab[j-1] + exp(logpmf_gpois(j, alpha[0], beta[0]))*P_NORM_CONST;
+      p_tab[j] = p_tab[j-1] + exp(logpmf_gpois(static_cast<double>(j),
+                                               alpha[0], beta[0]))*P_NORM_CONST;
     
     for (int i = 0; i < n; i++) {
       if (std::isinf(x[i])) {
         p[i] = 1;
-      } else if (x[i] == floor(x[i]) && x[i] >= 0) {
-        p[i] = p_tab[(int)x[i]]/P_NORM_CONST;
+      } else if (isInteger(x[i]) && x[i] >= 0) {
+        p[i] = p_tab[static_cast<int>(x[i])]/P_NORM_CONST;
       } else {
         p[i] = 0;
       }

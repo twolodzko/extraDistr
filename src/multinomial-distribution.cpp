@@ -1,7 +1,21 @@
 #include <Rcpp.h>
-#include "namespace.h"
 #include "const.h"
 #include "shared.h"
+
+using std::pow;
+using std::sqrt;
+using std::abs;
+using std::exp;
+using std::log;
+using std::floor;
+using std::ceil;
+using std::sin;
+using std::cos;
+using std::tan;
+using std::atan;
+using Rcpp::IntegerVector;
+using Rcpp::NumericVector;
+using Rcpp::NumericMatrix;
 
 
 /*
@@ -61,7 +75,7 @@ NumericVector cpp_dmnom(
       sum_p += prob(i % np, j)*P_NORM_CONST;
     }
 
-    if (!tol_equal(sum_p/P_NORM_CONST, 1) || wrong_p) {
+    if (!tol_equal(sum_p/P_NORM_CONST, 1.0) || wrong_p) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN; 
     } else if (floor(size[i % ns]) != size[i % ns] ||
@@ -112,7 +126,7 @@ NumericMatrix cpp_rmnom(
     x(i, k-1) = size_left;
     sum_p += prob(i % np, k-1)*P_NORM_CONST;
     
-    if (!tol_equal(sum_p/P_NORM_CONST, 1) || wrong_p) {
+    if (!tol_equal(sum_p/P_NORM_CONST, 1.0) || wrong_p) {
       Rcpp::warning("NaNs produced");
       for (int j = 0; j < k; j++)
         x(i, j) = NAN;

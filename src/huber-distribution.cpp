@@ -1,6 +1,20 @@
 #include <Rcpp.h>
-#include "namespace.h"
 #include "shared.h"
+
+using std::pow;
+using std::sqrt;
+using std::abs;
+using std::exp;
+using std::log;
+using std::floor;
+using std::ceil;
+using std::sin;
+using std::cos;
+using std::tan;
+using std::atan;
+using Rcpp::IntegerVector;
+using Rcpp::NumericVector;
+using Rcpp::NumericMatrix;
 
 
 double pdf_huber(double x, double mu, double sigma, double c) {
@@ -14,9 +28,9 @@ double pdf_huber(double x, double mu, double sigma, double c) {
   A = 2*sqrt(2*M_PI) * (Phi(c) + phi(c)/c - 0.5);
 
   if (z <= c)
-    rho = pow(z, 2)/2;
+    rho = pow(z, 2.0)/2;
   else
-    rho = c*z - pow(c, 2)/2;
+    rho = c*z - pow(c, 2.0)/2;
 
   return exp(-rho)/A/sigma;
 }
@@ -33,7 +47,7 @@ double cdf_huber(double x, double mu, double sigma, double c) {
   az = -abs(z);
   
   if (az <= -c) 
-    p = exp(pow(c, 2)/2)/c * exp(c*az) / sqrt(2*M_PI)/A;
+    p = exp(pow(c, 2.0)/2)/c * exp(c*az) / sqrt(2*M_PI)/A;
   else
     p = (phi(c)/c + Phi(az) - Phi(-c))/A;
   

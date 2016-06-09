@@ -1,16 +1,15 @@
 #include <Rcpp.h>
-#include "namespace.h"
 #include "const.h"
 
 
 // Basic functions
 
 bool tol_equal(double x, double y) {
-  return abs(x - y) <= MIN_DIFF_EPS;
+  return std::abs(x - y) <= MIN_DIFF_EPS;
 }
 
 bool isInteger(double x) {
-  if (floor(x) != x) {
+  if (std::floor(x) != x) {
     char msg[55];
     std::snprintf(msg, sizeof(msg), "non-integer x = %f", x);
     Rcpp::warning(msg);
@@ -21,7 +20,7 @@ bool isInteger(double x) {
 
 // Dealing with Inf
 
-bool anyFinite(NumericVector x) {
+bool anyFinite(Rcpp::NumericVector x) {
   int n = x.length();
   for (int i = 0; i < n; i++)
     if (!std::isinf(x[i]))
@@ -29,7 +28,7 @@ bool anyFinite(NumericVector x) {
   return false;
 }
 
-double finite_max(NumericVector x) {
+double finite_max(Rcpp::NumericVector x) {
   double max_x = -INFINITY;
   int n = x.length();
   for (int i = 0; i < n; i++) {

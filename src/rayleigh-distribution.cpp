@@ -1,5 +1,19 @@
 #include <Rcpp.h>
-#include "namespace.h"
+
+using std::pow;
+using std::sqrt;
+using std::abs;
+using std::exp;
+using std::log;
+using std::floor;
+using std::ceil;
+using std::sin;
+using std::cos;
+using std::tan;
+using std::atan;
+using Rcpp::IntegerVector;
+using Rcpp::NumericVector;
+using Rcpp::NumericMatrix;
 
 
 /*
@@ -24,7 +38,7 @@ double pdf_rayleigh(double x, double sigma) {
   }
   if (x < 0 || std::isinf(x))
     return 0;
-  return x/pow(sigma, 2) * exp(-pow(x, 2) / (2*pow(sigma, 2)));
+  return x/pow(sigma, 2.0) * exp(-pow(x, 2.0) / (2*pow(sigma, 2.0)));
 }
 
 double cdf_rayleigh(double x, double sigma) {
@@ -35,7 +49,7 @@ double cdf_rayleigh(double x, double sigma) {
   if (x == INFINITY)
     return 1;
   if (x >= 0)
-    return 1 - exp(-pow(x, 2) / (2*pow(sigma, 2)));
+    return 1 - exp(-pow(x, 2.0) / (2*pow(sigma, 2.0)));
   else
     return 0;
 }
@@ -45,7 +59,7 @@ double invcdf_rayleigh(double p, double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  return sqrt(-2*pow(sigma, 2) * log(1-p));
+  return sqrt(-2*pow(sigma, 2.0) * log(1-p));
 }
 
 

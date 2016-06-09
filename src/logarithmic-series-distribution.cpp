@@ -1,6 +1,20 @@
 #include <Rcpp.h>
-#include "namespace.h"
 #include "shared.h"
+
+using std::pow;
+using std::sqrt;
+using std::abs;
+using std::exp;
+using std::log;
+using std::floor;
+using std::ceil;
+using std::sin;
+using std::cos;
+using std::tan;
+using std::atan;
+using Rcpp::IntegerVector;
+using Rcpp::NumericVector;
+using Rcpp::NumericMatrix;
 
 
 /*
@@ -43,8 +57,10 @@ double cdf_lgser(double x, double theta) {
   double a = -1/log(1-theta);
   double b = 0;
   
-  for (int k = 1; k < x+1; k++)
-    b += pow(theta, k) / k;
+  for (int k = 1; k < x+1; k++) {
+    double dk = static_cast<double>(k);
+    b += pow(theta, dk) / dk;
+  }
   
   return a * b;
 }
@@ -60,12 +76,12 @@ double invcdf_lgser(double p, double theta) {
     return INFINITY;
   
   double pk = -theta/log(1-theta);
-  int k = 1;
+  double k = 1;
   
   while (p > pk) {
     p -= pk;
     pk *= theta * k/(k+1);
-    k++;
+    k += 1;
   }
   return k;
 }

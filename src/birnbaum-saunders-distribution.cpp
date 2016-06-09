@@ -1,6 +1,20 @@
 #include <Rcpp.h>
-#include "namespace.h"
 #include "shared.h"
+
+using std::pow;
+using std::sqrt;
+using std::abs;
+using std::exp;
+using std::log;
+using std::floor;
+using std::ceil;
+using std::sin;
+using std::cos;
+using std::tan;
+using std::atan;
+using Rcpp::IntegerVector;
+using Rcpp::NumericVector;
+using Rcpp::NumericMatrix;
 
 
 /*
@@ -53,7 +67,7 @@ double invcdf_fatigue(double p, double alpha, double beta, double mu) {
   if (p == 0)
     return mu;
   double Zp = InvPhi(p);
-  return pow(alpha/2*Zp + sqrt(pow(alpha/2*Zp, 2) + 1), 2) * beta + mu;
+  return pow(alpha/2*Zp + sqrt(pow(alpha/2*Zp, 2.0) + 1), 2.0) * beta + mu;
 }
 
 double rng_fatigue(double alpha, double beta, double mu) {
@@ -62,7 +76,7 @@ double rng_fatigue(double alpha, double beta, double mu) {
     return NAN;
   }
   double z = R::rnorm(0, 1);
-  return pow(alpha/2*z + sqrt(pow(alpha/2*z, 2) + 1), 2) * beta + mu;
+  return pow(alpha/2*z + sqrt(pow(alpha/2*z, 2.0) + 1), 2.0) * beta + mu;
 }
 
 

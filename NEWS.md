@@ -1,12 +1,17 @@
 
 ### 1.6.15
 
-* Cleaning namespace, now definitions in namespace.h
+* Cleaning namespace - now mathematical functions are explicitely
+  called from std library
 * "using namespace Rcpp" was removed from all the files
+* All the numerical values are now `<double>`'s, or
+  casted to `<double>`
+* Improvements in algorithms for categorical distribution,
+  mixture of normal, mixture of Poisson distributions
 
 ### 1.6.14
 
-* Removed erf, erfc, inv_erf that are not used at this moment and
+* Removed `erf`, `erfc`, `inv_erf` that are not used at this moment and
   caused problems when compiling on Fedora and Solaris
 
 ### 1.6.13

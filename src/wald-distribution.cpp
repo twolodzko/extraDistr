@@ -1,6 +1,20 @@
 #include <Rcpp.h>
-#include "namespace.h"
 #include "shared.h"
+
+using std::pow;
+using std::sqrt;
+using std::abs;
+using std::exp;
+using std::log;
+using std::floor;
+using std::ceil;
+using std::sin;
+using std::cos;
+using std::tan;
+using std::atan;
+using Rcpp::IntegerVector;
+using Rcpp::NumericVector;
+using Rcpp::NumericMatrix;
 
 
 /*
@@ -23,8 +37,8 @@ double pdf_wald(double x, double mu, double lambda) {
   }
   if (x <= 0 || std::isinf(x))
     return 0;
-  return sqrt(lambda/(2*PI*pow(x, 3))) *
-         exp((-lambda*pow(x-mu, 2))/(2*pow(mu, 2)*x));
+  return sqrt(lambda/(2*PI*pow(x, 3.0))) *
+         exp((-lambda*pow(x-mu, 2.0))/(2*pow(mu, 2.0)*x));
 }
 
 double cdf_wald(double x, double mu, double lambda) {
@@ -48,12 +62,12 @@ double rng_wald(double mu, double lambda) {
   }
   double u = R::runif(0, 1);
   double y = pow(R::rnorm(0, 1), 2);
-  double x = mu + (pow(mu, 2)*y)/(2*lambda) - mu/(2*lambda) *
-             sqrt(4*mu*lambda*y+pow(mu, 2)*pow(y, 2));
+  double x = mu + (pow(mu, 2.0)*y)/(2*lambda) - mu/(2*lambda) *
+             sqrt(4*mu*lambda*y+pow(mu, 2.0)*pow(y, 2.0));
   if (u <= mu/(mu+x))
     return x;
   else
-    return pow(mu, 2)/x;
+    return pow(mu, 2.0)/x;
 }
 
 

@@ -1,6 +1,20 @@
 #include <Rcpp.h>
-#include "namespace.h"
 #include "shared.h"
+
+using std::pow;
+using std::sqrt;
+using std::abs;
+using std::exp;
+using std::log;
+using std::floor;
+using std::ceil;
+using std::sin;
+using std::cos;
+using std::tan;
+using std::atan;
+using Rcpp::IntegerVector;
+using Rcpp::NumericVector;
+using Rcpp::NumericMatrix;
 
 
 double pmf_bpois(double x, double y, double a, double b, double c) {
@@ -25,47 +39,18 @@ double pmf_bpois(double x, double y, double a, double b, double c) {
   double xy = 0;
   
   if (x < y) {
-    for (int k = 0; k < x; k++)
-      xy += R::choose(x, k) * R::choose(y, k) * factorial(k) * pow(c/(a*b), k);
+    for (int k = 0; k < x; k++) {
+      double dk = static_cast<double>(k);
+      xy += R::choose(x, dk) * R::choose(y, dk) * factorial(dk) * pow(c/(a*b), dk);
+    }
   } else {
-    for (int k = 0; k < y; k++)
-      xy += R::choose(x, k) * R::choose(y, k) * factorial(k) * pow(c/(a*b), k);
+    for (int k = 0; k < y; k++) {
+      double dk = static_cast<double>(k);
+      xy += R::choose(x, dk) * R::choose(y, dk) * factorial(dk) * pow(c/(a*b), dk);
+    }
   }
   
   return tmp * xy;
-}
-
-
-double logpmf_bpois(double x, double y, double a, double b, double c) {
-  
-  if (a < 0 || b < 0 || c < 0) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
-  }
-  
-  if (!isInteger(x))
-    return -INFINITY;
-  
-  if (floor(y) != y) {
-    char msg[55];
-    std::snprintf(msg, sizeof(msg), "non-integer y = %f", y);
-    Rcpp::warning(msg);
-    return -INFINITY;
-  }
-  
-  double tmp = -(a+b+c); 
-  tmp += log(pow(x, a) / lfactorial(x)) + log(pow(y, b) / lfactorial(y));
-  double xy = 0;
-  
-  if (x < y) {
-    for (int k = 0; k < x; k++)
-      xy += R::choose(x, k) * R::choose(y, k) * lfactorial(k) * pow(c/(a*b), k);
-  } else {
-    for (int k = 0; k < y; k++)
-      xy += R::choose(x, k) * R::choose(y, k) * lfactorial(k) * pow(c/(a*b), k);
-  }
-  
-  return tmp + log(xy);
 }
 
 

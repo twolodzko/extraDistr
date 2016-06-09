@@ -1,5 +1,19 @@
 #include <Rcpp.h>
-#include "namespace.h"
+
+using std::pow;
+using std::sqrt;
+using std::abs;
+using std::exp;
+using std::log;
+using std::floor;
+using std::ceil;
+using std::sin;
+using std::cos;
+using std::tan;
+using std::atan;
+using Rcpp::IntegerVector;
+using Rcpp::NumericVector;
+using Rcpp::NumericMatrix;
 
 
 /*
@@ -48,9 +62,9 @@ double cdf_triangular(double x, double a, double b, double c) {
   } else if (x >= b) {
     return 1;
   } else if (x <= c) {
-    return pow(x-a, 2) / ((b-a)*(c-a));
+    return pow(x-a, 2.0) / ((b-a)*(c-a));
   } else {
-    return 1 - (pow(b-x, 2) / ((b-a)*(b-c)));
+    return 1 - (pow(b-x, 2.0) / ((b-a)*(b-c)));
   }
 }
 

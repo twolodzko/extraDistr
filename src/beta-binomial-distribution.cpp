@@ -1,7 +1,21 @@
 #include <Rcpp.h>
-#include "namespace.h"
 #include "const.h"
 #include "shared.h"
+
+using std::pow;
+using std::sqrt;
+using std::abs;
+using std::exp;
+using std::log;
+using std::floor;
+using std::ceil;
+using std::sin;
+using std::cos;
+using std::tan;
+using std::atan;
+using Rcpp::IntegerVector;
+using Rcpp::NumericVector;
+using Rcpp::NumericMatrix;
 
 
 /*
@@ -50,7 +64,7 @@ double cdf_bbinom(double k, double n, double alpha, double beta) {
     return 1;
   double p_tmp = 0;
   for (int j = 0; j < k+1; j++)
-    p_tmp += exp(logpmf_bbinom(j, n, alpha, beta))*P_NORM_CONST;
+    p_tmp += exp(logpmf_bbinom(static_cast<double>(j), n, alpha, beta))*P_NORM_CONST;
   return p_tmp/P_NORM_CONST;
 }
 
@@ -118,17 +132,18 @@ NumericVector cpp_pbbinom(
     
     double mx = finite_max(x);
     mx = std::max(mx, size[0]);
-    NumericVector p_tab(mx+1);
+    NumericVector p_tab(static_cast<int>(mx)+1);
     
-    p_tab[0] = exp(logpmf_bbinom(0, size[0], alpha[0], beta[0]))*P_NORM_CONST;
+    p_tab[0] = exp(logpmf_bbinom(0.0, size[0], alpha[0], beta[0]))*P_NORM_CONST;
     for (int j = 1; j < mx+1; j++)
-      p_tab[j] = p_tab[j-1] + exp(logpmf_bbinom(j, size[0], alpha[0], beta[0]))*P_NORM_CONST;
+      p_tab[j] = p_tab[j-1] + exp(logpmf_bbinom(static_cast<double>(j),
+                                                size[0], alpha[0], beta[0]))*P_NORM_CONST;
     
     for (int i = 0; i < n; i++) {
       if (x[i] > size[0]) {
         p[i] = 1;
-      } else if (x[i] == floor(x[i]) && x[i] >= 0) {
-        p[i] = p_tab[(int)x[i]]/P_NORM_CONST;
+      } else if (isInteger(x[i]) && x[i] >= 0) {
+        p[i] = p_tab[static_cast<int>(x[i])]/P_NORM_CONST;
       } else {
         p[i] = 0;
       }

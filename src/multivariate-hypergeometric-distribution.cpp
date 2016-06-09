@@ -1,6 +1,20 @@
 #include <Rcpp.h>
-#include "namespace.h"
 #include "shared.h"
+
+using std::pow;
+using std::sqrt;
+using std::abs;
+using std::exp;
+using std::log;
+using std::floor;
+using std::ceil;
+using std::sin;
+using std::cos;
+using std::tan;
+using std::atan;
+using Rcpp::IntegerVector;
+using Rcpp::NumericVector;
+using Rcpp::NumericMatrix;
 
 
 /*
@@ -36,7 +50,7 @@ NumericVector cpp_dmvhyper(
   for (int i = 0; i < Nmax; i++) {
     
     bool wrong_n = false;
-    int N = 0;
+    double N = 0;
     for (int j = 0; j < m; j++) {
       N += n(i % nr, j);
       if (floor(n(i % nr, j)) != n(i % nr, j) || n(i % nr, j) < 0) {
@@ -110,8 +124,9 @@ NumericMatrix cpp_rmvhyper(
     }
     
     if (floor(n(i % nr, 0)) != n(i % nr, 0) || n(i % nr, 0) < 0 ||
-        (n_otr[0] + n(i % nr, 0)) < k[i % nk])
+        (n_otr[0] + n(i % nr, 0)) < k[i % nk]) {
       wrong_n = true;
+    }
     
     if (wrong_n || floor(k[i % nk]) != k[i % nk]) {
       
@@ -124,7 +139,7 @@ NumericMatrix cpp_rmvhyper(
       for (int j = 1; j < m; j++)
         n_otr[j] = n_otr[j-1] - n(i % nr, j);
       
-      int k_left = k[i % nk];
+      double k_left = k[i % nk];
       x(i, 0) = R::rhyper(n(i % nr, 0), n_otr[0], k_left);
       k_left -= x(i, 0);
       

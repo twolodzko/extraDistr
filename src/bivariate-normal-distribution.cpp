@@ -1,5 +1,19 @@
 #include <Rcpp.h>
-#include "namespace.h"
+
+using std::pow;
+using std::sqrt;
+using std::abs;
+using std::exp;
+using std::log;
+using std::floor;
+using std::ceil;
+using std::sin;
+using std::cos;
+using std::tan;
+using std::atan;
+using Rcpp::IntegerVector;
+using Rcpp::NumericVector;
+using Rcpp::NumericMatrix;
 
 
 /*
@@ -34,10 +48,10 @@ double pdf_bnorm(double x, double y,
   double z1 = (x - mu1)/sigma1;
   double z2 = (y - mu2)/sigma2;
   
-  double c1 = 1/(2*M_PI*sqrt(1-pow(rho, 2))*sigma1*sigma2);
-  double c2 = -1/(2*(1-pow(rho, 2)));
+  double c1 = 1/(2*M_PI*sqrt(1-pow(rho, 2.0))*sigma1*sigma2);
+  double c2 = -1/(2*(1-pow(rho, 2.0)));
   
-  return c1 * exp(c2 * (pow(z1, 2) - 2*rho*z1*z2 + pow(z2, 2)));
+  return c1 * exp(c2 * (pow(z1, 2.0) - 2*rho*z1*z2 + pow(z2, 2.0)));
 }
 
 
@@ -137,7 +151,7 @@ NumericMatrix cpp_rbnorm(
     } else if (rho[i % nr] != 0) {
       double u = R::rnorm(0, 1);
       double v = R::rnorm(0, 1);
-      double corr = (rho[i % nr]*u + sqrt(1-pow(rho[i % nr], 2))*v);
+      double corr = (rho[i % nr]*u + sqrt(1-pow(rho[i % nr], 2.0))*v);
       x(i, 0) = mu1[i % nm1] + sigma1[i % ns1] * u;
       x(i, 1) = mu2[i % nm2] + sigma2[i % ns2] * corr;
     } else {

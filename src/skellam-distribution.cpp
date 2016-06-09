@@ -1,6 +1,20 @@
 #include <Rcpp.h>
-#include "namespace.h"
 #include "shared.h"
+
+using std::pow;
+using std::sqrt;
+using std::abs;
+using std::exp;
+using std::log;
+using std::floor;
+using std::ceil;
+using std::sin;
+using std::cos;
+using std::tan;
+using std::atan;
+using Rcpp::IntegerVector;
+using Rcpp::NumericVector;
+using Rcpp::NumericMatrix;
 
 
 /*
@@ -18,7 +32,7 @@ double pmf_skellam(double x, double mu1, double mu2) {
   }
   if (!isInteger(x))
     return 0;
-  return exp(-(mu1+mu2)) * pow(mu1/mu2, x/2) * R::bessel_i(2*sqrt(mu1*mu2), x, 1);
+  return exp(-(mu1+mu2)) * pow(mu1/mu2, x/2) * R::bessel_i(2*sqrt(mu1*mu2), x, 1.0);
 }
 
 double rng_skellam(double mu1, double mu2) {
