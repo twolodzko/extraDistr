@@ -1,6 +1,7 @@
 #ifndef EDCPP_SHARED_H
 #define EDCPP_SHARED_H
 
+
 // Basic functions
 
 bool tol_equal(double x, double y);
@@ -19,8 +20,8 @@ double InvPhi(double x);
 
 // Factorial
 
-double lfactorial(double x);
 double factorial(double x);
+double lfactorial(double x);
 
 // Random generation for Bernoulli
 

@@ -55,12 +55,12 @@ double InvPhi(double x) {
 
 // Factorial
 
-double lfactorial(double x) {
-  return R::lgammafn(x + 1);
-}
-
 double factorial(double x) {
   return R::gammafn(x + 1);
+}
+
+double lfactorial(double x) {
+  return R::lgammafn(x + 1);
 }
 
 // Random generation for Bernoulli
