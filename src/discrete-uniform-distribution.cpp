@@ -74,13 +74,12 @@ double rng_dunif(double min, double max) {
     return NAN;
   }
   
-  double x = ceil(R::runif(min - 1.0, max));
-  
   // boundry case for x == min-1
-  if (x < min) 
-    return min; 
-  else
-    return x;
+  double x = min - 1.0;
+  while (x < min) {
+    x = ceil(R::runif(min - 1.0, max));
+  }
+  return x;
 }
 
 
