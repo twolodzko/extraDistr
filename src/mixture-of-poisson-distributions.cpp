@@ -124,7 +124,7 @@ NumericVector cpp_rmixpois(
     Rcpp::stop("sizes of 'lambda' and 'alpha' do not match");
   
   int jj;
-  bool wrong_param, j_set;
+  bool wrong_param;
   double u, p_tmp;
   NumericVector prob(k);
   

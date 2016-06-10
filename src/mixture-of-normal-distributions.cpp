@@ -130,7 +130,7 @@ NumericVector cpp_rmixnorm(
     Rcpp::stop("sizes of 'mu', 'sigma', and 'alpha' do not match");
   
   int jj;
-  bool wrong_param, j_set;
+  bool wrong_param;
   double u, p_tmp;
   NumericVector prob(k);
   
