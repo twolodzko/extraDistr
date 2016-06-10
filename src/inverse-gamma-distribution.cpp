@@ -35,14 +35,14 @@ using Rcpp::NumericMatrix;
 */
 
 double pdf_invgamma(double x, double alpha, double beta) {
-  if (alpha <= 0 || beta <= 0) {
+  if (alpha <= 0.0 || beta <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x > 0)
-    return (pow(x, -alpha-1) * exp(-1/(beta*x))) / (R::gammafn(alpha) * pow(beta, alpha));
+  if (x > 0.0)
+    return (pow(x, -alpha-1.0) * exp(-1.0/(beta*x))) / (R::gammafn(alpha) * pow(beta, alpha));
   else
-    return 0;
+    return 0.0;
 }
 
 

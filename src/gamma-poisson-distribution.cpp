@@ -31,33 +31,33 @@ using Rcpp::NumericMatrix;
 */
 
 double logpmf_gpois(double x, double alpha, double beta) {
-  if (alpha <= 0 || beta <= 0) {
+  if (alpha <= 0.0 || beta <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (!isInteger(x) || x < 0 || std::isinf(x))
+  if (!isInteger(x) || x < 0.0 || std::isinf(x))
     return -INFINITY;
   
-  double p = beta/(1+beta);
+  double p = beta/(1.0+beta);
   return R::lgammafn(alpha+x) - (lfactorial(x) + R::lgammafn(alpha)) +
-    log(p)*x + log(1-p)*alpha;
+    log(p)*x + log(1.0-p)*alpha;
 }
 
 double cdf_gpois(double x, double alpha, double beta) {
-  if (alpha <= 0 || beta <= 0) {
+  if (alpha <= 0.0 || beta <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   if (std::isinf(x))
-    return 1;
-  double p_tmp = 0;
-  for (int j = 0; j < x+1; j++)
+    return 1.0;
+  double p_tmp = 0.0;
+  for (int j = 0; j < static_cast<int>(x)+1; j++)
     p_tmp += exp(logpmf_gpois(static_cast<double>(j), alpha, beta))*P_NORM_CONST;
   return p_tmp/P_NORM_CONST;
 }
 
 double rng_gpois(double alpha, double beta) {
-  if (alpha <= 0 || beta <= 0) {
+  if (alpha <= 0.0 || beta <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -117,11 +117,11 @@ NumericVector cpp_pgpois(
     
     for (int i = 0; i < n; i++) {
       if (std::isinf(x[i])) {
-        p[i] = 1;
-      } else if (isInteger(x[i]) && x[i] >= 0) {
+        p[i] = 1.0;
+      } else if (isInteger(x[i]) && x[i] >= 0.0) {
         p[i] = p_tab[static_cast<int>(x[i])]/P_NORM_CONST;
       } else {
-        p[i] = 0;
+        p[i] = 0.0;
       }
     }
     
@@ -134,7 +134,7 @@ NumericVector cpp_pgpois(
   
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
-      p[i] = 1-p[i];
+      p[i] = 1.0 - p[i];
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)

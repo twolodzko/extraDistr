@@ -37,33 +37,33 @@ using Rcpp::NumericMatrix;
 */
 
 double pdf_dweibull(double x, double q, double beta) {
-  if (q <= 0 || q >= 1 || beta <= 0) {
+  if (q <= 0.0 || q >= 1.0 || beta <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (!isInteger(x) || x < 0)
+  if (!isInteger(x) || x < 0.0)
     return 0;
-  return pow(q, pow(x, beta)) - pow(q, pow(x+1, beta));
+  return pow(q, pow(x, beta)) - pow(q, pow(x+1.0, beta));
 }
 
 double cdf_dweibull(double x, double q, double beta) {
-  if (q <= 0 || q >= 1 || beta <= 0) {
+  if (q <= 0.0 || q >= 1.0 || beta <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x < 0)
-    return 0;
-  return 1-pow(q, pow(x+1, beta));
+  if (x < 0.0)
+    return 0.0;
+  return 1.0 - pow(q, pow(x+1.0, beta));
 }
 
 double invcdf_dweibull(double p, double q, double beta) {
-  if (q <= 0 || q >= 1 || beta <= 0 || p < 0 || p > 1) {
+  if (q <= 0.0 || q >= 1.0 || beta <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (p == 0)
-    return 0;
-  return ceil(pow(log(1-p)/log(q), 1/beta) - 1);
+  if (p == 0.0)
+    return 0.0;
+  return ceil(pow(log(1.0 - p)/log(q), 1.0/beta) - 1.0);
 }
 
 
@@ -142,7 +142,7 @@ NumericVector cpp_qdweibull(
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      pp[i] = 1-pp[i];
+      pp[i] = 1.0 - pp[i];
 
   for (int i = 0; i < Nmax; i++)
     x[i] = invcdf_dweibull(pp[i % n], q[i % nq], beta[i % nb]);
@@ -164,7 +164,7 @@ NumericVector cpp_rdweibull(
   NumericVector x(n);
 
   for (int i = 0; i < n; i++) {
-    u = R::runif(0, 1);
+    u = R::runif(0.0, 1.0);
     x[i] = invcdf_dweibull(u, q[i % nq], beta[i % nb]);
   }
 

@@ -45,10 +45,10 @@ NumericVector cpp_dcat(
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++) {
-    double p_tot = 0;
+    double p_tot = 0.0;
     bool wrong_p = false;
     for (int j = 0; j < k; j++) {
-      if (prob(i % np, j) < 0 || prob(i % np, j) > 1) {
+      if (prob(i % np, j) < 0.0 || prob(i % np, j) > 1.0) {
         wrong_p = true;
         break;
       }
@@ -58,10 +58,10 @@ NumericVector cpp_dcat(
     if (!tol_equal(p_tot/P_NORM_CONST, 1.0) || wrong_p) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
-    } else if (!isInteger(x[i]) || x[i] < 1 || x[i] > k) {
-      p[i] = 0;
+    } else if (!isInteger(x[i]) || x[i] < 1.0 || x[i] > k) {
+      p[i] = 0.0;
     } else {
-      p[i] = prob(i % np, x[i]-1);
+      p[i] = prob(i % np, x[i] - 1.0);
     }
   }
 
@@ -87,32 +87,35 @@ NumericVector cpp_pcat(
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++) {
-    if (x[i] < 1) {
-      p[i] = 0;
-    } else if (x[i] > k) {
-      p[i] = 1;
+    if (x[i] < 1.0) {
+      p[i] = 0.0;
+    } else if (static_cast<int>(x[i]) > k) {
+      p[i] = 1.0;
     } else {
-      bool wrong_p = false;
-      p[i] = 0;
+      bool wrong_param = false;
+      p[i] = 0.0;
       int j = 0;
-      while (j < x[i]) {
-        if (prob(i % np, j) < 0 || prob(i % np, j) > 1) {
-          wrong_p = true;
+      while (j < static_cast<int>(x[i])) {
+        if (prob(i % np, j) < 0.0 || prob(i % np, j) > 1.0) {
+          wrong_param = true;
           break;
         }
         p[i] += prob(i % np, j)*P_NORM_CONST;
         j++;
       }
       double p_tot = p[i];
-      while (j < k) {
-        if (prob(i % np, j) < 0 || prob(i % np, j) > 1) {
-          wrong_p = true;
-          break;
+      if (!wrong_param) {
+        while (j < k) {
+          if (prob(i % np, j) < 0.0 || prob(i % np, j) > 1.0) {
+            wrong_param = true;
+            break;
+          }
+          p_tot += prob(i % np, j)*P_NORM_CONST;
+          j++;
         }
-        p_tot += prob(i % np, j)*P_NORM_CONST;
-        j++;
       }
-      if (!tol_equal(p_tot/P_NORM_CONST, 1.0) || wrong_p) {
+
+      if (wrong_param || !tol_equal(p_tot/P_NORM_CONST, 1.0)) {
         Rcpp::warning("NaNs produced");
         p[i] = NAN;
       } else {
@@ -124,7 +127,7 @@ NumericVector cpp_pcat(
 
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
-      p[i] = 1-p[i];
+      p[i] = 1.0 - p[i];
     
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -154,40 +157,51 @@ NumericVector cpp_qcat(
     
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      pp[i] = 1-pp[i];
+      pp[i] = 1.0 - pp[i];
+  
+  int jj;
+  double pp_norm, p_tmp;
+  bool wrong_param;
     
   for (int i = 0; i < Nmax; i++) {
-    if (pp[i] < 0 || pp[i] > 1) {
+    if (pp[i] < 0.0 || pp[i] > 1.0) {
       Rcpp::warning("NaNs produced");
       q[i] = NAN;
+    } else if (pp[i] == 0.0) {
+      q[i] = 1.0; 
     } else {
-      bool wrong_p = false;
-      double cs_prob = 0;
-      int j = 0;
-      while (cs_prob < pp[i]*P_NORM_CONST && j < k) {
-        if (prob(i % np, j) < 0 || prob(i % np, j) > 1) {
-          wrong_p = true;
-          break;
-        }
-        cs_prob += prob(i % np, j)*P_NORM_CONST;
-        j++;
-      }
-      if (pp[i] == 0)
-        q[i] = 1;
-      else
-        q[i] = j;
+      pp_norm = pp[i]*P_NORM_CONST;
+      wrong_param = false;
+      p_tmp = P_NORM_CONST;
+      jj = 0;
       
-      while (j < k) {
-        if (prob(i % np, j) < 0 || prob(i % np, j) > 1) {
-          wrong_p = true;
+      for (int j = k-1; j >= 0; j--) {
+        p_tmp -= prob(i % np, j)*P_NORM_CONST;
+        if (prob(i % np, j) < 0.0 || prob(i % np, j) > 1.0) {
+          wrong_param = true;
           break;
         }
-        cs_prob += prob(i % np, j)*P_NORM_CONST;
-        j++;
-      } 
-      if (!tol_equal(cs_prob/P_NORM_CONST, 1.0) || wrong_p) {
+        if (pp_norm > p_tmp) {
+          jj = j;
+          break;
+        }
+      }
+      
+      if (!wrong_param && jj > 0) {
+        for (int j = jj-1; j >= 0; j--) {
+          p_tmp -= prob(i % np, j)*P_NORM_CONST;
+          if (prob(i % np, j) < 0.0 || prob(i % np, j) > 1.0) {
+            wrong_param = true;
+            break;
+          }
+        } 
+      }
+      
+      if (wrong_param || !tol_equal(p_tmp/P_NORM_CONST, 0.0)) {
         Rcpp::warning("NaNs produced");
         q[i] = NAN;
+      } else {
+        q[i] = static_cast<double>(jj+1);
       }
     }
   }
@@ -202,40 +216,47 @@ NumericVector cpp_rcat(
     const NumericMatrix& prob
   ) {
   
-  double u;
   int np = prob.nrow();
   int k = prob.ncol();
   NumericVector x(n);
+  
+  int jj;
+  double u, p_tmp;
+  bool wrong_param;
 
   for (int i = 0; i < n; i++) {
-    bool wrong_p = false;
-    u = R::runif(0, P_NORM_CONST);
-
-    double cs_prob = 0;
-    int j = 0;
+    u = R::runif(0.0, P_NORM_CONST);
+    wrong_param = false;
+    p_tmp = P_NORM_CONST;
+    jj = 0;
     
-    while (cs_prob < u && j < k) {
-      if (prob(i % np, j) < 0 || prob(i % np, j) > 1) {
-        wrong_p = true;
+    for (int j = k-1; j >= 0; j--) {
+      p_tmp -= prob(i % np, j)*P_NORM_CONST;
+      if (prob(i % np, j) < 0.0 || prob(i % np, j) > 1.0 || p_tmp < 0) {
+        wrong_param = true;
         break;
       }
-      cs_prob += prob(i % np, j)*P_NORM_CONST;
-      j++;
+      if (u > p_tmp) {
+        jj = j;
+        break;
+      }
     }
-    x[i] = j;
     
-    while (j < k) {
-      if (prob(i % np, j) < 0 || prob(i % np, j) > 1) {
-        wrong_p = true;
-        break;
-      }
-      cs_prob += prob(i % np, j)*P_NORM_CONST;
-      j++;
-    } 
+    if (!wrong_param && jj > 0) {
+      for (int j = jj-1; j >= 0; j--) {
+        p_tmp -= prob(i % np, j)*P_NORM_CONST;
+        if (prob(i % np, j) < 0.0 || prob(i % np, j) > 1.0) {
+          wrong_param = true;
+          break;
+        }
+      } 
+    }
     
-    if (!tol_equal(cs_prob/P_NORM_CONST, 1.0) || wrong_p) {
+    if (wrong_param || !tol_equal(p_tmp/P_NORM_CONST, 0.0)) {
       Rcpp::warning("NaNs produced");
       x[i] = NAN;
+    } else {
+      x[i] = static_cast<double>(jj+1);
     }
   }
   

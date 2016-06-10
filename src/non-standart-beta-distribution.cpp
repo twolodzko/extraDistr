@@ -30,7 +30,7 @@ using Rcpp::NumericMatrix;
 */
 
 double pdf_nsbeta(double x, double alpha, double beta, double l, double u, bool log_p) {
-  if (l >= u || alpha < 0 || beta < 0) {
+  if (l >= u || alpha < 0.0 || beta < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -43,7 +43,7 @@ double pdf_nsbeta(double x, double alpha, double beta, double l, double u, bool 
 }
 
 double cdf_nsbeta(double x, double alpha, double beta, double l, double u, bool lower_tail, bool log_p) {
-  if (l >= u || alpha < 0 || beta < 0) {
+  if (l >= u || alpha < 0.0 || beta < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -51,7 +51,7 @@ double cdf_nsbeta(double x, double alpha, double beta, double l, double u, bool 
 }
 
 double invcdf_nsbeta(double p, double alpha, double beta, double l, double u, bool lower_tail, bool log_p) {
-  if (l >= u || alpha < 0 || beta < 0) {
+  if (l >= u || alpha < 0.0 || beta < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -59,7 +59,7 @@ double invcdf_nsbeta(double p, double alpha, double beta, double l, double u, bo
 }
 
 double rng_nsbeta(double alpha, double beta, double l, double u) {
-  if (l >= u || alpha < 0 || beta < 0) {
+  if (l >= u || alpha < 0.0 || beta < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }

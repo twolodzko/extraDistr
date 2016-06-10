@@ -29,35 +29,35 @@ using Rcpp::NumericMatrix;
 */
 
 double pdf_prop(double x, double size, double mean, bool log_p) {
-  if (size <= 0 || mean < 0 || mean > 1) {
+  if (size <= 0.0 || mean < 0.0 || mean > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  return R::dbeta(x, size*mean+1, size*(1-mean)+1, log_p);
+  return R::dbeta(x, size*mean+1.0, size*(1.0-mean)+1.0, log_p);
 }
 
 double cdf_prop(double x, double size, double mean, bool lower_tail, bool log_p) {
-  if (size <= 0 || mean < 0 || mean > 1) {
+  if (size <= 0.0 || mean < 0.0 || mean > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  return R::pbeta(x, size*mean+1, size*(1-mean)+1, lower_tail, log_p);
+  return R::pbeta(x, size*mean+1.0, size*(1.0-mean)+1.0, lower_tail, log_p);
 }
 
 double invcdf_prop(double p, double size, double mean, bool lower_tail, bool log_p) {
-  if (size <= 0 || mean < 0 || mean > 1) {
+  if (size <= 0.0 || mean < 0.0 || mean > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  return R::qbeta(p, size*mean+1, size*(1-mean)+1, lower_tail, log_p);
+  return R::qbeta(p, size*mean+1.0, size*(1.0-mean)+1.0, lower_tail, log_p);
 }
 
 double rng_prop(double size, double mean) {
-  if (size <= 0 || mean < 0 || mean > 1) {
+  if (size <= 0.0 || mean < 0.0 || mean > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  return R::rbeta(size*mean+1, size*(1-mean)+1);
+  return R::rbeta(size*mean+1.0, size*(1.0-mean)+1.0);
 }
 
 

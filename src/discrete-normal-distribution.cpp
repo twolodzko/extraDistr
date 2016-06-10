@@ -31,13 +31,13 @@ using Rcpp::NumericMatrix;
 
 
 double pmf_dnorm(double x, double mu, double sigma) {
-  if (sigma <= 0) {
+  if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   if (!isInteger(x))
-    return 0;
-  return R::pnorm(x+1, mu, sigma, true, false) -
+    return 0.0;
+  return R::pnorm(x+1.0, mu, sigma, true, false) -
          R::pnorm(x, mu, sigma, true, false);
 }
 

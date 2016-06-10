@@ -36,44 +36,44 @@ using Rcpp::NumericMatrix;
  */
 
 double pdf_laplace(double x, double mu, double sigma) {
-  if (sigma <= 0) {
+  if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   double z = abs(x-mu)/sigma;
-  return 1/(2*sigma) * exp(-z);
+  return 1.0/(2.0*sigma) * exp(-z);
 }
 
 double cdf_laplace(double x, double mu, double sigma) {
-  if (sigma <= 0) {
+  if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   double z = (x-mu)/sigma;
   if (x < mu)
-    return exp(z)/2;
+    return exp(z)/2.0;
   else
-    return 1 - exp(-z)/2;
+    return 1.0 - exp(-z)/2.0;
 }
 
 double invcdf_laplace(double p, double mu, double sigma) {
-  if (sigma <= 0 || p < 0 || p > 1) {
+  if (sigma <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   if (p < 0.5)
-    return mu + sigma * log(2*p);
+    return mu + sigma * log(2.0*p);
   else
-    return mu - sigma * log(2*(1-p));
+    return mu - sigma * log(2.0*(1.0-p));
 }
 
 double rng_laplace(double mu, double sigma) {
-  if (sigma <= 0) {
+  if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   double u = R::runif(-0.5, 0.5);
-  return mu + sigma * R::sign(u) * log(1 - 2*abs(u));
+  return mu + sigma * R::sign(u) * log(1.0 - 2.0*abs(u));
 }
 
 
@@ -121,7 +121,7 @@ NumericVector cpp_plaplace(
 
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
-      p[i] = 1-p[i];
+      p[i] = 1.0 - p[i];
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -152,7 +152,7 @@ NumericVector cpp_qlaplace(
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      pp[i] = 1-pp[i];
+      pp[i] = 1.0 - pp[i];
 
   for (int i = 0; i < Nmax; i++)
     q[i] = invcdf_laplace(pp[i % n], mu[i % nm], sigma[i % ns]);

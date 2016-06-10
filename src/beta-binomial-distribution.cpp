@@ -34,42 +34,42 @@ using Rcpp::NumericMatrix;
 */
 
 double pmf_bbinom(double k, double n, double alpha, double beta) {
-  if (alpha < 0 || beta < 0 || n < 0 || floor(n) != n) {
+  if (alpha < 0.0 || beta < 0.0 || n < 0.0 || floor(n) != n) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (!isInteger(k) || k < 0 || k > n)
-    return 0;
+  if (!isInteger(k) || k < 0.0 || k > n)
+    return 0.0;
   return R::choose(n, k) * R::beta(k+alpha, n-k+beta) / R::beta(alpha, beta);
 }
 
 double logpmf_bbinom(double k, double n, double alpha, double beta) {
-  if (alpha < 0 || beta < 0 || n < 0 || floor(n) != n) {
+  if (alpha < 0.0 || beta < 0.0 || n < 0.0 || floor(n) != n) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (!isInteger(k) || k < 0 || k > n)
+  if (!isInteger(k) || k < 0.0 || k > n)
     return -INFINITY;
   return R::lchoose(n, k) + R::lbeta(k+alpha, n-k+beta) - R::lbeta(alpha, beta);
 }
 
 double cdf_bbinom(double k, double n, double alpha, double beta) {
-  if (alpha < 0 || beta < 0 || n < 0 || floor(n) != n) {
+  if (alpha < 0.0 || beta < 0.0 || n < 0.0 || floor(n) != n) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (!isInteger(k) || k < 0)
-    return 0;
+  if (!isInteger(k) || k < 0.0)
+    return 0.0;
   if (k > n)
-    return 1;
-  double p_tmp = 0;
+    return 1.0;
+  double p_tmp = 0.0;
   for (int j = 0; j < k+1; j++)
     p_tmp += exp(logpmf_bbinom(static_cast<double>(j), n, alpha, beta))*P_NORM_CONST;
   return p_tmp/P_NORM_CONST;
 }
 
 double rng_bbinom(double n, double alpha, double beta) {
-  if (alpha < 0 || beta < 0 || n < 0 || floor(n) != n) {
+  if (alpha < 0.0 || beta < 0.0 || n < 0.0 || floor(n) != n) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -123,7 +123,7 @@ NumericVector cpp_pbbinom(
   
   if (nn == 1 && na == 1 && nb == 1) {
     
-    if (alpha[0] < 0 || beta[0] < 0 || size[0] < 0 || floor(size[0]) != size[0]) {
+    if (alpha[0] < 0.0 || beta[0] < 0.0 || size[0] < 0.0 || floor(size[0]) != size[0]) {
       Rcpp::warning("NaNs produced");
       for (int i = 0; i < n; i++)
         p[i] = NAN;
@@ -141,11 +141,11 @@ NumericVector cpp_pbbinom(
     
     for (int i = 0; i < n; i++) {
       if (x[i] > size[0]) {
-        p[i] = 1;
-      } else if (isInteger(x[i]) && x[i] >= 0) {
+        p[i] = 1.0;
+      } else if (isInteger(x[i]) && x[i] >= 0.0) {
         p[i] = p_tab[static_cast<int>(x[i])]/P_NORM_CONST;
       } else {
-        p[i] = 0;
+        p[i] = 0.0;
       }
     }
     
@@ -158,7 +158,7 @@ NumericVector cpp_pbbinom(
 
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
-      p[i] = 1-p[i];
+      p[i] = 1.0 - p[i];
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)

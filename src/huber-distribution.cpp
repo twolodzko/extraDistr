@@ -18,66 +18,65 @@ using Rcpp::NumericMatrix;
 
 
 double pdf_huber(double x, double mu, double sigma, double c) {
-  if (sigma <= 0 || c <= 0) {
+  if (sigma <= 0.0 || c <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   
   double z, A, rho;
   z = abs((x - mu)/sigma);
-  A = 2*sqrt(2*M_PI) * (Phi(c) + phi(c)/c - 0.5);
+  A = 2.0*sqrt(2.0*M_PI) * (Phi(c) + phi(c)/c - 0.5);
 
   if (z <= c)
-    rho = pow(z, 2.0)/2;
+    rho = pow(z, 2.0)/2.0;
   else
-    rho = c*z - pow(c, 2.0)/2;
+    rho = c*z - pow(c, 2.0)/2.0;
 
   return exp(-rho)/A/sigma;
 }
 
 double cdf_huber(double x, double mu, double sigma, double c) {
-  if (sigma <= 0 || c <= 0) {
+  if (sigma <= 0.0 || c <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
 
   double A, z, az, p;
-  A = 2*(phi(c)/c - Phi(-c) + 0.5);
+  A = 2.0*(phi(c)/c - Phi(-c) + 0.5);
   z = (x - mu)/sigma;
   az = -abs(z);
   
   if (az <= -c) 
-    p = exp(pow(c, 2.0)/2)/c * exp(c*az) / sqrt(2*M_PI)/A;
+    p = exp(pow(c, 2.0)/2.0)/c * exp(c*az) / sqrt(2.0*M_PI)/A;
   else
     p = (phi(c)/c + Phi(az) - Phi(-c))/A;
   
-  if (z <= 0)
+  if (z <= 0.0)
     return p;
   else
-    return 1-p;
+    return 1.0 - p;
 }
 
 double invcdf_huber(double p, double mu, double sigma, double c) {
-  if (sigma <= 0 || c <= 0) {
+  if (sigma <= 0.0 || c <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   
   double x, pm, A;
-  A = 2*sqrt(2*M_PI) * (Phi(c) + phi(c)/c - 0.5);
-  pm = std::min(p, 1 - p);
+  A = 2.0*sqrt(2.0*M_PI) * (Phi(c) + phi(c)/c - 0.5);
+  pm = std::min(p, 1.0 - p);
 
-  if (pm <= sqrt(2*M_PI) * phi(c)/(c*A))
-    x = log(c*pm*A)/c - c/2;
+  if (pm <= sqrt(2.0*M_PI) * phi(c)/(c*A))
+    x = log(c*pm*A)/c - c/2.0;
   else
-    x = InvPhi(abs(1 - Phi(c) + pm*A/sqrt(2*M_PI) - phi(c)/c));
+    x = InvPhi(abs(1.0 - Phi(c) + pm*A/sqrt(2.0*M_PI) - phi(c)/c));
 
   if (p < 0.5)
     return mu + x*sigma;
   else
     return mu - x*sigma;
 }
-
 
 
 // [[Rcpp::export]]
@@ -128,7 +127,7 @@ NumericVector cpp_phuber(
   
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
-      p[i] = 1-p[i];
+      p[i] = 1.0 - p[i];
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -161,7 +160,7 @@ NumericVector cpp_qhuber(
   
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      pp[i] = 1-pp[i];
+      pp[i] = 1.0 - pp[i];
   
   for (int i = 0; i < Nmax; i++)
     q[i] = invcdf_huber(pp[i % n], mu[i % nm], sigma[i % ns], epsilon[i % ne]);
@@ -185,12 +184,10 @@ NumericVector cpp_rhuber(
   NumericVector x(n);
   
   for (int i = 0; i < n; i++) {
-    u = R::runif(0, 1);
+    u = R::runif(0.0, 1.0);
     x[i] = invcdf_huber(u, mu[i % nm], sigma[i % ns], epsilon[i % ne]);
   }
   
   return x;
 }
-
-
 

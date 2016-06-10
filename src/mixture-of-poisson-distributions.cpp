@@ -41,12 +41,12 @@ NumericVector cpp_dmixpois(
   
   for (int i = 0; i < Nmax; i++) {
     wrong_param = false;
-    alpha_tot = 0;
-    p[i] = 0;
+    alpha_tot = 0.0;
+    p[i] = 0.0;
     for (int j = 0; j < k; j++) {
       p[i] += alpha(i % na, j) * R::dpois(x[i], lambda(i % nl, j), false);
       alpha_tot += alpha(i % na, j)*P_NORM_CONST;
-      if (lambda(i % nl, j) < 0)
+      if (lambda(i % nl, j) < 0.0)
         wrong_param = true;
     }
     if (!tol_equal(alpha_tot/P_NORM_CONST, 1.0) || wrong_param) {
@@ -86,8 +86,8 @@ NumericVector cpp_pmixpois(
   
   for (int i = 0; i < Nmax; i++) {
     wrong_param = false;
-    alpha_tot = 0;
-    p[i] = 0;
+    alpha_tot = 0.0;
+    p[i] = 0.0;
     for (int j = 0; j < k; j++) {
       p[i] += alpha(i % na, j) * R::ppois(x[i], lambda(i % nl, j), lower_tail, false);
       alpha_tot += alpha(i % na, j)*P_NORM_CONST;
@@ -123,19 +123,20 @@ NumericVector cpp_rmixpois(
   if (k != lambda.ncol())
     Rcpp::stop("sizes of 'lambda' and 'alpha' do not match");
   
+  int jj;
   bool wrong_param, j_set;
   double u, p_tmp;
   NumericVector prob(k);
   
   for (int i = 0; i < n; i++) {
-    int jj;
+    jj = 0;
     wrong_param = false;
-    u = R::runif(0, 1)*P_NORM_CONST;
+    u = R::runif(0.0, 1.0)*P_NORM_CONST;
     p_tmp = P_NORM_CONST;
     
     for (int j = k-1; j >= 0; j--) {
       p_tmp -= alpha(i % na, j)*P_NORM_CONST;
-      if (lambda(i % nl, j) < 0 || alpha(i % na, j) < 0 || alpha(i % na, j) > 1) {
+      if (lambda(i % nl, j) < 0.0 || alpha(i % na, j) < 0.0 || alpha(i % na, j) > 1.0) {
         wrong_param = true;
         break;
       }
@@ -148,7 +149,7 @@ NumericVector cpp_rmixpois(
     if (!wrong_param && jj > 0) {
       for (int j = jj-1; j >= 0; j--) {
         p_tmp -= alpha(i % na, j)*P_NORM_CONST;
-        if (lambda(i % nl, j) < 0)
+        if (lambda(i % nl, j) < 0.0 || alpha(i % na, j) < 0.0 || alpha(i % na, j) > 1.0)
           wrong_param = true;
       } 
     }

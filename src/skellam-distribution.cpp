@@ -26,17 +26,17 @@ using Rcpp::NumericMatrix;
  */
 
 double pmf_skellam(double x, double mu1, double mu2) {
-  if (mu1 < 0 || mu2 <= 0) {
+  if (mu1 < 0.0 || mu2 <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   if (!isInteger(x))
-    return 0;
-  return exp(-(mu1+mu2)) * pow(mu1/mu2, x/2) * R::bessel_i(2*sqrt(mu1*mu2), x, 1.0);
+    return 0.0;
+  return exp(-(mu1+mu2)) * pow(mu1/mu2, x/2.0) * R::bessel_i(2*sqrt(mu1*mu2), x, 1.0);
 }
 
 double rng_skellam(double mu1, double mu2) {
-  if (mu1 < 0 || mu2 <= 0) {
+  if (mu1 < 0.0 || mu2 <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }

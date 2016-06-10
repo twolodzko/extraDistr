@@ -30,57 +30,57 @@ using Rcpp::NumericMatrix;
 
 
 double pmf_dunif(double x, double min, double max) {
-  if (min > max || std::isinf(min) || std::isinf(max)) {
+  if (min > max || std::isinf(min) || std::isinf(max) ||
+      !isInteger(min) || !isInteger(max)) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   if (x < min || x > max || !isInteger(x))
-    return 0;
-  return 1/(max-min+1);
+    return 0.0;
+  return 1.0/(max-min+1.0);
 }
 
 
 double cdf_dunif(double x, double min, double max) {
-  if (min > max || std::isinf(min) || std::isinf(max)) {
+  if (min > max || std::isinf(min) || std::isinf(max) ||
+      !isInteger(min) || !isInteger(max)) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   if (x < min)
-    return 0;
+    return 0.0;
   else if (x >= max)
-    return 1;
-  return (floor(x)-min+1)/(max-min+1);
+    return 1.0;
+  return (floor(x)-min+1.0)/(max-min+1.0);
 }
 
 double invcdf_dunif(double p, double min, double max) {
-  if (min > max || std::isinf(min) || std::isinf(max)) {
+  if (min > max || std::isinf(min) || std::isinf(max) ||
+      !isInteger(min) || !isInteger(max)) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (p <= 0 || p > 1) {
+  if (p <= 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  return ceil( p*(max-min+1)+min-1 );
+  return ceil( p*(max-min+1.0)+min-1.0 );
 }
 
 double rng_dunif(double min, double max) {
-  if (min > max || std::isinf(min) || std::isinf(max)) {
+  if (min > max || std::isinf(min) || std::isinf(max) ||
+      !isInteger(min) || !isInteger(max)) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   
-  if (min > 0)
-    min = floor(min) - 1;
-  else
-    min = ceil(min) - 1;
+  double x = ceil(R::runif(min - 1.0, max));
   
-  if (max > 0)
-    max = ceil(max);
+  // boundry case for x == min-1
+  if (x < min) 
+    return min; 
   else
-    max = floor(max);
-  
-  return ceil(R::runif(min, max));
+    return x;
 }
 
 
@@ -128,7 +128,7 @@ NumericVector cpp_pdunif(
   
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
-      p[i] = 1-p[i];
+      p[i] = 1.0 - p[i];
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)

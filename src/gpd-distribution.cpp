@@ -40,52 +40,52 @@ using Rcpp::NumericMatrix;
 */
 
 double pdf_gpd(double x, double mu, double sigma, double xi) {
-  if (sigma <= 0) {
+  if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   double z = (x-mu)/sigma;
-  if (xi != 0) {
+  if (xi != 0.0) {
     if (x >= mu)
-      return pow(1+xi*z, -(xi+1)/xi)/sigma;
+      return pow(1.0+xi*z, -(xi+1.0)/xi)/sigma;
     else
-      return 0;
+      return 0.0;
   } else {
     if (x >= mu && x <= (mu - sigma/xi))
       return exp(-z)/sigma;
     else
-      return 0;
+      return 0.0;
   }
 }
 
 double cdf_gpd(double x, double mu, double sigma, double xi) {
-  if (sigma <= 0) {
+  if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   double z = (x-mu)/sigma;
-  if (xi != 0) {
+  if (xi != 0.0) {
     if (x >= mu)
-      return 1-pow(1+xi*z, -1/xi);
+      return 1.0-pow(1.0+xi*z, -1.0/xi);
     else
-      return 0;
+      return 0.0;
   } else {
     if (x >= mu && x <= (mu - sigma/xi))
-      return 1-exp(-z);
+      return 1.0-exp(-z);
     else
-      return 0;
+      return 0.0;
   }
 }
 
 double invcdf_gpd(double p, double mu, double sigma, double xi) {
-  if (sigma <= 0 || p < 0 || p > 1) {
+  if (sigma <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (xi != 0)
-    return mu + sigma * (pow(1-p, -xi)-1)/xi;
+  if (xi != 0.0)
+    return mu + sigma * (pow(1.0-p, -xi)-1.0)/xi;
   else
-    return mu - sigma * log(1-p);
+    return mu - sigma * log(1.0-p);
 }
 
 
@@ -137,7 +137,7 @@ NumericVector cpp_pgpd(
 
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
-      p[i] = 1-p[i];
+      p[i] = 1.0 - p[i];
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -170,7 +170,7 @@ NumericVector cpp_qgpd(
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      pp[i] = 1-pp[i];
+      pp[i] = 1.0 - pp[i];
 
   for (int i = 0; i < Nmax; i++)
     q[i] = invcdf_gpd(pp[i % n], mu[i % nm], sigma[i % ns], xi[i % nx]);
@@ -194,7 +194,7 @@ NumericVector cpp_rgpd(
   NumericVector x(n);
 
   for (int i = 0; i < n; i++) {
-    u = R::runif(0, 1);
+    u = R::runif(0.0, 1.0);
     x[i] = invcdf_gpd(u, mu[i % nm], sigma[i % ns], xi[i % nx]);
   }
 

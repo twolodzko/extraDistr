@@ -39,43 +39,43 @@ using Rcpp::NumericMatrix;
 
 
 double pdf_gompertz(double x, double a, double b) {
-  if (a <= 0 || b <= 0) {
+  if (a <= 0.0 || b <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x < 0 || std::isinf(x))
-    return 0;
-  return a * exp(b*x - a/b * (exp(b*x) - 1));
+  if (x < 0.0 || std::isinf(x))
+    return 0.0;
+  return a * exp(b*x - a/b * (exp(b*x) - 1.0));
 }
 
 double cdf_gompertz(double x, double a, double b) {
-  if (a <= 0 || b <= 0) {
+  if (a <= 0.0 || b <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   if (std::isinf(x))
-    return 1;
-  if (x < 0)
-    return 0;
-  return 1 - exp(-a/b * (exp(b*x) - 1));
+    return 1.0;
+  if (x < 0.0)
+    return 0.0;
+  return 1.0 - exp(-a/b * (exp(b*x) - 1.0));
 }
 
 double invcdf_gompertz(double p, double a, double b) {
-  if (a <= 0 || b <= 0 || p < 0 || p > 1) {
+  if (a <= 0.0 || b <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  return 1/b * log(1 - b/a * log(1-p));
+  return 1.0/b * log(1.0 - b/a * log(1.0-p));
 }
 
 double logpdf_gompertz(double x, double a, double b) {
-  if (a <= 0 || b <= 0) {
+  if (a <= 0.0 || b <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x < 0 || std::isinf(x))
+  if (x < 0.0 || std::isinf(x))
     return -INFINITY;
-  return log(a) + (b*x - a/b * (exp(b*x) - 1));
+  return log(a) + (b*x - a/b * (exp(b*x) - 1.0));
 }
 
 
@@ -123,7 +123,7 @@ NumericVector cpp_pgompertz(
 
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
-      p[i] = 1-p[i];
+      p[i] = 1.0 - p[i];
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -154,7 +154,7 @@ NumericVector cpp_qgompertz(
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      pp[i] = 1-pp[i];
+      pp[i] = 1.0 - pp[i];
 
   for (int i = 0; i < Nmax; i++)
     q[i] = invcdf_gompertz(pp[i % n], a[i % na], b[i % nb]);
@@ -176,7 +176,7 @@ NumericVector cpp_rgompertz(
   NumericVector x(n);
 
   for (int i = 0; i < n; i++) {
-    u = R::runif(0, 1);
+    u = R::runif(0.0, 1.0);
     x[i] = invcdf_gompertz(u, a[i % na], b[i % nb]);
   }
 

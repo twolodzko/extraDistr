@@ -8,6 +8,8 @@
   casted to `<double>`
 * Improvements in algorithms for categorical distribution,
   mixture of normal, mixture of Poisson distributions
+* Improvements in discrete uniform; now it accepts only integer
+  valued parameters.
 
 ### 1.6.14
 

@@ -36,45 +36,45 @@ double G(double x) {
 }
 
 double pdf_bhattacharjee(double x, double mu, double sigma, double a) {
-  if (sigma < 0 || a < 0) {
+  if (sigma < 0.0 || a < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (sigma == 0)
+  if (sigma == 0.0)
     return R::dunif(x, mu-a, mu+a, false);
-  if (a == 0)
+  if (a == 0.0)
     return R::dnorm(x, mu, sigma, false);
   double z = x-mu;
-  return (Phi((z+a)/sigma) - Phi((z-a)/sigma)) / (2*a);
+  return (Phi((z+a)/sigma) - Phi((z-a)/sigma)) / (2.0*a);
 }
 
 double cdf_bhattacharjee(double x, double mu, double sigma, double a) {
-  if (sigma < 0 || a < 0) {
+  if (sigma < 0.0 || a < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   if (x == -INFINITY)
-    return 0;
+    return 0.0;
   if (x == INFINITY)
-    return 1;
-  if (sigma == 0)
+    return 1.0;
+  if (sigma == 0.0)
     return R::punif(x, mu-a, mu+a, true, false);
-  if (a == 0)
+  if (a == 0.0)
     return R::pnorm(x, mu, sigma, true, false);
   double z = x-mu;
-  return sigma/(2*a) * (G((z+a)/sigma) - G((z-a)/sigma));
+  return sigma/(2.0*a) * (G((z+a)/sigma) - G((z-a)/sigma));
 }
 
 double rng_bhattacharjee(double mu, double sigma, double a) {
-  if (sigma < 0 || a < 0) {
+  if (sigma < 0.0 || a < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (sigma == 0)
+  if (sigma == 0.0)
     return R::runif(mu-a, mu+a);
-  if (a == 0)
+  if (a == 0.0)
     return R::rnorm(mu, sigma);
-  return R::runif(-a, +a) + R::rnorm(0, sigma) + mu;
+  return R::runif(-a, +a) + R::rnorm(0.0, sigma) + mu;
 }
 
 
@@ -127,7 +127,7 @@ NumericVector cpp_pbhatt(
   
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
-      p[i] = 1-p[i];
+      p[i] = 1.0 - p[i];
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)

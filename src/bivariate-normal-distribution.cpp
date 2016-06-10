@@ -38,9 +38,9 @@ using Rcpp::NumericMatrix;
 double pdf_bnorm(double x, double y,
                  double mu1, double mu2,
                  double sigma1, double sigma2,
-                 double rho = 0) {
+                 double rho) {
   
-  if (sigma1 <= 0 || sigma2 <= 0 || rho <= -1 || rho >= 1) {
+  if (sigma1 <= 0.0 || sigma2 <= 0.0 || rho <= -1.0 || rho >= 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -48,44 +48,11 @@ double pdf_bnorm(double x, double y,
   double z1 = (x - mu1)/sigma1;
   double z2 = (y - mu2)/sigma2;
   
-  double c1 = 1/(2*M_PI*sqrt(1-pow(rho, 2.0))*sigma1*sigma2);
-  double c2 = -1/(2*(1-pow(rho, 2.0)));
+  double c1 = 1.0/(2.0*M_PI*sqrt(1.0 - pow(rho, 2.0))*sigma1*sigma2);
+  double c2 = -1.0/(2.0*(1.0 - pow(rho, 2.0)));
   
-  return c1 * exp(c2 * (pow(z1, 2.0) - 2*rho*z1*z2 + pow(z2, 2.0)));
+  return c1 * exp(c2 * (pow(z1, 2.0) - 2.0*rho*z1*z2 + pow(z2, 2.0)));
 }
-
-
-/*
-NumericVector rng_bnorm(double mu1, double mu2,
-                        double sigma1, double sigma2,
-                        double rho = 0) {
-  
-  NumericVector x(2);
-  
-  if (sigma1 <= 0 || sigma2 <= 0 || rho < -1 || rho > 1) {
-    x[0] = NAN;
-    x[1] = NAN;
-    return x;
-  }
-  
-  if (rho == 1)
-    rho = 1 - 1e-16;
-  if (rho == -1)
-    rho = -1 + 1e-16;
-  
-  if (rho != 0) {
-      double u = R::rnorm(0, 1);
-      double v = R::rnorm(0, 1);
-      x[0] = mu1 + sigma1 * u;
-      x[1] = mu2 + sigma2 * (rho*u + sqrt(1-pow(rho, 2))*v);
-  } else {
-      x[0] = R::rnorm(mu1, sigma1);
-      x[1] = R::rnorm(mu2, sigma2);
-  }
-  
-  return x;
-}
-*/
 
 
 // [[Rcpp::export]]
@@ -143,15 +110,15 @@ NumericMatrix cpp_rbnorm(
   NumericMatrix x(n, 2);
 
   for (int i = 0; i < n; i++) {
-    if (sigma1[i % ns1] <= 0 || sigma2[i % ns2] <= 0 ||
-        rho[i % nr] < -1 || rho[i % nr] > 1) {
+    if (sigma1[i % ns1] <= 0.0 || sigma2[i % ns2] <= 0.0 ||
+        rho[i % nr] < -1.0 || rho[i % nr] > 1.0) {
       Rcpp::warning("NaNs produced");
       x(i, 0) = NAN;
       x(i, 1) = NAN;
-    } else if (rho[i % nr] != 0) {
-      double u = R::rnorm(0, 1);
-      double v = R::rnorm(0, 1);
-      double corr = (rho[i % nr]*u + sqrt(1-pow(rho[i % nr], 2.0))*v);
+    } else if (rho[i % nr] != 0.0) {
+      double u = R::rnorm(0.0, 1.0);
+      double v = R::rnorm(0.0, 1.0);
+      double corr = (rho[i % nr]*u + sqrt(1.0 - pow(rho[i % nr], 2.0))*v);
       x(i, 0) = mu1[i % nm1] + sigma1[i % ns1] * u;
       x(i, 1) = mu2[i % nm2] + sigma2[i % ns2] * corr;
     } else {

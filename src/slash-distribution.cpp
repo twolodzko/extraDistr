@@ -29,7 +29,7 @@ using Rcpp::NumericMatrix;
 
 
 double pdf_slash(double x, double mu, double sigma) {
-  if (sigma <= 0) {
+  if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -38,24 +38,24 @@ double pdf_slash(double x, double mu, double sigma) {
 }
 
 double cdf_slash(double x, double mu, double sigma) {
-  if (sigma <= 0) {
+  if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   double z = (x - mu)/sigma;
-  if (z == 0)
+  if (z == 0.0)
     return 0.5;
   else
     return Phi(z) - (phi(0.0) - phi(z))/z;
 }
 
 double rng_slash(double mu, double sigma) {
-  if (sigma <= 0) {
+  if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  double z = R::rnorm(0, 1);
-  double u = R::runif(0, 1);
+  double z = R::rnorm(0.0, 1.0);
+  double u = R::runif(0.0, 1.0);
   return z/u*sigma + mu;
 }
 
@@ -105,7 +105,7 @@ NumericVector cpp_pslash(
   
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
-      p[i] = 1-p[i];
+      p[i] = 1.0 - p[i];
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)

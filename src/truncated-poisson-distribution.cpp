@@ -18,63 +18,63 @@ using Rcpp::NumericMatrix;
 
 
 double pdf_tpois(double x, double lambda, double s) {
-  if (lambda < 0 || s < 0) {
+  if (lambda < 0.0 || s < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (!isInteger(x) || x < 0 || std::isinf(x))
-    return 0;
+  if (!isInteger(x) || x < 0.0 || std::isinf(x))
+    return 0.0;
   
-  if (s == 0 && x <= s)
-    return 0;
-  if (s > 0 && x > s)
-    return 0;
-  if (s == 0)
-    return pow(lambda, x) / (factorial(x) * (exp(lambda) - 1));
+  if (s == 0.0 && x <= s)
+    return 0.0;
+  if (s > 0.0 && x > s)
+    return 0.0;
+  if (s == 0.0)
+    return pow(lambda, x) / (factorial(x) * (exp(lambda) - 1.0));
   return R::dpois(x, lambda, false) / R::ppois(s, lambda, true, false);
 }
 
 double cdf_tpois(double x, double lambda, double s) {
-  if (lambda <= 0 || s < 0) {
+  if (lambda <= 0.0 || s < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   
-  if (x < 0)
-    return 0;
+  if (x < 0.0)
+    return 0.0;
   if (x == INFINITY)
-    return 1;
+    return 1.0;
   
-  if (s == 0 && x <= s)
-    return 0;
-  if (s > 0 && x > s)
-    return 1;
-  if (s == 0)
-    return R::ppois(x, lambda, true, false) / (1 - exp(-lambda));
+  if (s == 0.0 && x <= s)
+    return 0.0;
+  if (s > 0.0 && x > s)
+    return 1.0;
+  if (s == 0.0)
+    return R::ppois(x, lambda, true, false) / (1.0 - exp(-lambda));
   return R::ppois(x, lambda, true, false) / R::ppois(s, lambda, true, false);
 }
 
 double invcdf_tpois(double p, double lambda, double s) {
-  if (lambda < 0 || s < 0 || p < 0 || p > 1) {
+  if (lambda < 0.0 || s < 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
 
   double z;
   
-  if (s == 0) {
-    if (p == 0)
-      return 0;
-    if (p == 1)
+  if (s == 0.0) {
+    if (p == 0.0)
+      return 0.0;
+    if (p == 1.0)
       return INFINITY;
     
     z = exp(-lambda);
-    return R::qpois(p*(1-z) + z, lambda, true, false);
+    return R::qpois(p*(1.0-z) + z, lambda, true, false);
   }
 
-  if (p == 0)
-    return 0;
-  if (p == 1)
+  if (p == 0.0)
+    return 0.0;
+  if (p == 1.0)
     return s;
   
   z = R::ppois(s, lambda, true, false);
@@ -82,21 +82,21 @@ double invcdf_tpois(double p, double lambda, double s) {
 }
 
 double rng_tpois(double lambda, double s) {
-  if (lambda < 0 || s < 0) {
+  if (lambda < 0.0 || s < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
 
   double z, u;
   
-  if (s == 0) {
+  if (s == 0.0) {
     z = exp(-lambda);
-    u = R::runif(z, 1);
+    u = R::runif(z, 1.0);
     return R::qpois(u, lambda, true, false);
   }
   
   z = R::ppois(s, lambda, true, false);
-  u = R::runif(0, z);
+  u = R::runif(0.0, z);
   return R::qpois(u, lambda, true, false);
 }
 
@@ -145,7 +145,7 @@ NumericVector cpp_ptpois(
   
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
-      p[i] = 1-p[i];
+      p[i] = 1.0 - p[i];
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -176,7 +176,7 @@ NumericVector cpp_qtpois(
   
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      pp[i] = 1-pp[i];
+      pp[i] = 1.0 - pp[i];
   
   for (int i = 0; i < Nmax; i++)
     q[i] = invcdf_tpois(pp[i % n], lambda[i % nl], s[i % ns]);

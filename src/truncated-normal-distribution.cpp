@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include "const.h"
 #include "shared.h"
 
 using std::pow;
@@ -38,10 +39,9 @@ using Rcpp::NumericMatrix;
 *
 */
 
-const double SQRTPI = sqrt(2*M_PI);
 
 double pdf_tnorm(double x, double mu, double sigma, double a, double b) {
-  if (sigma <= 0 || b <= a) {
+  if (sigma <= 0.0 || b <= a) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -53,14 +53,14 @@ double pdf_tnorm(double x, double mu, double sigma, double a, double b) {
   if (x > a && x < b) {
     Phi_a = Phi((a-mu)/sigma);
     Phi_b = Phi((b-mu)/sigma);
-    return exp(-pow(x-mu, 2.0) / (2*pow(sigma, 2.0))) / (SQRTPI*sigma * (Phi_b - Phi_a));
+    return exp(-pow(x-mu, 2.0) / (2.0*pow(sigma, 2.0))) / (SQRT_2_PI*sigma * (Phi_b - Phi_a));
   } else {
-    return 0;
+    return 0.0;
   }
 }
 
 double cdf_tnorm(double x, double mu, double sigma, double a, double b) {
-  if (sigma <= 0 || b <= a) {
+  if (sigma <= 0.0 || b <= a) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -75,14 +75,14 @@ double cdf_tnorm(double x, double mu, double sigma, double a, double b) {
     Phi_b = Phi((b-mu)/sigma);
     return (Phi_x - Phi_a) / (Phi_b - Phi_a);
   } else if (x >= b) {
-    return 1;
+    return 1.0;
   } else {
-    return 0;
+    return 0.0;
   }
 }
 
 double invcdf_tnorm(double p, double mu, double sigma, double a, double b) {
-  if (sigma <= 0 || b <= a || p < 0 || p > 1) {
+  if (sigma <= 0.0 || b <= a || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -97,7 +97,7 @@ double invcdf_tnorm(double p, double mu, double sigma, double a, double b) {
 }
 
 double rng_tnorm(double mu, double sigma, double a, double b) {
-  if (sigma <= 0 || b <= a) {
+  if (sigma <= 0.0 || b <= a) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -111,18 +111,18 @@ double rng_tnorm(double mu, double sigma, double a, double b) {
   za = (a-mu)/sigma;
   zb = (b-mu)/sigma;
 
-  if (zb - za < SQRTPI) {
-    if (0 < za) {
+  if (zb - za < SQRT_2_PI) {
+    if (0.0 < za) {
       while (!stop) {
         r = R::runif(za, zb);
-        u = R::runif(0, 1);
-        stop = (u <= exp((pow(za, 2.0) - pow(r, 2.0))/2));
+        u = R::runif(0.0, 1.0);
+        stop = (u <= exp((pow(za, 2.0) - pow(r, 2.0))/2.0));
       }
-    } else if (zb < 0) {
+    } else if (zb < 0.0) {
       while (!stop) {
         r = R::runif(za, zb);
-        u = R::runif(0, 1);
-        stop = (u <= exp((pow(zb, 2.0) - pow(r, 2.0))/2));
+        u = R::runif(0.0, 1.0);
+        stop = (u <= exp((pow(zb, 2.0) - pow(r, 2.0))/2.0));
       }
     } else {
       while (!stop) {
@@ -133,7 +133,7 @@ double rng_tnorm(double mu, double sigma, double a, double b) {
     }
   } else {
     while (!stop) {
-      r = R::rnorm(0, 1);
+      r = R::rnorm(0.0, 1.0);
       stop = (r > za && r < zb);
     }
   }
@@ -194,7 +194,7 @@ NumericVector cpp_ptnorm(
 
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
-      p[i] = 1-p[i];
+      p[i] = 1.0 - p[i];
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -229,7 +229,7 @@ NumericVector cpp_qtnorm(
   
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      pp[i] = 1-pp[i];
+      pp[i] = 1.0 - pp[i];
 
   for (int i = 0; i < Nmax; i++)
     q[i] = invcdf_tnorm(pp[i % n], mu[i % nm], sigma[i % ns], a[i % na], b[i % nb]);

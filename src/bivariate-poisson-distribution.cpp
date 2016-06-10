@@ -19,24 +19,24 @@ using Rcpp::NumericMatrix;
 
 double pmf_bpois(double x, double y, double a, double b, double c) {
   
-  if (a < 0 || b < 0 || c < 0) {
+  if (a < 0.0 || b < 0.0 || c < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   
   if (!isInteger(x))
-    return 0;
+    return 0.0;
   
   if (floor(y) != y) {
     char msg[55];
     std::snprintf(msg, sizeof(msg), "non-integer y = %f", y);
     Rcpp::warning(msg);
-    return 0;
+    return 0.0;
   }
   
   double tmp = exp(-(a+b+c)); 
   tmp *= (pow(a, x) / factorial(x)) * (pow(b, y) / factorial(y));
-  double xy = 0;
+  double xy = 0.0;
   
   if (x < y) {
     for (int k = 0; k < x; k++) {
@@ -98,7 +98,7 @@ NumericMatrix cpp_rbpois(
   NumericMatrix x(n, 2);
   
   for (int i = 0; i < n; i++) {
-    if (a[i % na] < 0 || b[i % nb] < 0 || c[i % nc] < 0) {
+    if (a[i % na] < 0.0 || b[i % nb] < 0.0 || c[i % nc] < 0.0) {
       Rcpp::warning("NaNs produced");
       x(i, 0) = NAN;
       x(i, 1) = NAN;

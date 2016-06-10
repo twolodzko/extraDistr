@@ -52,20 +52,20 @@ NumericVector cpp_dmnom(
   for (int i = 0; i < Nmax; i++) {
     
     double n_fac = lfactorial(size[i % ns]);
-    double prod_xfac = 0;
-    double prod_pow_px = 0;
+    double prod_xfac = 0.0;
+    double prod_pow_px = 0.0;
     
-    double sum_x = 0;
-    double sum_p = 0;
+    double sum_x = 0.0;
+    double sum_p = 0.0;
     bool wrong_p = false;
     bool wrong_x = false;
 
     for (int j = 0; j < k; j++) {
-      if (prob(i % np, j) < 0 || prob(i % np, j) > 1) {
+      if (prob(i % np, j) < 0.0 || prob(i % np, j) > 1.0) {
         wrong_p = true;
         break;
       }
-      if (x(i % n, j) < 0 || !isInteger(x(i % n, j))) {
+      if (x(i % n, j) < 0.0 || !isInteger(x(i % n, j))) {
         wrong_x = true;
       } else {
         sum_x += x(i % n, j);
@@ -79,7 +79,7 @@ NumericVector cpp_dmnom(
       Rcpp::warning("NaNs produced");
       p[i] = NAN; 
     } else if (floor(size[i % ns]) != size[i % ns] ||
-        sum_x < 0 || sum_x != size[i % ns] || wrong_x) {
+               sum_x < 0.0 || sum_x != size[i % ns] || wrong_x) {
       p[i] = -INFINITY;
     } else {
       p[i] = n_fac - prod_xfac + prod_pow_px;
@@ -110,11 +110,11 @@ NumericMatrix cpp_rmnom(
   for (int i = 0; i < n; i++) {
     
     int size_left = size[i % ns];
-    double sum_p = 0;
+    double sum_p = 0.0;
     bool wrong_p = false;
     
     for (int j = 0; j < k-1; j++) {
-      if (prob(i % np, j) < 0 || prob(i % np, j) > 1) {
+      if (prob(i % np, j) < 0.0 || prob(i % np, j) > 1.0) {
         wrong_p = true;
         break;
       }

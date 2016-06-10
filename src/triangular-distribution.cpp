@@ -42,13 +42,13 @@ double pdf_triangular(double x, double a, double b, double c) {
     return NAN;
   }
   if (x < a || x > b) {
-    return 0;
+    return 0.0;
   } else if (x < c) {
-    return 2*(x-a) / ((b-a)*(c-a));
+    return 2.0*(x-a) / ((b-a)*(c-a));
   } else if (x > c) {
-    return 2*(b-x) / ((b-a)*(b-c));
+    return 2.0*(b-x) / ((b-a)*(b-c));
   } else {
-    return 2/(b-a);
+    return 2.0/(b-a);
   }
 }
 
@@ -58,18 +58,18 @@ double cdf_triangular(double x, double a, double b, double c) {
     return NAN;
   }
   if (x < a) {
-    return 0;
+    return 0.0;
   } else if (x >= b) {
     return 1;
   } else if (x <= c) {
     return pow(x-a, 2.0) / ((b-a)*(c-a));
   } else {
-    return 1 - (pow(b-x, 2.0) / ((b-a)*(b-c)));
+    return 1.0 - (pow(b-x, 2.0) / ((b-a)*(b-c)));
   }
 }
 
 double invcdf_triangular(double p, double a, double b, double c) {
-  if (a > c || c > b || a == b || p < 0 || p > 1) {
+  if (a > c || c > b || a == b || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -77,7 +77,7 @@ double invcdf_triangular(double p, double a, double b, double c) {
   if (p < fc) {
     return a + sqrt(p*(b-a)*(c-a));
   } else {
-    return b - sqrt((1-p)*(b-a)*(b-c));
+    return b - sqrt((1.0-p)*(b-a)*(b-c));
   }
 }
 
@@ -89,9 +89,9 @@ double rng_triangular(double a, double b, double c) {
   double u, v, r, cc;
   r = b - a;
   cc = (c-a)/r;
-  u = R::runif(0, 1);
-  v = R::runif(0, 1);
-  return ((1-cc) * std::min(u, v) + cc * std::max(u, v)) * r + a;
+  u = R::runif(0.0, 1.0);
+  v = R::runif(0.0, 1.0);
+  return ((1.0-cc) * std::min(u, v) + cc * std::max(u, v)) * r + a;
 }
 
 
@@ -143,7 +143,7 @@ NumericVector cpp_ptriang(
 
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
-      p[i] = 1-p[i];
+      p[i] = 1.0 - p[i];
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -176,7 +176,7 @@ NumericVector cpp_qtriang(
 
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      pp[i] = 1-pp[i];
+      pp[i] = 1.0 - pp[i];
 
   for (int i = 0; i < Nmax; i++)
     q[i] = invcdf_triangular(pp[i % n], a[i % na], b[i % nb], c[i % nc]);

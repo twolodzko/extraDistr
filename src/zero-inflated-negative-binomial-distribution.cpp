@@ -30,49 +30,49 @@ using Rcpp::NumericMatrix;
 */
 
 double pdf_zinb(double x, double r, double p, double pi) {
-  if (p < 0 || p > 1 || r < 0 || pi < 0 || pi > 1) {
+  if (p < 0.0 || p > 1.0 || r < 0.0 || pi < 0.0 || pi > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x < 0 || !isInteger(x) || std::isinf(x))
-    return 0;
-  if (x == 0)
-    return pi + (1-pi) * pow(p, r);
+  if (x < 0.0 || !isInteger(x) || std::isinf(x))
+    return 0.0;
+  if (x == 0.0)
+    return pi + (1.0-pi) * pow(p, r);
   else
-    return (1-pi) * R::dnbinom(x, r, p, false);
+    return (1.0-pi) * R::dnbinom(x, r, p, false);
 }
 
 double cdf_zinb(double x, double r, double p, double pi) {
-  if (p < 0 || p > 1 || r < 0 || pi < 0 || pi > 1) {
+  if (p < 0.0 || p > 1.0 || r < 0.0 || pi < 0.0 || pi > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x < 0)
-    return 0;
+  if (x < 0.0)
+    return 0.0;
   if (std::isinf(x))
-    return 1;
-  return pi + (1-pi) * R::pnbinom(x, r, p, true, false);
+    return 1.0;
+  return pi + (1.0-pi) * R::pnbinom(x, r, p, true, false);
 }
 
 double invcdf_zinb(double pp, double r, double p, double pi) {
-  if (p < 0 || p > 1 || r < 0 || pi < 0 || pi > 1 || pp < 0 || pp > 1) {
+  if (p < 0.0 || p > 1.0 || r < 0.0 || pi < 0.0 || pi > 1.0 || pp < 0.0 || pp > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
   if (pp < pi)
-    return 0;
+    return 0.0;
   else
-    return R::qnbinom((pp - pi) / (1-pi), r, p, true, false);
+    return R::qnbinom((pp - pi) / (1.0-pi), r, p, true, false);
 }
 
 double rng_zinb(double r, double p, double pi) {
-  if (p < 0 || p > 1 || r < 0 || pi < 0 || pi > 1) {
+  if (p < 0.0 || p > 1.0 || r < 0.0 || pi < 0.0 || pi > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  double u = R::runif(0, 1);
+  double u = R::runif(0.0, 1.0);
   if (u < pi)
-    return 0;
+    return 0.0;
   else
     return R::rnbinom(r, p);
 }
@@ -126,7 +126,7 @@ NumericVector cpp_pzinb(
   
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
-      p[i] = 1-p[i];
+      p[i] = 1.0 - p[i];
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -159,7 +159,7 @@ NumericVector cpp_qzinb(
   
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      pp[i] = 1-pp[i];
+      pp[i] = 1.0 - pp[i];
   
   for (int i = 0; i < Nmax; i++)
     x[i] = invcdf_zinb(pp[i % n], size[i % ns], prob[i % np], pi[i % np]);
