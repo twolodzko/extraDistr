@@ -65,7 +65,7 @@ double cdf_bnbinom(double k, double r, double alpha, double beta) {
   if (std::isinf(k))
     return 1.0;
   double p_tmp = 0.0;
-  for (int j = 0; j < k+1; j++)
+  for (int j = 0; j < static_cast<int>(k)+1; j++)
     p_tmp += exp(logpmf_bnbinom(static_cast<double>(j), r, alpha, beta))*P_NORM_CONST;
   return p_tmp/P_NORM_CONST;
 }

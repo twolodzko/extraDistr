@@ -66,12 +66,12 @@ double cdf_gpd(double x, double mu, double sigma, double xi) {
   double z = (x-mu)/sigma;
   if (xi != 0.0) {
     if (x >= mu)
-      return 1.0-pow(1.0+xi*z, -1.0/xi);
+      return 1.0 - pow(1.0+xi*z, -1.0/xi);
     else
       return 0.0;
   } else {
     if (x >= mu && x <= (mu - sigma/xi))
-      return 1.0-exp(-z);
+      return 1.0 - exp(-z);
     else
       return 0.0;
   }

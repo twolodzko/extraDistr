@@ -69,7 +69,7 @@ NumericVector cpp_dmnom(
         wrong_x = true;
       } else {
         sum_x += x(i % n, j);
-        prod_xfac += lfactorial(x(i % n, j));
+        prod_xfac += lfactorial(x(i % n, static_cast<double>(j)));
         prod_pow_px += log(prob(i % np, j)) * x(i % n, j);
       }
       sum_p += prob(i % np, j)*P_NORM_CONST;
@@ -109,7 +109,7 @@ NumericMatrix cpp_rmnom(
   
   for (int i = 0; i < n; i++) {
     
-    int size_left = size[i % ns];
+    double size_left = size[i % ns];
     double sum_p = 0.0;
     bool wrong_p = false;
     

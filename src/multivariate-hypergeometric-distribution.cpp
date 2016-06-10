@@ -113,7 +113,7 @@ NumericMatrix cpp_rmvhyper(
   for (int i = 0; i < nn; i++) {
     
     bool wrong_n = false;
-    n_otr[0] = 0;
+    n_otr[0] = 0.0;
     
     for (int j = 1; j < m; j++) {
       n_otr[0] += n(i % nr, j);

@@ -127,8 +127,8 @@ double rng_tnorm(double mu, double sigma, double a, double b) {
     } else {
       while (!stop) {
         r = R::runif(za, zb);
-        u = R::runif(0, 1);
-        stop = (u <= exp(-pow(r, 2.0)/2));
+        u = R::runif(0.0, 1.0);
+        stop = (u <= exp(-pow(r, 2.0)/2.0));
       }
     }
   } else {

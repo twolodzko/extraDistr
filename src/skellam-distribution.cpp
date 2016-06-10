@@ -32,7 +32,7 @@ double pmf_skellam(double x, double mu1, double mu2) {
   }
   if (!isInteger(x))
     return 0.0;
-  return exp(-(mu1+mu2)) * pow(mu1/mu2, x/2.0) * R::bessel_i(2*sqrt(mu1*mu2), x, 1.0);
+  return exp(-(mu1+mu2)) * pow(mu1/mu2, x/2.0) * R::bessel_i(2.0*sqrt(mu1*mu2), x, 1.0);
 }
 
 double rng_skellam(double mu1, double mu2) {

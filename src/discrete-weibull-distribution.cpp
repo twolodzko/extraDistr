@@ -111,7 +111,7 @@ NumericVector cpp_pdweibull(
 
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
-      p[i] = 1-p[i];
+      p[i] = 1.0 - p[i];
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)

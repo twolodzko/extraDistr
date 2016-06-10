@@ -63,7 +63,7 @@ double cdf_bbinom(double k, double n, double alpha, double beta) {
   if (k > n)
     return 1.0;
   double p_tmp = 0.0;
-  for (int j = 0; j < k+1; j++)
+  for (int j = 0; j < static_cast<int>(k)+1; j++)
     p_tmp += exp(logpmf_bbinom(static_cast<double>(j), n, alpha, beta))*P_NORM_CONST;
   return p_tmp/P_NORM_CONST;
 }

@@ -107,8 +107,8 @@ NumericVector cpp_pgpois(
 
   if (na == 1 && nb == 1 && anyFinite(x)) {
     
-    double mx = finite_max(x);
-    NumericVector p_tab(static_cast<int>(mx)+1);
+    double mx = static_cast<int>(finite_max(x));
+    NumericVector p_tab(mx+1);
     
     p_tab[0] = exp(logpmf_gpois(0, alpha[0], beta[0]))*P_NORM_CONST;
     for (int j = 1; j < mx+1; j++)

@@ -60,7 +60,7 @@ double cdf_triangular(double x, double a, double b, double c) {
   if (x < a) {
     return 0.0;
   } else if (x >= b) {
-    return 1;
+    return 1.0;
   } else if (x <= c) {
     return pow(x-a, 2.0) / ((b-a)*(c-a));
   } else {

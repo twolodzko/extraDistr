@@ -41,7 +41,7 @@ double pdf_laplace(double x, double mu, double sigma) {
     return NAN;
   }
   double z = abs(x-mu)/sigma;
-  return 1.0/(2.0*sigma) * exp(-z);
+  return exp(-z)/(2.0*sigma);
 }
 
 double cdf_laplace(double x, double mu, double sigma) {

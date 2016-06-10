@@ -161,7 +161,7 @@ NumericVector cpp_qfatigue(
   
   if (!lower_tail)
     for (int i = 0; i < n; i++)
-      pp[i] = 1-pp[i];
+      pp[i] = 1.0 - pp[i];
   
   for (int i = 0; i < Nmax; i++)
     q[i] = invcdf_fatigue(pp[i % n], alpha[i % na], beta[i % nb], mu[i % nm]);

@@ -1,5 +1,5 @@
 
-### 1.6.15
+### 1.7.0
 
 * Cleaning namespace - now mathematical functions are explicitely
   called from std library
@@ -10,6 +10,7 @@
   mixture of normal, mixture of Poisson distributions
 * Improvements in discrete uniform; now it accepts only integer
   valued parameters.
+* Major C++ code clean-up.
 
 ### 1.6.14
 
