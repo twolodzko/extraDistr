@@ -137,7 +137,7 @@ NumericVector cpp_rmixnorm(
   for (int i = 0; i < n; i++) {
     jj = 0;
     wrong_param = false;
-    u = R::runif(0.0, 1.0)*P_NORM_CONST;
+    u = R::runif(0.0, P_NORM_CONST);
     p_tmp = P_NORM_CONST;
     
     for (int j = k-1; j >= 0; j--) {
