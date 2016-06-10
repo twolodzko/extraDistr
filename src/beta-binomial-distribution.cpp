@@ -131,8 +131,8 @@ NumericVector cpp_pbbinom(
     }
     
     double mx = finite_max(x);
-    mx = std::max(mx, size[0]);
-    NumericVector p_tab(static_cast<int>(mx)+1);
+    mx = static_cast<int>(std::max(mx, size[0]));
+    NumericVector p_tab(mx+1);
     
     p_tab[0] = exp(logpmf_bbinom(0.0, size[0], alpha[0], beta[0]))*P_NORM_CONST;
     for (int j = 1; j < mx+1; j++)
