@@ -4,13 +4,14 @@
 * Cleaning namespace - now mathematical functions are explicitely
   called from std library
 * "using namespace Rcpp" was removed from all the files
-* All the numerical values are now `<double>`'s, or
-  casted to `<double>`
-* Improvements in algorithms for categorical distribution,
+* All the numerical values are now explicitely `<double>`'s,
+  or casted to `<double>`; or `<int>`'s (for indexing)
+* Improvements in algorithms for discrete uniform, categorical,
   mixture of normal, mixture of Poisson distributions
 * Improvements in discrete uniform; now it accepts only integer
   valued parameters.
-* Major C++ code clean-up.
+* Major C++ code clean-up
+* Added vignette with full list of implemented distributions
 
 ### 1.6.14
 
