@@ -49,7 +49,7 @@ double logpdf_lomax(double x, double lambda, double kappa) {
   }
   if (x <= 0.0)
     return -INFINITY;
-  return log(lambda) + log(kappa) - log(1+lambda*x)*(kappa+1.0);
+  return log(lambda) + log(kappa) - log(1.0+lambda*x)*(kappa+1.0);
 }
 
 double cdf_lomax(double x, double lambda, double kappa) {

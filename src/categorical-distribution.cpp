@@ -46,16 +46,16 @@ NumericVector cpp_dcat(
   
   for (int i = 0; i < Nmax; i++) {
     double p_tot = 0.0;
-    bool wrong_p = false;
+    bool wrong_param = false;
     for (int j = 0; j < k; j++) {
       if (prob(i % np, j) < 0.0 || prob(i % np, j) > 1.0) {
-        wrong_p = true;
+        wrong_param = true;
         break;
       }
       p_tot += prob(i % np, j)*P_NORM_CONST;
     }
 
-    if (!tol_equal(p_tot/P_NORM_CONST, 1.0) || wrong_p) {
+    if (!tol_equal(p_tot/P_NORM_CONST, 1.0) || wrong_param) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
     } else if (!isInteger(x[i]) || x[i] < 1.0 || x[i] > k) {

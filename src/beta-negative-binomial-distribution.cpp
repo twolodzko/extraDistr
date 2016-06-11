@@ -51,7 +51,7 @@ double logpmf_bnbinom(double k, double r, double alpha, double beta) {
   }
   if (!isInteger(k) || k < 0.0 || std::isinf(k))
     return -INFINITY;
-  return (R::lgammafn(r+k) - (R::lgammafn(k+1) + R::lgammafn(r))) +
+  return (R::lgammafn(r+k) - (R::lgammafn(k+1.0) + R::lgammafn(r))) +
     R::lbeta(alpha+r, beta+k) - R::lbeta(alpha, beta);
 }
 

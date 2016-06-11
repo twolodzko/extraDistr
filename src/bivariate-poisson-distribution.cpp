@@ -38,16 +38,16 @@ double pmf_bpois(double x, double y, double a, double b, double c) {
   tmp *= (pow(a, x) / factorial(x)) * (pow(b, y) / factorial(y));
   double xy = 0.0;
   
-  if (x < y) {
-    for (int k = 0; k < x; k++) {
-      double dk = static_cast<double>(k);
-      xy += R::choose(x, dk) * R::choose(y, dk) * factorial(dk) * pow(c/(a*b), dk);
-    }
-  } else {
-    for (int k = 0; k < y; k++) {
-      double dk = static_cast<double>(k);
-      xy += R::choose(x, dk) * R::choose(y, dk) * factorial(dk) * pow(c/(a*b), dk);
-    }
+  double z;
+  if (x < y)
+    z = x;
+  else
+    z = y;
+  
+  double k = 0.0;
+  while (k < z) {
+    xy += R::choose(x, k) * R::choose(y, k) * factorial(k) * pow(c/(a*b), k);
+    k += 1.0;
   }
   
   return tmp * xy;

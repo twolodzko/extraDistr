@@ -91,7 +91,7 @@ NumericVector cpp_pmixpois(
     for (int j = 0; j < k; j++) {
       p[i] += alpha(i % na, j) * R::ppois(x[i], lambda(i % nl, j), lower_tail, false);
       alpha_tot += alpha(i % na, j)*P_NORM_CONST;
-      if (lambda(i % nl, j) < 0)
+      if (lambda(i % nl, j) < 0.0)
         wrong_param = true;
     }
     if (!tol_equal(alpha_tot/P_NORM_CONST, 1.0) || wrong_param) {

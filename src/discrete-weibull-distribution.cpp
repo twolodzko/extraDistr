@@ -42,7 +42,7 @@ double pdf_dweibull(double x, double q, double beta) {
     return NAN;
   }
   if (!isInteger(x) || x < 0.0)
-    return 0;
+    return 0.0;
   return pow(q, pow(x, beta)) - pow(q, pow(x+1.0, beta));
 }
 
