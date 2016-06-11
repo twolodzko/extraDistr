@@ -2,7 +2,7 @@
 ## Update
 
 Namespace was cleaned, all math functions are called from
-std library. Rccp namespace is not used globally any more.
+std library. Rcpp namespace is not used globally any more.
 All numeric values are now explicitely <double> or <int>
 (or casted to) to avoid overloading ambiguity for math functions.
 
