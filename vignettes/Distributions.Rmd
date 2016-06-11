@@ -1,9 +1,16 @@
+---
+title: "List of distributions implemented in extraDistr"
+author: "Tymoteusz Wolodzko"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 
-# List of distributions implemented in extraDistr
-
-
-Name                            | Functions |  Suffix   |  Comment
---------------------------------|-----------|-----------|----------------------------------------------------------
+Name | Functions |  Suffix   |  Comment
+---------------|---------------|---------------|---------------
 Bernoulli                       | d,p,q,r   | bern      |
 Beta (reparametrized)           | d,p,q,r   | prop      | parametrized by mean and precission
 Beta-Binomial                   | d,p,r     | bbinom    |

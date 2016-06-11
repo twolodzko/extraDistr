@@ -12,5 +12,8 @@ License: GPL-2
 LazyData: TRUE
 LinkingTo: Rcpp
 Imports: Rcpp
-Suggests: testthat
+Suggests: testthat,
+    knitr,
+    rmarkdown
 RoxygenNote: 5.0.1
+VignetteBuilder: knitr
