@@ -58,7 +58,7 @@ NumericVector cpp_dcat(
     if (!tol_equal(p_tot/P_NORM_CONST, 1.0) || wrong_param) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
-    } else if (!isInteger(x[i]) || x[i] < 1.0 || x[i] > k) {
+    } else if (!isInteger(x[i]) || x[i] < 1.0 || x[i] > static_cast<double>(k)) {
       p[i] = 0.0;
     } else {
       p[i] = prob(i % np, x[i] - 1.0);
@@ -89,7 +89,7 @@ NumericVector cpp_pcat(
   for (int i = 0; i < Nmax; i++) {
     if (x[i] < 1.0) {
       p[i] = 0.0;
-    } else if (static_cast<int>(x[i]) > k) {
+    } else if (x[i] > static_cast<double>(k)) {
       p[i] = 1.0;
     } else {
       bool wrong_param = false;

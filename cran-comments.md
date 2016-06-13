@@ -9,5 +9,3 @@ All numeric values are now explicitely <double> or <int>
 Moreover, C++ code was cleaned up. There were some improvements
 in several functions, e.g. for mixture of normals, or mixture of
 Poissons, discrete uniform, or categorical distribution.
-
-Vignette with full list of implemented distributions was added.

@@ -11,7 +11,6 @@
 * Improvements in discrete uniform; now it accepts only integer
   valued parameters.
 * Major C++ code clean-up
-* Added vignette with full list of implemented distributions
 
 ### 1.6.14
 
