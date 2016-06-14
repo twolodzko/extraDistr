@@ -396,6 +396,20 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// cpp_ddirmnom
+NumericVector cpp_ddirmnom(const NumericMatrix& x, const NumericVector& size, const NumericMatrix& alpha, bool log_prob);
+RcppExport SEXP extraDistr_cpp_ddirmnom(SEXP xSEXP, SEXP sizeSEXP, SEXP alphaSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    __result = Rcpp::wrap(cpp_ddirmnom(x, size, alpha, log_prob));
+    return __result;
+END_RCPP
+}
 // cpp_ddnorm
 NumericVector cpp_ddnorm(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, bool log_prob);
 RcppExport SEXP extraDistr_cpp_ddnorm(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {

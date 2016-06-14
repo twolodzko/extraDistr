@@ -54,9 +54,9 @@ rcat(10, c(1/3, 1/3, 1/3))
 p <- rdirichlet(10, c(1, 1, 1, 1, 1))
 rcat(10, p)
 
-x <- rcat(1e5, c(.2, .4, .3, .1))
+x <- rcat(1e5, c(0.2, 0.4, 0.3, 0.1))
 plot(prop.table(table(x)), type = "h")
-lines(0:5, dcat(0:5, c(.2, .4, .3, .1)), col = "red")
+lines(0:5, dcat(0:5, c(0.2, 0.4, 0.3, 0.1)), col = "red")
 
 }
 \keyword{distribution}

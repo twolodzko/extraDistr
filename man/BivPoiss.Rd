@@ -34,6 +34,13 @@ f(x) = exp(-(a+b+c)) * (a^x)/factorial(x) * (b^y)/factorial(y) *
 sum(choose(x,k)*choose(y,k)*factorial(k)*(c/(a*b))^k)
 }
 }
+\examples{
+
+x <- rbvpois(5000, 7, 8, 5)
+image(prop.table(table(x[,1], x[,2])))
+colMeans(x)
+
+}
 \references{
 Karlis, D. and Ntzoufras, I. (2003). Analysis of sports data by using bivariate Poisson models.
 Journal of the Royal Statistical Society: Series D (The Statistician), 52(3), 381-393.

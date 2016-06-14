@@ -32,9 +32,9 @@
 #' p <- rdirichlet(10, c(1, 1, 1, 1, 1))
 #' rcat(10, p)
 #' 
-#' x <- rcat(1e5, c(.2, .4, .3, .1))
+#' x <- rcat(1e5, c(0.2, 0.4, 0.3, 0.1))
 #' plot(prop.table(table(x)), type = "h")
-#' lines(0:5, dcat(0:5, c(.2, .4, .3, .1)), col = "red")
+#' lines(0:5, dcat(0:5, c(0.2, 0.4, 0.3, 0.1)), col = "red")
 #'
 #' @name Categorical
 #' @aliases Categorical
@@ -96,7 +96,7 @@ rcat <- function(n, prob, labels) {
   
   if (is.vector(prob)) {
     k <- length(prob)
-    if (sum(prob) == 1) {
+    if (sum(prob) == 1.0) {
       x <- sample.int(length(prob), size = n, replace = TRUE, prob = prob)
     } else {
       warning("NaNs produced")

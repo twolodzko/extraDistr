@@ -109,6 +109,10 @@ cpp_rdirichlet <- function(n, alpha) {
     .Call('extraDistr_cpp_rdirichlet', PACKAGE = 'extraDistr', n, alpha)
 }
 
+cpp_ddirmnom <- function(x, size, alpha, log_prob = FALSE) {
+    .Call('extraDistr_cpp_ddirmnom', PACKAGE = 'extraDistr', x, size, alpha, log_prob)
+}
+
 cpp_ddnorm <- function(x, mu, sigma, log_prob = FALSE) {
     .Call('extraDistr_cpp_ddnorm', PACKAGE = 'extraDistr', x, mu, sigma, log_prob)
 }

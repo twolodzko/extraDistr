@@ -41,6 +41,12 @@
 #' @references 
 #' Kawamura, K. (1984). Direct calculation of maximum likelihood estimator for the bivariate
 #' Poisson distribution. Kodai mathematical journal, 7(2), 211-221.
+#' 
+#' @examples 
+#' 
+#' x <- rbvpois(5000, 7, 8, 5)
+#' image(prop.table(table(x[,1], x[,2])))
+#' colMeans(x)
 #'
 #' @seealso \code{\link[stats]{Poisson}}
 #'

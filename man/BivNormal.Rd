@@ -49,6 +49,17 @@ z_2 = \frac{x_2 - \mu_2}{\sigma_2}
 z2 = (x2 - \mu2)/\sigma2
 }.
 }
+\examples{
+
+x <- rbvnorm(5000, cor = -0.3)
+plot(x)
+cor(x)
+
+y <- rbvnorm(5000, cor = 0.77)
+plot(y)
+cor(y)
+
+}
 \references{
 Krishnamoorthy, K. (2006). Handbook of Statistical Distributions
 with Applications. Chapman & Hall/CRC

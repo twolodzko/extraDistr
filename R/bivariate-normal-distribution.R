@@ -41,6 +41,16 @@
 #' @references 
 #' Mukhopadhyay, N. (2000). Probability and statistical inference.
 #' Chapman & Hall/CRC
+#' 
+#' @examples 
+#' 
+#' x <- rbvnorm(5000, cor = -0.3)
+#' plot(x)
+#' cor(x)
+#' 
+#' y <- rbvnorm(5000, cor = 0.77)
+#' plot(y)
+#' cor(y)
 #'
 #' @seealso \code{\link[stats]{Normal}}
 #'
