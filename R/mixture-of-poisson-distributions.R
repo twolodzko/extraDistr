@@ -1,6 +1,6 @@
 
 
-#' Mixture of Poisson Distributions
+#' Mixture of Poisson distributions
 #'
 #' Density, distribution function and random generation
 #' for the mixture of Poisson distributions.

@@ -4,7 +4,7 @@
 \alias{BivNormal}
 \alias{dbvnorm}
 \alias{rbvnorm}
-\title{Bivariate Normal distribution}
+\title{Bivariate normal distribution}
 \usage{
 dbvnorm(x, y = NULL, mean1 = 0, mean2 = mean1, sd1 = 1, sd2 = sd1,
   cor = 0, log = FALSE)
@@ -28,7 +28,7 @@ the length is taken to be the number required.}
 }
 \description{
 Density, distribution function and random generation
-for the Bivariate Normal distribution.
+for the bivariate normal distribution.
 }
 \details{
 Probability density function

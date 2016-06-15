@@ -31,8 +31,6 @@
 #' Kvam, P. and Day, D. (2001) The multivariate Polya distribution in combat modeling.
 #' Naval Research Logistics, 48, 1-17.
 #' 
-#' @examples
-#' 
 #' @name DirMnom
 #' @aliases DirMnom
 #' @aliases ddirmnom
@@ -62,7 +60,6 @@ rdirmnom <- function (n, size, alpha) {
     alpha <- matrix(alpha, nrow = 1)
   else if (!is.matrix(alpha))
     alpha <- as.matrix(alpha)
-  prob <- .Call('extraDistr_cpp_rdirichlet', PACKAGE = 'extraDistr', n, alpha)
-  .Call('extraDistr_cpp_rmnom', PACKAGE = 'extraDistr', n, size, prob)
+  .Call('extraDistr_cpp_rdirmnom', PACKAGE = 'extraDistr', n, size, alpha)
 }
 

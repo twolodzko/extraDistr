@@ -1,6 +1,6 @@
 
 
-#' Beta-Binomial distribution
+#' Beta-binomial distribution
 #'
 #' Probability mass function and random generation
 #' for the Beta-binomial distribution.

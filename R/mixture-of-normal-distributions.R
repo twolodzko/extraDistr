@@ -1,6 +1,6 @@
 
 
-#' Mixture of Normal Distributions
+#' Mixture of normal distributions
 #'
 #' Density, distribution function and random generation
 #' for the mixture of normal distributions.

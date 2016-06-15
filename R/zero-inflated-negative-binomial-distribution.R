@@ -1,6 +1,6 @@
 
 
-#' Zero-inflated nagative binomial distribution
+#' Zero-inflated negative binomial distribution
 #'
 #' Probability mass function and random generation
 #' for the zero-inflated nagative binomial distribution.

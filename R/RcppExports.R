@@ -41,6 +41,22 @@ cpp_rbnbinom <- function(n, size, alpha, beta) {
     .Call('extraDistr_cpp_rbnbinom', PACKAGE = 'extraDistr', n, size, alpha, beta)
 }
 
+cpp_dbetapr <- function(x, alpha, beta, sigma, log_prob = FALSE) {
+    .Call('extraDistr_cpp_dbetapr', PACKAGE = 'extraDistr', x, alpha, beta, sigma, log_prob)
+}
+
+cpp_pbetapr <- function(x, alpha, beta, sigma, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_pbetapr', PACKAGE = 'extraDistr', x, alpha, beta, sigma, lower_tail, log_prob)
+}
+
+cpp_qbetapr <- function(p, alpha, beta, sigma, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_qbetapr', PACKAGE = 'extraDistr', p, alpha, beta, sigma, lower_tail, log_prob)
+}
+
+cpp_rbetapr <- function(n, alpha, beta, sigma) {
+    .Call('extraDistr_cpp_rbetapr', PACKAGE = 'extraDistr', n, alpha, beta, sigma)
+}
+
 cpp_dbhatt <- function(x, mu, sigma, a, log_prob = FALSE) {
     .Call('extraDistr_cpp_dbhatt', PACKAGE = 'extraDistr', x, mu, sigma, a, log_prob)
 }
@@ -111,6 +127,10 @@ cpp_rdirichlet <- function(n, alpha) {
 
 cpp_ddirmnom <- function(x, size, alpha, log_prob = FALSE) {
     .Call('extraDistr_cpp_ddirmnom', PACKAGE = 'extraDistr', x, size, alpha, log_prob)
+}
+
+cpp_rdirmnom <- function(n, size, alpha) {
+    .Call('extraDistr_cpp_rdirmnom', PACKAGE = 'extraDistr', n, size, alpha)
 }
 
 cpp_ddnorm <- function(x, mu, sigma, log_prob = FALSE) {

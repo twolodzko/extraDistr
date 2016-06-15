@@ -1,9 +1,9 @@
 
 
-#' Truncated Normal distribution
+#' Truncated normal distribution
 #'
 #' Density, distribution function, quantile function and random generation
-#' for the Truncated Normal distribution.
+#' for the truncated normal distribution.
 #'
 #' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.

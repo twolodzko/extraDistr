@@ -148,6 +148,67 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// cpp_dbetapr
+NumericVector cpp_dbetapr(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const NumericVector& sigma, bool log_prob);
+RcppExport SEXP extraDistr_cpp_dbetapr(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    __result = Rcpp::wrap(cpp_dbetapr(x, alpha, beta, sigma, log_prob));
+    return __result;
+END_RCPP
+}
+// cpp_pbetapr
+NumericVector cpp_pbetapr(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const NumericVector& sigma, bool lower_tail, bool log_prob);
+RcppExport SEXP extraDistr_cpp_pbetapr(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    __result = Rcpp::wrap(cpp_pbetapr(x, alpha, beta, sigma, lower_tail, log_prob));
+    return __result;
+END_RCPP
+}
+// cpp_qbetapr
+NumericVector cpp_qbetapr(const NumericVector& p, const NumericVector& alpha, const NumericVector& beta, const NumericVector& sigma, bool lower_tail, bool log_prob);
+RcppExport SEXP extraDistr_cpp_qbetapr(SEXP pSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    __result = Rcpp::wrap(cpp_qbetapr(p, alpha, beta, sigma, lower_tail, log_prob));
+    return __result;
+END_RCPP
+}
+// cpp_rbetapr
+NumericVector cpp_rbetapr(const int n, const NumericVector& alpha, const NumericVector& beta, const NumericVector& sigma);
+RcppExport SEXP extraDistr_cpp_rbetapr(SEXP nSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP sigmaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
+    __result = Rcpp::wrap(cpp_rbetapr(n, alpha, beta, sigma));
+    return __result;
+END_RCPP
+}
 // cpp_dbhatt
 NumericVector cpp_dbhatt(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& a, bool log_prob);
 RcppExport SEXP extraDistr_cpp_dbhatt(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP aSEXP, SEXP log_probSEXP) {
@@ -407,6 +468,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericMatrix& >::type alpha(alphaSEXP);
     Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
     __result = Rcpp::wrap(cpp_ddirmnom(x, size, alpha, log_prob));
+    return __result;
+END_RCPP
+}
+// cpp_rdirmnom
+NumericMatrix cpp_rdirmnom(const int n, const NumericVector& size, const NumericMatrix& alpha);
+RcppExport SEXP extraDistr_cpp_rdirmnom(SEXP nSEXP, SEXP sizeSEXP, SEXP alphaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type alpha(alphaSEXP);
+    __result = Rcpp::wrap(cpp_rdirmnom(n, size, alpha));
     return __result;
 END_RCPP
 }

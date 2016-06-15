@@ -6,7 +6,7 @@
 \alias{pgev}
 \alias{qgev}
 \alias{rgev}
-\title{Generalized Extreme Value Distribution}
+\title{Generalized extreme value distribution}
 \usage{
 dgev(x, mu = 0, sigma = 1, xi = 0, log = FALSE)
 
@@ -33,7 +33,7 @@ the length is taken to be the number required.}
 }
 \description{
 Density, distribution function, quantile function and random generation
-for the Generalized Extreme Value distribution.
+for the generalized extreme value distribution.
 }
 \details{
 Probability density function

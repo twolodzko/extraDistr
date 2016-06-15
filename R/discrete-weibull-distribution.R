@@ -3,7 +3,7 @@
 #' Discrete Weibull distribution (type I)
 #'
 #' Density, distribution function, quantile function and random generation
-#' for the Discrete Weibull distribution.
+#' for the discrete Weibull distribution.
 #'
 #' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.

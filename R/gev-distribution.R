@@ -1,9 +1,9 @@
 
 
-#' Generalized Extreme Value Distribution
+#' Generalized extreme value distribution
 #'
 #' Density, distribution function, quantile function and random generation
-#' for the Generalized Extreme Value distribution.
+#' for the generalized extreme value distribution.
 #'
 #' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.

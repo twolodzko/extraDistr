@@ -35,7 +35,7 @@ the length is taken to be the number required.}
 }
 \description{
 Density, distribution function, quantile function and random generation
-for the Triangular distribution.
+for the triangular distribution.
 }
 \details{
 Probability density function

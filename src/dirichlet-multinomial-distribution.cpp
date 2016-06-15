@@ -92,3 +92,50 @@ NumericVector cpp_ddirmnom(
   return p;
 }
 
+
+// [[Rcpp::export]]
+NumericMatrix cpp_rdirmnom(
+    const int n,
+    const NumericVector& size,
+    const NumericMatrix& alpha
+) {
+  
+  int k = alpha.ncol();
+  int na = alpha.nrow();
+  int ns = size.length();
+  NumericMatrix x(n, k);
+  
+  if (k < 2)
+    Rcpp::stop("Number of columns in 'alpha' should be >= 2.");
+  
+  for (int i = 0; i < n; i++) {
+    double size_left = size[i % ns];
+    double row_sum = 0.0;
+    bool wrong_alpha = false;
+    NumericVector prob(k);
+    
+    for (int j = 0; j < k; j++) {
+      if (alpha(i % na, j) <= 0.0) {
+        wrong_alpha = true;
+        break;
+      }
+      prob[j] = R::rgamma(alpha(i % na, j), 1.0);
+      row_sum += prob[j];
+    }
+    
+    if (wrong_alpha) {
+      Rcpp::warning("NaNs produced");
+      for (int j = 0; j < k; j++)
+        x(i, j) = NAN;
+    } else {
+      for (int j = 0; j < k-1; j++) {
+        x(i, j) = R::rbinom(size_left, prob[j] / row_sum);
+        size_left -= x(i, j);
+      }
+      x(i, k-1) = size_left;
+    }
+  }
+  
+  return x;
+}
+

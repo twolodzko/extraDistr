@@ -5,7 +5,7 @@
 \alias{dbnbinom}
 \alias{pbnbinom}
 \alias{rbnbinom}
-\title{Beta-Negative Binomial distribution}
+\title{Beta-negative binomial distribution}
 \usage{
 dbnbinom(x, size, alpha = 1, beta = 1, log = FALSE)
 

@@ -6,7 +6,7 @@
 \alias{pgpd}
 \alias{qgpd}
 \alias{rgpd}
-\title{Generalized Pareto Distribution}
+\title{Generalized Pareto distribution}
 \usage{
 dgpd(x, mu = 0, sigma = 1, xi = 0, log = FALSE)
 
@@ -33,7 +33,7 @@ the length is taken to be the number required.}
 }
 \description{
 Density, distribution function, quantile function and random generation
-for the Generalized Pareto distribution.
+for the generalized Pareto distribution.
 }
 \details{
 Probability density function

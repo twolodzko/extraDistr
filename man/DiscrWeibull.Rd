@@ -34,7 +34,7 @@ the length is taken to be the number required.}
 }
 \description{
 Density, distribution function, quantile function and random generation
-for the Discrete Weibull distribution.
+for the discrete Weibull distribution.
 }
 \details{
 Probability mass function

@@ -5,7 +5,7 @@
 \alias{dmixpois}
 \alias{pmixpois}
 \alias{rmixpois}
-\title{Mixture of Poisson Distributions}
+\title{Mixture of Poisson distributions}
 \usage{
 dmixpois(x, lambda, alpha, log = FALSE)
 

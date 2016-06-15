@@ -5,7 +5,7 @@
 \alias{dmixnorm}
 \alias{pmixnorm}
 \alias{rmixnorm}
-\title{Mixture of Normal Distributions}
+\title{Mixture of normal distributions}
 \usage{
 dmixnorm(x, mean, sd, alpha, log = FALSE)
 

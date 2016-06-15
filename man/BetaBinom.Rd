@@ -5,7 +5,7 @@
 \alias{dbbinom}
 \alias{pbbinom}
 \alias{rbbinom}
-\title{Beta-Binomial distribution}
+\title{Beta-binomial distribution}
 \usage{
 dbbinom(x, size, alpha = 1, beta = 1, log = FALSE)
 

@@ -35,9 +35,6 @@ f(x) = \frac{\left(n!\right)\Gamma\left(\sum \alpha_k\right)}{\Gamma\left(n+\sum
 f(x) = (n! * \Gamma(sum(\alpha[k]))) / (\Gamma(n + sum(\alpha[k]))) * prod((\Gamma(x[k] + \alpha[k])) / (x[k]! * \Gamma(\alpha[k]))
 }
 }
-\examples{
-
-}
 \references{
 Gentle, J.E. (2006). Random number generation and Monte Carlo methods. Springer.
 

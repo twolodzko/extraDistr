@@ -1,9 +1,9 @@
 
 
-#' Bivariate Normal distribution
+#' Bivariate normal distribution
 #'
 #' Density, distribution function and random generation
-#' for the Bivariate Normal distribution.
+#' for the bivariate normal distribution.
 #'
 #' @param x,y	        vectors of quantiles; alternativelly x may be a two-column
 #'                    matrix (or data.frame) and y may be omitted.

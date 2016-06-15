@@ -3,7 +3,7 @@
 #' Gamma-Poisson distribution
 #'
 #' Probability mass function and random generation
-#' for the Gamma-Poisson distribution.
+#' for the gamma-Poisson distribution.
 #'
 #' @param x,q	            vector of quantiles.
 #' @param n	              number of observations. If \code{length(n) > 1},

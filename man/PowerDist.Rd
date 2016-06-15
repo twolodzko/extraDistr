@@ -33,7 +33,7 @@ the length is taken to be the number required.}
 }
 \description{
 Density, distribution function, quantile function and random generation
-for the Pareto distribution.
+for the power distribution.
 }
 \details{
 Probability density function

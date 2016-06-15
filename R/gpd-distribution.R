@@ -1,9 +1,9 @@
 
 
-#' Generalized Pareto Distribution
+#' Generalized Pareto distribution
 #'
 #' Density, distribution function, quantile function and random generation
-#' for the Generalized Pareto distribution.
+#' for the generalized Pareto distribution.
 #'
 #' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.

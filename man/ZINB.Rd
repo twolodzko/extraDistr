@@ -6,7 +6,7 @@
 \alias{pzinb}
 \alias{qzinb}
 \alias{rzinb}
-\title{Zero-inflated nagative binomial distribution}
+\title{Zero-inflated negative binomial distribution}
 \usage{
 dzinb(x, size, prob, pi, log = FALSE)
 

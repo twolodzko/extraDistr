@@ -6,7 +6,7 @@
 \alias{ptnorm}
 \alias{qtnorm}
 \alias{rtnorm}
-\title{Truncated Normal distribution}
+\title{Truncated normal distribution}
 \usage{
 dtnorm(x, mu = 0, sigma = 1, a = -Inf, b = Inf, log = FALSE)
 
@@ -38,7 +38,7 @@ the length is taken to be the number required.}
 }
 \description{
 Density, distribution function, quantile function and random generation
-for the Truncated Normal distribution.
+for the truncated normal distribution.
 }
 \details{
 Probability density function

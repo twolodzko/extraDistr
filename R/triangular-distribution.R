@@ -3,7 +3,7 @@
 #' Triangular distribution
 #'
 #' Density, distribution function, quantile function and random generation
-#' for the Triangular distribution.
+#' for the triangular distribution.
 #'
 #' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.

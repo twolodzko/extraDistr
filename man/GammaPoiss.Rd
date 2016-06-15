@@ -31,7 +31,7 @@ the length is taken to be the number required.}
 }
 \description{
 Probability mass function and random generation
-for the Gamma-Poisson distribution.
+for the gamma-Poisson distribution.
 }
 \details{
 Gamma-Poisson distribution arises as a continuous mixture of
