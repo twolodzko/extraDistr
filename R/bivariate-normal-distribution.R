@@ -44,13 +44,13 @@
 #' 
 #' @examples 
 #' 
-#' x <- rbvnorm(5000, cor = -0.3)
-#' plot(x)
-#' cor(x)
-#' 
-#' y <- rbvnorm(5000, cor = 0.77)
-#' plot(y)
-#' cor(y)
+#' y <- x <- seq(-4, 4, by = 0.25)
+#' z <- outer(x, y, function(x, y) dbvnorm(x, y, cor = -0.75))
+#' persp(x, y, z)
+#'
+#' y <- x <- seq(-4, 4, by = 0.25)
+#' z <- outer(x, y, function(x, y) dbvnorm(x, y, cor = -0.25))
+#' persp(x, y, z)
 #'
 #' @seealso \code{\link[stats]{Normal}}
 #'
