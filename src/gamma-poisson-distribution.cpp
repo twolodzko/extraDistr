@@ -127,8 +127,11 @@ NumericVector cpp_pgpois(
     
   } else {
     
-    for (int i = 0; i < Nmax; i++)
+    for (int i = 0; i < Nmax; i++) {
+      if (i % 1000 == 0)
+        Rcpp::checkUserInterrupt();
       p[i] = cdf_gpois(x[i % n], alpha[i % na], beta[i % nb]);
+    }
     
   }
   

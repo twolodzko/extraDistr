@@ -151,8 +151,11 @@ NumericVector cpp_pbbinom(
     
   } else {
     
-    for (int i = 0; i < Nmax; i++)
+    for (int i = 0; i < Nmax; i++) {
+      if (i % 1000 == 0)
+        Rcpp::checkUserInterrupt();
       p[i] = cdf_bbinom(x[i % n], size[i % nn], alpha[i % na], beta[i % nb]);
+    }
   
   }
 

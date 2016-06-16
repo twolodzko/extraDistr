@@ -20,8 +20,12 @@
 #' \deqn{
 #' f(x) = {n \choose x} \frac{\mathrm{B}(x+\alpha, n-x+\beta)}{\mathrm{B}(\alpha, \beta)}
 #' }{
-#' f(x) = choose(n, x) * (beta(x+alpha, n-x+beta)) / (beta(alpha, beta))
+#' f(x) = choose(n, x) * B(x+\alpha, n-x+\beta) / B(\alpha, \beta)
 #' }
+#'
+#' \emph{Warning:} cumulative distribution function is defined as
+#' \eqn{\sum_{k=0}^x f(k)}{f(0)+...+f(x)} so it may be slow for
+#' large detasets.
 #'
 #' @seealso \code{\link[stats]{Beta}}, \code{\link[stats]{Binomial}}
 #' 

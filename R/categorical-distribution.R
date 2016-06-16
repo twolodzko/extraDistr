@@ -96,7 +96,7 @@ rcat <- function(n, prob, labels) {
   
   if (is.vector(prob)) {
     k <- length(prob)
-    if (sum(prob) == 1.0) {
+    if (abs(sum(prob) - 1.0) < 1e-8) {
       x <- sample.int(length(prob), size = n, replace = TRUE, prob = prob)
     } else {
       warning("NaNs produced")

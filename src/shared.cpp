@@ -5,7 +5,7 @@
 // Basic functions
 
 bool tol_equal(double x, double y) {
-  return std::abs(x - y) <= MIN_DIFF_EPS;
+  return std::abs(x - y) < MIN_DIFF_EPS;
 }
 
 bool isInteger(double x) {
