@@ -20,7 +20,7 @@
 #' \deqn{
 #' f(x) = abx^{a-1} (1-x^a)^{b-1}
 #' }{
-#' f(x) = a*b*x^{a-1}*(1-x^a)^{b-1}
+#' f(x) = a*b*x^(a-1)*(1-x^a)^(b-1)
 #' }
 #'
 #' Cumulative distribution function
@@ -34,7 +34,7 @@
 #' \deqn{
 #' F^{-1}(p) = 1-(1-p^{1/b})^{1/a}
 #' }{
-#' F^-1(p) = 1-(1-p^{1/b})^{1/a}
+#' F^-1(p) = 1-(1-p^(1/b))^(1/a)
 #' }
 #'
 #' @references

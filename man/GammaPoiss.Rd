@@ -50,8 +50,8 @@ f(x) = \Gamma(\alpha+x) / (x!*\Gamma(\alpha)) * p^x * (1-p)^\alpha
 where \eqn{p = \frac{\beta}{1+\beta}}{p = \beta/(1+\beta)}.
 
 \emph{Warning:} cumulative distribution function is defined as
-\eqn{\sum_{k=0}^x f(k)}{f(0)+...+f(x)} so it may be slow for
-large detasets.
+\deqn{F(x) = \sum_{k=0}^x f(k)}{F(x) = f(0)+...+f(x)}
+so it may be slow for large datasets.
 }
 \examples{
 

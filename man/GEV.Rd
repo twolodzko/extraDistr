@@ -42,7 +42,7 @@ Probability density function
 \frac{1}{\sigma} \exp(-z) \exp(-\exp(-z))                       & \xi = 0
 \end{array}\right.
 }{
-f(x) = [if xi != 0:] 1/\sigma * (1-\xi*z)^{-1-1/\xi} * exp(-(1-\xi*z)^{-1/\xi})
+f(x) = [if \xi != 0:] 1/\sigma * (1-\xi*z)^{-1-1/\xi} * exp(-(1-\xi*z)^{-1/\xi})
 [else:] 1/\sigma * exp(-z) * exp(-exp(-z))
 }
 
@@ -52,7 +52,7 @@ Cumulative distribution function
 \exp(-\exp(-z))          & \xi = 0
 \end{array}\right.
 }{
-F(x) = [if xi != 0:] exp(-(1+\xi*z)^{1/\xi})
+F(x) = [if \xi != 0:] exp(-(1+\xi*z)^{1/\xi})
 [else:] exp(-exp(-z))
 }
 
@@ -62,7 +62,7 @@ Quantile function
 \mu - \sigma \log(-\log(p))                    & \xi = 0
 \end{array}\right.
 }{
-F^-1(p) = [if xi != 0:] \mu - \sigma/\xi * (1 - (-log(p))^\xi)
+F^-1(p) = [if \xi != 0:] \mu - \sigma/\xi * (1 - (-log(p))^\xi)
           [else:] \mu - \sigma * log(-log(p))
 }
 

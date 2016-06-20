@@ -22,8 +22,8 @@
 #' \frac{1}{\sigma} \exp(-z)                 & \xi = 0
 #' \end{array}\right.
 #' }{
-#' f(x) = [if \xi != 0:] (1+\xi*z)^{-(\xi+1)/\xi}/sigma
-#'        [else:] exp(-z)/sigma
+#' f(x) = [if \xi != 0:] (1+\xi*z)^{-(\xi+1)/\xi}/\sigma
+#'        [else:] exp(-z)/\sigma
 #' }
 #'
 #' Cumulative distribution function

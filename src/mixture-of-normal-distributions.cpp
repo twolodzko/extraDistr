@@ -47,11 +47,11 @@ NumericVector cpp_dmixnorm(
     p[i] = 0.0;
     for (int j = 0; j < k; j++) {
       p[i] += alpha(i % na, j) * R::dnorm(x[i], mu(i % nm, j), sigma(i % ns, j), false);
-      alpha_tot += alpha(i % na, j)*P_NORM_CONST;
+      alpha_tot += alpha(i % na, j);
       if (sigma(i % ns, j) <= 0.0)
         wrong_param = true;
     }
-    if (!tol_equal(alpha_tot/P_NORM_CONST, 1.0) || wrong_param) {
+    if (!tol_equal(alpha_tot, 1.0) || wrong_param) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
     }
@@ -94,11 +94,11 @@ NumericVector cpp_pmixnorm(
     p[i] = 0.0;
     for (int j = 0; j < k; j++) {
       p[i] += alpha(i % na, j) * R::pnorm(x[i], mu(i % nm, j), sigma(i % ns, j), lower_tail, false);
-      alpha_tot += alpha(i % na, j)*P_NORM_CONST;
+      alpha_tot += alpha(i % na, j);
       if (sigma(i % ns, j) <= 0.0)
         wrong_param = true;
     }
-    if (!tol_equal(alpha_tot/P_NORM_CONST, 1.0) || wrong_param) {
+    if (!tol_equal(alpha_tot, 1.0) || wrong_param) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
     }
@@ -137,11 +137,11 @@ NumericVector cpp_rmixnorm(
   for (int i = 0; i < n; i++) {
     jj = 0;
     wrong_param = false;
-    u = R::runif(0.0, P_NORM_CONST);
-    p_tmp = P_NORM_CONST;
+    u = R::runif(0.0, 1.0);
+    p_tmp = 1.0;
     
     for (int j = k-1; j >= 0; j--) {
-      p_tmp -= alpha(i % na, j)*P_NORM_CONST;
+      p_tmp -= alpha(i % na, j);
       if (sigma(i % ns, j) < 0.0 || alpha(i % na, j) < 0.0 || alpha(i % na, j) > 1.0) {
         wrong_param = true;
         break;
@@ -154,7 +154,7 @@ NumericVector cpp_rmixnorm(
     
     if (!wrong_param && jj > 0) {
       for (int j = jj-1; j >= 0; j--) {
-        p_tmp -= alpha(i % na, j)*P_NORM_CONST;
+        p_tmp -= alpha(i % na, j);
         if (sigma(i % ns, j) < 0.0 || alpha(i % na, j) < 0.0 || alpha(i % na, j) > 1.0) {
           wrong_param = true;
           break;
@@ -162,7 +162,7 @@ NumericVector cpp_rmixnorm(
       } 
     }
 
-    if (wrong_param || !tol_equal(p_tmp/P_NORM_CONST, 0.0)) {
+    if (wrong_param || !tol_equal(p_tmp, 0.0)) {
       Rcpp::warning("NaNs produced");
       x[i] = NAN;
     } else {

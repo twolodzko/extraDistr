@@ -33,7 +33,7 @@
 #' F(x) = \alpha[1] * F1(x; \mu[1], \sigma[1]) + \dots + \alpha[k] * Fk(x; \mu[k], \sigma[k])
 #' }
 #' 
-#' where \eqn{\sum_i \alpha_i = 1}{sum(alpha[i]) == 1}.
+#' where \eqn{\sum_i \alpha_i = 1}{sum(\alpha[i]) == 1}.
 #'
 #' @examples 
 #' 

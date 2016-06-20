@@ -52,7 +52,7 @@ F(x) = \alpha_1 F_1(x; \mu_1, \sigma_1) + \dots + \alpha_k F_k(x; \mu_k, \sigma_
 F(x) = \alpha[1] * F1(x; \mu[1], \sigma[1]) + \dots + \alpha[k] * Fk(x; \mu[k], \sigma[k])
 }
 
-where \eqn{\sum_i \alpha_i = 1}{sum(alpha[i]) == 1}.
+where \eqn{\sum_i \alpha_i = 1}{sum(\alpha[i]) == 1}.
 }
 \examples{
 

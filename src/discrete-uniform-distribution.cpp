@@ -68,18 +68,14 @@ double invcdf_dunif(double p, double min, double max) {
 }
 
 double rng_dunif(double min, double max) {
-  if (min >= max || std::isinf(min) || std::isinf(max) ||
+  if (min > max || std::isinf(min) || std::isinf(max) ||
       floor(min) != min || floor(max) != max) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  
-  // boundry case for x == min-1
-  double x = min - 1.0;
-  while (x < min) {
-    x = ceil(R::runif(min - 1.0, max));
-  }
-  return x;
+  if (min == max)
+    return min;
+  return ceil(R::runif(min - 1.0, max));
 }
 
 

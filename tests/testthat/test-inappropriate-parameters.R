@@ -10,6 +10,10 @@ test_that("Wrong parameter values in PDF and PMF functions", {
   expect_warning(expect_true(is.nan(dbern(1, -1))))
   expect_warning(expect_true(is.nan(dbern(1, 2))))
   
+  expect_warning(expect_true(is.nan(dbetapr(1, -1, 1, 1))))
+  expect_warning(expect_true(is.nan(dbetapr(1, 1, -1, 1))))
+  expect_warning(expect_true(is.nan(dbetapr(1, 1, 1, -1))))
+  
   expect_warning(expect_true(is.nan(dbhatt(1, sigma = -1))))
   expect_warning(expect_true(is.nan(dbhatt(1, a = -1))))
   
@@ -195,6 +199,10 @@ test_that("Wrong parameter values in CDF functions", {
   expect_warning(expect_true(is.nan(pbbinom(1, c(1, -1), c(1, 1), c(1, 1))[2])))
   expect_warning(expect_true(is.nan(pbbinom(1, c(1, 1), c(1, -1), c(1, 1))[2])))
   expect_warning(expect_true(is.nan(pbbinom(1, c(1, 1), c(1, 1), c(1, -1))[2])))
+  
+  expect_warning(expect_true(is.nan(pbetapr(1, -1, 1, 1))))
+  expect_warning(expect_true(is.nan(pbetapr(1, 1, -1, 1))))
+  expect_warning(expect_true(is.nan(pbetapr(1, 1, 1, -1))))
 
   expect_warning(expect_true(is.nan(pbern(1, -1))))
   expect_warning(expect_true(is.nan(pbern(1, 2))))
@@ -374,6 +382,10 @@ test_that("Wrong parameter values in inverse CDF functions", {
   # expect_warning(expect_true(is.nan(qbbinom(0.5, 1, -1, 1))))
   # expect_warning(expect_true(is.nan(qbbinom(0.5, 1, 1, -1))))
   
+  expect_warning(expect_true(is.nan(qbetapr(0.5, -1, 1, 1))))
+  expect_warning(expect_true(is.nan(qbetapr(0.5, 1, -1, 1))))
+  expect_warning(expect_true(is.nan(qbetapr(0.5, 1, 1, -1))))
+  
   expect_warning(expect_true(is.nan(qbern(0.5, -1))))
   expect_warning(expect_true(is.nan(qbern(0.5, 2))))
   
@@ -530,6 +542,10 @@ test_that("Wrong parameter values in RNG functions", {
   expect_warning(expect_true(is.nan(rbbinom(1, -1, 1, 1))))
   expect_warning(expect_true(is.nan(rbbinom(1, 1, -1, 1))))
   expect_warning(expect_true(is.nan(rbbinom(1, 1, 1, -1))))
+  
+  expect_warning(expect_true(is.nan(rbetapr(1, -1, 1, 1))))
+  expect_warning(expect_true(is.nan(rbetapr(1, 1, -1, 1))))
+  expect_warning(expect_true(is.nan(rbetapr(1, 1, 1, -1))))
   
   expect_warning(expect_true(is.nan(rbern(1, -1))))
   expect_warning(expect_true(is.nan(rbern(1, 2))))

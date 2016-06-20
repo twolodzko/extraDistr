@@ -5,6 +5,7 @@
 * Code clean-up for categorical distribution
 * Improvements in documentation and examples (e.g. bivariate Poisson,
   bivariate normal)
+* Other minor improvements in the code
 
 ### 1.7.0
 

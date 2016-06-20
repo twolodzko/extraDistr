@@ -31,7 +31,7 @@
 #' \deqn{
 #' \frac{1}{\mathrm{B}(\alpha, \beta)} p^{\alpha-1} (1-p)^{\beta-1}
 #' }{
-#' 1/beta(\alpha, \beta) p^(\alpha-1) (1-p)^(\beta-1)
+#' 1/B(\alpha, \beta) p^(\alpha-1) (1-p)^(\beta-1)
 #' }
 #' 
 #' we can rewrite
@@ -39,7 +39,7 @@
 #' \deqn{
 #' {n \choose k} = \frac{1}{(n+1) \mathrm{B}(k+1, n-k+1)}
 #' }{
-#' choose(n,k) = 1/((n+1) * beta(k+1, n-k+1))
+#' choose(n,k) = 1/((n+1) * B(k+1, n-k+1))
 #' }
 #' 
 #' if we substitute \eqn{k+1 = \alpha} and \eqn{n-k+1 = \beta} then pmf
@@ -48,7 +48,7 @@
 #' \deqn{
 #' \frac{1}{(n+1) \mathrm{B}(\alpha, \beta)} p^{\alpha-1} (1-p)^{\beta-1}
 #' }{
-#' 1/((n+1) * beta(\alpha, \beta)) * p^(\alpha-1) * (1-p)^(\beta-1)
+#' 1/((n+1) * B(\alpha, \beta)) * p^(\alpha-1) * (1-p)^(\beta-1)
 #' }
 #' 
 #' so beta can be understood as a distribution of \eqn{k/n} proportions in
@@ -57,7 +57,7 @@
 #' \deqn{
 #' \frac{1}{\mathrm{B}(n\mu, n(1-\mu))} p^{n\mu+1} (1-p)^{n(1-\mu)+1}
 #' }{
-#' 1/(beta(n\mu, n(1-\mu))) * p^(n\mu+1) * (1-p)^(n(1-\mu)+1)
+#' 1/(B(n\mu, n(1-\mu))) * p^(n\mu+1) * (1-p)^(n(1-\mu)+1)
 #' }
 #' 
 #' Alternatively \eqn{n} may be understood as precision parameter.

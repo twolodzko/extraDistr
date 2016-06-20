@@ -52,8 +52,8 @@ double cdf_gpois(double x, double alpha, double beta) {
     return 1.0;
   double p_tmp = 0.0;
   for (int j = 0; j < static_cast<int>(x)+1; j++)
-    p_tmp += exp(logpmf_gpois(static_cast<double>(j), alpha, beta))*P_NORM_CONST;
-  return p_tmp/P_NORM_CONST;
+    p_tmp += exp(logpmf_gpois(static_cast<double>(j), alpha, beta));
+  return p_tmp;
 }
 
 double rng_gpois(double alpha, double beta) {
@@ -110,16 +110,16 @@ NumericVector cpp_pgpois(
     double mx = static_cast<int>(finite_max(x));
     NumericVector p_tab(mx+1);
     
-    p_tab[0] = exp(logpmf_gpois(0, alpha[0], beta[0]))*P_NORM_CONST;
+    p_tab[0] = exp(logpmf_gpois(0, alpha[0], beta[0]));
     for (int j = 1; j < mx+1; j++)
       p_tab[j] = p_tab[j-1] + exp(logpmf_gpois(static_cast<double>(j),
-                                               alpha[0], beta[0]))*P_NORM_CONST;
+                                               alpha[0], beta[0]));
     
     for (int i = 0; i < n; i++) {
       if (std::isinf(x[i])) {
         p[i] = 1.0;
       } else if (isInteger(x[i]) && x[i] >= 0.0) {
-        p[i] = p_tab[static_cast<int>(x[i])]/P_NORM_CONST;
+        p[i] = p_tab[static_cast<int>(x[i])];
       } else {
         p[i] = 0.0;
       }

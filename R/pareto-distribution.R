@@ -20,7 +20,7 @@
 #' \deqn{
 #' f(x) = \frac{ab^a}{x^{a+1}}
 #' }{
-#' f(x) = (a*b^a) / x^{a+1}
+#' f(x) = (a*b^a) / x^(a+1)
 #' }
 #'
 #' Cumulative distribution function
@@ -34,7 +34,7 @@
 #' \deqn{
 #' F^{-1}(p) = \frac{b}{(1-p)^{1-a}}
 #' }{
-#' F^-1(p) = b/(1-p)^{1-a}
+#' F^-1(p) = b/(1-p)^(1-a)
 #' }
 #'
 #' @references

@@ -1,9 +1,9 @@
 
 
-#' Dirichlet-multinomial (multivariate \enc{Pólya}{Polya}) distribution
+#' Dirichlet-multinomial (multivariate Polya) distribution
 #'
 #' Density function, cumulative distribution function and random generation
-#' for the Dirichlet-multinomial (multivariate \enc{Pólya}{Polya}) distribution.
+#' for the Dirichlet-multinomial (multivariate Polya) distribution.
 #'
 #' @param x               \eqn{k}-column matrix of quantiles.
 #' @param n	              number of observations. If \code{length(n) > 1},

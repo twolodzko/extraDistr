@@ -30,8 +30,8 @@ Probability mass function
 f(x) = \exp \{-(a+b+c)\} \frac{a^x}{x!} \frac{b^y}{y!} \sum_{k=0}^{\min(x,y)}
 {x \choose k} {y \choose k} k! \left( \frac{c}{ab} \right)^k
 }{
-f(x) = exp(-(a+b+c)) * (a^x)/factorial(x) * (b^y)/factorial(y) *
-sum(choose(x,k)*choose(y,k)*factorial(k)*(c/(a*b))^k)
+f(x) = exp(-(a+b+c)) * (a^x)/x! * (b^y)/y! *
+sum(choose(x,k)*choose(y,k)*k!*(c/(a*b))^k)
 }
 }
 \examples{

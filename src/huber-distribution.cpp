@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include "const.h"
 #include "shared.h"
 
 using std::pow;
@@ -25,7 +26,7 @@ double pdf_huber(double x, double mu, double sigma, double c) {
   
   double z, A, rho;
   z = abs((x - mu)/sigma);
-  A = 2.0*sqrt(2.0*M_PI) * (Phi(c) + phi(c)/c - 0.5);
+  A = 2.0*SQRT_2_PI * (Phi(c) + phi(c)/c - 0.5);
 
   if (z <= c)
     rho = pow(z, 2.0)/2.0;
@@ -47,7 +48,7 @@ double cdf_huber(double x, double mu, double sigma, double c) {
   az = -abs(z);
   
   if (az <= -c) 
-    p = exp(pow(c, 2.0)/2.0)/c * exp(c*az) / sqrt(2.0*M_PI)/A;
+    p = exp(pow(c, 2.0)/2.0)/c * exp(c*az) / SQRT_2_PI/A;
   else
     p = (phi(c)/c + Phi(az) - Phi(-c))/A;
   
@@ -64,13 +65,13 @@ double invcdf_huber(double p, double mu, double sigma, double c) {
   }
   
   double x, pm, A;
-  A = 2.0*sqrt(2.0*M_PI) * (Phi(c) + phi(c)/c - 0.5);
+  A = 2.0*SQRT_2_PI * (Phi(c) + phi(c)/c - 0.5);
   pm = std::min(p, 1.0 - p);
 
-  if (pm <= sqrt(2.0*M_PI) * phi(c)/(c*A))
+  if (pm <= SQRT_2_PI * phi(c)/(c*A))
     x = log(c*pm*A)/c - c/2.0;
   else
-    x = InvPhi(abs(1.0 - Phi(c) + pm*A/sqrt(2.0*M_PI) - phi(c)/c));
+    x = InvPhi(abs(1.0 - Phi(c) + pm*A/SQRT_2_PI - phi(c)/c));
 
   if (p < 0.5)
     return mu + x*sigma;

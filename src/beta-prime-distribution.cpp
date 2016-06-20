@@ -34,8 +34,10 @@ double pdf_betapr(double x, double alpha, double beta, double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x < 0.0)
+  if (x <= 0.0)
     return 0.0;
+  if (x == INFINITY)
+    return 0;
   double z = x / sigma;
   return pow(z, alpha-1.0) * pow(z+1.0, -alpha-beta) / R::beta(alpha, beta) / sigma;
 }
@@ -45,7 +47,9 @@ double logpdf_betapr(double x, double alpha, double beta, double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x < 0.0)
+  if (x <= 0.0)
+    return -INFINITY;
+  if (x == INFINITY)
     return -INFINITY;
   double z = x / sigma;
   return log(pow(z, alpha-1.0)) + log(pow(z+1.0, -alpha-beta)) - R::lbeta(alpha, beta) - log(sigma);
@@ -57,6 +61,10 @@ double cdf_betapr(double x, double alpha, double beta, double sigma,
     Rcpp::warning("NaNs produced");
     return NAN;
   }
+  if (x <= 0.0)
+    return 0;
+  if (x == INFINITY)
+    return 1;
   double z = x / sigma;
   return R::pbeta(z/(1.0+z), alpha, beta, lower_tail, log_prob);
 }
@@ -175,7 +183,6 @@ NumericVector cpp_rbetapr(
     const NumericVector& sigma
 ) {
   
-  double u;
   int na = alpha.length();
   int nb = beta.length();
   int ns = sigma.length();

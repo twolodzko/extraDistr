@@ -4,7 +4,7 @@
 \alias{DirMnom}
 \alias{ddirmnom}
 \alias{rdirmnom}
-\title{Dirichlet-multinomial (multivariate \enc{Pólya}{Polya}) distribution}
+\title{Dirichlet-multinomial (multivariate Polya) distribution}
 \usage{
 ddirmnom(x, size, alpha, log = FALSE)
 
@@ -25,7 +25,7 @@ the length is taken to be the number required.}
 }
 \description{
 Density function, cumulative distribution function and random generation
-for the Dirichlet-multinomial (multivariate \enc{Pólya}{Polya}) distribution.
+for the Dirichlet-multinomial (multivariate Polya) distribution.
 }
 \details{
 Probability density function

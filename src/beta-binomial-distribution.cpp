@@ -64,8 +64,8 @@ double cdf_bbinom(double k, double n, double alpha, double beta) {
     return 1.0;
   double p_tmp = 0.0;
   for (int j = 0; j < static_cast<int>(k)+1; j++)
-    p_tmp += exp(logpmf_bbinom(static_cast<double>(j), n, alpha, beta))*P_NORM_CONST;
-  return p_tmp/P_NORM_CONST;
+    p_tmp += exp(logpmf_bbinom(static_cast<double>(j), n, alpha, beta));
+  return p_tmp;
 }
 
 double rng_bbinom(double n, double alpha, double beta) {
@@ -134,16 +134,16 @@ NumericVector cpp_pbbinom(
     mx = static_cast<int>(std::max(mx, size[0]));
     NumericVector p_tab(mx+1);
     
-    p_tab[0] = exp(logpmf_bbinom(0.0, size[0], alpha[0], beta[0]))*P_NORM_CONST;
+    p_tab[0] = exp(logpmf_bbinom(0.0, size[0], alpha[0], beta[0]));
     for (int j = 1; j < mx+1; j++)
       p_tab[j] = p_tab[j-1] + exp(logpmf_bbinom(static_cast<double>(j),
-                                                size[0], alpha[0], beta[0]))*P_NORM_CONST;
+                                                size[0], alpha[0], beta[0]));
     
     for (int i = 0; i < n; i++) {
       if (x[i] > size[0]) {
         p[i] = 1.0;
       } else if (isInteger(x[i]) && x[i] >= 0.0) {
-        p[i] = p_tab[static_cast<int>(x[i])]/P_NORM_CONST;
+        p[i] = p_tab[static_cast<int>(x[i])];
       } else {
         p[i] = 0.0;
       }

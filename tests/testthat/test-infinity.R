@@ -2,6 +2,7 @@
 
 test_that("Testing PDFs & PMFs against infinite values", {
 
+  expect_true(!is.nan(dbetapr(Inf, 1, 1, 1)) && is.finite(dbetapr(Inf, 1, 1, 1)))
   expect_true(!is.nan(dbbinom(Inf, 10, 1, 1)) && is.finite(dbbinom(Inf, 10, 1, 1)))
   expect_true(!is.nan(dbnbinom(Inf, 10, 1, 1)) && is.finite(dbnbinom(Inf, 10, 1, 1)))
   expect_true(!is.nan(dbhatt(Inf)) && is.finite(dbhatt(Inf)))
@@ -43,6 +44,7 @@ test_that("Testing PDFs & PMFs against infinite values", {
 
 test_that("Testing CDFs against infinite values", {
   
+  expect_true(!is.nan(pbetapr(Inf, 1, 1, 1)) && is.finite(pbetapr(Inf, 1, 1, 1)))
   expect_true(!is.nan(pbbinom(Inf, 10, 1, 1)) && is.finite(pbbinom(Inf, 10, 1, 1)))
   expect_true(!is.nan(pbnbinom(Inf, 10, 1, 1)) && is.finite(pbnbinom(Inf, 10, 1, 1)))
   expect_true(!is.nan(pbhatt(Inf)) && is.finite(pbhatt(Inf)))
@@ -86,6 +88,7 @@ test_that("Testing CDFs against infinite values", {
 
 test_that("Testing PDFs & PMFs against negatively infinite values", {
   
+  expect_true(!is.nan(dbetapr(-Inf, 1, 1, 1)) && is.finite(dbetapr(-Inf, 1, 1, 1)))
   expect_true(!is.nan(dbbinom(-Inf, 10, 1, 1)) && is.finite(dbbinom(-Inf, 10, 1, 1)))
   expect_true(!is.nan(dbnbinom(-Inf, 10, 1, 1)) && is.finite(dbnbinom(-Inf, 10, 1, 1)))
   expect_true(!is.nan(dbhatt(-Inf)) && is.finite(dbhatt(-Inf)))
@@ -127,6 +130,7 @@ test_that("Testing PDFs & PMFs against negatively infinite values", {
 
 test_that("Testing CDFs against negatively infinite values", {
   
+  expect_true(!is.nan(pbetapr(-Inf, 1, 1, 1)) && is.finite(pbetapr(-Inf, 1, 1, 1)))
   expect_true(!is.nan(pbbinom(-Inf, 10, 1, 1)) && is.finite(pbbinom(-Inf, 10, 1, 1)))
   expect_true(!is.nan(pbnbinom(-Inf, 10, 1, 1)) && is.finite(pbnbinom(-Inf, 10, 1, 1)))
   expect_true(!is.nan(pbhatt(-Inf)) && is.finite(pbhatt(-Inf)))

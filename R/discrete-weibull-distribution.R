@@ -35,7 +35,7 @@
 #' \deqn{
 #' F^{-1}(p) = \left \lceil{\left(\frac{\log(1-p)}{\log(q)}\right)^{1/\beta} - 1}\right \rceil
 #' }{
-#' F^-1(p) = ceiling((\log(1-p)/\log(q))^(1/\beta) - 1)
+#' F^-1(p) = ceiling((log(1-p)/log(q))^(1/\beta) - 1)
 #' }
 #'
 #' @references

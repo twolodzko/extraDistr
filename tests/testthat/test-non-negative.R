@@ -4,6 +4,7 @@ context("Testing distributions with non-negative support")
 
 test_that("Zero probabilities for values <0", {
   
+  expect_equal(c(0, 0), dbetapr(c(-1, 0), 1, 1, 1))
   expect_equal(0, ddweibull(-1, 0.5, 1))
   expect_equal(0, ddunif(-1, 0, 5))
   expect_equal(0, dcat(-1, c(0.5, 0.5)))

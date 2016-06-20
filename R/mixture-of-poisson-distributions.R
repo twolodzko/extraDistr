@@ -32,7 +32,7 @@
 #' F(x) = \alpha[1] * F1(x; \lambda[1]) + \dots + \alpha[k] * Fk(x; \lambda[k])
 #' }
 #' 
-#' where \eqn{\sum_i \alpha_i = 1}{sum(alpha[i]) == 1}.
+#' where \eqn{\sum_i \alpha_i = 1}{sum(\alpha[i]) == 1}.
 #'
 #' @examples 
 #' 

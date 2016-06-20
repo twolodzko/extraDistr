@@ -2,6 +2,7 @@
 
 test_that("Zeros in quantile functions", {
   
+  expect_true(!is.nan(qbetapr(0, 1, 1, 1)))
   # expect_true(!is.nan(qbbinom(0, 10, 1, 1)))
   # expect_true(!is.nan(qbnbinom(0, 10, 1, 1)))
   # expect_true(!is.nan(qbhatt(0)))
@@ -41,6 +42,7 @@ test_that("Zeros in quantile functions", {
 
 test_that("Ones in quantile functions", {
   
+  expect_true(!is.nan(qbetapr(1, 1, 1, 1)))
   # expect_true(!is.nan(qbbinom(1, 10, 1, 1)))
   # expect_true(!is.nan(qbnbinom(1, 10, 1, 1)))
   # expect_true(!is.nan(qbhatt(1)))
@@ -84,6 +86,7 @@ test_that("Checking p = F(F^-1(p))", {
   
   pp <- seq(0, 1, by = 0.001)
   
+  expect_equal(pp, pbetapr(qbetapr(pp, 1, 1, 1), 1, 1, 1))
   # expect_equal(pp, pbbinom(qbbinom(pp, 10, 1, 1), 10, 1, 1))
   # expect_equal(pp, pbnbinom(qbnbinom(pp, 10, 1, 1), 10, 1, 1))
   # expect_equal(pp, pbhatt(qbhatt(pp)))

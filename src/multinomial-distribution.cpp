@@ -72,10 +72,10 @@ NumericVector cpp_dmnom(
         prod_xfac += lfactorial(x(i % n, static_cast<double>(j)));
         prod_pow_px += log(prob(i % np, j)) * x(i % n, j);
       }
-      sum_p += prob(i % np, j)*P_NORM_CONST;
+      sum_p += prob(i % np, j);
     }
 
-    if (!tol_equal(sum_p/P_NORM_CONST, 1.0) || wrong_p) {
+    if (!tol_equal(sum_p, 1.0) || wrong_p) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN; 
     } else if (floor(size[i % ns]) != size[i % ns] ||
@@ -118,15 +118,15 @@ NumericMatrix cpp_rmnom(
         wrong_p = true;
         break;
       }
-      sum_p += prob(i % np, j)*P_NORM_CONST;
+      sum_p += prob(i % np, j);
       x(i, j) = R::rbinom(size_left, prob(i % np, j));
       size_left -= x(i, j);
     }
     
     x(i, k-1) = size_left;
-    sum_p += prob(i % np, k-1)*P_NORM_CONST;
+    sum_p += prob(i % np, k-1);
     
-    if (!tol_equal(sum_p/P_NORM_CONST, 1.0) || wrong_p) {
+    if (!tol_equal(sum_p, 1.0) || wrong_p) {
       Rcpp::warning("NaNs produced");
       for (int j = 0; j < k; j++)
         x(i, j) = NAN;

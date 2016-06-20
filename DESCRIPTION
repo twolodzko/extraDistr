@@ -1,8 +1,8 @@
 Package: extraDistr
 Type: Package
 Title: Additional Univariate and Multivariate Distributions
-Version: 1.7.1
-Date: 2016-06-14
+Version: 1.7.2
+Date: 2016-06-20
 Author: Tymoteusz Wolodzko
 Maintainer: Tymoteusz Wolodzko <twolodzko+extraDistr@gmail.com>
 Description: Density, distribution function, quantile function
@@ -10,7 +10,6 @@ Description: Density, distribution function, quantile function
     and multivariate distributions.
 License: GPL-2
 URL: https://github.com/twolodzko/extraDistr
-Encoding: UTF-8
 LazyData: TRUE
 LinkingTo: Rcpp
 Imports: Rcpp
