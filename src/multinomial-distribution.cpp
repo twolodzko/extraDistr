@@ -61,7 +61,7 @@ NumericVector cpp_dmnom(
     bool wrong_x = false;
 
     for (int j = 0; j < k; j++) {
-      if (prob(i % np, j) < 0.0 || prob(i % np, j) > 1.0) {
+      if (prob(i % np, j) < 0.0) {
         wrong_p = true;
         break;
       }
@@ -114,7 +114,7 @@ NumericMatrix cpp_rmnom(
     bool wrong_p = false;
     
     for (int j = 0; j < k-1; j++) {
-      if (prob(i % np, j) < 0.0 || prob(i % np, j) > 1.0) {
+      if (prob(i % np, j) < 0.0) {
         wrong_p = true;
         break;
       }

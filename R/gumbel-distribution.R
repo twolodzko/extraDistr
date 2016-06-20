@@ -18,16 +18,16 @@
 #'
 #' Probability density function
 #' \deqn{
-#' f(x) = \frac{1}{\sigma} \exp(-(z+\exp(-z)))
+#' f(x) = \frac{1}{\sigma} \exp\left(-\left(\frac{x-\mu}{\sigma} + \exp\left(-\frac{x-\mu}{\sigma}\right)\right)\right)
 #' }{
-#' f(x) = 1/\sigma * exp(-(z+exp(-z)))
+#' f(x) = 1/\sigma * exp(-((x-\mu)/\sigma + exp(-(x-\mu)/\sigma)))
 #' }
 #'
 #' Cumulative distribution function
 #' \deqn{
-#' F(x) = \exp(-\exp(-z))
+#' F(x) = \exp\left(-\exp\left(-\frac{x-\mu}{\sigma}\right)\right)
 #' }{
-#' F(x) = exp(-exp(-z))
+#' F(x) = exp(-exp(-(x-\mu)/\sigma))
 #' }
 #'
 #' Quantile function
@@ -36,8 +36,6 @@
 #' }{
 #' F^-1(p) = \mu - \sigma * log(-log(p))
 #' }
-#'
-#' where \eqn{ z = \frac{x-\mu}{\sigma} }{ z = (x-\mu)/\sigma }.
 #'
 #' @references
 #' Bury, K. (1999). Statistical Distributions in Engineering.

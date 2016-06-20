@@ -24,12 +24,10 @@
 #'
 #' Probability density function (parametrized by scale)
 #' \deqn{
-#' f(x) = \frac{\Gamma(\alpha+x)}{x! \Gamma(\alpha)} p^k (1-p)^\alpha
+#' f(x) = \frac{\Gamma(\alpha+x)}{x! \Gamma(\alpha)} \left(\frac{\beta}{1+\beta}\right)^k \left(1-\frac{\beta}{1+\beta}\right)^\alpha
 #' }{
-#' f(x) = \Gamma(\alpha+x) / (x!*\Gamma(\alpha)) * p^x * (1-p)^\alpha
+#' f(x) = \Gamma(\alpha+x) / (x!*\Gamma(\alpha)) * (\beta/(1+\beta))^x * (1-\beta/(1+\beta))^\alpha
 #' }
-#' 
-#' where \eqn{p = \frac{\beta}{1+\beta}}{p = \beta/(1+\beta)}.
 #' 
 #' \emph{Warning:} cumulative distribution function is defined as
 #' \deqn{F(x) = \sum_{k=0}^x f(k)}{F(x) = f(0)+...+f(x)}

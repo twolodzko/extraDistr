@@ -124,7 +124,7 @@ NumericMatrix cpp_rdirichlet(
         x(i, j) = NAN;
     } else {
       for (int j = 0; j < k; j++)
-        x(i, j) = x(i, j) / row_sum;
+        x(i, j) /= row_sum;
     }
   }
 

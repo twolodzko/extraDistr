@@ -41,16 +41,16 @@ for the Frechet distribution.
 \details{
 Probability density function
 \deqn{
-f(x) = \frac{\lambda}{\sigma} z^{-1-\lambda} \exp(-z^{-\lambda})
+f(x) = \frac{\lambda}{\sigma} \left(\frac{x-\mu}{\sigma}\right)^{-1-\lambda} \exp\left(-\left(\frac{x-\mu}{\sigma}\right)^{-\lambda}\right)
 }{
-f(x) = \lambda/\sigma * z^{-1-\lambda} * exp(-z^-\lambda)
+f(x) = \lambda/\sigma * ((x-\mu)/\sigma)^(-1-\lambda) * exp(-((x-\mu)/\sigma)^-\lambda)
 }
 
 Cumulative distribution function
 \deqn{
-F(x) = \exp(-z^{-\lambda})
+F(x) = \exp\left(-\left(\frac{x-\mu}{\sigma}\right)^{-\lambda}\right)
 }{
-F(x) = exp(-z^-\lambda)
+F(x) = exp(-((x-\mu)/\sigma)^-\lambda)
 }
 
 Quantile function
@@ -59,8 +59,6 @@ F^{-1}(p) = \mu + \sigma -\log(p)^{-1/\lambda}
 }{
 F^-1(p) = \mu + \sigma * -log(p)^{-1/\lambda}
 }
-
-where \eqn{ z = \frac{x-\mu}{\sigma} }{ z = (x-\mu)/\sigma }.
 }
 \examples{
 

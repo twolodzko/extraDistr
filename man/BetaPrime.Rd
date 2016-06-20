@@ -44,20 +44,18 @@ If \eqn{X \sim \mathrm{Beta}(\alpha, \beta)}{X ~ Beta(\alpha, \beta)}, then
 Probability density function
 
 \deqn{
-f(x) = \frac{z^{\alpha-1} (1+z)^{-\alpha -\beta}}{B(\alpha,\beta)\sigma}
+f(x) = \frac{(x/\sigma)^{\alpha-1} (1+x/\sigma)^{-\alpha -\beta}}{B(\alpha,\beta)\sigma}
 }{
-f(x) = (z^(\alpha-1) * (1 + z)^(-\alpha-\beta)) / (B(\alpha,\beta) * \sigma)
+f(x) = ((x/\sigma)^(\alpha-1) * (1 + x/\sigma)^(-\alpha-\beta)) / (B(\alpha,\beta) * \sigma)
 }
 
 Cumulative distribution function
 
 \deqn{
-F(x) = I_{\frac{z}{1+z}}(\alpha, \beta)
+F(x) = I_{\frac{x/\sigma}{1+x/\sigma}}(\alpha, \beta)
 }{
-F(x) = pbeta(z/(1+z), \alpha, \beta)
+F(x) = pbeta((x/\sigma)/(1+(x/\sigma)), \alpha, \beta)
 }
-
-where \eqn{z = x/\sigma}.
 }
 \examples{
 

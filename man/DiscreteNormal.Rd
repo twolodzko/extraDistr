@@ -41,7 +41,9 @@ for discrete normal distribution.
 Probability mass function
 
 \deqn{
-f(x) = \Phi(x+1) - \Phi(x)
+f(x) = \Phi\left(\frac{x-\mu+1}{\sigma}\right) - \Phi\left(\frac{x-\mu}{\sigma}\right)
+}{
+f(x) = \Phi((x-\mu+1)/\sigma) - \Phi((x-\mu)/\sigma)
 }
 }
 \examples{

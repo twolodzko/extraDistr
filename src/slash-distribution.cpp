@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include "const.h"
 #include "shared.h"
 
 using std::pow;
@@ -34,7 +35,7 @@ double pdf_slash(double x, double mu, double sigma) {
     return NAN;
   }
   double z = (x - mu)/sigma;
-  return ((phi(0.0) - phi(z))/pow(z, 2.0))/sigma;
+  return ((PHI_0 - phi(z))/pow(z, 2.0))/sigma;
 }
 
 double cdf_slash(double x, double mu, double sigma) {
@@ -46,7 +47,7 @@ double cdf_slash(double x, double mu, double sigma) {
   if (z == 0.0)
     return 0.5;
   else
-    return Phi(z) - (phi(0.0) - phi(z))/z;
+    return Phi(z) - (PHI_0 - phi(z))/z;
 }
 
 double rng_slash(double mu, double sigma) {

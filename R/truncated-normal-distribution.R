@@ -20,18 +20,18 @@
 #'
 #' Probability density function
 #' \deqn{
-#' f(x) = \frac{\phi(z)}
+#' f(x) = \frac{\phi(\frac{x-\mu}{\sigma})}
 #'             {\Phi(\frac{b-\mu}{\sigma}) - \Phi(\frac{a-\mu}{\sigma})}
 #' }{
-#' f(x) = \phi(z) / (\Phi((b-\mu)/\sigma) - \Phi((a-\mu)/\sigma))
+#' f(x) = \phi((x-\mu)/\sigma) / (\Phi((b-\mu)/\sigma) - \Phi((a-\mu)/\sigma))
 #' }
 #'
 #' Cumulative distribution function
 #' \deqn{
-#' F(x) = \frac{\Phi(z) - \Phi(\frac{a-\mu}{\sigma})}
+#' F(x) = \frac{\Phi(\frac{x-\mu}{\sigma}) - \Phi(\frac{a-\mu}{\sigma})}
 #'             {\Phi(\frac{b-\mu}{\sigma}) - \Phi(\frac{a-\mu}{\sigma})}
 #' }{
-#' F(x) = (\Phi(z) - \Phi((a-\mu)/\sigma)) / (\Phi((b-\mu)/\sigma) - \Phi((a-\mu)/\sigma))
+#' F(x) = (\Phi((x-\mu)/\sigma) - \Phi((a-\mu)/\sigma)) / (\Phi((b-\mu)/\sigma) - \Phi((a-\mu)/\sigma))
 #' }
 #'
 #' Quantile function
@@ -42,8 +42,6 @@
 #' }{
 #' F^-1(p) = \Phi^-1(\Phi((a-\mu)/\sigma) + p * (\Phi((b-\mu)/\sigma) - \Phi((a-\mu)/\sigma)))
 #' }
-#'
-#' where \eqn{ z = \frac{x-\mu}{\sigma} }{ z = (x-\mu)/\sigma }.
 #'
 #' For random generation algorithm described by Robert (1995) is used.
 #'

@@ -38,19 +38,19 @@ for the Laplace distribution.
 \details{
 Probability density function
 \deqn{
-f(x) = \frac{1}{2\sigma} \exp(-|z|)
+f(x) = \frac{1}{2\sigma} \exp\left(-\left|\frac{x-\mu}{\sigma}\right|\right)
 }{
-f(x) = 1/(2*\sigma) * exp(-|z|)
+f(x) = 1/(2*\sigma) * exp(-|(x-\mu)/\sigma|)
 }
 
 Cumulative distribution function
 \deqn{ F(x) = \left\{\begin{array}{ll}
-\frac{1}{2} \exp(z)     & x < \mu \\
-1 - \frac{1}{2} \exp(z) & x \geq \mu
+\frac{1}{2} \exp\left(\frac{x-\mu}{\sigma}\right)     & x < \mu \\
+1 - \frac{1}{2} \exp\left(\frac{x-\mu}{\sigma}\right) & x \geq \mu
 \end{array}\right.
 }{
-F(x) = [if x < mu:] 1/2 * exp(z)
-       [else:] 1 - 1/2 * exp(z)
+F(x) = [if x < mu:] 1/2 * exp((x-\mu)/\sigma)
+       [else:] 1 - 1/2 * exp((x-\mu)/\sigma)
 }
 
 Quantile function
@@ -62,8 +62,6 @@ Quantile function
 F^-1(p) = [if p < 0.5:] \mu + \sigma * log(2*p)
           [else:] \mu + \sigma * log(2*(1-p))
 }
-
-where \eqn{ z = \frac{x-\mu}{\sigma} }{ z = (x-\mu)/\sigma }.
 }
 \examples{
 
