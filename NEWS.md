@@ -3,6 +3,8 @@
 
 * Documentation clean-up
 * Minor improvements and simplifications in C++ code
+* For `min == max` discrete uniform distribution behaves now
+  as degenerate distribution
 
 ### 1.7.1
 
