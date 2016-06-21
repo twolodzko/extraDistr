@@ -15,7 +15,11 @@
 #'                        otherwise, \eqn{P[X > x]}.
 #' 
 #' @details
-#'
+#' 
+#' If \eqn{p \sim \mathrm{Beta}(\alpha, \beta)}{p ~ Beta(\alpha, \beta)} and
+#' \eqn{X \sim \mathrm{Binomial}(n, p)}{X ~ Binomial(n, p)}, then 
+#' \eqn{X \sim \mathrm{BetaBinomial}(n, \alpha, \beta)}{X ~ BetaBinomial(n, \alpha, \beta)}.
+#' 
 #' Probability mass function
 #' \deqn{
 #' f(x) = {n \choose x} \frac{\mathrm{B}(x+\alpha, n-x+\beta)}{\mathrm{B}(\alpha, \beta)}

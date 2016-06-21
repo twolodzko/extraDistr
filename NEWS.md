@@ -1,4 +1,9 @@
 
+### 1.7.2
+
+* Documentation clean-up
+* Minor improvements and simplifications in C++ code
+
 ### 1.7.1
 
 * Added Dirichlet-multinomial and beta prime distributions

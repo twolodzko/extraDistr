@@ -17,7 +17,7 @@
 #'
 #' @details
 #' Gamma-Poisson distribution arises as a continuous mixture of
-#' Poisson distributions, where where the mixing distribution
+#' Poisson distributions, where the mixing distribution
 #' of the Poisson rate \eqn{\lambda} is a gamma distribution.
 #' When \eqn{X \sim \mathrm{Poisson}(\lambda)}{X ~ Poisson(\lambda)}
 #' and \eqn{\lambda \sim \mathrm{Gamma}(\alpha, \beta)}{\lambda ~ Gamma(\alpha, \beta)}, then \eqn{X \sim \mathrm{GammaPoisson}(\alpha, \beta)}{X ~ Gamma-Poisson(\alpha, \beta)}.

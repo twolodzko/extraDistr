@@ -70,7 +70,7 @@ double rng_bernoulli(double p = 0.5) {
     return NAN;
   }
   double u = R::runif(0.0, 1.0);
-  if (u <= 1.0 - p)
+  if (u > p)
     return 0.0;
   else
     return 1.0;

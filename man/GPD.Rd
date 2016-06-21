@@ -38,22 +38,22 @@ for the generalized Pareto distribution.
 \details{
 Probability density function
 \deqn{ f(x) = \left\{\begin{array}{ll}
-\frac{1}{\sigma} (1+\xi z)^{-(\xi+1)/\xi} & \xi \neq 0 \\
-\frac{1}{\sigma} \exp(-z)                 & \xi = 0
+\frac{1}{\sigma} \left(1+\xi \frac{x-\mu}{\sigma}\right)^{-(\xi+1)/\xi} & \xi \neq 0 \\
+\frac{1}{\sigma} \exp\left(-\frac{x-\mu}{\sigma}\right)                 & \xi = 0
 \end{array}\right.
 }{
-f(x) = [if \xi != 0:] (1+\xi*z)^{-(\xi+1)/\xi}/\sigma
-       [else:] exp(-z)/\sigma
+f(x) = [if \xi != 0:] (1+\xi*(x-\mu)/\sigma)^{-(\xi+1)/\xi}/\sigma
+       [else:] exp(-(x-\mu)/\sigma)/\sigma
 }
 
 Cumulative distribution function
 \deqn{ F(x) = \left\{\begin{array}{ll}
-1-(1+\xi z)^{-1/\xi} & \xi \neq 0 \\
-1-\exp(-z)           & \xi = 0
+1-\left(1+\xi \frac{x-\mu}{\sigma}\right)^{-1/\xi} & \xi \neq 0 \\
+1-\exp\left(-\frac{x-\mu}{\sigma}\right)           & \xi = 0
 \end{array}\right.
 }{
-F(x) = [if \xi != 0:] 1-(1+\xi*z)^{-1/\xi}
-       [else:] 1-exp(-z)
+F(x) = [if \xi != 0:] 1-(1+\xi*(x-\mu)/\sigma)^{-1/\xi}
+       [else:] 1-exp(-(x-\mu)/\sigma)
 }
 
 Quantile function
@@ -65,8 +65,6 @@ Quantile function
 F^-1(x) = [if \xi != 0:] \mu + \sigma * ((1-p)^{-\xi}-1)/\xi
           [else:] \mu - \sigma * log(1-p)
 }
-
-where \eqn{ z = \frac{x-\mu}{\sigma} }{ z = (x-\mu)/\sigma }.
 }
 \examples{
 

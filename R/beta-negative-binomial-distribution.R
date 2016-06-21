@@ -16,12 +16,16 @@
 #'
 #' @details
 #'
+#' If \eqn{p \sim \mathrm{Beta}(\alpha, \beta)}{p ~ Beta(\alpha, \beta)} and
+#' \eqn{X \sim \mathrm{NegBinomial}(r, p)}{X ~ NegBinomial(r, p)}, then 
+#' \eqn{X \sim \mathrm{BetaNegBinomial}(r, \alpha, \beta)}{X ~ BetaNegBinomial(r, \alpha, \beta)}.
+#'
 #' Probability mass function
 #' \deqn{
-#' f(x) = \frac{\Gamma(r+k)}{k! \Gamma(r)}
-#'        \frac{\mathrm{B}(\alpha+r, \beta+k)}{\mathrm{B}(\alpha, \beta)}
+#' f(x) = \frac{\Gamma(r+x)}{x! \Gamma(r)}
+#'        \frac{\mathrm{B}(\alpha+r, \beta+x)}{\mathrm{B}(\alpha, \beta)}
 #' }{
-#' f(x) = \Gamma(r+k)/(k! \Gamma(r)) * B(\alpha+r, \beta+k) / B(\alpha, \beta)
+#' f(x) = \Gamma(r+x)/(x! \Gamma(r)) * B(\alpha+r, \beta+x) / B(\alpha, \beta)
 #' }
 #'
 #' \emph{Warning:} cumulative distribution function is defined as

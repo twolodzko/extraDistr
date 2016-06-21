@@ -28,6 +28,10 @@ Density function, cumulative distribution function and random generation
 for the Dirichlet-multinomial (multivariate Polya) distribution.
 }
 \details{
+If \eqn{(p_1,\dots,p_k) \sim \mathrm{Dirichlet}(\alpha_1,\dots,\alpha_k)}{(p[1],\dots,p[k]) ~ Dirichlet(\alpha[1],\dots,\alpha[k])} and
+\eqn{(x_1,\dots,x_k) \sim \mathrm{Multinomial}(n, p_1,\dots,p_k)}{(x[1],\dots,x[k]) ~ Multinomial(n, p[1],\dots,p[k])}, then 
+\eqn{(x_1,\dots,x_k) \sim \mathrm{DirichletMultinomial(n, \alpha_1,\dots,\alpha_k)}}{(x[1],\dots,x[k]) ~ DirichletMultinomial(n, \alpha[1],\dots,\alpha[k])}.
+
 Probability density function
 \deqn{
 f(x) = \frac{\left(n!\right)\Gamma\left(\sum \alpha_k\right)}{\Gamma\left(n+\sum \alpha_k\right)}\prod_{k=1}^K\frac{\Gamma(x_{k}+\alpha_{k})}{\left(x_{k}!\right)\Gamma(\alpha_{k})}

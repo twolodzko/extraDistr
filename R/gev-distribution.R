@@ -18,22 +18,22 @@
 #'
 #' Probability density function
 #' \deqn{ f(x) = \left\{\begin{array}{ll}
-#' \frac{1}{\sigma} (1-\xi z)^{-1-1/\xi} \exp(-(1-\xi z)^{-1/\xi}) & \xi \neq 0 \\
-#' \frac{1}{\sigma} \exp(-z) \exp(-\exp(-z))                       & \xi = 0
+#' \frac{1}{\sigma} \left(1-\xi \frac{x-\mu}{\sigma}\right)^{-1-1/\xi} \exp\left(-\left(1-\xi \frac{x-\mu}{\sigma}\right)^{-1/\xi}\right) & \xi \neq 0 \\
+#' \frac{1}{\sigma} \exp\left(- \frac{x-\mu}{\sigma}\right) \exp\left(-\exp\left(- \frac{x-\mu}{\sigma}\right)\right)                       & \xi = 0
 #' \end{array}\right.
 #' }{
 #' f(x) = [if \xi != 0:] 1/\sigma * (1-\xi*z)^{-1-1/\xi} * exp(-(1-\xi*z)^{-1/\xi})
-#' [else:] 1/\sigma * exp(-z) * exp(-exp(-z))
+#' [else:] 1/\sigma * exp(-(x-\mu)/\sigma) * exp(-exp(-(x-\mu)/\sigma))
 #' }
 #'
 #' Cumulative distribution function
 #' \deqn{ F(x) = \left\{\begin{array}{ll}
-#' \exp(-(1+\xi z)^{1/\xi}) & \xi \neq 0 \\
-#' \exp(-\exp(-z))          & \xi = 0
+#' \exp\left(-\left(1+\xi \frac{x-\mu}{\sigma}\right)^{1/\xi}\right) & \xi \neq 0 \\
+#' \exp\left(-\exp\left(- \frac{x-\mu}{\sigma}\right)\right)          & \xi = 0
 #' \end{array}\right.
 #' }{
-#' F(x) = [if \xi != 0:] exp(-(1+\xi*z)^{1/\xi})
-#' [else:] exp(-exp(-z))
+#' F(x) = [if \xi != 0:] exp(-(1+\xi*(x-\mu)/\sigma)^{1/\xi})
+#' [else:] exp(-exp(-(x-\mu)/\sigma))
 #' }
 #'
 #' Quantile function
@@ -45,8 +45,6 @@
 #' F^-1(p) = [if \xi != 0:] \mu - \sigma/\xi * (1 - (-log(p))^\xi)
 #'           [else:] \mu - \sigma * log(-log(p))
 #' }
-#'
-#' where \eqn{ z = \frac{x-\mu}{\sigma} }{ z = (x-\mu)/\sigma }.
 #'
 #' @references
 #' Coles, S. (2001). An Introduction to Statistical Modeling of Extreme Values.
