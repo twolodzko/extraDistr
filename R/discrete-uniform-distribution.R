@@ -16,7 +16,7 @@
 #'                        
 #' @examples 
 #' 
-#' x <- sample.int(10, 1e5, replace = TRUE) 
+#' x <- rdunif(1e5, 1, 10) 
 #' xx <- -1:11
 #' plot(prop.table(table(x)), type = "h")
 #' lines(xx, ddunif(xx, 1, 10), col = "red")

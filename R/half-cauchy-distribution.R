@@ -50,7 +50,7 @@
 #' @export
 
 dhcauchy <- function(x, sigma = 1, log = FALSE) {
-  .Call('extraDistr_cpp_dhalf', PACKAGE = 'extraDistr', x, 1, sigma, log)
+  .Call('extraDistr_cpp_dhcauchy', PACKAGE = 'extraDistr', x, sigma, log)
 }
 
 
@@ -58,7 +58,7 @@ dhcauchy <- function(x, sigma = 1, log = FALSE) {
 #' @export
 
 phcauchy <- function(q, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_phalf', PACKAGE = 'extraDistr', q, 1, sigma, lower.tail, log.p)
+  .Call('extraDistr_cpp_phcauchy', PACKAGE = 'extraDistr', q, sigma, lower.tail, log.p)
 }
 
 
@@ -66,7 +66,7 @@ phcauchy <- function(q, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qhcauchy <- function(p, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qhalf', PACKAGE = 'extraDistr', p, 1, sigma, lower.tail, log.p)
+  .Call('extraDistr_cpp_qhcauchy', PACKAGE = 'extraDistr', p, sigma, lower.tail, log.p)
 }
 
 
@@ -75,6 +75,6 @@ qhcauchy <- function(p, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 
 rhcauchy <- function(n, sigma = 1) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rhalf', PACKAGE = 'extraDistr', n, 1, sigma)
+  .Call('extraDistr_cpp_rhcauchy', PACKAGE = 'extraDistr', n, sigma)
 }
 

@@ -49,7 +49,7 @@
 #' @export
 
 dht <- function(x, nu, sigma = 1, log = FALSE) {
-  .Call('extraDistr_cpp_dhalf', PACKAGE = 'extraDistr', x, nu, sigma, log)
+  .Call('extraDistr_cpp_dht', PACKAGE = 'extraDistr', x, nu, sigma, log)
 }
 
 
@@ -57,7 +57,7 @@ dht <- function(x, nu, sigma = 1, log = FALSE) {
 #' @export
 
 pht <- function(q, nu, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_phalf', PACKAGE = 'extraDistr', q, nu, sigma, lower.tail, log.p)
+  .Call('extraDistr_cpp_pht', PACKAGE = 'extraDistr', q, nu, sigma, lower.tail, log.p)
 }
 
 
@@ -65,7 +65,7 @@ pht <- function(q, nu, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qht <- function(p, nu, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qhalf', PACKAGE = 'extraDistr', p, nu, sigma, lower.tail, log.p)
+  .Call('extraDistr_cpp_qht', PACKAGE = 'extraDistr', p, nu, sigma, lower.tail, log.p)
 }
 
 
@@ -74,6 +74,6 @@ qht <- function(p, nu, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 
 rht <- function(n, nu, sigma = 1) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rhalf', PACKAGE = 'extraDistr', n, nu, sigma)
+  .Call('extraDistr_cpp_rht', PACKAGE = 'extraDistr', n, nu, sigma)
 }
 
