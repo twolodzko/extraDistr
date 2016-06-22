@@ -49,8 +49,6 @@ rdirichlet(10, alpha)
 }
 \references{
 Devroye, L. (1986). Non-Uniform Random Variate Generation. Springer-Verlag.
-
-\url{http://stats.stackexchange.com/a/57313/35989}
 }
 \keyword{distribution}
 

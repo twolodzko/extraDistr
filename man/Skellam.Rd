@@ -27,7 +27,7 @@ for the Skellam distribution.
 \details{
 If \eqn{X} and \eqn{Y} follow Poisson distributions with means
 \eqn{\mu_1}{\mu[1]} and \eqn{\mu_2}{\mu[2]}, than \eqn{X-Y} follows
-Skellam distribution.
+Skellam distribution parametrized by \eqn{\mu_1}{\mu[1]} and \eqn{\mu_2}{\mu[2]}.
 
 Probability mass function
 \deqn{
