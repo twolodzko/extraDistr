@@ -35,6 +35,9 @@ the length is taken to be the number required.}
 Probability mass function, distribution function, quantile function and random generation
 for the Bernoulli distribution.
 }
+\details{
+If \code{min == max}, then discrete uniform distribution is a degenerate distribution.
+}
 \examples{
 
 x <- rdunif(1e5, 1, 10) 

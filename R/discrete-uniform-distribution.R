@@ -13,7 +13,11 @@
 #' @param log,log.p	      logical; if TRUE, probabilities p are given as log(p).
 #' @param lower.tail	    logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
 #'                        otherwise, \eqn{P[X > x]}.
-#'                        
+#' 
+#' @details 
+#' 
+#' If \code{min == max}, then discrete uniform distribution is a degenerate distribution.
+#'                                           
 #' @examples 
 #' 
 #' x <- rdunif(1e5, 1, 10) 
