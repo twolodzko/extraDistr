@@ -1,9 +1,9 @@
 
 
-#' Inverse-Gamma distribution
+#' Inverse-gamma distribution
 #'
 #' Density, distribution function and random generation
-#' for the Inverse-Gamma distribution.
+#' for the inverse-gamma distribution.
 #'
 #' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.

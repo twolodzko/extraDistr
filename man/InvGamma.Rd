@@ -6,7 +6,7 @@
 \alias{pinvgamma}
 \alias{qinvgamma}
 \alias{rinvgamma}
-\title{Inverse-Gamma distribution}
+\title{Inverse-gamma distribution}
 \usage{
 dinvgamma(x, alpha, beta = 1, log = FALSE)
 
@@ -33,7 +33,7 @@ the length is taken to be the number required.}
 }
 \description{
 Density, distribution function and random generation
-for the Inverse-Gamma distribution.
+for the inverse-gamma distribution.
 }
 \details{
 Probability mass function

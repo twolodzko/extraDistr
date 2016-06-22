@@ -30,7 +30,7 @@ the length is taken to be the number required.}
 }
 \description{
 Probability mass function and random generation
-for the Beta-binomial distribution.
+for the beta-negative binomial distribution.
 }
 \details{
 If \eqn{p \sim \mathrm{Beta}(\alpha, \beta)}{p ~ Beta(\alpha, \beta)} and

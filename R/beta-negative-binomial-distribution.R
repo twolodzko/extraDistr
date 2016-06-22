@@ -3,7 +3,7 @@
 #' Beta-negative binomial distribution
 #'
 #' Probability mass function and random generation
-#' for the Beta-binomial distribution.
+#' for the beta-negative binomial distribution.
 #'
 #' @param x,q	            vector of quantiles.
 #' @param n	              number of observations. If \code{length(n) > 1},
