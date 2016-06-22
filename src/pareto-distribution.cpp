@@ -70,7 +70,7 @@ double invcdf_pareto(double p, double a, double b) {
 }
 
 double invcdf_pareto2(double p, double a, double b) {
-  if (a <= 0.0 || b <= 0.0) {
+  if (a <= 0.0 || b <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }

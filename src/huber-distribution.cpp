@@ -59,11 +59,11 @@ double cdf_huber(double x, double mu, double sigma, double c) {
 }
 
 double invcdf_huber(double p, double mu, double sigma, double c) {
-  if (sigma <= 0.0 || c <= 0.0) {
+  if (sigma <= 0.0 || c <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  
+
   double x, pm, A;
   A = 2.0*SQRT_2_PI * (Phi(c) + phi(c)/c - 0.5);
   pm = std::min(p, 1.0 - p);

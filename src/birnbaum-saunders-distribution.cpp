@@ -60,7 +60,7 @@ double cdf_fatigue(double x, double alpha, double beta, double mu) {
 }
 
 double invcdf_fatigue(double p, double alpha, double beta, double mu) {
-  if (alpha <= 0.0 || beta <= 0.0) {
+  if (alpha <= 0.0 || beta <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }

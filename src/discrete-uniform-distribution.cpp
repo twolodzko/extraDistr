@@ -56,11 +56,8 @@ double cdf_dunif(double x, double min, double max) {
 
 double invcdf_dunif(double p, double min, double max) {
   if (min > max || std::isinf(min) || std::isinf(max) ||
-      floor(min) != min || floor(max) != max) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
-  }
-  if (p <= 0.0 || p > 1.0) {
+      floor(min) != min || floor(max) != max ||
+      p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }

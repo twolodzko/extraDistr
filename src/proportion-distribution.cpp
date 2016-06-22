@@ -45,7 +45,7 @@ double cdf_prop(double x, double size, double mean, bool lower_tail, bool log_p)
 }
 
 double invcdf_prop(double p, double size, double mean, bool lower_tail, bool log_p) {
-  if (size <= 0.0 || mean < 0.0 || mean > 1.0) {
+  if (size <= 0.0 || mean < 0.0 || mean > 1.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }

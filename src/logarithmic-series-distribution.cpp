@@ -67,11 +67,10 @@ double cdf_lgser(double x, double theta) {
 
 
 double invcdf_lgser(double p, double theta) {
-  if (theta <= 0.0 || theta >= 1.0) {
+  if (theta <= 0.0 || theta >= 1.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  
   if (p == 1.0)
     return INFINITY;
   

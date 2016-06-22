@@ -52,7 +52,7 @@ double cdf_nst(double x, double nu, double mu, double sigma) {
 }
 
 double invcdf_nst(double p, double nu, double mu, double sigma) {
-  if (nu <= 0.0 || sigma <= 0.0) {
+  if (nu <= 0.0 || sigma <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
