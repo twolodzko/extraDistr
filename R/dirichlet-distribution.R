@@ -23,9 +23,6 @@
 #'
 #' @references
 #' Devroye, L. (1986). Non-Uniform Random Variate Generation. Springer-Verlag.
-#'
-#' @references
-#' \url{http://stats.stackexchange.com/a/57313/35989}
 #' 
 #' @examples
 #' 
