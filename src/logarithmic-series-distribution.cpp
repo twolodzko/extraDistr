@@ -71,6 +71,8 @@ double invcdf_lgser(double p, double theta) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
+  if (p == 0.0)
+    return 1.0;
   if (p == 1.0)
     return INFINITY;
   

@@ -45,23 +45,25 @@ NumericVector cpp_dcat(
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++) {
-    double p_tot = 0.0;
-    bool wrong_param = false;
-    for (int j = 0; j < k; j++) {
-      if (prob(i % np, j) < 0.0) {
-        wrong_param = true;
-        break;
-      }
-      p_tot += prob(i % np, j);
-    }
-
-    if (!tol_equal(p_tot, 1.0) || wrong_param) {
-      Rcpp::warning("NaNs produced");
-      p[i] = NAN;
-    } else if (!isInteger(x[i]) || x[i] < 1.0 || x[i] > static_cast<double>(k)) {
+    if (!isInteger(x[i]) || x[i] < 1.0 || x[i] > static_cast<double>(k)) {
       p[i] = 0.0;
     } else {
-      p[i] = prob(i % np, x[i] - 1.0);
+      double p_tot = 0.0;
+      bool wrong_param = false;
+      for (int j = 0; j < k; j++) {
+        if (prob(i % np, j) < 0.0) {
+          wrong_param = true;
+          break;
+        }
+        p_tot += prob(i % np, j);
+      }
+      
+      if (!tol_equal(p_tot, 1.0) || wrong_param) {
+        Rcpp::warning("NaNs produced");
+        p[i] = NAN;
+      } else {
+        p[i] = prob(i % np, static_cast<int>(x[i] - 1.0));
+      }
     }
   }
 
@@ -232,7 +234,7 @@ NumericVector cpp_rcat(
     
     for (int j = k-1; j >= 0; j--) {
       p_tmp -= prob(i % np, j);
-      if (prob(i % np, j) < 0.0 || p_tmp < 0) {
+      if (prob(i % np, j) < 0.0) {
         wrong_param = true;
         break;
       }
