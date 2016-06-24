@@ -42,7 +42,7 @@ Probability density function
 \frac{1}{\sigma} \exp\left(- \frac{x-\mu}{\sigma}\right) \exp\left(-\exp\left(- \frac{x-\mu}{\sigma}\right)\right)                       & \xi = 0
 \end{array}\right.
 }{
-f(x) = [if \xi != 0:] 1/\sigma * (1-\xi*z)^{-1-1/\xi} * exp(-(1-\xi*z)^{-1/\xi})
+f(x) = [if \xi != 0:] 1/\sigma * (1-\xi*(x-\mu)/\sigma)^{-1-1/\xi} * exp(-(1-\xi*(x-\mu)/\sigma)^{-1/\xi})
 [else:] 1/\sigma * exp(-(x-\mu)/\sigma) * exp(-exp(-(x-\mu)/\sigma))
 }
 
