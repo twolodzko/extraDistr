@@ -93,7 +93,7 @@ double invcdf_tnorm(double p, double mu, double sigma, double a, double b) {
   double Phi_a, Phi_b;
   Phi_a = Phi((a-mu)/sigma);
   Phi_b = Phi((b-mu)/sigma);
-  return InvPhi(Phi_a + p * (Phi_b - Phi_a));
+  return InvPhi(Phi_a + p * (Phi_b - Phi_a)) * sigma + mu;
 }
 
 double rng_tnorm(double mu, double sigma, double a, double b) {
