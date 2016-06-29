@@ -48,7 +48,7 @@ NumericVector cpp_dmnom(
   
   if (m != k)
     Rcpp::stop("Number of columns in 'x' does not equal number of columns in 'prob'.");
-
+  
   for (int i = 0; i < Nmax; i++) {
     
     double n_fac = lfactorial(size[i % ns]);
@@ -59,7 +59,7 @@ NumericVector cpp_dmnom(
     double sum_p = 0.0;
     bool wrong_p = false;
     bool wrong_x = false;
-
+    
     for (int j = 0; j < k; j++) {
       if (prob(i % np, j) < 0.0) {
         wrong_p = true;
@@ -69,12 +69,12 @@ NumericVector cpp_dmnom(
         wrong_x = true;
       } else {
         sum_x += x(i % n, j);
-        prod_xfac += lfactorial(x(i % n, static_cast<double>(j)));
+        prod_xfac += lfactorial(x(i % n, j));
         prod_pow_px += log(prob(i % np, j)) * x(i % n, j);
       }
       sum_p += prob(i % np, j);
     }
-
+    
     if (!tol_equal(sum_p, 1.0) || wrong_p) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN; 
@@ -85,7 +85,7 @@ NumericVector cpp_dmnom(
       p[i] = n_fac - prod_xfac + prod_pow_px;
     }
   }
-
+  
   if (!log_prob)
     for (int i = 0; i < Nmax; i++)
       p[i] = exp(p[i]);
@@ -110,23 +110,26 @@ NumericMatrix cpp_rmnom(
   for (int i = 0; i < n; i++) {
     
     double size_left = size[i % ns];
-    double sum_p = 0.0;
+    double sum_p = 1.0;
     bool wrong_p = false;
+    
+    // TODO:
+    // sort prob(i,_) first?
     
     for (int j = 0; j < k-1; j++) {
       if (prob(i % np, j) < 0.0) {
         wrong_p = true;
         break;
       }
-      sum_p += prob(i % np, j);
-      x(i, j) = R::rbinom(size_left, prob(i % np, j));
+      x(i, j) = R::rbinom(size_left, prob(i % np, j)/sum_p);
       size_left -= x(i, j);
+      sum_p -= prob(i % np, j);
     }
     
     x(i, k-1) = size_left;
-    sum_p += prob(i % np, k-1);
+    sum_p -= prob(i % np, k-1);
     
-    if (!tol_equal(sum_p, 1.0) || wrong_p) {
+    if (!tol_equal(sum_p, 0.0) || wrong_p) {
       Rcpp::warning("NaNs produced");
       for (int j = 0; j < k; j++)
         x(i, j) = NAN;

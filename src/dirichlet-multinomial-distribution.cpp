@@ -39,7 +39,7 @@ NumericVector cpp_ddirmnom(
     const NumericVector& size,
     const NumericMatrix& alpha,
     bool log_prob = false
-) {
+  ) {
   
   int n = x.nrow();
   int m = x.ncol();
@@ -98,7 +98,7 @@ NumericMatrix cpp_rdirmnom(
     const int n,
     const NumericVector& size,
     const NumericMatrix& alpha
-) {
+  ) {
   
   int k = alpha.ncol();
   int na = alpha.nrow();
@@ -128,9 +128,13 @@ NumericMatrix cpp_rdirmnom(
       for (int j = 0; j < k; j++)
         x(i, j) = NAN;
     } else {
+      double sum_p = 1.0;
+      double p_tmp;
       for (int j = 0; j < k-1; j++) {
-        x(i, j) = R::rbinom(size_left, prob[j] / row_sum);
+        p_tmp = prob[j] / row_sum;
+        x(i, j) = R::rbinom(size_left, p_tmp/sum_p);
         size_left -= x(i, j);
+        sum_p -= p_tmp;
       }
       x(i, k-1) = size_left;
     }
