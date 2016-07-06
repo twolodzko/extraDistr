@@ -1,4 +1,12 @@
 
+### 1.7.3
+
+* Bug fixes in `qtnorm` - now it works properly for
+  non-standard truncated normal
+* Bug fixes for `rmnom` and `rdirmnom` - now they correctly
+  use the `prob` parameter values
+* Cleaned-up the documentation
+
 ### 1.7.2
 
 * Documentation clean-up
