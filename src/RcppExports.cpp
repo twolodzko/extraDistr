@@ -484,6 +484,48 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// cpp_ddlaplace
+NumericVector cpp_ddlaplace(const NumericVector& x, const NumericVector& scale, const NumericVector& location, bool log_prob);
+RcppExport SEXP extraDistr_cpp_ddlaplace(SEXP xSEXP, SEXP scaleSEXP, SEXP locationSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type scale(scaleSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type location(locationSEXP);
+    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    __result = Rcpp::wrap(cpp_ddlaplace(x, scale, location, log_prob));
+    return __result;
+END_RCPP
+}
+// cpp_pdlaplace
+NumericVector cpp_pdlaplace(const NumericVector& x, const NumericVector& scale, const NumericVector& location, bool lower_tail, bool log_prob);
+RcppExport SEXP extraDistr_cpp_pdlaplace(SEXP xSEXP, SEXP scaleSEXP, SEXP locationSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type scale(scaleSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type location(locationSEXP);
+    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    __result = Rcpp::wrap(cpp_pdlaplace(x, scale, location, lower_tail, log_prob));
+    return __result;
+END_RCPP
+}
+// cpp_rdlaplace
+NumericVector cpp_rdlaplace(const int n, const NumericVector& scale, const NumericVector& location);
+RcppExport SEXP extraDistr_cpp_rdlaplace(SEXP nSEXP, SEXP scaleSEXP, SEXP locationSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type scale(scaleSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type location(locationSEXP);
+    __result = Rcpp::wrap(cpp_rdlaplace(n, scale, location));
+    return __result;
+END_RCPP
+}
 // cpp_ddnorm
 NumericVector cpp_ddnorm(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, bool log_prob);
 RcppExport SEXP extraDistr_cpp_ddnorm(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {

@@ -133,6 +133,18 @@ cpp_rdirmnom <- function(n, size, alpha) {
     .Call('extraDistr_cpp_rdirmnom', PACKAGE = 'extraDistr', n, size, alpha)
 }
 
+cpp_ddlaplace <- function(x, scale, location, log_prob = FALSE) {
+    .Call('extraDistr_cpp_ddlaplace', PACKAGE = 'extraDistr', x, scale, location, log_prob)
+}
+
+cpp_pdlaplace <- function(x, scale, location, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_pdlaplace', PACKAGE = 'extraDistr', x, scale, location, lower_tail, log_prob)
+}
+
+cpp_rdlaplace <- function(n, scale, location) {
+    .Call('extraDistr_cpp_rdlaplace', PACKAGE = 'extraDistr', n, scale, location)
+}
+
 cpp_ddnorm <- function(x, mu, sigma, log_prob = FALSE) {
     .Call('extraDistr_cpp_ddnorm', PACKAGE = 'extraDistr', x, mu, sigma, log_prob)
 }

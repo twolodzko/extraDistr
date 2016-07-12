@@ -6,6 +6,7 @@
 * Bug fixes for `rmnom` and `rdirmnom` - now they correctly
   use the `prob` parameter values
 * Cleaned-up the documentation
+* Added discrete Laplace distribution
 
 ### 1.7.2
 
