@@ -58,7 +58,7 @@
 #' xx <- seq(-200, 200, by = 1)
 #' plot(prop.table(table(x)))
 #' lines(xx, ddlaplace(xx, p), col = "red")
-#' plot(hist(pdlaplace(x, p)))
+#' hist(pdlaplace(x, p))
 #' plot(ecdf(x))
 #' lines(xx, pdlaplace(xx, p), col = "red")
 #' 
@@ -90,63 +90,3 @@ rdlaplace <- function(n, scale, location = 0) {
   .Call('extraDistr_cpp_rdlaplace', PACKAGE = 'extraDistr', n, scale, location)
 }
 
-
-
-# ==============================================
-# 
-# ddlaplace <- function(x, p, mu = 0) (1-p)/(1+p)*p^abs(x-mu)
-# pdlaplace <- function(q, p, mu = 0) ifelse(q<0, (p^-floor(q-mu))/(1+p), 1-(p^(floor(q-mu)+1))/(1+p))
-# rdlaplace <- function(n, p, mu = 0) rgeom(n, 1-p) - rgeom(n, 1-p) + mu
-# 
-# qdlaplace <- function(pp, p, mu = 0) {
-#   qq <- (pp - 0.5) * 2
-#   ifelse(qq>0, qgeom(qq, 1-p), -qgeom(abs(qq), 1-p))
-# }
-# 
-# p <- 0.46
-# x <- rdlaplace(1e5, p)
-# pp <- seq(0, 1, by = 0.0001)
-# plot(ecdf(x))
-# lines(qdlaplace(pp, p), pp, col = "orange")
-
-
-
-# # ==============================================
-# 
-# 
-# qdlaplace <- function(pp, p, mu = 0) {
-#   qq <- (pp - 0.5) * 2
-#   ifelse(qq>0, qgeom(qq, 1-p), -qgeom(abs(qq), 1-p)) 
-# }
-# 
-# x <- rdlaplace(1e5, p)
-# pp <- seq(0, 1, by = 0.0001)
-# plot(ecdf(x))
-# lines(qdlaplace(pp, p), pp, col = "orange")
-# 
-# # 
-# # grint <- function(x) ifelse(x>0, floor(x), ceiling(x))
-# # 
-# # xx <- seq(-30, 30, by = 1)
-# # 
-# # plot(x, f(x, p = 0.5), type = "b", ylim = c(0, 0.9))
-# # lines(x, f(x, p = 0.3), type = "b", col = "red")
-# # lines(x, f(x, p = 0.1), type = "b", col = "orange")
-# # lines(x, f(x, p = 0.6), type = "b", col = "blue")
-# # lines(x, f(x, p = 0.8), type = "b", col = "violet")
-# # 
-# # xx <- seq(-200, 200, by = 1)
-# # 
-# # p <- 0.45
-# # # x1 <- rgeom(1e5, p = p)
-# # # x2 <- rgeom(1e5, p = p)
-# # # 
-# # # y <- x1-x2
-# # x <- rdlaplace(1e5, p)
-# # plot(prop.table(table(x)))
-# # lines(xx, ddlaplace(xx, p), col = "red")
-# # 
-# # plot(ecdf(x))
-# # lines(xx, pdlaplace(xx, p), col = "red")
-# # 
-# # plot(hist(pdlaplace(x, p)))

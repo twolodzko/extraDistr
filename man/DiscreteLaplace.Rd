@@ -65,7 +65,7 @@ x <- rdlaplace(1e5, p)
 xx <- seq(-200, 200, by = 1)
 plot(prop.table(table(x)))
 lines(xx, ddlaplace(xx, p), col = "red")
-plot(hist(pdlaplace(x, p)))
+hist(pdlaplace(x, p))
 plot(ecdf(x))
 lines(xx, pdlaplace(xx, p), col = "red")
 
