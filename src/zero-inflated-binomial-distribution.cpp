@@ -70,7 +70,7 @@ double rng_zib(double n, double p, double pi) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  double u = R::runif(0.0, 1.0);
+  double u = rng_unif();
   if (u < pi)
     return 0.0;
   else

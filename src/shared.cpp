@@ -64,6 +64,15 @@ double lfactorial(double x) {
 
 // Random generation
 
+double rng_unif() {
+  double u;
+  // same as in base R
+  do {
+    u = R::unif_rand();
+  } while (u <= 0 || u >= 1);
+  return u;
+}
+
 double rng_bernoulli(double p = 0.5) {
   if (p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
@@ -75,16 +84,6 @@ double rng_bernoulli(double p = 0.5) {
   else
     return 1.0;
 }
-
-// double rng_unif() {
-//   double u;
-//   do {
-//     u = R::unif_rand();
-//   } while (u <= 0 || u >= 1);
-//   return u;
-// }
-
-// Rademacher distribution
 
 double rng_sign() {
   double u = R::runif(0.0, 1.0);

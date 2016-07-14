@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include "shared.h"
 
 using std::pow;
 using std::sqrt;
@@ -89,8 +90,8 @@ double rng_triangular(double a, double b, double c) {
   double u, v, r, cc;
   r = b - a;
   cc = (c-a)/r;
-  u = R::runif(0.0, 1.0);
-  v = R::runif(0.0, 1.0);
+  u = rng_unif();
+  v = rng_unif();
   return ((1.0-cc) * std::min(u, v) + cc * std::max(u, v)) * r + a;
 }
 

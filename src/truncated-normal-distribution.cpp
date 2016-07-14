@@ -115,25 +115,25 @@ double rng_tnorm(double mu, double sigma, double a, double b) {
     if (0.0 < za) {
       while (!stop) {
         r = R::runif(za, zb);
-        u = R::runif(0.0, 1.0);
+        u = rng_unif();
         stop = (u <= exp((pow(za, 2.0) - pow(r, 2.0))/2.0));
       }
     } else if (zb < 0.0) {
       while (!stop) {
         r = R::runif(za, zb);
-        u = R::runif(0.0, 1.0);
+        u = rng_unif();
         stop = (u <= exp((pow(zb, 2.0) - pow(r, 2.0))/2.0));
       }
     } else {
       while (!stop) {
         r = R::runif(za, zb);
-        u = R::runif(0.0, 1.0);
+        u = rng_unif();
         stop = (u <= exp(-pow(r, 2.0)/2.0));
       }
     }
   } else {
     while (!stop) {
-      r = R::rnorm(0.0, 1.0);
+      r = R::norm_rand();
       stop = (r > za && r < zb);
     }
   }

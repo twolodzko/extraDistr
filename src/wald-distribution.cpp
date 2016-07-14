@@ -60,10 +60,12 @@ double rng_wald(double mu, double lambda) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  double u = R::runif(0.0, 1.0);
-  double y = pow(R::rnorm(0.0, 1.0), 2.0);
-  double x = mu + (pow(mu, 2.0)*y)/(2.0*lambda) - mu/(2.0*lambda) *
-             sqrt(4.0*mu*lambda*y+pow(mu, 2.0)*pow(y, 2.0));
+  double u, x, y, z;
+  u = rng_unif();
+  z = R::norm_rand();
+  y = pow(z, 2.0);
+  x = mu + (pow(mu, 2.0)*y)/(2.0*lambda) - mu/(2.0*lambda) *
+      sqrt(4.0*mu*lambda*y+pow(mu, 2.0)*pow(y, 2.0));
   if (u <= mu/(mu+x))
     return x;
   else

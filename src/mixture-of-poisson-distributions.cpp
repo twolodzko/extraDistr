@@ -131,7 +131,7 @@ NumericVector cpp_rmixpois(
   for (int i = 0; i < n; i++) {
     jj = 0;
     wrong_param = false;
-    u = R::runif(0.0, 1.0);
+    u = rng_unif();
     p_tmp = 1.0;
     
     for (int j = k-1; j >= 0; j--) {

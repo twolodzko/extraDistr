@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include "shared.h"
 
 using std::pow;
 using std::sqrt;
@@ -152,7 +153,7 @@ NumericVector cpp_rrayleigh(
   NumericVector x(n);
 
   for (int i = 0; i < n; i++) {
-    u = R::runif(0.0, 1.0);
+    u = rng_unif();
     x[i] = invcdf_rayleigh(u, sigma[i % ns]);
   }
 

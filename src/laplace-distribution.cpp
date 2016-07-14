@@ -76,7 +76,7 @@ double rng_laplace(double mu, double sigma) {
   // this is slower
   // double u = R::runif(-0.5, 0.5);
   // return mu + sigma * R::sign(u) * log(1.0 - 2.0*abs(u));
-  double u = R::rexp(1.0);
+  double u = R::exp_rand();
   double s = rng_sign();
   return u*s * sigma + mu;
 }

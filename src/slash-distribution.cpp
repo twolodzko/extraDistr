@@ -55,8 +55,8 @@ double rng_slash(double mu, double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  double z = R::rnorm(0.0, 1.0);
-  double u = R::runif(0.0, 1.0);
+  double z = R::norm_rand();
+  double u = rng_unif();
   return z/u*sigma + mu;
 }
 

@@ -176,7 +176,7 @@ NumericVector cpp_rlgser(
   NumericVector x(n);
 
   for (int i = 0; i < n; i++) {
-    double u = R::runif(0.0, 1.0);
+    double u = rng_unif();
     x[i] = invcdf_lgser(u, theta[i % nt]);
   }
 

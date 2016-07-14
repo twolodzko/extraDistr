@@ -50,7 +50,7 @@ double rng_hnorm(double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  return abs(R::rnorm(0.0, sigma));
+  return abs(R::norm_rand()) * sigma;
 }
 
 

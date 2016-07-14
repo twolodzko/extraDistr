@@ -75,7 +75,7 @@ double rng_fatigue(double alpha, double beta, double mu) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  double z = R::rnorm(0.0, 1.0);
+  double z = R::norm_rand();
   return pow(alpha/2.0*z + sqrt(pow(alpha/2.0*z, 2.0) + 1.0), 2.0) * beta + mu;
 }
 

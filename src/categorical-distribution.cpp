@@ -227,7 +227,7 @@ NumericVector cpp_rcat(
   bool wrong_param;
 
   for (int i = 0; i < n; i++) {
-    u = R::runif(0.0, 1.0);
+    u = rng_unif();
     wrong_param = false;
     p_tmp = 1.0;
     jj = 0;

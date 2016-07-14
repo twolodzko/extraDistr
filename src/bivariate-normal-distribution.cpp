@@ -116,8 +116,8 @@ NumericMatrix cpp_rbnorm(
       x(i, 0) = NAN;
       x(i, 1) = NAN;
     } else if (rho[i % nr] != 0.0) {
-      double u = R::rnorm(0.0, 1.0);
-      double v = R::rnorm(0.0, 1.0);
+      double u = R::norm_rand();
+      double v = R::norm_rand();
       double corr = (rho[i % nr]*u + sqrt(1.0 - pow(rho[i % nr], 2.0))*v);
       x(i, 0) = mu1[i % nm1] + sigma1[i % ns1] * u;
       x(i, 1) = mu2[i % nm2] + sigma2[i % ns2] * corr;
