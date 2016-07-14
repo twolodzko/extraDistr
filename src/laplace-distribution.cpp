@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include "shared.h"
 
 using std::pow;
 using std::sqrt;
@@ -72,8 +73,12 @@ double rng_laplace(double mu, double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  double u = R::runif(-0.5, 0.5);
-  return mu + sigma * R::sign(u) * log(1.0 - 2.0*abs(u));
+  // this is slower
+  // double u = R::runif(-0.5, 0.5);
+  // return mu + sigma * R::sign(u) * log(1.0 - 2.0*abs(u));
+  double u = R::rexp(1.0);
+  double s = rng_sign();
+  return u*s * sigma + mu;
 }
 
 

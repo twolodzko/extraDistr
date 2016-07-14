@@ -62,7 +62,7 @@ double lfactorial(double x) {
   return R::lgammafn(x + 1.0);
 }
 
-// Random generation for Bernoulli
+// Random generation
 
 double rng_bernoulli(double p = 0.5) {
   if (p < 0.0 || p > 1.0) {
@@ -74,6 +74,24 @@ double rng_bernoulli(double p = 0.5) {
     return 0.0;
   else
     return 1.0;
+}
+
+// double rng_unif() {
+//   double u;
+//   do {
+//     u = unif_rand();
+//   } while (u <= 0 || u >= 1);
+//   return u;
+// }
+
+// Rademacher distribution
+
+double rng_sign() {
+  double u = R::runif(0.0, 1.0);
+  if (u > 0.5)
+    return 1.0;
+  else
+    return -1.0;
 }
  
  

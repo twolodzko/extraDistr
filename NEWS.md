@@ -7,6 +7,7 @@
   use the `prob` parameter values
 * Cleaned-up the documentation
 * Added discrete Laplace distribution
+* Faster RNG generator for Laplace distribution
 
 ### 1.7.2
 

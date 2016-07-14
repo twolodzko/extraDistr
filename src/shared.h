@@ -23,8 +23,9 @@ double InvPhi(double x);
 double factorial(double x);
 double lfactorial(double x);
 
-// Random generation for Bernoulli
+// Random generation
 
 double rng_bernoulli(double p);
+double rng_sign();
 
 #endif
