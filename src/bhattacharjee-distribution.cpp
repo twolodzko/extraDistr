@@ -74,7 +74,7 @@ double rng_bhattacharjee(double mu, double sigma, double a) {
     return R::runif(mu-a, mu+a);
   if (a == 0.0)
     return R::rnorm(mu, sigma);
-  return R::runif(-a, +a) + R::rnorm(0.0, sigma) + mu;
+  return R::runif(-a, a) + R::rnorm(0.0, sigma) + mu;
 }
 
 

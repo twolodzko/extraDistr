@@ -79,7 +79,7 @@ double rng_bernoulli(double p = 0.5) {
 // double rng_unif() {
 //   double u;
 //   do {
-//     u = unif_rand();
+//     u = R::unif_rand();
 //   } while (u <= 0 || u >= 1);
 //   return u;
 // }
