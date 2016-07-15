@@ -112,15 +112,15 @@ NumericMatrix cpp_rdirmnom(
     double size_left = size[i % ns];
     double row_sum = 0.0;
     bool wrong_alpha = false;
-    NumericVector prob(k);
+    NumericVector pi(k);
     
     for (int j = 0; j < k; j++) {
       if (alpha(i % na, j) <= 0.0) {
         wrong_alpha = true;
         break;
       }
-      prob[j] = R::rgamma(alpha(i % na, j), 1.0);
-      row_sum += prob[j];
+      pi[j] = R::rgamma(alpha(i % na, j), 1.0);
+      row_sum += pi[j];
     }
     
     if (wrong_alpha) {
@@ -131,7 +131,7 @@ NumericMatrix cpp_rdirmnom(
       double sum_p = 1.0;
       double p_tmp;
       for (int j = 0; j < k-1; j++) {
-        p_tmp = prob[j] / row_sum;
+        p_tmp = pi[j] / row_sum;
         x(i, j) = R::rbinom(size_left, p_tmp/sum_p);
         size_left -= x(i, j);
         sum_p -= p_tmp;
