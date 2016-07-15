@@ -79,7 +79,7 @@ double rng_bern(double p = 0.5) {
     return NAN;
   }
   double u = rng_unif();
-  return (u > p) ? 0.0 : 1.0 ;
+  return (u > p) ? 0.0 : 1.0;
 }
 
 double rng_sign() {

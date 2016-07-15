@@ -25,8 +25,8 @@ double lfactorial(double x);
 
 // Random generation
 
-double rng_unif(); // standard uniform
-double rng_bern(double p);
-double rng_sign(); // Rademacher distribution
+double rng_unif();         // standard uniform
+double rng_bern(double p); // Bernoulli distribution
+double rng_sign();         // Rademacher distribution
 
 #endif

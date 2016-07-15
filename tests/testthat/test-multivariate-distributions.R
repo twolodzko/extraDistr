@@ -12,4 +12,28 @@ test_that("Testing multivariate distributions", {
   expect_equal(sum(dmnom(xx[rowSums(xx) == 20,], 20, c(2/10, 5/10, 3/10))), 1)
   expect_equal(sum(dmvhyper(xx[rowSums(xx) == 35,], c(20, 20, 20), 35)), 1)
   
+  p <- c(4, 5, 1, 6, 2)
+  
+  expect_equal(prop.table(colSums(rmnom(1e5, 100, p/sum(p)))),
+               p/sum(p),
+               tolerance = 1e-3)
+  
+  expect_equal(as.numeric(prop.table(table(rcat(1e5, p/sum(p))))),
+               p/sum(p),
+               tolerance = 1e-2)
+  
+  expect_equal(prop.table(colSums(rdirichlet(1e5, p))),
+               p/sum(p),
+               tolerance = 1e-3)
+  
+  expect_equal(prop.table(colSums(rdirmnom(1e5, 100, p))),
+               p/sum(p),
+               tolerance = 1e-3)
+  
+  n <- c(11, 24, 43, 7, 56)
+  
+  expect_equal(prop.table(colSums(rmvhyper(1e5, n, 100))),
+               n/sum(n),
+               tolerance = 1e-3)
+  
 })
