@@ -61,7 +61,7 @@ double invcdf_dunif(double p, double min, double max) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (p == 0)
+  if (p == 0 || min == max)
     return min;
   return ceil( p*(max-min+1.0)+min-1.0 );
 }

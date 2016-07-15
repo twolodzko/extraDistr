@@ -153,7 +153,7 @@ NumericVector cpp_rbern(
   NumericVector x(n);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_bernoulli(prob[i % np]);
+    x[i] = rng_bern(prob[i % np]);
   
   return x;
 }
