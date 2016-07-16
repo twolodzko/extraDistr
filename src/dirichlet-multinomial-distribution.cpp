@@ -111,22 +111,29 @@ NumericMatrix cpp_rdirmnom(
   for (int i = 0; i < n; i++) {
     double size_left = size[i % ns];
     double row_sum = 0.0;
-    bool wrong_alpha = false;
+    bool wrong_param = false;
     NumericVector pi(k);
     
-    for (int j = 0; j < k; j++) {
-      if (alpha(i % na, j) <= 0.0) {
-        wrong_alpha = true;
-        break;
+    if (size[i % ns] < 0.0) {
+      wrong_param = true;
+    } else {
+      for (int j = 0; j < k; j++) {
+        if (alpha(i % na, j) <= 0.0) {
+          wrong_param = true;
+          break;
+        }
+        pi[j] = R::rgamma(alpha(i % na, j), 1.0);
+        row_sum += pi[j];
       }
-      pi[j] = R::rgamma(alpha(i % na, j), 1.0);
-      row_sum += pi[j];
     }
     
-    if (wrong_alpha) {
+    if (wrong_param) {
       Rcpp::warning("NaNs produced");
       for (int j = 0; j < k; j++)
         x(i, j) = NAN;
+    } else if (size[i % ns] == 0.0) {
+      for (int j = 0; j < k; j++)
+        x(i, j) = 0.0;
     } else {
       double sum_p = 1.0;
       double p_tmp;

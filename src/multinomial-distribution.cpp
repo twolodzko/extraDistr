@@ -111,25 +111,29 @@ NumericMatrix cpp_rmnom(
     
     double size_left = size[i % ns];
     double sum_p = 1.0;
-    bool wrong_p = false;
+    bool wrong_param = false;
     
     // TODO:
     // sort prob(i,_) first?
     
-    for (int j = 0; j < k-1; j++) {
-      if (prob(i % np, j) < 0.0) {
-        wrong_p = true;
-        break;
+    if (size[i % ns] < 0.0) {
+      wrong_param = true;
+    } else {
+      for (int j = 0; j < k-1; j++) {
+        if (prob(i % np, j) < 0.0) {
+          wrong_param = true;
+          break;
+        }
+        x(i, j) = R::rbinom(size_left, prob(i % np, j)/sum_p);
+        size_left -= x(i, j);
+        sum_p -= prob(i % np, j);
       }
-      x(i, j) = R::rbinom(size_left, prob(i % np, j)/sum_p);
-      size_left -= x(i, j);
-      sum_p -= prob(i % np, j);
+      
+      x(i, k-1) = size_left;
+      sum_p -= prob(i % np, k-1);
     }
     
-    x(i, k-1) = size_left;
-    sum_p -= prob(i % np, k-1);
-    
-    if (!tol_equal(sum_p, 0.0) || wrong_p) {
+    if (wrong_param || !tol_equal(sum_p, 0.0)) {
       Rcpp::warning("NaNs produced");
       for (int j = 0; j < k; j++)
         x(i, j) = NAN;
