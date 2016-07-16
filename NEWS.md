@@ -5,7 +5,7 @@
   non-standard truncated normal
 * Bug fixes for `rmnom` and `rdirmnom` - now they correctly
   use the `prob` parameter values
-* Minor improvements in `dmvhyper`
+* Minor improvements in `dmvhyper` and `dbvpois`
 * Cleaned-up the documentation
 * Added discrete Laplace distribution
 * Faster RNG generator for Laplace distribution
