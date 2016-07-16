@@ -1,7 +1,4 @@
 
-
-context("Testing distributions with non-negative support")
-
 test_that("Zero probabilities for values <0", {
   
   expect_equal(c(0, 0), dbetapr(c(-1, 0), 1, 1, 1))

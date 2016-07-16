@@ -59,7 +59,8 @@ NumericVector cpp_dmvhyper(
       }
     }
     
-    if (k[i % nk] > N || floor(k[i % nk]) != k[i % nk] || wrong_n) {
+    if (wrong_n || k[i % nk] < 0.0 || k[i % nk] > N ||
+        floor(k[i % nk]) != k[i % nk]) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
     } else {
@@ -70,7 +71,8 @@ NumericVector cpp_dmvhyper(
       bool wrong_x = false;
       
       for (int j = 0; j < m; j++) {
-        if (x(i % nx, j) > n(i % nr, j) || x(i % nx, j) < 0.0 || !isInteger(x(i % nx, j))) {
+        if (x(i % nx, j) > n(i % nr, j) || x(i % nx, j) < 0.0 ||
+            !isInteger(x(i % nx, j))) {
           wrong_x = true;
         } else {
           lncx_prod += R::lchoose(n(i % nr, j), x(i % nx, j));
@@ -128,7 +130,7 @@ NumericMatrix cpp_rmvhyper(
       wrong_n = true;
     }
     
-    if (wrong_n || floor(k[i % nk]) != k[i % nk]) {
+    if (wrong_n || floor(k[i % nk]) != k[i % nk] || k[i % nk] < 0.0) {
       
       Rcpp::warning("NaNs produced");
       for (int j = 0; j < m; j++)

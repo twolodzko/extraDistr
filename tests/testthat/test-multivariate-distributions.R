@@ -37,3 +37,14 @@ test_that("Testing multivariate distributions", {
                tolerance = 1e-3)
   
 })
+
+
+test_that("First, evaluate wrong parameters", {
+
+  expect_warning(expect_true(is.nan(dbvpois(-1, -1, -1, 1, 1))))
+  expect_warning(expect_true(is.nan(ddirichlet(c(2, 2), c(-1, 0.5)))))
+  expect_warning(expect_true(is.nan(ddirmnom(c(-1, 1, 1), 1.5, c(1, 1, 1)))))
+  expect_warning(expect_true(is.nan(dmnom(c(-1, 1, 1), 1.5, c(1/3, 1/3, 1/3)))))
+  expect_warning(expect_true(is.nan(dmvhyper(c(-1, 2, 2), c(2,3,4), -5))))
+  
+})
