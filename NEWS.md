@@ -12,7 +12,6 @@
 * Changes to using lower level RNG functions
   (`unif_rand`, `norm_rand`) when possible
 * More tests
-* Bernoulli pmf now does not warn if x is not 0 or 1
 
 ### 1.7.2
 

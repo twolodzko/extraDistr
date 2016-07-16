@@ -37,7 +37,7 @@ double pdf_bernoulli(double x, double prob) {
     return prob;
   if (x == 0.0)
     return 1.0 - prob;
-  // Rcpp::warning("improper value of x");
+  Rcpp::warning("improper value of x");
   return 0.0;
 }
 
