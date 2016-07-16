@@ -53,7 +53,7 @@ double cdf_gpois(double x, double alpha, double beta) {
   if (x < 0.0)
     return 0.0;
   double p_tmp = 0.0;
-  for (int j = 0; j < static_cast<int>(x)+1; j++)
+  for (int j = 0; j < static_cast<int>(floor(x))+1; j++)
     p_tmp += exp(logpmf_gpois(static_cast<double>(j), alpha, beta));
   return p_tmp;
 }
@@ -121,7 +121,7 @@ NumericVector cpp_pgpois(
       if (x[i] == INFINITY) {
         p[i] = 1.0;
       } else if (x[i] >= 0.0) {
-        p[i] = p_tab[static_cast<int>(x[i])];
+        p[i] = p_tab[static_cast<int>(floor(x[i]))];
       } else {
         p[i] = 0.0;
       }

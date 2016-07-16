@@ -39,7 +39,7 @@ double pmf_bnbinom(double k, double r, double alpha, double beta) {
     return NAN;
   }
   if (!isInteger(k) || k < 0.0 || std::isinf(k))
-    return 0;
+    return 0.0;
   return (R::gammafn(r+k) / (R::gammafn(k+1.0) * R::gammafn(r))) *
           R::beta(alpha+r, beta+k) / R::beta(alpha, beta);
 }
@@ -65,7 +65,7 @@ double cdf_bnbinom(double k, double r, double alpha, double beta) {
   if (k == INFINITY)
     return 1.0;
   double p_tmp = 0.0;
-  for (int j = 0; j < static_cast<int>(k)+1; j++)
+  for (int j = 0; j < static_cast<int>(floor(k))+1; j++)
     p_tmp += exp(logpmf_bnbinom(static_cast<double>(j), r, alpha, beta));
   return p_tmp;
 }
@@ -125,7 +125,8 @@ NumericVector cpp_pbnbinom(
 
   if (nn == 1 && na == 1 && nb == 1 && anyFinite(x)) {
     
-    if (alpha[0] < 0.0 || beta[0] < 0.0 || size[0] < 0.0 || floor(size[0]) != size[0]) {
+    if (alpha[0] < 0.0 || beta[0] < 0.0 || size[0] < 0.0 ||
+        floor(size[0]) != size[0]) {
       Rcpp::warning("NaNs produced");
       for (int i = 0; i < n; i++)
         p[i] = NAN;
@@ -144,7 +145,7 @@ NumericVector cpp_pbnbinom(
       if (x[i] == INFINITY) {
         p[i] = 1.0;
       } else if (x[i] >= 0.0) {
-        p[i] = p_tab[static_cast<int>(x[i])];
+        p[i] = p_tab[static_cast<int>(floor(x[i]))];
       } else {
         p[i] = 0.0;
       }
