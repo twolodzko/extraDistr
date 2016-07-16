@@ -116,7 +116,9 @@ NumericVector cpp_pgpois(
                                                alpha[0], beta[0]));
     
     for (int i = 0; i < n; i++) {
-      if (std::isinf(x[i])) {
+      if (x[i] < 0.0) {
+        p[i] = 0.0;
+      } else if (std::isinf(x[i])) {
         p[i] = 1.0;
       } else if (isInteger(x[i]) && x[i] >= 0.0) {
         p[i] = p_tab[static_cast<int>(x[i])];
