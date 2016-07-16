@@ -57,29 +57,33 @@ NumericVector cpp_dmnom(
     
     double sum_x = 0.0;
     double sum_p = 0.0;
-    bool wrong_p = false;
+    bool wrong_param = false;
     bool wrong_x = false;
     
-    for (int j = 0; j < k; j++) {
-      if (prob(i % np, j) < 0.0) {
-        wrong_p = true;
-        break;
+    if (size[i % ns] < 0.0 || floor(size[i % ns]) != size[i % ns]) {
+      wrong_param = true;
+    } else {
+      for (int j = 0; j < k; j++) {
+        if (prob(i % np, j) < 0.0) {
+          wrong_param = true;
+          break;
+        }
+        if (x(i % n, j) < 0.0 || !isInteger(x(i % n, j))) {
+          wrong_x = true;
+        } else {
+          sum_x += x(i % n, j);
+          prod_xfac += lfactorial(x(i % n, j));
+          prod_pow_px += log(prob(i % np, j)) * x(i % n, j);
+        }
+        sum_p += prob(i % np, j);
       }
-      if (x(i % n, j) < 0.0 || !isInteger(x(i % n, j))) {
-        wrong_x = true;
-      } else {
-        sum_x += x(i % n, j);
-        prod_xfac += lfactorial(x(i % n, j));
-        prod_pow_px += log(prob(i % np, j)) * x(i % n, j);
-      }
-      sum_p += prob(i % np, j);
+      
     }
     
-    if (!tol_equal(sum_p, 1.0) || wrong_p) {
+    if (!tol_equal(sum_p, 1.0) || wrong_param) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN; 
-    } else if (floor(size[i % ns]) != size[i % ns] ||
-               sum_x < 0.0 || sum_x != size[i % ns] || wrong_x) {
+    } else if (sum_x < 0.0 || sum_x != size[i % ns] || wrong_x) {
       p[i] = -INFINITY;
     } else {
       p[i] = n_fac - prod_xfac + prod_pow_px;
@@ -116,7 +120,7 @@ NumericMatrix cpp_rmnom(
     // TODO:
     // sort prob(i,_) first?
     
-    if (size[i % ns] < 0.0) {
+    if (size[i % ns] < 0.0 || floor(size[i % ns]) != size[i % ns]) {
       wrong_param = true;
     } else {
       for (int j = 0; j < k-1; j++) {
