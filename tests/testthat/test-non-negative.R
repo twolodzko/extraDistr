@@ -6,7 +6,7 @@ test_that("Zero probabilities for values <0", {
   expect_equal(0, ddunif(-1, 0, 5))
   expect_equal(0, dcat(-1, c(0.5, 0.5)))
   expect_equal(0, dmnom(c(-1, 1), 5, c(0.5, 0.5)))
-  expect_warning(expect_equal(0, dbern(-1)))
+  expect_equal(0, dbern(-1))
   expect_equal(0, dbbinom(-1, 1, 1, 1))
   expect_equal(0, dbnbinom(-1, 1, 1, 1))
   expect_equal(0, dgpois(-1, 1, 1))
