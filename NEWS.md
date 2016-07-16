@@ -9,8 +9,8 @@
 * Cleaned-up the documentation
 * Added discrete Laplace distribution
 * Faster RNG generator for Laplace distribution
-* Changes to using lower level RNG functions (unif_rand, norm_rand)
-  when possible
+* Changes to using lower level RNG functions
+  (`unif_rand`, `norm_rand`) when possible
 * More tests for checking multivariate distributions
 
 ### 1.7.2
