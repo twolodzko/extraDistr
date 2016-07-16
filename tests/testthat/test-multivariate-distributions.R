@@ -39,7 +39,7 @@ test_that("Testing multivariate distributions", {
 })
 
 
-test_that("First, evaluate wrong parameters", {
+test_that("Evaluate wrong parameters first", {
 
   expect_warning(expect_true(is.nan(dbvpois(-1, -1, -1, 1, 1))))
   expect_warning(expect_true(is.nan(ddirichlet(c(2, 2), c(-1, 0.5)))))

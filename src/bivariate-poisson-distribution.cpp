@@ -24,7 +24,7 @@ double pmf_bpois(double x, double y, double a, double b, double c) {
     return NAN;
   }
   
-  if (!isInteger(x))
+  if (!isInteger(x) || x < 0.0)
     return 0.0;
   
   if (floor(y) != y) {
@@ -33,6 +33,9 @@ double pmf_bpois(double x, double y, double a, double b, double c) {
     Rcpp::warning(msg);
     return 0.0;
   }
+  
+  if (y < 0.0)
+    return 0.0;
   
   double tmp = exp(-(a+b+c)); 
   tmp *= (pow(a, x) / factorial(x)) * (pow(b, y) / factorial(y));
