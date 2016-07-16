@@ -73,7 +73,7 @@ double rng_unif() {
   return u;
 }
 
-double rng_bern(double p = 0.5) {
+double rng_bern(double p) {
   if (p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
