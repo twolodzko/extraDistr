@@ -1,5 +1,5 @@
 
-### 1.7.3
+### 1.8.0
 
 * Bug fixes in `qtnorm` - now it works properly for
   non-standard truncated normal
