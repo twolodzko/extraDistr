@@ -69,7 +69,7 @@ double rng_unif() {
   // same as in base R
   do {
     u = R::unif_rand();
-  } while (u <= 0 || u >= 1);
+  } while (u <= 0.0 || u >= 1.0);
   return u;
 }
 
