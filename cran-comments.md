@@ -1,2 +1,2 @@
 
-Bug fixes in qtnorm, rmnom, rdirmnom functions. Cleaned-up the documentation. Added discrete Laplace distribution (d,p,r). Faster RNG for Laplace distribution. Now I am using lower level RNG functions (unif_rand, norm_rand) when possible. New tests for checking if things work fine.
+Fixed tests for multivariate distributions for tolerance 1e-2 since it was producing errors on OS X.
