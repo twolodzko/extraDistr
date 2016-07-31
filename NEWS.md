@@ -2,7 +2,7 @@
 ### 1.8.1
 
 * Tests for multivariate distribution now done
-  with tolerance 1e-2
+  with tolerance `1e-2`
 
 ### 1.8.0
 
