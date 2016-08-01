@@ -107,6 +107,11 @@ double rng_tnorm(double mu, double sigma, double a, double b) {
 
   double r, u, za, zb;
   bool stop = false;
+  
+  if ((mu + 3.0*sigma) < a || (mu - 3.0*sigma) > b) {
+    u = rng_unif();
+    return invcdf_tnorm(u, mu, sigma, a, b);
+  }
 
   za = (a-mu)/sigma;
   zb = (b-mu)/sigma;
