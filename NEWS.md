@@ -1,4 +1,11 @@
 
+### 1.8.2
+
+* `rtnorm` uses inverse transform sampling for extreme 
+  truncation points - this makes random generation more
+  time-efficient
+* Corrected and simplified documentation for `*prop` distribution
+
 ### 1.8.1
 
 * Tests for multivariate distribution now done

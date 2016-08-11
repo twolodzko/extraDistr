@@ -18,49 +18,19 @@
 #'                        
 #' @details
 #' 
-#' Probability mass function of binomial distribution is
+#' Beta can be understood as a distribution of \eqn{k/n} proportions in
+#' \eqn{n} trials where the average proportion is denoted as \eqn{\mu},
+#' so it's parameters become \eqn{\alpha = n\mu+1} and
+#' \eqn{\beta = n(1-\mu)+1} and it's density function becomes:
 #' 
 #' \deqn{
-#' {n \choose k} p^k (1-p) ^{n-k} 
+#' f(x) = \frac{1}{\mathrm{B}(n\mu+1, n(1-\mu)+1)} x^{n\mu} (1-x)^{n(1-\mu)}
 #' }{
-#' choose(n,k) * p^k (1-p)^(n-k)
+#' f(x) = 1/(B(n\mu+1, n(1-\mu)+1)) * x^(n\mu) * (1-x)^(n(1-\mu))
 #' }
 #' 
-#' probability density function of beta distribution is
-#' 
-#' \deqn{
-#' \frac{1}{\mathrm{B}(\alpha, \beta)} p^{\alpha-1} (1-p)^{\beta-1}
-#' }{
-#' 1/B(\alpha, \beta) p^(\alpha-1) (1-p)^(\beta-1)
-#' }
-#' 
-#' we can rewrite
-#' 
-#' \deqn{
-#' {n \choose k} = \frac{1}{(n+1) \mathrm{B}(k+1, n-k+1)}
-#' }{
-#' choose(n,k) = 1/((n+1) * B(k+1, n-k+1))
-#' }
-#' 
-#' if we substitute \eqn{k+1 = \alpha} and \eqn{n-k+1 = \beta} then pmf
-#' of binomial distribution becomes
-#' 
-#' \deqn{
-#' \frac{1}{(n+1) \mathrm{B}(\alpha, \beta)} p^{\alpha-1} (1-p)^{\beta-1}
-#' }{
-#' 1/((n+1) * B(\alpha, \beta)) * p^(\alpha-1) * (1-p)^(\beta-1)
-#' }
-#' 
-#' so beta can be understood as a distribution of \eqn{k/n} proportions in
-#' \eqn{n} trials where the average proportion is denoted as \eqn{\mu}
-#' 
-#' \deqn{
-#' \frac{1}{\mathrm{B}(n\mu, n(1-\mu))} p^{n\mu+1} (1-p)^{n(1-\mu)+1}
-#' }{
-#' 1/(B(n\mu, n(1-\mu))) * p^(n\mu+1) * (1-p)^(n(1-\mu)+1)
-#' }
-#' 
-#' Alternatively \eqn{n} may be understood as precision parameter.
+#' Alternatively \eqn{n} may be understood as precision parameter
+#' as described Ferrari and Cribari-Neto (2004).
 #' 
 #' @references
 #' Ferrari, S., & Cribari-Neto, F. (2004). Beta regression for modelling rates and proportions.
