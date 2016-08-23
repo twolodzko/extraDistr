@@ -58,11 +58,11 @@ NumericVector cpp_dcat(
         p_tot += prob(i % np, j);
       }
       
-      if (!tol_equal(p_tot, 1.0) || wrong_param) {
+      if (wrong_param) {
         Rcpp::warning("NaNs produced");
         p[i] = NAN;
       } else {
-        p[i] = prob(i % np, static_cast<int>(x[i] - 1.0));
+        p[i] = prob(i % np, static_cast<int>(x[i] - 1.0)) / p_tot;
       }
     }
   }
@@ -117,11 +117,11 @@ NumericVector cpp_pcat(
         }
       }
 
-      if (wrong_param || !tol_equal(p_tot, 1.0)) {
+      if (wrong_param) {
         Rcpp::warning("NaNs produced");
         p[i] = NAN;
       } else {
-        p[i] = p[i];
+        p[i] = p[i] / p_tot;
       }
       
     }
@@ -162,7 +162,7 @@ NumericVector cpp_qcat(
       pp[i] = 1.0 - pp[i];
   
   int jj;
-  double pp_norm, p_tmp;
+  double pp_norm, p_tmp, p_tot;
   bool wrong_param;
     
   for (int i = 0; i < Nmax; i++) {
@@ -175,31 +175,26 @@ NumericVector cpp_qcat(
       pp_norm = pp[i];
       wrong_param = false;
       p_tmp = 1.0;
+      p_tot = 0.0;
       jj = 0;
       
-      for (int j = k-1; j >= 0; j--) {
-        p_tmp -= prob(i % np, j);
+      for (int j = 0; j < k; j++) {
         if (prob(i % np, j) < 0.0) {
           wrong_param = true;
           break;
         }
+        p_tot += prob(i % np, j);
+      }
+      
+      for (int j = k-1; j >= 0; j--) {
+        p_tmp -= prob(i % np, j) / p_tot;
         if (pp_norm > p_tmp) {
           jj = j;
           break;
         }
       }
-      
-      if (!wrong_param && jj > 0) {
-        for (int j = jj-1; j >= 0; j--) {
-          p_tmp -= prob(i % np, j);
-          if (prob(i % np, j) < 0.0) {
-            wrong_param = true;
-            break;
-          }
-        } 
-      }
-      
-      if (wrong_param || !tol_equal(p_tmp, 0.0)) {
+
+      if (wrong_param) {
         Rcpp::warning("NaNs produced");
         q[i] = NAN;
       } else {
@@ -223,7 +218,7 @@ NumericVector cpp_rcat(
   NumericVector x(n);
   
   int jj;
-  double u, p_tmp;
+  double u, p_tmp, p_tot;
   bool wrong_param;
 
   for (int i = 0; i < n; i++) {
@@ -231,30 +226,25 @@ NumericVector cpp_rcat(
     wrong_param = false;
     p_tmp = 1.0;
     jj = 0;
+    p_tot = 0.0;
     
-    for (int j = k-1; j >= 0; j--) {
-      p_tmp -= prob(i % np, j);
+    for (int j = 0; j < k; j++) {
       if (prob(i % np, j) < 0.0) {
         wrong_param = true;
         break;
       }
+      p_tot += prob(i % np, j);
+    }
+    
+    for (int j = k-1; j >= 0; j--) {
+      p_tmp -= prob(i % np, j) / p_tot;
       if (u > p_tmp) {
         jj = j;
         break;
       }
     }
-    
-    if (!wrong_param && jj > 0) {
-      for (int j = jj-1; j >= 0; j--) {
-        p_tmp -= prob(i % np, j);
-        if (prob(i % np, j) < 0.0) {
-          wrong_param = true;
-          break;
-        }
-      } 
-    }
-    
-    if (wrong_param || !tol_equal(p_tmp, 0.0)) {
+
+    if (wrong_param) {
       Rcpp::warning("NaNs produced");
       x[i] = NAN;
     } else {

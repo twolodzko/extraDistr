@@ -43,13 +43,19 @@ NumericVector cpp_dmixpois(
     wrong_param = false;
     alpha_tot = 0.0;
     p[i] = 0.0;
+    
     for (int j = 0; j < k; j++) {
-      p[i] += alpha(i % na, j) * R::dpois(x[i], lambda(i % nl, j), false);
-      alpha_tot += alpha(i % na, j);
-      if (lambda(i % nl, j) < 0.0)
+      if (alpha(i % na, j) < 0.0 || lambda(i % nl, j) < 0.0) {
         wrong_param = true;
+        break;
+      }
+      alpha_tot += alpha(i % na, j);
     }
-    if (!tol_equal(alpha_tot, 1.0) || wrong_param) {
+    
+    for (int j = 0; j < k; j++)
+      p[i] += (alpha(i % na, j) / alpha_tot) * R::dpois(x[i], lambda(i % nl, j), false);
+
+    if (wrong_param) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
     }
@@ -88,13 +94,19 @@ NumericVector cpp_pmixpois(
     wrong_param = false;
     alpha_tot = 0.0;
     p[i] = 0.0;
+    
     for (int j = 0; j < k; j++) {
-      p[i] += alpha(i % na, j) * R::ppois(x[i], lambda(i % nl, j), lower_tail, false);
-      alpha_tot += alpha(i % na, j);
-      if (lambda(i % nl, j) < 0.0)
+      if (alpha(i % na, j) < 0.0 || lambda(i % nl, j) < 0.0) {
         wrong_param = true;
+        break;
+      }
+      alpha_tot += alpha(i % na, j);
     }
-    if (!tol_equal(alpha_tot, 1.0) || wrong_param) {
+    
+    for (int j = 0; j < k; j++)
+      p[i] += (alpha(i % na, j) / alpha_tot) * R::ppois(x[i], lambda(i % nl, j), lower_tail, false);
+      
+    if (wrong_param) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
     }
@@ -125,7 +137,7 @@ NumericVector cpp_rmixpois(
   
   int jj;
   bool wrong_param;
-  double u, p_tmp;
+  double u, p_tmp, alpha_tot;
   NumericVector prob(k);
   
   for (int i = 0; i < n; i++) {
@@ -133,28 +145,25 @@ NumericVector cpp_rmixpois(
     wrong_param = false;
     u = rng_unif();
     p_tmp = 1.0;
+    alpha_tot = 0.0;
     
-    for (int j = k-1; j >= 0; j--) {
-      p_tmp -= alpha(i % na, j);
-      if (lambda(i % nl, j) < 0.0 || alpha(i % na, j) < 0.0 || alpha(i % na, j) > 1.0) {
+    for (int j = 0; j < k; j++) {
+      if (alpha(i % na, j) < 0.0 || lambda(i % nl, j) < 0.0) {
         wrong_param = true;
         break;
       }
+      alpha_tot += alpha(i % na, j);
+    }
+    
+    for (int j = k-1; j >= 0; j--) {
+      p_tmp -= alpha(i % na, j) / alpha_tot;
       if (u > p_tmp) {
         jj = j;
         break;
       }
     }
-    
-    if (!wrong_param && jj > 0) {
-      for (int j = jj-1; j >= 0; j--) {
-        p_tmp -= alpha(i % na, j);
-        if (lambda(i % nl, j) < 0.0 || alpha(i % na, j) < 0.0 || alpha(i % na, j) > 1.0)
-          wrong_param = true;
-      } 
-    }
-    
-    if (wrong_param || !tol_equal(p_tmp, 0.0)) {
+
+    if (wrong_param) {
       Rcpp::warning("NaNs produced");
       x[i] = NAN;
     } else {

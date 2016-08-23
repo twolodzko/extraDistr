@@ -1,7 +1,5 @@
 
 
-context("Non-integer values in discrete distributions")
-
 test_that("Zero probabilities for non-integers", {
   
   expect_warning(expect_equal(0, ddlaplace(0.5, 0.5)))
