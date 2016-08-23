@@ -100,7 +100,7 @@ rcat <- function(n, prob, labels) {
       warning("NaNs produced")
       x <- rep(NaN, n)
     } else {
-      x <- sample.int(length(prob), size = n, replace = TRUE, prob = prob)
+      x <- sample.int(k, size = n, replace = TRUE, prob = prob)
     }
   } else {
     k <- ncol(prob)
