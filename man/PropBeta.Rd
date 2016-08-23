@@ -39,7 +39,7 @@ Probability mass function, distribution function and random generation
 for the reparametrized beta distribution.
 }
 \details{
-Beta can be understood as a distribution of \eqn{k/n} proportions in
+Beta can be understood as a distribution of \eqn{x = k/n} proportions in
 \eqn{n} trials where the average proportion is denoted as \eqn{\mu},
 so it's parameters become \eqn{\alpha = n\mu+1} and
 \eqn{\beta = n(1-\mu)+1} and it's density function becomes:
