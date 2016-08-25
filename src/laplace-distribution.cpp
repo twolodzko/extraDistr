@@ -37,6 +37,8 @@ using Rcpp::NumericMatrix;
  */
 
 double pdf_laplace(double x, double mu, double sigma) {
+  if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
   if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -46,6 +48,8 @@ double pdf_laplace(double x, double mu, double sigma) {
 }
 
 double cdf_laplace(double x, double mu, double sigma) {
+  if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
   if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -58,6 +62,8 @@ double cdf_laplace(double x, double mu, double sigma) {
 }
 
 double invcdf_laplace(double p, double mu, double sigma) {
+  if (ISNAN(p) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
   if (sigma <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -69,6 +75,8 @@ double invcdf_laplace(double p, double mu, double sigma) {
 }
 
 double rng_laplace(double mu, double sigma) {
+  if (ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
   if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;

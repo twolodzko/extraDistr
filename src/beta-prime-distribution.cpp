@@ -30,6 +30,8 @@ using Rcpp::NumericMatrix;
 */
 
 double pdf_betapr(double x, double alpha, double beta, double sigma) {
+  if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma))
+    return NA_REAL;
   if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -43,6 +45,8 @@ double pdf_betapr(double x, double alpha, double beta, double sigma) {
 }
 
 double logpdf_betapr(double x, double alpha, double beta, double sigma) {
+  if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma))
+    return NA_REAL;
   if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -57,6 +61,8 @@ double logpdf_betapr(double x, double alpha, double beta, double sigma) {
 
 double cdf_betapr(double x, double alpha, double beta, double sigma,
                   bool lower_tail, bool log_prob) {
+  if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma))
+    return NA_REAL;
   if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -70,6 +76,8 @@ double cdf_betapr(double x, double alpha, double beta, double sigma,
 }
 
 double invcdf_betapr(double p, double alpha, double beta, double sigma) {
+  if (ISNAN(p) || ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma))
+    return NA_REAL;
   if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -83,6 +91,8 @@ double invcdf_betapr(double p, double alpha, double beta, double sigma) {
 }
 
 double rng_betapr(double alpha, double beta, double sigma) {
+  if (ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma))
+    return NA_REAL;
   if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;

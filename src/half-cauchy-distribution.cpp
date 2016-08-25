@@ -18,6 +18,8 @@ using Rcpp::NumericMatrix;
 
 
 double pdf_hcauchy(double x, double sigma) {
+  if (ISNAN(x) || ISNAN(sigma))
+    return NA_REAL;
   if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -28,6 +30,8 @@ double pdf_hcauchy(double x, double sigma) {
 }
 
 double cdf_hcauchy(double x, double sigma) {
+  if (ISNAN(x) || ISNAN(sigma))
+    return NA_REAL;
   if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -38,6 +42,8 @@ double cdf_hcauchy(double x, double sigma) {
 }
 
 double invcdf_hcauchy(double p, double sigma) {
+  if (ISNAN(p) || ISNAN(sigma))
+    return NA_REAL;
   if (sigma <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -46,6 +52,8 @@ double invcdf_hcauchy(double p, double sigma) {
 }
 
 double rng_hcauchy(double sigma) {
+  if (ISNAN(sigma))
+    return NA_REAL;
   if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;

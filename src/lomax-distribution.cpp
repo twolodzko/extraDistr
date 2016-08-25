@@ -34,6 +34,8 @@ using Rcpp::NumericMatrix;
 */
 
 double pdf_lomax(double x, double lambda, double kappa) {
+  if (ISNAN(x) || ISNAN(lambda) || ISNAN(kappa))
+    return NA_REAL;
   if (lambda <= 0.0 || kappa <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -44,6 +46,8 @@ double pdf_lomax(double x, double lambda, double kappa) {
 }
 
 double logpdf_lomax(double x, double lambda, double kappa) {
+  if (ISNAN(x) || ISNAN(lambda) || ISNAN(kappa))
+    return NA_REAL;
   if (lambda <= 0.0 || kappa <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -54,6 +58,8 @@ double logpdf_lomax(double x, double lambda, double kappa) {
 }
 
 double cdf_lomax(double x, double lambda, double kappa) {
+  if (ISNAN(x) || ISNAN(lambda) || ISNAN(kappa))
+    return NA_REAL;
   if (lambda <= 0.0 || kappa <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -64,6 +70,8 @@ double cdf_lomax(double x, double lambda, double kappa) {
 }
 
 double invcdf_lomax(double p, double lambda, double kappa) {
+  if (ISNAN(p) || ISNAN(lambda) || ISNAN(kappa))
+    return NA_REAL;
   if (lambda <= 0.0 || kappa <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;

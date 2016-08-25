@@ -30,6 +30,8 @@ using Rcpp::NumericMatrix;
 */
 
 double pdf_nsbeta(double x, double alpha, double beta, double l, double u, bool log_p) {
+  if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(l) || ISNAN(u))
+    return NA_REAL;
   if (l >= u || alpha < 0.0 || beta < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -43,6 +45,8 @@ double pdf_nsbeta(double x, double alpha, double beta, double l, double u, bool 
 }
 
 double cdf_nsbeta(double x, double alpha, double beta, double l, double u, bool lower_tail, bool log_p) {
+  if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(l) || ISNAN(u))
+    return NA_REAL;
   if (l >= u || alpha < 0.0 || beta < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -50,15 +54,19 @@ double cdf_nsbeta(double x, double alpha, double beta, double l, double u, bool 
   return R::pbeta((x-l)/(u-l), alpha, beta, lower_tail, log_p);
 }
 
-double invcdf_nsbeta(double p, double alpha, double beta, double l, double u, bool lower_tail, bool log_p) {
+double invcdf_nsbeta(double p, double alpha, double beta, double l, double u) {
+  if (ISNAN(p) || ISNAN(alpha) || ISNAN(beta) || ISNAN(l) || ISNAN(u))
+    return NA_REAL;
   if (l >= u || alpha < 0.0 || beta < 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  return R::qbeta(p, alpha, beta, lower_tail, log_p) * (u-l) + l;
+  return R::qbeta(p, alpha, beta, true, false) * (u-l) + l;
 }
 
 double rng_nsbeta(double alpha, double beta, double l, double u) {
+  if (ISNAN(alpha) || ISNAN(beta) || ISNAN(l) || ISNAN(u))
+    return NA_REAL;
   if (l >= u || alpha < 0.0 || beta < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -134,9 +142,18 @@ NumericVector cpp_qnsbeta(
   int nu = upper.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb, nl, nu));
   NumericVector q(Nmax);
+  NumericVector pp = Rcpp::clone(p);
+  
+  if (log_prob)
+    for (int i = 0; i < n; i++)
+      pp[i] = exp(pp[i]);
+  
+  if (!lower_tail)
+    for (int i = 0; i < n; i++)
+      pp[i] = 1.0 - pp[i];
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_nsbeta(p[i % n], alpha[i % na], beta[i % nb], lower[i % nl], upper[i % nu], lower_tail, log_prob);
+    q[i] = invcdf_nsbeta(pp[i % n], alpha[i % na], beta[i % nb], lower[i % nl], upper[i % nu]);
   
   return q;
 }

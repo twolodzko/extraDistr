@@ -31,6 +31,8 @@ using Rcpp::NumericMatrix;
 */
 
 double logpmf_gpois(double x, double alpha, double beta) {
+  if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
+    return NA_REAL;
   if (alpha <= 0.0 || beta <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -44,6 +46,8 @@ double logpmf_gpois(double x, double alpha, double beta) {
 }
 
 double cdf_gpois(double x, double alpha, double beta) {
+  if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
+    return NA_REAL;
   if (alpha <= 0.0 || beta <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -59,6 +63,8 @@ double cdf_gpois(double x, double alpha, double beta) {
 }
 
 double rng_gpois(double alpha, double beta) {
+  if (ISNAN(alpha) || ISNAN(beta))
+    return NA_REAL;
   if (alpha <= 0.0 || beta <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;

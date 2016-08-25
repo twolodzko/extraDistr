@@ -18,6 +18,8 @@ using Rcpp::NumericMatrix;
 
 
 double pdf_tpois(double x, double lambda, double s) {
+  if (ISNAN(x) || ISNAN(lambda) || ISNAN(s))
+    return NA_REAL;
   if (lambda < 0.0 || s < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -35,6 +37,8 @@ double pdf_tpois(double x, double lambda, double s) {
 }
 
 double cdf_tpois(double x, double lambda, double s) {
+  if (ISNAN(x) || ISNAN(lambda) || ISNAN(s))
+    return NA_REAL;
   if (lambda <= 0.0 || s < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -55,6 +59,8 @@ double cdf_tpois(double x, double lambda, double s) {
 }
 
 double invcdf_tpois(double p, double lambda, double s) {
+  if (ISNAN(p) || ISNAN(lambda) || ISNAN(s))
+    return NA_REAL;
   if (lambda < 0.0 || s < 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -82,6 +88,8 @@ double invcdf_tpois(double p, double lambda, double s) {
 }
 
 double rng_tpois(double lambda, double s) {
+  if (ISNAN(lambda) || ISNAN(s))
+    return NA_REAL;
   if (lambda < 0.0 || s < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;

@@ -29,6 +29,8 @@ using Rcpp::NumericMatrix;
 */
 
 double pdf_bernoulli(double x, double prob) {
+  if (ISNAN(x) || ISNAN(prob))
+    return NA_REAL;
   if (prob < 0.0 || prob > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -42,6 +44,8 @@ double pdf_bernoulli(double x, double prob) {
 }
 
 double cdf_bernoulli(double x, double prob) {
+  if (ISNAN(x) || ISNAN(prob))
+    return NA_REAL;
   if (prob < 0.0 || prob > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -54,6 +58,8 @@ double cdf_bernoulli(double x, double prob) {
 }
 
 double invcdf_bernoulli(double p, double prob) {
+  if (ISNAN(p) || ISNAN(prob))
+    return NA_REAL;
   if (prob < 0.0 || prob > 1.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;

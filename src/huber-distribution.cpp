@@ -19,6 +19,8 @@ using Rcpp::NumericMatrix;
 
 
 double pdf_huber(double x, double mu, double sigma, double c) {
+  if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(c))
+    return NA_REAL;
   if (sigma <= 0.0 || c <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -37,6 +39,8 @@ double pdf_huber(double x, double mu, double sigma, double c) {
 }
 
 double cdf_huber(double x, double mu, double sigma, double c) {
+  if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(c))
+    return NA_REAL;
   if (sigma <= 0.0 || c <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -59,6 +63,8 @@ double cdf_huber(double x, double mu, double sigma, double c) {
 }
 
 double invcdf_huber(double p, double mu, double sigma, double c) {
+  if (ISNAN(p) || ISNAN(mu) || ISNAN(sigma) || ISNAN(c))
+    return NA_REAL;
   if (sigma <= 0.0 || c <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;

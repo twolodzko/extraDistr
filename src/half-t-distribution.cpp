@@ -31,6 +31,8 @@ using Rcpp::NumericMatrix;
  */
 
 double pdf_ht(double x, double nu, double sigma) {
+  if (ISNAN(x) || ISNAN(nu) || ISNAN(sigma))
+    return NA_REAL;
   if (sigma <= 0.0 || nu <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -41,6 +43,8 @@ double pdf_ht(double x, double nu, double sigma) {
 }
 
 double cdf_ht(double x, double nu, double sigma) {
+  if (ISNAN(x) || ISNAN(nu) || ISNAN(sigma))
+    return NA_REAL;
   if (sigma <= 0.0 || nu <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -51,6 +55,8 @@ double cdf_ht(double x, double nu, double sigma) {
 }
 
 double invcdf_ht(double p, double nu, double sigma) {
+  if (ISNAN(p) || ISNAN(nu) || ISNAN(sigma))
+    return NA_REAL;
   if (sigma <= 0.0 || nu <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -59,6 +65,8 @@ double invcdf_ht(double p, double nu, double sigma) {
 }
 
 double rng_ht(double nu, double sigma) {
+  if (ISNAN(nu) || ISNAN(sigma))
+    return NA_REAL;
   if (sigma <= 0.0 || nu <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;

@@ -34,6 +34,8 @@ using Rcpp::NumericMatrix;
 */
 
 double pmf_bnbinom(double k, double r, double alpha, double beta) {
+  if (ISNAN(k) || ISNAN(r) || ISNAN(alpha) || ISNAN(beta))
+    return NA_REAL;
   if (alpha <= 0.0 || beta <= 0.0 || r < 0.0 || floor(r) != r) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -45,6 +47,8 @@ double pmf_bnbinom(double k, double r, double alpha, double beta) {
 }
 
 double logpmf_bnbinom(double k, double r, double alpha, double beta) {
+  if (ISNAN(k) || ISNAN(r) || ISNAN(alpha) || ISNAN(beta))
+    return NA_REAL;
   if (alpha <= 0.0 || beta <= 0.0 || r < 0.0 || floor(r) != r) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -56,6 +60,8 @@ double logpmf_bnbinom(double k, double r, double alpha, double beta) {
 }
 
 double cdf_bnbinom(double k, double r, double alpha, double beta) {
+  if (ISNAN(k) || ISNAN(r) || ISNAN(alpha) || ISNAN(beta))
+    return NA_REAL;
   if (alpha < 0.0 || beta < 0.0 || r < 0.0 || floor(r) != r) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -71,6 +77,8 @@ double cdf_bnbinom(double k, double r, double alpha, double beta) {
 }
 
 double rng_bnbinom(double r, double alpha, double beta) {
+  if (ISNAN(r) || ISNAN(alpha) || ISNAN(beta))
+    return NA_REAL;
   if (alpha <= 0.0 || beta <= 0.0 || r < 0.0 || floor(r) != r) {
     Rcpp::warning("NaNs produced");
     return NAN;

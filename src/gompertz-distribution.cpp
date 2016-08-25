@@ -40,6 +40,8 @@ using Rcpp::NumericMatrix;
 
 
 double pdf_gompertz(double x, double a, double b) {
+  if (ISNAN(x) || ISNAN(a) || ISNAN(b))
+    return NA_REAL;
   if (a <= 0.0 || b <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -50,6 +52,8 @@ double pdf_gompertz(double x, double a, double b) {
 }
 
 double cdf_gompertz(double x, double a, double b) {
+  if (ISNAN(x) || ISNAN(a) || ISNAN(b))
+    return NA_REAL;
   if (a <= 0.0 || b <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -62,6 +66,8 @@ double cdf_gompertz(double x, double a, double b) {
 }
 
 double invcdf_gompertz(double p, double a, double b) {
+  if (ISNAN(p) || ISNAN(a) || ISNAN(b))
+    return NA_REAL;
   if (a <= 0.0 || b <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -70,6 +76,8 @@ double invcdf_gompertz(double p, double a, double b) {
 }
 
 double logpdf_gompertz(double x, double a, double b) {
+  if (ISNAN(x) || ISNAN(a) || ISNAN(b))
+    return NA_REAL;
   if (a <= 0.0 || b <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;

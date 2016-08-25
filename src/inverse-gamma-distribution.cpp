@@ -35,6 +35,8 @@ using Rcpp::NumericMatrix;
 */
 
 double pdf_invgamma(double x, double alpha, double beta) {
+  if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
+    return NA_REAL;
   if (alpha <= 0.0 || beta <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;

@@ -30,6 +30,8 @@ using Rcpp::NumericMatrix;
 
 
 double pdf_slash(double x, double mu, double sigma) {
+  if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
   if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -39,6 +41,8 @@ double pdf_slash(double x, double mu, double sigma) {
 }
 
 double cdf_slash(double x, double mu, double sigma) {
+  if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
   if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -51,6 +55,8 @@ double cdf_slash(double x, double mu, double sigma) {
 }
 
 double rng_slash(double mu, double sigma) {
+  if (ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
   if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;

@@ -41,6 +41,8 @@ using Rcpp::NumericMatrix;
 
 
 double pdf_tnorm(double x, double mu, double sigma, double a, double b) {
+  if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(a) || ISNAN(b))
+    return NA_REAL;
   if (sigma <= 0.0 || b <= a) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -60,6 +62,8 @@ double pdf_tnorm(double x, double mu, double sigma, double a, double b) {
 }
 
 double cdf_tnorm(double x, double mu, double sigma, double a, double b) {
+  if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(a) || ISNAN(b))
+    return NA_REAL;
   if (sigma <= 0.0 || b <= a) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -82,6 +86,8 @@ double cdf_tnorm(double x, double mu, double sigma, double a, double b) {
 }
 
 double invcdf_tnorm(double p, double mu, double sigma, double a, double b) {
+  if (ISNAN(p) || ISNAN(mu) || ISNAN(sigma) || ISNAN(a) || ISNAN(b))
+    return NA_REAL;
   if (sigma <= 0.0 || b <= a || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -97,6 +103,8 @@ double invcdf_tnorm(double p, double mu, double sigma, double a, double b) {
 }
 
 double rng_tnorm(double mu, double sigma, double a, double b) {
+  if (ISNAN(mu) || ISNAN(sigma) || ISNAN(a) || ISNAN(b))
+    return NA_REAL;
   if (sigma <= 0.0 || b <= a) {
     Rcpp::warning("NaNs produced");
     return NAN;

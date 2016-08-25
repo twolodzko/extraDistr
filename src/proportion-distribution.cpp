@@ -29,6 +29,8 @@ using Rcpp::NumericMatrix;
 */
 
 double pdf_prop(double x, double size, double mean, bool log_p) {
+  if (ISNAN(x) || ISNAN(size) || ISNAN(mean))
+    return NA_REAL;
   if (size <= 0.0 || mean < 0.0 || mean > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -37,6 +39,8 @@ double pdf_prop(double x, double size, double mean, bool log_p) {
 }
 
 double cdf_prop(double x, double size, double mean, bool lower_tail, bool log_p) {
+  if (ISNAN(x) || ISNAN(size) || ISNAN(mean))
+    return NA_REAL;
   if (size <= 0.0 || mean < 0.0 || mean > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -44,15 +48,19 @@ double cdf_prop(double x, double size, double mean, bool lower_tail, bool log_p)
   return R::pbeta(x, size*mean+1.0, size*(1.0-mean)+1.0, lower_tail, log_p);
 }
 
-double invcdf_prop(double p, double size, double mean, bool lower_tail, bool log_p) {
+double invcdf_prop(double p, double size, double mean) {
+  if (ISNAN(p) || ISNAN(size) || ISNAN(mean))
+    return NA_REAL;
   if (size <= 0.0 || mean < 0.0 || mean > 1.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  return R::qbeta(p, size*mean+1.0, size*(1.0-mean)+1.0, lower_tail, log_p);
+  return R::qbeta(p, size*mean+1.0, size*(1.0-mean)+1.0, true, false);
 }
 
 double rng_prop(double size, double mean) {
+  if (ISNAN(size) || ISNAN(mean))
+    return NA_REAL;
   if (size <= 0.0 || mean < 0.0 || mean > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -116,9 +124,18 @@ NumericVector cpp_qprop(
   int ns = size.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
   NumericVector q(Nmax);
+  NumericVector pp = Rcpp::clone(p);
+  
+  if (log_prob)
+    for (int i = 0; i < n; i++)
+      pp[i] = exp(pp[i]);
+  
+  if (!lower_tail)
+    for (int i = 0; i < n; i++)
+      pp[i] = 1.0 - pp[i];
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_prop(p[i % n], size[i % ns], mean[i % nm], lower_tail, log_prob);
+    q[i] = invcdf_prop(pp[i % n], size[i % ns], mean[i % nm]);
   
   return q;
 }

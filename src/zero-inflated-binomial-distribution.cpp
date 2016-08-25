@@ -30,6 +30,8 @@ using Rcpp::NumericMatrix;
 */
 
 double pdf_zib(double x, double n, double p, double pi) {
+  if (ISNAN(x) || ISNAN(n) || ISNAN(p) || ISNAN(pi))
+    return NA_REAL;
   if (p < 0.0 || p > 1.0 || n < 0.0 || pi < 0.0 || pi > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -43,6 +45,8 @@ double pdf_zib(double x, double n, double p, double pi) {
 }
 
 double cdf_zib(double x, double n, double p, double pi) {
+  if (ISNAN(x) || ISNAN(n) || ISNAN(p) || ISNAN(pi))
+    return NA_REAL;
   if (p < 0.0 || p > 1.0 || n < 0.0 || pi < 0.0 || pi > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -55,6 +59,8 @@ double cdf_zib(double x, double n, double p, double pi) {
 }
 
 double invcdf_zib(double pp, double n, double p, double pi) {
+  if (ISNAN(pp) || ISNAN(n) || ISNAN(p) || ISNAN(pi))
+    return NA_REAL;
   if (p < 0.0 || p > 1.0 || n < 0.0 || pi < 0.0 || pi > 1.0 || pp < 0.0 || pp > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -66,6 +72,8 @@ double invcdf_zib(double pp, double n, double p, double pi) {
 }
 
 double rng_zib(double n, double p, double pi) {
+  if (ISNAN(n) || ISNAN(p) || ISNAN(pi))
+    return NA_REAL;
   if (p < 0.0 || p > 1.0 || n < 0.0 || pi < 0.0 || pi > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;

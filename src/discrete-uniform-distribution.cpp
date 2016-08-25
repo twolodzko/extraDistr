@@ -30,6 +30,8 @@ using Rcpp::NumericMatrix;
 
 
 double pmf_dunif(double x, double min, double max) {
+  if (ISNAN(x) || ISNAN(min) || ISNAN(max))
+    return NA_REAL;
   if (min > max || std::isinf(min) || std::isinf(max) ||
       floor(min) != min || floor(max) != max) {
     Rcpp::warning("NaNs produced");
@@ -42,6 +44,8 @@ double pmf_dunif(double x, double min, double max) {
 
 
 double cdf_dunif(double x, double min, double max) {
+  if (ISNAN(x) || ISNAN(min) || ISNAN(max))
+    return NA_REAL;
   if (min > max || std::isinf(min) || std::isinf(max) ||
       floor(min) != min || floor(max) != max) {
     Rcpp::warning("NaNs produced");
@@ -55,6 +59,8 @@ double cdf_dunif(double x, double min, double max) {
 }
 
 double invcdf_dunif(double p, double min, double max) {
+  if (ISNAN(p) || ISNAN(min) || ISNAN(max))
+    return NA_REAL;
   if (min > max || std::isinf(min) || std::isinf(max) ||
       floor(min) != min || floor(max) != max ||
       p < 0.0 || p > 1.0) {
@@ -67,6 +73,8 @@ double invcdf_dunif(double p, double min, double max) {
 }
 
 double rng_dunif(double min, double max) {
+  if (ISNAN(min) || ISNAN(max))
+    return NA_REAL;
   if (min > max || std::isinf(min) || std::isinf(max) ||
       floor(min) != min || floor(max) != max) {
     Rcpp::warning("NaNs produced");

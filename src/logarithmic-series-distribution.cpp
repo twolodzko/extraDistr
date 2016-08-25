@@ -33,6 +33,8 @@ using Rcpp::NumericMatrix;
 
 
 double pdf_lgser(double x, double theta) {
+  if (ISNAN(x) || ISNAN(theta))
+    return NA_REAL;
   if (theta <= 0.0 || theta >= 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -45,6 +47,8 @@ double pdf_lgser(double x, double theta) {
 
 
 double cdf_lgser(double x, double theta) {
+  if (ISNAN(x) || ISNAN(theta))
+    return NA_REAL;
   if (theta <= 0.0 || theta >= 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -67,6 +71,8 @@ double cdf_lgser(double x, double theta) {
 
 
 double invcdf_lgser(double p, double theta) {
+  if (ISNAN(p) || ISNAN(theta))
+    return NA_REAL;
   if (theta <= 0.0 || theta >= 1.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;

@@ -19,6 +19,9 @@ using Rcpp::NumericMatrix;
 
 double pmf_bpois(double x, double y, double a, double b, double c) {
   
+  if (ISNAN(x) || ISNAN(y) || ISNAN(a) || ISNAN(b) || ISNAN(c))
+    return NA_REAL;
+  
   if (a < 0.0 || b < 0.0 || c < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -101,7 +104,10 @@ NumericMatrix cpp_rbpois(
   NumericMatrix x(n, 2);
   
   for (int i = 0; i < n; i++) {
-    if (a[i % na] < 0.0 || b[i % nb] < 0.0 || c[i % nc] < 0.0) {
+    if (ISNAN(a[i % na]) || ISNAN(b[i % nb]) || ISNAN(c[i % nc])) {
+      x(i, 0) = NA_REAL;
+      x(i, 1) = NA_REAL;
+    } else if (a[i % na] < 0.0 || b[i % nb] < 0.0 || c[i % nc] < 0.0) {
       Rcpp::warning("NaNs produced");
       x(i, 0) = NAN;
       x(i, 1) = NAN;

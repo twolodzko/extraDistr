@@ -35,6 +35,8 @@ using Rcpp::NumericMatrix;
  */
 
 double pdf_gumbel(double x, double mu, double sigma) {
+  if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
   if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -46,6 +48,8 @@ double pdf_gumbel(double x, double mu, double sigma) {
 }
 
 double cdf_gumbel(double x, double mu, double sigma) {
+  if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
   if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -55,6 +59,8 @@ double cdf_gumbel(double x, double mu, double sigma) {
 }
 
 double invcdf_gumbel(double p, double mu, double sigma) {
+  if (ISNAN(p) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
   if (sigma <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;

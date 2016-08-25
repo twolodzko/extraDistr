@@ -31,6 +31,8 @@ using Rcpp::NumericMatrix;
 
 
 double pmf_dnorm(double x, double mu, double sigma) {
+  if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
   if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;

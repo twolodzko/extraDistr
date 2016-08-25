@@ -32,6 +32,8 @@ using Rcpp::NumericMatrix;
  */
 
 double pdf_fatigue(double x, double alpha, double beta, double mu) {
+  if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(mu))
+    return NA_REAL;
   if (alpha <= 0.0 || beta <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -46,6 +48,8 @@ double pdf_fatigue(double x, double alpha, double beta, double mu) {
 }
 
 double cdf_fatigue(double x, double alpha, double beta, double mu) {
+  if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(mu))
+    return NA_REAL;
   if (alpha <= 0.0 || beta <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -60,6 +64,8 @@ double cdf_fatigue(double x, double alpha, double beta, double mu) {
 }
 
 double invcdf_fatigue(double p, double alpha, double beta, double mu) {
+  if (ISNAN(p) || ISNAN(alpha) || ISNAN(beta) || ISNAN(mu))
+    return NA_REAL;
   if (alpha <= 0.0 || beta <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -71,6 +77,8 @@ double invcdf_fatigue(double p, double alpha, double beta, double mu) {
 }
 
 double rng_fatigue(double alpha, double beta, double mu) {
+  if (ISNAN(alpha) || ISNAN(beta) || ISNAN(mu))
+    return NA_REAL;
   if (alpha <= 0.0 || beta <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;

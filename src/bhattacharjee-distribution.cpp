@@ -36,6 +36,8 @@ double G(double x) {
 }
 
 double pdf_bhattacharjee(double x, double mu, double sigma, double a) {
+  if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(a))
+    return NA_REAL;
   if (sigma < 0.0 || a < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -49,6 +51,8 @@ double pdf_bhattacharjee(double x, double mu, double sigma, double a) {
 }
 
 double cdf_bhattacharjee(double x, double mu, double sigma, double a) {
+  if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(a))
+    return NA_REAL;
   if (sigma < 0.0 || a < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -66,6 +70,8 @@ double cdf_bhattacharjee(double x, double mu, double sigma, double a) {
 }
 
 double rng_bhattacharjee(double mu, double sigma, double a) {
+  if (ISNAN(mu) || ISNAN(sigma) || ISNAN(a))
+    return NA_REAL;
   if (sigma < 0.0 || a < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;

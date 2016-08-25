@@ -40,6 +40,10 @@ double pdf_bnorm(double x, double y,
                  double sigma1, double sigma2,
                  double rho) {
   
+  if (ISNAN(x) || ISNAN(y) || ISNAN(mu1) || ISNAN(mu2) ||
+      ISNAN(sigma1) || ISNAN(sigma2) || ISNAN(rho))
+    return NA_REAL;
+  
   if (sigma1 <= 0.0 || sigma2 <= 0.0 || rho <= -1.0 || rho >= 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -110,7 +114,12 @@ NumericMatrix cpp_rbnorm(
   NumericMatrix x(n, 2);
 
   for (int i = 0; i < n; i++) {
-    if (sigma1[i % ns1] <= 0.0 || sigma2[i % ns2] <= 0.0 ||
+    if (ISNAN(mu1[i % nm1]) || ISNAN(mu2[i % nm1]) ||
+        ISNAN(sigma1[i % ns1]) || ISNAN(sigma2[i % ns2]) ||
+        ISNAN(rho[i % nr])) {
+      x(i, 0) = NA_REAL;
+      x(i, 1) = NA_REAL;
+    } else if (sigma1[i % ns1] <= 0.0 || sigma2[i % ns2] <= 0.0 ||
         rho[i % nr] < -1.0 || rho[i % nr] > 1.0) {
       Rcpp::warning("NaNs produced");
       x(i, 0) = NAN;

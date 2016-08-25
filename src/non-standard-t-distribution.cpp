@@ -30,44 +30,44 @@ using Rcpp::NumericMatrix;
 */
 
 double pdf_nst(double x, double nu, double mu, double sigma) {
+  if (ISNAN(x) || ISNAN(nu) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
   if (nu <= 0.0 || sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (nu == 1.0)
-    return R::dcauchy(x, mu, sigma, false);
   double z = (x - mu)/sigma;
   return R::dt(z, nu, false)/sigma;
 }
 
 double cdf_nst(double x, double nu, double mu, double sigma) {
+  if (ISNAN(x) || ISNAN(nu) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
   if (nu <= 0.0 || sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (nu == 1.0)
-    return R::pcauchy(x, mu, sigma, true, false);
   double z = (x - mu)/sigma;
   return R::pt(z, nu, true, false);
 }
 
 double invcdf_nst(double p, double nu, double mu, double sigma) {
+  if (ISNAN(p) || ISNAN(nu) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
   if (nu <= 0.0 || sigma <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (nu == 1.0)
-    return R::qcauchy(p, mu, sigma, true, false);
   return R::qt(p, nu, true, false)*sigma + mu;
 }
 
 double rng_nst(double nu, double mu, double sigma) {
+  if (ISNAN(nu) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
   if (nu <= 0.0 || sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (nu == 1.0)
-    return R::rcauchy(mu, sigma);
   return R::rt(nu)*sigma + mu;
 }
 

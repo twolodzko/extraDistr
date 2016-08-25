@@ -34,6 +34,8 @@ double pdf_zip(double x, double lambda, double pi) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
+  if (ISNAN(x) || ISNAN(lambda) || ISNAN(pi))
+    return NA_REAL;
   if (x < 0.0 || !isInteger(x) || std::isinf(x))
     return 0.0;
   if (x == 0.0)
@@ -43,6 +45,8 @@ double pdf_zip(double x, double lambda, double pi) {
 }
 
 double cdf_zip(double x, double lambda, double pi) {
+  if (ISNAN(x) || ISNAN(lambda) || ISNAN(pi))
+    return NA_REAL;
   if (lambda <= 0.0 || pi < 0.0 || pi > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -55,6 +59,8 @@ double cdf_zip(double x, double lambda, double pi) {
 }
 
 double invcdf_zip(double p, double lambda, double pi) {
+  if (ISNAN(p) || ISNAN(lambda) || ISNAN(pi))
+    return NA_REAL;
   if (lambda <= 0.0 || pi < 0.0 || pi > 1.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -66,6 +72,8 @@ double invcdf_zip(double p, double lambda, double pi) {
 }
 
 double rng_zip(double lambda, double pi) {
+  if (ISNAN(lambda) || ISNAN(pi))
+    return NA_REAL;
   if (lambda <= 0.0 || pi < 0.0 || pi > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;

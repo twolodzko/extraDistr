@@ -36,6 +36,8 @@ using Rcpp::NumericMatrix;
  */
 
 double pdf_frechet(double x, double lambda, double mu, double sigma) {
+  if (ISNAN(x) || ISNAN(lambda) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
   if (lambda <= 0.0 || sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -47,6 +49,8 @@ double pdf_frechet(double x, double lambda, double mu, double sigma) {
 }
 
 double cdf_frechet(double x, double lambda, double mu, double sigma) {
+  if (ISNAN(x) || ISNAN(lambda) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
   if (lambda <= 0.0 || sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -58,6 +62,8 @@ double cdf_frechet(double x, double lambda, double mu, double sigma) {
 }
 
 double invcdf_frechet(double p, double lambda, double mu, double sigma) {
+  if (ISNAN(p) || ISNAN(lambda) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
   if (lambda <= 0.0 || sigma <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;

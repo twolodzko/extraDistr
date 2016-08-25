@@ -74,6 +74,8 @@ double rng_unif() {
 }
 
 double rng_bern(double p) {
+  if (ISNAN(p))
+    return NA_REAL;
   if (p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;

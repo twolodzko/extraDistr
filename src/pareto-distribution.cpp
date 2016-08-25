@@ -33,6 +33,8 @@ using Rcpp::NumericMatrix;
  */
 
 double pdf_pareto(double x, double a, double b) {
+  if (ISNAN(x) || ISNAN(a) || ISNAN(b))
+    return NA_REAL;
   if (a <= 0.0 || b <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -43,6 +45,8 @@ double pdf_pareto(double x, double a, double b) {
 }
 
 double logpdf_pareto(double x, double a, double b) {
+  if (ISNAN(x) || ISNAN(a) || ISNAN(b))
+    return NA_REAL;
   if (a <= 0.0 || b <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -53,6 +57,8 @@ double logpdf_pareto(double x, double a, double b) {
 }
 
 double cdf_pareto(double x, double a, double b) {
+  if (ISNAN(x) || ISNAN(a) || ISNAN(b))
+    return NA_REAL;
   if (a <= 0.0 || b <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -63,6 +69,8 @@ double cdf_pareto(double x, double a, double b) {
 }
 
 double invcdf_pareto(double p, double a, double b) {
+  if (ISNAN(p) || ISNAN(a) || ISNAN(b))
+    return NA_REAL;
   if (a <= 0.0 || b <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -71,6 +79,8 @@ double invcdf_pareto(double p, double a, double b) {
 }
 
 double invcdf_pareto2(double p, double a, double b) {
+  if (ISNAN(p) || ISNAN(a) || ISNAN(b))
+    return NA_REAL;
   if (a <= 0.0 || b <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
