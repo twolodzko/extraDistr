@@ -29,4 +29,8 @@ double rng_unif();         // standard uniform
 double rng_bern(double p); // Bernoulli distribution
 double rng_sign();         // Rademacher distribution
 
+// Checking parameters
+
+Rcpp::NumericMatrix normalize_prob(const Rcpp::NumericMatrix& prob);
+
 #endif
