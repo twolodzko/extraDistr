@@ -8,7 +8,8 @@
 * categorical, multinomial, mixture of normals and mixture of Poisson
   distributions are now *less restrictive* about probability parameters
   and accept any non-negtive values. Probability parameter vectors are
-  normalized to sum to one (i.e. `c(1,1,1)` becomes `c(1,1,1)/3`).
+  normalized to sum to one (i.e. `c(1,1,1)` becomes `c(1,1,1)/3`)
+* `NAN`'s in input now always lead to `NA`'s in output
 
 ### 1.8.1
 
