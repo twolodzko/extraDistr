@@ -42,11 +42,11 @@ using Rcpp::NumericMatrix;
 
 double pdf_gev(double x, double mu, double sigma, double xi) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
-    return NA_REAL;
-  if (sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (sigma <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   double z = (x-mu)/sigma;
   if (1.0+xi*z > 0.0) {
     if (xi != 0.0)
@@ -60,11 +60,11 @@ double pdf_gev(double x, double mu, double sigma, double xi) {
 
 double cdf_gev(double x, double mu, double sigma, double xi) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
-    return NA_REAL;
-  if (sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (sigma <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   double z = (x-mu)/sigma;
   if (1.0+xi*z > 0.0) {
     if (xi != 0.0)
@@ -78,11 +78,11 @@ double cdf_gev(double x, double mu, double sigma, double xi) {
 
 double invcdf_gev(double p, double mu, double sigma, double xi) {
   if (ISNAN(p) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
-    return NA_REAL;
-  if (sigma <= 0.0 || p < 0.0 || p > 1.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (sigma <= 0.0 || p < 0.0 || p > 1.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   if (p == 1.0)
     return INFINITY;
   if (xi != 0.0)
@@ -107,9 +107,10 @@ NumericVector cpp_dgev(
   int nx = xi.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, nx));
   NumericVector p(Nmax);
+  NumericVector sigma_n = positive_or_nan(sigma);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_gev(x[i % n], mu[i % nm], sigma[i % ns], xi[i % nx]);
+    p[i] = pdf_gev(x[i % n], mu[i % nm], sigma_n[i % ns], xi[i % nx]);
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -134,9 +135,10 @@ NumericVector cpp_pgev(
   int nx = xi.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, nx));
   NumericVector p(Nmax);
+  NumericVector sigma_n = positive_or_nan(sigma);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_gev(x[i % n], mu[i % nm], sigma[i % ns], xi[i % nx]);
+    p[i] = cdf_gev(x[i % n], mu[i % nm], sigma_n[i % ns], xi[i % nx]);
 
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
@@ -166,6 +168,7 @@ NumericVector cpp_qgev(
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, nx));
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
+  NumericVector sigma_n = positive_or_nan(sigma);
 
   if (log_prob)
     for (int i = 0; i < n; i++)
@@ -174,9 +177,11 @@ NumericVector cpp_qgev(
   if (!lower_tail)
     for (int i = 0; i < n; i++)
       pp[i] = 1.0 - pp[i];
+  
+  pp = zeroone_or_nan(pp);
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_gev(pp[i % n], mu[i % nm], sigma[i % ns], xi[i % nx]);
+    q[i] = invcdf_gev(pp[i % n], mu[i % nm], sigma_n[i % ns], xi[i % nx]);
 
   return q;
 }
@@ -195,10 +200,11 @@ NumericVector cpp_rgev(
   int ns = sigma.length();
   int nx = xi.length();
   NumericVector x(n);
+  NumericVector sigma_n = positive_or_nan(sigma);
 
   for (int i = 0; i < n; i++) {
     u = rng_unif();
-    x[i] = invcdf_gev(u, mu[i % nm], sigma[i % ns], xi[i % nx]);
+    x[i] = invcdf_gev(u, mu[i % nm], sigma_n[i % ns], xi[i % nx]);
   }
 
   return x;

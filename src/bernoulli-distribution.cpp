@@ -30,11 +30,11 @@ using Rcpp::NumericMatrix;
 
 double pdf_bernoulli(double x, double prob) {
   if (ISNAN(x) || ISNAN(prob))
-    return NA_REAL;
-  if (prob < 0.0 || prob > 1.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (prob < 0.0 || prob > 1.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   if (x == 1.0)
     return prob;
   if (x == 0.0)
@@ -45,11 +45,11 @@ double pdf_bernoulli(double x, double prob) {
 
 double cdf_bernoulli(double x, double prob) {
   if (ISNAN(x) || ISNAN(prob))
-    return NA_REAL;
-  if (prob < 0.0 || prob > 1.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (prob < 0.0 || prob > 1.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   if (x < 0.0)
     return 0.0;
   if (x < 1.0)
@@ -59,12 +59,23 @@ double cdf_bernoulli(double x, double prob) {
 
 double invcdf_bernoulli(double p, double prob) {
   if (ISNAN(p) || ISNAN(prob))
-    return NA_REAL;
-  if (prob < 0.0 || prob > 1.0 || p < 0.0 || p > 1.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (prob < 0.0 || prob > 1.0 || p < 0.0 || p > 1.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   return (p <= 1.0 - prob) ? 0.0 : 1.0;
+}
+
+double rng_bernoulli(double p) {
+  if (ISNAN(p))
+    return NAN;
+  // if (p < 0.0 || p > 1.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
+  double u = rng_unif();
+  return (u > p) ? 0.0 : 1.0;
 }
 
 
@@ -79,9 +90,10 @@ NumericVector cpp_dbern(
   int np = prob.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, np));
   NumericVector p(Nmax);
+  NumericVector prob_n = zeroone_or_nan(prob);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_bernoulli(x[i % n], prob[i % np]);
+    p[i] = pdf_bernoulli(x[i % n], prob_n[i % np]);
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -102,9 +114,10 @@ NumericVector cpp_pbern(
   int np = prob.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, np));
   NumericVector p(Nmax);
+  NumericVector prob_n = zeroone_or_nan(prob);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_bernoulli(x[i % n], prob[i % np]);
+    p[i] = cdf_bernoulli(x[i % n], prob_n[i % np]);
   
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
@@ -130,6 +143,7 @@ NumericVector cpp_qbern(
   int Nmax = Rcpp::max(IntegerVector::create(n, np));
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
+  NumericVector prob_n = zeroone_or_nan(prob);
   
   if (log_prob)
     for (int i = 0; i < n; i++)
@@ -139,8 +153,10 @@ NumericVector cpp_qbern(
     for (int i = 0; i < n; i++)
       pp[i] = 1.0 - pp[i];
   
+  pp = zeroone_or_nan(pp);
+  
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_bernoulli(pp[i % n], prob[i % np]);
+    q[i] = invcdf_bernoulli(pp[i % n], prob_n[i % np]);
   
   return q;
 }
@@ -154,9 +170,10 @@ NumericVector cpp_rbern(
   
   int np = prob.length();
   NumericVector x(n);
+  NumericVector prob_n = zeroone_or_nan(prob);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_bern(prob[i % np]);
+    x[i] = rng_bernoulli(prob_n[i % np]);
   
   return x;
 }

@@ -19,11 +19,11 @@ using Rcpp::NumericMatrix;
 
 double pdf_hnorm(double x, double sigma) {
   if (ISNAN(x) || ISNAN(sigma))
-    return NA_REAL;
-  if (sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (sigma <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   if (x < 0.0)
     return 0.0;
   return 2.0 * R::dnorm(x, 0.0, sigma, false);
@@ -31,11 +31,11 @@ double pdf_hnorm(double x, double sigma) {
 
 double cdf_hnorm(double x, double sigma) {
   if (ISNAN(x) || ISNAN(sigma))
-    return NA_REAL;
-  if (sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (sigma <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   if (x < 0.0)
     return 0.0;
   return 2.0 * R::pnorm(x, 0.0, sigma, true, false) - 1.0;
@@ -43,21 +43,21 @@ double cdf_hnorm(double x, double sigma) {
 
 double invcdf_hnorm(double p, double sigma) {
   if (ISNAN(p) || ISNAN(sigma))
-    return NA_REAL;
-  if (sigma <= 0.0 || p < 0.0 || p > 1.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (sigma <= 0.0 || p < 0.0 || p > 1.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   return R::qnorm((p+1.0)/2.0, 0.0, sigma, true, false);
 }
 
 double rng_hnorm(double sigma) {
   if (ISNAN(sigma))
-    return NA_REAL;
-  if (sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (sigma <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   return abs(R::norm_rand()) * sigma;
 }
 
@@ -73,9 +73,10 @@ NumericVector cpp_dhnorm(
   int ns = sigma.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, ns));
   NumericVector p(Nmax);
+  NumericVector sigma_n = positive_or_nan(sigma);
   
   for (int i = 0; i < Nmax; i++)
-      p[i] = pdf_hnorm(x[i % n], sigma[i % ns]);
+      p[i] = pdf_hnorm(x[i % n], sigma_n[i % ns]);
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -96,9 +97,10 @@ NumericVector cpp_phnorm(
   int ns = sigma.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, ns));
   NumericVector p(Nmax);
+  NumericVector sigma_n = positive_or_nan(sigma);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_hnorm(x[i % n], sigma[i % ns]);
+    p[i] = cdf_hnorm(x[i % n], sigma_n[i % ns]);
   
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
@@ -124,6 +126,7 @@ NumericVector cpp_qhnorm(
   int Nmax = Rcpp::max(IntegerVector::create(n, ns));
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
+  NumericVector sigma_n = positive_or_nan(sigma);
   
   if (log_prob)
     for (int i = 0; i < n; i++)
@@ -133,8 +136,10 @@ NumericVector cpp_qhnorm(
     for (int i = 0; i < n; i++)
       pp[i] = 1.0 - pp[i];
   
+  pp = zeroone_or_nan(pp);
+  
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_hnorm(pp[i % n], sigma[i % ns]);
+    q[i] = invcdf_hnorm(pp[i % n], sigma_n[i % ns]);
   
   return q;
 }
@@ -148,9 +153,10 @@ NumericVector cpp_rhnorm(
   
   int ns = sigma.length();
   NumericVector x(n);
+  NumericVector sigma_n = positive_or_nan(sigma);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_hnorm(sigma[i % ns]);
+    x[i] = rng_hnorm(sigma_n[i % ns]);
   
   return x;
 }

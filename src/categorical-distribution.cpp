@@ -26,7 +26,7 @@ using Rcpp::NumericMatrix;
 *
 *  Parameters:
 *  0 <= p <= 1
-*  sum(p) = 1
+*  sum(p) = 1ISNAN(prob_n(i % np, 0)) ? NAN : 0.0
 *
 */
 
@@ -43,27 +43,15 @@ NumericVector cpp_dcat(
   int Nmax = Rcpp::max(IntegerVector::create(n, np));
   int k = prob.ncol();
   NumericVector p(Nmax);
+  NumericMatrix prob_n = normalize_prob(prob); 
   
   for (int i = 0; i < Nmax; i++) {
-    if (!isInteger(x[i]) || x[i] < 1.0 || x[i] > static_cast<double>(k)) {
-      p[i] = 0.0;
+    if (ISNAN(x[i])) {
+      p[i] = NA_REAL;
+    } else if (!isInteger(x[i]) || x[i] < 1.0 || x[i] > static_cast<double>(k)) {
+      p[i] = ISNAN(prob_n(i % np, 0)) ? NAN : 0.0;
     } else {
-      double p_tot = 0.0;
-      bool wrong_param = false;
-      for (int j = 0; j < k; j++) {
-        if (prob(i % np, j) < 0.0) {
-          wrong_param = true;
-          break;
-        }
-        p_tot += prob(i % np, j);
-      }
-      
-      if (wrong_param) {
-        Rcpp::warning("NaNs produced");
-        p[i] = NAN;
-      } else {
-        p[i] = prob(i % np, static_cast<int>(x[i] - 1.0)) / p_tot;
-      }
+      p[i] = prob_n(i % np, static_cast<int>(x[i] - 1.0));
     }
   }
 
@@ -87,43 +75,23 @@ NumericVector cpp_pcat(
   int Nmax = Rcpp::max(IntegerVector::create(n, np));
   int k = prob.ncol();
   NumericVector p(Nmax);
+  NumericMatrix prob_n = normalize_prob(prob); 
   
   for (int i = 0; i < Nmax; i++) {
-    if (x[i] < 1.0) {
-      p[i] = 0.0;
+    if (ISNAN(x[i])) {
+      p[i] = NA_REAL;
+    } else if (x[i] < 1.0) {
+      p[i] = ISNAN(prob_n(i % np, 0)) ? NAN : 0.0;
     } else if (x[i] > static_cast<double>(k)) {
-      p[i] = 1.0;
+      p[i] = ISNAN(prob_n(i % np, 0)) ? NAN : 1.0;
     } else {
-      bool wrong_param = false;
+      //bool wrong_param = false;
       p[i] = 0.0;
       int j = 0;
       while (j < static_cast<int>(x[i])) {
-        if (prob(i % np, j) < 0.0) {
-          wrong_param = true;
-          break;
-        }
-        p[i] += prob(i % np, j);
+        p[i] += prob_n(i % np, j);
         j++;
       }
-      double p_tot = p[i];
-      if (!wrong_param) {
-        while (j < k) {
-          if (prob(i % np, j) < 0.0) {
-            wrong_param = true;
-            break;
-          }
-          p_tot += prob(i % np, j);
-          j++;
-        }
-      }
-
-      if (wrong_param) {
-        Rcpp::warning("NaNs produced");
-        p[i] = NAN;
-      } else {
-        p[i] = p[i] / p_tot;
-      }
-      
     }
   }
 
@@ -152,6 +120,7 @@ NumericVector cpp_qcat(
   int k = prob.ncol();
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
+  NumericMatrix prob_n = normalize_prob(prob); 
   
   if (log_prob)
     for (int i = 0; i < n; i++)
@@ -162,40 +131,29 @@ NumericVector cpp_qcat(
       pp[i] = 1.0 - pp[i];
   
   int jj;
-  double pp_norm, p_tmp, p_tot;
-  bool wrong_param;
+  double p_tmp;
     
   for (int i = 0; i < Nmax; i++) {
-    if (pp[i] < 0.0 || pp[i] > 1.0) {
+    if (ISNAN(pp[i])) {
+      q[i] = NA_REAL;
+    } else if (pp[i] < 0.0 || pp[i] > 1.0) {
       Rcpp::warning("NaNs produced");
       q[i] = NAN;
     } else if (pp[i] == 0.0) {
-      q[i] = 1.0; 
+      q[i] = ISNAN(prob_n(i % np, 0)) ? NAN : 1.0; 
     } else {
-      pp_norm = pp[i];
-      wrong_param = false;
       p_tmp = 1.0;
-      p_tot = 0.0;
       jj = 0;
       
-      for (int j = 0; j < k; j++) {
-        if (prob(i % np, j) < 0.0) {
-          wrong_param = true;
-          break;
-        }
-        p_tot += prob(i % np, j);
-      }
-      
       for (int j = k-1; j >= 0; j--) {
-        p_tmp -= prob(i % np, j) / p_tot;
-        if (pp_norm > p_tmp) {
+        p_tmp -= prob_n(i % np, j);
+        if (pp[i] > p_tmp) {
           jj = j;
           break;
         }
       }
 
-      if (wrong_param) {
-        Rcpp::warning("NaNs produced");
+      if (ISNAN(p_tmp)) {
         q[i] = NAN;
       } else {
         q[i] = static_cast<double>(jj+1);
@@ -216,36 +174,25 @@ NumericVector cpp_rcat(
   int np = prob.nrow();
   int k = prob.ncol();
   NumericVector x(n);
+  NumericMatrix prob_n = normalize_prob(prob); 
   
   int jj;
-  double u, p_tmp, p_tot;
-  bool wrong_param;
+  double u, p_tmp;
 
   for (int i = 0; i < n; i++) {
     u = rng_unif();
-    wrong_param = false;
     p_tmp = 1.0;
     jj = 0;
-    p_tot = 0.0;
-    
-    for (int j = 0; j < k; j++) {
-      if (prob(i % np, j) < 0.0) {
-        wrong_param = true;
-        break;
-      }
-      p_tot += prob(i % np, j);
-    }
     
     for (int j = k-1; j >= 0; j--) {
-      p_tmp -= prob(i % np, j) / p_tot;
+      p_tmp -= prob_n(i % np, j);
       if (u > p_tmp) {
         jj = j;
         break;
       }
     }
 
-    if (wrong_param) {
-      Rcpp::warning("NaNs produced");
+    if (ISNAN(p_tmp)) {
       x[i] = NAN;
     } else {
       x[i] = static_cast<double>(jj+1);

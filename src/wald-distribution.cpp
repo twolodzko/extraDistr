@@ -32,11 +32,11 @@ using Rcpp::NumericMatrix;
 
 double pdf_wald(double x, double mu, double lambda) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(lambda))
-    return NA_REAL;
-  if (mu <= 0.0 || lambda <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (mu <= 0.0 || lambda <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   if (x <= 0.0 || std::isinf(x))
     return 0.0;
   return sqrt(lambda/(2.0*PI*pow(x, 3.0))) *
@@ -45,11 +45,11 @@ double pdf_wald(double x, double mu, double lambda) {
 
 double cdf_wald(double x, double mu, double lambda) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(lambda))
-    return NA_REAL;
-  if (mu <= 0.0 || lambda <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (mu <= 0.0 || lambda <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   if (x <= 0.0)
     return 0.0;
   if (x == INFINITY)
@@ -61,11 +61,11 @@ double cdf_wald(double x, double mu, double lambda) {
 
 double rng_wald(double mu, double lambda) {
   if (ISNAN(mu) || ISNAN(lambda))
-    return NA_REAL;
-  if (mu <= 0.0 || lambda <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (mu <= 0.0 || lambda <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   double u, x, y, z;
   u = rng_unif();
   z = R::norm_rand();
@@ -92,9 +92,11 @@ NumericVector cpp_dwald(
   int nl = lambda.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, nl));
   NumericVector p(Nmax);
+  NumericVector mu_n = positive_or_nan(mu);
+  NumericVector lambda_n = positive_or_nan(lambda);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_wald(x[i % n], mu[i % nm], lambda[i % nl]);
+    p[i] = pdf_wald(x[i % n], mu_n[i % nm], lambda_n[i % nl]);
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -117,9 +119,11 @@ NumericVector cpp_pwald(
   int nl = lambda.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, nl));
   NumericVector p(Nmax);
+  NumericVector mu_n = positive_or_nan(mu);
+  NumericVector lambda_n = positive_or_nan(lambda);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_wald(x[i % n], mu[i % nm], lambda[i % nl]);
+    p[i] = cdf_wald(x[i % n], mu_n[i % nm], lambda_n[i % nl]);
   
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
@@ -143,9 +147,11 @@ NumericVector cpp_rwald(
   int nm = mu.length();
   int nl = lambda.length();
   NumericVector x(n);
+  NumericVector mu_n = positive_or_nan(mu);
+  NumericVector lambda_n = positive_or_nan(lambda);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_wald(mu[i % nm], lambda[i % nl]);
+    x[i] = rng_wald(mu_n[i % nm], lambda_n[i % nl]);
   
   return x;
 }

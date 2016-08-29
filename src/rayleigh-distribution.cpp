@@ -34,11 +34,11 @@ using Rcpp::NumericMatrix;
 
 double pdf_rayleigh(double x, double sigma) {
   if (ISNAN(x) || ISNAN(sigma))
-    return NA_REAL;
-  if (sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (sigma <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   if (x < 0.0 || std::isinf(x))
     return 0.0;
   return x/pow(sigma, 2.0) * exp(-pow(x, 2.0) / (2.0*pow(sigma, 2.0)));
@@ -46,11 +46,11 @@ double pdf_rayleigh(double x, double sigma) {
 
 double cdf_rayleigh(double x, double sigma) {
   if (ISNAN(x) || ISNAN(sigma))
-    return NA_REAL;
-  if (sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (sigma <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   if (x == INFINITY)
     return 1.0;
   if (x >= 0.0)
@@ -61,11 +61,11 @@ double cdf_rayleigh(double x, double sigma) {
 
 double invcdf_rayleigh(double p, double sigma) {
   if (ISNAN(p) || ISNAN(sigma))
-    return NA_REAL;
-  if (p < 0.0 || p > 1.0 || sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (p < 0.0 || p > 1.0 || sigma <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   return sqrt(-2.0*pow(sigma, 2.0) * log(1.0-p));
 }
 
@@ -81,9 +81,10 @@ NumericVector cpp_drayleigh(
   int ns = sigma.length();
   int Nmax = std::max(n, ns);
   NumericVector p(Nmax);
+  NumericVector sigma_n = positive_or_nan(sigma);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_rayleigh(x[i % n], sigma[i % ns]);
+    p[i] = pdf_rayleigh(x[i % n], sigma_n[i % ns]);
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -104,9 +105,10 @@ NumericVector cpp_prayleigh(
   int ns = sigma.length();
   int Nmax = std::max(n, ns);
   NumericVector p(Nmax);
+  NumericVector sigma_n = positive_or_nan(sigma);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_rayleigh(x[i % n], sigma[i % ns]);
+    p[i] = cdf_rayleigh(x[i % n], sigma_n[i % ns]);
 
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
@@ -132,6 +134,7 @@ NumericVector cpp_qrayleigh(
   int Nmax = std::max(n, ns);
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
+  NumericVector sigma_n = positive_or_nan(sigma);
 
   if (log_prob)
     for (int i = 0; i < n; i++)
@@ -141,8 +144,10 @@ NumericVector cpp_qrayleigh(
     for (int i = 0; i < n; i++)
       pp[i] = 1.0 - pp[i];
 
+  pp = zeroone_or_nan(pp);
+  
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_rayleigh(pp[i % n], sigma[i % ns]);
+    q[i] = invcdf_rayleigh(pp[i % n], sigma_n[i % ns]);
 
   return q;
 }
@@ -157,10 +162,11 @@ NumericVector cpp_rrayleigh(
   double u;
   int ns = sigma.length();
   NumericVector x(n);
+  NumericVector sigma_n = positive_or_nan(sigma);
 
   for (int i = 0; i < n; i++) {
     u = rng_unif();
-    x[i] = invcdf_rayleigh(u, sigma[i % ns]);
+    x[i] = invcdf_rayleigh(u, sigma_n[i % ns]);
   }
 
   return x;

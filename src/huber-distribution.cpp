@@ -20,11 +20,11 @@ using Rcpp::NumericMatrix;
 
 double pdf_huber(double x, double mu, double sigma, double c) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(c))
-    return NA_REAL;
-  if (sigma <= 0.0 || c <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (sigma <= 0.0 || c <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   
   double z, A, rho;
   z = abs((x - mu)/sigma);
@@ -40,11 +40,11 @@ double pdf_huber(double x, double mu, double sigma, double c) {
 
 double cdf_huber(double x, double mu, double sigma, double c) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(c))
-    return NA_REAL;
-  if (sigma <= 0.0 || c <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (sigma <= 0.0 || c <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
 
   double A, z, az, p;
   A = 2.0*(phi(c)/c - Phi(-c) + 0.5);
@@ -64,11 +64,11 @@ double cdf_huber(double x, double mu, double sigma, double c) {
 
 double invcdf_huber(double p, double mu, double sigma, double c) {
   if (ISNAN(p) || ISNAN(mu) || ISNAN(sigma) || ISNAN(c))
-    return NA_REAL;
-  if (sigma <= 0.0 || c <= 0.0 || p < 0.0 || p > 1.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (sigma <= 0.0 || c <= 0.0 || p < 0.0 || p > 1.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
 
   double x, pm, A;
   A = 2.0*SQRT_2_PI * (Phi(c) + phi(c)/c - 0.5);
@@ -101,9 +101,11 @@ NumericVector cpp_dhuber(
   int ne = epsilon.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, ne));
   NumericVector p(Nmax);
+  NumericVector sigma_n = positive_or_nan(sigma);
+  NumericVector epsilon_n = positive_or_nan(epsilon);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_huber(x[i % n], mu[i % nm], sigma[i % ns], epsilon[i % ne]);
+    p[i] = pdf_huber(x[i % n], mu[i % nm], sigma_n[i % ns], epsilon_n[i % ne]);
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -128,9 +130,11 @@ NumericVector cpp_phuber(
   int ne = epsilon.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, ne));
   NumericVector p(Nmax);
+  NumericVector sigma_n = positive_or_nan(sigma);
+  NumericVector epsilon_n = positive_or_nan(epsilon);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_huber(x[i % n], mu[i % nm], sigma[i % ns], epsilon[i % ne]);
+    p[i] = cdf_huber(x[i % n], mu[i % nm], sigma_n[i % ns], epsilon_n[i % ne]);
   
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
@@ -160,6 +164,8 @@ NumericVector cpp_qhuber(
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, ne));
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
+  NumericVector sigma_n = positive_or_nan(sigma);
+  NumericVector epsilon_n = positive_or_nan(epsilon);
   
   if (log_prob)
     for (int i = 0; i < n; i++)
@@ -169,8 +175,10 @@ NumericVector cpp_qhuber(
     for (int i = 0; i < n; i++)
       pp[i] = 1.0 - pp[i];
   
+  pp = zeroone_or_nan(pp);
+  
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_huber(pp[i % n], mu[i % nm], sigma[i % ns], epsilon[i % ne]);
+    q[i] = invcdf_huber(pp[i % n], mu[i % nm], sigma_n[i % ns], epsilon_n[i % ne]);
   
   return q;
 }
@@ -189,10 +197,12 @@ NumericVector cpp_rhuber(
   int ns = sigma.length();
   int ne = epsilon.length();
   NumericVector x(n);
+  NumericVector sigma_n = positive_or_nan(sigma);
+  NumericVector epsilon_n = positive_or_nan(epsilon);
   
   for (int i = 0; i < n; i++) {
     u = rng_unif();
-    x[i] = invcdf_huber(u, mu[i % nm], sigma[i % ns], epsilon[i % ne]);
+    x[i] = invcdf_huber(u, mu[i % nm], sigma_n[i % ns], epsilon_n[i % ne]);
   }
   
   return x;

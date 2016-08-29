@@ -35,7 +35,7 @@ using Rcpp::NumericMatrix;
 
 double pdf_power(double x, double alpha, double beta) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
-    return NA_REAL;
+    return NAN;
   if (x < 0.0)
     return 0.0;
   if (x > 0.0 && x < alpha) {
@@ -47,7 +47,7 @@ double pdf_power(double x, double alpha, double beta) {
 
 double cdf_power(double x, double alpha, double beta) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
-    return NA_REAL;
+    return NAN;
   if (x < 0.0)
     return 0.0;
   if (x > 0.0 && x < alpha) {
@@ -61,17 +61,17 @@ double cdf_power(double x, double alpha, double beta) {
 
 double invcdf_power(double p, double alpha, double beta) {
   if (ISNAN(p) || ISNAN(alpha) || ISNAN(beta))
-    return NA_REAL;
-  if (p < 0.0 || p > 1.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (p < 0.0 || p > 1.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   return alpha * pow(p, 1.0/beta);
 }
 
 double logpdf_power(double x, double alpha, double beta) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
-    return NA_REAL;
+    return NAN;
   if (x < 0.0)
     return -INFINITY;
   if (x > 0.0 && x < alpha) {
@@ -83,7 +83,7 @@ double logpdf_power(double x, double alpha, double beta) {
 
 double logcdf_power(double x, double alpha, double beta) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
-    return NA_REAL;
+    return NAN;
   if (x < 0.0)
     return -INFINITY;
   if (x > 0.0 && x < alpha) {
@@ -172,6 +172,8 @@ NumericVector cpp_qpower(
   if (!lower_tail)
     for (int i = 0; i < n; i++)
       pp[i] = 1.0 - pp[i];
+  
+  pp = zeroone_or_nan(pp);
 
   for (int i = 0; i < Nmax; i++)
     q[i] = invcdf_power(pp[i % n], alpha[i % na], beta[i % nb]);

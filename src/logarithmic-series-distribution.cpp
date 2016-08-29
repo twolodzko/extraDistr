@@ -34,7 +34,7 @@ using Rcpp::NumericMatrix;
 
 double pdf_lgser(double x, double theta) {
   if (ISNAN(x) || ISNAN(theta))
-    return NA_REAL;
+    return NAN;
   if (theta <= 0.0 || theta >= 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -48,7 +48,7 @@ double pdf_lgser(double x, double theta) {
 
 double cdf_lgser(double x, double theta) {
   if (ISNAN(x) || ISNAN(theta))
-    return NA_REAL;
+    return NAN;
   if (theta <= 0.0 || theta >= 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -72,7 +72,7 @@ double cdf_lgser(double x, double theta) {
 
 double invcdf_lgser(double p, double theta) {
   if (ISNAN(p) || ISNAN(theta))
-    return NA_REAL;
+    return NAN;
   if (theta <= 0.0 || theta >= 1.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -164,6 +164,8 @@ NumericVector cpp_qlgser(
   if (!lower_tail)
     for (int i = 0; i < n; i++)
       pp[i] = 1.0 - pp[i];
+  
+  pp = zeroone_or_nan(pp);
   
   for (int i = 0; i < Nmax; i++)
     x[i] = invcdf_lgser(pp[i % n], theta[i % nt]);

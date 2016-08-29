@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include "shared.h"
 
 using std::pow;
 using std::sqrt;
@@ -31,8 +32,8 @@ using Rcpp::NumericMatrix;
 
 double pdf_nsbeta(double x, double alpha, double beta, double l, double u, bool log_p) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(l) || ISNAN(u))
-    return NA_REAL;
-  if (l >= u || alpha < 0.0 || beta < 0.0) {
+    return NAN;
+  if (l >= u) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -46,8 +47,8 @@ double pdf_nsbeta(double x, double alpha, double beta, double l, double u, bool 
 
 double cdf_nsbeta(double x, double alpha, double beta, double l, double u, bool lower_tail, bool log_p) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(l) || ISNAN(u))
-    return NA_REAL;
-  if (l >= u || alpha < 0.0 || beta < 0.0) {
+    return NAN;
+  if (l >= u) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -56,8 +57,8 @@ double cdf_nsbeta(double x, double alpha, double beta, double l, double u, bool 
 
 double invcdf_nsbeta(double p, double alpha, double beta, double l, double u) {
   if (ISNAN(p) || ISNAN(alpha) || ISNAN(beta) || ISNAN(l) || ISNAN(u))
-    return NA_REAL;
-  if (l >= u || alpha < 0.0 || beta < 0.0 || p < 0.0 || p > 1.0) {
+    return NAN;
+  if (l >= u) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -66,8 +67,8 @@ double invcdf_nsbeta(double p, double alpha, double beta, double l, double u) {
 
 double rng_nsbeta(double alpha, double beta, double l, double u) {
   if (ISNAN(alpha) || ISNAN(beta) || ISNAN(l) || ISNAN(u))
-    return NA_REAL;
-  if (l >= u || alpha < 0.0 || beta < 0.0) {
+    return NAN;
+  if (l >= u) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -92,9 +93,12 @@ NumericVector cpp_dnsbeta(
   int nu = upper.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb, nl, nu));
   NumericVector p(Nmax);
+  NumericVector alpha_n = positive_or_nan(alpha);
+  NumericVector beta_n = positive_or_nan(beta);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_nsbeta(x[i % n], alpha[i % na], beta[i % nb], lower[i % nl], upper[i % nu], log_prob);
+    p[i] = pdf_nsbeta(x[i % n], alpha_n[i % na], beta_n[i % nb],
+                      lower[i % nl], upper[i % nu], log_prob);
   
   return p;
 }
@@ -117,9 +121,12 @@ NumericVector cpp_pnsbeta(
   int nu = upper.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb, nl, nu));
   NumericVector p(Nmax);
+  NumericVector alpha_n = positive_or_nan(alpha);
+  NumericVector beta_n = positive_or_nan(beta);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_nsbeta(x[i % n], alpha[i % na], beta[i % nb], lower[i % nl], upper[i % nu], lower_tail, log_prob);
+    p[i] = cdf_nsbeta(x[i % n], alpha_n[i % na], beta_n[i % nb],
+                      lower[i % nl], upper[i % nu], lower_tail, log_prob);
   
   return p;
 }
@@ -143,6 +150,8 @@ NumericVector cpp_qnsbeta(
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb, nl, nu));
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
+  NumericVector alpha_n = positive_or_nan(alpha);
+  NumericVector beta_n = positive_or_nan(beta);
   
   if (log_prob)
     for (int i = 0; i < n; i++)
@@ -152,8 +161,11 @@ NumericVector cpp_qnsbeta(
     for (int i = 0; i < n; i++)
       pp[i] = 1.0 - pp[i];
   
+  pp = zeroone_or_nan(pp);
+  
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_nsbeta(pp[i % n], alpha[i % na], beta[i % nb], lower[i % nl], upper[i % nu]);
+    q[i] = invcdf_nsbeta(pp[i % n], alpha_n[i % na], beta_n[i % nb],
+                         lower[i % nl], upper[i % nu]);
   
   return q;
 }
@@ -173,9 +185,11 @@ NumericVector cpp_rnsbeta(
   int nl = lower.length();
   int nu = upper.length();
   NumericVector x(n);
+  NumericVector alpha_n = positive_or_nan(alpha);
+  NumericVector beta_n = positive_or_nan(beta);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_nsbeta(alpha[i % na], beta[i % nb], lower[i % nl], upper[i % nu]);
+    x[i] = rng_nsbeta(alpha_n[i % na], beta_n[i % nb], lower[i % nl], upper[i % nu]);
   
   return x;
 }

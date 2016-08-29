@@ -32,11 +32,11 @@ using Rcpp::NumericMatrix;
 
 double logpmf_gpois(double x, double alpha, double beta) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
-    return NA_REAL;
-  if (alpha <= 0.0 || beta <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (alpha <= 0.0 || beta <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   if (!isInteger(x) || x < 0.0 || std::isinf(x))
     return -INFINITY;
   
@@ -47,11 +47,11 @@ double logpmf_gpois(double x, double alpha, double beta) {
 
 double cdf_gpois(double x, double alpha, double beta) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
-    return NA_REAL;
-  if (alpha <= 0.0 || beta <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (alpha <= 0.0 || beta <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   if (x == INFINITY)
     return 1.0;
   if (x < 0.0)
@@ -64,11 +64,11 @@ double cdf_gpois(double x, double alpha, double beta) {
 
 double rng_gpois(double alpha, double beta) {
   if (ISNAN(alpha) || ISNAN(beta))
-    return NA_REAL;
-  if (alpha <= 0.0 || beta <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (alpha <= 0.0 || beta <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   double lambda = R::rgamma(alpha, beta);
   return R::rpois(lambda);
 }
@@ -87,9 +87,11 @@ NumericVector cpp_dgpois(
   int nb = beta.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
   NumericVector p(Nmax);
+  NumericVector alpha_n = positive_or_nan(alpha);
+  NumericVector beta_n = positive_or_nan(beta);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpmf_gpois(x[i % n], alpha[i % na], beta[i % nb]);
+    p[i] = logpmf_gpois(x[i % n], alpha_n[i % na], beta_n[i % nb]);
 
   if (!log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -112,8 +114,16 @@ NumericVector cpp_pgpois(
   int nb = beta.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
   NumericVector p(Nmax);
+  NumericVector alpha_n = positive_or_nan(alpha);
+  NumericVector beta_n = positive_or_nan(beta);
 
   if (na == 1 && nb == 1 && anyFinite(x)) {
+    
+    if (ISNAN(alpha_n[0]) || ISNAN(beta_n[0])) {
+      for (int i = 0; i < n; i++)
+        p[i] = NAN;
+      return p;
+    }
     
     double mx = static_cast<int>(finite_max(x));
     NumericVector p_tab(mx+1);
@@ -121,7 +131,7 @@ NumericVector cpp_pgpois(
     p_tab[0] = exp(logpmf_gpois(0, alpha[0], beta[0]));
     for (int j = 1; j < mx+1; j++)
       p_tab[j] = p_tab[j-1] + exp(logpmf_gpois(static_cast<double>(j),
-                                               alpha[0], beta[0]));
+                                               alpha_n[0], beta_n[0]));
     
     for (int i = 0; i < n; i++) {
       if (x[i] == INFINITY) {
@@ -165,9 +175,11 @@ NumericVector cpp_rgpois(
   int na = alpha.length();
   int nb = beta.length();
   NumericVector x(n);
+  NumericVector alpha_n = positive_or_nan(alpha);
+  NumericVector beta_n = positive_or_nan(beta);
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_gpois(alpha[i % na], beta[i % nb]);
+    x[i] = rng_gpois(alpha_n[i % na], beta_n[i % nb]);
 
   return x;
 }

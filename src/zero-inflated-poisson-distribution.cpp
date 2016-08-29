@@ -30,12 +30,12 @@ using Rcpp::NumericMatrix;
 */
 
 double pdf_zip(double x, double lambda, double pi) {
-  if (lambda <= 0.0 || pi < 0.0 || pi > 1.0) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
-  }
+  // if (lambda <= 0.0 || pi < 0.0 || pi > 1.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(pi))
-    return NA_REAL;
+    return NAN;
   if (x < 0.0 || !isInteger(x) || std::isinf(x))
     return 0.0;
   if (x == 0.0)
@@ -46,11 +46,11 @@ double pdf_zip(double x, double lambda, double pi) {
 
 double cdf_zip(double x, double lambda, double pi) {
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(pi))
-    return NA_REAL;
-  if (lambda <= 0.0 || pi < 0.0 || pi > 1.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (lambda <= 0.0 || pi < 0.0 || pi > 1.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   if (x < 0.0)
     return 0.0;
   if (std::isinf(x))
@@ -60,11 +60,11 @@ double cdf_zip(double x, double lambda, double pi) {
 
 double invcdf_zip(double p, double lambda, double pi) {
   if (ISNAN(p) || ISNAN(lambda) || ISNAN(pi))
-    return NA_REAL;
-  if (lambda <= 0.0 || pi < 0.0 || pi > 1.0 || p < 0.0 || p > 1.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (lambda <= 0.0 || pi < 0.0 || pi > 1.0 || p < 0.0 || p > 1.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   if (p < pi)
     return 0.0;
   else
@@ -73,11 +73,11 @@ double invcdf_zip(double p, double lambda, double pi) {
 
 double rng_zip(double lambda, double pi) {
   if (ISNAN(lambda) || ISNAN(pi))
-    return NA_REAL;
-  if (lambda <= 0.0 || pi < 0.0 || pi > 1.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (lambda <= 0.0 || pi < 0.0 || pi > 1.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   double u = rng_unif();
   if (u < pi)
     return 0.0;
@@ -99,9 +99,11 @@ NumericVector cpp_dzip(
   int nl = lambda.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, np, nl));
   NumericVector p(Nmax);
+  NumericVector pi_n = zeroone_or_nan(pi);
+  NumericVector lambda_n = positive_or_nan(lambda);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_zip(x[i % n], lambda[i % nl], pi[i % np]);
+    p[i] = pdf_zip(x[i % n], lambda_n[i % nl], pi_n[i % np]);
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -124,9 +126,11 @@ NumericVector cpp_pzip(
   int nl = lambda.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, np, nl));
   NumericVector p(Nmax);
+  NumericVector pi_n = zeroone_or_nan(pi);
+  NumericVector lambda_n = positive_or_nan(lambda);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_zip(x[i % n], lambda[i % nl], pi[i % np]);
+    p[i] = cdf_zip(x[i % n], lambda_n[i % nl], pi_n[i % np]);
   
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
@@ -154,6 +158,8 @@ NumericVector cpp_qzip(
   int Nmax = Rcpp::max(IntegerVector::create(n, np, nl));
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
+  NumericVector pi_n = zeroone_or_nan(pi);
+  NumericVector lambda_n = positive_or_nan(lambda);
   
   if (log_prob)
     for (int i = 0; i < n; i++)
@@ -163,8 +169,10 @@ NumericVector cpp_qzip(
     for (int i = 0; i < n; i++)
       pp[i] = 1.0 - pp[i];
   
+  pp = zeroone_or_nan(pp);
+  
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_zip(pp[i % n], lambda[i % nl], pi[i % np]);
+    x[i] = invcdf_zip(pp[i % n], lambda_n[i % nl], pi_n[i % np]);
   
   return x;
 }
@@ -180,9 +188,11 @@ NumericVector cpp_rzip(
   int np = pi.length();
   int nl = lambda.length();
   NumericVector x(n);
+  NumericVector pi_n = zeroone_or_nan(pi);
+  NumericVector lambda_n = positive_or_nan(lambda);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_zip(lambda[i % nl], pi[i % np]);
+    x[i] = rng_zip(lambda_n[i % nl], pi_n[i % np]);
   
   return x;
 }

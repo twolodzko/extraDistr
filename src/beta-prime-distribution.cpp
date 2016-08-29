@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include "shared.h"
 
 using std::pow;
 using std::sqrt;
@@ -31,11 +32,11 @@ using Rcpp::NumericMatrix;
 
 double pdf_betapr(double x, double alpha, double beta, double sigma) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma))
-    return NA_REAL;
-  if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   if (x <= 0.0)
     return 0.0;
   if (x == INFINITY)
@@ -46,11 +47,11 @@ double pdf_betapr(double x, double alpha, double beta, double sigma) {
 
 double logpdf_betapr(double x, double alpha, double beta, double sigma) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma))
-    return NA_REAL;
-  if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   if (x <= 0.0)
     return -INFINITY;
   if (x == INFINITY)
@@ -62,11 +63,11 @@ double logpdf_betapr(double x, double alpha, double beta, double sigma) {
 double cdf_betapr(double x, double alpha, double beta, double sigma,
                   bool lower_tail, bool log_prob) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma))
-    return NA_REAL;
-  if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   if (x <= 0.0)
     return 0;
   if (x == INFINITY)
@@ -77,11 +78,11 @@ double cdf_betapr(double x, double alpha, double beta, double sigma,
 
 double invcdf_betapr(double p, double alpha, double beta, double sigma) {
   if (ISNAN(p) || ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma))
-    return NA_REAL;
-  if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0 || p < 0.0 || p > 1.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0 || p < 0.0 || p > 1.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   if (p == 0.0)
     return 0.0;
   if (p == 1.0)
@@ -92,11 +93,11 @@ double invcdf_betapr(double p, double alpha, double beta, double sigma) {
 
 double rng_betapr(double alpha, double beta, double sigma) {
   if (ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma))
-    return NA_REAL;
-  if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   double x = R::rbeta(alpha, beta);
   return x/(1.0-x) * sigma;
 }
@@ -117,9 +118,12 @@ NumericVector cpp_dbetapr(
   int ns = sigma.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb, ns));
   NumericVector p(Nmax);
+  NumericVector alpha_n = positive_or_nan(alpha);
+  NumericVector beta_n = positive_or_nan(beta);
+  NumericVector sigma_n = positive_or_nan(sigma);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_betapr(x[i % n], alpha[i % na], beta[i % nb], sigma[i % ns]);
+    p[i] = pdf_betapr(x[i % n], alpha_n[i % na], beta_n[i % nb], sigma_n[i % ns]);
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -144,9 +148,12 @@ NumericVector cpp_pbetapr(
   int ns = sigma.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb, ns));
   NumericVector p(Nmax);
+  NumericVector alpha_n = positive_or_nan(alpha);
+  NumericVector beta_n = positive_or_nan(beta);
+  NumericVector sigma_n = positive_or_nan(sigma);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_betapr(x[i % n], alpha[i % na], beta[i % nb], sigma[i % ns],
+    p[i] = cdf_betapr(x[i % n], alpha_n[i % na], beta_n[i % nb], sigma_n[i % ns],
                       lower_tail, log_prob);
 
   return p;
@@ -169,6 +176,9 @@ NumericVector cpp_qbetapr(
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb, ns));
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
+  NumericVector alpha_n = positive_or_nan(alpha);
+  NumericVector beta_n = positive_or_nan(beta);
+  NumericVector sigma_n = positive_or_nan(sigma);
   
   if (log_prob)
     for (int i = 0; i < n; i++)
@@ -178,8 +188,10 @@ NumericVector cpp_qbetapr(
     for (int i = 0; i < n; i++)
       pp[i] = 1.0 - pp[i];
   
+  pp = zeroone_or_nan(pp);
+  
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_betapr(pp[i % n], alpha[i % na], beta[i % nb], sigma[i % ns]);
+    q[i] = invcdf_betapr(pp[i % n], alpha_n[i % na], beta_n[i % nb], sigma_n[i % ns]);
   
   return q;
 }
@@ -197,9 +209,12 @@ NumericVector cpp_rbetapr(
   int nb = beta.length();
   int ns = sigma.length();
   NumericVector x(n);
+  NumericVector alpha_n = positive_or_nan(alpha);
+  NumericVector beta_n = positive_or_nan(beta);
+  NumericVector sigma_n = positive_or_nan(sigma);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_betapr(alpha[i % na], beta[i % nb], sigma[i % ns]);
+    x[i] = rng_betapr(alpha_n[i % na], beta_n[i % nb], sigma_n[i % ns]);
   
   return x;
 }

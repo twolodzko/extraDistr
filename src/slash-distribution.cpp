@@ -31,22 +31,22 @@ using Rcpp::NumericMatrix;
 
 double pdf_slash(double x, double mu, double sigma) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
-    return NA_REAL;
-  if (sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (sigma <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   double z = (x - mu)/sigma;
   return ((PHI_0 - phi(z))/pow(z, 2.0))/sigma;
 }
 
 double cdf_slash(double x, double mu, double sigma) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
-    return NA_REAL;
-  if (sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (sigma <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   double z = (x - mu)/sigma;
   if (z == 0.0)
     return 0.5;
@@ -56,11 +56,11 @@ double cdf_slash(double x, double mu, double sigma) {
 
 double rng_slash(double mu, double sigma) {
   if (ISNAN(mu) || ISNAN(sigma))
-    return NA_REAL;
-  if (sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
     return NAN;
-  }
+  // if (sigma <= 0.0) {
+  //   Rcpp::warning("NaNs produced");
+  //   return NAN;
+  // }
   double z = R::norm_rand();
   double u = rng_unif();
   return z/u*sigma + mu;
@@ -81,9 +81,10 @@ NumericVector cpp_dslash(
   int ns = sigma.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
   NumericVector p(Nmax);
+  NumericVector sigma_n = nonneg_or_nan(sigma);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_slash(x[i % n], mu[i % nm], sigma[i % ns]);
+    p[i] = pdf_slash(x[i % n], mu[i % nm], sigma_n[i % ns]);
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -106,9 +107,10 @@ NumericVector cpp_pslash(
   int ns = sigma.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
   NumericVector p(Nmax);
+  NumericVector sigma_n = nonneg_or_nan(sigma);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_slash(x[i % n], mu[i % nm], sigma[i % ns]);
+    p[i] = cdf_slash(x[i % n], mu[i % nm], sigma_n[i % ns]);
   
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
@@ -132,9 +134,10 @@ NumericVector cpp_rslash(
   int nm = mu.length();
   int ns = sigma.length();
   NumericVector x(n);
+  NumericVector sigma_n = nonneg_or_nan(sigma);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_slash(mu[i % nm], sigma[i % ns]);
+    x[i] = rng_slash(mu[i % nm], sigma_n[i % ns]);
   
   return x;
 }
