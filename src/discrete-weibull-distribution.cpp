@@ -38,7 +38,7 @@ using Rcpp::NumericMatrix;
 
 double pdf_dweibull(double x, double q, double beta) {
   if (ISNAN(x) || ISNAN(q) || ISNAN(beta))
-    return NA_REAL;
+    return NAN;
   if (q <= 0.0 || q >= 1.0 || beta <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -50,7 +50,7 @@ double pdf_dweibull(double x, double q, double beta) {
 
 double cdf_dweibull(double x, double q, double beta) {
   if (ISNAN(x) || ISNAN(q) || ISNAN(beta))
-    return NA_REAL;
+    return NAN;
   if (q <= 0.0 || q >= 1.0 || beta <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
