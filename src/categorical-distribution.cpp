@@ -47,7 +47,7 @@ NumericVector cpp_dcat(
   
   for (int i = 0; i < Nmax; i++) {
     if (ISNAN(x[i])) {
-      p[i] = NAN;
+      p[i] = NA_REAL;
     } else if (!isInteger(x[i]) || x[i] < 1.0 || x[i] > static_cast<double>(k)) {
       p[i] = ISNAN(prob_n(i % np, 0)) ? NAN : 0.0;
     } else {
@@ -79,7 +79,7 @@ NumericVector cpp_pcat(
   
   for (int i = 0; i < Nmax; i++) {
     if (ISNAN(x[i])) {
-      p[i] = NAN;
+      p[i] = NA_REAL;
     } else if (x[i] < 1.0) {
       p[i] = ISNAN(prob_n(i % np, 0)) ? NAN : 0.0;
     } else if (x[i] > static_cast<double>(k)) {
@@ -135,7 +135,7 @@ NumericVector cpp_qcat(
     
   for (int i = 0; i < Nmax; i++) {
     if (ISNAN(pp[i])) {
-      q[i] = NAN;
+      q[i] = NA_REAL;
     } else if (pp[i] < 0.0 || pp[i] > 1.0) {
       Rcpp::warning("NaNs produced");
       q[i] = NAN;
