@@ -19,11 +19,11 @@ using Rcpp::NumericMatrix;
 
 double pdf_hcauchy(double x, double sigma) {
   if (ISNAN(x) || ISNAN(sigma))
+    return NA_REAL;
+  if (sigma <= 0.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (sigma <= 0.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (x < 0.0)
     return 0.0;
   return 2.0/(M_PI*(1.0 + pow(x/sigma, 2.0)))/sigma;
@@ -31,11 +31,11 @@ double pdf_hcauchy(double x, double sigma) {
 
 double cdf_hcauchy(double x, double sigma) {
   if (ISNAN(x) || ISNAN(sigma))
+    return NA_REAL;
+  if (sigma <= 0.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (sigma <= 0.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (x < 0.0)
     return 0.0;
   return 2.0/M_PI * atan(x/sigma);
@@ -43,21 +43,21 @@ double cdf_hcauchy(double x, double sigma) {
 
 double invcdf_hcauchy(double p, double sigma) {
   if (ISNAN(p) || ISNAN(sigma))
+    return NA_REAL;
+  if (sigma <= 0.0 || p < 0.0 || p > 1.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (sigma <= 0.0 || p < 0.0 || p > 1.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   return sigma * tan((M_PI*p)/2.0);
 }
 
 double rng_hcauchy(double sigma) {
   if (ISNAN(sigma))
+    return NA_REAL;
+  if (sigma <= 0.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (sigma <= 0.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   return abs(R::rcauchy(0.0, sigma));
 }
 
@@ -73,10 +73,9 @@ NumericVector cpp_dhcauchy(
   int ns = sigma.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, ns));
   NumericVector p(Nmax);
-  NumericVector sigma_n = positive_or_nan(sigma);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_hcauchy(x[i % n], sigma_n[i % ns]);
+    p[i] = pdf_hcauchy(x[i % n], sigma[i % ns]);
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -97,10 +96,9 @@ NumericVector cpp_phcauchy(
   int ns = sigma.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, ns));
   NumericVector p(Nmax);
-  NumericVector sigma_n = positive_or_nan(sigma);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_hcauchy(x[i % n], sigma_n[i % ns]);
+    p[i] = cdf_hcauchy(x[i % n], sigma[i % ns]);
   
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
@@ -126,7 +124,6 @@ NumericVector cpp_qhcauchy(
   int Nmax = Rcpp::max(IntegerVector::create(n, ns));
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
-  NumericVector sigma_n = positive_or_nan(sigma);
   
   if (log_prob)
     for (int i = 0; i < n; i++)
@@ -136,10 +133,8 @@ NumericVector cpp_qhcauchy(
     for (int i = 0; i < n; i++)
       pp[i] = 1.0 - pp[i];
   
-  pp = zeroone_or_nan(pp);
-  
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_hcauchy(pp[i % n], sigma_n[i % ns]);
+    q[i] = invcdf_hcauchy(pp[i % n], sigma[i % ns]);
   
   return q;
 }
@@ -153,10 +148,9 @@ NumericVector cpp_rhcauchy(
   
   int ns = sigma.length();
   NumericVector x(n);
-  NumericVector sigma_n = positive_or_nan(sigma);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_hcauchy(sigma_n[i % ns]);
+    x[i] = rng_hcauchy(sigma[i % ns]);
   
   return x;
 }

@@ -31,11 +31,11 @@ using Rcpp::NumericMatrix;
 
 double pdf_zib(double x, double n, double p, double pi) {
   if (ISNAN(x) || ISNAN(n) || ISNAN(p) || ISNAN(pi))
+    return NA_REAL;
+  if (p < 0.0 || p > 1.0 || n < 0.0 || pi < 0.0 || pi > 1.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (p < 0.0 || p > 1.0 || n < 0.0 || pi < 0.0 || pi > 1.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (x < 0.0 || !isInteger(x) || std::isinf(x))
     return 0.0;
   if (x == 0.0)
@@ -46,11 +46,11 @@ double pdf_zib(double x, double n, double p, double pi) {
 
 double cdf_zib(double x, double n, double p, double pi) {
   if (ISNAN(x) || ISNAN(n) || ISNAN(p) || ISNAN(pi))
+    return NA_REAL;
+  if (p < 0.0 || p > 1.0 || n < 0.0 || pi < 0.0 || pi > 1.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (p < 0.0 || p > 1.0 || n < 0.0 || pi < 0.0 || pi > 1.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (x < 0.0)
     return 0.0;
   if (std::isinf(x))
@@ -60,11 +60,11 @@ double cdf_zib(double x, double n, double p, double pi) {
 
 double invcdf_zib(double pp, double n, double p, double pi) {
   if (ISNAN(pp) || ISNAN(n) || ISNAN(p) || ISNAN(pi))
+    return NA_REAL;
+  if (p < 0.0 || p > 1.0 || n < 0.0 || pi < 0.0 || pi > 1.0 || pp < 0.0 || pp > 1.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (p < 0.0 || p > 1.0 || n < 0.0 || pi < 0.0 || pi > 1.0 || pp < 0.0 || pp > 1.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (pp < pi)
     return 0.0;
   else
@@ -73,11 +73,11 @@ double invcdf_zib(double pp, double n, double p, double pi) {
 
 double rng_zib(double n, double p, double pi) {
   if (ISNAN(n) || ISNAN(p) || ISNAN(pi))
+    return NA_REAL;
+  if (p < 0.0 || p > 1.0 || n < 0.0 || pi < 0.0 || pi > 1.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (p < 0.0 || p > 1.0 || n < 0.0 || pi < 0.0 || pi > 1.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   double u = rng_unif();
   if (u < pi)
     return 0.0;
@@ -101,12 +101,9 @@ NumericVector cpp_dzib(
   int np = prob.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, npi, ns, np));
   NumericVector p(Nmax);
-  NumericVector size_n = nonneg_or_nan(size);
-  NumericVector prob_n = zeroone_or_nan(prob);
-  NumericVector pi_n = zeroone_or_nan(pi);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_zib(x[i % n], size_n[i % ns], prob_n[i % np], pi_n[i % npi]);
+    p[i] = pdf_zib(x[i % n], size[i % ns], prob[i % np], pi[i % npi]);
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -131,12 +128,9 @@ NumericVector cpp_pzib(
   int np = prob.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, npi, ns, np));
   NumericVector p(Nmax);
-  NumericVector size_n = nonneg_or_nan(size);
-  NumericVector prob_n = zeroone_or_nan(prob);
-  NumericVector pi_n = zeroone_or_nan(pi);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_zib(x[i % n], size_n[i % ns], prob_n[i % np], pi_n[i % np]);
+    p[i] = cdf_zib(x[i % n], size[i % ns], prob[i % np], pi[i % np]);
   
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
@@ -166,9 +160,6 @@ NumericVector cpp_qzib(
   int Nmax = Rcpp::max(IntegerVector::create(n, npi, ns, np));
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
-  NumericVector size_n = nonneg_or_nan(size);
-  NumericVector prob_n = zeroone_or_nan(prob);
-  NumericVector pi_n = zeroone_or_nan(pi);
   
   if (log_prob)
     for (int i = 0; i < n; i++)
@@ -178,10 +169,8 @@ NumericVector cpp_qzib(
     for (int i = 0; i < n; i++)
       pp[i] = 1.0 - pp[i];
   
-  pp = zeroone_or_nan(pp);
-  
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_zib(pp[i % n], size_n[i % ns], prob_n[i % np], pi_n[i % np]);
+    x[i] = invcdf_zib(pp[i % n], size[i % ns], prob[i % np], pi[i % np]);
   
   return x;
 }
@@ -199,12 +188,9 @@ NumericVector cpp_rzib(
   int ns = size.length();
   int np = prob.length();
   NumericVector x(n);
-  NumericVector size_n = nonneg_or_nan(size);
-  NumericVector prob_n = zeroone_or_nan(prob);
-  NumericVector pi_n = zeroone_or_nan(pi);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_zib(size_n[i % ns], prob_n[i % np], pi_n[i % npi]);
+    x[i] = rng_zib(size[i % ns], prob[i % np], pi[i % npi]);
   
   return x;
 }

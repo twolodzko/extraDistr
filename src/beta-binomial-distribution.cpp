@@ -35,11 +35,11 @@ using Rcpp::NumericMatrix;
 
 double pmf_bbinom(double k, double n, double alpha, double beta) {
   if (ISNAN(k) || ISNAN(n) || ISNAN(alpha) || ISNAN(beta))
+    return NA_REAL;
+  if (alpha < 0.0 || beta < 0.0 || n < 0.0 || floor(n) != n) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (alpha < 0.0 || beta < 0.0 || n < 0.0 || floor(n) != n) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (!isInteger(k) || k < 0.0 || k > n)
     return 0.0;
   return R::choose(n, k) * R::beta(k+alpha, n-k+beta) / R::beta(alpha, beta);
@@ -47,11 +47,11 @@ double pmf_bbinom(double k, double n, double alpha, double beta) {
 
 double logpmf_bbinom(double k, double n, double alpha, double beta) {
   if (ISNAN(k) || ISNAN(n) || ISNAN(alpha) || ISNAN(beta))
+    return NA_REAL;
+  if (alpha < 0.0 || beta < 0.0 || n < 0.0 || floor(n) != n) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (alpha < 0.0 || beta < 0.0 || n < 0.0 || floor(n) != n) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (!isInteger(k) || k < 0.0 || k > n)
     return -INFINITY;
   return R::lchoose(n, k) + R::lbeta(k+alpha, n-k+beta) - R::lbeta(alpha, beta);
@@ -59,11 +59,11 @@ double logpmf_bbinom(double k, double n, double alpha, double beta) {
 
 double cdf_bbinom(double k, double n, double alpha, double beta) {
   if (ISNAN(k) || ISNAN(n) || ISNAN(alpha) || ISNAN(beta))
+    return NA_REAL;
+  if (alpha < 0.0 || beta < 0.0 || n < 0.0 || floor(n) != n) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (alpha < 0.0 || beta < 0.0 || n < 0.0 || floor(n) != n) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (k < 0.0)
     return 0.0;
   if (k > n)
@@ -76,11 +76,11 @@ double cdf_bbinom(double k, double n, double alpha, double beta) {
 
 double rng_bbinom(double n, double alpha, double beta) {
   if (ISNAN(n) || ISNAN(alpha) || ISNAN(beta))
+    return NA_REAL;
+  if (alpha < 0.0 || beta < 0.0 || n < 0.0 || floor(n) != n) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (alpha < 0.0 || beta < 0.0 || n < 0.0 || floor(n) != n) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   double prob = R::rbeta(alpha, beta);
   return R::rbinom(n, prob);
 }
@@ -101,12 +101,9 @@ NumericVector cpp_dbbinom(
   int nb = beta.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nn, na, nb));
   NumericVector p(Nmax);
-  NumericVector alpha_n = nonneg_or_nan(alpha);
-  NumericVector beta_n = nonneg_or_nan(beta);
-  NumericVector size_n = discrete_or_nan(nonneg_or_nan(size));
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpmf_bbinom(x[i % n], size_n[i % nn], alpha_n[i % na], beta_n[i % nb]);
+    p[i] = logpmf_bbinom(x[i % n], size[i % nn], alpha[i % na], beta[i % nb]);
 
   if (!log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -131,13 +128,12 @@ NumericVector cpp_pbbinom(
   int nb = beta.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nn, na, nb));
   NumericVector p(Nmax);
-  NumericVector alpha_n = nonneg_or_nan(alpha);
-  NumericVector beta_n = nonneg_or_nan(beta);
-  NumericVector size_n = discrete_or_nan(nonneg_or_nan(size));
   
   if (nn == 1 && na == 1 && nb == 1) {
     
-    if (ISNAN(alpha_n[0]) || ISNAN(beta_n[0]) || ISNAN(size_n[0])) {
+    if (alpha[0] < 0.0 || beta[0] < 0.0 || size[0] < 0.0 ||
+        floor(size[0]) != size[0]) {
+      Rcpp::warning("NaNs produced");
       for (int i = 0; i < n; i++)
         p[i] = NAN;
       return p;
@@ -153,9 +149,7 @@ NumericVector cpp_pbbinom(
                                                 size[0], alpha[0], beta[0]));
     
     for (int i = 0; i < n; i++) {
-      if (ISNAN(x[i])) {
-        p[i] = NAN;
-      } else if (x[i] > size[0]) {
+      if (x[i] > size[0]) {
         p[i] = 1.0;
       } else if (x[i] >= 0.0) {
         p[i] = p_tab[static_cast<int>(floor(x[i]))];
@@ -169,7 +163,7 @@ NumericVector cpp_pbbinom(
     for (int i = 0; i < Nmax; i++) {
       if (i % 1000 == 0)
         Rcpp::checkUserInterrupt();
-      p[i] = cdf_bbinom(x[i % n], size_n[i % nn], alpha_n[i % na], beta_n[i % nb]); 
+      p[i] = cdf_bbinom(x[i % n], size[i % nn], alpha[i % na], beta[i % nb]);
     }
   
   }
@@ -198,12 +192,9 @@ NumericVector cpp_rbbinom(
   int na = alpha.length();
   int nb = beta.length();
   NumericVector x(n);
-  NumericVector alpha_n = nonneg_or_nan(alpha);
-  NumericVector beta_n = nonneg_or_nan(beta);
-  NumericVector size_n = discrete_or_nan(nonneg_or_nan(size));
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_bbinom(size_n[i % nn], alpha_n[i % na], beta_n[i % nb]);
+    x[i] = rng_bbinom(size[i % nn], alpha[i % na], beta[i % nb]);
 
   return x;
 }

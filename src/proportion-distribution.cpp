@@ -1,5 +1,4 @@
 #include <Rcpp.h>
-#include "shared.h"
 
 using std::pow;
 using std::sqrt;
@@ -31,41 +30,41 @@ using Rcpp::NumericMatrix;
 
 double pdf_prop(double x, double size, double mean, bool log_p) {
   if (ISNAN(x) || ISNAN(size) || ISNAN(mean))
+    return NA_REAL;
+  if (size <= 0.0 || mean < 0.0 || mean > 1.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (size <= 0.0 || mean < 0.0 || mean > 1.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   return R::dbeta(x, size*mean+1.0, size*(1.0-mean)+1.0, log_p);
 }
 
 double cdf_prop(double x, double size, double mean, bool lower_tail, bool log_p) {
   if (ISNAN(x) || ISNAN(size) || ISNAN(mean))
+    return NA_REAL;
+  if (size <= 0.0 || mean < 0.0 || mean > 1.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (size <= 0.0 || mean < 0.0 || mean > 1.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   return R::pbeta(x, size*mean+1.0, size*(1.0-mean)+1.0, lower_tail, log_p);
 }
 
 double invcdf_prop(double p, double size, double mean) {
   if (ISNAN(p) || ISNAN(size) || ISNAN(mean))
+    return NA_REAL;
+  if (size <= 0.0 || mean < 0.0 || mean > 1.0 || p < 0.0 || p > 1.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (size <= 0.0 || mean < 0.0 || mean > 1.0 || p < 0.0 || p > 1.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   return R::qbeta(p, size*mean+1.0, size*(1.0-mean)+1.0, true, false);
 }
 
 double rng_prop(double size, double mean) {
   if (ISNAN(size) || ISNAN(mean))
+    return NA_REAL;
+  if (size <= 0.0 || mean < 0.0 || mean > 1.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (size <= 0.0 || mean < 0.0 || mean > 1.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   return R::rbeta(size*mean+1.0, size*(1.0-mean)+1.0);
 }
 
@@ -83,11 +82,9 @@ NumericVector cpp_dprop(
   int ns = size.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
   NumericVector p(Nmax);
-  NumericVector size_n = positive_or_nan(size);
-  NumericVector mean_n = zeroone_or_nan(mean);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_prop(x[i % n], size_n[i % ns], mean_n[i % nm], log_prob);
+    p[i] = pdf_prop(x[i % n], size[i % ns], mean[i % nm], log_prob);
 
   return p;
 }
@@ -106,11 +103,9 @@ NumericVector cpp_pprop(
   int ns = size.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
   NumericVector p(Nmax);
-  NumericVector size_n = positive_or_nan(size);
-  NumericVector mean_n = zeroone_or_nan(mean);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_prop(x[i % n], size_n[i % ns], mean_n[i % nm], lower_tail, log_prob);
+    p[i] = cdf_prop(x[i % n], size[i % ns], mean[i % nm], lower_tail, log_prob);
 
   return p;
 }
@@ -130,8 +125,6 @@ NumericVector cpp_qprop(
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
-  NumericVector size_n = positive_or_nan(size);
-  NumericVector mean_n = zeroone_or_nan(mean);
   
   if (log_prob)
     for (int i = 0; i < n; i++)
@@ -141,10 +134,8 @@ NumericVector cpp_qprop(
     for (int i = 0; i < n; i++)
       pp[i] = 1.0 - pp[i];
   
-  pp = zeroone_or_nan(pp);
-  
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_prop(pp[i % n], size_n[i % ns], mean_n[i % nm]);
+    q[i] = invcdf_prop(pp[i % n], size[i % ns], mean[i % nm]);
   
   return q;
 }
@@ -160,11 +151,9 @@ NumericVector cpp_rprop(
   int nm = mean.length();
   int ns = size.length();
   NumericVector x(n);
-  NumericVector size_n = positive_or_nan(size);
-  NumericVector mean_n = zeroone_or_nan(mean);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_prop(size_n[i % ns], mean_n[i % nm]);
+    x[i] = rng_prop(size[i % ns], mean[i % nm]);
   
   return x;
 }

@@ -32,11 +32,11 @@ using Rcpp::NumericMatrix;
 
 double pmf_dnorm(double x, double mu, double sigma) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
+  if (sigma <= 0.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (sigma <= 0.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (!isInteger(x))
     return 0.0;
   return R::pnorm(x+1.0, mu, sigma, true, false) -
@@ -57,10 +57,9 @@ NumericVector cpp_ddnorm(
   int ns = sigma.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
   NumericVector p(Nmax);
-  NumericVector sigma_n = positive_or_nan(sigma);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pmf_dnorm(x[i % n], mu[i % nm], sigma_n[i % ns]);
+    p[i] = pmf_dnorm(x[i % n], mu[i % nm], sigma[i % ns]);
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)

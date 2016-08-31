@@ -37,11 +37,11 @@ using Rcpp::NumericMatrix;
 
 double pdf_frechet(double x, double lambda, double mu, double sigma) {
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
+  if (lambda <= 0.0 || sigma <= 0.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (lambda <= 0.0 || sigma <= 0.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (x <= mu)
     return 0.0;
   double z = (x-mu)/sigma;
@@ -50,11 +50,11 @@ double pdf_frechet(double x, double lambda, double mu, double sigma) {
 
 double cdf_frechet(double x, double lambda, double mu, double sigma) {
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
+  if (lambda <= 0.0 || sigma <= 0.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (lambda <= 0.0 || sigma <= 0.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (x <= mu)
     return 0.0;
   double z = (x-mu)/sigma;
@@ -63,11 +63,11 @@ double cdf_frechet(double x, double lambda, double mu, double sigma) {
 
 double invcdf_frechet(double p, double lambda, double mu, double sigma) {
   if (ISNAN(p) || ISNAN(lambda) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
+  if (lambda <= 0.0 || sigma <= 0.0 || p < 0.0 || p > 1.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (lambda <= 0.0 || sigma <= 0.0 || p < 0.0 || p > 1.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (p == 1.0)
     return INFINITY;
   return mu + sigma * pow(-log(p), -1.0/lambda);
@@ -89,11 +89,9 @@ NumericVector cpp_dfrechet(
   int ns = sigma.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nl, nm, ns));
   NumericVector p(Nmax);
-  NumericVector lambda_n = positive_or_nan(lambda);
-  NumericVector sigma_n = positive_or_nan(sigma);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_frechet(x[i % n], lambda_n[i % nl], mu[i % nm], sigma_n[i % ns]);
+    p[i] = pdf_frechet(x[i % n], lambda[i % nl], mu[i % nm], sigma[i % ns]);
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -118,11 +116,9 @@ NumericVector cpp_pfrechet(
   int ns = sigma.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nl, nm, ns));
   NumericVector p(Nmax);
-  NumericVector lambda_n = positive_or_nan(lambda);
-  NumericVector sigma_n = positive_or_nan(sigma);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_frechet(x[i % n], lambda_n[i % nl], mu[i % nm], sigma_n[i % ns]);
+    p[i] = cdf_frechet(x[i % n], lambda[i % nl], mu[i % nm], sigma[i % ns]);
 
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
@@ -152,8 +148,6 @@ NumericVector cpp_qfrechet(
   int Nmax = Rcpp::max(IntegerVector::create(n, nl, nm, ns));
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
-  NumericVector lambda_n = positive_or_nan(lambda);
-  NumericVector sigma_n = positive_or_nan(sigma);
 
   if (log_prob)
     for (int i = 0; i < n; i++)
@@ -163,10 +157,8 @@ NumericVector cpp_qfrechet(
     for (int i = 0; i < n; i++)
       pp[i] = 1.0 - pp[i];
 
-  pp = zeroone_or_nan(pp);
-  
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_frechet(pp[i % n], lambda_n[i % nl], mu[i % nm], sigma_n[i % ns]);
+    q[i] = invcdf_frechet(pp[i % n], lambda[i % nl], mu[i % nm], sigma[i % ns]);
 
   return q;
 }
@@ -185,12 +177,10 @@ NumericVector cpp_rfrechet(
   int nm = mu.length();
   int ns = sigma.length();
   NumericVector x(n);
-  NumericVector lambda_n = positive_or_nan(lambda);
-  NumericVector sigma_n = positive_or_nan(sigma);
 
   for (int i = 0; i < n; i++) {
     u = rng_unif();
-    x[i] = invcdf_frechet(u, lambda_n[i % nl], mu[i % nm], sigma_n[i % ns]);
+    x[i] = invcdf_frechet(u, lambda[i % nl], mu[i % nm], sigma[i % ns]);
   }
 
   return x;

@@ -73,6 +73,17 @@ double rng_unif() {
   return u;
 }
 
+double rng_bern(double p) {
+  if (ISNAN(p))
+    return NA_REAL;
+  if (p < 0.0 || p > 1.0) {
+    Rcpp::warning("NaNs produced");
+    return NAN;
+  }
+  double u = rng_unif();
+  return (u > p) ? 0.0 : 1.0;
+}
+
 double rng_sign() {
   double u = rng_unif();
   return (u > 0.5) ? 1.0 : -1.0;
@@ -111,57 +122,5 @@ Rcpp::NumericMatrix normalize_prob(const Rcpp::NumericMatrix& prob) {
   }
   
   return p;
-}
-
-Rcpp::NumericVector positive_or_nan(const Rcpp::NumericVector& x) {
-  int n = x.length();
-  bool wrong_param;
-  Rcpp::NumericVector xx = Rcpp::clone(x);
-  for (int i = 0; i < n; i++) {
-    if (xx[i] <= 0.0) {
-      xx[i] = NAN;
-      Rcpp::warning("NaNs produced");
-    }
-  }
-  return xx;
-}
-
-Rcpp::NumericVector nonneg_or_nan(const Rcpp::NumericVector& x) {
-  int n = x.length();
-  bool wrong_param;
-  Rcpp::NumericVector xx = Rcpp::clone(x);
-  for (int i = 0; i < n; i++) {
-    if (xx[i] < 0.0) {
-      xx[i] = NAN;
-      Rcpp::warning("NaNs produced");
-    }
-  }
-  return xx;
-}
-
-Rcpp::NumericVector zeroone_or_nan(const Rcpp::NumericVector& x) {
-  int n = x.length();
-  bool wrong_param;
-  Rcpp::NumericVector xx = Rcpp::clone(x);
-  for (int i = 0; i < n; i++) {
-    if (xx[i] < 0.0 || xx[i] > 1.0) {
-      xx[i] = NAN;
-      Rcpp::warning("NaNs produced");
-    }
-  }
-  return xx;
-}
-
-Rcpp::NumericVector discrete_or_nan(const Rcpp::NumericVector& x) {
-  int n = x.length();
-  bool wrong_param;
-  Rcpp::NumericVector xx = Rcpp::clone(x);
-  for (int i = 0; i < n; i++) {
-    if (floor(xx[i]) != xx[i]) {
-      xx[i] = NAN;
-      Rcpp::warning("NaNs produced");
-    }
-  }
-  return xx;
 }
 

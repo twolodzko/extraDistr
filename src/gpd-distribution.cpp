@@ -42,11 +42,11 @@ using Rcpp::NumericMatrix;
 
 double pdf_gpd(double x, double mu, double sigma, double xi) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
+    return NA_REAL;
+  if (sigma <= 0.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (sigma <= 0.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   double z = (x-mu)/sigma;
   if (xi != 0.0) {
     if (x >= mu)
@@ -63,11 +63,11 @@ double pdf_gpd(double x, double mu, double sigma, double xi) {
 
 double cdf_gpd(double x, double mu, double sigma, double xi) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
+    return NA_REAL;
+  if (sigma <= 0.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (sigma <= 0.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   double z = (x-mu)/sigma;
   if (xi != 0.0) {
     if (x >= mu)
@@ -84,11 +84,11 @@ double cdf_gpd(double x, double mu, double sigma, double xi) {
 
 double invcdf_gpd(double p, double mu, double sigma, double xi) {
   if (ISNAN(p) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
+    return NA_REAL;
+  if (sigma <= 0.0 || p < 0.0 || p > 1.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (sigma <= 0.0 || p < 0.0 || p > 1.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (xi != 0.0)
     return mu + sigma * (pow(1.0-p, -xi)-1.0)/xi;
   else
@@ -111,10 +111,9 @@ NumericVector cpp_dgpd(
   int nx = xi.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, nx));
   NumericVector p(Nmax);
-  NumericVector sigma_n = positive_or_nan(sigma);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_gpd(x[i % n], mu[i % nm], sigma_n[i % ns], xi[i % nx]);
+    p[i] = pdf_gpd(x[i % n], mu[i % nm], sigma[i % ns], xi[i % nx]);
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -139,10 +138,9 @@ NumericVector cpp_pgpd(
   int nx = xi.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, nx));
   NumericVector p(Nmax);
-  NumericVector sigma_n = positive_or_nan(sigma);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_gpd(x[i % n], mu[i % nm], sigma_n[i % ns], xi[i % nx]);
+    p[i] = cdf_gpd(x[i % n], mu[i % nm], sigma[i % ns], xi[i % nx]);
 
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
@@ -172,7 +170,6 @@ NumericVector cpp_qgpd(
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, nx));
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
-  NumericVector sigma_n = positive_or_nan(sigma);
 
   if (log_prob)
     for (int i = 0; i < n; i++)
@@ -182,10 +179,8 @@ NumericVector cpp_qgpd(
     for (int i = 0; i < n; i++)
       pp[i] = 1.0 - pp[i];
 
-  pp = zeroone_or_nan(pp);
-  
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_gpd(pp[i % n], mu[i % nm], sigma_n[i % ns], xi[i % nx]);
+    q[i] = invcdf_gpd(pp[i % n], mu[i % nm], sigma[i % ns], xi[i % nx]);
 
   return q;
 }
@@ -204,11 +199,10 @@ NumericVector cpp_rgpd(
   int ns = sigma.length();
   int nx = xi.length();
   NumericVector x(n);
-  NumericVector sigma_n = positive_or_nan(sigma);
 
   for (int i = 0; i < n; i++) {
     u = rng_unif();
-    x[i] = invcdf_gpd(u, mu[i % nm], sigma_n[i % ns], xi[i % nx]);
+    x[i] = invcdf_gpd(u, mu[i % nm], sigma[i % ns], xi[i % nx]);
   }
 
   return x;

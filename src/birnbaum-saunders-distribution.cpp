@@ -33,11 +33,11 @@ using Rcpp::NumericMatrix;
 
 double pdf_fatigue(double x, double alpha, double beta, double mu) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(mu))
+    return NA_REAL;
+  if (alpha <= 0.0 || beta <= 0.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (alpha <= 0.0 || beta <= 0.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (x <= mu || std::isinf(x))
     return 0.0;
   double z, zb, bz;
@@ -49,11 +49,11 @@ double pdf_fatigue(double x, double alpha, double beta, double mu) {
 
 double cdf_fatigue(double x, double alpha, double beta, double mu) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(mu))
+    return NA_REAL;
+  if (alpha <= 0.0 || beta <= 0.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (alpha <= 0.0 || beta <= 0.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (x <= mu)
     return 0.0;
   double z, zb, bz;
@@ -65,11 +65,11 @@ double cdf_fatigue(double x, double alpha, double beta, double mu) {
 
 double invcdf_fatigue(double p, double alpha, double beta, double mu) {
   if (ISNAN(p) || ISNAN(alpha) || ISNAN(beta) || ISNAN(mu))
+    return NA_REAL;
+  if (alpha <= 0.0 || beta <= 0.0 || p < 0.0 || p > 1.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (alpha <= 0.0 || beta <= 0.0 || p < 0.0 || p > 1.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (p == 0.0)
     return mu;
   double Zp = InvPhi(p);
@@ -78,11 +78,11 @@ double invcdf_fatigue(double p, double alpha, double beta, double mu) {
 
 double rng_fatigue(double alpha, double beta, double mu) {
   if (ISNAN(alpha) || ISNAN(beta) || ISNAN(mu))
+    return NA_REAL;
+  if (alpha <= 0.0 || beta <= 0.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (alpha <= 0.0 || beta <= 0.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   double z = R::norm_rand();
   return pow(alpha/2.0*z + sqrt(pow(alpha/2.0*z, 2.0) + 1.0), 2.0) * beta + mu;
 }
@@ -103,11 +103,9 @@ NumericVector cpp_dfatigue(
   int nm = mu.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb, nm));
   NumericVector p(Nmax);
-  NumericVector alpha_n = positive_or_nan(alpha);
-  NumericVector beta_n = positive_or_nan(beta);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_fatigue(x[i % n], alpha_n[i % na], beta_n[i % nb], mu[i % nm]);
+    p[i] = pdf_fatigue(x[i % n], alpha[i % na], beta[i % nb], mu[i % nm]);
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -132,11 +130,9 @@ NumericVector cpp_pfatigue(
   int nm = mu.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb, nm));
   NumericVector p(Nmax);
-  NumericVector alpha_n = positive_or_nan(alpha);
-  NumericVector beta_n = positive_or_nan(beta);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_fatigue(x[i % n], alpha_n[i % na], beta_n[i % nb], mu[i % nm]);
+    p[i] = cdf_fatigue(x[i % n], alpha[i % na], beta[i % nb], mu[i % nm]);
   
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
@@ -166,8 +162,6 @@ NumericVector cpp_qfatigue(
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb, nm));
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
-  NumericVector alpha_n = positive_or_nan(alpha);
-  NumericVector beta_n = positive_or_nan(beta);
   
   if (log_prob)
     for (int i = 0; i < n; i++)
@@ -177,10 +171,8 @@ NumericVector cpp_qfatigue(
     for (int i = 0; i < n; i++)
       pp[i] = 1.0 - pp[i];
   
-  pp = zeroone_or_nan(pp);
-  
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_fatigue(pp[i % n], alpha_n[i % na], beta_n[i % nb], mu[i % nm]);
+    q[i] = invcdf_fatigue(pp[i % n], alpha[i % na], beta[i % nb], mu[i % nm]);
   
   return q;
 }
@@ -198,11 +190,9 @@ NumericVector cpp_rfatigue(
   int nb = beta.length();
   int nm = mu.length();
   NumericVector x(n);
-  NumericVector alpha_n = positive_or_nan(alpha);
-  NumericVector beta_n = positive_or_nan(beta);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_fatigue(alpha_n[i % na], beta_n[i % nb], mu[i % nm]);
+    x[i] = rng_fatigue(alpha[i % na], beta[i % nb], mu[i % nm]);
   
   return x;
 }

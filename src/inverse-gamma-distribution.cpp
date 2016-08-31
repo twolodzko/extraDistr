@@ -1,5 +1,4 @@
 #include <Rcpp.h>
-#include "shared.h"
 
 using std::pow;
 using std::sqrt;
@@ -37,11 +36,11 @@ using Rcpp::NumericMatrix;
 
 double pdf_invgamma(double x, double alpha, double beta) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
+    return NA_REAL;
+  if (alpha <= 0.0 || beta <= 0.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (alpha <= 0.0 || beta <= 0.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (x > 0.0)
     return (pow(x, -alpha-1.0) * exp(-1.0/(beta*x))) / (R::gammafn(alpha) * pow(beta, alpha));
   else
@@ -62,11 +61,9 @@ NumericVector cpp_dinvgamma(
   int nb = beta.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
   NumericVector p(Nmax);
-  NumericVector alpha_n = nonneg_or_nan(alpha);
-  NumericVector beta_n = nonneg_or_nan(beta);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_invgamma(x[i % n], alpha_n[i % na], beta_n[i % nb]);
+    p[i] = pdf_invgamma(x[i % n], alpha[i % na], beta[i % nb]);
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)

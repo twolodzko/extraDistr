@@ -35,11 +35,11 @@ using Rcpp::NumericMatrix;
 
 double pmf_bnbinom(double k, double r, double alpha, double beta) {
   if (ISNAN(k) || ISNAN(r) || ISNAN(alpha) || ISNAN(beta))
+    return NA_REAL;
+  if (alpha <= 0.0 || beta <= 0.0 || r < 0.0 || floor(r) != r) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (alpha <= 0.0 || beta <= 0.0 || r < 0.0 || floor(r) != r) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (!isInteger(k) || k < 0.0 || std::isinf(k))
     return 0.0;
   return (R::gammafn(r+k) / (R::gammafn(k+1.0) * R::gammafn(r))) *
@@ -48,11 +48,11 @@ double pmf_bnbinom(double k, double r, double alpha, double beta) {
 
 double logpmf_bnbinom(double k, double r, double alpha, double beta) {
   if (ISNAN(k) || ISNAN(r) || ISNAN(alpha) || ISNAN(beta))
+    return NA_REAL;
+  if (alpha <= 0.0 || beta <= 0.0 || r < 0.0 || floor(r) != r) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (alpha <= 0.0 || beta <= 0.0 || r < 0.0 || floor(r) != r) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (!isInteger(k) || k < 0.0 || std::isinf(k))
     return -INFINITY;
   return (R::lgammafn(r+k) - (R::lgammafn(k+1.0) + R::lgammafn(r))) +
@@ -61,11 +61,11 @@ double logpmf_bnbinom(double k, double r, double alpha, double beta) {
 
 double cdf_bnbinom(double k, double r, double alpha, double beta) {
   if (ISNAN(k) || ISNAN(r) || ISNAN(alpha) || ISNAN(beta))
+    return NA_REAL;
+  if (alpha < 0.0 || beta < 0.0 || r < 0.0 || floor(r) != r) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (alpha < 0.0 || beta < 0.0 || r < 0.0 || floor(r) != r) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (k < 0.0)
     return 0.0;
   if (k == INFINITY)
@@ -78,11 +78,11 @@ double cdf_bnbinom(double k, double r, double alpha, double beta) {
 
 double rng_bnbinom(double r, double alpha, double beta) {
   if (ISNAN(r) || ISNAN(alpha) || ISNAN(beta))
+    return NA_REAL;
+  if (alpha <= 0.0 || beta <= 0.0 || r < 0.0 || floor(r) != r) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (alpha <= 0.0 || beta <= 0.0 || r < 0.0 || floor(r) != r) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   double prob = R::rbeta(alpha, beta);
   return R::rnbinom(r, prob);
 }
@@ -103,13 +103,9 @@ NumericVector cpp_dbnbinom(
   int nb = beta.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nn, na, nb));
   NumericVector p(Nmax);
-  NumericVector alpha_n = nonneg_or_nan(alpha);
-  NumericVector beta_n = nonneg_or_nan(beta);
-  NumericVector size_n = nonneg_or_nan(size);
-  size_n = discrete_or_nan(size_n);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpmf_bnbinom(x[i % n], size_n[i % nn], alpha_n[i % na], beta_n[i % nb]);
+    p[i] = logpmf_bnbinom(x[i % n], size[i % nn], alpha[i % na], beta[i % nb]);
 
   if (!log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -134,14 +130,12 @@ NumericVector cpp_pbnbinom(
   int nb = beta.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nn, na, nb));
   NumericVector p(Nmax);
-  NumericVector alpha_n = nonneg_or_nan(alpha);
-  NumericVector beta_n = nonneg_or_nan(beta);
-  NumericVector size_n = nonneg_or_nan(size);
-  size_n = discrete_or_nan(size_n);
 
   if (nn == 1 && na == 1 && nb == 1 && anyFinite(x)) {
     
-    if (ISNAN(alpha_n[0]) || ISNAN(beta_n[0]) || ISNAN(size_n[0])) {
+    if (alpha[0] < 0.0 || beta[0] < 0.0 || size[0] < 0.0 ||
+        floor(size[0]) != size[0]) {
+      Rcpp::warning("NaNs produced");
       for (int i = 0; i < n; i++)
         p[i] = NAN;
       return p;
@@ -156,9 +150,7 @@ NumericVector cpp_pbnbinom(
                                                  size[0], alpha[0], beta[0]));
     
     for (int i = 0; i < n; i++) {
-      if (ISNAN(x[i])) {
-        p[i] = NAN;
-      } else if (x[i] == INFINITY) {
+      if (x[i] == INFINITY) {
         p[i] = 1.0;
       } else if (x[i] >= 0.0) {
         p[i] = p_tab[static_cast<int>(floor(x[i]))];
@@ -201,13 +193,9 @@ NumericVector cpp_rbnbinom(
   int na = alpha.length();
   int nb = beta.length();
   NumericVector x(n);
-  NumericVector alpha_n = nonneg_or_nan(alpha);
-  NumericVector beta_n = nonneg_or_nan(beta);
-  NumericVector size_n = nonneg_or_nan(size);
-  size_n = discrete_or_nan(size_n);
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_bnbinom(size_n[i % nn], alpha_n[i % na], beta_n[i % nb]);
+    x[i] = rng_bnbinom(size[i % nn], alpha[i % na], beta[i % nb]);
 
   return x;
 }

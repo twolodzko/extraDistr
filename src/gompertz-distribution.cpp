@@ -41,11 +41,11 @@ using Rcpp::NumericMatrix;
 
 double pdf_gompertz(double x, double a, double b) {
   if (ISNAN(x) || ISNAN(a) || ISNAN(b))
+    return NA_REAL;
+  if (a <= 0.0 || b <= 0.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (a <= 0.0 || b <= 0.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (x < 0.0 || std::isinf(x))
     return 0.0;
   return a * exp(b*x - a/b * (exp(b*x) - 1.0));
@@ -53,11 +53,11 @@ double pdf_gompertz(double x, double a, double b) {
 
 double cdf_gompertz(double x, double a, double b) {
   if (ISNAN(x) || ISNAN(a) || ISNAN(b))
+    return NA_REAL;
+  if (a <= 0.0 || b <= 0.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (a <= 0.0 || b <= 0.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (std::isinf(x))
     return 1.0;
   if (x < 0.0)
@@ -67,21 +67,21 @@ double cdf_gompertz(double x, double a, double b) {
 
 double invcdf_gompertz(double p, double a, double b) {
   if (ISNAN(p) || ISNAN(a) || ISNAN(b))
+    return NA_REAL;
+  if (a <= 0.0 || b <= 0.0 || p < 0.0 || p > 1.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (a <= 0.0 || b <= 0.0 || p < 0.0 || p > 1.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   return 1.0/b * log(1.0 - b/a * log(1.0-p));
 }
 
 double logpdf_gompertz(double x, double a, double b) {
   if (ISNAN(x) || ISNAN(a) || ISNAN(b))
+    return NA_REAL;
+  if (a <= 0.0 || b <= 0.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (a <= 0.0 || b <= 0.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (x < 0.0 || std::isinf(x))
     return -INFINITY;
   return log(a) + (b*x - a/b * (exp(b*x) - 1.0));
@@ -101,11 +101,9 @@ NumericVector cpp_dgompertz(
   int nb = b.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
   NumericVector p(Nmax);
-  NumericVector a_n = positive_or_nan(a);
-  NumericVector b_n = positive_or_nan(b);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpdf_gompertz(x[i % n], a_n[i % na], b_n[i % nb]);
+    p[i] = logpdf_gompertz(x[i % n], a[i % na], b[i % nb]);
 
   if (!log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -128,11 +126,9 @@ NumericVector cpp_pgompertz(
   int nb = b.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
   NumericVector p(Nmax);
-  NumericVector a_n = positive_or_nan(a);
-  NumericVector b_n = positive_or_nan(b);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_gompertz(x[i % n], a_n[i % na], b_n[i % nb]);
+    p[i] = cdf_gompertz(x[i % n], a[i % na], b[i % nb]);
 
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
@@ -160,8 +156,6 @@ NumericVector cpp_qgompertz(
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
-  NumericVector a_n = positive_or_nan(a);
-  NumericVector b_n = positive_or_nan(b);
   
   if (log_prob)
     for (int i = 0; i < n; i++)
@@ -171,10 +165,8 @@ NumericVector cpp_qgompertz(
     for (int i = 0; i < n; i++)
       pp[i] = 1.0 - pp[i];
 
-  pp = zeroone_or_nan(pp);
-  
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_gompertz(pp[i % n], a_n[i % na], b_n[i % nb]);
+    q[i] = invcdf_gompertz(pp[i % n], a[i % na], b[i % nb]);
 
   return q;
 }
@@ -191,12 +183,10 @@ NumericVector cpp_rgompertz(
   int na = a.length();
   int nb = b.length();
   NumericVector x(n);
-  NumericVector a_n = positive_or_nan(a);
-  NumericVector b_n = positive_or_nan(b);
 
   for (int i = 0; i < n; i++) {
     u = rng_unif();
-    x[i] = invcdf_gompertz(u, a_n[i % na], b_n[i % nb]);
+    x[i] = invcdf_gompertz(u, a[i % na], b[i % nb]);
   }
 
   return x;

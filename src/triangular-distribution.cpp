@@ -39,7 +39,7 @@ using Rcpp::NumericMatrix;
 
 double pdf_triangular(double x, double a, double b, double c) {
   if (ISNAN(x) || ISNAN(a) || ISNAN(b) || ISNAN(c))
-    return NAN;
+    return NA_REAL;
   if (a > c || c > b || a == b) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -57,7 +57,7 @@ double pdf_triangular(double x, double a, double b, double c) {
 
 double cdf_triangular(double x, double a, double b, double c) {
   if (ISNAN(x) || ISNAN(a) || ISNAN(b) || ISNAN(c))
-    return NAN;
+    return NA_REAL;
   if (a > c || c > b || a == b) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -75,7 +75,7 @@ double cdf_triangular(double x, double a, double b, double c) {
 
 double invcdf_triangular(double p, double a, double b, double c) {
   if (ISNAN(p) || ISNAN(a) || ISNAN(b) || ISNAN(c))
-    return NAN;
+    return NA_REAL;
   if (a > c || c > b || a == b || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -90,7 +90,7 @@ double invcdf_triangular(double p, double a, double b, double c) {
 
 double rng_triangular(double a, double b, double c) {
   if (ISNAN(a) || ISNAN(b) || ISNAN(c))
-    return NAN;
+    return NA_REAL;
   if (a > c || c > b || a == b) {
     Rcpp::warning("NaNs produced");
     return NAN;

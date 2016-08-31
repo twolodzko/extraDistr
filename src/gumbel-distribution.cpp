@@ -36,11 +36,11 @@ using Rcpp::NumericMatrix;
 
 double pdf_gumbel(double x, double mu, double sigma) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
+  if (sigma <= 0.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (sigma <= 0.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   if (std::isinf(x))
     return 0.0;
   double z = (x-mu)/sigma;
@@ -49,22 +49,22 @@ double pdf_gumbel(double x, double mu, double sigma) {
 
 double cdf_gumbel(double x, double mu, double sigma) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
+  if (sigma <= 0.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (sigma <= 0.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   double z = (x-mu)/sigma;
   return exp(-exp(-z));
 }
 
 double invcdf_gumbel(double p, double mu, double sigma) {
   if (ISNAN(p) || ISNAN(mu) || ISNAN(sigma))
+    return NA_REAL;
+  if (sigma <= 0.0 || p < 0.0 || p > 1.0) {
+    Rcpp::warning("NaNs produced");
     return NAN;
-  // if (sigma <= 0.0 || p < 0.0 || p > 1.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  }
   return mu - sigma * log(-log(p));
 }
 
@@ -82,10 +82,9 @@ NumericVector cpp_dgumbel(
   int ns = sigma.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
   NumericVector p(Nmax);
-  NumericVector sigma_n = positive_or_nan(sigma);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_gumbel(x[i % n], mu[i % nm], sigma_n[i % ns]);
+    p[i] = pdf_gumbel(x[i % n], mu[i % nm], sigma[i % ns]);
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -108,10 +107,9 @@ NumericVector cpp_pgumbel(
   int ns = sigma.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
   NumericVector p(Nmax);
-  NumericVector sigma_n = positive_or_nan(sigma);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_gumbel(x[i % n], mu[i % nm], sigma_n[i % ns]);
+    p[i] = cdf_gumbel(x[i % n], mu[i % nm], sigma[i % ns]);
 
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
@@ -139,7 +137,6 @@ NumericVector cpp_qgumbel(
   int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
-  NumericVector sigma_n = positive_or_nan(sigma);
 
   if (log_prob)
     for (int i = 0; i < n; i++)
@@ -148,11 +145,9 @@ NumericVector cpp_qgumbel(
   if (!lower_tail)
     for (int i = 0; i < n; i++)
       pp[i] = 1.0 - pp[i];
-  
-  pp = zeroone_or_nan(pp);
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_gumbel(pp[i % n], mu[i % nm], sigma_n[i % ns]);
+    q[i] = invcdf_gumbel(pp[i % n], mu[i % nm], sigma[i % ns]);
 
   return q;
 }
@@ -169,11 +164,10 @@ NumericVector cpp_rgumbel(
   int nm = mu.length();
   int ns = sigma.length();
   NumericVector x(n);
-  NumericVector sigma_n = positive_or_nan(sigma);
 
   for (int i = 0; i < n; i++) {
     u = rng_unif();
-    x[i] = invcdf_gumbel(u, mu[i % nm], sigma_n[i % ns]);
+    x[i] = invcdf_gumbel(u, mu[i % nm], sigma[i % ns]);
   }
 
   return x;

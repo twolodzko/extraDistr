@@ -20,12 +20,12 @@ using Rcpp::NumericMatrix;
 double pmf_bpois(double x, double y, double a, double b, double c) {
   
   if (ISNAN(x) || ISNAN(y) || ISNAN(a) || ISNAN(b) || ISNAN(c))
-    return NAN;
+    return NA_REAL;
   
-  // if (a < 0.0 || b < 0.0 || c < 0.0) {
-  //   Rcpp::warning("NaNs produced");
-  //   return NAN;
-  // }
+  if (a < 0.0 || b < 0.0 || c < 0.0) {
+    Rcpp::warning("NaNs produced");
+    return NAN;
+  }
   
   if (!isInteger(x) || x < 0.0)
     return 0.0;
@@ -77,13 +77,9 @@ NumericVector cpp_dbpois(
   int nc = c.length();
   int Nmax = Rcpp::max(IntegerVector::create(nx, ny, na, nb, nc));
   NumericVector p(Nmax);
-  NumericVector a_n = nonneg_or_nan(a);
-  NumericVector b_n = nonneg_or_nan(b);
-  NumericVector c_n = nonneg_or_nan(c);
-
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pmf_bpois(x[i % nx], y[i % ny], a_n[i % na], b_n[i % nb], c_n[i % nc]);
+    p[i] = pmf_bpois(x[i % nx], y[i % ny], a[i % na], b[i % nb], c[i % nc]);
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -106,22 +102,19 @@ NumericMatrix cpp_rbpois(
   int nb = b.length();
   int nc = c.length();
   NumericMatrix x(n, 2);
-  NumericVector a_n = nonneg_or_nan(a);
-  NumericVector b_n = nonneg_or_nan(b);
-  NumericVector c_n = nonneg_or_nan(c);
   
   for (int i = 0; i < n; i++) {
-    if (ISNAN(a_n[i % na]) || ISNAN(b_n[i % nb]) || ISNAN(c_n[i % nc])) {
+    if (ISNAN(a[i % na]) || ISNAN(b[i % nb]) || ISNAN(c[i % nc])) {
+      x(i, 0) = NA_REAL;
+      x(i, 1) = NA_REAL;
+    } else if (a[i % na] < 0.0 || b[i % nb] < 0.0 || c[i % nc] < 0.0) {
+      Rcpp::warning("NaNs produced");
       x(i, 0) = NAN;
       x(i, 1) = NAN;
-    // } else if (a[i % na] < 0.0 || b[i % nb] < 0.0 || c[i % nc] < 0.0) {
-    //   Rcpp::warning("NaNs produced");
-    //   x(i, 0) = NAN;
-    //   x(i, 1) = NAN;
     } else {
-      u = R::rpois(a_n[i % na]);
-      v = R::rpois(b_n[i % nb]);
-      w = R::rpois(c_n[i % nc]);
+      u = R::rpois(a[i % na]);
+      v = R::rpois(b[i % nb]);
+      w = R::rpois(c[i % nc]);
       x(i, 0) = u+w;
       x(i, 1) = v+w;
     }
