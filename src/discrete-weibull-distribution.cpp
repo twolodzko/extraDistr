@@ -62,7 +62,7 @@ double cdf_dweibull(double x, double q, double beta) {
 
 double invcdf_dweibull(double p, double q, double beta) {
   if (ISNAN(p) || ISNAN(q) || ISNAN(beta))
-    return NAN;
+    return NA_REAL;
   if (q <= 0.0 || q >= 1.0 || beta <= 0.0 || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
