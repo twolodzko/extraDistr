@@ -82,7 +82,7 @@
 #' @export
 
 dfatigue <- function(x, alpha, beta = 1, mu = 0, log = FALSE) {
-  .Call('extraDistr_cpp_dfatigue', PACKAGE = 'extraDistr', x, alpha, beta, mu, log)
+  cpp_dfatigue(x, alpha, beta, mu, log)
 }
 
 
@@ -90,7 +90,7 @@ dfatigue <- function(x, alpha, beta = 1, mu = 0, log = FALSE) {
 #' @export
 
 pfatigue <- function(q, alpha, beta = 1, mu = 0, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pfatigue', PACKAGE = 'extraDistr', q, alpha, beta, mu, lower.tail, log.p)
+  cpp_pfatigue(q, alpha, beta, mu, lower.tail, log.p)
 }
 
 
@@ -98,7 +98,7 @@ pfatigue <- function(q, alpha, beta = 1, mu = 0, lower.tail = TRUE, log.p = FALS
 #' @export
 
 qfatigue <- function(p, alpha, beta = 1, mu = 0, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qfatigue', PACKAGE = 'extraDistr', p, alpha, beta, mu, lower.tail, log.p)
+  cpp_qfatigue(p, alpha, beta, mu, lower.tail, log.p)
 }
 
 
@@ -107,6 +107,6 @@ qfatigue <- function(p, alpha, beta = 1, mu = 0, lower.tail = TRUE, log.p = FALS
 
 rfatigue <- function(n, alpha, beta = 1, mu = 0) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rfatigue', PACKAGE = 'extraDistr', n, alpha, beta, mu)
+  cpp_rfatigue(n, alpha, beta, mu)
 }
 
