@@ -81,7 +81,7 @@
 #' @export
 
 dtriang <- function(x, a = -1, b = 1, c = (a+b)/2, log = FALSE) {
-  .Call('extraDistr_cpp_dtriang', PACKAGE = 'extraDistr', x, a, b, c, log)
+  cpp_dtriang(x, a, b, c, log)
 }
 
 
@@ -89,7 +89,7 @@ dtriang <- function(x, a = -1, b = 1, c = (a+b)/2, log = FALSE) {
 #' @export
 
 ptriang <- function(q, a = -1, b = 1, c = (a+b)/2, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_ptriang', PACKAGE = 'extraDistr', q, a, b, c, lower.tail, log.p)
+  cpp_ptriang(q, a, b, c, lower.tail, log.p)
 }
 
 
@@ -97,7 +97,7 @@ ptriang <- function(q, a = -1, b = 1, c = (a+b)/2, lower.tail = TRUE, log.p = FA
 #' @export
 
 qtriang <- function(p, a = -1, b = 1, c = (a+b)/2, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qtriang', PACKAGE = 'extraDistr', p, a, b, c, lower.tail, log.p)
+  cpp_qtriang(p, a, b, c, lower.tail, log.p)
 }
 
 
@@ -106,6 +106,6 @@ qtriang <- function(p, a = -1, b = 1, c = (a+b)/2, lower.tail = TRUE, log.p = FA
 
 rtriang <- function(n, a = -1, b = 1, c = (a+b)/2) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rtriang', PACKAGE = 'extraDistr', n, a, b, c)
+  cpp_rtriang(n, a, b, c)
 }
 

@@ -70,7 +70,7 @@
 #' @export
 
 ddlaplace <- function(x, scale, location = 0, log = FALSE) {
-  .Call('extraDistr_cpp_ddlaplace', PACKAGE = 'extraDistr', x, scale, location, log)
+  cpp_ddlaplace(x, scale, location, log)
 }
 
 
@@ -78,7 +78,7 @@ ddlaplace <- function(x, scale, location = 0, log = FALSE) {
 #' @export
 
 pdlaplace <- function(q, scale, location = 0, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pdlaplace', PACKAGE = 'extraDistr', q, scale, location, lower.tail, log.p)
+  cpp_pdlaplace(q, scale, location, lower.tail, log.p)
 }
 
 
@@ -87,6 +87,6 @@ pdlaplace <- function(q, scale, location = 0, lower.tail = TRUE, log.p = FALSE) 
 
 rdlaplace <- function(n, scale, location = 0) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rdlaplace', PACKAGE = 'extraDistr', n, scale, location)
+  cpp_rdlaplace(n, scale, location)
 }
 

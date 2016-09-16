@@ -56,7 +56,7 @@
 #' @export
 
 dslash <- function(x, mu = 0, sigma = 1, log = FALSE) {
-  .Call('extraDistr_cpp_dslash', PACKAGE = 'extraDistr', x, mu, sigma, log)
+  cpp_dslash(x, mu, sigma, log)
 }
 
 
@@ -64,7 +64,7 @@ dslash <- function(x, mu = 0, sigma = 1, log = FALSE) {
 #' @export
 
 pslash <- function(q, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pslash', PACKAGE = 'extraDistr', q, mu, sigma, lower.tail, log.p)
+  cpp_pslash(q, mu, sigma, lower.tail, log.p)
 }
 
 
@@ -73,6 +73,6 @@ pslash <- function(q, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 
 rslash <- function(n, mu = 0, sigma = 1) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rslash', PACKAGE = 'extraDistr', n, mu, sigma)
+  cpp_rslash(n, mu, sigma)
 }
 

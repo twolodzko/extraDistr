@@ -55,7 +55,7 @@
 #' @export
 
 dlomax <- function(x, lambda, kappa, log = FALSE) {
-  .Call('extraDistr_cpp_dlomax', PACKAGE = 'extraDistr', x, lambda, kappa, log)
+  cpp_dlomax(x, lambda, kappa, log)
 }
 
 
@@ -63,7 +63,7 @@ dlomax <- function(x, lambda, kappa, log = FALSE) {
 #' @export
 
 plomax <- function(q, lambda, kappa, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_plomax', PACKAGE = 'extraDistr', q, lambda, kappa, lower.tail, log.p)
+  cpp_plomax(q, lambda, kappa, lower.tail, log.p)
 }
 
 
@@ -71,7 +71,7 @@ plomax <- function(q, lambda, kappa, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qlomax <- function(p, lambda, kappa, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qlomax', PACKAGE = 'extraDistr', p, lambda, kappa, lower.tail, log.p)
+  cpp_qlomax(p, lambda, kappa, lower.tail, log.p)
 }
 
 
@@ -80,6 +80,6 @@ qlomax <- function(p, lambda, kappa, lower.tail = TRUE, log.p = FALSE) {
 
 rlomax <- function(n, lambda, kappa) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rlomax', PACKAGE = 'extraDistr', n, lambda, kappa)
+  cpp_rlomax(n, lambda, kappa)
 }
 

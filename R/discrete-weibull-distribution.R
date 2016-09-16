@@ -76,7 +76,7 @@
 #' @export
 
 ddweibull <- function(x, shape1, shape2, log = FALSE) {
-  .Call('extraDistr_cpp_ddweibull', PACKAGE = 'extraDistr', x, shape1, shape2, log)
+  cpp_ddweibull(x, shape1, shape2, log)
 }
 
 
@@ -84,7 +84,7 @@ ddweibull <- function(x, shape1, shape2, log = FALSE) {
 #' @export
 
 pdweibull <- function(q, shape1, shape2, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pdweibull', PACKAGE = 'extraDistr', q, shape1, shape2, lower.tail, log.p)
+  cpp_pdweibull(q, shape1, shape2, lower.tail, log.p)
 }
 
 
@@ -92,7 +92,7 @@ pdweibull <- function(q, shape1, shape2, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qdweibull <- function(p, shape1, shape2, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qdweibull', PACKAGE = 'extraDistr', p, shape1, shape2, lower.tail, log.p)
+  cpp_qdweibull(p, shape1, shape2, lower.tail, log.p)
 }
 
 
@@ -101,6 +101,6 @@ qdweibull <- function(p, shape1, shape2, lower.tail = TRUE, log.p = FALSE) {
 
 rdweibull <- function(n, shape1, shape2) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rdweibull', PACKAGE = 'extraDistr', n, shape1, shape2)
+  cpp_rdweibull(n, shape1, shape2)
 }
 

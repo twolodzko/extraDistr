@@ -48,7 +48,7 @@ dcat <- function(x, prob, log = FALSE) {
     prob <- matrix(prob, nrow = 1)
   else if (!is.matrix(prob))
     prob <- as.matrix(prob)
-  .Call('extraDistr_cpp_dcat', PACKAGE = 'extraDistr', as.numeric(x), prob, log)
+  cpp_dcat(as.numeric(x), prob, log)
 }
 
 
@@ -60,8 +60,7 @@ pcat <- function(q, prob, lower.tail = TRUE, log.p = FALSE) {
     prob <- matrix(prob, nrow = 1)
   else if (!is.matrix(prob))
     prob <- as.matrix(prob)
-  .Call('extraDistr_cpp_pcat', PACKAGE = 'extraDistr', as.numeric(q), prob,
-        lower.tail, log.p)
+  cpp_pcat(as.numeric(q), prob, lower.tail, log.p)
 }
 
 
@@ -74,8 +73,7 @@ qcat <- function(p, prob, lower.tail = TRUE, log.p = FALSE, labels) {
   else if (!is.matrix(prob))
     prob <- as.matrix(prob)
   
-  x <- .Call('extraDistr_cpp_qcat', PACKAGE = 'extraDistr', p, prob,
-             lower.tail, log.p)
+  x <- cpp_qcat(p, prob, lower.tail, log.p)
   
   if (!missing(labels)) {
     if (length(labels) != ncol(prob))
@@ -104,7 +102,7 @@ rcat <- function(n, prob, labels) {
     }
   } else {
     k <- ncol(prob)
-    x <- .Call('extraDistr_cpp_rcat', PACKAGE = 'extraDistr', n, prob)
+    x <- cpp_rcat(n, prob)
   }
   
   if (!missing(labels)) {

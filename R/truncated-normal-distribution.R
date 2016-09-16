@@ -71,7 +71,7 @@
 #' @export
 
 dtnorm <- function(x, mu = 0, sigma = 1, a = -Inf, b = Inf, log = FALSE) {
-  .Call('extraDistr_cpp_dtnorm', PACKAGE = 'extraDistr', x, mu, sigma, a, b, log)
+  cpp_dtnorm(x, mu, sigma, a, b, log)
 }
 
 
@@ -79,7 +79,7 @@ dtnorm <- function(x, mu = 0, sigma = 1, a = -Inf, b = Inf, log = FALSE) {
 #' @export
 
 ptnorm <- function(q, mu = 0, sigma = 1, a = -Inf, b = Inf, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_ptnorm', PACKAGE = 'extraDistr', q, mu, sigma, a, b, lower.tail, log.p)
+  cpp_ptnorm(q, mu, sigma, a, b, lower.tail, log.p)
 }
 
 
@@ -87,7 +87,7 @@ ptnorm <- function(q, mu = 0, sigma = 1, a = -Inf, b = Inf, lower.tail = TRUE, l
 #' @export
 
 qtnorm <- function(p, mu = 0, sigma = 1, a = -Inf, b = Inf, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qtnorm', PACKAGE = 'extraDistr', p, mu, sigma, a, b, lower.tail, log.p)
+  cpp_qtnorm(p, mu, sigma, a, b, lower.tail, log.p)
 }
 
 
@@ -96,6 +96,6 @@ qtnorm <- function(p, mu = 0, sigma = 1, a = -Inf, b = Inf, lower.tail = TRUE, l
 
 rtnorm <- function(n, mu = 0, sigma = 1, a = -Inf, b = Inf) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rtnorm', PACKAGE = 'extraDistr', n, mu, sigma, a, b)
+  cpp_rtnorm(n, mu, sigma, a, b)
 }
 

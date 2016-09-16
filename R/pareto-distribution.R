@@ -59,7 +59,7 @@
 #' @export
 
 dpareto <- function(x, a = 1, b = 1, log = FALSE) {
-  .Call('extraDistr_cpp_dpareto', PACKAGE = 'extraDistr', x, a, b, log)
+  cpp_dpareto(x, a, b, log)
 }
 
 
@@ -67,7 +67,7 @@ dpareto <- function(x, a = 1, b = 1, log = FALSE) {
 #' @export
 
 ppareto <- function(q, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_ppareto', PACKAGE = 'extraDistr', q, a, b, lower.tail, log.p)
+  cpp_ppareto(q, a, b, lower.tail, log.p)
 }
 
 
@@ -75,7 +75,7 @@ ppareto <- function(q, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qpareto <- function(p, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qpareto', PACKAGE = 'extraDistr', p, a, b, lower.tail, log.p)
+  cpp_qpareto(p, a, b, lower.tail, log.p)
 }
 
 
@@ -84,6 +84,6 @@ qpareto <- function(p, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
 
 rpareto <- function(n, a = 1, b = 1) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rpareto', PACKAGE = 'extraDistr', n, a, b)
+  cpp_rpareto(n, a, b)
 }
 

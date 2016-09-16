@@ -56,7 +56,7 @@
 #' @export
 
 dbetapr <- function(x, shape1, shape2, scale = 1, log = FALSE) {
-  .Call('extraDistr_cpp_dbetapr', PACKAGE = 'extraDistr', x, shape1, shape2, scale, log)
+  cpp_dbetapr(x, shape1, shape2, scale, log)
 }
 
 
@@ -64,7 +64,7 @@ dbetapr <- function(x, shape1, shape2, scale = 1, log = FALSE) {
 #' @export
 
 pbetapr <- function(q, shape1, shape2, scale = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pbetapr', PACKAGE = 'extraDistr', q, shape1, shape2, scale, lower.tail, log.p)
+  cpp_pbetapr(q, shape1, shape2, scale, lower.tail, log.p)
 }
 
 
@@ -72,7 +72,7 @@ pbetapr <- function(q, shape1, shape2, scale = 1, lower.tail = TRUE, log.p = FAL
 #' @export
 
 qbetapr <- function(p, shape1, shape2, scale = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qbetapr', PACKAGE = 'extraDistr', p, shape1, shape2, scale, lower.tail, log.p)
+  cpp_qbetapr(p, shape1, shape2, scale, lower.tail, log.p)
 }
 
 
@@ -81,6 +81,6 @@ qbetapr <- function(p, shape1, shape2, scale = 1, lower.tail = TRUE, log.p = FAL
 
 rbetapr <- function(n, shape1, shape2, scale = 1) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rbetapr', PACKAGE = 'extraDistr', n, shape1, shape2, scale)
+  cpp_rbetapr(n, shape1, shape2, scale)
 }
 

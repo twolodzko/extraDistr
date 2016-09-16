@@ -46,7 +46,7 @@
 #' @export
 
 dzip <- function(x, lambda, pi, log = FALSE) {
-  .Call('extraDistr_cpp_dzip', PACKAGE = 'extraDistr', x, lambda, pi, log)
+  cpp_dzip(x, lambda, pi, log)
 }
 
 
@@ -54,8 +54,7 @@ dzip <- function(x, lambda, pi, log = FALSE) {
 #' @export
 
 pzip <- function(q, lambda, pi, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pzip', PACKAGE = 'extraDistr', q, lambda, pi,
-        lower.tail, log.p)
+  cpp_pzip(q, lambda, pi, lower.tail, log.p)
 }
 
 
@@ -63,8 +62,7 @@ pzip <- function(q, lambda, pi, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qzip <- function(p, lambda, pi, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qzip', PACKAGE = 'extraDistr', p, lambda, pi,
-        lower.tail, log.p)
+  cpp_qzip(p, lambda, pi, lower.tail, log.p)
 }
 
 
@@ -73,6 +71,6 @@ qzip <- function(p, lambda, pi, lower.tail = TRUE, log.p = FALSE) {
 
 rzip <- function(n, lambda, pi) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rzip', PACKAGE = 'extraDistr', n, lambda, pi)
+  cpp_rzip(n, lambda, pi)
 }
 

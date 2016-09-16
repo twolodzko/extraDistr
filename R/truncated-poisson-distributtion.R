@@ -62,7 +62,7 @@
 #' @export
 
 dtpois <- function(x, lambda, s = 0, log = FALSE) {
-  .Call('extraDistr_cpp_dtpois', PACKAGE = 'extraDistr', x, lambda, s, log)
+  cpp_dtpois(x, lambda, s, log)
 }
 
 
@@ -70,7 +70,7 @@ dtpois <- function(x, lambda, s = 0, log = FALSE) {
 #' @export
 
 ptpois <- function(q, lambda, s = 0, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_ptpois', PACKAGE = 'extraDistr', q, lambda, s, lower.tail, log.p)
+  cpp_ptpois(q, lambda, s, lower.tail, log.p)
 }
 
 
@@ -78,7 +78,7 @@ ptpois <- function(q, lambda, s = 0, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qtpois <- function(p, lambda, s = 0, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qtpois', PACKAGE = 'extraDistr', p, lambda, s, lower.tail, log.p)
+  cpp_qtpois(p, lambda, s, lower.tail, log.p)
 }
 
 
@@ -87,6 +87,6 @@ qtpois <- function(p, lambda, s = 0, lower.tail = TRUE, log.p = FALSE) {
 
 rtpois <- function(n, lambda, s = 0) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rtpois', PACKAGE = 'extraDistr', n, lambda, s)
+  cpp_rtpois(n, lambda, s)
 }
 

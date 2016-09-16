@@ -63,7 +63,7 @@
 #' @export
 
 drayleigh <- function(x, sigma = 1, log = FALSE) {
-  .Call('extraDistr_cpp_drayleigh', PACKAGE = 'extraDistr', x, sigma, log)
+  cpp_drayleigh(x, sigma, log)
 }
 
 
@@ -71,7 +71,7 @@ drayleigh <- function(x, sigma = 1, log = FALSE) {
 #' @export
 
 prayleigh <- function(q, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_prayleigh', PACKAGE = 'extraDistr', q, sigma, lower.tail, log.p)
+  cpp_prayleigh(q, sigma, lower.tail, log.p)
 }
 
 
@@ -79,7 +79,7 @@ prayleigh <- function(q, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qrayleigh <- function(p, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qrayleigh', PACKAGE = 'extraDistr', p, sigma, lower.tail, log.p)
+  cpp_qrayleigh(p, sigma, lower.tail, log.p)
 }
 
 
@@ -88,5 +88,5 @@ qrayleigh <- function(p, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 
 rrayleigh <- function(n, sigma = 1) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rrayleigh', PACKAGE = 'extraDistr', n, sigma)
+  cpp_rrayleigh(n, sigma)
 }

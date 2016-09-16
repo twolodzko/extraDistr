@@ -51,7 +51,7 @@
 #' @export
 
 dwald <- function(x, mu, lambda, log = FALSE) {
-  .Call('extraDistr_cpp_dwald', PACKAGE = 'extraDistr', x, mu, lambda, log)
+  cpp_dwald(x, mu, lambda, log)
 }
 
 
@@ -59,7 +59,7 @@ dwald <- function(x, mu, lambda, log = FALSE) {
 #' @export
 
 pwald <- function(q, mu, lambda, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pwald', PACKAGE = 'extraDistr', q, mu, lambda, lower.tail, log.p)
+  cpp_pwald(q, mu, lambda, lower.tail, log.p)
 }
 
 
@@ -68,6 +68,6 @@ pwald <- function(q, mu, lambda, lower.tail = TRUE, log.p = FALSE) {
 
 rwald <- function(n, mu, lambda) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rwald', PACKAGE = 'extraDistr', n, mu, lambda)
+  cpp_rwald(n, mu, lambda)
 }
 

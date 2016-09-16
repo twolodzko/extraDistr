@@ -60,7 +60,7 @@
 #' @export
 
 dfrechet <- function(x, lambda = 1, mu = 0, sigma = 1, log = FALSE) {
-  .Call('extraDistr_cpp_dfrechet', PACKAGE = 'extraDistr', x, lambda, mu, sigma, log)
+  cpp_dfrechet(x, lambda, mu, sigma, log)
 }
 
 
@@ -68,7 +68,7 @@ dfrechet <- function(x, lambda = 1, mu = 0, sigma = 1, log = FALSE) {
 #' @export
 
 pfrechet <- function(q, lambda = 1, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pfrechet', PACKAGE = 'extraDistr', q, lambda, mu, sigma, lower.tail, log.p)
+  cpp_pfrechet(q, lambda, mu, sigma, lower.tail, log.p)
 }
 
 
@@ -76,7 +76,7 @@ pfrechet <- function(q, lambda = 1, mu = 0, sigma = 1, lower.tail = TRUE, log.p 
 #' @export
 
 qfrechet <- function(p, lambda = 1, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qfrechet', PACKAGE = 'extraDistr', p, lambda, mu, sigma, lower.tail, log.p)
+  cpp_qfrechet(p, lambda, mu, sigma, lower.tail, log.p)
 }
 
 
@@ -85,6 +85,6 @@ qfrechet <- function(p, lambda = 1, mu = 0, sigma = 1, lower.tail = TRUE, log.p 
 
 rfrechet <- function(n, lambda = 1, mu = 0, sigma = 1) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rfrechet', PACKAGE = 'extraDistr', n, lambda, mu, sigma)
+  cpp_rfrechet(n, lambda, mu, sigma)
 }
 

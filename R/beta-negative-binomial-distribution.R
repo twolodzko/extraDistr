@@ -52,7 +52,7 @@
 #' @export
 
 dbnbinom <- function(x, size, alpha = 1, beta = 1, log = FALSE) {
-  .Call('extraDistr_cpp_dbnbinom', PACKAGE = 'extraDistr', x, size, alpha, beta, log)
+  cpp_dbnbinom(x, size, alpha, beta, log)
 }
 
 
@@ -60,7 +60,7 @@ dbnbinom <- function(x, size, alpha = 1, beta = 1, log = FALSE) {
 #' @export
 
 pbnbinom <- function(q, size, alpha = 1, beta = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pbnbinom', PACKAGE = 'extraDistr', q, size, alpha, beta, lower.tail, log.p)
+  cpp_pbnbinom(q, size, alpha, beta, lower.tail, log.p)
 }
 
 
@@ -69,6 +69,6 @@ pbnbinom <- function(q, size, alpha = 1, beta = 1, lower.tail = TRUE, log.p = FA
 
 rbnbinom <- function(n, size, alpha = 1, beta = 1) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rbnbinom', PACKAGE = 'extraDistr', n, size, alpha, beta)
+  cpp_rbnbinom(n, size, alpha, beta)
 }
 

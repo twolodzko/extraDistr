@@ -63,7 +63,7 @@
 #' @export
 
 dbhatt <- function(x, mu = 0, sigma = 1, a = sigma, log = FALSE) {
-  .Call('extraDistr_cpp_dbhatt', PACKAGE = 'extraDistr', x, mu, sigma, a, log)
+  cpp_dbhatt(x, mu, sigma, a, log)
 }
 
 
@@ -71,7 +71,7 @@ dbhatt <- function(x, mu = 0, sigma = 1, a = sigma, log = FALSE) {
 #' @export
 
 pbhatt <- function(q, mu = 0, sigma = 1, a = sigma, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pbhatt', PACKAGE = 'extraDistr', q, mu, sigma, a, lower.tail, log.p)
+  cpp_pbhatt(q, mu, sigma, a, lower.tail, log.p)
 }
 
 
@@ -80,6 +80,6 @@ pbhatt <- function(q, mu = 0, sigma = 1, a = sigma, lower.tail = TRUE, log.p = F
 
 rbhatt <- function(n, mu = 0, sigma = 1, a = sigma) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rbhatt', PACKAGE = 'extraDistr', n, mu, sigma, a)
+  cpp_rbhatt(n, mu, sigma, a)
 }
 

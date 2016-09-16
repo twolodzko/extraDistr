@@ -68,7 +68,7 @@
 #' @export
 
 dgev <- function(x, mu = 0, sigma = 1, xi = 0, log = FALSE) {
-  .Call('extraDistr_cpp_dgev', PACKAGE = 'extraDistr', x, mu, sigma, xi, log)
+  cpp_dgev(x, mu, sigma, xi, log)
 }
 
 
@@ -76,7 +76,7 @@ dgev <- function(x, mu = 0, sigma = 1, xi = 0, log = FALSE) {
 #' @export
 
 pgev <- function(q, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pgev', PACKAGE = 'extraDistr', q, mu, sigma, xi, lower.tail, log.p)
+  cpp_pgev(q, mu, sigma, xi, lower.tail, log.p)
 }
 
 
@@ -84,7 +84,7 @@ pgev <- function(q, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE)
 #' @export
 
 qgev <- function(p, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qgev', PACKAGE = 'extraDistr', p, mu, sigma, xi, lower.tail, log.p)
+  cpp_qgev(p, mu, sigma, xi, lower.tail, log.p)
 }
 
 
@@ -93,6 +93,6 @@ qgev <- function(p, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE)
 
 rgev <- function(n, mu = 0, sigma = 1, xi = 0) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rgev', PACKAGE = 'extraDistr', n, mu, sigma, xi)
+  cpp_rgev(n, mu, sigma, xi)
 }
 

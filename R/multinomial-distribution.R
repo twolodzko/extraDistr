@@ -56,7 +56,7 @@ dmnom <- function(x, size, prob, log = FALSE) {
   else if (!is.matrix(x))
     x <- as.matrix(x)
   
-  .Call('extraDistr_cpp_dmnom', PACKAGE = 'extraDistr', x, size, prob, log)
+  cpp_dmnom(x, size, prob, log)
 }
 
 
@@ -72,6 +72,6 @@ rmnom <- function(n, size, prob) {
   else if (!is.matrix(prob))
     prob <- as.matrix(prob)
   
-  .Call('extraDistr_cpp_rmnom', PACKAGE = 'extraDistr', n, size, prob)
+  cpp_rmnom(n, size, prob)
 }
 

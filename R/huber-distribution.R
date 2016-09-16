@@ -73,7 +73,7 @@
 #' @export
 
 dhuber <- function(x, mu = 0, sigma = 1, epsilon = 1.345, log = FALSE) {
-  .Call('extraDistr_cpp_dhuber', PACKAGE = 'extraDistr', x, mu, sigma, epsilon, log)
+  cpp_dhuber(x, mu, sigma, epsilon, log)
 }
 
 
@@ -81,7 +81,7 @@ dhuber <- function(x, mu = 0, sigma = 1, epsilon = 1.345, log = FALSE) {
 #' @export
 
 phuber <- function(q, mu = 0, sigma = 1, epsilon = 1.345, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_phuber', PACKAGE = 'extraDistr', q, mu, sigma, epsilon, lower.tail, log.p)
+  cpp_phuber(q, mu, sigma, epsilon, lower.tail, log.p)
 }
 
 
@@ -89,7 +89,7 @@ phuber <- function(q, mu = 0, sigma = 1, epsilon = 1.345, lower.tail = TRUE, log
 #' @export
 
 qhuber <- function(p, mu = 0, sigma = 1, epsilon = 1.345, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qhuber', PACKAGE = 'extraDistr', p, mu, sigma, epsilon, lower.tail, log.p)
+  cpp_qhuber(p, mu, sigma, epsilon, lower.tail, log.p)
 }
 
 
@@ -98,6 +98,6 @@ qhuber <- function(p, mu = 0, sigma = 1, epsilon = 1.345, lower.tail = TRUE, log
 
 rhuber <- function(n, mu = 0, sigma = 1, epsilon = 1.345) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rhuber', PACKAGE = 'extraDistr', n, mu, sigma, epsilon)
+  cpp_rhuber(n, mu, sigma, epsilon)
 }
 

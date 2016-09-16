@@ -66,7 +66,7 @@ dbvpois <- function(x, y = NULL, a, b, c, log = FALSE) {
       stop("y is not provided while x is not a two-column matrix")
     }
   }
-  .Call('extraDistr_cpp_dbpois', PACKAGE = 'extraDistr', x, y, a, b, c, log)
+  cpp_dbpois(x, y, a, b, c, log)
 }
 
 
@@ -75,6 +75,6 @@ dbvpois <- function(x, y = NULL, a, b, c, log = FALSE) {
 
 rbvpois <- function(n, a, b, c) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rbpois', PACKAGE = 'extraDistr', n, a, b, c)
+  cpp_rbpois(n, a, b, c)
 }
 

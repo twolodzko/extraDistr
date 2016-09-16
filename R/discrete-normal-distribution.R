@@ -48,7 +48,7 @@
 #' @export
 
 ddnorm <- function(x, mean = 0, sd = 1, log = FALSE) {
-  .Call('extraDistr_cpp_ddnorm', PACKAGE = 'extraDistr', x, mean, sd, log)
+  cpp_ddnorm(x, mean, sd, log)
 }
 
 

@@ -51,7 +51,7 @@ ddirmnom <- function(x, size, alpha, log = FALSE) {
     x <- as.matrix(x)
   else if (is.vector(x))
     x <- matrix(x, byrow = TRUE, nrow = 1)
-  .Call('extraDistr_cpp_ddirmnom', PACKAGE = 'extraDistr', x, size, alpha, log)
+  cpp_ddirmnom(x, size, alpha, log)
 }
 
 
@@ -64,6 +64,6 @@ rdirmnom <- function (n, size, alpha) {
     alpha <- matrix(alpha, nrow = 1)
   else if (!is.matrix(alpha))
     alpha <- as.matrix(alpha)
-  .Call('extraDistr_cpp_rdirmnom', PACKAGE = 'extraDistr', n, size, alpha)
+  cpp_rdirmnom(n, size, alpha)
 }
 

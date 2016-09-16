@@ -55,7 +55,7 @@
 #' @export
 
 dpower <- function(x, alpha, beta, log = FALSE) {
-  .Call('extraDistr_cpp_dpower', PACKAGE = 'extraDistr', x, alpha, beta, log)
+  cpp_dpower(x, alpha, beta, log)
 }
 
 
@@ -63,7 +63,7 @@ dpower <- function(x, alpha, beta, log = FALSE) {
 #' @export
 
 ppower <- function(q, alpha, beta, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_ppower', PACKAGE = 'extraDistr', q, alpha, beta, lower.tail, log.p)
+  cpp_ppower(q, alpha, beta, lower.tail, log.p)
 }
 
 
@@ -71,7 +71,7 @@ ppower <- function(q, alpha, beta, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qpower <- function(p, alpha, beta, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qpower', PACKAGE = 'extraDistr', p, alpha, beta, lower.tail, log.p)
+  cpp_qpower(p, alpha, beta, lower.tail, log.p)
 }
 
 
@@ -80,6 +80,6 @@ qpower <- function(p, alpha, beta, lower.tail = TRUE, log.p = FALSE) {
 
 rpower <- function(n, alpha, beta) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rpower', PACKAGE = 'extraDistr', n, alpha, beta)
+  cpp_rpower(n, alpha, beta)
 }
 

@@ -60,7 +60,7 @@
 #' @export
 
 dgompertz <- function(x, a = 1, b = 1, log = FALSE) {
-  .Call('extraDistr_cpp_dgompertz', PACKAGE = 'extraDistr', x, a, b, log)
+  cpp_dgompertz(x, a, b, log)
 }
 
 
@@ -68,7 +68,7 @@ dgompertz <- function(x, a = 1, b = 1, log = FALSE) {
 #' @export
 
 pgompertz <- function(q, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pgompertz', PACKAGE = 'extraDistr', q, a, b, lower.tail, log.p)
+  cpp_pgompertz(q, a, b, lower.tail, log.p)
 }
 
 
@@ -76,7 +76,7 @@ pgompertz <- function(q, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qgompertz <- function(p, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qgompertz', PACKAGE = 'extraDistr', p, a, b, lower.tail, log.p)
+  cpp_qgompertz(p, a, b, lower.tail, log.p)
 }
 
 
@@ -85,6 +85,6 @@ qgompertz <- function(p, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
 
 rgompertz <- function(n, a = 1, b = 1) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rgompertz', PACKAGE = 'extraDistr', n, a, b)
+  cpp_rgompertz(n, a, b)
 }
 

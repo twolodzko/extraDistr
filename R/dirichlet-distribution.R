@@ -53,7 +53,7 @@ ddirichlet <- function(x, alpha, log = FALSE) {
     x <- as.matrix(x)
   else if (is.vector(x))
     x <- matrix(x, byrow = TRUE, nrow = 1)
-  .Call('extraDistr_cpp_ddirichlet', PACKAGE = 'extraDistr', x, alpha, log)
+  cpp_ddirichlet(x, alpha, log)
 }
 
 
@@ -66,6 +66,6 @@ rdirichlet <- function (n, alpha) {
     alpha <- matrix(alpha, nrow = 1)
   else if (!is.matrix(alpha))
     alpha <- as.matrix(alpha)
-  .Call('extraDistr_cpp_rdirichlet', PACKAGE = 'extraDistr', n, alpha)
+  cpp_rdirichlet(n, alpha)
 }
 

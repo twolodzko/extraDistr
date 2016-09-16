@@ -50,7 +50,7 @@
 #' @export
 
 dhnorm <- function(x, sigma = 1, log = FALSE) {
-  .Call('extraDistr_cpp_dhnorm', PACKAGE = 'extraDistr', x, sigma, log)
+  cpp_dhnorm(x, sigma, log)
 }
 
 
@@ -58,7 +58,7 @@ dhnorm <- function(x, sigma = 1, log = FALSE) {
 #' @export
 
 phnorm <- function(q, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_phnorm', PACKAGE = 'extraDistr', q, sigma, lower.tail, log.p)
+  cpp_phnorm(q, sigma, lower.tail, log.p)
 }
 
 
@@ -66,7 +66,7 @@ phnorm <- function(q, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qhnorm <- function(p, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qhnorm', PACKAGE = 'extraDistr', p, sigma, lower.tail, log.p)
+  cpp_qhnorm(p, sigma, lower.tail, log.p)
 }
 
 
@@ -75,6 +75,6 @@ qhnorm <- function(p, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 
 rhnorm <- function(n, sigma = 1) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rhnorm', PACKAGE = 'extraDistr', n, sigma)
+  cpp_rhnorm(n, sigma)
 }
 

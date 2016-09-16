@@ -36,7 +36,7 @@
 #' @export
 
 ddunif <- function(x, min, max, log = FALSE) {
-  .Call('extraDistr_cpp_ddunif', PACKAGE = 'extraDistr', x, min, max, log)
+  cpp_ddunif(x, min, max, log)
 }
 
 
@@ -44,7 +44,7 @@ ddunif <- function(x, min, max, log = FALSE) {
 #' @export
 
 pdunif <- function(q, min, max, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pdunif', PACKAGE = 'extraDistr', q, min, max, lower.tail, log.p)
+  cpp_pdunif(q, min, max, lower.tail, log.p)
 }
 
 
@@ -52,7 +52,7 @@ pdunif <- function(q, min, max, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qdunif <- function(p, min, max, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qdunif', PACKAGE = 'extraDistr', p, min, max, lower.tail, log.p)
+  cpp_qdunif(p, min, max, lower.tail, log.p)
 }
 
 
@@ -61,6 +61,6 @@ qdunif <- function(p, min, max, lower.tail = TRUE, log.p = FALSE) {
 
 rdunif <- function(n, min, max) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rdunif', PACKAGE = 'extraDistr', n, min, max)
+  cpp_rdunif(n, min, max)
 }
 

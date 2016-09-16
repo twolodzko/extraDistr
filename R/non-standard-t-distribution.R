@@ -39,7 +39,7 @@
 #' @export
 
 dnst <- function(x, df, mu = 0, sigma = 1, log = FALSE) {
-  .Call('extraDistr_cpp_dnst', PACKAGE = 'extraDistr', x, df, mu, sigma, log)
+  cpp_dnst(x, df, mu, sigma, log)
 }
 
 
@@ -47,7 +47,7 @@ dnst <- function(x, df, mu = 0, sigma = 1, log = FALSE) {
 #' @export
 
 pnst <- function(q, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pnst', PACKAGE = 'extraDistr', q, df, mu, sigma, lower.tail, log.p)
+  cpp_pnst(q, df, mu, sigma, lower.tail, log.p)
 }
 
 
@@ -55,7 +55,7 @@ pnst <- function(q, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qnst <- function(p, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qnst', PACKAGE = 'extraDistr', p, df, mu, sigma, lower.tail, log.p)
+  cpp_qnst(p, df, mu, sigma, lower.tail, log.p)
 }
 
 
@@ -64,26 +64,6 @@ qnst <- function(p, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 
 rnst <- function(n, df, mu = 0, sigma = 1) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rnst', PACKAGE = 'extraDistr', n, df, mu, sigma)
+  cpp_rnst(n, df, mu, sigma)
 }
 
-
-
-
-# dlst <- function(x, df, mu = 0, sigma = 1, log = FALSE) {
-#   p <- dt((x - mu)/sigma, df)/sigma
-#   if (log) log(p) else p
-# }
-# 
-# plst <- function(q, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-#   pt((q - mu)/sigma, df, lower.tail = lower.tail, log.p = log.p)
-# }
-# 
-# 
-# qlst <- function(p, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-#   qt(p, df, lower.tail = lower.tail, log.p = log.p)*sigma + mu
-# }
-# 
-# rlst <- function(n, df, mu = 0, sigma = 1) {
-#   rt(n, df)*sigma + mu
-# }

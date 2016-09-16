@@ -54,7 +54,7 @@
 #' @export
 
 dprop <- function(x, size, mean, log = FALSE) {
-  .Call('extraDistr_cpp_dprop', PACKAGE = 'extraDistr', x, size, mean, log)
+  cpp_dprop(x, size, mean, log)
 }
 
 
@@ -62,7 +62,7 @@ dprop <- function(x, size, mean, log = FALSE) {
 #' @export
 
 pprop <- function(q, size, mean, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pprop', PACKAGE = 'extraDistr', q, size, mean, lower.tail, log.p)
+  cpp_pprop(q, size, mean, lower.tail, log.p)
 }
 
 
@@ -70,7 +70,7 @@ pprop <- function(q, size, mean, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qprop <- function(p, size, mean, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qprop', PACKAGE = 'extraDistr', p, size, mean, lower.tail, log.p)
+  cpp_qprop(p, size, mean, lower.tail, log.p)
 }
 
 
@@ -79,6 +79,6 @@ qprop <- function(p, size, mean, lower.tail = TRUE, log.p = FALSE) {
 
 rprop <- function(n, size, mean) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rprop', PACKAGE = 'extraDistr', n, size, mean)
+  cpp_rprop(n, size, mean)
 }
 

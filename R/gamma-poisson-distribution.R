@@ -53,7 +53,7 @@
 #' @export
 
 dgpois <- function(x, shape, rate, scale = 1/rate, log = FALSE) {
-  .Call('extraDistr_cpp_dgpois', PACKAGE = 'extraDistr', x, shape, scale, log)
+  cpp_dgpois(x, shape, scale, log)
 }
 
 
@@ -61,7 +61,7 @@ dgpois <- function(x, shape, rate, scale = 1/rate, log = FALSE) {
 #' @export
 
 pgpois <- function(q, shape, rate, scale = 1/rate, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pgpois', PACKAGE = 'extraDistr', q, shape, scale, lower.tail, log.p)
+  cpp_pgpois(q, shape, scale, lower.tail, log.p)
 }
 
 
@@ -69,6 +69,6 @@ pgpois <- function(q, shape, rate, scale = 1/rate, lower.tail = TRUE, log.p = FA
 #' @export
 
 rgpois <- function(n, shape, rate, scale = 1/rate) {
-  .Call('extraDistr_cpp_rgpois', PACKAGE = 'extraDistr', n, shape, scale)
+  cpp_rgpois(n, shape, scale)
 }
 

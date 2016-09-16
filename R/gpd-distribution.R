@@ -68,7 +68,7 @@
 #' @export
 
 dgpd <- function(x, mu = 0, sigma = 1, xi = 0, log = FALSE) {
-  .Call('extraDistr_cpp_dgpd', PACKAGE = 'extraDistr', x, mu, sigma, xi, log)
+  cpp_dgpd(x, mu, sigma, xi, log)
 }
 
 
@@ -76,7 +76,7 @@ dgpd <- function(x, mu = 0, sigma = 1, xi = 0, log = FALSE) {
 #' @export
 
 pgpd <- function(q, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pgpd', PACKAGE = 'extraDistr', q, mu, sigma, xi, lower.tail, log.p)
+  cpp_pgpd(q, mu, sigma, xi, lower.tail, log.p)
 }
 
 
@@ -84,7 +84,7 @@ pgpd <- function(q, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE)
 #' @export
 
 qgpd <- function(p, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qgpd', PACKAGE = 'extraDistr', p, mu, sigma, xi, lower.tail, log.p)
+  cpp_qgpd(p, mu, sigma, xi, lower.tail, log.p)
 }
 
 
@@ -93,6 +93,6 @@ qgpd <- function(p, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE)
 
 rgpd <- function(n, mu = 0, sigma = 1, xi = 0) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rgpd', PACKAGE = 'extraDistr', n, mu, sigma, xi)
+  cpp_rgpd(n, mu, sigma, xi)
 }
 

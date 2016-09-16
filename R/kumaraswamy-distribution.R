@@ -63,7 +63,7 @@
 #' @export
 
 dkumar <- function(x, a = 1, b = 1, log = FALSE) {
-  .Call('extraDistr_cpp_dkumar', PACKAGE = 'extraDistr', x, a, b, log)
+  cpp_dkumar(x, a, b, log)
 }
 
 
@@ -71,7 +71,7 @@ dkumar <- function(x, a = 1, b = 1, log = FALSE) {
 #' @export
 
 pkumar <- function(q, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pkumar', PACKAGE = 'extraDistr', q, a, b, lower.tail, log.p)
+  cpp_pkumar(q, a, b, lower.tail, log.p)
 }
 
 
@@ -79,7 +79,7 @@ pkumar <- function(q, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qkumar <- function(p, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qkumar', PACKAGE = 'extraDistr', p, a, b, lower.tail, log.p)
+  cpp_qkumar(p, a, b, lower.tail, log.p)
 }
 
 
@@ -88,6 +88,6 @@ qkumar <- function(p, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
 
 rkumar <- function(n, a = 1, b = 1) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rkumar', PACKAGE = 'extraDistr', n, a, b)
+  cpp_rkumar(n, a, b)
 }
 

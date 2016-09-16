@@ -70,7 +70,7 @@ dbvnorm <- function(x, y = NULL, mean1 = 0, mean2 = mean1, sd1 = 1, sd2 = sd1, c
       stop("y is not provided while x is not a two-column matrix")
     }
   }
-  .Call('extraDistr_cpp_dbnorm', PACKAGE = 'extraDistr', x, y, mean1, mean2, sd1, sd2, cor, log)
+  cpp_dbnorm(x, y, mean1, mean2, sd1, sd2, cor, log)
 }
 
 
@@ -79,6 +79,6 @@ dbvnorm <- function(x, y = NULL, mean1 = 0, mean2 = mean1, sd1 = 1, sd2 = sd1, c
 
 rbvnorm <- function(n, mean1 = 0, mean2 = mean1, sd1 = 1, sd2 = sd1, cor = 0) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rbnorm', PACKAGE = 'extraDistr', n, mean1, mean2, sd1, sd2, cor)
+  cpp_rbnorm(n, mean1, mean2, sd1, sd2, cor)
 }
 

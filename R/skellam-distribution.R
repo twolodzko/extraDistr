@@ -43,7 +43,7 @@
 #' @export
 
 dskellam <- function(x, mu1, mu2, log = FALSE) {
-  .Call('extraDistr_cpp_dskellam', PACKAGE = 'extraDistr', x, mu1, mu2, log)
+  cpp_dskellam(x, mu1, mu2, log)
 }
 
 
@@ -52,6 +52,6 @@ dskellam <- function(x, mu1, mu2, log = FALSE) {
 
 rskellam <- function(n, mu1, mu2) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rskellam', PACKAGE = 'extraDistr', n, mu1, mu2)
+  cpp_rskellam(n, mu1, mu2)
 }
 

@@ -69,7 +69,7 @@ dmixnorm <- function(x, mean, sd, alpha, log = FALSE) {
   else if (!is.matrix(alpha))
     alpha <- as.matrix(alpha)
   
-  .Call('extraDistr_cpp_dmixnorm', PACKAGE = 'extraDistr', x, mean, sd, alpha, log)
+  cpp_dmixnorm(x, mean, sd, alpha, log)
 }
 
 
@@ -93,7 +93,7 @@ pmixnorm <- function(q, mean, sd, alpha, lower.tail = TRUE, log.p = FALSE) {
   else if (!is.matrix(alpha))
     alpha <- as.matrix(alpha)
   
-  .Call('extraDistr_cpp_pmixnorm', PACKAGE = 'extraDistr', q, mean, sd, alpha, lower.tail, log.p)
+  cpp_pmixnorm(q, mean, sd, alpha, lower.tail, log.p)
 }
 
 
@@ -118,6 +118,6 @@ rmixnorm <- function(n, mean, sd, alpha) {
   else if (!is.matrix(alpha))
     alpha <- as.matrix(alpha)
   
-  .Call('extraDistr_cpp_rmixnorm', PACKAGE = 'extraDistr', n, mean, sd, alpha)
+  cpp_rmixnorm(n, mean, sd, alpha)
 }
 

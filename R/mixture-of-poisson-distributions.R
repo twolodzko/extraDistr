@@ -63,7 +63,7 @@ dmixpois <- function(x, lambda, alpha, log = FALSE) {
   else if (!is.matrix(alpha))
     alpha <- as.matrix(alpha)
   
-  .Call('extraDistr_cpp_dmixpois', PACKAGE = 'extraDistr', x, lambda, alpha, log)
+  cpp_dmixpois(x, lambda, alpha, log)
 }
 
 
@@ -82,7 +82,7 @@ pmixpois <- function(q, lambda, alpha, lower.tail = TRUE, log.p = FALSE) {
   else if (!is.matrix(alpha))
     alpha <- as.matrix(alpha)
   
-  .Call('extraDistr_cpp_pmixpois', PACKAGE = 'extraDistr', q, lambda, alpha, lower.tail, log.p)
+  cpp_pmixpois(q, lambda, alpha, lower.tail, log.p)
 }
 
 
@@ -102,6 +102,6 @@ rmixpois <- function(n, lambda, alpha) {
   else if (!is.matrix(alpha))
     alpha <- as.matrix(alpha)
   
-  .Call('extraDistr_cpp_rmixpois', PACKAGE = 'extraDistr', n, lambda, alpha)
+  cpp_rmixpois(n, lambda, alpha)
 }
 

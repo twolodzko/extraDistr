@@ -60,7 +60,7 @@
 #' @export
 
 dlgser <- function(x, theta, log = FALSE) {
-  .Call('extraDistr_cpp_dlgser', PACKAGE = 'extraDistr', x, theta, log)
+  cpp_dlgser(x, theta, log)
 }
 
 
@@ -68,7 +68,7 @@ dlgser <- function(x, theta, log = FALSE) {
 #' @export
 
 plgser <- function(q, theta, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_plgser', PACKAGE = 'extraDistr', q, theta, lower.tail, log.p)
+  cpp_plgser(q, theta, lower.tail, log.p)
 }
 
 
@@ -76,7 +76,7 @@ plgser <- function(q, theta, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qlgser <- function(p, theta, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qlgser', PACKAGE = 'extraDistr', p, theta, lower.tail, log.p)
+  cpp_qlgser(p, theta, lower.tail, log.p)
 }
 
 
@@ -85,6 +85,6 @@ qlgser <- function(p, theta, lower.tail = TRUE, log.p = FALSE) {
 
 rlgser <- function (n, theta) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rlgser', PACKAGE = 'extraDistr', n, theta)
+  cpp_rlgser(n, theta)
 }
 

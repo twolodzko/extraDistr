@@ -35,7 +35,7 @@
 #' @export
 
 dnsbeta <- function(x, shape1, shape2, min = 0, max = 1, log = FALSE) {
-  .Call('extraDistr_cpp_dnsbeta', PACKAGE = 'extraDistr', x, shape1, shape2, min, max, log)
+  cpp_dnsbeta(x, shape1, shape2, min, max, log)
 }
 
 
@@ -43,7 +43,7 @@ dnsbeta <- function(x, shape1, shape2, min = 0, max = 1, log = FALSE) {
 #' @export
 
 pnsbeta <- function(q, shape1, shape2, min = 0, max = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pnsbeta', PACKAGE = 'extraDistr', q, shape1, shape2, min, max, lower.tail, log.p)
+  cpp_pnsbeta(q, shape1, shape2, min, max, lower.tail, log.p)
 }
 
 
@@ -51,7 +51,7 @@ pnsbeta <- function(q, shape1, shape2, min = 0, max = 1, lower.tail = TRUE, log.
 #' @export
 
 qnsbeta <- function(p, shape1, shape2, min = 0, max = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qnsbeta', PACKAGE = 'extraDistr', p, shape1, shape2, min, max, lower.tail, log.p)
+  cpp_qnsbeta(p, shape1, shape2, min, max, lower.tail, log.p)
 }
 
 
@@ -60,6 +60,6 @@ qnsbeta <- function(p, shape1, shape2, min = 0, max = 1, lower.tail = TRUE, log.
 
 rnsbeta <- function(n, shape1, shape2, min = 0, max = 1) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rnsbeta', PACKAGE = 'extraDistr', n, shape1, shape2, min, max)
+  cpp_rnsbeta(n, shape1, shape2, min, max)
 }
 

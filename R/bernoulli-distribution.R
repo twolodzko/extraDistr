@@ -28,7 +28,7 @@
 #' @export
 
 dbern <- function(x, prob = 0.5, log = FALSE) {
-  .Call('extraDistr_cpp_dbern', PACKAGE = 'extraDistr', x, prob, log)
+  cpp_dbern(x, prob, log)
 }
 
 
@@ -36,7 +36,7 @@ dbern <- function(x, prob = 0.5, log = FALSE) {
 #' @export
 
 pbern <- function(q, prob = 0.5, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pbern', PACKAGE = 'extraDistr', q, prob, lower.tail, log.p)
+  cpp_pbern(q, prob, lower.tail, log.p)
 }
 
 
@@ -44,7 +44,7 @@ pbern <- function(q, prob = 0.5, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qbern <- function(p, prob = 0.5, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qbern', PACKAGE = 'extraDistr', p, prob, lower.tail, log.p)
+  cpp_qbern(p, prob, lower.tail, log.p)
 }
 
 
@@ -53,6 +53,6 @@ qbern <- function(p, prob = 0.5, lower.tail = TRUE, log.p = FALSE) {
 
 rbern <- function(n, prob = 0.5) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rbern', PACKAGE = 'extraDistr', n, prob)
+  cpp_rbern(n, prob)
 }
 

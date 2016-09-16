@@ -59,7 +59,7 @@
 #' @export
 
 dgumbel <- function(x, mu = 0, sigma = 1, log = FALSE) {
-  .Call('extraDistr_cpp_dgumbel', PACKAGE = 'extraDistr', x, mu, sigma, log)
+  cpp_dgumbel(x, mu, sigma, log)
 }
 
 
@@ -67,7 +67,7 @@ dgumbel <- function(x, mu = 0, sigma = 1, log = FALSE) {
 #' @export
 
 pgumbel <- function(q, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pgumbel', PACKAGE = 'extraDistr', q, mu, sigma, lower.tail, log.p)
+  cpp_pgumbel(q, mu, sigma, lower.tail, log.p)
 }
 
 
@@ -75,7 +75,7 @@ pgumbel <- function(q, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qgumbel <- function(p, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qgumbel', PACKAGE = 'extraDistr', p, mu, sigma, lower.tail, log.p)
+  cpp_qgumbel(p, mu, sigma, lower.tail, log.p)
 }
 
 
@@ -84,6 +84,6 @@ qgumbel <- function(p, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 
 rgumbel <- function(n, mu = 0, sigma = 1) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rgumbel', PACKAGE = 'extraDistr', n, mu, sigma)
+  cpp_rgumbel(n, mu, sigma)
 }
 

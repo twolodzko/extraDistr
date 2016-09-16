@@ -50,7 +50,7 @@
 #' @export
 
 dzinb <- function(x, size, prob, pi, log = FALSE) {
-  .Call('extraDistr_cpp_dzinb', PACKAGE = 'extraDistr', x, size, prob, pi, log)
+  cpp_dzinb(x, size, prob, pi, log)
 }
 
 
@@ -58,7 +58,7 @@ dzinb <- function(x, size, prob, pi, log = FALSE) {
 #' @export
 
 pzinb <- function(q, size, prob, pi, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pzinb', PACKAGE = 'extraDistr', q, size, prob, pi, lower.tail, log.p)
+  cpp_pzinb(q, size, prob, pi, lower.tail, log.p)
 }
 
 
@@ -66,8 +66,7 @@ pzinb <- function(q, size, prob, pi, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qzinb <- function(p, size, prob, pi, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_qzinb', PACKAGE = 'extraDistr', p, size, prob, pi,
-        lower.tail, log.p)
+  cpp_qzinb(p, size, prob, pi, lower.tail, log.p)
 }
 
 
@@ -76,6 +75,6 @@ qzinb <- function(p, size, prob, pi, lower.tail = TRUE, log.p = FALSE) {
 
 rzinb <- function(n, size, prob, pi) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rzinb', PACKAGE = 'extraDistr', n, size, prob, pi)
+  cpp_rzinb(n, size, prob, pi)
 }
 

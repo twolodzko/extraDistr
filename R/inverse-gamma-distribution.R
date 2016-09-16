@@ -58,7 +58,7 @@
 #' @export
 
 dinvgamma <- function(x, alpha, beta = 1, log = FALSE) {
-  .Call('extraDistr_cpp_dinvgamma', PACKAGE = 'extraDistr', x, alpha, 1/beta, log)
+  cpp_dinvgamma(x, alpha, 1/beta, log)
 }
 
 

@@ -51,7 +51,7 @@
 #' @export
 
 dbbinom <- function(x, size, alpha = 1, beta = 1, log = FALSE) {
-  .Call('extraDistr_cpp_dbbinom', PACKAGE = 'extraDistr', x, size, alpha, beta, log)
+  cpp_dbbinom(x, size, alpha, beta, log)
 }
 
 
@@ -59,7 +59,7 @@ dbbinom <- function(x, size, alpha = 1, beta = 1, log = FALSE) {
 #' @export
 
 pbbinom <- function(q, size, alpha = 1, beta = 1, lower.tail = TRUE, log.p = FALSE) {
-  .Call('extraDistr_cpp_pbbinom', PACKAGE = 'extraDistr', q, size, alpha, beta, lower.tail, log.p)
+  cpp_pbbinom(q, size, alpha, beta, lower.tail, log.p)
 }
 
 
@@ -68,6 +68,6 @@ pbbinom <- function(q, size, alpha = 1, beta = 1, lower.tail = TRUE, log.p = FAL
 
 rbbinom <- function(n, size, alpha = 1, beta = 1) {
   if (length(n) > 1) n <- length(n)
-  .Call('extraDistr_cpp_rbbinom', PACKAGE = 'extraDistr', n, size, alpha, beta)
+  cpp_rbbinom(n, size, alpha, beta)
 }
 

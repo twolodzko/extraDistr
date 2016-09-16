@@ -59,7 +59,7 @@ dmvhyper <- function(x, n, k, log = FALSE) {
   else if (!is.matrix(x))
     x <- as.matrix(x)
   
-  .Call('extraDistr_cpp_dmvhyper', PACKAGE = 'extraDistr', x, n, k, log)
+  cpp_dmvhyper(x, n, k, log)
 }
 
 
@@ -78,6 +78,6 @@ rmvhyper <- function(nn, n, k) {
   else if (!is.matrix(n))
     n <- as.matrix(n)
   
-  .Call('extraDistr_cpp_rmvhyper', PACKAGE = 'extraDistr', nn, n, k)
+  cpp_rmvhyper(nn, n, k)
 }
 
