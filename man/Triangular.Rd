@@ -8,20 +8,25 @@
 \alias{rtriang}
 \title{Triangular distribution}
 \usage{
-dtriang(x, a = -1, b = 1, c = (a + b)/2, log = FALSE)
+dtriang(x, min = -1, max = 1, mode = if (is.null(mean)) (min + max)/2 else
+  3 * mean - min - max, mean = NULL, log = FALSE)
 
-ptriang(q, a = -1, b = 1, c = (a + b)/2, lower.tail = TRUE,
-  log.p = FALSE)
+ptriang(q, min = -1, max = 1, mode = if (is.null(mean)) (min + max)/2 else
+  3 * mean - min - max, mean = NULL, lower.tail = TRUE, log.p = FALSE)
 
-qtriang(p, a = -1, b = 1, c = (a + b)/2, lower.tail = TRUE,
-  log.p = FALSE)
+qtriang(p, min = -1, max = 1, mode = if (is.null(mean)) (min + max)/2 else
+  3 * mean - min - max, mean = NULL, lower.tail = TRUE, log.p = FALSE)
 
-rtriang(n, a = -1, b = 1, c = (a + b)/2)
+rtriang(n, min = -1, max = 1, mode = if (is.null(mean)) (min + max)/2 else
+  3 * mean - min - max, mean = NULL)
 }
 \arguments{
 \item{x, q}{vector of quantiles.}
 
-\item{a, b, c}{minimum, maximum and shape parameters.}
+\item{min, max, mode}{minimum, maximum and mode of the distribution.}
+
+\item{mean}{alternatively, instead of \code{mode} distribution can be
+specified using \code{min}, \code{max} and \code{mean}.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 
