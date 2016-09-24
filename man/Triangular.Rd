@@ -8,17 +8,15 @@
 \alias{rtriang}
 \title{Triangular distribution}
 \usage{
-dtriang(x, min = -1, max = 1, mode = if (is.null(mean)) (min + max)/2 else
-  3 * mean - min - max, mean = NULL, log = FALSE)
+dtriang(x, min = -1, max = 1, mode, mean, log = FALSE)
 
-ptriang(q, min = -1, max = 1, mode = if (is.null(mean)) (min + max)/2 else
-  3 * mean - min - max, mean = NULL, lower.tail = TRUE, log.p = FALSE)
+ptriang(q, min = -1, max = 1, mode, mean, lower.tail = TRUE,
+  log.p = FALSE)
 
-qtriang(p, min = -1, max = 1, mode = if (is.null(mean)) (min + max)/2 else
-  3 * mean - min - max, mean = NULL, lower.tail = TRUE, log.p = FALSE)
+qtriang(p, min = -1, max = 1, mode, mean, lower.tail = TRUE,
+  log.p = FALSE)
 
-rtriang(n, min = -1, max = 1, mode = if (is.null(mean)) (min + max)/2 else
-  3 * mean - min - max, mean = NULL)
+rtriang(n, min = -1, max = 1, mode, mean)
 }
 \arguments{
 \item{x, q}{vector of quantiles.}
