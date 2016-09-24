@@ -10,8 +10,6 @@
   and accept any non-negtive values. Probability parameter vectors are
   normalized to sum to one (i.e. `c(1,1,1)` becomes `c(1,1,1)/3`)
 * `NAN`'s in input now always lead to `NA`'s in output
-* Renamed parameters of triangular distribution to min, max and mode
-  for clarity.
 
 ### 1.8.1
 

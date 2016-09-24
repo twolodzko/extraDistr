@@ -9,7 +9,7 @@
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
-#' @param min,max,mode    minimum, maximum and mode of the distribution.
+#' @param a,b,c           minimum, maximum and mode of the distribution.
 #' @param log,log.p	      logical; if TRUE, probabilities p are given as log(p).
 #' @param lower.tail	    logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
 #'                        otherwise, \eqn{P[X > x]}.
@@ -80,32 +80,32 @@
 #'
 #' @export
 
-dtriang <- function(x, min = -1, max = 1, mode = (min+max)/2, log = FALSE) {
-  cpp_dtriang(x, min, max, mode, log)
+dtriang <- function(x, a = -1, b = 1, c = (a+b)/2, log = FALSE) {
+  cpp_dtriang(x, a, b, c, log)
 }
 
 
 #' @rdname Triangular
 #' @export
 
-ptriang <- function(q, min = -1, max = 1, mode = (min+max)/2, lower.tail = TRUE, log.p = FALSE) {
-  cpp_ptriang(q, min, max, mode, lower.tail, log.p)
+ptriang <- function(q, a = -1, b = 1, c = (a+b)/2, lower.tail = TRUE, log.p = FALSE) {
+  cpp_ptriang(q, a, b, c, lower.tail, log.p)
 }
 
 
 #' @rdname Triangular
 #' @export
 
-qtriang <- function(p, min = -1, max = 1, mode = (min+max)/2, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qtriang(p, min, max, mode, lower.tail, log.p)
+qtriang <- function(p, a = -1, b = 1, c = (a+b)/2, lower.tail = TRUE, log.p = FALSE) {
+  cpp_qtriang(p, a, b, c, lower.tail, log.p)
 }
 
 
 #' @rdname Triangular
 #' @export
 
-rtriang <- function(n, min = -1, max = 1, mode = (min+max)/2) {
+rtriang <- function(n, a = -1, b = 1, c = (a+b)/2) {
   if (length(n) > 1) n <- length(n)
-  cpp_rtriang(n, min, max, mode)
+  cpp_rtriang(n, a, b, c)
 }
 

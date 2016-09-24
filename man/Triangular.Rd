@@ -8,23 +8,20 @@
 \alias{rtriang}
 \title{Triangular distribution}
 \usage{
-dtriang(x, min = -1, max = 1, mode, mean, log = FALSE)
+dtriang(x, a = -1, b = 1, c = (a + b)/2, log = FALSE)
 
-ptriang(q, min = -1, max = 1, mode, mean, lower.tail = TRUE,
+ptriang(q, a = -1, b = 1, c = (a + b)/2, lower.tail = TRUE,
   log.p = FALSE)
 
-qtriang(p, min = -1, max = 1, mode, mean, lower.tail = TRUE,
+qtriang(p, a = -1, b = 1, c = (a + b)/2, lower.tail = TRUE,
   log.p = FALSE)
 
-rtriang(n, min = -1, max = 1, mode, mean)
+rtriang(n, a = -1, b = 1, c = (a + b)/2)
 }
 \arguments{
 \item{x, q}{vector of quantiles.}
 
-\item{min, max, mode}{minimum, maximum and mode of the distribution.}
-
-\item{mean}{alternatively, instead of \code{mode} distribution can be
-specified using \code{min}, \code{max} and \code{mean}.}
+\item{a, b, c}{minimum, maximum and mode of the distribution.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 
