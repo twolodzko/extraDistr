@@ -42,12 +42,32 @@ NumericVector cpp_dmvhyper(
   
   int nx = x.nrow();
   int nr = n.nrow();
-  int m = n.ncol();
+  int m = x.ncol();
   int nk = k.length();
   int Nmax = Rcpp::max(IntegerVector::create(nx, nr, nk));
   NumericVector p(Nmax);
+  
+  if (m != n.ncol())
+    Rcpp::stop("Number of columns in 'x' does not equal number of columns in 'n'.");
 
   for (int i = 0; i < Nmax; i++) {
+    
+    bool missings = false;
+    
+    if (ISNAN(k[i % nk]))
+      missings = true;
+    
+    for (int j = 0; j < m; j++) {
+      if (ISNAN(x(i % nx, j)) || ISNAN(n(i % nr, j))) {
+        missings = true;
+        break;
+      }
+    }
+    
+    if (missings) {
+      p[i] = NA_REAL;
+      continue;
+    } 
     
     bool wrong_n = false;
     double N = 0.0;
@@ -113,6 +133,24 @@ NumericMatrix cpp_rmvhyper(
   NumericVector n_otr(m);
 
   for (int i = 0; i < nn; i++) {
+    
+    bool missings = false;
+    
+    if (ISNAN(k[i % nk]))
+      missings = true;
+    
+    for (int j = 0; j < m; j++) {
+      if (ISNAN(n(i % nr, j))) {
+        missings = true;
+        break;
+      }
+    }
+    
+    if (missings) {
+      for (int j = 0; j < m; j++)
+        x(i, j) = NA_REAL;
+      continue;
+    } 
     
     bool wrong_n = false;
     n_otr[0] = 0.0;

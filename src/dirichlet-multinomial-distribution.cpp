@@ -63,18 +63,25 @@ NumericVector cpp_ddirmnom(
     bool wrong_param = false;
     bool missings = false;
     
-    // check NAs first!
-    
-    if (ISNAN(size[i % ns])) {
+    if (ISNAN(size[i % ns]))
       missings = true;
-    } else if (size[i % ns] < 0.0 || floor(size[i % ns]) != size[i % ns]) {
+    
+    for (int j = 0; j < k; j++) {
+      if (ISNAN(alpha(i % na, j)) || ISNAN(x(i % n, j))) {
+        missings = true;
+        break;
+      }
+    }
+    
+    if (missings) {
+      p[i] = NA_REAL;
+      continue;
+    } 
+      
+    if (size[i % ns] < 0.0 || floor(size[i % ns]) != size[i % ns]) {
       wrong_param = true;
     } else {
-      for (int j = 0; j < m; j++) {
-        if (ISNAN(alpha(i % na, j)) || ISNAN(x(i % n, j))) {
-          missings = true;
-          break;
-        }
+      for (int j = 0; j < k; j++) {
         if (alpha(i % na, j) <= 0.0) {
           wrong_param = true;
           break;
@@ -90,9 +97,7 @@ NumericVector cpp_ddirmnom(
       }
     }
     
-    if (missings) {
-      p[i] = NA_REAL;
-    } else if (wrong_param) {
+    if (wrong_param) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
     } else if (sum_x < 0.0 || sum_x != size[i % ns] || wrong_x) {
@@ -133,9 +138,23 @@ NumericMatrix cpp_rdirmnom(
     bool missings = false;
     NumericVector pi(k);
     
-    if (ISNAN(size[i % ns])) {
+    if (ISNAN(size[i % ns]))
       missings = true;
-    } else if (size[i % ns] < 0.0 || floor(size[i % ns]) != size[i % ns]) {
+    
+    for (int j = 0; j < k; j++) {
+      if (ISNAN(alpha(i % na, j))) {
+        missings = true;
+        break;
+      }
+    }
+    
+    if (missings) {
+      for (int j = 0; j < k; j++)
+        x(i, j) = NA_REAL;
+      continue;
+    } 
+    
+    if (size[i % ns] < 0.0 || floor(size[i % ns]) != size[i % ns]) {
       wrong_param = true;
     } else {
       for (int j = 0; j < k; j++) {
@@ -152,10 +171,7 @@ NumericMatrix cpp_rdirmnom(
       }
     }
     
-    if (missings) {
-      for (int j = 0; j < k; j++)
-        x(i, j) = NA_REAL;
-    } else if (wrong_param) {
+    if (wrong_param) {
       Rcpp::warning("NaNs produced");
       for (int j = 0; j < k; j++)
         x(i, j) = NAN;

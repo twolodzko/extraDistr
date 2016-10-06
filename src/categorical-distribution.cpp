@@ -45,6 +45,24 @@ NumericVector cpp_dcat(
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++) {
+    
+    bool missings = false;
+    
+    if (ISNAN(x[i]))
+      missings = true;
+    
+    for (int j = 0; j < k; j++) {
+      if (ISNAN(prob(i % np, j))) {
+        missings = true;
+        break;
+      }
+    }
+    
+    if (missings) {
+      p[i] = NA_REAL;
+      continue;
+    }
+    
     if (!isInteger(x[i]) || x[i] < 1.0 || x[i] > static_cast<double>(k)) {
       p[i] = 0.0;
     } else {
@@ -89,6 +107,24 @@ NumericVector cpp_pcat(
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++) {
+    
+    bool missings = false;
+    
+    if (ISNAN(x[i]))
+      missings = true;
+    
+    for (int j = 0; j < k; j++) {
+      if (ISNAN(prob(i % np, j))) {
+        missings = true;
+        break;
+      }
+    }
+    
+    if (missings) {
+      p[i] = NA_REAL;
+      continue;
+    }
+    
     if (x[i] < 1.0) {
       p[i] = 0.0;
     } else if (x[i] > static_cast<double>(k)) {
@@ -166,6 +202,24 @@ NumericVector cpp_qcat(
   bool wrong_param;
     
   for (int i = 0; i < Nmax; i++) {
+    
+    bool missings = false;
+    
+    if (ISNAN(pp[i]))
+      missings = true;
+    
+    for (int j = 0; j < k; j++) {
+      if (ISNAN(prob(i % np, j))) {
+        missings = true;
+        break;
+      }
+    }
+    
+    if (missings) {
+      q[i] = NA_REAL;
+      continue;
+    }
+    
     if (pp[i] < 0.0 || pp[i] > 1.0) {
       Rcpp::warning("NaNs produced");
       q[i] = NAN;
@@ -222,6 +276,21 @@ NumericVector cpp_rcat(
   bool wrong_param;
 
   for (int i = 0; i < n; i++) {
+    
+    bool missings = false;
+
+    for (int j = 0; j < k; j++) {
+      if (ISNAN(prob(i % np, j))) {
+        missings = true;
+        break;
+      }
+    }
+    
+    if (missings) {
+      x[i] = NA_REAL;
+      continue;
+    }
+    
     u = rng_unif();
     wrong_param = false;
     p_tmp = 1.0;
