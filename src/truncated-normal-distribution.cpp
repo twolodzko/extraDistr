@@ -113,12 +113,6 @@ double rng_tnorm(double mu, double sigma, double a, double b) {
   // non-truncated normal
   if (a == -INFINITY && b == INFINITY)
     return R::rnorm(mu, sigma);
-  
-  // extreme truncation points
-  if ((mu + 2.0*sigma) < a || (mu - 2.0*sigma) > b) {
-    double u = rng_unif();
-    return invcdf_tnorm(u, mu, sigma, a, b);
-  }
 
   double r, u, za, zb;
   bool stop = false;

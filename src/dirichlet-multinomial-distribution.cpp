@@ -61,11 +61,20 @@ NumericVector cpp_ddirmnom(
     double sum_x = 0.0;
     bool wrong_x = false;
     bool wrong_param = false;
+    bool missings = false;
     
-    if (size[i % ns] < 0.0 || floor(size[i % ns]) != size[i % ns]) {
+    // check NAs first!
+    
+    if (ISNAN(size[i % ns])) {
+      missings = true;
+    } else if (size[i % ns] < 0.0 || floor(size[i % ns]) != size[i % ns]) {
       wrong_param = true;
     } else {
       for (int j = 0; j < m; j++) {
+        if (ISNAN(alpha(i % na, j)) || ISNAN(x(i % n, j))) {
+          missings = true;
+          break;
+        }
         if (alpha(i % na, j) <= 0.0) {
           wrong_param = true;
           break;
@@ -81,7 +90,9 @@ NumericVector cpp_ddirmnom(
       }
     }
     
-    if (wrong_param) {
+    if (missings) {
+      p[i] = NA_REAL;
+    } else if (wrong_param) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
     } else if (sum_x < 0.0 || sum_x != size[i % ns] || wrong_x) {
@@ -119,12 +130,19 @@ NumericMatrix cpp_rdirmnom(
     double size_left = size[i % ns];
     double row_sum = 0.0;
     bool wrong_param = false;
+    bool missings = false;
     NumericVector pi(k);
     
-    if (size[i % ns] < 0.0 || floor(size[i % ns]) != size[i % ns]) {
+    if (ISNAN(size[i % ns])) {
+      missings = true;
+    } else if (size[i % ns] < 0.0 || floor(size[i % ns]) != size[i % ns]) {
       wrong_param = true;
     } else {
       for (int j = 0; j < k; j++) {
+        if (ISNAN(alpha(i % na, j))) {
+          missings = true;
+          break;
+        }
         if (alpha(i % na, j) <= 0.0) {
           wrong_param = true;
           break;
@@ -134,7 +152,10 @@ NumericMatrix cpp_rdirmnom(
       }
     }
     
-    if (wrong_param) {
+    if (missings) {
+      for (int j = 0; j < k; j++)
+        x(i, j) = NA_REAL;
+    } else if (wrong_param) {
       Rcpp::warning("NaNs produced");
       for (int j = 0; j < k; j++)
         x(i, j) = NAN;
