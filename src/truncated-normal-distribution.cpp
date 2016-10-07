@@ -140,8 +140,8 @@ double rng_tnorm(double mu, double sigma, double a, double b) {
     }
   } else if (za >= 0.0 && (zb > za + 2.0*sqrt(M_E) / (za + sqrt(za_sq + 4.0))
                       * exp((za*2.0 - za*sqrt(za_sq + 4.0)) / 4.0))) {
+    aa = (za + sqrt(za_sq + 4.0)) / 2.0;
     while (!stop) {
-      aa = (za + sqrt(za_sq + 4.0)) / 2.0;
       r = R::exp_rand()*aa + za;
       u = rng_unif();
       if ((u <= exp(-pow(r-aa, 2.0) / 2.0)) && (r <= zb))
@@ -149,8 +149,8 @@ double rng_tnorm(double mu, double sigma, double a, double b) {
     }
   } else if (zb <= 0.0 && (-za > -zb + 2.0*sqrt(M_E) / (-zb + sqrt(zb_sq + 4.0))
                           * exp((zb*2.0 + zb*sqrt(zb_sq + 4.0)) / 4.0))) {
+    aa = (-zb + sqrt(zb_sq + 4.0)) / 2.0;
     while (!stop) {
-      aa = (-zb + sqrt(zb_sq + 4.0)) / 2.0;
       r = R::exp_rand()*aa - zb;
       u = rng_unif();
       if ((u <= exp(-pow(r-aa, 2.0) / 2.0)) && (r >= za)) {
