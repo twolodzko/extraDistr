@@ -8,20 +8,20 @@
 \alias{rtnorm}
 \title{Truncated normal distribution}
 \usage{
-dtnorm(x, mu = 0, sigma = 1, a = -Inf, b = Inf, log = FALSE)
+dtnorm(x, mean = 0, sd = 1, a = -Inf, b = Inf, log = FALSE)
 
-ptnorm(q, mu = 0, sigma = 1, a = -Inf, b = Inf, lower.tail = TRUE,
+ptnorm(q, mean = 0, sd = 1, a = -Inf, b = Inf, lower.tail = TRUE,
   log.p = FALSE)
 
-qtnorm(p, mu = 0, sigma = 1, a = -Inf, b = Inf, lower.tail = TRUE,
+qtnorm(p, mean = 0, sd = 1, a = -Inf, b = Inf, lower.tail = TRUE,
   log.p = FALSE)
 
-rtnorm(n, mu = 0, sigma = 1, a = -Inf, b = Inf)
+rtnorm(n, mean = 0, sd = 1, a = -Inf, b = Inf)
 }
 \arguments{
 \item{x, q}{vector of quantiles.}
 
-\item{mu, sigma}{location and scale parameters. Scale must be positive.}
+\item{mean, sd}{location and scale parameters. Scale must be positive.}
 
 \item{a, b}{minimal and maximal boundries for truncation
 (\code{-Inf} and \code{Inf} by default).}
