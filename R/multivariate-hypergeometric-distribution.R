@@ -70,13 +70,15 @@ rmvhyper <- function(nn, n, k) {
   if (length(nn) > 1)
     nn <- length(nn)
   
-  if (is.vector(n) && sum(n) == k)
-    return(matrix(rep(n, nn), nrow = nn, byrow = TRUE))
-  
-  if (is.vector(n))
+  if (is.vector(n) && length(k) == 1) {
+    if (anyNA(n) || is.na(k))
+      return(matrix(rep(NA, nn), nrow = nn, byrow = TRUE))
+    if (sum(n) == k)
+      return(matrix(rep(n, nn), nrow = nn, byrow = TRUE))
     n <- matrix(n, nrow = 1)
-  else if (!is.matrix(n))
+  } else if (!is.matrix(n)) {
     n <- as.matrix(n)
+  }
   
   cpp_rmvhyper(nn, n, k)
 }
