@@ -142,7 +142,7 @@ double rng_tnorm(double mu, double sigma, double a, double b) {
                       * exp((za*2.0 - za*sqrt(za_sq + 4.0)) / 4.0))) {
     aa = (za + sqrt(za_sq + 4.0)) / 2.0;
     while (!stop) {
-      r = R::exp_rand()*aa + za;
+      r = R::exp_rand() / aa + za;
       u = rng_unif();
       if ((u <= exp(-pow(r-aa, 2.0) / 2.0)) && (r <= zb))
         stop = true;
@@ -151,7 +151,7 @@ double rng_tnorm(double mu, double sigma, double a, double b) {
                           * exp((zb*2.0 + zb*sqrt(zb_sq + 4.0)) / 4.0))) {
     aa = (-zb + sqrt(zb_sq + 4.0)) / 2.0;
     while (!stop) {
-      r = R::exp_rand()*aa - zb;
+      r = R::exp_rand() / aa - zb;
       u = rng_unif();
       if ((u <= exp(-pow(r-aa, 2.0) / 2.0)) && (r >= za)) {
         r = -r;
@@ -182,49 +182,6 @@ double rng_tnorm(double mu, double sigma, double a, double b) {
 
   return mu + sigma * r;
 }
-
-// 
-// double rng_tnorm_TEST(double mu, double sigma, double a, double b) {
-//   if (ISNAN(mu) || ISNAN(sigma) || ISNAN(a) || ISNAN(b))
-//     return NA_REAL;
-//   if (sigma <= 0.0 || b <= a) {
-//     Rcpp::warning("NaNs produced");
-//     return NAN;
-//   }
-// 
-//   double r, u, za, zb, aa, za_sq, zb_sq;
-//   bool stop = false;
-//   
-//   za = (a-mu)/sigma;
-//   zb = (b-mu)/sigma;
-//   za_sq = pow(za, 2.0);
-//   zb_sq = pow(zb, 2.0);
-//   
-//   if (za >= 0.0) {
-//     while (!stop) {
-//       aa = (za + sqrt(za_sq + 4.0)) / 2.0;
-//       r = R::exp_rand() * aa + za;
-//       u = rng_unif();
-//       if ((u <= exp(-pow(r-aa, 2.0) / 2.0)) && (r <= zb))
-//         stop = true;
-//     }
-//   } else if (zb <= 0.0) {
-//     while (!stop) {
-//       aa = (-zb + sqrt(zb_sq + 4.0)) / 2.0;
-//       r = R::exp_rand() * aa - zb;
-//       u = rng_unif();
-//       if ((u <= exp(-pow(r-aa, 2.0) / 2.0)) && (r >= za)) {
-//         r = -r;
-//         stop = true;
-//       }
-//     }
-//   } else {
-//     r = NAN;
-//   }
-//   
-//   return mu + sigma * r;
-// }
-
 
 
 // [[Rcpp::export]]
