@@ -18,10 +18,10 @@ rtlambda(n, lambda)
 \item{lower.tail}{logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
 otherwise, \eqn{P[X > x]}.}
 
+\item{log.p}{logical; if TRUE, probabilities p are given as log(p).}
+
 \item{n}{number of observations. If \code{length(n) > 1},
 the length is taken to be the number required.}
-
-\item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 }
 \description{
 Quantile function, and random generation for the Tuckey lambda
