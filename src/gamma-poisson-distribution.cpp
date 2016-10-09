@@ -115,7 +115,18 @@ NumericVector cpp_pgpois(
 
   if (na == 1 && nb == 1 && anyFinite(x)) {
     
+    if (allNA(x)) {
+      for (int i = 0; i < n; i++)
+        p[i] = NA_REAL;
+      return p;
+    }
+    
     double mx = static_cast<int>(finite_max(x));
+    if (mx < 0.0) {
+      for (int i = 0; i < n; i++)
+        p[i] = 0;
+      return p;
+    }
     NumericVector p_tab(mx+1);
     
     p_tab[0] = exp(logpmf_gpois(0, alpha[0], beta[0]));

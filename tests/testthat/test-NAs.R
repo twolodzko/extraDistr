@@ -626,8 +626,8 @@ test_that("Wrong parameter values in RNG functions", {
   expect_true(is.na(rdlaplace(1, NA, 1)))
   expect_true(is.na(rdlaplace(1, 1, NA)))
   
-  expect_true(is.na(rdnorm(1, NA, 1)))
-  expect_true(is.na(rdnorm(1, 1, NA)))
+  # expect_true(is.na(rdnorm(1, NA, 1)))
+  # expect_true(is.na(rdnorm(1, 1, NA)))
   
   expect_true(is.na(rdunif(1, NA, 10)))
   expect_true(is.na(rdunif(1, 1, NA)))

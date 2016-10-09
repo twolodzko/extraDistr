@@ -18,7 +18,7 @@ bool isInteger(double x) {
   return true;
 }
 
-// Dealing with Inf
+// Dealing with Inf and NAs
 
 bool anyFinite(Rcpp::NumericVector x) {
   int n = x.length();
@@ -36,6 +36,14 @@ double finite_max(Rcpp::NumericVector x) {
       max_x = x[i];
   }
   return max_x;
+}
+
+bool allNA(Rcpp::NumericVector x) {
+  int n = x.length();
+  for (int i = 0; i < n; i++)
+    if (!ISNAN(x[i]))
+      return false;
+  return true;
 }
 
 // Standard normal

@@ -7,10 +7,11 @@
 bool tol_equal(double x, double y);
 bool isInteger(double x);
 
-// Dealing with Inf
+// Dealing with Inf and NAs
 
 bool anyFinite(Rcpp::NumericVector x);
 double finite_max(Rcpp::NumericVector x);
+bool allNA(Rcpp::NumericVector x);
 
 // Standard normal
 
