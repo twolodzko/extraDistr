@@ -2,7 +2,7 @@
 ### 1.8.2
 
 * Corrected and simplified documentation for `*prop` distribution
-* categorical, multinomial, mixture of normals and mixture of Poisson
+* Categorical, multinomial, mixture of normals and mixture of Poisson
   distributions are now *less restrictive* about probability parameters
   and accept any non-negtive values. Probability parameter vectors are
   normalized to sum to one (i.e. `c(1,1,1)` becomes `c(1,1,1)/3`)
