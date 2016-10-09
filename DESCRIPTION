@@ -7,9 +7,24 @@ Author: Tymoteusz Wolodzko
 Maintainer: Tymoteusz Wolodzko <twolodzko+extraDistr@gmail.com>
 Description: Density, distribution function, quantile function
     and random generation for a number of univariate
-    and multivariate distributions.
+    and multivariate distributions. This package implements the
+    folowing distributions: Bernoulli, beta-binomial, beta-negative
+    binomial, beta prime, Bhattacharje, Birnbaum-Saunder,
+    bivariate normal, bivariate Poisson, categorical, Dirichlet,
+    Dirichlet-multinomial, discrete Laplace, discrete normal,
+    discrete uniform, discrete Weibull, Frechet, gamma-Poisson,
+    generalized extreme value, Gompertz, generalized Pareto,
+    Gumbel, half-Cauchy, half-normal, half-t, Huber density, 
+    inverse chi-squared, inverse-gamma, Kumaraswamy, Laplace,
+    logarithmic, Lomax, multivariate hypergeometric, multinomial,
+    non-standart t, non-standart beta, normal mixture,
+    Poisson mixture, Pareto, power, reparametrized beta,
+    Rayleigh, Skellam, slash, triangular, truncated normal,
+    truncated Poisson, Wald, zero-inflated binomial, zero-inflated
+    negative binomial, zero-inflated Poisson.
 License: GPL-2
 URL: https://github.com/twolodzko/extraDistr
+BugReports: https://github.com/twolodzko/extraDistr/issues
 LazyData: TRUE
 LinkingTo: Rcpp
 Imports: Rcpp
