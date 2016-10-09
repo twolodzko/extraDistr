@@ -115,7 +115,7 @@ NumericVector cpp_pgpois(
 
   if (na == 1 && nb == 1 && anyFinite(x)) {
     
-    if (allNA(x)) {
+    if (ISNAN(alpha[0]) || ISNAN(beta[0]) || allNA(x)) {
       for (int i = 0; i < n; i++)
         p[i] = NA_REAL;
       return p;

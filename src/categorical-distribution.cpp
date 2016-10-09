@@ -43,10 +43,11 @@ NumericVector cpp_dcat(
   int Nmax = Rcpp::max(IntegerVector::create(n, np));
   int k = prob.ncol();
   NumericVector p(Nmax);
+  bool missings;
   
   for (int i = 0; i < Nmax; i++) {
     
-    bool missings = false;
+    missings = false;
     
     if (ISNAN(x[i]))
       missings = true;
@@ -105,10 +106,11 @@ NumericVector cpp_pcat(
   int Nmax = Rcpp::max(IntegerVector::create(n, np));
   int k = prob.ncol();
   NumericVector p(Nmax);
+  bool missings;
   
   for (int i = 0; i < Nmax; i++) {
     
-    bool missings = false;
+    missings = false;
     
     if (ISNAN(x[i]))
       missings = true;
@@ -199,11 +201,11 @@ NumericVector cpp_qcat(
   
   int jj;
   double pp_norm, p_tmp, p_tot;
-  bool wrong_param;
+  bool wrong_param, missings;
     
   for (int i = 0; i < Nmax; i++) {
     
-    bool missings = false;
+    missings = false;
     
     if (ISNAN(pp[i]))
       missings = true;
@@ -273,11 +275,11 @@ NumericVector cpp_rcat(
   
   int jj;
   double u, p_tmp, p_tot;
-  bool wrong_param;
+  bool wrong_param, missings;
 
   for (int i = 0; i < n; i++) {
     
-    bool missings = false;
+    missings = false;
 
     for (int j = 0; j < k; j++) {
       if (ISNAN(prob(i % np, j))) {

@@ -49,17 +49,20 @@ NumericVector cpp_dmnom(
   if (m != k)
     Rcpp::stop("Number of columns in 'x' does not equal number of columns in 'prob'.");
   
+  double n_fac, prod_xfac, prod_pow_px, sum_x, p_tot;
+  bool wrong_param, wrong_x, missings;
+  
   for (int i = 0; i < Nmax; i++) {
     
-    double n_fac = lfactorial(size[i % ns]);
-    double prod_xfac = 0.0;
-    double prod_pow_px = 0.0;
+    n_fac = lfactorial(size[i % ns]);
+    prod_xfac = 0.0;
+    prod_pow_px = 0.0;
     
-    double sum_x = 0.0;
-    double p_tot = 0.0;
-    bool wrong_param = false;
-    bool wrong_x = false;
-    bool missings = false;
+    sum_x = 0.0;
+    p_tot = 0.0;
+    wrong_param = false;
+    wrong_x = false;
+    missings = false;
     
     if (ISNAN(size[i % ns]))
       missings = true;

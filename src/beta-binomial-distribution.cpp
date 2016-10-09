@@ -160,9 +160,7 @@ NumericVector cpp_pbbinom(
                                                 size[0], alpha[0], beta[0]));
     
     for (int i = 0; i < n; i++) {
-      if (ISNAN(x[i])) {
-        p[i] = NA_REAL;
-      } else if (x[i] > size[0]) {
+      if (x[i] > size[0]) {
         p[i] = 1.0;
       } else if (x[i] >= 0.0) {
         p[i] = p_tab[static_cast<int>(floor(x[i]))];
