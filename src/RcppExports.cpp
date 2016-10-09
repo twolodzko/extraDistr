@@ -2198,6 +2198,32 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// cpp_qtlambda
+NumericVector cpp_qtlambda(const NumericVector& p, const NumericVector& lambda, bool lower_tail, bool log_prob);
+RcppExport SEXP extraDistr_cpp_qtlambda(SEXP pSEXP, SEXP lambdaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_qtlambda(p, lambda, lower_tail, log_prob));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_rtlambda
+NumericVector cpp_rtlambda(const int n, const NumericVector& lambda);
+RcppExport SEXP extraDistr_cpp_rtlambda(SEXP nSEXP, SEXP lambdaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_rtlambda(n, lambda));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cpp_dwald
 NumericVector cpp_dwald(const NumericVector& x, const NumericVector& mu, const NumericVector& lambda, bool log_prob);
 RcppExport SEXP extraDistr_cpp_dwald(SEXP xSEXP, SEXP muSEXP, SEXP lambdaSEXP, SEXP log_probSEXP) {

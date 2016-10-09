@@ -609,6 +609,14 @@ cpp_rtpois <- function(n, lambda, s) {
     .Call('extraDistr_cpp_rtpois', PACKAGE = 'extraDistr', n, lambda, s)
 }
 
+cpp_qtlambda <- function(p, lambda, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_qtlambda', PACKAGE = 'extraDistr', p, lambda, lower_tail, log_prob)
+}
+
+cpp_rtlambda <- function(n, lambda) {
+    .Call('extraDistr_cpp_rtlambda', PACKAGE = 'extraDistr', n, lambda)
+}
+
 cpp_dwald <- function(x, mu, lambda, log_prob = FALSE) {
     .Call('extraDistr_cpp_dwald', PACKAGE = 'extraDistr', x, mu, lambda, log_prob)
 }
