@@ -7,6 +7,8 @@
   and accept any non-negtive values. Probability parameter vectors are
   normalized to sum to one (i.e. `c(1,1,1)` becomes `c(1,1,1)/3`)
 * `NA`'s and `NaN`'s in input now always lead to `NA`'s in output
+* Fixed bugs in `rtnorm`, now it properly handles sampling from extreme
+  tails
 
 ### 1.8.1
 
