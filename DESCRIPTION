@@ -2,14 +2,14 @@ Package: extraDistr
 Type: Package
 Title: Additional Univariate and Multivariate Distributions
 Version: 1.8.2
-Date: 2016-10-09
+Date: 2016-10-10
 Author: Tymoteusz Wolodzko
 Maintainer: Tymoteusz Wolodzko <twolodzko+extraDistr@gmail.com>
 Description: Density, distribution function, quantile function
     and random generation for a number of univariate
     and multivariate distributions. This package implements the
-    folowing distributions: Bernoulli, beta-binomial, beta-negative
-    binomial, beta prime, Bhattacharje, Birnbaum-Saunders,
+    following distributions: Bernoulli, beta-binomial, beta-negative
+    binomial, beta prime, Bhattacharjee, Birnbaum-Saunders,
     bivariate normal, bivariate Poisson, categorical, Dirichlet,
     Dirichlet-multinomial, discrete Laplace, discrete normal,
     discrete uniform, discrete Weibull, Frechet, gamma-Poisson,
@@ -17,10 +17,10 @@ Description: Density, distribution function, quantile function
     Gumbel, half-Cauchy, half-normal, half-t, Huber density, 
     inverse chi-squared, inverse-gamma, Kumaraswamy, Laplace,
     logarithmic, Lomax, multivariate hypergeometric, multinomial,
-    non-standart t, non-standart beta, normal mixture,
+    non-standard t, non-standard beta, normal mixture,
     Poisson mixture, Pareto, power, reparametrized beta,
     Rayleigh, Skellam, slash, triangular, truncated normal,
-    truncated Poisson, Tuckey lambda, Wald, zero-inflated binomial,
+    truncated Poisson, Tukey lambda, Wald, zero-inflated binomial,
     zero-inflated negative binomial, zero-inflated Poisson.
 License: GPL-2
 URL: https://github.com/twolodzko/extraDistr
