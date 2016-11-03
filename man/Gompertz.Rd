@@ -45,7 +45,7 @@ f(x) = a*exp(b*x - a/b * (exp(b*x)-1))
 
 Cumulative distribution function
 \deqn{
-F(x) = 1-\exp\left(-\frac{a}{b} (exp(bx)-1)\right)
+F(x) = 1-\exp\left(-\frac{a}{b} (\exp(bx)-1)\right)
 }{
 F(x) = 1-exp(-a/b * (exp(b*x)-1))
 }

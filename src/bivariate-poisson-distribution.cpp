@@ -51,10 +51,10 @@ double pmf_bpois(double x, double y, double a, double b, double c) {
     z = y;
   
   double k = 0.0;
-  while (k < z) {
+  do {
     xy += R::choose(x, k) * R::choose(y, k) * factorial(k) * pow(c/(a*b), k);
     k += 1.0;
-  }
+  } while (k <= z);
   
   return tmp * xy;
 }
