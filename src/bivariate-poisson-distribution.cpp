@@ -50,9 +50,10 @@ double pmf_bpois(double x, double y, double a, double b, double c) {
   else
     z = y;
   
+  double c_ab = c/(a*b);
   double k = 0.0;
   do {
-    xy += R::choose(x, k) * R::choose(y, k) * factorial(k) * pow(c/(a*b), k);
+    xy += R::choose(x, k) * R::choose(y, k) * factorial(k) * pow(c_ab, k);
     k += 1.0;
   } while (k <= z);
   
