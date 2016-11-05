@@ -27,22 +27,37 @@
 #' f(x) = choose(n, x) * B(x+\alpha, n-x+\beta) / B(\alpha, \beta)
 #' }
 #'
-#' Cumulative distribution function is defined as
-#' 
-#' \deqn{F(x) = \sum_{k=0}^x f(k)}{F(x) = f(0)+...+f(x)}
-#' 
-#' and it is calculated using recursive algorithm that employs the fact that
+#' Cumulative distribution function is calculated using recursive algorithm that employs the fact that
+#' \eqn{\Gamma(x) = (x - 1)!}, and
 #' \eqn{
 #' \mathrm{B}(x, y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}
 #' }{
 #' B(x, y) = (\Gamma(x)\Gamma(y))/\Gamma(x+y)
-#' },
-#' and \eqn{\Gamma(x) = (x - 1)!}, and
+#' }, and
 #' \eqn{
 #' {n \choose k} = \prod_{i=1}^k \frac{n+1-i}{i}
 #' }{
-#' choose(n, k) = prod((n+1-(1:k))/(1:k))
-#' }.
+#' choose(n,k) = prod((n+1-(1:k))/(1:k))
+#' }. This enables re-writing probability mass function as
+#' 
+#' \deqn{
+#' f(x) = \left( \prod_{i=1}^x \frac{n+1-i}{i} \right) \frac{\frac{(\alpha+x-1)!\,(\beta+n-x-1)!}{(\alpha+\beta+n-1)!}}{\mathrm{B}(\alpha,\beta)}
+#' }{
+#' f(x) = prod((n+1-(1:x))/(1:x)) * (((\alpha+x-1)!*(\beta+n-x-1)!)/((\alpha+\beta+n+1)!)) / B(\alpha, \beta)
+#' }
+#' 
+#' what makes recursive updating from \eqn{x} to \eqn{x+1} easy
+#' 
+#' \deqn{
+#' f(x+1) = \left( \prod_{i=1}^x \frac{n+1-i}{i} \right) \frac{n+1-x+1}{x+1} \frac{\frac{(\alpha+x-1)! \,(\alpha+x)\,(\beta+n-x-1)! \, (\beta+n-x)^{-1}}{(\alpha+\beta+n-1)!\,(\alpha+\beta+n)}}{\mathrm{B}(\alpha,\beta)}
+#' }{
+#' f(x+1) = prod((n+1-(1:x))/(1:x)) * ((n+1-x+1)/(x+1)) * (((\alpha+x-1)!*(\alpha+x)*(\beta+n-x-1)!/(\beta+n-x))/((\alpha+\beta+n+1)!*(\alpha+\beta+n))) / B(\alpha, \beta)
+#' }
+#' 
+#' and let's us efficiently calculate cumulative distribution function as a sum of probability mass functions
+#' 
+#' \deqn{F(x) = \sum_{k=0}^x f(k)}{F(x) = f(0)+...+f(x)}
+#' 
 #'
 #' @seealso \code{\link[stats]{Beta}}, \code{\link[stats]{Binomial}}
 #' 

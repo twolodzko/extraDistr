@@ -22,7 +22,7 @@
 #' @details
 #'
 #' Negative hypergeometric distribution describes number of balls \eqn{x} observed
-#' until drawing with replacement to obtain \eqn{r} white balls
+#' until drawing without replacement to obtain \eqn{r} white balls
 #' from the urn containing \eqn{m} white balls and \eqn{n} black balls,
 #' and is defined as
 #' 

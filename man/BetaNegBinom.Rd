@@ -42,20 +42,34 @@ Probability mass function
 f(x) = \frac{\Gamma(r+x)}{x! \Gamma(r)}
        \frac{\mathrm{B}(\alpha+r, \beta+x)}{\mathrm{B}(\alpha, \beta)}
 }{
-f(x) = \Gamma(r+x)/(x! \Gamma(r)) * B(\alpha+r, \beta+x) / B(\alpha, \beta)
+f(x) = \Gamma(r+x)/(x! \, \Gamma(r)) * B(\alpha+r, \beta+x) / B(\alpha, \beta)
 }
 
-Cumulative distribution function is defined as
-
-\deqn{F(x) = \sum_{k=0}^x f(k)}{F(x) = f(0)+...+f(x)}
-
-and it is calculated using recursive algorithm that employs the fact that
+Cumulative distribution function is calculated using recursive algorithm that employs the fact that
+\eqn{\Gamma(x) = (x - 1)!} and
 \eqn{
 \mathrm{B}(x, y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}
 }{
 B(x, y) = (\Gamma(x)\Gamma(y))/\Gamma(x+y)
+}. This enables re-writing probability mass function as
+
+\deqn{
+f(x) = \frac{(r+x-1)!}{x! \, \Gamma(r)} \frac{\frac{(\alpha+r-1)!\,(\beta+x-1)!}{(\alpha+\beta+r+x-1)!}}{\mathrm{B}(\alpha,\beta)}
+}{
+f(x) = ((r+x-1)!)/(x!*\Gamma(r))*(((\alpha+r-1)!*(\beta+x-1)!)/((\alpha+\beta+r+x-1)!))/B(\alpha,\beta)
 }
-and \eqn{\Gamma(x) = (x - 1)!}.
+
+what makes recursive updating from \eqn{x} to \eqn{x+1} easy
+
+\deqn{
+f(x+1) = \frac{(r+x-1)!\,(r+x)}{x!\,(x+1) \, \Gamma(r)} \frac{\frac{(\alpha+r-1)!\,(\beta+x-1)!\,(\beta+x)}{(\alpha+\beta+r+x-1)!\,(\alpha+\beta+r+x)}}{\mathrm{B}(\alpha,\beta)}
+}{
+f(x+1) = ((r+x-1)!*(r+x))/(x!*(x+1)*\Gamma(r))*(((\alpha+r-1)!*(\beta+x-1)!*(\beta+x))/((\alpha+\beta+r+x-1)!*(\alpha+\beta+r+x)))/B(\alpha,\beta)
+}
+
+and let's us efficiently calculate cumulative distribution function as a sum of probability mass functions
+
+\deqn{F(x) = \sum_{k=0}^x f(k)}{F(x) = f(0)+...+f(x)}
 }
 \examples{
 
