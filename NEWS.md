@@ -4,6 +4,7 @@
 * Fixed bug in bivariate poisson pmf (it returned underestimated probabilities)
 * Improved and simplified code for beta-binomial, beta negative-binomial,
   and gamma-Poisson cdf; now recursive algorithm is used
+* Negative hypergeometric distribution (d,p,q,r) was added
 
 ### 1.8.2
 
