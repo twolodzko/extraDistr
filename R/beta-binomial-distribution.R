@@ -46,7 +46,7 @@
 #' f(x) = prod((n+1-(1:x))/(1:x)) * (((\alpha+x-1)!*(\beta+n-x-1)!)/((\alpha+\beta+n+1)!)) / B(\alpha, \beta)
 #' }
 #' 
-#' what makes recursive updating from \eqn{x} to \eqn{x+1} easy
+#' what makes recursive updating from \eqn{x} to \eqn{x+1} easy using the properties of factorials
 #' 
 #' \deqn{
 #' f(x+1) = \left( \prod_{i=1}^x \frac{n+1-i}{i} \right) \frac{n+1-x+1}{x+1} \frac{\frac{(\alpha+x-1)! \,(\alpha+x)\,(\beta+n-x-1)! \, (\beta+n-x)^{-1}}{(\alpha+\beta+n-1)!\,(\alpha+\beta+n)}}{\mathrm{B}(\alpha,\beta)}

@@ -38,7 +38,7 @@
 #' f(x) = ((\alpha+x-1)!)/(x!*\Gamma(\alpha))*(\beta/(1+\beta))^x*(1-\beta/(1+\beta))^\alpha
 #' }
 #' 
-#' what makes recursive updating from \eqn{x} to \eqn{x+1} easy
+#' what makes recursive updating from \eqn{x} to \eqn{x+1} easy using the properties of factorials
 #' 
 #' \deqn{
 #' f(x+1) = \frac{(\alpha+x-1)! \, (\alpha+x)}{x! \,(x+1) \, \Gamma(\alpha)} \left( \frac{\beta}{1+\beta} \right)^x \left( \frac{\beta}{1+\beta} \right) \left( 1- \frac{\beta}{1+\beta} \right)^\alpha

@@ -42,7 +42,7 @@
 #' f(x) = ((r+x-1)!)/(x!*\Gamma(r))*(((\alpha+r-1)!*(\beta+x-1)!)/((\alpha+\beta+r+x-1)!))/B(\alpha,\beta)
 #' }
 #' 
-#' what makes recursive updating from \eqn{x} to \eqn{x+1} easy
+#' what makes recursive updating from \eqn{x} to \eqn{x+1} easy using the properties of factorials
 #' 
 #' \deqn{
 #' f(x+1) = \frac{(r+x-1)!\,(r+x)}{x!\,(x+1) \, \Gamma(r)} \frac{\frac{(\alpha+r-1)!\,(\beta+x-1)!\,(\beta+x)}{(\alpha+\beta+r+x-1)!\,(\alpha+\beta+r+x)}}{\mathrm{B}(\alpha,\beta)}
