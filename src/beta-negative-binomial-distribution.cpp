@@ -70,9 +70,46 @@ double cdf_bnbinom(double k, double r, double alpha, double beta) {
     return 0.0;
   if (k == INFINITY)
     return 1.0;
-  double p_tmp = 0.0;
-  for (int j = 0; j < static_cast<int>(floor(k))+1; j++)
-    p_tmp += exp(logpmf_bnbinom(static_cast<double>(j), r, alpha, beta));
+
+  double p_tmp, grx, xf, gr, gar, gbx, gabrx, bab;
+  
+  p_tmp = 0.0;
+  bab = R::beta(alpha, beta);
+  gr = R::gammafn(r);
+  gar = R::gammafn(alpha + r);
+  
+  // k < 1
+  
+  grx = gr;
+  gbx = R::gammafn(beta);
+  gabrx = R::gammafn(alpha + beta + r);
+  p_tmp += grx/gr * (gar*gbx)/gabrx/bab;
+  
+  if (k < 1.0)
+    return p_tmp;
+  
+  // k < 2
+  
+  grx *= r;
+  gbx *= beta;
+  gabrx *= alpha + beta + r;
+  p_tmp += grx/gr * (gar*gbx)/gabrx/bab;
+  
+  if (k < 2.0)
+    return p_tmp;
+  
+  // k >= 2
+  
+  double i = 2.0;
+  while (i <= k) {
+    grx *= r + i - 1;
+    gbx *= beta + i - 1;
+    gabrx *= alpha + beta + r + i - 1;
+    xf *= i;
+    p_tmp += grx/(xf * gr) * (gar*gbx)/gabrx/bab;
+    i += 1.0;
+  }
+  
   return p_tmp;
 }
 
@@ -131,53 +168,10 @@ NumericVector cpp_pbnbinom(
   int Nmax = Rcpp::max(IntegerVector::create(n, nn, na, nb));
   NumericVector p(Nmax);
 
-  if (nn == 1 && na == 1 && nb == 1 && anyFinite(x)) {
-    
-    if (ISNAN(alpha[0]) || ISNAN(beta[0]) || ISNAN(size[0]) || allNA(x)) {
-      for (int i = 0; i < n; i++)
-        p[i] = NA_REAL;
-      return p;
-    }
-    
-    if (alpha[0] < 0.0 || beta[0] < 0.0 || size[0] < 0.0 ||
-        floor(size[0]) != size[0]) {
-      Rcpp::warning("NaNs produced");
-      for (int i = 0; i < n; i++)
-        p[i] = NAN;
-      return p;
-    }
-    
-    double mx = finite_max(x);
-    if (mx < 0.0) {
-      for (int i = 0; i < n; i++)
-        p[i] = 0;
-      return p;
-    }
-    NumericVector p_tab(mx+1);
-    
-    p_tab[0] = exp(logpmf_bnbinom(0.0, size[0], alpha[0], beta[0]));
-    for (int j = 1; j < mx+1; j++)
-      p_tab[j] = p_tab[j-1] + exp(logpmf_bnbinom(static_cast<double>(j),
-                                                 size[0], alpha[0], beta[0]));
-    
-    for (int i = 0; i < n; i++) {
-      if (x[i] == INFINITY) {
-        p[i] = 1.0;
-      } else if (x[i] >= 0.0) {
-        p[i] = p_tab[static_cast<int>(floor(x[i]))];
-      } else {
-        p[i] = 0.0;
-      }
-    }
-    
-  } else {
-    
-    for (int i = 0; i < Nmax; i++) {
-      if (i % 1000 == 0)
-        Rcpp::checkUserInterrupt();
-      p[i] = cdf_bnbinom(x[i % n], size[i % nn], alpha[i % na], beta[i % nb]);
-    }
-    
+  for (int i = 0; i < Nmax; i++) {
+    if (i % 1000 == 0)
+      Rcpp::checkUserInterrupt();
+    p[i] = cdf_bnbinom(x[i % n], size[i % nn], alpha[i % na], beta[i % nb]);
   }
 
   if (!lower_tail)

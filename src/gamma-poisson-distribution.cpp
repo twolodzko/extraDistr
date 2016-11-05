@@ -56,11 +56,48 @@ double cdf_gpois(double x, double alpha, double beta) {
     return 1.0;
   if (x < 0.0)
     return 0.0;
-  double p_tmp = 0.0;
-  for (int j = 0; j < static_cast<int>(floor(x))+1; j++)
-    p_tmp += exp(logpmf_gpois(static_cast<double>(j), alpha, beta));
+  
+  double p_tmp, p, qa, ga, gax, xf, px;
+  
+  p_tmp = 0.0;
+  p = beta/(1.0+beta);
+  qa = pow(1.0 - p, alpha);
+  ga = R::gammafn(alpha);
+  
+  // x = 0
+  
+  gax = R::gammafn(alpha);
+  xf = 1.0;
+  px = 1.0;
+  p_tmp += gax/ga * qa;
+  
+  if (x < 1.0)
+    return p_tmp;
+  
+  // x < 2
+  
+  gax *= alpha;
+  px *= p;
+  p_tmp += gax/ga * px * qa;
+  
+  if (x < 2.0)
+    return p_tmp;
+  
+  // x >= 2
+  
+  double i = 2.0;
+  while (i <= x) {
+    gax *= i + alpha - 1.0;
+    xf *= i;
+    px *= p;
+    p_tmp += gax/(xf * ga) * px * qa;
+    i += 1.0;
+  }
+
   return p_tmp;
 }
+
+
 
 double rng_gpois(double alpha, double beta) {
   if (ISNAN(alpha) || ISNAN(beta))
@@ -112,46 +149,11 @@ NumericVector cpp_pgpois(
   int nb = beta.length();
   int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
   NumericVector p(Nmax);
-
-  if (na == 1 && nb == 1 && anyFinite(x)) {
-    
-    if (ISNAN(alpha[0]) || ISNAN(beta[0]) || allNA(x)) {
-      for (int i = 0; i < n; i++)
-        p[i] = NA_REAL;
-      return p;
-    }
-    
-    double mx = static_cast<int>(finite_max(x));
-    if (mx < 0.0) {
-      for (int i = 0; i < n; i++)
-        p[i] = 0;
-      return p;
-    }
-    NumericVector p_tab(mx+1);
-    
-    p_tab[0] = exp(logpmf_gpois(0, alpha[0], beta[0]));
-    for (int j = 1; j < mx+1; j++)
-      p_tab[j] = p_tab[j-1] + exp(logpmf_gpois(static_cast<double>(j),
-                                               alpha[0], beta[0]));
-    
-    for (int i = 0; i < n; i++) {
-      if (x[i] == INFINITY) {
-        p[i] = 1.0;
-      } else if (x[i] >= 0.0) {
-        p[i] = p_tab[static_cast<int>(floor(x[i]))];
-      } else {
-        p[i] = 0.0;
-      }
-    }
-    
-  } else {
-    
-    for (int i = 0; i < Nmax; i++) {
-      if (i % 1000 == 0)
-        Rcpp::checkUserInterrupt();
-      p[i] = cdf_gpois(x[i % n], alpha[i % na], beta[i % nb]);
-    }
-    
+  
+  for (int i = 0; i < Nmax; i++) {
+    if (i % 1000 == 0)
+      Rcpp::checkUserInterrupt();
+    p[i] = cdf_gpois(x[i % n], alpha[i % na], beta[i % nb]);
   }
   
   if (!lower_tail)

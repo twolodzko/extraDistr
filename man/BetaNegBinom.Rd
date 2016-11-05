@@ -45,9 +45,17 @@ f(x) = \frac{\Gamma(r+x)}{x! \Gamma(r)}
 f(x) = \Gamma(r+x)/(x! \Gamma(r)) * B(\alpha+r, \beta+x) / B(\alpha, \beta)
 }
 
-\emph{Warning:} cumulative distribution function is defined as
+Cumulative distribution function is defined as
+
 \deqn{F(x) = \sum_{k=0}^x f(k)}{F(x) = f(0)+...+f(x)}
-so it may be slow for large datasets.
+
+and it is calculated using recursive algorithm that employs the fact that
+\eqn{
+\mathrm{B}(x, y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}
+}{
+B(x, y) = (\Gamma(x)\Gamma(y))/\Gamma(x+y)
+}
+and \eqn{\Gamma(x) = (x - 1)!}.
 }
 \examples{
 

@@ -27,9 +27,22 @@
 #' f(x) = choose(n, x) * B(x+\alpha, n-x+\beta) / B(\alpha, \beta)
 #' }
 #'
-#' \emph{Warning:} cumulative distribution function is defined as
+#' Cumulative distribution function is defined as
+#' 
 #' \deqn{F(x) = \sum_{k=0}^x f(k)}{F(x) = f(0)+...+f(x)}
-#' so it may be slow for large datasets.
+#' 
+#' and it is calculated using recursive algorithm that employs the fact that
+#' \eqn{
+#' \mathrm{B}(x, y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}
+#' }{
+#' B(x, y) = (\Gamma(x)\Gamma(y))/\Gamma(x+y)
+#' },
+#' and \eqn{\Gamma(x) = (x - 1)!}, and
+#' \eqn{
+#' {n \choose k} = \prod_{i=1}^k \frac{n+1-i}{i}
+#' }{
+#' choose(n, k) = prod((n+1-(1:k))/(1:k))
+#' }.
 #'
 #' @seealso \code{\link[stats]{Beta}}, \code{\link[stats]{Binomial}}
 #' 

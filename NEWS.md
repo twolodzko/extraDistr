@@ -1,4 +1,10 @@
 
+### 1.8.3
+
+* Fixed bug in bivariate poisson pmf (it returned underestimated probabilities)
+* Improved and simplified code for beta-binomial, beta negative-binomial,
+  and gamma-Poisson cdf; now recursive algorithm is used
+
 ### 1.8.2
 
 * Corrected and simplified documentation for `*prop` distribution

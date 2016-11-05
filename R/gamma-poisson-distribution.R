@@ -29,9 +29,12 @@
 #' f(x) = \Gamma(\alpha+x) / (x!*\Gamma(\alpha)) * (\beta/(1+\beta))^x * (1-\beta/(1+\beta))^\alpha
 #' }
 #' 
-#' \emph{Warning:} cumulative distribution function is defined as
+#' Cumulative distribution function is defined as
+#' 
 #' \deqn{F(x) = \sum_{k=0}^x f(k)}{F(x) = f(0)+...+f(x)}
-#' so it may be slow for large datasets.
+#' 
+#' and it is calculated using recursive algorithm that employs the fact that
+#' \eqn{\Gamma(x) = (x - 1)!}.
 #'
 #' @seealso \code{\link[stats]{Gamma}}, \code{\link[stats]{Poisson}}
 #' 
