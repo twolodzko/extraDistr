@@ -1596,6 +1596,67 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// cpp_dnhyper
+NumericVector cpp_dnhyper(const NumericVector& x, const NumericVector& n, const NumericVector& m, const NumericVector& r, bool log_prob);
+RcppExport SEXP extraDistr_cpp_dnhyper(SEXP xSEXP, SEXP nSEXP, SEXP mSEXP, SEXP rSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type m(mSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type r(rSEXP);
+    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_dnhyper(x, n, m, r, log_prob));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_pnhyper
+NumericVector cpp_pnhyper(const NumericVector& x, const NumericVector& n, const NumericVector& m, const NumericVector& r, bool lower_tail, bool log_prob);
+RcppExport SEXP extraDistr_cpp_pnhyper(SEXP xSEXP, SEXP nSEXP, SEXP mSEXP, SEXP rSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type m(mSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type r(rSEXP);
+    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_pnhyper(x, n, m, r, lower_tail, log_prob));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_qnhyper
+NumericVector cpp_qnhyper(const NumericVector& p, const NumericVector& n, const NumericVector& m, const NumericVector& r, bool lower_tail, bool log_prob);
+RcppExport SEXP extraDistr_cpp_qnhyper(SEXP pSEXP, SEXP nSEXP, SEXP mSEXP, SEXP rSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type m(mSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type r(rSEXP);
+    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_qnhyper(p, n, m, r, lower_tail, log_prob));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_rnhyper
+NumericVector cpp_rnhyper(const int nn, const NumericVector& n, const NumericVector& m, const NumericVector& r);
+RcppExport SEXP extraDistr_cpp_rnhyper(SEXP nnSEXP, SEXP nSEXP, SEXP mSEXP, SEXP rSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const int >::type nn(nnSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type m(mSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type r(rSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_rnhyper(nn, n, m, r));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cpp_dnst
 NumericVector cpp_dnst(const NumericVector& x, const NumericVector& nu, const NumericVector& mu, const NumericVector& sigma, bool log_prob);
 RcppExport SEXP extraDistr_cpp_dnst(SEXP xSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {

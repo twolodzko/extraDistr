@@ -445,6 +445,22 @@ cpp_rmvhyper <- function(nn, n, k) {
     .Call('extraDistr_cpp_rmvhyper', PACKAGE = 'extraDistr', nn, n, k)
 }
 
+cpp_dnhyper <- function(x, n, m, r, log_prob = FALSE) {
+    .Call('extraDistr_cpp_dnhyper', PACKAGE = 'extraDistr', x, n, m, r, log_prob)
+}
+
+cpp_pnhyper <- function(x, n, m, r, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_pnhyper', PACKAGE = 'extraDistr', x, n, m, r, lower_tail, log_prob)
+}
+
+cpp_qnhyper <- function(p, n, m, r, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_qnhyper', PACKAGE = 'extraDistr', p, n, m, r, lower_tail, log_prob)
+}
+
+cpp_rnhyper <- function(nn, n, m, r) {
+    .Call('extraDistr_cpp_rnhyper', PACKAGE = 'extraDistr', nn, n, m, r)
+}
+
 cpp_dnst <- function(x, nu, mu, sigma, log_prob = FALSE) {
     .Call('extraDistr_cpp_dnst', PACKAGE = 'extraDistr', x, nu, mu, sigma, log_prob)
 }
