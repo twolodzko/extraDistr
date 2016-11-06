@@ -222,7 +222,7 @@ NumericVector cpp_pgpois(
       } else if (x[i] == INFINITY) {
         p[i] = 1.0;
       } else {
-        p[i] = p_tab[static_cast<int>(floor(x[i]))];
+        p[i] = p_tab[static_cast<int>(x[i])];
       } 
     }
     
