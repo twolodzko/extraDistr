@@ -124,6 +124,7 @@ std::vector<double> cdf_bnbinom_table(double k, double r, double alpha, double b
   bab = R::lbeta(alpha, beta);
   gr = R::lgammafn(r);
   gar = R::lgammafn(alpha + r);
+  xf = 0.0;
   
   // k < 1
   

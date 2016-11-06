@@ -135,7 +135,7 @@ std::vector<double> cdf_bbinom_table(double k, double n, double alpha, double be
   nck += log(n);
   gx += log(alpha);
   gy -= log(n + beta - 1.0);
-  p_tab[1] = p_tab[0] + exp(nck + gx + gy - gxy + bab);
+  p_tab[1] = p_tab[0] + exp(nck + gx + gy - gxy - bab);
   
   if (k < 2.0)
     return p_tab;

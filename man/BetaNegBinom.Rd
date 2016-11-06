@@ -39,7 +39,7 @@ If \eqn{p \sim \mathrm{Beta}(\alpha, \beta)}{p ~ Beta(\alpha, \beta)} and
 
 Probability mass function
 \deqn{
-f(x) = \frac{\Gamma(r+x)}{x! \Gamma(r)}
+f(x) = \frac{\Gamma(r+x)}{x! \,\Gamma(r)}
        \frac{\mathrm{B}(\alpha+r, \beta+x)}{\mathrm{B}(\alpha, \beta)}
 }{
 f(x) = \Gamma(r+x)/(x! \, \Gamma(r)) * B(\alpha+r, \beta+x) / B(\alpha, \beta)
