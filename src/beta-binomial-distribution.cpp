@@ -257,7 +257,7 @@ NumericVector cpp_pbbinom(
       } else if (xi >= size[i % nn]) {
         p[i] = 1.0;
       } else {
-        p[i] = cdf_bbinom_table(xi, size[i % nn], alpha[i % na], beta[i % nb])[static_cast<int>(xi)];
+        p[i] = cdf_bbinom_table(xi, size[i % nn], alpha[i % na], beta[i % nb]).back();
       }
     }
   

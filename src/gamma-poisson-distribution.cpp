@@ -243,7 +243,7 @@ NumericVector cpp_pgpois(
       } else if (xi == INFINITY) {
         p[i] = 1.0;
       } else {
-        p[i] = cdf_gpois_table(xi, alpha[i % na], beta[i % nb])[static_cast<int>(xi)];
+        p[i] = cdf_gpois_table(xi, alpha[i % na], beta[i % nb]).back();
       }
     } 
     
