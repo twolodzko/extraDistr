@@ -59,6 +59,7 @@ double logpmf_bnbinom(double k, double r, double alpha, double beta) {
     R::lbeta(alpha+r, beta+k) - R::lbeta(alpha, beta);
 }
 
+/*
 double cdf_bnbinom(double k, double r, double alpha, double beta) {
   if (ISNAN(k) || ISNAN(r) || ISNAN(alpha) || ISNAN(beta))
     return NA_REAL;
@@ -111,6 +112,52 @@ double cdf_bnbinom(double k, double r, double alpha, double beta) {
   }
   
   return p_tmp;
+}
+*/
+
+std::vector<double> cdf_bnbinom_table(double k, double r, double alpha, double beta) {
+
+  k = floor(k);
+  std::vector<double> p_tab(static_cast<int>(k)+1);
+  double grx, xf, gr, gar, gbx, gabrx, bab;
+  
+  bab = R::lbeta(alpha, beta);
+  gr = R::lgammafn(r);
+  gar = R::lgammafn(alpha + r);
+  
+  // k < 1
+  
+  grx = gr;
+  gbx = R::lgammafn(beta);
+  gabrx = R::lgammafn(alpha + beta + r);
+  p_tab[0] = exp(grx - gr + gar + gbx - gabrx - bab);
+  
+  if (k < 1.0)
+    return p_tab;
+  
+  // k < 2
+  
+  grx += log(r);
+  gbx += log(beta);
+  gabrx += log(alpha + beta + r);
+  p_tab[1] = p_tab[0] + exp(grx - gr + gar + gbx - gabrx - bab);
+  
+  if (k < 2.0)
+    return p_tab;
+  
+  // k >= 2
+  
+  double i = 2.0;
+  while (i <= k) {
+    grx += log(r + i - 1.0);
+    gbx += log(beta + i - 1.0);
+    gabrx += log(alpha + beta + r + i - 1.0);
+    xf += log(i);
+    p_tab[static_cast<int>(i)] = p_tab[static_cast<int>(i)-1] + exp(grx - (xf + gr) + gar + gbx - gabrx - bab);
+    i += 1.0;
+  }
+  
+  return p_tab;
 }
 
 double rng_bnbinom(double r, double alpha, double beta) {
@@ -168,10 +215,61 @@ NumericVector cpp_pbnbinom(
   int Nmax = Rcpp::max(IntegerVector::create(n, nn, na, nb));
   NumericVector p(Nmax);
 
-  for (int i = 0; i < Nmax; i++) {
-    if (i % 1000 == 0)
-      Rcpp::checkUserInterrupt();
-    p[i] = cdf_bnbinom(x[i % n], size[i % nn], alpha[i % na], beta[i % nb]);
+  if (na == 1 && nb == 1 && nn == 1) {
+    
+    if (ISNAN(alpha[0]) || ISNAN(beta[0]) || ISNAN(size[0]) || allNA(x)) {
+      for (int i = 0; i < n; i++)
+        p[i] = NA_REAL;
+      return p;
+    }
+    
+    if (alpha[0] <= 0.0 || beta[0] <= 0.0 ||
+        size[0] < 0.0 || floor(size[0]) != size[0]) {
+      for (int i = 0; i < n; i++)
+        p[i] = NAN;
+      Rcpp::warning("NaNs produced");
+      return p;
+    }
+    
+    double mx = floor(finite_max(x));
+    if (mx < 0.0 || mx == INFINITY)
+      mx = 0.0;
+    std::vector<double> p_tab = cdf_bnbinom_table(mx, size[0], alpha[0], beta[0]);
+    
+    for (int i = 0; i < n; i++) {
+      if (ISNAN(x[i])) {
+        p[i] = NA_REAL;
+      } else if (x[i] < 0.0) {
+        p[i] = 0.0;
+      } else if (x[i] == INFINITY) {
+        p[i] = 1.0;
+      } else {
+        p[i] = p_tab[static_cast<int>(floor(x[i]))];
+      } 
+    }
+    
+  } else {
+    
+    double xi;
+    for (int i = 0; i < Nmax; i++) {
+      if (i % 1000 == 0)
+        Rcpp::checkUserInterrupt();
+      xi = floor(x[i % n]);
+      if (ISNAN(xi) || ISNAN(size[i % nn]) || ISNAN(alpha[i % na]) || ISNAN(beta[i % nb])) {
+        p[i] = NA_REAL;
+      } else if (alpha[i % na] <= 0.0 || beta[i % nb] <= 0.0 ||
+                 size[i % nn] < 0.0 || floor(size[i % nn]) != size[i % nn]) {
+        Rcpp::warning("NaNs produced");
+        p[i] = NAN;
+      } else if (xi < 0.0) {
+        p[i] = 0.0;
+      } else if (xi == INFINITY) {
+        p[i] = 1.0;
+      } else {
+        p[i] = cdf_bnbinom_table(xi, size[i % nn], alpha[i % na], beta[i % nb])[static_cast<int>(xi)];
+      }
+    }
+    
   }
 
   if (!lower_tail)
