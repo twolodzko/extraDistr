@@ -209,7 +209,7 @@ NumericVector cpp_pgpois(
       return p;
     }
     
-    double mx = floor(finite_max(x));
+    double mx = finite_max(x);
     if (mx < 0.0 || mx == INFINITY)
       mx = 0.0;
     std::vector<double> p_tab = cdf_gpois_table(mx, alpha[0], beta[0]);
@@ -228,22 +228,20 @@ NumericVector cpp_pgpois(
     
   } else {
     
-    double xi;
     for (int i = 0; i < Nmax; i++) {
       if (i % 1000 == 0)
         Rcpp::checkUserInterrupt();
-      xi = floor(x[i % n]);
-      if (ISNAN(xi) || ISNAN(alpha[i % na]) || ISNAN(beta[i % nb])) {
+      if (ISNAN(x[i % n]) || ISNAN(alpha[i % na]) || ISNAN(beta[i % nb])) {
         p[i] = NA_REAL;
       } else if (alpha[i % na] <= 0.0 || beta[i % nb] <= 0.0) {
         Rcpp::warning("NaNs produced");
         p[i] = NAN;
-      } else if (xi < 0.0) {
+      } else if (x[i % n] < 0.0) {
         p[i] = 0.0;
-      } else if (xi == INFINITY) {
+      } else if (x[i % n] == INFINITY) {
         p[i] = 1.0;
       } else {
-        p[i] = cdf_gpois_table(xi, alpha[i % na], beta[i % nb]).back();
+        p[i] = cdf_gpois_table(x[i % n], alpha[i % na], beta[i % nb]).back();
       }
     } 
     
