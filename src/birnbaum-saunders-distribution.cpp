@@ -94,18 +94,20 @@ NumericVector cpp_dfatigue(
     const NumericVector& alpha,
     const NumericVector& beta,
     const NumericVector& mu,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
   
-  int n  = x.length();
-  int na = alpha.length();
-  int nb = beta.length();
-  int nm = mu.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, nb, nm));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(alpha.length());
+  dims.push_back(beta.length());
+  dims.push_back(mu.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_fatigue(x[i % n], alpha[i % na], beta[i % nb], mu[i % nm]);
+    p[i] = pdf_fatigue(x[i % dims[0]], alpha[i % dims[1]],
+                       beta[i % dims[2]], mu[i % dims[3]]);
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -121,18 +123,21 @@ NumericVector cpp_pfatigue(
     const NumericVector& alpha,
     const NumericVector& beta,
     const NumericVector& mu,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
   
-  int n  = x.length();
-  int na = alpha.length();
-  int nb = beta.length();
-  int nm = mu.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, nb, nm));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(alpha.length());
+  dims.push_back(beta.length());
+  dims.push_back(mu.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_fatigue(x[i % n], alpha[i % na], beta[i % nb], mu[i % nm]);
+    p[i] = cdf_fatigue(x[i % dims[0]], alpha[i % dims[1]],
+                       beta[i % dims[2]], mu[i % dims[3]]);
   
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
@@ -152,27 +157,30 @@ NumericVector cpp_qfatigue(
     const NumericVector& alpha,
     const NumericVector& beta,
     const NumericVector& mu,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
   
-  int n  = p.length();
-  int na = alpha.length();
-  int nb = beta.length();
-  int nm = mu.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, nb, nm));
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(alpha.length());
+  dims.push_back(beta.length());
+  dims.push_back(mu.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < dims[0]; i++)
       pp[i] = exp(pp[i]);
   
   if (!lower_tail)
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < dims[0]; i++)
       pp[i] = 1.0 - pp[i];
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_fatigue(pp[i % n], alpha[i % na], beta[i % nb], mu[i % nm]);
+    q[i] = invcdf_fatigue(pp[i % dims[0]], alpha[i % dims[1]],
+                          beta[i % dims[2]], mu[i % dims[3]]);
   
   return q;
 }
@@ -180,19 +188,20 @@ NumericVector cpp_qfatigue(
 
 // [[Rcpp::export]]
 NumericVector cpp_rfatigue(
-    const int n,
+    const int& n,
     const NumericVector& alpha,
     const NumericVector& beta,
     const NumericVector& mu
   ) {
   
-  int na = alpha.length();
-  int nb = beta.length();
-  int nm = mu.length();
+  std::vector<int> dims;
+  dims.push_back(alpha.length());
+  dims.push_back(beta.length());
+  dims.push_back(mu.length());
   NumericVector x(n);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_fatigue(alpha[i % na], beta[i % nb], mu[i % nm]);
+    x[i] = rng_fatigue(alpha[i % dims[0]], beta[i % dims[1]], mu[i % dims[2]]);
   
   return x;
 }

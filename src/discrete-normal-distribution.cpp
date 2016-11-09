@@ -49,17 +49,18 @@ NumericVector cpp_ddnorm(
     const NumericVector& x,
     const NumericVector& mu,
     const NumericVector& sigma,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
   
-  int n  = x.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pmf_dnorm(x[i % n], mu[i % nm], sigma[i % ns]);
+    p[i] = pmf_dnorm(x[i % dims[0]], mu[i % dims[1]], sigma[i % dims[2]]);
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)

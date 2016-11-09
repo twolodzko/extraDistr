@@ -108,18 +108,20 @@ NumericVector cpp_dbetapr(
     const NumericVector& alpha,
     const NumericVector& beta,
     const NumericVector& sigma,
-    bool log_prob = false
+    const bool& log_prob = false
 ) {
   
-  int n  = x.length();
-  int na = alpha.length();
-  int nb = beta.length();
-  int ns = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, nb, ns));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(alpha.length());
+  dims.push_back(beta.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_betapr(x[i % n], alpha[i % na], beta[i % nb], sigma[i % ns]);
+    p[i] = pdf_betapr(x[i % dims[0]], alpha[i % dims[1]],
+                      beta[i % dims[2]], sigma[i % dims[3]]);
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -135,19 +137,21 @@ NumericVector cpp_pbetapr(
     const NumericVector& alpha,
     const NumericVector& beta,
     const NumericVector& sigma,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
 ) {
   
-  int n  = x.length();
-  int na = alpha.length();
-  int nb = beta.length();
-  int ns = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, nb, ns));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(alpha.length());
+  dims.push_back(beta.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_betapr(x[i % n], alpha[i % na], beta[i % nb], sigma[i % ns],
-                      lower_tail, log_prob);
+    p[i] = cdf_betapr(x[i % dims[0]], alpha[i % dims[1]], beta[i % dims[2]],
+                      sigma[i % dims[3]], lower_tail, log_prob);
 
   return p;
 }
@@ -159,27 +163,30 @@ NumericVector cpp_qbetapr(
     const NumericVector& alpha,
     const NumericVector& beta,
     const NumericVector& sigma,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
 ) {
   
-  int n  = p.length();
-  int na = alpha.length();
-  int nb = beta.length();
-  int ns = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, nb, ns));
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(alpha.length());
+  dims.push_back(beta.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < dims[0]; i++)
       pp[i] = exp(pp[i]);
   
   if (!lower_tail)
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < dims[0]; i++)
       pp[i] = 1.0 - pp[i];
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_betapr(pp[i % n], alpha[i % na], beta[i % nb], sigma[i % ns]);
+    q[i] = invcdf_betapr(pp[i % dims[0]], alpha[i % dims[1]],
+                         beta[i % dims[2]], sigma[i % dims[3]]);
   
   return q;
 }
@@ -187,19 +194,20 @@ NumericVector cpp_qbetapr(
 
 // [[Rcpp::export]]
 NumericVector cpp_rbetapr(
-    const int n,
+    const int& n,
     const NumericVector& alpha,
     const NumericVector& beta,
     const NumericVector& sigma
 ) {
   
-  int na = alpha.length();
-  int nb = beta.length();
-  int ns = sigma.length();
+  std::vector<int> dims;
+  dims.push_back(alpha.length());
+  dims.push_back(beta.length());
+  dims.push_back(sigma.length());
   NumericVector x(n);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_betapr(alpha[i % na], beta[i % nb], sigma[i % ns]);
+    x[i] = rng_betapr(alpha[i % dims[0]], beta[i % dims[1]], sigma[i % dims[2]]);
   
   return x;
 }

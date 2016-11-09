@@ -91,17 +91,18 @@ NumericVector cpp_ddunif(
     const NumericVector& x,
     const NumericVector& min,
     const NumericVector& max,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
   
-  int n  = x.length();
-  int na = min.length();
-  int nb = max.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(min.length());
+  dims.push_back(max.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pmf_dunif(x[i % n], min[i % na], max[i % nb]);
+    p[i] = pmf_dunif(x[i % dims[0]], min[i % dims[1]], max[i % dims[2]]);
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -116,17 +117,19 @@ NumericVector cpp_pdunif(
     const NumericVector& x,
     const NumericVector& min,
     const NumericVector& max,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
   
-  int n  = x.length();
-  int na = min.length();
-  int nb = max.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(min.length());
+  dims.push_back(max.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_dunif(x[i % n], min[i % na], max[i % nb]);
+    p[i] = cdf_dunif(x[i % dims[0]], min[i % dims[1]], max[i % dims[2]]);
   
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
@@ -145,26 +148,28 @@ NumericVector cpp_qdunif(
     const NumericVector& p,
     const NumericVector& min,
     const NumericVector& max,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
   
-  int n  = p.length();
-  int na = min.length();
-  int nb = max.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(min.length());
+  dims.push_back(max.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < dims[0]; i++)
       pp[i] = exp(pp[i]);
   
   if (!lower_tail)
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < dims[0]; i++)
       pp[i] = 1.0 - pp[i];
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_dunif(pp[i % n], min[i % na], max[i % nb]);
+    q[i] = invcdf_dunif(pp[i % dims[0]], min[i % dims[1]], max[i % dims[2]]);
   
   return q;
 }
@@ -172,7 +177,7 @@ NumericVector cpp_qdunif(
 
 // [[Rcpp::export]]
 NumericVector cpp_rdunif(
-    const int n,
+    const int& n,
     const NumericVector& min,
     const NumericVector& max
   ) {

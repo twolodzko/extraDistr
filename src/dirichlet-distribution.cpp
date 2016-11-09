@@ -34,21 +34,21 @@ using Rcpp::NumericMatrix;
 NumericVector cpp_ddirichlet(
     const NumericMatrix& x,
     const NumericMatrix& alpha,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
 
   int n = x.nrow();
   int m = x.ncol();
   int k = alpha.ncol();
   int na = alpha.nrow();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na));
+  int Nmax = std::max(n, na);
   k = std::min(m, k);
   NumericVector p(Nmax);
   
   if (k < 2)
-    Rcpp::stop("Number of columns in 'alpha' should be >= 2.");
+    Rcpp::stop("Number of columns in alpha should be >= 2");
   if (m != k)
-    Rcpp::stop("Number of columns in 'x' does not equal number of columns in 'alpha'.");
+    Rcpp::stop("Number of columns in x does not equal number of columns in alpha");
   
   double prod_gamma, sum_alpha, p_tmp;
   bool wrong_alpha, missings;
@@ -103,7 +103,7 @@ NumericVector cpp_ddirichlet(
 
 // [[Rcpp::export]]
 NumericMatrix cpp_rdirichlet(
-    const int n,
+    const int& n,
     const NumericMatrix& alpha
   ) {
 
@@ -112,7 +112,7 @@ NumericMatrix cpp_rdirichlet(
   NumericMatrix x(n, k);
   
   if (k < 2)
-    Rcpp::stop("Number of columns in 'alpha' should be >= 2.");
+    Rcpp::stop("Number of columns in alpha should be >= 2");
   
   double row_sum;
   bool wrong_alpha, missings;

@@ -91,18 +91,20 @@ NumericVector cpp_dbhatt(
     const NumericVector& mu,
     const NumericVector& sigma,
     const NumericVector& a,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
   
-  int n  = x.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int na = a.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, na));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  dims.push_back(a.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_bhattacharjee(x[i % n], mu[i % nm], sigma[i % ns], a[i % na]);
+    p[i] = pdf_bhattacharjee(x[i % dims[0]], mu[i % dims[1]],
+                             sigma[i % dims[2]], a[i % dims[3]]);
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -118,18 +120,21 @@ NumericVector cpp_pbhatt(
     const NumericVector& mu,
     const NumericVector& sigma,
     const NumericVector& a,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
   
-  int n  = x.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int na = a.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, na));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  dims.push_back(a.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_bhattacharjee(x[i % n], mu[i % nm], sigma[i % ns], a[i % na]);
+    p[i] = cdf_bhattacharjee(x[i % dims[0]], mu[i % dims[1]],
+                             sigma[i % dims[2]], a[i % dims[3]]);
   
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
@@ -145,19 +150,20 @@ NumericVector cpp_pbhatt(
 
 // [[Rcpp::export]]
 NumericVector cpp_rbhatt(
-    const int n,
+    const int& n,
     const NumericVector& mu,
     const NumericVector& sigma,
     const NumericVector& a
   ) {
   
-  int nm = mu.length();
-  int ns = sigma.length();
-  int na = a.length();
+  std::vector<int> dims;
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  dims.push_back(a.length());
   NumericVector x(n);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_bhattacharjee(mu[i % nm], sigma[i % ns], a[i % na]);
+    x[i] = rng_bhattacharjee(mu[i % dims[0]], sigma[i % dims[1]], a[i % dims[2]]);
   
   return x;
 }

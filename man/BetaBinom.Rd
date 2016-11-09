@@ -50,7 +50,7 @@ Cumulative distribution function is calculated using recursive algorithm that em
 \mathrm{B}(x, y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}
 }{
 B(x, y) = (\Gamma(x)\Gamma(y))/\Gamma(x+y)
-}, and
+}, and that
 \eqn{
 {n \choose k} = \prod_{i=1}^k \frac{n+1-i}{i}
 }{

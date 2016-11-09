@@ -38,22 +38,24 @@ NumericVector cpp_ddirmnom(
     const NumericMatrix& x,
     const NumericVector& size,
     const NumericMatrix& alpha,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
   
-  int n = x.nrow();
+  std::vector<int> dims;
+  dims.push_back(x.nrow());
+  dims.push_back(alpha.nrow());
+  dims.push_back(size.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
+  
   int m = x.ncol();
   int k = alpha.ncol();
-  int na = alpha.nrow();
-  int ns = size.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, ns));
   k = std::min(m, k);
   NumericVector p(Nmax);
   
   if (k < 2)
-    Rcpp::stop("Number of columns in 'alpha' should be >= 2.");
+    Rcpp::stop("Number of columns in alpha should be >= 2");
   if (m != k)
-    Rcpp::stop("Number of columns in 'x' does not equal number of columns in 'alpha'.");
+    Rcpp::stop("Number of columns in x does not equal number of columns in alpha");
   
   double prod_tmp, sum_alpha, sum_x;
   bool wrong_x, wrong_param, missings;
@@ -66,11 +68,11 @@ NumericVector cpp_ddirmnom(
     wrong_param = false;
     missings = false;
     
-    if (ISNAN(size[i % ns]))
+    if (ISNAN(size[i % dims[2]]))
       missings = true;
     
     for (int j = 0; j < k; j++) {
-      if (ISNAN(alpha(i % na, j)) || ISNAN(x(i % n, j))) {
+      if (ISNAN(alpha(i % dims[1], j)) || ISNAN(x(i % dims[0], j))) {
         missings = true;
         break;
       }
@@ -81,38 +83,38 @@ NumericVector cpp_ddirmnom(
       continue;
     } 
       
-    if (size[i % ns] < 0.0 || floor(size[i % ns]) != size[i % ns]) {
+    if (size[i % dims[2]] < 0.0 || floor(size[i % dims[2]]) != size[i % dims[2]]) {
       wrong_param = true;
     } else {
       for (int j = 0; j < k; j++) {
-        if (alpha(i % na, j) <= 0.0) {
+        if (alpha(i % dims[1], j) <= 0.0) {
           wrong_param = true;
           break;
         }
-        if (x(i % n, j) < 0.0 || !isInteger(x(i % n, j))) {
+        if (x(i % dims[0], j) < 0.0 || !isInteger(x(i % dims[0], j))) {
           wrong_x = true;
           break;
         }
-        sum_x += x(i % n, j);
-        prod_tmp += R::lgammafn(x(i % n, j) + alpha(i % na, j)) -
-          (lfactorial(x(i % n, j)) + R::lgammafn(alpha(i % na, j)));
-        sum_alpha += alpha(i % na, j);
+        sum_x += x(i % dims[0], j);
+        prod_tmp += R::lgammafn(x(i % dims[0], j) + alpha(i % dims[1], j)) -
+          (lfactorial(x(i % dims[0], j)) + R::lgammafn(alpha(i % dims[1], j)));
+        sum_alpha += alpha(i % dims[1], j);
       }
     }
     
     if (wrong_param) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
-    } else if (sum_x < 0.0 || sum_x != size[i % ns] || wrong_x) {
+    } else if (sum_x < 0.0 || sum_x != size[i % dims[2]] || wrong_x) {
       p[i] = -INFINITY;
     } else {
-      p[i] = (lfactorial(size[i % ns]) + R::lgammafn(sum_alpha)) -
-        R::lgammafn(size[i % ns] + sum_alpha) + prod_tmp;
+      p[i] = (lfactorial(size[i % dims[2]]) + R::lgammafn(sum_alpha)) -
+        R::lgammafn(size[i % dims[2]] + sum_alpha) + prod_tmp;
     }
   }
   
   if (!log_prob)
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < dims[0]; i++)
       p[i] = exp(p[i]);
   
   return p;
@@ -121,34 +123,35 @@ NumericVector cpp_ddirmnom(
 
 // [[Rcpp::export]]
 NumericMatrix cpp_rdirmnom(
-    const int n,
+    const int& n,
     const NumericVector& size,
     const NumericMatrix& alpha
   ) {
   
   int k = alpha.ncol();
-  int na = alpha.nrow();
-  int ns = size.length();
+  std::vector<int> dims;
+  dims.push_back(alpha.nrow());
+  dims.push_back(size.length());
   NumericMatrix x(n, k);
   
   if (k < 2)
-    Rcpp::stop("Number of columns in 'alpha' should be >= 2.");
+    Rcpp::stop("Number of columns in alpha should be >= 2");
   
   double size_left, row_sum;
   bool wrong_param, missings;
   
   for (int i = 0; i < n; i++) {
-    size_left = size[i % ns];
+    size_left = size[i % dims[1]];
     row_sum = 0.0;
     wrong_param = false;
     missings = false;
     NumericVector pi(k);
     
-    if (ISNAN(size[i % ns]))
+    if (ISNAN(size[i % dims[1]]))
       missings = true;
     
     for (int j = 0; j < k; j++) {
-      if (ISNAN(alpha(i % na, j))) {
+      if (ISNAN(alpha(i % dims[0], j))) {
         missings = true;
         break;
       }
@@ -160,19 +163,19 @@ NumericMatrix cpp_rdirmnom(
       continue;
     } 
     
-    if (size[i % ns] < 0.0 || floor(size[i % ns]) != size[i % ns]) {
+    if (size[i % dims[1]] < 0.0 || floor(size[i % dims[1]]) != size[i % dims[1]]) {
       wrong_param = true;
     } else {
       for (int j = 0; j < k; j++) {
-        if (ISNAN(alpha(i % na, j))) {
+        if (ISNAN(alpha(i % dims[0], j))) {
           missings = true;
           break;
         }
-        if (alpha(i % na, j) <= 0.0) {
+        if (alpha(i % dims[0], j) <= 0.0) {
           wrong_param = true;
           break;
         }
-        pi[j] = R::rgamma(alpha(i % na, j), 1.0);
+        pi[j] = R::rgamma(alpha(i % dims[0], j), 1.0);
         row_sum += pi[j];
       }
     }
@@ -181,7 +184,7 @@ NumericMatrix cpp_rdirmnom(
       Rcpp::warning("NaNs produced");
       for (int j = 0; j < k; j++)
         x(i, j) = NAN;
-    } else if (size[i % ns] == 0.0) {
+    } else if (size[i % dims[1]] == 0.0) {
       for (int j = 0; j < k; j++)
         x(i, j) = 0.0;
     } else {

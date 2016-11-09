@@ -68,19 +68,24 @@ NumericVector cpp_dbpois(
     const NumericVector& a,
     const NumericVector& b,
     const NumericVector& c,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
   
-  int nx = x.length();
-  int ny = y.length();
-  int na = a.length();
-  int nb = b.length();
-  int nc = c.length();
-  int Nmax = Rcpp::max(IntegerVector::create(nx, ny, na, nb, nc));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(y.length());
+  dims.push_back(a.length());
+  dims.push_back(b.length());
+  dims.push_back(c.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  if (dims[0] != dims[1])
+    Rcpp::stop("lengths of x and y differ");
+  
   for (int i = 0; i < Nmax; i++)
-    p[i] = pmf_bpois(x[i % nx], y[i % ny], a[i % na], b[i % nb], c[i % nc]);
+    p[i] = pmf_bpois(x[i % dims[0]], y[i % dims[1]],
+                     a[i % dims[2]], b[i % dims[3]], c[i % dims[4]]);
   
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -92,30 +97,31 @@ NumericVector cpp_dbpois(
 
 // [[Rcpp::export]]
 NumericMatrix cpp_rbpois(
-    const int n,
+    const int& n,
     const NumericVector& a,
     const NumericVector& b,
     const NumericVector& c
   ) {
   
   double u, v, w;
-  int na = a.length();
-  int nb = b.length();
-  int nc = c.length();
+  std::vector<int> dims;
+  dims.push_back(a.length());
+  dims.push_back(b.length());
+  dims.push_back(c.length());
   NumericMatrix x(n, 2);
   
   for (int i = 0; i < n; i++) {
-    if (ISNAN(a[i % na]) || ISNAN(b[i % nb]) || ISNAN(c[i % nc])) {
+    if (ISNAN(a[i % dims[0]]) || ISNAN(b[i % dims[1]]) || ISNAN(c[i % dims[2]])) {
       x(i, 0) = NA_REAL;
       x(i, 1) = NA_REAL;
-    } else if (a[i % na] < 0.0 || b[i % nb] < 0.0 || c[i % nc] < 0.0) {
+    } else if (a[i % dims[0]] < 0.0 || b[i % dims[1]] < 0.0 || c[i % dims[2]] < 0.0) {
       Rcpp::warning("NaNs produced");
       x(i, 0) = NAN;
       x(i, 1) = NAN;
     } else {
-      u = R::rpois(a[i % na]);
-      v = R::rpois(b[i % nb]);
-      w = R::rpois(c[i % nc]);
+      u = R::rpois(a[i % dims[0]]);
+      v = R::rpois(b[i % dims[1]]);
+      w = R::rpois(c[i % dims[2]]);
       x(i, 0) = u+w;
       x(i, 1) = v+w;
     }

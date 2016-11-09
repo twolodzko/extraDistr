@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include "shared.h"
 
 using std::pow;
 using std::sqrt;
@@ -68,27 +69,31 @@ NumericVector cpp_dbnorm(
     const NumericVector& sigma1,
     const NumericVector& sigma2,
     const NumericVector& rho,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
 
-  int nx  = x.length();
-  int ny  = y.length();
-  int nm1 = mu1.length();
-  int nm2 = mu2.length();
-  int ns1 = sigma1.length();
-  int ns2 = sigma2.length();
-  int nr = rho.length();
-  int Nmax = Rcpp::max(IntegerVector::create(nx, ny, nm1, nm2, ns1, ns2, nr));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(y.length());
+  dims.push_back(mu1.length());
+  dims.push_back(mu2.length());
+  dims.push_back(sigma1.length());
+  dims.push_back(sigma2.length());
+  dims.push_back(rho.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
+  
+  if (dims[0] != dims[1])
+    Rcpp::stop("lengths of x and y differ");
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_bnorm(x[i % nx], y[i % ny],
-                     mu1[i % nm1], mu2[i % nm2],
-                     sigma1[i % ns1], sigma2[i % ns2],
-                     rho[i % nr]);
+    p[i] = pdf_bnorm(x[i % dims[0]], y[i % dims[1]],
+                     mu1[i % dims[2]], mu2[i % dims[3]],
+                     sigma1[i % dims[4]], sigma2[i % dims[5]],
+                     rho[i % dims[6]]);
 
   if (log_prob)
-    for (int i = 0; i < nx; i++)
+    for (int i = 0; i < dims[0]; i++)
       p[i] = log(p[i]);
 
   return p;
@@ -97,7 +102,7 @@ NumericVector cpp_dbnorm(
 
 // [[Rcpp::export]]
 NumericMatrix cpp_rbnorm(
-    const int n,
+    const int& n,
     const NumericVector& mu1,
     const NumericVector& mu2,
     const NumericVector& sigma1,
@@ -105,34 +110,34 @@ NumericMatrix cpp_rbnorm(
     const NumericVector& rho
   ) {
 
-  int nm1 = mu1.length();
-  int nm2 = mu2.length();
-  int ns1 = sigma1.length();
-  int ns2 = sigma2.length();
-  int nr = rho.length();
-  
+  std::vector<int> dims;
+  dims.push_back(mu1.length());
+  dims.push_back(mu2.length());
+  dims.push_back(sigma1.length());
+  dims.push_back(sigma2.length());
+  dims.push_back(rho.length());
   NumericMatrix x(n, 2);
 
   for (int i = 0; i < n; i++) {
-    if (ISNAN(mu1[i % nm1]) || ISNAN(mu2[i % nm1]) ||
-        ISNAN(sigma1[i % ns1]) || ISNAN(sigma2[i % ns2]) ||
-        ISNAN(rho[i % nr])) {
+    if (ISNAN(mu1[i % dims[0]]) || ISNAN(mu2[i % dims[1]]) ||
+        ISNAN(sigma1[i % dims[2]]) || ISNAN(sigma2[i % dims[3]]) ||
+        ISNAN(rho[i % dims[4]])) {
       x(i, 0) = NA_REAL;
       x(i, 1) = NA_REAL;
-    } else if (sigma1[i % ns1] <= 0.0 || sigma2[i % ns2] <= 0.0 ||
-        rho[i % nr] < -1.0 || rho[i % nr] > 1.0) {
+    } else if (sigma1[i % dims[2]] <= 0.0 || sigma2[i % dims[3]] <= 0.0 ||
+        rho[i % dims[4]] < -1.0 || rho[i % dims[4]] > 1.0) {
       Rcpp::warning("NaNs produced");
       x(i, 0) = NAN;
       x(i, 1) = NAN;
-    } else if (rho[i % nr] != 0.0) {
+    } else if (!tol_equal(rho[i % dims[4]], 0.0)) {
       double u = R::norm_rand();
       double v = R::norm_rand();
-      double corr = (rho[i % nr]*u + sqrt(1.0 - pow(rho[i % nr], 2.0))*v);
-      x(i, 0) = mu1[i % nm1] + sigma1[i % ns1] * u;
-      x(i, 1) = mu2[i % nm2] + sigma2[i % ns2] * corr;
+      double corr = (rho[i % dims[4]]*u + sqrt(1.0 - pow(rho[i % dims[4]], 2.0))*v);
+      x(i, 0) = mu1[i % dims[0]] + sigma1[i % dims[2]] * u;
+      x(i, 1) = mu2[i % dims[1]] + sigma2[i % dims[3]] * corr;
     } else {
-      x(i, 0) = R::rnorm(mu1[i % nm1], sigma1[i % ns1]);
-      x(i, 1) = R::rnorm(mu2[i % nm2], sigma2[i % ns2]);
+      x(i, 0) = R::rnorm(mu1[i % dims[0]], sigma1[i % dims[2]]);
+      x(i, 1) = R::rnorm(mu2[i % dims[1]], sigma2[i % dims[3]]);
     }
   }
 

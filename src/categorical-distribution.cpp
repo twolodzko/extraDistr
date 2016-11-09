@@ -35,12 +35,13 @@ using Rcpp::NumericMatrix;
 NumericVector cpp_dcat(
     const NumericVector& x,
     const NumericMatrix& prob,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
   
-  int n  = x.length();
-  int np = prob.nrow();
-  int Nmax = Rcpp::max(IntegerVector::create(n, np));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(prob.nrow());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   int k = prob.ncol();
   NumericVector p(Nmax);
   bool missings;
@@ -49,11 +50,11 @@ NumericVector cpp_dcat(
     
     missings = false;
     
-    if (ISNAN(x[i]))
+    if (ISNAN(x[i % dims[0]]))
       missings = true;
     
     for (int j = 0; j < k; j++) {
-      if (ISNAN(prob(i % np, j))) {
+      if (ISNAN(prob(i % dims[1], j))) {
         missings = true;
         break;
       }
@@ -64,24 +65,25 @@ NumericVector cpp_dcat(
       continue;
     }
     
-    if (!isInteger(x[i]) || x[i] < 1.0 || x[i] > static_cast<double>(k)) {
+    if (!isInteger(x[i % dims[0]]) || x[i % dims[0]] < 1.0 ||
+        x[i % dims[0]] > static_cast<double>(k)) {
       p[i] = 0.0;
     } else {
       double p_tot = 0.0;
       bool wrong_param = false;
       for (int j = 0; j < k; j++) {
-        if (prob(i % np, j) < 0.0) {
+        if (prob(i % dims[1], j) < 0.0) {
           wrong_param = true;
           break;
         }
-        p_tot += prob(i % np, j);
+        p_tot += prob(i % dims[1], j);
       }
       
       if (wrong_param) {
         Rcpp::warning("NaNs produced");
         p[i] = NAN;
       } else {
-        p[i] = prob(i % np, static_cast<int>(x[i] - 1.0)) / p_tot;
+        p[i] = prob(i % dims[1], static_cast<int>(x[i % dims[0]] - 1.0)) / p_tot;
       }
     }
   }
@@ -101,9 +103,10 @@ NumericVector cpp_pcat(
     bool lower_tail = true, bool log_prob = false
   ) {
   
-  int n  = x.length();
-  int np = prob.nrow();
-  int Nmax = Rcpp::max(IntegerVector::create(n, np));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(prob.nrow());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   int k = prob.ncol();
   NumericVector p(Nmax);
   bool missings;
@@ -112,11 +115,11 @@ NumericVector cpp_pcat(
     
     missings = false;
     
-    if (ISNAN(x[i]))
+    if (ISNAN(x[i % dims[0]]))
       missings = true;
     
     for (int j = 0; j < k; j++) {
-      if (ISNAN(prob(i % np, j))) {
+      if (ISNAN(prob(i % dims[1], j))) {
         missings = true;
         break;
       }
@@ -129,28 +132,28 @@ NumericVector cpp_pcat(
     
     if (x[i] < 1.0) {
       p[i] = 0.0;
-    } else if (x[i] > static_cast<double>(k)) {
+    } else if (x[i % dims[0]] > static_cast<double>(k)) {
       p[i] = 1.0;
     } else {
       bool wrong_param = false;
       p[i] = 0.0;
       int j = 0;
-      while (j < static_cast<int>(x[i])) {
-        if (prob(i % np, j) < 0.0) {
+      while (j < static_cast<int>(x[i % dims[0]])) {
+        if (prob(i % dims[1], j) < 0.0) {
           wrong_param = true;
           break;
         }
-        p[i] += prob(i % np, j);
+        p[i] += prob(i % dims[1], j);
         j++;
       }
       double p_tot = p[i];
       if (!wrong_param) {
         while (j < k) {
-          if (prob(i % np, j) < 0.0) {
+          if (prob(i % dims[1], j) < 0.0) {
             wrong_param = true;
             break;
           }
-          p_tot += prob(i % np, j);
+          p_tot += prob(i % dims[1], j);
           j++;
         }
       }
@@ -181,22 +184,24 @@ NumericVector cpp_pcat(
 NumericVector cpp_qcat(
     const NumericVector& p,
     const NumericMatrix& prob,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
   
-  int n  = p.length();
-  int np = prob.nrow();
-  int Nmax = Rcpp::max(IntegerVector::create(n, np));
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(prob.nrow());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   int k = prob.ncol();
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < dims[0]; i++)
       pp[i] = exp(pp[i]);
     
   if (!lower_tail)
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < dims[0]; i++)
       pp[i] = 1.0 - pp[i];
   
   int jj;
@@ -207,11 +212,11 @@ NumericVector cpp_qcat(
     
     missings = false;
     
-    if (ISNAN(pp[i]))
+    if (ISNAN(pp[i % dims[0]]))
       missings = true;
     
     for (int j = 0; j < k; j++) {
-      if (ISNAN(prob(i % np, j))) {
+      if (ISNAN(prob(i % dims[1], j))) {
         missings = true;
         break;
       }
@@ -222,28 +227,28 @@ NumericVector cpp_qcat(
       continue;
     }
     
-    if (pp[i] < 0.0 || pp[i] > 1.0) {
+    if (pp[i % dims[0]] < 0.0 || pp[i % dims[0]] > 1.0) {
       Rcpp::warning("NaNs produced");
       q[i] = NAN;
-    } else if (pp[i] == 0.0) {
+    } else if (pp[i % dims[0]] == 0.0) {
       q[i] = 1.0; 
     } else {
-      pp_norm = pp[i];
+      pp_norm = pp[i % dims[0]];
       wrong_param = false;
       p_tmp = 1.0;
       p_tot = 0.0;
       jj = 0;
       
       for (int j = 0; j < k; j++) {
-        if (prob(i % np, j) < 0.0) {
+        if (prob(i % dims[1], j) < 0.0) {
           wrong_param = true;
           break;
         }
-        p_tot += prob(i % np, j);
+        p_tot += prob(i % dims[1], j);
       }
       
       for (int j = k-1; j >= 0; j--) {
-        p_tmp -= prob(i % np, j) / p_tot;
+        p_tmp -= prob(i % dims[1], j) / p_tot;
         if (pp_norm > p_tmp) {
           jj = j;
           break;
@@ -265,7 +270,7 @@ NumericVector cpp_qcat(
 
 // [[Rcpp::export]]
 NumericVector cpp_rcat(
-    const int n,
+    const int& n,
     const NumericMatrix& prob
   ) {
   

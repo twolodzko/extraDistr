@@ -172,18 +172,20 @@ NumericVector cpp_dbbinom(
     const NumericVector& size,
     const NumericVector& alpha,
     const NumericVector& beta,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
 
-  int n = x.length();
-  int nn = size.length();
-  int na = alpha.length();
-  int nb = beta.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nn, na, nb));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(size.length());
+  dims.push_back(alpha.length());
+  dims.push_back(beta.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpmf_bbinom(x[i % n], size[i % nn], alpha[i % na], beta[i % nb]);
+    p[i] = logpmf_bbinom(x[i % dims[0]], size[i % dims[1]],
+                         alpha[i % dims[2]], beta[i % dims[3]]);
 
   if (!log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -199,27 +201,29 @@ NumericVector cpp_pbbinom(
     const NumericVector& size,
     const NumericVector& alpha,
     const NumericVector& beta,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
 
-  int n = x.length();
-  int nn = size.length();
-  int na = alpha.length();
-  int nb = beta.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nn, na, nb));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(size.length());
+  dims.push_back(alpha.length());
+  dims.push_back(beta.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
-  if (na == 1 && nb == 1 && nn == 1) {
+  if (dims[1] == 1 && dims[2] == 1 && dims[3] == 1) {
     
     if (ISNAN(size[0]) || ISNAN(alpha[0]) || ISNAN(beta[0]) || allNA(x)) {
-      for (int i = 0; i < n; i++)
+      for (int i = 0; i < dims[0]; i++)
         p[i] = NA_REAL;
       return p;
     }
     
     if (alpha[0] <= 0.0 || beta[0] <= 0.0  ||
         size[0] < 0.0 || floor(size[0]) != size[0]) {
-      for (int i = 0; i < n; i++)
+      for (int i = 0; i < dims[0]; i++)
         p[i] = NAN;
       Rcpp::warning("NaNs produced");
       return p;
@@ -229,7 +233,7 @@ NumericVector cpp_pbbinom(
     mx = std::max(0.0, std::min(mx, size[0]));
     std::vector<double> p_tab = cdf_bbinom_table(mx, size[0], alpha[0], beta[0]);
     
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < dims[0]; i++) {
       if (x[i] < 0.0) {
         p[i] = 0.0;
       } else if (x[i] >= size[0]) {
@@ -244,18 +248,20 @@ NumericVector cpp_pbbinom(
     for (int i = 0; i < Nmax; i++) {
       if (i % 1000 == 0)
         Rcpp::checkUserInterrupt();
-      if (ISNAN(x[i % n]) || ISNAN(size[i % nn]) || ISNAN(alpha[i % na]) || ISNAN(beta[i % nb])) {
+      if (ISNAN(x[i % dims[0]]) || ISNAN(size[i % dims[1]]) ||
+          ISNAN(alpha[i % dims[2]]) || ISNAN(beta[i % dims[3]])) {
         p[i] = NA_REAL;
-      } else if (alpha[i % na] <= 0.0 || beta[i % nb] <= 0.0 ||
-        size[i % nn] < 0.0 || floor(size[i % nn]) != size[i % nn]) {
+      } else if (alpha[i % dims[2]] <= 0.0 || beta[i % dims[3]] <= 0.0 ||
+        size[i % dims[1]] < 0.0 || floor(size[i % dims[1]]) != size[i % dims[1]]) {
         Rcpp::warning("NaNs produced");
         p[i] = NAN;
-      } else if (x[i % n] < 0.0) {
+      } else if (x[i % dims[0]] < 0.0) {
         p[i] = 0.0;
-      } else if (x[i % n] >= size[i % nn]) {
+      } else if (x[i % dims[0]] >= size[i % dims[1]]) {
         p[i] = 1.0;
       } else {
-        p[i] = cdf_bbinom_table(x[i % n], size[i % nn], alpha[i % na], beta[i % nb]).back();
+        p[i] = cdf_bbinom_table(x[i % dims[0]], size[i % dims[1]],
+                                alpha[i % dims[2]], beta[i % dims[3]]).back();
       }
     }
   
@@ -275,19 +281,20 @@ NumericVector cpp_pbbinom(
 
 // [[Rcpp::export]]
 NumericVector cpp_rbbinom(
-    const int n,
+    const int& n,
     const NumericVector& size,
     const NumericVector& alpha,
     const NumericVector& beta
   ) {
 
-  int nn = size.length();
-  int na = alpha.length();
-  int nb = beta.length();
+  std::vector<int> dims;
+  dims.push_back(size.length());
+  dims.push_back(alpha.length());
+  dims.push_back(beta.length());
   NumericVector x(n);
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_bbinom(size[i % nn], alpha[i % na], beta[i % nb]);
+    x[i] = rng_bbinom(size[i % dims[0]], alpha[i % dims[1]], beta[i % dims[2]]);
 
   return x;
 }

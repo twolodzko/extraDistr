@@ -78,17 +78,18 @@ NumericVector cpp_ddweibull(
     const NumericVector& x,
     const NumericVector& q,
     const NumericVector& beta,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
 
-  int n  = x.length();
-  int nq = q.length();
-  int nb = beta.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nq, nb));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(q.length());
+  dims.push_back(beta.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_dweibull(x[i % n], q[i % nq], beta[i % nb]);
+    p[i] = pdf_dweibull(x[i % dims[0]], q[i % dims[1]], beta[i % dims[2]]);
 
   if (log_prob)
     for (int i = 0; i < Nmax; i++)
@@ -103,17 +104,19 @@ NumericVector cpp_pdweibull(
     const NumericVector& x,
     const NumericVector& q,
     const NumericVector& beta,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
 
-  int n  = x.length();
-  int nq = q.length();
-  int nb = beta.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nq, nb));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(q.length());
+  dims.push_back(beta.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_dweibull(x[i % n], q[i % nq], beta[i % nb]);
+    p[i] = cdf_dweibull(x[i % dims[0]], q[i % dims[1]], beta[i % dims[2]]);
 
   if (!lower_tail)
     for (int i = 0; i < Nmax; i++)
@@ -132,26 +135,28 @@ NumericVector cpp_qdweibull(
     const NumericVector& p,
     const NumericVector& q,
     const NumericVector& beta,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
 
-  int n  = p.length();
-  int nq = q.length();
-  int nb = beta.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nq, nb));
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(q.length());
+  dims.push_back(beta.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
 
   if (log_prob)
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < dims[0]; i++)
       pp[i] = exp(pp[i]);
 
   if (!lower_tail)
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < dims[0]; i++)
       pp[i] = 1.0 - pp[i];
 
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_dweibull(pp[i % n], q[i % nq], beta[i % nb]);
+    x[i] = invcdf_dweibull(pp[i % dims[0]], q[i % dims[1]], beta[i % dims[2]]);
 
   return x;
 }
@@ -159,7 +164,7 @@ NumericVector cpp_qdweibull(
 
 // [[Rcpp::export]]
 NumericVector cpp_rdweibull(
-    const int n,
+    const int& n,
     const NumericVector& q,
     const NumericVector& beta
   ) {
