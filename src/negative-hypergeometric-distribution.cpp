@@ -17,6 +17,7 @@ using Rcpp::NumericVector;
 using Rcpp::NumericMatrix;
 
 
+
 double pmf_nhyper(double x, double m, double n, double r) {
   
   if (ISNAN(x) || ISNAN(r) || ISNAN(n) || ISNAN(m))
@@ -30,15 +31,15 @@ double pmf_nhyper(double x, double m, double n, double r) {
   p = h;
   t = h;
   
-  if (x < r || r > rmax || m > N) {
+  if (r > rmax || m > N) {
     Rcpp::warning("NanN produced");
     return NAN;
   }
-
+  
   if (x < r || x > rmax ||
       !isInteger(x) || !isInteger(r) ||
       !isInteger(n) || !isInteger(m))
-    return 0.0;
+      return 0.0;
   
   if (!tol_equal(x, r)) {
     i = r;
@@ -52,7 +53,7 @@ double pmf_nhyper(double x, double m, double n, double r) {
     if (tol_equal(x, rmax))
       return p/t;
   }
-
+  
   i = x;
   do {
     h *= i*(n+r-i)/(N-i)/(i+1.0-r);
@@ -76,7 +77,7 @@ double cdf_nhyper(double x, double m, double n, double r) {
   rmax = n+r;
   p = h;
   
-  if (x < r || r > rmax || m > N) {
+  if (r > rmax || m > N) {
     Rcpp::warning("NanN produced");
     return NAN;
   }
@@ -120,39 +121,44 @@ double invcdf_nhyper(double p, double m, double n, double r) {
   
   double p1, rmax, h, t, i, pt;
   double N = m+n;
-  
-  h = 1e-100;
   rmax = n+r;
-  t = h;
   
   if (r > rmax || m > N) {
     Rcpp::warning("NanN produced");
     return NAN;
   }
-
+  
+  h = 1e-100;
+  t = h;
+  
   i = r;
   do {
     h *= i*(n+r-i)/(N-i)/(i+1.0-r);
     t += h;
     i += 1.0;
   } while (i <= rmax-1.0);
-
+  
   pt = p*t;
   h = 1e-100;
   p1 = h;
+  
+  // Rcpp::Rcout << "** I = " << i << " ; P = " << p1/t << std::endl;
+  if (p1 >= pt)
+    return r;
   
   i = r;
   do {
     h *= i*(n+r-i)/(N-i)/(i+1.0-r);
     p1 += h;
     i += 1.0;
-    // Rcout << "I = " << i << " ; P = " << p1/t << std::endl;
+    // Rcpp::Rcout << "I = " << i << " ; P = " << p1/t << std::endl;
     if (p1 >= pt)
       break;
   } while (i <= rmax);
   
   return i;
 }
+
 
 
 // [[Rcpp::export]]

@@ -29,11 +29,22 @@ bool anyFinite(Rcpp::NumericVector x) {
 }
 
 double finite_max(Rcpp::NumericVector x) {
-  double max_x = -INFINITY;
+  double max_x = 0.0;
   int n = x.length();
-  for (int i = 0; i < n; i++) {
-    if (!std::isinf(x[i]) && x[i] > max_x)
+  int i = 0;
+  do {
+    if (R_FINITE(x[i])) {
       max_x = x[i];
+      break;
+    }
+    i++;
+  } while (i < n);
+  while (i < n) {
+    if (R_FINITE(x[i]) && x[i] > max_x) {
+      max_x = x[i];
+      break;
+    }
+    i++;
   }
   return max_x;
 }
