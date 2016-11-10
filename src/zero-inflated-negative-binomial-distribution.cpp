@@ -36,7 +36,7 @@ double pdf_zinb(double x, double r, double p, double pi) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x < 0.0 || !isInteger(x) || std::isinf(x))
+  if (x < 0.0 || !isInteger(x) || !R_FINITE(x))
     return 0.0;
   if (x == 0.0)
     return pi + (1.0-pi) * pow(p, r);
@@ -106,8 +106,7 @@ NumericVector cpp_dzinb(
     p[i] = pdf_zinb(x[i % n], size[i % ns], prob[i % np], pi[i % npi]);
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }
@@ -133,12 +132,10 @@ NumericVector cpp_pzinb(
     p[i] = cdf_zinb(x[i % n], size[i % ns], prob[i % np], pi[i % np]);
   
   if (!lower_tail)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = 1.0 - p[i];
+    p = 1.0 - p;
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }
@@ -162,12 +159,10 @@ NumericVector cpp_qzinb(
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
-    for (int i = 0; i < n; i++)
-      pp[i] = exp(pp[i]);
+    pp = Rcpp::exp(pp);
   
   if (!lower_tail)
-    for (int i = 0; i < n; i++)
-      pp[i] = 1.0 - pp[i];
+    pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
     x[i] = invcdf_zinb(pp[i % n], size[i % ns], prob[i % np], pi[i % np]);

@@ -94,7 +94,8 @@ NumericVector cpp_dnsbeta(
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_nsbeta(x[i % n], alpha[i % na], beta[i % nb], lower[i % nl], upper[i % nu], log_prob);
+    p[i] = pdf_nsbeta(x[i % n], alpha[i % na], beta[i % nb],
+                      lower[i % nl], upper[i % nu], log_prob);
   
   return p;
 }
@@ -119,7 +120,8 @@ NumericVector cpp_pnsbeta(
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_nsbeta(x[i % n], alpha[i % na], beta[i % nb], lower[i % nl], upper[i % nu], lower_tail, log_prob);
+    p[i] = cdf_nsbeta(x[i % n], alpha[i % na], beta[i % nb],
+                      lower[i % nl], upper[i % nu], lower_tail, log_prob);
   
   return p;
 }
@@ -145,15 +147,14 @@ NumericVector cpp_qnsbeta(
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
-    for (int i = 0; i < n; i++)
-      pp[i] = exp(pp[i]);
+    pp = Rcpp::exp(pp);
   
   if (!lower_tail)
-    for (int i = 0; i < n; i++)
-      pp[i] = 1.0 - pp[i];
+    pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_nsbeta(pp[i % n], alpha[i % na], beta[i % nb], lower[i % nl], upper[i % nu]);
+    q[i] = invcdf_nsbeta(pp[i % n], alpha[i % na], beta[i % nb],
+                         lower[i % nl], upper[i % nu]);
   
   return q;
 }

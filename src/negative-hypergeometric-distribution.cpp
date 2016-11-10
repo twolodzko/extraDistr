@@ -181,8 +181,7 @@ NumericVector cpp_dnhyper(
     p[i] = pmf_nhyper(x[i % nx], m[i % nm], n[i % nl], r[i % nr]);
 
   if (log_prob)
-    for (int i = 0; i < nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }
@@ -208,12 +207,10 @@ NumericVector cpp_pnhyper(
     p[i] = cdf_nhyper(x[i % nx], m[i % nm], n[i % nl], r[i % nr]);
   
   if (!lower_tail)
-    for (int i = 0; i < nmax; i++)
-      p[i] = 1.0 - p[i];
+    p = 1.0 - p;
   
   if (log_prob)
-    for (int i = 0; i < nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }
@@ -237,12 +234,10 @@ NumericVector cpp_qnhyper(
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
-    for (int i = 0; i < np; i++)
-      pp[i] = exp(pp[i]);
+    pp = Rcpp::exp(pp);
   
   if (!lower_tail)
-    for (int i = 0; i < np; i++)
-      pp[i] = 1.0 - pp[i];
+    pp = 1.0 - pp;
   
   for (int i = 0; i < nmax; i++)
     q[i] = invcdf_nhyper(pp[i % np], m[i % nm], n[i % nl], r[i % nr]);
@@ -265,74 +260,11 @@ NumericVector cpp_rnhyper(
   int nm = m.length();
   NumericVector x(nn);
   
-  /*
-  if (nr == 1 && nl == 1 && nm == 1) {
-    
-    if (ISNAN(r[0]) || ISNAN(n[0]) || ISNAN(m[0])) {
-      for (int j = 0; j < nn; j++)
-        x[j] = NA_REAL;
-      return x;
-    }
-    
-    double p1, rmax, h, t, i;
-    double N = m[0]+n[0];
-    
-    h = 1.0e-100;
-    rmax = n[0]+r[0];
-    t = h;
-    
-    if (r[0] > rmax || m[0] > N) {
-      Rcpp::warning("NanN produced");
-      return NAN;
-    }
-    
-    if (r[0] > rmax) {
-      for (int j = 0; j < nn; j++)
-        x[j] = NAN;
-      return x;
-    }
-
-    i = r[0];
-    do {
-      h *= i*(n[0]+r[0]-i)/(N-i)/(i+1.0-r[0]);
-      t += h;
-      i += 1.0;
-    } while (i <= rmax-1.0);
-    
-    h = 1.0e-100;
-    p1 = h;
-    
-    std::vector<double> ptab(static_cast<int>(rmax)+1, 0.0);
-    
-    i = r[0];
-    do {
-      h *= i*(n[0]+r[0]-i)/(N-i)/(i+1.0-r[0]);
-      p1 += h;
-      i += 1.0;
-      ptab[static_cast<int>(i)] = p1/t;
-    } while (i <= rmax);
-    
-    for (int j = 0; j < nn; j++) {
-      u = rng_unif();
-      
-      for (int z = rmax; z >= 0; z--) {
-        if (u > ptab[z]) {
-          x[j] = static_cast<double>(z+1);
-          break;
-        }
-      }
-      
-    }
-    
-  } else {
-    */
-    
     for (int i = 0; i < nn; i++) {
       u = rng_unif();
       x[i] = invcdf_nhyper(u, m[i % nm], n[i % nl], r[i % nr]);
     }
-    
-  //}
+
   
   return x;
 }

@@ -37,7 +37,7 @@ double pdf_wald(double x, double mu, double lambda) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x <= 0.0 || std::isinf(x))
+  if (x <= 0.0 || !R_FINITE(x))
     return 0.0;
   return sqrt(lambda/(2.0*PI*pow(x, 3.0))) *
          exp((-lambda*pow(x-mu, 2.0))/(2.0*pow(mu, 2.0)*x));
@@ -97,8 +97,7 @@ NumericVector cpp_dwald(
     p[i] = pdf_wald(x[i % n], mu[i % nm], lambda[i % nl]);
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }
@@ -122,12 +121,10 @@ NumericVector cpp_pwald(
     p[i] = cdf_wald(x[i % n], mu[i % nm], lambda[i % nl]);
   
   if (!lower_tail)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = 1.0 - p[i];
+    p = 1.0 - p;
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }

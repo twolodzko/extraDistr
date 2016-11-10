@@ -75,8 +75,7 @@ NumericVector cpp_dmixnorm(
   }
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }
@@ -138,9 +137,11 @@ NumericVector cpp_pmixnorm(
       p[i] += (alpha(i % na, j) / alpha_tot) * R::pnorm(x[i], mu(i % nm, j), sigma(i % ns, j), lower_tail, false);
   }
   
+  if (!lower_tail)
+    p = 1.0 - p;
+  
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }

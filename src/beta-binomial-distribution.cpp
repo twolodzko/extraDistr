@@ -188,8 +188,7 @@ NumericVector cpp_dbbinom(
                          alpha[i % dims[2]], beta[i % dims[3]]);
 
   if (!log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = exp(p[i]);
+    p = Rcpp::exp(p);
 
   return p;
 }
@@ -213,6 +212,7 @@ NumericVector cpp_pbbinom(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  /*
   if (dims[1] == 1 && dims[2] == 1 && dims[3] == 1) {
     
     if (ISNAN(size[0]) || ISNAN(alpha[0]) || ISNAN(beta[0]) || allNA(x)) {
@@ -244,10 +244,13 @@ NumericVector cpp_pbbinom(
     }
     
   } else {
+   */
   
     for (int i = 0; i < Nmax; i++) {
+      
       if (i % 1000 == 0)
         Rcpp::checkUserInterrupt();
+      
       if (ISNAN(x[i % dims[0]]) || ISNAN(size[i % dims[1]]) ||
           ISNAN(alpha[i % dims[2]]) || ISNAN(beta[i % dims[3]])) {
         p[i] = NA_REAL;
@@ -265,15 +268,13 @@ NumericVector cpp_pbbinom(
       }
     }
   
-  }
+  //}
 
   if (!lower_tail)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = 1.0 - p[i];
-
+    p = 1.0 - p;
+  
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
 
   return p;
 }

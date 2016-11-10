@@ -36,7 +36,7 @@ double pdf_zib(double x, double n, double p, double pi) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x < 0.0 || !isInteger(x) || std::isinf(x))
+  if (x < 0.0 || !isInteger(x) || !R_FINITE(x))
     return 0.0;
   if (x == 0.0)
     return pi + (1.0-pi) * pow(1.0-p, n);
@@ -53,7 +53,7 @@ double cdf_zib(double x, double n, double p, double pi) {
   }
   if (x < 0.0)
     return 0.0;
-  if (std::isinf(x))
+  if (!R_FINITE(x))
     return 1.0;
   return pi + (1.0-pi) * R::pbinom(x, n, p, true, false);
 }
@@ -106,8 +106,7 @@ NumericVector cpp_dzib(
     p[i] = pdf_zib(x[i % n], size[i % ns], prob[i % np], pi[i % npi]);
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }
@@ -133,12 +132,10 @@ NumericVector cpp_pzib(
     p[i] = cdf_zib(x[i % n], size[i % ns], prob[i % np], pi[i % np]);
   
   if (!lower_tail)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = 1.0 - p[i];
+    p = 1.0 - p;
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }
@@ -162,12 +159,10 @@ NumericVector cpp_qzib(
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
-    for (int i = 0; i < n; i++)
-      pp[i] = exp(pp[i]);
+    pp = Rcpp::exp(pp);
   
   if (!lower_tail)
-    for (int i = 0; i < n; i++)
-      pp[i] = 1.0 - pp[i];
+    pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
     x[i] = invcdf_zib(pp[i % n], size[i % ns], prob[i % np], pi[i % np]);

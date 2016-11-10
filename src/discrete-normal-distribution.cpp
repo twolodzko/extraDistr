@@ -63,8 +63,7 @@ NumericVector cpp_ddnorm(
     p[i] = pmf_dnorm(x[i % dims[0]], mu[i % dims[1]], sigma[i % dims[2]]);
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }

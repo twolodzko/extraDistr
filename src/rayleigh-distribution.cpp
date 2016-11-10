@@ -39,7 +39,7 @@ double pdf_rayleigh(double x, double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x < 0.0 || std::isinf(x))
+  if (x < 0.0 || !R_FINITE(x))
     return 0.0;
   return x/pow(sigma, 2.0) * exp(-pow(x, 2.0) / (2.0*pow(sigma, 2.0)));
 }
@@ -86,8 +86,7 @@ NumericVector cpp_drayleigh(
     p[i] = pdf_rayleigh(x[i % n], sigma[i % ns]);
 
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
 
   return p;
 }
@@ -109,12 +108,10 @@ NumericVector cpp_prayleigh(
     p[i] = cdf_rayleigh(x[i % n], sigma[i % ns]);
 
   if (!lower_tail)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = 1.0 - p[i];
-
+    p = 1.0 - p;
+  
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
 
   return p;
 }
@@ -134,12 +131,10 @@ NumericVector cpp_qrayleigh(
   NumericVector pp = Rcpp::clone(p);
 
   if (log_prob)
-    for (int i = 0; i < n; i++)
-      pp[i] = exp(pp[i]);
-
+    pp = Rcpp::exp(pp);
+  
   if (!lower_tail)
-    for (int i = 0; i < n; i++)
-      pp[i] = 1.0 - pp[i];
+    pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
     q[i] = invcdf_rayleigh(pp[i % n], sigma[i % ns]);

@@ -94,8 +94,7 @@ NumericVector cpp_ddirichlet(
   }
 
   if (!log_prob)
-    for (int i = 0; i < n; i++)
-      p[i] = exp(p[i]);
+    p = Rcpp::exp(p);
 
   return p;
 }

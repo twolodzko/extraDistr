@@ -32,7 +32,7 @@ using Rcpp::NumericMatrix;
 double pmf_dunif(double x, double min, double max) {
   if (ISNAN(x) || ISNAN(min) || ISNAN(max))
     return NA_REAL;
-  if (min > max || std::isinf(min) || std::isinf(max) ||
+  if (min > max || !R_FINITE(min) || !R_FINITE(max) ||
       floor(min) != min || floor(max) != max) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -46,7 +46,7 @@ double pmf_dunif(double x, double min, double max) {
 double cdf_dunif(double x, double min, double max) {
   if (ISNAN(x) || ISNAN(min) || ISNAN(max))
     return NA_REAL;
-  if (min > max || std::isinf(min) || std::isinf(max) ||
+  if (min > max || !R_FINITE(min) || !R_FINITE(max) ||
       floor(min) != min || floor(max) != max) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -61,7 +61,7 @@ double cdf_dunif(double x, double min, double max) {
 double invcdf_dunif(double p, double min, double max) {
   if (ISNAN(p) || ISNAN(min) || ISNAN(max))
     return NA_REAL;
-  if (min > max || std::isinf(min) || std::isinf(max) ||
+  if (min > max || !R_FINITE(min) || !R_FINITE(max) ||
       floor(min) != min || floor(max) != max ||
       p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
@@ -75,7 +75,7 @@ double invcdf_dunif(double p, double min, double max) {
 double rng_dunif(double min, double max) {
   if (ISNAN(min) || ISNAN(max))
     return NA_REAL;
-  if (min > max || std::isinf(min) || std::isinf(max) ||
+  if (min > max || !R_FINITE(min) || !R_FINITE(max) ||
       floor(min) != min || floor(max) != max) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -105,8 +105,7 @@ NumericVector cpp_ddunif(
     p[i] = pmf_dunif(x[i % dims[0]], min[i % dims[1]], max[i % dims[2]]);
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }
@@ -132,12 +131,10 @@ NumericVector cpp_pdunif(
     p[i] = cdf_dunif(x[i % dims[0]], min[i % dims[1]], max[i % dims[2]]);
   
   if (!lower_tail)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = 1.0 - p[i];
+    p = 1.0 - p;
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }
@@ -161,12 +158,10 @@ NumericVector cpp_qdunif(
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
-    for (int i = 0; i < dims[0]; i++)
-      pp[i] = exp(pp[i]);
+    pp = Rcpp::exp(pp);
   
   if (!lower_tail)
-    for (int i = 0; i < dims[0]; i++)
-      pp[i] = 1.0 - pp[i];
+    pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
     q[i] = invcdf_dunif(pp[i % dims[0]], min[i % dims[1]], max[i % dims[2]]);

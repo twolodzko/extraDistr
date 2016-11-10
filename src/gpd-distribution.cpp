@@ -116,8 +116,7 @@ NumericVector cpp_dgpd(
     p[i] = pdf_gpd(x[i % n], mu[i % nm], sigma[i % ns], xi[i % nx]);
 
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
 
   return p;
 }
@@ -143,12 +142,10 @@ NumericVector cpp_pgpd(
     p[i] = cdf_gpd(x[i % n], mu[i % nm], sigma[i % ns], xi[i % nx]);
 
   if (!lower_tail)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = 1.0 - p[i];
-
+    p = 1.0 - p;
+  
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
 
   return p;
 }
@@ -172,12 +169,10 @@ NumericVector cpp_qgpd(
   NumericVector pp = Rcpp::clone(p);
 
   if (log_prob)
-    for (int i = 0; i < n; i++)
-      pp[i] = exp(p[i]);
-
+    pp = Rcpp::exp(pp);
+  
   if (!lower_tail)
-    for (int i = 0; i < n; i++)
-      pp[i] = 1.0 - pp[i];
+    pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
     q[i] = invcdf_gpd(pp[i % n], mu[i % nm], sigma[i % ns], xi[i % nx]);

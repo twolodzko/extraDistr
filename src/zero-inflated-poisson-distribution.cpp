@@ -36,7 +36,7 @@ double pdf_zip(double x, double lambda, double pi) {
   }
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(pi))
     return NA_REAL;
-  if (x < 0.0 || !isInteger(x) || std::isinf(x))
+  if (x < 0.0 || !isInteger(x) || !R_FINITE(x))
     return 0.0;
   if (x == 0.0)
     return pi + (1.0-pi) * exp(-lambda);
@@ -53,7 +53,7 @@ double cdf_zip(double x, double lambda, double pi) {
   }
   if (x < 0.0)
     return 0.0;
-  if (std::isinf(x))
+  if (!R_FINITE(x))
     return 1.0;
   return pi + (1.0-pi) * R::ppois(x, lambda, true, false);
 }
@@ -104,8 +104,7 @@ NumericVector cpp_dzip(
     p[i] = pdf_zip(x[i % n], lambda[i % nl], pi[i % np]);
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }
@@ -129,12 +128,10 @@ NumericVector cpp_pzip(
     p[i] = cdf_zip(x[i % n], lambda[i % nl], pi[i % np]);
   
   if (!lower_tail)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = 1.0 - p[i];
+    p = 1.0 - p;
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }
@@ -156,12 +153,10 @@ NumericVector cpp_qzip(
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
-    for (int i = 0; i < n; i++)
-      pp[i] = exp(pp[i]);
+    pp = Rcpp::exp(pp);
   
   if (!lower_tail)
-    for (int i = 0; i < n; i++)
-      pp[i] = 1.0 - pp[i];
+    pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
     x[i] = invcdf_zip(pp[i % n], lambda[i % nl], pi[i % np]);

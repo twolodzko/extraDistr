@@ -93,8 +93,7 @@ NumericVector cpp_dbnorm(
                      rho[i % dims[6]]);
 
   if (log_prob)
-    for (int i = 0; i < dims[0]; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
 
   return p;
 }

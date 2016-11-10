@@ -124,8 +124,7 @@ NumericVector cpp_dbetapr(
                       beta[i % dims[2]], sigma[i % dims[3]]);
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }
@@ -152,6 +151,12 @@ NumericVector cpp_pbetapr(
   for (int i = 0; i < Nmax; i++)
     p[i] = cdf_betapr(x[i % dims[0]], alpha[i % dims[1]], beta[i % dims[2]],
                       sigma[i % dims[3]], lower_tail, log_prob);
+  
+  if (!lower_tail)
+    p = 1.0 - p;
+  
+  if (log_prob)
+    p = Rcpp::log(p);
 
   return p;
 }
@@ -177,12 +182,10 @@ NumericVector cpp_qbetapr(
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
-    for (int i = 0; i < dims[0]; i++)
-      pp[i] = exp(pp[i]);
+    pp = Rcpp::exp(pp);
   
   if (!lower_tail)
-    for (int i = 0; i < dims[0]; i++)
-      pp[i] = 1.0 - pp[i];
+    pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
     q[i] = invcdf_betapr(pp[i % dims[0]], alpha[i % dims[1]],

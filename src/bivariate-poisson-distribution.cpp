@@ -88,8 +88,7 @@ NumericVector cpp_dbpois(
                      a[i % dims[2]], b[i % dims[3]], c[i % dims[4]]);
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }

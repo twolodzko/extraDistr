@@ -112,8 +112,7 @@ NumericVector cpp_dmvhyper(
   }
   
   if (!log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = exp(p[i]);
+    p = Rcpp::exp(p);
   
   return p;
 }

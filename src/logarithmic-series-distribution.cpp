@@ -55,7 +55,7 @@ double cdf_lgser(double x, double theta) {
   }
   if (x < 1.0)
     return 0.0;
-  if (std::isinf(x))
+  if (!R_FINITE(x))
     return 1.0;
   
   double a = -1.0/log(1.0 - theta);
@@ -109,9 +109,8 @@ NumericVector cpp_dlgser(
   for (int i = 0; i < Nmax; i++)
     p[i] = pdf_lgser(x[i % n], theta[i % nt]);
  
-  if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+ if (log_prob)
+   p = Rcpp::log(p);
 
   return p;
 }
@@ -133,12 +132,10 @@ NumericVector cpp_plgser(
     p[i] = cdf_lgser(x[i % n], theta[i % nt]);
 
   if (!lower_tail)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = 1.0 - p[i];
-
+    p = 1.0 - p;
+  
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
 
   return p;
 }
@@ -158,12 +155,10 @@ NumericVector cpp_qlgser(
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
-    for (int i = 0; i < n; i++)
-      pp[i] = exp(pp[i]);
+    pp = Rcpp::exp(pp);
   
   if (!lower_tail)
-    for (int i = 0; i < n; i++)
-      pp[i] = 1.0 - pp[i];
+    pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
     x[i] = invcdf_lgser(pp[i % n], theta[i % nt]);

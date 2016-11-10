@@ -67,8 +67,7 @@ NumericVector cpp_dskellam(
     p[i] = pmf_skellam(x[i % nx], mu1[i % na], mu2[i % nb]);
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }

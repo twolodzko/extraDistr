@@ -73,8 +73,7 @@ NumericVector cpp_dmixpois(
   }
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }
@@ -134,9 +133,11 @@ NumericVector cpp_pmixpois(
       p[i] += (alpha(i % na, j) / alpha_tot) * R::ppois(x[i], lambda(i % nl, j), lower_tail, false);
   }
   
+  if (!lower_tail)
+    p = 1.0 - p;
+  
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }

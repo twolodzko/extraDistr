@@ -24,7 +24,7 @@ double pdf_tpois(double x, double lambda, double s) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (!isInteger(x) || x < 0.0 || std::isinf(x))
+  if (!isInteger(x) || x < 0.0 || !R_FINITE(x))
     return 0.0;
   
   if (s == 0.0 && x <= s)
@@ -46,7 +46,7 @@ double cdf_tpois(double x, double lambda, double s) {
   
   if (x < 0.0)
     return 0.0;
-  if (x == INFINITY)
+  if (!R_FINITE(x))
     return 1.0;
   
   if (s == 0.0 && x <= s)
@@ -127,8 +127,7 @@ NumericVector cpp_dtpois(
     p[i] = pdf_tpois(x[i % n], lambda[i % nl], s[i % ns]);
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }
@@ -152,12 +151,10 @@ NumericVector cpp_ptpois(
     p[i] = cdf_tpois(x[i % n], lambda[i % nl], s[i % ns]);
   
   if (!lower_tail)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = 1.0 - p[i];
+    p = 1.0 - p;
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }
@@ -179,12 +176,10 @@ NumericVector cpp_qtpois(
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
-    for (int i = 0; i < n; i++)
-      pp[i] = exp(pp[i]);
+    pp = Rcpp::exp(pp);
   
   if (!lower_tail)
-    for (int i = 0; i < n; i++)
-      pp[i] = 1.0 - pp[i];
+    pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
     q[i] = invcdf_tpois(pp[i % n], lambda[i % nl], s[i % ns]);

@@ -84,7 +84,8 @@ NumericVector cpp_dprop(
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_prop(x[i % n], size[i % ns], mean[i % nm], log_prob);
+    p[i] = pdf_prop(x[i % n], size[i % ns], mean[i % nm],
+                    log_prob);
 
   return p;
 }
@@ -105,7 +106,8 @@ NumericVector cpp_pprop(
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_prop(x[i % n], size[i % ns], mean[i % nm], lower_tail, log_prob);
+    p[i] = cdf_prop(x[i % n], size[i % ns], mean[i % nm],
+                    lower_tail, log_prob);
 
   return p;
 }
@@ -127,12 +129,10 @@ NumericVector cpp_qprop(
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
-    for (int i = 0; i < n; i++)
-      pp[i] = exp(pp[i]);
+    pp = Rcpp::exp(pp);
   
   if (!lower_tail)
-    for (int i = 0; i < n; i++)
-      pp[i] = 1.0 - pp[i];
+    pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
     q[i] = invcdf_prop(pp[i % n], size[i % ns], mean[i % nm]);

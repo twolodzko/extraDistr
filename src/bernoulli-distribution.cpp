@@ -85,8 +85,7 @@ NumericVector cpp_dbern(
     p[i] = pdf_bernoulli(x[i % dims[0]], prob[i % dims[1]]);
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }
@@ -110,12 +109,10 @@ NumericVector cpp_pbern(
     p[i] = cdf_bernoulli(x[i % dims[0]], prob[i % dims[1]]);
   
   if (!lower_tail)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = 1.0 - p[i];
+    p = 1.0 - p;
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }
@@ -137,12 +134,10 @@ NumericVector cpp_qbern(
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
-    for (int i = 0; i < dims[0]; i++)
-      pp[i] = exp(pp[i]);
+    pp = Rcpp::exp(pp);
   
   if (!lower_tail)
-    for (int i = 0; i < dims[0]; i++)
-      pp[i] = 1.0 - pp[i];
+    pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
     q[i] = invcdf_bernoulli(pp[i % dims[0]], prob[i % dims[1]]);
@@ -157,11 +152,11 @@ NumericVector cpp_rbern(
     const NumericVector& prob
   ) {
   
-  int np = prob.length();
+  int dims = prob.length();
   NumericVector x(n);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_bern(prob[i % np]);
+    x[i] = rng_bern(prob[i % dims]);
   
   return x;
 }

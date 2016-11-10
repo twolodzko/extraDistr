@@ -98,8 +98,7 @@ NumericVector cpp_dlomax(
     p[i] = logpdf_lomax(x[i % n], lambda[i % nl], kappa[i % nk]);
 
   if (!log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = exp(p[i]);
+    p = Rcpp::exp(p);
 
   return p;
 }
@@ -123,12 +122,10 @@ NumericVector cpp_plomax(
     p[i] = cdf_lomax(x[i % n], lambda[i % nl], kappa[i % nk]);
 
   if (!lower_tail)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = 1.0 - p[i];
-
+    p = 1.0 - p;
+  
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
 
   return p;
 }
@@ -150,12 +147,10 @@ NumericVector cpp_qlomax(
   NumericVector pp = Rcpp::clone(p);
 
   if (log_prob)
-    for (int i = 0; i < n; i++)
-      pp[i] = exp(pp[i]);
-
+    pp = Rcpp::exp(pp);
+  
   if (!lower_tail)
-    for (int i = 0; i < n; i++)
-      pp[i] = 1.0 - pp[i];
+    pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
     q[i] = invcdf_lomax(pp[i % n], lambda[i % nl], kappa[i % nk]);

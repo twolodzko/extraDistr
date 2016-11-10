@@ -23,7 +23,7 @@ bool isInteger(double x) {
 bool anyFinite(Rcpp::NumericVector x) {
   int n = x.length();
   for (int i = 0; i < n; i++)
-    if (!std::isinf(x[i]))
+    if (R_FINITE(x[i]))
       return true;
   return false;
 }

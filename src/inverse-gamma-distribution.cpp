@@ -66,8 +66,7 @@ NumericVector cpp_dinvgamma(
     p[i] = pdf_invgamma(x[i % n], alpha[i % na], beta[i % nb]);
 
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
 
   return p;
 }

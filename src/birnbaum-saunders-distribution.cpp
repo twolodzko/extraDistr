@@ -38,7 +38,7 @@ double pdf_fatigue(double x, double alpha, double beta, double mu) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x <= mu || std::isinf(x))
+  if (x <= mu || !R_FINITE(x))
     return 0.0;
   double z, zb, bz;
   z = x-mu;
@@ -110,8 +110,7 @@ NumericVector cpp_dfatigue(
                        beta[i % dims[2]], mu[i % dims[3]]);
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }
@@ -140,12 +139,10 @@ NumericVector cpp_pfatigue(
                        beta[i % dims[2]], mu[i % dims[3]]);
   
   if (!lower_tail)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = 1.0 - p[i];
+    p = 1.0 - p;
   
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
   
   return p;
 }
@@ -171,12 +168,10 @@ NumericVector cpp_qfatigue(
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
-    for (int i = 0; i < dims[0]; i++)
-      pp[i] = exp(pp[i]);
+    pp = Rcpp::exp(pp);
   
   if (!lower_tail)
-    for (int i = 0; i < dims[0]; i++)
-      pp[i] = 1.0 - pp[i];
+    pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
     q[i] = invcdf_fatigue(pp[i % dims[0]], alpha[i % dims[1]],

@@ -37,7 +37,7 @@ double logpmf_gpois(double x, double alpha, double beta) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (!isInteger(x) || x < 0.0 || std::isinf(x))
+  if (!isInteger(x) || x < 0.0 || !R_FINITE(x))
     return -INFINITY;
   
   double p = beta/(1.0+beta);
@@ -173,8 +173,7 @@ NumericVector cpp_dgpois(
     p[i] = logpmf_gpois(x[i % n], alpha[i % na], beta[i % nb]);
 
   if (!log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = exp(p[i]);
+    p = Rcpp::exp(p);
 
   return p;
 }
@@ -248,12 +247,10 @@ NumericVector cpp_pgpois(
   }
   
   if (!lower_tail)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = 1.0 - p[i];
-
+    p = 1.0 - p;
+  
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
 
   return p;
 }

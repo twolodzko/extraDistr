@@ -114,8 +114,7 @@ NumericVector cpp_ddirmnom(
   }
   
   if (!log_prob)
-    for (int i = 0; i < dims[0]; i++)
-      p[i] = exp(p[i]);
+    p = Rcpp::exp(p);
   
   return p;
 }

@@ -108,8 +108,7 @@ NumericVector cpp_dlaplace(
     p[i] = pdf_laplace(x[i % n], mu[i % nm], sigma[i % ns]);
 
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
 
   return p;
 }
@@ -133,12 +132,10 @@ NumericVector cpp_plaplace(
     p[i] = cdf_laplace(x[i % n], mu[i % nm], sigma[i % ns]);
 
   if (!lower_tail)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = 1.0 - p[i];
-
+    p = 1.0 - p;
+  
   if (log_prob)
-    for (int i = 0; i < Nmax; i++)
-      p[i] = log(p[i]);
+    p = Rcpp::log(p);
 
   return p;
 }
@@ -160,12 +157,10 @@ NumericVector cpp_qlaplace(
   NumericVector pp = Rcpp::clone(p);
 
   if (log_prob)
-    for (int i = 0; i < n; i++)
-      pp[i] = exp(pp[i]);
-
+    pp = Rcpp::exp(pp);
+  
   if (!lower_tail)
-    for (int i = 0; i < n; i++)
-      pp[i] = 1.0 - pp[i];
+    pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
     q[i] = invcdf_laplace(pp[i % n], mu[i % nm], sigma[i % ns]);
