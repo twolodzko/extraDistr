@@ -159,17 +159,18 @@ NumericVector cpp_dgpois(
     const NumericVector& x,
     const NumericVector& alpha,
     const NumericVector& beta,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
 
-  int n  = x.length();
-  int na = alpha.length();
-  int nb = beta.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(alpha.length());
+  dims.push_back(beta.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpmf_gpois(x[i % n], alpha[i % na], beta[i % nb]);
+    p[i] = logpmf_gpois(x[i % dims[0]], alpha[i % dims[1]], beta[i % dims[2]]);
 
   if (!log_prob)
     p = Rcpp::exp(p);
@@ -183,15 +184,18 @@ NumericVector cpp_pgpois(
     const NumericVector& x,
     const NumericVector& alpha,
     const NumericVector& beta,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
 
-  int n  = x.length();
-  int na = alpha.length();
-  int nb = beta.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(alpha.length());
+  dims.push_back(beta.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  /*
   if (na == 1 && nb == 1) {
     
     if (ISNAN(alpha[0]) || ISNAN(beta[0]) || allNA(x)) {
@@ -225,25 +229,35 @@ NumericVector cpp_pgpois(
     }
     
   } else {
+   */
+  
+  std::map<std::tuple<int, int>, std::vector<double>> memo;
+  double mx = finite_max(x);
     
     for (int i = 0; i < Nmax; i++) {
       if (i % 1000 == 0)
         Rcpp::checkUserInterrupt();
-      if (ISNAN(x[i % n]) || ISNAN(alpha[i % na]) || ISNAN(beta[i % nb])) {
+      if (ISNAN(x[i % dims[0]]) || ISNAN(alpha[i % dims[1]]) || ISNAN(beta[i % dims[2]])) {
         p[i] = NA_REAL;
-      } else if (alpha[i % na] <= 0.0 || beta[i % nb] <= 0.0) {
+      } else if (alpha[i % dims[1]] <= 0.0 || beta[i % dims[2]] <= 0.0) {
         Rcpp::warning("NaNs produced");
         p[i] = NAN;
-      } else if (x[i % n] < 0.0) {
+      } else if (x[i % dims[0]] < 0.0) {
         p[i] = 0.0;
-      } else if (x[i % n] == R_PosInf) {
+      } else if (x[i % dims[0]] == R_PosInf) {
         p[i] = 1.0;
       } else {
-        p[i] = cdf_gpois_table(x[i % n], alpha[i % na], beta[i % nb]).back();
+        
+        std::vector<double>& tmp = memo[std::make_tuple(i % dims[1], i % dims[2])];
+        if (!tmp.size()) {
+          tmp = cdf_gpois_table(mx, alpha[i % dims[1]], beta[i % dims[2]]);
+        }
+        p[i] = tmp[static_cast<int>(x[i % dims[0]])];
+        
       }
     } 
     
-  }
+  //}
   
   if (!lower_tail)
     p = 1.0 - p;
@@ -257,17 +271,19 @@ NumericVector cpp_pgpois(
 
 // [[Rcpp::export]]
 NumericVector cpp_rgpois(
-    const int n,
+    const int& n,
     const NumericVector& alpha,
     const NumericVector& beta
   ) {
 
-  int na = alpha.length();
-  int nb = beta.length();
+  std::vector<int> dims;
+  dims.push_back(alpha.length());
+  dims.push_back(beta.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector x(n);
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_gpois(alpha[i % na], beta[i % nb]);
+    x[i] = rng_gpois(alpha[i % dims[0]], beta[i % dims[1]]);
 
   return x;
 }

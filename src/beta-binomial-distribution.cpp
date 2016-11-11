@@ -142,13 +142,13 @@ std::vector<double> cdf_bbinom_table(double k, double n, double alpha, double be
   
   // k >= 1
   
-  double i = 2.0;
-  while (i <= k) {
-    nck += log((n + 1.0 - i)/i);
-    gx += log(i + alpha - 1.0);
-    gy -= log(n + beta - i);
-    p_tab[static_cast<int>(i)] = p_tab[static_cast<int>(i)-1] + exp(nck + gx + gy - gxy - bab);
-    i += 1.0;
+  double j = 2.0;
+  while (j <= k) {
+    nck += log((n + 1.0 - j)/j);
+    gx += log(j + alpha - 1.0);
+    gy -= log(n + beta - j);
+    p_tab[static_cast<int>(j)] = p_tab[static_cast<int>(j)-1] + exp(nck + gx + gy - gxy - bab);
+    j += 1.0;
   }
   
   return p_tab;
@@ -193,7 +193,7 @@ NumericVector cpp_dbbinom(
   return p;
 }
 
-
+// [[Rcpp::plugins(cpp11)]]
 // [[Rcpp::export]]
 NumericVector cpp_pbbinom(
     const NumericVector& x,
@@ -201,7 +201,8 @@ NumericVector cpp_pbbinom(
     const NumericVector& alpha,
     const NumericVector& beta,
     const bool& lower_tail = true,
-    const bool& log_prob = false
+    const bool& log_prob = false,
+    bool old = true
   ) {
 
   std::vector<int> dims;
@@ -246,6 +247,9 @@ NumericVector cpp_pbbinom(
   } else {
    */
   
+  std::map<std::tuple<int, int, int>, std::vector<double>> memo;
+  double mx = std::min(finite_max(x), finite_max(size));
+  
     for (int i = 0; i < Nmax; i++) {
       
       if (i % 1000 == 0)
@@ -263,8 +267,17 @@ NumericVector cpp_pbbinom(
       } else if (x[i % dims[0]] >= size[i % dims[1]]) {
         p[i] = 1.0;
       } else {
-        p[i] = cdf_bbinom_table(x[i % dims[0]], size[i % dims[1]],
-                                alpha[i % dims[2]], beta[i % dims[3]]).back();
+        
+          std::vector<double>& tmp = memo[std::make_tuple(i % dims[1], i % dims[2], i % dims[3])];
+          if (!tmp.size()) {
+            tmp = cdf_bbinom_table(mx, size[i % dims[1]],
+                                   alpha[i % dims[2]], beta[i % dims[3]]);
+          }
+          p[i] = tmp[static_cast<int>(x[i % dims[0]])];
+        
+        /*
+
+         */
       }
     }
   

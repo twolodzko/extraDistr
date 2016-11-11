@@ -255,6 +255,9 @@ NumericVector cpp_pbnbinom(
     
   } else {
    */
+  
+  std::map<std::tuple<int, int, int>, std::vector<double>> memo;
+  double mx = finite_max(x);
 
     for (int i = 0; i < Nmax; i++) {
       
@@ -273,8 +276,14 @@ NumericVector cpp_pbnbinom(
       } else if (!R_FINITE(x[i % dims[0]])) {
         p[i] = 1.0;
       } else {
-        p[i] = cdf_bnbinom_table(x[i % dims[0]], size[i % dims[1]],
-                                 alpha[i % dims[2]], beta[i % dims[3]]).back();
+        
+        std::vector<double>& tmp = memo[std::make_tuple(i % dims[1], i % dims[2], i % dims[3])];
+        if (!tmp.size()) {
+          tmp = cdf_bnbinom_table(mx, size[i % dims[1]],
+                                  alpha[i % dims[2]], beta[i % dims[3]]);
+        }
+        p[i] = tmp[static_cast<int>(x[i % dims[0]])];
+
       }
     }
     

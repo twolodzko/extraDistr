@@ -74,8 +74,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_pbbinom
-NumericVector cpp_pbbinom(const NumericVector& x, const NumericVector& size, const NumericVector& alpha, const NumericVector& beta, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pbbinom(SEXP xSEXP, SEXP sizeSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+NumericVector cpp_pbbinom(const NumericVector& x, const NumericVector& size, const NumericVector& alpha, const NumericVector& beta, const bool& lower_tail, const bool& log_prob, bool old);
+RcppExport SEXP extraDistr_cpp_pbbinom(SEXP xSEXP, SEXP sizeSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP, SEXP oldSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -85,7 +85,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type beta(betaSEXP);
     Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
     Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_pbbinom(x, size, alpha, beta, lower_tail, log_prob));
+    Rcpp::traits::input_parameter< bool >::type old(oldSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_pbbinom(x, size, alpha, beta, lower_tail, log_prob, old));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -716,7 +717,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dgpois
-NumericVector cpp_dgpois(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, bool log_prob);
+NumericVector cpp_dgpois(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dgpois(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -724,13 +725,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type alpha(alphaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type beta(betaSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dgpois(x, alpha, beta, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_pgpois
-NumericVector cpp_pgpois(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, bool lower_tail, bool log_prob);
+NumericVector cpp_pgpois(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_pgpois(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -738,19 +739,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type alpha(alphaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type beta(betaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_pgpois(x, alpha, beta, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rgpois
-NumericVector cpp_rgpois(const int n, const NumericVector& alpha, const NumericVector& beta);
+NumericVector cpp_rgpois(const int& n, const NumericVector& alpha, const NumericVector& beta);
 RcppExport SEXP extraDistr_cpp_rgpois(SEXP nSEXP, SEXP alphaSEXP, SEXP betaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type alpha(alphaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type beta(betaSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rgpois(n, alpha, beta));

@@ -42,7 +42,6 @@ double finite_max(Rcpp::NumericVector x) {
   while (i < n) {
     if (R_FINITE(x[i]) && x[i] > max_x) {
       max_x = x[i];
-      break;
     }
     i++;
   }
