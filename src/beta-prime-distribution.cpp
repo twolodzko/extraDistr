@@ -36,10 +36,8 @@ double pdf_betapr(double x, double alpha, double beta, double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x <= 0.0)
+  if (x <= 0.0 || !R_FINITE(x))
     return 0.0;
-  if (x == INFINITY)
-    return 0;
   double z = x / sigma;
   return pow(z, alpha-1.0) * pow(z+1.0, -alpha-beta) / R::beta(alpha, beta) / sigma;
 }
@@ -51,10 +49,8 @@ double logpdf_betapr(double x, double alpha, double beta, double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x <= 0.0)
-    return -INFINITY;
-  if (x == INFINITY)
-    return -INFINITY;
+  if (x <= 0.0 || !R_FINITE(x))
+    return R_NegInf;
   double z = x / sigma;
   return log(pow(z, alpha-1.0)) + log(pow(z+1.0, -alpha-beta)) - R::lbeta(alpha, beta) - log(sigma);
 }
@@ -68,9 +64,9 @@ double cdf_betapr(double x, double alpha, double beta, double sigma,
     return NAN;
   }
   if (x <= 0.0)
-    return 0;
-  if (x == INFINITY)
-    return 1;
+    return 0.0;
+  if (!R_FINITE(x))
+    return 1.0;
   double z = x / sigma;
   return R::pbeta(z/(1.0+z), alpha, beta, lower_tail, log_prob);
 }
@@ -85,7 +81,7 @@ double invcdf_betapr(double p, double alpha, double beta, double sigma) {
   if (p == 0.0)
     return 0.0;
   if (p == 1.0)
-    return INFINITY;
+    return R_PosInf;
   double x = R::qbeta(p, alpha, beta, true, false);
   return x/(1.0-x) * sigma;
 }

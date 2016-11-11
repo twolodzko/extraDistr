@@ -79,7 +79,7 @@ double logpdf_kumar(double x, double a, double b) {
   if (x >= 0.0 && x <= 1.0)
     return log(a) + log(b) + log(x)*(a-1.0) + log(1.0 - pow(x, a))*(b-1.0);
   else
-    return -INFINITY;
+    return R_NegInf;
 }
 
 

@@ -72,7 +72,7 @@ double invcdf_tpois(double p, double lambda, double s) {
     if (p == 0.0)
       return 0.0;
     if (p == 1.0)
-      return INFINITY;
+      return R_PosInf;
     
     z = exp(-lambda);
     return R::qpois(p*(1.0-z) + z, lambda, true, false);

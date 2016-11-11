@@ -70,7 +70,7 @@ NumericVector cpp_ddirichlet(
         break;
       }
       if (x(i % n, j) < 0.0 || x(i % n, j) > 1.0) {
-        p[i] = -INFINITY;
+        p[i] = R_NegInf;
         break;
       }
       
@@ -79,7 +79,7 @@ NumericVector cpp_ddirichlet(
       p_tmp += log(x(i % n, j)) * (alpha(i % na, j) - 1.0);
       
       if (alpha(i % na, j) == 1.0 && x(i % n, j) == 0.0)
-        p_tmp = -INFINITY;
+        p_tmp = R_NegInf;
     }
     
     if (missings) {

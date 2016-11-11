@@ -106,7 +106,7 @@ NumericVector cpp_ddirmnom(
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
     } else if (sum_x < 0.0 || sum_x != size[i % dims[2]] || wrong_x) {
-      p[i] = -INFINITY;
+      p[i] = R_NegInf;
     } else {
       p[i] = (lfactorial(size[i % dims[2]]) + R::lgammafn(sum_alpha)) -
         R::lgammafn(size[i % dims[2]] + sum_alpha) + prod_tmp;

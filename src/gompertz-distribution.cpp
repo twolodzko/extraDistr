@@ -58,10 +58,10 @@ double cdf_gompertz(double x, double a, double b) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (std::isinf(x))
-    return 1.0;
   if (x < 0.0)
     return 0.0;
+  if (!R_FINITE(x))
+    return 1.0;
   return 1.0 - exp(-a/b * (exp(b*x) - 1.0));
 }
 
@@ -83,7 +83,7 @@ double logpdf_gompertz(double x, double a, double b) {
     return NAN;
   }
   if (x < 0.0 || !R_FINITE(x))
-    return -INFINITY;
+    return R_NegInf;
   return log(a) + (b*x - a/b * (exp(b*x) - 1.0));
 }
 

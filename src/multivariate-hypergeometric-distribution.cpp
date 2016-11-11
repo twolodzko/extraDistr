@@ -104,7 +104,7 @@ NumericVector cpp_dmvhyper(
         Rcpp::warning("NaNs produced");
         p[i] = NAN;
       } else if (wrong_x || row_sum != k[i % nk]) {
-        p[i] = -INFINITY;
+        p[i] = R_NegInf;
       } else {
         p[i] = lncx_prod - lNck;
       }

@@ -54,7 +54,7 @@ double logpmf_bnbinom(double k, double r, double alpha, double beta) {
     return NAN;
   }
   if (!isInteger(k) || k < 0.0 || !R_FINITE(k))
-    return -INFINITY;
+    return R_NegInf;
   return (R::lgammafn(r+k) - (R::lgammafn(k+1.0) + R::lgammafn(r))) +
     R::lbeta(alpha+r, beta+k) - R::lbeta(alpha, beta);
 }
@@ -270,7 +270,7 @@ NumericVector cpp_pbnbinom(
         p[i] = NAN;
       } else if (x[i % dims[0]] < 0.0) {
         p[i] = 0.0;
-      } else if (x[i % dims[0]] == INFINITY) {
+      } else if (!R_FINITE(x[i % dims[0]])) {
         p[i] = 1.0;
       } else {
         p[i] = cdf_bnbinom_table(x[i % dims[0]], size[i % dims[1]],

@@ -48,7 +48,7 @@ double pdf_tnorm(double x, double mu, double sigma, double a, double b) {
     return NAN;
   }
   
-  if (a == -INFINITY && b == INFINITY)
+  if (a == R_NegInf && b == R_PosInf)
     return R::dnorm(x, mu, sigma, false);
   
   double Phi_a, Phi_b;
@@ -69,7 +69,7 @@ double cdf_tnorm(double x, double mu, double sigma, double a, double b) {
     return NAN;
   }
   
-  if (a == -INFINITY && b == INFINITY)
+  if (a == R_NegInf && b == R_PosInf)
     return R::pnorm(x, mu, sigma, true, false);
   
   double Phi_x, Phi_a, Phi_b;
@@ -93,7 +93,7 @@ double invcdf_tnorm(double p, double mu, double sigma, double a, double b) {
     return NAN;
   }
   
-  if (a == -INFINITY && b == INFINITY)
+  if (a == R_NegInf && b == R_PosInf)
     return R::qnorm(p, mu, sigma, true, false);
   
   double Phi_a, Phi_b;
@@ -111,7 +111,7 @@ double rng_tnorm(double mu, double sigma, double a, double b) {
   }
   
   // non-truncated normal
-  if (a == -INFINITY && b == INFINITY)
+  if (a == R_NegInf && b == R_PosInf)
     return R::rnorm(mu, sigma);
 
   double r, u, za, zb, aa, za_sq, zb_sq;
@@ -122,16 +122,16 @@ double rng_tnorm(double mu, double sigma, double a, double b) {
   za_sq = pow(za, 2.0);
   zb_sq = pow(zb, 2.0);
   
-  if (abs(za) <= 1e-16 && zb == INFINITY) {
+  if (abs(za) <= 1e-16 && zb == R_PosInf) {
     r = R::norm_rand();
     if (r < 0.0)
       r = -r;
-  } else if (za == INFINITY && abs(zb) <= 1e-16) {
+  } else if (za == R_PosInf && abs(zb) <= 1e-16) {
     r = R::norm_rand();
     if (r > 0.0)
       r = -r;
-  } else if ((za < 0.0 && zb == INFINITY) || (za == -INFINITY && zb > 0.0) ||
-      (za != INFINITY && zb != INFINITY &&
+  } else if ((za < 0.0 && zb == R_PosInf) || (za == R_NegInf && zb > 0.0) ||
+      (za != R_PosInf && zb != R_PosInf &&
        za < 0.0 && zb > 0.0 && zb-za > SQRT_2_PI)) {
     while (!stop) {
       r = R::norm_rand();

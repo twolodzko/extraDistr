@@ -52,7 +52,7 @@ double logpdf_pareto(double x, double a, double b) {
     return NAN;
   }
   if (x < b)
-    return -INFINITY;
+    return R_NegInf;
   return log(a) + log(b)*a - log(x)*(a+1.0);
 }
 

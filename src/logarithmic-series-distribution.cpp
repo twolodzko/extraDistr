@@ -80,7 +80,7 @@ double invcdf_lgser(double p, double theta) {
   if (p == 0.0)
     return 1.0;
   if (p == 1.0)
-    return INFINITY;
+    return R_PosInf;
   
   double pk = -theta/log(1.0 - theta);
   double k = 1.0;

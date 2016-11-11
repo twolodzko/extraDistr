@@ -107,7 +107,7 @@ NumericVector cpp_dmnom(
       Rcpp::warning("NaNs produced");
       p[i] = NAN; 
     } else if (sum_x < 0.0 || sum_x != size[i % ns] || wrong_x) {
-      p[i] = -INFINITY;
+      p[i] = R_NegInf;
     } else {
       p[i] = n_fac - prod_xfac + prod_pow_px;
     }

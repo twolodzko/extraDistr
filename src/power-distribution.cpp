@@ -36,27 +36,19 @@ using Rcpp::NumericMatrix;
 double pdf_power(double x, double alpha, double beta) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
     return NA_REAL;
-  if (x < 0.0)
+  if (x <= 0.0 || x >= alpha)
     return 0.0;
-  if (x > 0.0 && x < alpha) {
-    return beta * pow(x, beta-1.0) / pow(alpha, beta);
-  } else {
-    return 0.0;
-  }
+  return beta * pow(x, beta-1.0) / pow(alpha, beta);
 }
 
 double cdf_power(double x, double alpha, double beta) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
     return NA_REAL;
-  if (x < 0.0)
+  if (x <= 0.0)
     return 0.0;
-  if (x > 0.0 && x < alpha) {
-    return pow(x, beta) / pow(alpha, beta);
-  } else if (x >= alpha) {
+  if (x >= alpha)
     return 1.0;
-  } else {
-    return 0.0;
-  }
+  return pow(x, beta) / pow(alpha, beta);
 }
 
 double invcdf_power(double p, double alpha, double beta) {
@@ -72,27 +64,19 @@ double invcdf_power(double p, double alpha, double beta) {
 double logpdf_power(double x, double alpha, double beta) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
     return NA_REAL;
-  if (x < 0.0)
-    return -INFINITY;
-  if (x > 0.0 && x < alpha) {
-    return log(beta) + log(x)*(beta-1.0) - log(alpha)*beta;
-  } else {
-    return -INFINITY;
-  }
+  if (x <= 0.0 || x >= alpha)
+    return R_NegInf;
+  return log(beta) + log(x)*(beta-1.0) - log(alpha)*beta;
 }
 
 double logcdf_power(double x, double alpha, double beta) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
     return NA_REAL;
-  if (x < 0.0)
-    return -INFINITY;
-  if (x > 0.0 && x < alpha) {
-    return log(x)*beta - log(alpha)*beta;
-  } else if (x >= alpha) {
+  if (x <= 0.0)
+    return R_NegInf;
+  if (x >= alpha)
     return 0.0;
-  } else {
-    return -INFINITY;
-  }
+  return log(x)*beta - log(alpha)*beta;
 }
 
 

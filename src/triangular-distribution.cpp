@@ -81,11 +81,9 @@ double invcdf_triangular(double p, double a, double b, double c) {
     return NAN;
   }
   double fc = (c-a)/(b-a);
-  if (p < fc) {
+  if (p < fc)
     return a + sqrt(p*(b-a)*(c-a));
-  } else {
-    return b - sqrt((1.0-p)*(b-a)*(b-c));
-  }
+  return b - sqrt((1.0-p)*(b-a)*(b-c));
 }
 
 double rng_triangular(double a, double b, double c) {

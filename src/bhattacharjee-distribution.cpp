@@ -57,9 +57,9 @@ double cdf_bhattacharjee(double x, double mu, double sigma, double a) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x == -INFINITY)
+  if (x == R_NegInf)
     return 0.0;
-  if (x == INFINITY)
+  if (x == R_PosInf)
     return 1.0;
   if (sigma == 0.0)
     return R::punif(x, mu-a, mu+a, true, false);

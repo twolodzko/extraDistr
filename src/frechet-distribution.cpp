@@ -69,7 +69,7 @@ double invcdf_frechet(double p, double lambda, double mu, double sigma) {
     return NAN;
   }
   if (p == 1.0)
-    return INFINITY;
+    return R_PosInf;
   return mu + sigma * pow(-log(p), -1.0/lambda);
 }
 

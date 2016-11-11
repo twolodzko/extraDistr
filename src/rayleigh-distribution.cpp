@@ -51,12 +51,11 @@ double cdf_rayleigh(double x, double sigma) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x == INFINITY)
-    return 1.0;
-  if (x >= 0.0)
-    return 1.0 - exp(-pow(x, 2.0) / (2.0*pow(sigma, 2.0)));
-  else
+  if (x < 0)
     return 0.0;
+  if (!R_FINITE(x))
+    return 1.0;
+  return 1.0 - exp(-pow(x, 2.0) / (2.0*pow(sigma, 2.0)));
 }
 
 double invcdf_rayleigh(double p, double sigma) {

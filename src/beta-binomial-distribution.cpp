@@ -53,7 +53,7 @@ double logpmf_bbinom(double k, double n, double alpha, double beta) {
     return NAN;
   }
   if (!isInteger(k) || k < 0.0 || k > n)
-    return -INFINITY;
+    return R_NegInf;
   return R::lchoose(n, k) + R::lbeta(k+alpha, n-k+beta) - R::lbeta(alpha, beta);
 }
 

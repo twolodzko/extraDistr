@@ -38,8 +38,7 @@ double logpmf_gpois(double x, double alpha, double beta) {
     return NAN;
   }
   if (!isInteger(x) || x < 0.0 || !R_FINITE(x))
-    return -INFINITY;
-  
+    return R_NegInf;
   double p = beta/(1.0+beta);
   return R::lgammafn(alpha+x) - (lfactorial(x) + R::lgammafn(alpha)) +
     log(p)*x + log(1.0-p)*alpha;
@@ -209,7 +208,7 @@ NumericVector cpp_pgpois(
     }
     
     double mx = finite_max(x);
-    if (mx < 0.0 || mx == INFINITY)
+    if (mx < 0.0 || mx == R_PosInf)
       mx = 0.0;
     std::vector<double> p_tab = cdf_gpois_table(mx, alpha[0], beta[0]);
     
@@ -218,7 +217,7 @@ NumericVector cpp_pgpois(
         p[i] = NA_REAL;
       } else if (x[i] < 0.0) {
         p[i] = 0.0;
-      } else if (x[i] == INFINITY) {
+      } else if (x[i] == R_PosInf) {
         p[i] = 1.0;
       } else {
         p[i] = p_tab[static_cast<int>(x[i])];
@@ -237,7 +236,7 @@ NumericVector cpp_pgpois(
         p[i] = NAN;
       } else if (x[i % n] < 0.0) {
         p[i] = 0.0;
-      } else if (x[i % n] == INFINITY) {
+      } else if (x[i % n] == R_PosInf) {
         p[i] = 1.0;
       } else {
         p[i] = cdf_gpois_table(x[i % n], alpha[i % na], beta[i % nb]).back();

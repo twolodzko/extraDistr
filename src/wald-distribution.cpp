@@ -52,7 +52,7 @@ double cdf_wald(double x, double mu, double lambda) {
   }
   if (x <= 0.0)
     return 0.0;
-  if (x == INFINITY)
+  if (x == R_PosInf)
     return 1.0;
   return Phi(sqrt(lambda/x)*(x/mu-1.0)) +
          exp((2.0*lambda)/mu) *

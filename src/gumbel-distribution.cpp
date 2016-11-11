@@ -44,7 +44,7 @@ double pdf_gumbel(double x, double mu, double sigma) {
   if (!R_FINITE(x))
     return 0.0;
   double z = (x-mu)/sigma;
-  return 1.0/sigma * exp(-(z+exp(-z)));
+  return exp(-(z+exp(-z)))/sigma;
 }
 
 double cdf_gumbel(double x, double mu, double sigma) {

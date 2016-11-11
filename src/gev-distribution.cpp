@@ -84,7 +84,7 @@ double invcdf_gev(double p, double mu, double sigma, double xi) {
     return NAN;
   }
   if (p == 1.0)
-    return INFINITY;
+    return R_PosInf;
   if (xi != 0.0)
     return mu - sigma/xi * (1.0 - pow(-log(p), -xi));
   else

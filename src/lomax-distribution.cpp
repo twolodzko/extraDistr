@@ -53,7 +53,7 @@ double logpdf_lomax(double x, double lambda, double kappa) {
     return NAN;
   }
   if (x <= 0.0)
-    return -INFINITY;
+    return R_NegInf;
   return log(lambda) + log(kappa) - log(1.0+lambda*x)*(kappa+1.0);
 }
 
