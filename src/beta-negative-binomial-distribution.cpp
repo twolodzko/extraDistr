@@ -59,62 +59,6 @@ double logpmf_bnbinom(double k, double r, double alpha, double beta) {
     R::lbeta(alpha+r, beta+k) - R::lbeta(alpha, beta);
 }
 
-/*
-double cdf_bnbinom(double k, double r, double alpha, double beta) {
-  if (ISNAN(k) || ISNAN(r) || ISNAN(alpha) || ISNAN(beta))
-    return NA_REAL;
-  if (alpha < 0.0 || beta < 0.0 || r < 0.0 || floor(r) != r) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
-  }
-  if (k < 0.0)
-    return 0.0;
-  if (k == INFINITY)
-    return 1.0;
-
-  double p_tmp, grx, xf, gr, gar, gbx, gabrx, bab;
-  
-  p_tmp = 0.0;
-  bab = R::beta(alpha, beta);
-  gr = R::gammafn(r);
-  gar = R::gammafn(alpha + r);
-  
-  // k < 1
-  
-  grx = gr;
-  gbx = R::gammafn(beta);
-  gabrx = R::gammafn(alpha + beta + r);
-  p_tmp += grx/gr * (gar*gbx)/gabrx/bab;
-  
-  if (k < 1.0)
-    return p_tmp;
-  
-  // k < 2
-  
-  grx *= r;
-  gbx *= beta;
-  gabrx *= alpha + beta + r;
-  p_tmp += grx/gr * (gar*gbx)/gabrx/bab;
-  
-  if (k < 2.0)
-    return p_tmp;
-  
-  // k >= 2
-  
-  double i = 2.0;
-  while (i <= k) {
-    grx *= r + i - 1;
-    gbx *= beta + i - 1;
-    gabrx *= alpha + beta + r + i - 1;
-    xf *= i;
-    p_tmp += grx/(xf * gr) * (gar*gbx)/gabrx/bab;
-    i += 1.0;
-  }
-  
-  return p_tmp;
-}
-*/
-
 std::vector<double> cdf_bnbinom_table(double k, double r, double alpha, double beta) {
 
   k = floor(k);
@@ -219,75 +163,36 @@ NumericVector cpp_pbnbinom(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
-  /*
-  if (dims[1] == 1 && dims[2] == 1 && dims[3] == 1) {
-    
-    if (ISNAN(size[0]) || ISNAN(alpha[0]) || ISNAN(beta[0]) || allNA(x)) {
-      for (int i = 0; i < dims[0]; i++)
-        p[i] = NA_REAL;
-      return p;
-    }
-    
-    if (alpha[0] <= 0.0 || beta[0] <= 0.0 ||
-        size[0] < 0.0 || floor(size[0]) != size[0]) {
-      for (int i = 0; i < dims[0]; i++)
-        p[i] = NAN;
-      Rcpp::warning("NaNs produced");
-      return p;
-    }
-    
-    double mx = finite_max(x);
-    if (mx < 0.0 || mx == INFINITY)
-      mx = 0.0;
-    std::vector<double> p_tab = cdf_bnbinom_table(mx, size[0], alpha[0], beta[0]);
-    
-    for (int i = 0; i < dims[0]; i++) {
-      if (ISNAN(x[i])) {
-        p[i] = NA_REAL;
-      } else if (x[i] < 0.0) {
-        p[i] = 0.0;
-      } else if (x[i] == INFINITY) {
-        p[i] = 1.0;
-      } else {
-        p[i] = p_tab[static_cast<int>(x[i])];
-      } 
-    }
-    
-  } else {
-   */
-  
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
   double mx = finite_max(x);
-
-    for (int i = 0; i < Nmax; i++) {
-      
-      if (i % 1000 == 0)
-        Rcpp::checkUserInterrupt();
-      
-      if (ISNAN(x[i % dims[0]]) || ISNAN(size[i % dims[1]]) ||
-          ISNAN(alpha[i % dims[2]]) || ISNAN(beta[i % dims[3]])) {
-        p[i] = NA_REAL;
-      } else if (alpha[i % dims[2]] <= 0.0 || beta[i % dims[3]] <= 0.0 ||
-                 size[i % dims[1]] < 0.0 || floor(size[i % dims[1]]) != size[i % dims[1]]) {
-        Rcpp::warning("NaNs produced");
-        p[i] = NAN;
-      } else if (x[i % dims[0]] < 0.0) {
-        p[i] = 0.0;
-      } else if (!R_FINITE(x[i % dims[0]])) {
-        p[i] = 1.0;
-      } else {
-        
-        std::vector<double>& tmp = memo[std::make_tuple(i % dims[1], i % dims[2], i % dims[3])];
-        if (!tmp.size()) {
-          tmp = cdf_bnbinom_table(mx, size[i % dims[1]],
-                                  alpha[i % dims[2]], beta[i % dims[3]]);
-        }
-        p[i] = tmp[static_cast<int>(x[i % dims[0]])];
-
-      }
-    }
+  
+  for (int i = 0; i < Nmax; i++) {
     
-  //}
+    if (i % 1000 == 0)
+      Rcpp::checkUserInterrupt();
+    
+    if (ISNAN(x[i % dims[0]]) || ISNAN(size[i % dims[1]]) ||
+        ISNAN(alpha[i % dims[2]]) || ISNAN(beta[i % dims[3]])) {
+      p[i] = NA_REAL;
+    } else if (alpha[i % dims[2]] <= 0.0 || beta[i % dims[3]] <= 0.0 ||
+      size[i % dims[1]] < 0.0 || floor(size[i % dims[1]]) != size[i % dims[1]]) {
+      Rcpp::warning("NaNs produced");
+      p[i] = NAN;
+    } else if (x[i % dims[0]] < 0.0) {
+      p[i] = 0.0;
+    } else if (!R_FINITE(x[i % dims[0]])) {
+      p[i] = 1.0;
+    } else {
+      
+      std::vector<double>& tmp = memo[std::make_tuple(i % dims[1], i % dims[2], i % dims[3])];
+      if (!tmp.size()) {
+        tmp = cdf_bnbinom_table(mx, size[i % dims[1]],
+                                alpha[i % dims[2]], beta[i % dims[3]]);
+      }
+      p[i] = tmp[static_cast<int>(x[i % dims[0]])];
+      
+    }
+  }
 
   if (!lower_tail)
     p = 1.0 - p;

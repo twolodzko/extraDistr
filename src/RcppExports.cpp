@@ -74,8 +74,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_pbbinom
-NumericVector cpp_pbbinom(const NumericVector& x, const NumericVector& size, const NumericVector& alpha, const NumericVector& beta, const bool& lower_tail, const bool& log_prob, bool old);
-RcppExport SEXP extraDistr_cpp_pbbinom(SEXP xSEXP, SEXP sizeSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP, SEXP oldSEXP) {
+NumericVector cpp_pbbinom(const NumericVector& x, const NumericVector& size, const NumericVector& alpha, const NumericVector& beta, const bool& lower_tail, const bool& log_prob);
+RcppExport SEXP extraDistr_cpp_pbbinom(SEXP xSEXP, SEXP sizeSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -85,8 +85,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type beta(betaSEXP);
     Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
     Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
-    Rcpp::traits::input_parameter< bool >::type old(oldSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_pbbinom(x, size, alpha, beta, lower_tail, log_prob, old));
+    rcpp_result_gen = Rcpp::wrap(cpp_pbbinom(x, size, alpha, beta, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -656,7 +655,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dfrechet
-NumericVector cpp_dfrechet(const NumericVector& x, const NumericVector& lambda, const NumericVector& mu, const NumericVector& sigma, bool log_prob);
+NumericVector cpp_dfrechet(const NumericVector& x, const NumericVector& lambda, const NumericVector& mu, const NumericVector& sigma, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dfrechet(SEXP xSEXP, SEXP lambdaSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -665,13 +664,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dfrechet(x, lambda, mu, sigma, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_pfrechet
-NumericVector cpp_pfrechet(const NumericVector& x, const NumericVector& lambda, const NumericVector& mu, const NumericVector& sigma, bool lower_tail, bool log_prob);
+NumericVector cpp_pfrechet(const NumericVector& x, const NumericVector& lambda, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_pfrechet(SEXP xSEXP, SEXP lambdaSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -680,14 +679,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_pfrechet(x, lambda, mu, sigma, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qfrechet
-NumericVector cpp_qfrechet(const NumericVector& p, const NumericVector& lambda, const NumericVector& mu, const NumericVector& sigma, bool lower_tail, bool log_prob);
+NumericVector cpp_qfrechet(const NumericVector& p, const NumericVector& lambda, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qfrechet(SEXP pSEXP, SEXP lambdaSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -696,19 +695,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qfrechet(p, lambda, mu, sigma, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rfrechet
-NumericVector cpp_rfrechet(const int n, const NumericVector& lambda, const NumericVector& mu, const NumericVector& sigma);
+NumericVector cpp_rfrechet(const int& n, const NumericVector& lambda, const NumericVector& mu, const NumericVector& sigma);
 RcppExport SEXP extraDistr_cpp_rfrechet(SEXP nSEXP, SEXP lambdaSEXP, SEXP muSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);

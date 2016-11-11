@@ -269,7 +269,7 @@ NumericVector cpp_rcat(
     const NumericMatrix& prob
   ) {
   
-  int np = prob.nrow();
+  int dims = prob.nrow();
   int k = prob.ncol();
   NumericVector x(n);
   
@@ -282,7 +282,7 @@ NumericVector cpp_rcat(
     missings = false;
 
     for (int j = 0; j < k; j++) {
-      if (ISNAN(prob(i % np, j))) {
+      if (ISNAN(prob(i % dims, j))) {
         missings = true;
         break;
       }
@@ -300,15 +300,15 @@ NumericVector cpp_rcat(
     p_tot = 0.0;
     
     for (int j = 0; j < k; j++) {
-      if (prob(i % np, j) < 0.0) {
+      if (prob(i % dims, j) < 0.0) {
         wrong_param = true;
         break;
       }
-      p_tot += prob(i % np, j);
+      p_tot += prob(i % dims, j);
     }
     
     for (int j = k-1; j >= 0; j--) {
-      p_tmp -= prob(i % np, j) / p_tot;
+      p_tmp -= prob(i % dims, j) / p_tot;
       if (u > p_tmp) {
         jj = j;
         break;

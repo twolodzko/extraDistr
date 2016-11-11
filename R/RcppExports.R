@@ -21,8 +21,8 @@ cpp_dbbinom <- function(x, size, alpha, beta, log_prob = FALSE) {
     .Call('extraDistr_cpp_dbbinom', PACKAGE = 'extraDistr', x, size, alpha, beta, log_prob)
 }
 
-cpp_pbbinom <- function(x, size, alpha, beta, lower_tail = TRUE, log_prob = FALSE, old = TRUE) {
-    .Call('extraDistr_cpp_pbbinom', PACKAGE = 'extraDistr', x, size, alpha, beta, lower_tail, log_prob, old)
+cpp_pbbinom <- function(x, size, alpha, beta, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_pbbinom', PACKAGE = 'extraDistr', x, size, alpha, beta, lower_tail, log_prob)
 }
 
 cpp_rbbinom <- function(n, size, alpha, beta) {

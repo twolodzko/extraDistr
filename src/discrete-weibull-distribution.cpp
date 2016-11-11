@@ -165,13 +165,14 @@ NumericVector cpp_rdweibull(
   ) {
 
   double u;
-  int nq = q.length();
-  int nb = beta.length();
+  std::vector<int> dims;
+  dims.push_back(q.length());
+  dims.push_back(beta.length());
   NumericVector x(n);
 
   for (int i = 0; i < n; i++) {
     u = rng_unif();
-    x[i] = invcdf_dweibull(u, q[i % nq], beta[i % nb]);
+    x[i] = invcdf_dweibull(u, q[i % dims[0]], beta[i % dims[1]]);
   }
 
   return x;

@@ -177,12 +177,13 @@ NumericVector cpp_rdunif(
     const NumericVector& max
   ) {
   
-  int na = min.length();
-  int nb = max.length();
+  std::vector<int> dims;
+  dims.push_back(min.length());
+  dims.push_back(max.length());
   NumericVector x(n);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_dunif(min[i % na], max[i % nb]);
+    x[i] = rng_dunif(min[i % dims[0]], max[i % dims[1]]);
   
   return x;
 }

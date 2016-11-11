@@ -80,18 +80,20 @@ NumericVector cpp_dfrechet(
     const NumericVector& lambda,
     const NumericVector& mu,
     const NumericVector& sigma,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
 
-  int n  = x.length();
-  int nl = lambda.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nl, nm, ns));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(lambda.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_frechet(x[i % n], lambda[i % nl], mu[i % nm], sigma[i % ns]);
+    p[i] = pdf_frechet(x[i % dims[0]], lambda[i % dims[1]],
+                       mu[i % dims[2]], sigma[i % dims[3]]);
 
   if (log_prob)
     p = Rcpp::log(p);
@@ -106,18 +108,21 @@ NumericVector cpp_pfrechet(
     const NumericVector& lambda,
     const NumericVector& mu,
     const NumericVector& sigma,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
 
-  int n  = x.length();
-  int nl = lambda.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nl, nm, ns));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(lambda.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_frechet(x[i % n], lambda[i % nl], mu[i % nm], sigma[i % ns]);
+    p[i] = cdf_frechet(x[i % dims[0]], lambda[i % dims[1]],
+                       mu[i % dims[2]], sigma[i % dims[3]]);
 
   if (!lower_tail)
     p = 1.0 - p;
@@ -135,14 +140,16 @@ NumericVector cpp_qfrechet(
     const NumericVector& lambda,
     const NumericVector& mu,
     const NumericVector& sigma,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
 
-  int n  = p.length();
-  int nl = lambda.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nl, nm, ns));
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(lambda.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
 
@@ -153,7 +160,8 @@ NumericVector cpp_qfrechet(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_frechet(pp[i % n], lambda[i % nl], mu[i % nm], sigma[i % ns]);
+    q[i] = invcdf_frechet(pp[i % dims[0]], lambda[i % dims[1]],
+                          mu[i % dims[2]], sigma[i % dims[3]]);
 
   return q;
 }
@@ -161,21 +169,24 @@ NumericVector cpp_qfrechet(
 
 // [[Rcpp::export]]
 NumericVector cpp_rfrechet(
-    const int n,
+    const int& n,
     const NumericVector& lambda,
     const NumericVector& mu,
     const NumericVector& sigma
   ) {
 
   double u;
-  int nl = lambda.length();
-  int nm = mu.length();
-  int ns = sigma.length();
+  std::vector<int> dims;
+  dims.push_back(lambda.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector x(n);
 
   for (int i = 0; i < n; i++) {
     u = rng_unif();
-    x[i] = invcdf_frechet(u, lambda[i % nl], mu[i % nm], sigma[i % ns]);
+    x[i] = invcdf_frechet(u, lambda[i % dims[0]],
+                          mu[i % dims[1]], sigma[i % dims[2]]);
   }
 
   return x;
