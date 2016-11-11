@@ -53,7 +53,7 @@ double cdf_zinb(double x, double r, double p, double pi) {
   }
   if (x < 0.0)
     return 0.0;
-  if (std::isinf(x))
+  if (!R_FINITE(x))
     return 1.0;
   return pi + (1.0-pi) * R::pnbinom(x, r, p, true, false);
 }
