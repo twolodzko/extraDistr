@@ -66,16 +66,17 @@ double rng_hnorm(double sigma) {
 NumericVector cpp_dhnorm(
     const NumericVector& x,
     const NumericVector& sigma,
-    bool log_prob = false
+    const bool& log_prob = false
 ) {
   
-  int n  = x.length();
-  int ns = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, ns));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-      p[i] = pdf_hnorm(x[i % n], sigma[i % ns]);
+    p[i] = pdf_hnorm(x[i % dims[0]], sigma[i % dims[1]]);
   
   if (log_prob)
     p = Rcpp::log(p);
@@ -88,16 +89,18 @@ NumericVector cpp_dhnorm(
 NumericVector cpp_phnorm(
     const NumericVector& x,
     const NumericVector& sigma,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
 ) {
   
-  int n  = x.length();
-  int ns = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, ns));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_hnorm(x[i % n], sigma[i % ns]);
+    p[i] = cdf_hnorm(x[i % dims[0]], sigma[i % dims[1]]);
   
   if (!lower_tail)
     p = 1.0 - p;
@@ -113,12 +116,14 @@ NumericVector cpp_phnorm(
 NumericVector cpp_qhnorm(
     const NumericVector& p,
     const NumericVector& sigma,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
 ) {
   
-  int n  = p.length();
-  int ns = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, ns));
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
@@ -129,7 +134,7 @@ NumericVector cpp_qhnorm(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_hnorm(pp[i % n], sigma[i % ns]);
+    q[i] = invcdf_hnorm(pp[i % dims[0]], sigma[i % dims[1]]);
   
   return q;
 }
@@ -137,15 +142,15 @@ NumericVector cpp_qhnorm(
 
 // [[Rcpp::export]]
 NumericVector cpp_rhnorm(
-    const int n,
+    const int& n,
     const NumericVector& sigma
 ) {
   
-  int ns = sigma.length();
+  int dims = sigma.length();
   NumericVector x(n);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_hnorm(sigma[i % ns]);
+    x[i] = rng_hnorm(sigma[i % dims]);
   
   return x;
 }

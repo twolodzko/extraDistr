@@ -85,17 +85,18 @@ NumericVector cpp_dlomax(
     const NumericVector& x,
     const NumericVector& lambda,
     const NumericVector& kappa,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
 
-  int n = x.length();
-  int nl = lambda.length();
-  int nk = kappa.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nl, nk));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(lambda.length());
+  dims.push_back(kappa.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpdf_lomax(x[i % n], lambda[i % nl], kappa[i % nk]);
+    p[i] = logpdf_lomax(x[i % dims[0]], lambda[i % dims[1]], kappa[i % dims[2]]);
 
   if (!log_prob)
     p = Rcpp::exp(p);
@@ -109,17 +110,19 @@ NumericVector cpp_plomax(
     const NumericVector& x,
     const NumericVector& lambda,
     const NumericVector& kappa,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
 
-  int n  = x.length();
-  int nl = lambda.length();
-  int nk = kappa.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nl, nk));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(lambda.length());
+  dims.push_back(kappa.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_lomax(x[i % n], lambda[i % nl], kappa[i % nk]);
+    p[i] = cdf_lomax(x[i % dims[0]], lambda[i % dims[1]], kappa[i % dims[2]]);
 
   if (!lower_tail)
     p = 1.0 - p;
@@ -136,14 +139,16 @@ NumericVector cpp_qlomax(
     const NumericVector& p,
     const NumericVector& lambda,
     const NumericVector& kappa,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
 
-  int n  = p.length();
-  int nl = lambda.length();
-  int nk = kappa.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nl, nk));
-  NumericVector q(Nmax);
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(lambda.length());
+  dims.push_back(kappa.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
+  NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
 
   if (log_prob)
@@ -153,27 +158,28 @@ NumericVector cpp_qlomax(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_lomax(pp[i % n], lambda[i % nl], kappa[i % nk]);
+    x[i] = invcdf_lomax(pp[i % dims[0]], lambda[i % dims[1]], kappa[i % dims[2]]);
 
-  return q;
+  return x;
 }
 
 
 // [[Rcpp::export]]
 NumericVector cpp_rlomax(
-    const int n,
+    const int& n,
     const NumericVector& lambda,
     const NumericVector& kappa
   ) {
 
   double u;
-  int nl = lambda.length();
-  int nk = kappa.length();
+  std::vector<int> dims;
+  dims.push_back(lambda.length());
+  dims.push_back(kappa.length());
   NumericVector x(n);
 
   for (int i = 0; i < n; i++) {
     u = rng_unif();
-    x[i] = invcdf_lomax(u, lambda[i % nl], kappa[i % nk]);
+    x[i] = invcdf_lomax(u, lambda[i % dims[0]], kappa[i % dims[1]]);
   }
 
   return x;

@@ -78,18 +78,19 @@ NumericVector cpp_dnst(
     const NumericVector& nu,
     const NumericVector& mu,
     const NumericVector& sigma,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
   
-  int n  = x.length();
-  int nn = nu.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nn, nm, ns));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(nu.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_nst(x[i % n], nu[i % nn], mu[i % nm], sigma[i % ns]);
+    p[i] = pdf_nst(x[i % dims[0]], nu[i % dims[1]], mu[i % dims[2]], sigma[i % dims[3]]);
   
   if (log_prob)
     p = Rcpp::log(p);
@@ -104,18 +105,20 @@ NumericVector cpp_pnst(
     const NumericVector& nu,
     const NumericVector& mu,
     const NumericVector& sigma,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
   
-  int n  = x.length();
-  int nn = nu.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nn, nm, ns));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(nu.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_nst(x[i % n], nu[i % nn], mu[i % nm], sigma[i % ns]);
+    p[i] = cdf_nst(x[i % dims[0]], nu[i % dims[1]], mu[i % dims[2]], sigma[i % dims[3]]);
   
   if (!lower_tail)
     p = 1.0 - p;
@@ -133,15 +136,17 @@ NumericVector cpp_qnst(
     const NumericVector& nu,
     const NumericVector& mu,
     const NumericVector& sigma,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
   
-  int n  = p.length();
-  int nn = nu.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nn, nm, ns));
-  NumericVector q(Nmax);
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(nu.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
+  NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
@@ -151,27 +156,28 @@ NumericVector cpp_qnst(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_nst(pp[i % n], nu[i % nn], mu[i % nm], sigma[i % ns]);
+    x[i] = invcdf_nst(pp[i % dims[0]], nu[i % dims[1]], mu[i % dims[2]], sigma[i % dims[3]]);
   
-  return q;
+  return x;
 }
 
 
 // [[Rcpp::export]]
 NumericVector cpp_rnst(
-    const int n,
+    const int& n,
     const NumericVector& nu,
     const NumericVector& mu,
     const NumericVector& sigma
   ) {
   
-  int nn = nu.length();
-  int nm = mu.length();
-  int ns = sigma.length();
+  std::vector<int> dims;
+  dims.push_back(nu.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
   NumericVector x(n);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_nst(nu[i % nn], mu[i % nm], sigma[i % ns]);
+    x[i] = rng_nst(nu[i % dims[0]], mu[i % dims[1]], sigma[i % dims[2]]);
   
   return x;
 }

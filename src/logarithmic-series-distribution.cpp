@@ -98,16 +98,17 @@ double invcdf_lgser(double p, double theta) {
 NumericVector cpp_dlgser(
     const NumericVector& x,
     const NumericVector& theta,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
 
-  int n = x.length();
-  int nt = theta.length();
-  int Nmax = std::max(n, nt);
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(theta.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_lgser(x[i % n], theta[i % nt]);
+    p[i] = pdf_lgser(x[i % dims[0]], theta[i % dims[1]]);
  
  if (log_prob)
    p = Rcpp::log(p);
@@ -120,16 +121,18 @@ NumericVector cpp_dlgser(
 NumericVector cpp_plgser(
     const NumericVector& x,
     const NumericVector& theta,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
 
-  int n = x.length();
-  int nt = theta.length();
-  int Nmax = std::max(n, nt);
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(theta.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_lgser(x[i % n], theta[i % nt]);
+    p[i] = cdf_lgser(x[i % dims[0]], theta[i % dims[1]]);
 
   if (!lower_tail)
     p = 1.0 - p;
@@ -145,12 +148,14 @@ NumericVector cpp_plgser(
 NumericVector cpp_qlgser(
     const NumericVector& p,
     const NumericVector& theta,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
   
-  int n = p.length();
-  int nt = theta.length();
-  int Nmax = std::max(n, nt);
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(theta.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
@@ -161,7 +166,7 @@ NumericVector cpp_qlgser(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_lgser(pp[i % n], theta[i % nt]);
+    x[i] = invcdf_lgser(pp[i % dims[0]], theta[i % dims[1]]);
   
   return x;
 }
@@ -169,16 +174,16 @@ NumericVector cpp_qlgser(
 
 // [[Rcpp::export]]
 NumericVector cpp_rlgser(
-    const int n,
+    const int& n,
     const NumericVector& theta
   ) {
 
-  int nt = theta.length();
+  int dims = theta.length();
   NumericVector x(n);
 
   for (int i = 0; i < n; i++) {
     double u = rng_unif();
-    x[i] = invcdf_lgser(u, theta[i % nt]);
+    x[i] = invcdf_lgser(u, theta[i % dims]);
   }
 
   return x;

@@ -54,17 +54,18 @@ NumericVector cpp_dskellam(
     const NumericVector& x,
     const NumericVector& mu1,
     const NumericVector& mu2,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
   
-  int nx = x.length();
-  int na = mu1.length();
-  int nb = mu2.length();
-  int Nmax = Rcpp::max(IntegerVector::create(nx, na, nb));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(mu1.length());
+  dims.push_back(mu2.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pmf_skellam(x[i % nx], mu1[i % na], mu2[i % nb]);
+    p[i] = pmf_skellam(x[i % dims[0]], mu1[i % dims[1]], mu2[i % dims[2]]);
   
   if (log_prob)
     p = Rcpp::log(p);
@@ -75,17 +76,18 @@ NumericVector cpp_dskellam(
 
 // [[Rcpp::export]]
 NumericVector cpp_rskellam(
-    const int n,
+    const int& n,
     const NumericVector& mu1,
     const NumericVector& mu2
   ) {
   
-  int na = mu1.length();
-  int nb = mu2.length();
+  std::vector<int> dims;
+  dims.push_back(mu1.length());
+  dims.push_back(mu2.length());
   NumericVector x(n);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_skellam(mu1[i % na], mu2[i % nb]);
+    x[i] = rng_skellam(mu1[i % dims[0]], mu2[i % dims[1]]);
   
   return x;
 }

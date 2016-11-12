@@ -24,19 +24,20 @@ NumericVector cpp_dmixnorm(
     const NumericMatrix& mu,
     const NumericMatrix& sigma,
     const NumericMatrix& alpha,
-    bool log_prob = false
+    const bool& log_prob = false
 ) {
   
-  int n  = x.length();
-  int nm = mu.nrow();
-  int ns = sigma.nrow();
-  int na = alpha.nrow();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, na));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(mu.nrow());
+  dims.push_back(sigma.nrow());
+  dims.push_back(alpha.nrow());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   int k = alpha.ncol();
   NumericVector p(Nmax);
   
   if (k != mu.ncol() || k != sigma.ncol())
-    Rcpp::stop("sizes of 'mu', 'sigma', and 'alpha' do not match");
+    Rcpp::stop("sizes of mu, sigma, and alpha do not match");
   
   bool wrong_param, missings;
   double alpha_tot;
@@ -48,18 +49,18 @@ NumericVector cpp_dmixnorm(
     missings = false;
     
     for (int j = 0; j < k; j++) {
-      if (ISNAN(alpha(i % na, j)) || ISNAN(mu(i % nm, j)) || ISNAN(sigma(i % ns, j))) {
+      if (ISNAN(alpha(i % dims[3], j)) || ISNAN(mu(i % dims[1], j)) || ISNAN(sigma(i % dims[2], j))) {
         missings = true;
         break;
       }
-      if (alpha(i % na, j) < 0.0 || sigma(i % ns, j) <= 0.0) {
+      if (alpha(i % dims[3], j) < 0.0 || sigma(i % dims[2], j) <= 0.0) {
         wrong_param = true;
         break;
       }
-      alpha_tot += alpha(i % na, j);
+      alpha_tot += alpha(i % dims[3], j);
     }
     
-    if (missings || ISNAN(x[i])) {
+    if (missings || ISNAN(x[i % dims[0]])) {
       p[i] = NA_REAL;
       continue;
     }
@@ -71,7 +72,7 @@ NumericVector cpp_dmixnorm(
     }
     
     for (int j = 0; j < k; j++)
-      p[i] += (alpha(i % na, j) / alpha_tot) * R::dnorm(x[i], mu(i % nm, j), sigma(i % ns, j), false);
+      p[i] += (alpha(i % dims[3], j) / alpha_tot) * R::dnorm(x[i % dims[0]], mu(i % dims[1], j), sigma(i % dims[2], j), false);
   }
   
   if (log_prob)
@@ -87,19 +88,21 @@ NumericVector cpp_pmixnorm(
     const NumericMatrix& mu,
     const NumericMatrix& sigma,
     const NumericMatrix& alpha,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
 ) {
   
-  int n  = x.length();
-  int nm = mu.nrow();
-  int ns = sigma.nrow();
-  int na = alpha.nrow();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, na));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(mu.nrow());
+  dims.push_back(sigma.nrow());
+  dims.push_back(alpha.nrow());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   int k = alpha.ncol();
   NumericVector p(Nmax);
   
   if (k != mu.ncol() || k != sigma.ncol())
-    Rcpp::stop("sizes of 'mu', 'sigma', and 'alpha' do not match");
+    Rcpp::stop("sizes of mu, sigma, and alpha do not match");
   
   bool wrong_param, missings;
   double alpha_tot;
@@ -111,18 +114,18 @@ NumericVector cpp_pmixnorm(
     missings = false;
     
     for (int j = 0; j < k; j++) {
-      if (ISNAN(alpha(i % na, j)) || ISNAN(mu(i % nm, j)) || ISNAN(sigma(i % ns, j))) {
+      if (ISNAN(alpha(i % dims[3], j)) || ISNAN(mu(i % dims[1], j)) || ISNAN(sigma(i % dims[2], j))) {
         missings = true;
         break;
       }
-      if (alpha(i % na, j) < 0.0 || sigma(i % ns, j) < 0.0) {
+      if (alpha(i % dims[3], j) < 0.0 || sigma(i % dims[2], j) < 0.0) {
         wrong_param = true;
         break;
       }
-      alpha_tot += alpha(i % na, j);
+      alpha_tot += alpha(i % dims[3], j);
     }
     
-    if (missings || ISNAN(x[i])) {
+    if (missings || ISNAN(x[i % dims[0]])) {
       p[i] = NA_REAL;
       continue;
     }
@@ -134,7 +137,7 @@ NumericVector cpp_pmixnorm(
     }
     
     for (int j = 0; j < k; j++)
-      p[i] += (alpha(i % na, j) / alpha_tot) * R::pnorm(x[i], mu(i % nm, j), sigma(i % ns, j), lower_tail, false);
+      p[i] += (alpha(i % dims[3], j) / alpha_tot) * R::pnorm(x[i % dims[0]], mu(i % dims[1], j), sigma(i % dims[2], j), lower_tail, false);
   }
   
   if (!lower_tail)
@@ -149,20 +152,21 @@ NumericVector cpp_pmixnorm(
 
 // [[Rcpp::export]]
 NumericVector cpp_rmixnorm(
-    const int n,
+    const int& n,
     const NumericMatrix& mu,
     const NumericMatrix& sigma,
     const NumericMatrix& alpha
 ) {
   
-  int nm = mu.nrow();
-  int ns = sigma.nrow();
-  int na = alpha.nrow();
+  std::vector<int> dims;
+  dims.push_back(mu.nrow());
+  dims.push_back(sigma.nrow());
+  dims.push_back(alpha.nrow());
   int k = alpha.ncol();
   NumericVector x(n);
   
   if (k != mu.ncol() || k != sigma.ncol())
-    Rcpp::stop("sizes of 'mu', 'sigma', and 'alpha' do not match");
+    Rcpp::stop("sizes of mu, sigma, and alpha do not match");
   
   int jj;
   bool wrong_param, missings;
@@ -178,18 +182,18 @@ NumericVector cpp_rmixnorm(
     missings = false;
     
     for (int j = 0; j < k; j++) {
-      if (ISNAN(alpha(i % na, j)) || ISNAN(mu(i % nm, j)) || ISNAN(sigma(i % ns, j))) {
+      if (ISNAN(alpha(i % dims[2], j)) || ISNAN(mu(i % dims[0], j)) || ISNAN(sigma(i % dims[1], j))) {
         missings = true;
         break;
       }
-      if (alpha(i % na, j) < 0.0 || sigma(i % ns, j) < 0.0) {
+      if (alpha(i % dims[2], j) < 0.0 || sigma(i % dims[1], j) < 0.0) {
         wrong_param = true;
         break;
       }
-      alpha_tot += alpha(i % na, j);
+      alpha_tot += alpha(i % dims[2], j);
     }
     
-    if (missings || ISNAN(x[i])) {
+    if (missings) {
       x[i] = NA_REAL;
       continue;
     }
@@ -201,14 +205,14 @@ NumericVector cpp_rmixnorm(
     }
     
     for (int j = k-1; j >= 0; j--) {
-      p_tmp -= alpha(i % na, j) / alpha_tot;
+      p_tmp -= alpha(i % dims[2], j) / alpha_tot;
       if (u > p_tmp) {
         jj = j;
         break;
       }
     }
 
-    x[i] = R::rnorm(mu(i % nm, jj), sigma(i % ns, jj)); 
+    x[i] = R::rnorm(mu(i % dims[0], jj), sigma(i % dims[1], jj)); 
   }
   
   return x;

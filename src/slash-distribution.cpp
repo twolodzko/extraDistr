@@ -73,17 +73,18 @@ NumericVector cpp_dslash(
     const NumericVector& x,
     const NumericVector& mu,
     const NumericVector& sigma,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
   
-  int n  = x.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_slash(x[i % n], mu[i % nm], sigma[i % ns]);
+    p[i] = pdf_slash(x[i % dims[0]], mu[i % dims[1]], sigma[i % dims[2]]);
   
   if (log_prob)
     p = Rcpp::log(p);
@@ -97,17 +98,19 @@ NumericVector cpp_pslash(
     const NumericVector& x,
     const NumericVector& mu,
     const NumericVector& sigma,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
   
-  int n  = x.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_slash(x[i % n], mu[i % nm], sigma[i % ns]);
+    p[i] = cdf_slash(x[i % dims[0]], mu[i % dims[1]], sigma[i % dims[2]]);
   
   if (!lower_tail)
     p = 1.0 - p;
@@ -121,17 +124,18 @@ NumericVector cpp_pslash(
 
 // [[Rcpp::export]]
 NumericVector cpp_rslash(
-    const int n,
+    const int& n,
     const NumericVector& mu,
     const NumericVector& sigma
   ) {
   
-  int nm = mu.length();
-  int ns = sigma.length();
+  std::vector<int> dims;
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
   NumericVector x(n);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_slash(mu[i % nm], sigma[i % ns]);
+    x[i] = rng_slash(mu[i % dims[0]], sigma[i % dims[1]]);
   
   return x;
 }

@@ -84,17 +84,18 @@ NumericVector cpp_dwald(
     const NumericVector& x,
     const NumericVector& mu,
     const NumericVector& lambda,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
   
-  int n  = x.length();
-  int nm = mu.length();
-  int nl = lambda.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, nl));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(mu.length());
+  dims.push_back(lambda.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_wald(x[i % n], mu[i % nm], lambda[i % nl]);
+    p[i] = pdf_wald(x[i % dims[0]], mu[i % dims[1]], lambda[i % dims[2]]);
   
   if (log_prob)
     p = Rcpp::log(p);
@@ -108,17 +109,19 @@ NumericVector cpp_pwald(
     const NumericVector& x,
     const NumericVector& mu,
     const NumericVector& lambda,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
   
-  int n  = x.length();
-  int nm = mu.length();
-  int nl = lambda.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, nl));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(mu.length());
+  dims.push_back(lambda.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_wald(x[i % n], mu[i % nm], lambda[i % nl]);
+    p[i] = cdf_wald(x[i % dims[0]], mu[i % dims[1]], lambda[i % dims[2]]);
   
   if (!lower_tail)
     p = 1.0 - p;
@@ -132,17 +135,19 @@ NumericVector cpp_pwald(
 
 // [[Rcpp::export]]
 NumericVector cpp_rwald(
-    const int n,
+    const int& n,
     const NumericVector& mu,
     const NumericVector& lambda
   ) {
   
-  int nm = mu.length();
-  int nl = lambda.length();
+  std::vector<int> dims;
+  dims.push_back(mu.length());
+  dims.push_back(lambda.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector x(n);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_wald(mu[i % nm], lambda[i % nl]);
+    x[i] = rng_wald(mu[i % dims[0]], lambda[i % dims[1]]);
   
   return x;
 }

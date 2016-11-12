@@ -35,7 +35,7 @@ NumericVector cpp_dmnom(
     const NumericMatrix& x,
     const NumericVector& size,
     const NumericMatrix& prob,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
   
   int n = x.nrow();

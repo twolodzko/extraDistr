@@ -191,19 +191,21 @@ NumericVector cpp_dtnorm(
     const NumericVector& sigma,
     const NumericVector& a,
     const NumericVector& b,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
 
-  int n  = x.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int na = mu.length();
-  int nb = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, na, nb));
-  NumericVector p(n);
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  dims.push_back(a.length());
+  dims.push_back(b.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
+  NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_tnorm(x[i % n], mu[i % nm], sigma[i % ns], a[i % na], b[i % nb]);
+    p[i] = pdf_tnorm(x[i % dims[0]], mu[i % dims[1]], sigma[i % dims[2]],
+                     a[i % dims[3]], b[i % dims[4]]);
 
   if (log_prob)
     p = Rcpp::log(p);
@@ -219,19 +221,22 @@ NumericVector cpp_ptnorm(
     const NumericVector& sigma,
     const NumericVector& a,
     const NumericVector& b,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
 
-  int n  = x.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int na = mu.length();
-  int nb = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, na, nb));
-  NumericVector p(n);
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  dims.push_back(a.length());
+  dims.push_back(b.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
+  NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_tnorm(x[i % n], mu[i % nm], sigma[i % ns], a[i % na], b[i % nb]);
+    p[i] = cdf_tnorm(x[i % dims[0]], mu[i % dims[1]], sigma[i % dims[2]],
+                     a[i % dims[3]], b[i % dims[4]]);
 
   if (!lower_tail)
     p = 1.0 - p;
@@ -250,16 +255,18 @@ NumericVector cpp_qtnorm(
     const NumericVector& sigma,
     const NumericVector& a,
     const NumericVector& b,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
 
-  int n  = p.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int na = mu.length();
-  int nb = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, na, nb));
-  NumericVector q(n);
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  dims.push_back(a.length());
+  dims.push_back(b.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
+  NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
@@ -269,29 +276,32 @@ NumericVector cpp_qtnorm(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_tnorm(pp[i % n], mu[i % nm], sigma[i % ns], a[i % na], b[i % nb]);
+    x[i] = invcdf_tnorm(pp[i % dims[0]], mu[i % dims[1]], sigma[i % dims[2]],
+                        a[i % dims[3]], b[i % dims[4]]);
 
-  return q;
+  return x;
 }
 
 
 // [[Rcpp::export]]
 NumericVector cpp_rtnorm(
-    const int n,
+    const int& n,
     const NumericVector& mu,
     const NumericVector& sigma,
     const NumericVector& a,
     const NumericVector& b
   ) {
 
-  int nm = mu.length();
-  int ns = sigma.length();
-  int na = mu.length();
-  int nb = sigma.length();
+  std::vector<int> dims;
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  dims.push_back(a.length());
+  dims.push_back(b.length());
   NumericVector x(n);
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_tnorm(mu[i % nm], sigma[i % ns], a[i % na], b[i % nb]);
+    x[i] = rng_tnorm(mu[i % dims[0]], sigma[i % dims[1]],
+                     a[i % dims[2]], b[i % dims[3]]);
 
   return x;
 }

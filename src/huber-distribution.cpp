@@ -92,18 +92,20 @@ NumericVector cpp_dhuber(
     const NumericVector& mu,
     const NumericVector& sigma,
     const NumericVector& epsilon,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
   
-  int n  = x.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int ne = epsilon.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, ne));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  dims.push_back(epsilon.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_huber(x[i % n], mu[i % nm], sigma[i % ns], epsilon[i % ne]);
+    p[i] = pdf_huber(x[i % dims[0]], mu[i % dims[1]],
+                     sigma[i % dims[2]], epsilon[i % dims[3]]);
   
   if (log_prob)
     p = Rcpp::log(p);
@@ -118,18 +120,21 @@ NumericVector cpp_phuber(
     const NumericVector& mu,
     const NumericVector& sigma,
     const NumericVector& epsilon,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
   
-  int n  = x.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int ne = epsilon.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, ne));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  dims.push_back(epsilon.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_huber(x[i % n], mu[i % nm], sigma[i % ns], epsilon[i % ne]);
+    p[i] = cdf_huber(x[i % dims[0]], mu[i % dims[1]],
+                     sigma[i % dims[2]], epsilon[i % dims[3]]);
   
   if (!lower_tail)
     p = 1.0 - p;
@@ -147,14 +152,16 @@ NumericVector cpp_qhuber(
     const NumericVector& mu,
     const NumericVector& sigma,
     const NumericVector& epsilon,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
   
-  int n  = p.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int ne = epsilon.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, ne));
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  dims.push_back(epsilon.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
@@ -165,7 +172,8 @@ NumericVector cpp_qhuber(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_huber(pp[i % n], mu[i % nm], sigma[i % ns], epsilon[i % ne]);
+    q[i] = invcdf_huber(pp[i % dims[0]], mu[i % dims[1]],
+                        sigma[i % dims[2]], epsilon[i % dims[3]]);
   
   return q;
 }
@@ -173,21 +181,22 @@ NumericVector cpp_qhuber(
 
 // [[Rcpp::export]]
 NumericVector cpp_rhuber(
-    const int n,
+    const int& n,
     const NumericVector& mu,
     const NumericVector& sigma,
     const NumericVector& epsilon
   ) {
   
   double u;
-  int nm = mu.length();
-  int ns = sigma.length();
-  int ne = epsilon.length();
+  std::vector<int> dims;
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  dims.push_back(epsilon.length());
   NumericVector x(n);
   
   for (int i = 0; i < n; i++) {
     u = rng_unif();
-    x[i] = invcdf_huber(u, mu[i % nm], sigma[i % ns], epsilon[i % ne]);
+    x[i] = invcdf_huber(u, mu[i % dims[0]], sigma[i % dims[1]], epsilon[i % dims[2]]);
   }
   
   return x;

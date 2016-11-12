@@ -44,12 +44,14 @@ double invcdf_tlambda(double p, double lambda) {
 NumericVector cpp_qtlambda(
     const NumericVector& p,
     const NumericVector& lambda,
-    bool lower_tail = true, bool log_prob = false
-) {
+    const bool& lower_tail = true,
+    const bool& log_prob = false
+  ) {
   
-  int n  = p.length();
-  int nl = lambda.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nl));
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(lambda.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
@@ -60,7 +62,7 @@ NumericVector cpp_qtlambda(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_tlambda(pp[i % n], lambda[i % nl]);
+    q[i] = invcdf_tlambda(pp[i % dims[0]], lambda[i % dims[1]]);
   
   return q;
 }
@@ -68,17 +70,17 @@ NumericVector cpp_qtlambda(
 
 // [[Rcpp::export]]
 NumericVector cpp_rtlambda(
-    const int n,
+    const int& n,
     const NumericVector& lambda
-) {
+  ) {
   
-  int nl = lambda.length();
+  int dims = lambda.length();
   NumericVector x(n);
   double u;
     
   for (int i = 0; i < n; i++) {
     u = rng_unif();
-    x[i] = invcdf_tlambda(u, lambda[i % nl]);
+    x[i] = invcdf_tlambda(u, lambda[i % dims]);
   }
   
   return x;

@@ -73,16 +73,17 @@ double invcdf_rayleigh(double p, double sigma) {
 NumericVector cpp_drayleigh(
     const NumericVector& x,
     const NumericVector& sigma,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
 
-  int n = x.length();
-  int ns = sigma.length();
-  int Nmax = std::max(n, ns);
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_rayleigh(x[i % n], sigma[i % ns]);
+    p[i] = pdf_rayleigh(x[i % dims[0]], sigma[i % dims[1]]);
 
   if (log_prob)
     p = Rcpp::log(p);
@@ -95,16 +96,18 @@ NumericVector cpp_drayleigh(
 NumericVector cpp_prayleigh(
     const NumericVector& x,
     const NumericVector& sigma,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
 
-  int n = x.length();
-  int ns = sigma.length();
-  int Nmax = std::max(n, ns);
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_rayleigh(x[i % n], sigma[i % ns]);
+    p[i] = cdf_rayleigh(x[i % dims[0]], sigma[i % dims[1]]);
 
   if (!lower_tail)
     p = 1.0 - p;
@@ -120,12 +123,14 @@ NumericVector cpp_prayleigh(
 NumericVector cpp_qrayleigh(
     const NumericVector& p,
     const NumericVector& sigma,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
 
-  int n  = p.length();
-  int ns = sigma.length();
-  int Nmax = std::max(n, ns);
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
 
@@ -136,7 +141,7 @@ NumericVector cpp_qrayleigh(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_rayleigh(pp[i % n], sigma[i % ns]);
+    q[i] = invcdf_rayleigh(pp[i % dims[0]], sigma[i % dims[1]]);
 
   return q;
 }
@@ -144,17 +149,17 @@ NumericVector cpp_qrayleigh(
 
 // [[Rcpp::export]]
 NumericVector cpp_rrayleigh(
-    const int n,
+    const int& n,
     const NumericVector& sigma
   ) {
 
   double u;
-  int ns = sigma.length();
+  int dims = sigma.length();
   NumericVector x(n);
 
   for (int i = 0; i < n; i++) {
     u = rng_unif();
-    x[i] = invcdf_rayleigh(u, sigma[i % ns]);
+    x[i] = invcdf_rayleigh(u, sigma[i % dims]);
   }
 
   return x;

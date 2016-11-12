@@ -66,16 +66,17 @@ double rng_hcauchy(double sigma) {
 NumericVector cpp_dhcauchy(
     const NumericVector& x,
     const NumericVector& sigma,
-    bool log_prob = false
+    const bool& log_prob = false
 ) {
   
-  int n  = x.length();
-  int ns = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, ns));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_hcauchy(x[i % n], sigma[i % ns]);
+    p[i] = pdf_hcauchy(x[i % dims[0]], sigma[i % dims[1]]);
   
   if (log_prob)
     p = Rcpp::log(p);
@@ -91,13 +92,14 @@ NumericVector cpp_phcauchy(
     bool lower_tail = true, bool log_prob = false
 ) {
   
-  int n  = x.length();
-  int ns = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, ns));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_hcauchy(x[i % n], sigma[i % ns]);
+    p[i] = cdf_hcauchy(x[i % dims[0]], sigma[i % dims[1]]);
   
   if (!lower_tail)
     p = 1.0 - p;
@@ -113,12 +115,14 @@ NumericVector cpp_phcauchy(
 NumericVector cpp_qhcauchy(
     const NumericVector& p,
     const NumericVector& sigma,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
 ) {
   
-  int n  = p.length();
-  int ns = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, ns));
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
@@ -129,7 +133,7 @@ NumericVector cpp_qhcauchy(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_hcauchy(pp[i % n], sigma[i % ns]);
+    q[i] = invcdf_hcauchy(pp[i % dims[0]], sigma[i % dims[1]]);
   
   return q;
 }
@@ -137,15 +141,15 @@ NumericVector cpp_qhcauchy(
 
 // [[Rcpp::export]]
 NumericVector cpp_rhcauchy(
-    const int n,
+    const int& n,
     const NumericVector& sigma
 ) {
   
-  int ns = sigma.length();
+  int dims = sigma.length();
   NumericVector x(n);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_hcauchy(sigma[i % ns]);
+    x[i] = rng_hcauchy(sigma[i % dims]);
   
   return x;
 }

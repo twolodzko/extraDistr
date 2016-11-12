@@ -37,11 +37,12 @@ NumericVector cpp_ddirichlet(
     const bool& log_prob = false
   ) {
 
-  int n = x.nrow();
+  std::vector<int> dims;
+  dims.push_back(x.nrow());
+  dims.push_back(alpha.nrow());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   int m = x.ncol();
   int k = alpha.ncol();
-  int na = alpha.nrow();
-  int Nmax = std::max(n, na);
   k = std::min(m, k);
   NumericVector p(Nmax);
   
@@ -61,24 +62,24 @@ NumericVector cpp_ddirichlet(
     missings = false;
     
     for (int j = 0; j < m; j++) {
-      if (ISNAN(alpha(i % na, j)) || ISNAN(x(i % n, j))) {
+      if (ISNAN(alpha(i % dims[1], j)) || ISNAN(x(i % dims[0], j))) {
         missings = true;
         break;
       }
-      if (alpha(i % na, j) <= 0.0) {
+      if (alpha(i % dims[1], j) <= 0.0) {
         wrong_alpha = true;
         break;
       }
-      if (x(i % n, j) < 0.0 || x(i % n, j) > 1.0) {
+      if (x(i % dims[0], j) < 0.0 || x(i % dims[0], j) > 1.0) {
         p[i] = R_NegInf;
         break;
       }
       
-      prod_gamma += R::lgammafn(alpha(i % na, j));
-      sum_alpha += alpha(i % na, j);
-      p_tmp += log(x(i % n, j)) * (alpha(i % na, j) - 1.0);
+      prod_gamma += R::lgammafn(alpha(i % dims[1], j));
+      sum_alpha += alpha(i % dims[1], j);
+      p_tmp += log(x(i % dims[0], j)) * (alpha(i % dims[1], j) - 1.0);
       
-      if (alpha(i % na, j) == 1.0 && x(i % n, j) == 0.0)
+      if (alpha(i % dims[1], j) == 1.0 && x(i % dims[0], j) == 0.0)
         p_tmp = R_NegInf;
     }
     
@@ -107,7 +108,7 @@ NumericMatrix cpp_rdirichlet(
   ) {
 
   int k = alpha.ncol();
-  int na = alpha.nrow();
+  int dims = alpha.nrow();
   NumericMatrix x(n, k);
   
   if (k < 2)
@@ -122,16 +123,16 @@ NumericMatrix cpp_rdirichlet(
     missings = false;
 
     for (int j = 0; j < k; j++) {
-      if (ISNAN(alpha(i % na, j))) {
+      if (ISNAN(alpha(i % dims, j))) {
         missings = true;
         break;
       }
-      if (alpha(i % na, j) <= 0.0) {
+      if (alpha(i % dims, j) <= 0.0) {
         wrong_alpha = true;
         break;
       }
       
-      x(i, j) = R::rgamma(alpha(i % na, j), 1.0);
+      x(i, j) = R::rgamma(alpha(i % dims, j), 1.0);
       row_sum += x(i, j);
     }
 

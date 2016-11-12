@@ -53,17 +53,18 @@ NumericVector cpp_dinvgamma(
     const NumericVector& x,
     const NumericVector& alpha,
     const NumericVector& beta,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
 
-  int n = x.length();
-  int na = alpha.length();
-  int nb = beta.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(alpha.length());
+  dims.push_back(beta.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_invgamma(x[i % n], alpha[i % na], beta[i % nb]);
+    p[i] = pdf_invgamma(x[i % dims[0]], alpha[i % dims[1]], beta[i % dims[2]]);
 
   if (log_prob)
     p = Rcpp::log(p);

@@ -26,15 +26,16 @@ NumericVector cpp_dmixpois(
     bool log_prob = false
 ) {
   
-  int n  = x.length();
-  int nl = lambda.nrow();
-  int na = alpha.nrow();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nl, na));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(lambda.nrow());
+  dims.push_back(alpha.nrow());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   int k = alpha.ncol();
   NumericVector p(Nmax);
   
   if (k != lambda.ncol())
-    Rcpp::stop("sizes of 'lambda' and 'alpha' do not match");
+    Rcpp::stop("sizes of lambda and alpha do not match");
   
   bool wrong_param, missings;
   double alpha_tot;
@@ -46,18 +47,18 @@ NumericVector cpp_dmixpois(
     missings = false;
     
     for (int j = 0; j < k; j++) {
-      if (ISNAN(alpha(i % na, j)) || ISNAN(lambda(i % nl, j))) {
+      if (ISNAN(alpha(i % dims[2], j)) || ISNAN(lambda(i % dims[1], j))) {
         missings = true;
         break;
       }
-      if (alpha(i % na, j) < 0.0 || lambda(i % nl, j) < 0.0) {
+      if (alpha(i % dims[2], j) < 0.0 || lambda(i % dims[1], j) < 0.0) {
         wrong_param = true;
         break;
       }
-      alpha_tot += alpha(i % na, j);
+      alpha_tot += alpha(i % dims[2], j);
     }
     
-    if (missings || ISNAN(x[i])) {
+    if (missings || ISNAN(x[i % dims[0]])) {
       p[i] = NA_REAL;
       continue;
     }
@@ -69,7 +70,7 @@ NumericVector cpp_dmixpois(
     }
     
     for (int j = 0; j < k; j++)
-      p[i] += (alpha(i % na, j) / alpha_tot) * R::dpois(x[i], lambda(i % nl, j), false);
+      p[i] += (alpha(i % dims[2], j) / alpha_tot) * R::dpois(x[i % dims[0]], lambda(i % dims[1], j), false);
   }
   
   if (log_prob)
@@ -87,10 +88,11 @@ NumericVector cpp_pmixpois(
     bool lower_tail = true, bool log_prob = false
 ) {
   
-  int n  = x.length();
-  int nl = lambda.nrow();
-  int na = alpha.nrow();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nl, na));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(lambda.nrow());
+  dims.push_back(alpha.nrow());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   int k = alpha.ncol();
   NumericVector p(Nmax);
   
@@ -107,18 +109,18 @@ NumericVector cpp_pmixpois(
     missings = false;
     
     for (int j = 0; j < k; j++) {
-      if (ISNAN(alpha(i % na, j)) || ISNAN(lambda(i % nl, j))) {
+      if (ISNAN(alpha(i % dims[2], j)) || ISNAN(lambda(i % dims[1], j))) {
         missings = true;
         break;
       }
-      if (alpha(i % na, j) < 0.0 || lambda(i % nl, j) < 0.0) {
+      if (alpha(i % dims[2], j) < 0.0 || lambda(i % dims[1], j) < 0.0) {
         wrong_param = true;
         break;
       }
-      alpha_tot += alpha(i % na, j);
+      alpha_tot += alpha(i % dims[2], j);
     }
     
-    if (missings || ISNAN(x[i])) {
+    if (missings || ISNAN(x[i % dims[0]])) {
       p[i] = NA_REAL;
       continue;
     }
@@ -130,7 +132,7 @@ NumericVector cpp_pmixpois(
     }
     
     for (int j = 0; j < k; j++)
-      p[i] += (alpha(i % na, j) / alpha_tot) * R::ppois(x[i], lambda(i % nl, j), lower_tail, false);
+      p[i] += (alpha(i % dims[2], j) / alpha_tot) * R::ppois(x[i % dims[0]], lambda(i % dims[1], j), lower_tail, false);
   }
   
   if (!lower_tail)
@@ -150,13 +152,15 @@ NumericVector cpp_rmixpois(
     const NumericMatrix& alpha
 ) {
   
-  int nl = lambda.nrow();
-  int na = alpha.nrow();
+  std::vector<int> dims;
+  dims.push_back(lambda.nrow());
+  dims.push_back(alpha.nrow());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   int k = alpha.ncol();
   NumericVector x(n);
   
   if (k != lambda.ncol())
-    Rcpp::stop("sizes of 'lambda' and 'alpha' do not match");
+    Rcpp::stop("sizes of lambda and alpha do not match");
   
   int jj;
   bool wrong_param, missings;
@@ -172,18 +176,18 @@ NumericVector cpp_rmixpois(
     missings = false;
     
     for (int j = 0; j < k; j++) {
-      if (ISNAN(alpha(i % na, j)) || ISNAN(lambda(i % nl, j))) {
+      if (ISNAN(alpha(i % dims[1], j)) || ISNAN(lambda(i % dims[0], j))) {
         missings = true;
         break;
       }
-      if (alpha(i % na, j) < 0.0 || lambda(i % nl, j) < 0.0) {
+      if (alpha(i % dims[1], j) < 0.0 || lambda(i % dims[0], j) < 0.0) {
         wrong_param = true;
         break;
       }
-      alpha_tot += alpha(i % na, j);
+      alpha_tot += alpha(i % dims[1], j);
     }
     
-    if (missings || ISNAN(x[i])) {
+    if (missings) {
       x[i] = NA_REAL;
       continue;
     }
@@ -195,14 +199,14 @@ NumericVector cpp_rmixpois(
     }
     
     for (int j = k-1; j >= 0; j--) {
-      p_tmp -= alpha(i % na, j) / alpha_tot;
+      p_tmp -= alpha(i % dims[1], j) / alpha_tot;
       if (u > p_tmp) {
         jj = j;
         break;
       }
     }
     
-    x[i] = R::rpois(lambda(i % nl, jj)); 
+    x[i] = R::rpois(lambda(i % dims[0], jj)); 
   }
   
   return x;

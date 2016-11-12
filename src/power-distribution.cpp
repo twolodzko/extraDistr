@@ -85,17 +85,18 @@ NumericVector cpp_dpower(
     const NumericVector& x,
     const NumericVector& alpha,
     const NumericVector& beta,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
 
-  int n  = x.length();
-  int na = alpha.length();
-  int nb = beta.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(alpha.length());
+  dims.push_back(beta.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpdf_power(x[i % n], alpha[i % na], beta[i % nb]);
+    p[i] = logpdf_power(x[i % dims[0]], alpha[i % dims[1]], beta[i % dims[2]]);
 
   if (!log_prob)
     p = Rcpp::exp(p);
@@ -109,17 +110,19 @@ NumericVector cpp_ppower(
     const NumericVector& x,
     const NumericVector& alpha,
     const NumericVector& beta,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
 
-  int n  = x.length();
-  int na = alpha.length();
-  int nb = beta.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(alpha.length());
+  dims.push_back(beta.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logcdf_power(x[i % n], alpha[i % na], beta[i % nb]);
+    p[i] = logcdf_power(x[i % dims[0]], alpha[i % dims[1]], beta[i % dims[2]]);
 
   if (!lower_tail)
     p = 1.0 - p;
@@ -136,14 +139,16 @@ NumericVector cpp_qpower(
     const NumericVector& p,
     const NumericVector& alpha,
     const NumericVector& beta,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
 
-  int n  = p.length();
-  int na = alpha.length();
-  int nb = beta.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
-  NumericVector q(Nmax);
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(alpha.length());
+  dims.push_back(beta.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
+  NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
 
   if (log_prob)
@@ -153,27 +158,28 @@ NumericVector cpp_qpower(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_power(pp[i % n], alpha[i % na], beta[i % nb]);
+    x[i] = invcdf_power(pp[i % dims[0]], alpha[i % dims[1]], beta[i % dims[2]]);
 
-  return q;
+  return x;
 }
 
 
 // [[Rcpp::export]]
 NumericVector cpp_rpower(
-    const int n,
+    const int& n,
     const NumericVector& alpha,
     const NumericVector& beta
   ) {
 
   double u;
-  int na = alpha.length();
-  int nb = beta.length();
+  std::vector<int> dims;
+  dims.push_back(alpha.length());
+  dims.push_back(beta.length());
   NumericVector x(n);
 
   for (int i = 0; i < n; i++) {
     u = rng_unif();
-    x[i] = invcdf_power(u, alpha[i % na], beta[i % nb]);
+    x[i] = invcdf_power(u, alpha[i % dims[0]], beta[i % dims[1]]);
   }
 
   return x;

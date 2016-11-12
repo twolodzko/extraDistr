@@ -94,17 +94,18 @@ NumericVector cpp_dpareto(
     const NumericVector& x,
     const NumericVector& a,
     const NumericVector& b,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
 
-  int n = x.length();
-  int na = a.length();
-  int nb = b.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(a.length());
+  dims.push_back(b.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpdf_pareto(x[i % n], a[i % na], b[i % nb]);
+    p[i] = logpdf_pareto(x[i % dims[0]], a[i % dims[1]], b[i % dims[2]]);
 
   if (!log_prob)
     p = Rcpp::exp(p);
@@ -118,17 +119,19 @@ NumericVector cpp_ppareto(
     const NumericVector& x,
     const NumericVector& a,
     const NumericVector& b,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
 
-  int n  = x.length();
-  int na = a.length();
-  int nb = b.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(a.length());
+  dims.push_back(b.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_pareto(x[i % n], a[i % na], b[i % nb]);
+    p[i] = cdf_pareto(x[i % dims[0]], a[i % dims[1]], b[i % dims[2]]);
 
   if (!lower_tail)
     p = 1.0 - p;
@@ -145,14 +148,16 @@ NumericVector cpp_qpareto(
     const NumericVector& p,
     const NumericVector& a,
     const NumericVector& b,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
 
-  int n  = p.length();
-  int na = a.length();
-  int nb = b.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, nb));
-  NumericVector q(Nmax);
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(a.length());
+  dims.push_back(b.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
+  NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
@@ -162,27 +167,28 @@ NumericVector cpp_qpareto(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_pareto(pp[i % n], a[i % na], b[i % nb]);
+    x[i] = invcdf_pareto(pp[i % dims[0]], a[i % dims[1]], b[i % dims[2]]);
 
-  return q;
+  return x;
 }
 
 
 // [[Rcpp::export]]
 NumericVector cpp_rpareto(
-    const int n,
+    const int& n,
     const NumericVector& a,
     const NumericVector& b
   ) {
 
   double u;
-  int na = a.length();
-  int nb = b.length();
+  std::vector<int> dims;
+  dims.push_back(a.length());
+  dims.push_back(b.length());
   NumericVector x(n);
 
   for (int i = 0; i < n; i++) {
     u = rng_unif();
-    x[i] = invcdf_pareto(u, a[i % na], b[i % nb]);
+    x[i] = invcdf_pareto(u, a[i % dims[0]], b[i % dims[1]]);
   }
 
   return x;

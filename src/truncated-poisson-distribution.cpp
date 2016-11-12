@@ -114,17 +114,18 @@ NumericVector cpp_dtpois(
     const NumericVector& x,
     const NumericVector& lambda,
     const NumericVector& s,
-    bool log_prob = false
+    const bool& log_prob = false
 ) {
   
-  int n  = x.length();
-  int nl = lambda.length();
-  int ns = s.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nl, ns));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(lambda.length());
+  dims.push_back(s.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_tpois(x[i % n], lambda[i % nl], s[i % ns]);
+    p[i] = pdf_tpois(x[i % dims[0]], lambda[i % dims[1]], s[i % dims[2]]);
   
   if (log_prob)
     p = Rcpp::log(p);
@@ -138,17 +139,19 @@ NumericVector cpp_ptpois(
     const NumericVector& x,
     const NumericVector& lambda,
     const NumericVector& s,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
 ) {
   
-  int n  = x.length();
-  int nl = lambda.length();
-  int ns = s.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nl, ns));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(lambda.length());
+  dims.push_back(s.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_tpois(x[i % n], lambda[i % nl], s[i % ns]);
+    p[i] = cdf_tpois(x[i % dims[0]], lambda[i % dims[1]], s[i % dims[2]]);
   
   if (!lower_tail)
     p = 1.0 - p;
@@ -165,14 +168,16 @@ NumericVector cpp_qtpois(
     const NumericVector& p,
     const NumericVector& lambda,
     const NumericVector& s,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
 ) {
   
-  int n  = p.length();
-  int nl = lambda.length();
-  int ns = s.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nl, ns));
-  NumericVector q(Nmax);
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(lambda.length());
+  dims.push_back(s.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
+  NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
@@ -182,25 +187,26 @@ NumericVector cpp_qtpois(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_tpois(pp[i % n], lambda[i % nl], s[i % ns]);
+    x[i] = invcdf_tpois(pp[i % dims[0]], lambda[i % dims[1]], s[i % dims[2]]);
   
-  return q;
+  return x;
 }
 
 
 // [[Rcpp::export]]
 NumericVector cpp_rtpois(
-    const int n,
+    const int& n,
     const NumericVector& lambda,
     const NumericVector& s
 ) {
   
-  int nl = lambda.length();
-  int ns = s.length();
+  std::vector<int> dims;
+  dims.push_back(lambda.length());
+  dims.push_back(s.length());
   NumericVector x(n);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_tpois(lambda[i % nl], s[i % ns]);
+    x[i] = rng_tpois(lambda[i % dims[0]], s[i % dims[1]]);
   
   return x;
 }

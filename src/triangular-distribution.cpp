@@ -108,18 +108,19 @@ NumericVector cpp_dtriang(
     const NumericVector& a,
     const NumericVector& b,
     const NumericVector& c,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
 
-  int n = x.length();
-  int na = a.length();
-  int nb = b.length();
-  int nc = c.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, nb, nc));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(a.length());
+  dims.push_back(b.length());
+  dims.push_back(c.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_triangular(x[i % n], a[i % na], b[i % nb], c[i % nc]);
+    p[i] = pdf_triangular(x[i % dims[0]], a[i % dims[1]], b[i % dims[2]], c[i % dims[3]]);
 
   if (log_prob)
     p = Rcpp::log(p);
@@ -134,18 +135,20 @@ NumericVector cpp_ptriang(
     const NumericVector& a,
     const NumericVector& b,
     const NumericVector& c,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
 
-  int n  = x.length();
-  int na = a.length();
-  int nb = b.length();
-  int nc = c.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, nb, nc));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(a.length());
+  dims.push_back(b.length());
+  dims.push_back(c.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_triangular(x[i % n], a[i % na], b[i % nb], c[i % nc]);
+    p[i] = cdf_triangular(x[i % dims[0]], a[i % dims[1]], b[i % dims[2]], c[i % dims[3]]);
 
   if (!lower_tail)
     p = 1.0 - p;
@@ -163,15 +166,17 @@ NumericVector cpp_qtriang(
     const NumericVector& a,
     const NumericVector& b,
     const NumericVector& c,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
 
-  int n  = p.length();
-  int na = a.length();
-  int nb = b.length();
-  int nc = c.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, na, nb, nc));
-  NumericVector q(Nmax);
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(a.length());
+  dims.push_back(b.length());
+  dims.push_back(c.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
+  NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
 
   if (log_prob)
@@ -181,27 +186,28 @@ NumericVector cpp_qtriang(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_triangular(pp[i % n], a[i % na], b[i % nb], c[i % nc]);
+    x[i] = invcdf_triangular(pp[i % dims[0]], a[i % dims[1]], b[i % dims[2]], c[i % dims[3]]);
 
-  return q;
+  return x;
 }
 
 
 // [[Rcpp::export]]
 NumericVector cpp_rtriang(
-    const int n,
+    const int& n,
     const NumericVector& a,
     const NumericVector& b,
     const NumericVector& c
   ) {
 
-  int na = a.length();
-  int nb = b.length();
-  int nc = c.length();
+  std::vector<int> dims;
+  dims.push_back(a.length());
+  dims.push_back(b.length());
+  dims.push_back(c.length());
   NumericVector x(n);
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_triangular(a[i % na], b[i % nb], c[i % nc]);
+    x[i] = rng_triangular(a[i % dims[0]], b[i % dims[1]], c[i % dims[2]]);
 
   return x;
 }

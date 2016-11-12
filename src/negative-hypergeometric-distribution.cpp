@@ -160,25 +160,25 @@ double invcdf_nhyper(double p, double m, double n, double r) {
 }
 
 
-
 // [[Rcpp::export]]
 NumericVector cpp_dnhyper(
     const NumericVector& x,
     const NumericVector& n,
     const NumericVector& m,
     const NumericVector& r,
-    bool log_prob = false
-) {
+    const bool& log_prob = false
+  ) {
   
-  int nx  = x.length();
-  int nr = r.length();
-  int nl = n.length();
-  int nm = m.length();
-  int nmax = Rcpp::max(IntegerVector::create(nx, nr, nl, nm));
-  NumericVector p(nmax);
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(n.length());
+  dims.push_back(m.length());
+  dims.push_back(r.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
+  NumericVector p(Nmax);
   
-  for (int i = 0; i < nmax; i++)
-    p[i] = pmf_nhyper(x[i % nx], m[i % nm], n[i % nl], r[i % nr]);
+  for (int i = 0; i < Nmax; i++)
+    p[i] = pmf_nhyper(x[i % dims[0]], m[i % dims[1]], n[i % dims[2]], r[i % dims[3]]);
 
   if (log_prob)
     p = Rcpp::log(p);
@@ -193,18 +193,20 @@ NumericVector cpp_pnhyper(
     const NumericVector& n,
     const NumericVector& m,
     const NumericVector& r,
-    bool lower_tail = true, bool log_prob = false
-) {
+    const bool& lower_tail = true,
+    const bool& log_prob = false
+  ) {
   
-  int nx  = x.length();
-  int nr = r.length();
-  int nl = n.length();
-  int nm = m.length();
-  int nmax = Rcpp::max(IntegerVector::create(nx, nr, nl, nm));
-  NumericVector p(nmax);
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(n.length());
+  dims.push_back(m.length());
+  dims.push_back(r.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
+  NumericVector p(Nmax);
   
-  for (int i = 0; i < nmax; i++)
-    p[i] = cdf_nhyper(x[i % nx], m[i % nm], n[i % nl], r[i % nr]);
+  for (int i = 0; i < Nmax; i++)
+    p[i] = cdf_nhyper(x[i % dims[0]], m[i % dims[1]], n[i % dims[2]], r[i % dims[3]]);
   
   if (!lower_tail)
     p = 1.0 - p;
@@ -222,15 +224,17 @@ NumericVector cpp_qnhyper(
     const NumericVector& n,
     const NumericVector& m,
     const NumericVector& r,
-    bool lower_tail = true, bool log_prob = false
-) {
+    const bool& lower_tail = true,
+    const bool& log_prob = false
+  ) {
   
-  int np  = p.length();
-  int nr = r.length();
-  int nl = n.length();
-  int nm = m.length();
-  int nmax = Rcpp::max(IntegerVector::create(np, nr, nl, nm));
-  NumericVector q(nmax);
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(n.length());
+  dims.push_back(m.length());
+  dims.push_back(r.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
+  NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
@@ -239,33 +243,33 @@ NumericVector cpp_qnhyper(
   if (!lower_tail)
     pp = 1.0 - pp;
   
-  for (int i = 0; i < nmax; i++)
-    q[i] = invcdf_nhyper(pp[i % np], m[i % nm], n[i % nl], r[i % nr]);
+  for (int i = 0; i < Nmax; i++)
+    x[i] = invcdf_nhyper(pp[i % dims[0]], m[i % dims[1]], n[i % dims[2]], r[i % dims[3]]);
   
-  return q;
+  return x;
 }
 
 
 // [[Rcpp::export]]
 NumericVector cpp_rnhyper(
-    const int nn,
+    const int& nn,
     const NumericVector& n,
     const NumericVector& m,
     const NumericVector& r
-) {
+  ) {
   
   double u;
-  int nr = r.length();
-  int nl = n.length();
-  int nm = m.length();
+  std::vector<int> dims;
+  dims.push_back(n.length());
+  dims.push_back(m.length());
+  dims.push_back(r.length());
   NumericVector x(nn);
   
-    for (int i = 0; i < nn; i++) {
-      u = rng_unif();
-      x[i] = invcdf_nhyper(u, m[i % nm], n[i % nl], r[i % nr]);
-    }
+  for (int i = 0; i < nn; i++) {
+    u = rng_unif();
+    x[i] = invcdf_nhyper(u, m[i % dims[0]], n[i % dims[1]], r[i % dims[2]]);
+  }
 
-  
   return x;
 }
 

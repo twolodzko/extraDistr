@@ -92,18 +92,19 @@ NumericVector cpp_dzinb(
     const NumericVector& size,
     const NumericVector& prob,
     const NumericVector& pi,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
   
-  int n  = x.length();
-  int npi = pi.length();
-  int ns = size.length();
-  int np = prob.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, npi, ns, np));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(size.length());
+  dims.push_back(prob.length());
+  dims.push_back(pi.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_zinb(x[i % n], size[i % ns], prob[i % np], pi[i % npi]);
+    p[i] = pdf_zinb(x[i % dims[0]], size[i % dims[1]], prob[i % dims[2]], pi[i % dims[3]]);
   
   if (log_prob)
     p = Rcpp::log(p);
@@ -118,19 +119,21 @@ NumericVector cpp_pzinb(
     const NumericVector& size,
     const NumericVector& prob,
     const NumericVector& pi,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
   
-  int n  = x.length();
-  int npi = pi.length();
-  int ns = size.length();
-  int np = prob.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, npi, ns, np));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(size.length());
+  dims.push_back(prob.length());
+  dims.push_back(pi.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_zinb(x[i % n], size[i % ns], prob[i % np], pi[i % np]);
-  
+    p[i] = cdf_zinb(x[i % dims[0]], size[i % dims[1]], prob[i % dims[2]], pi[i % dims[3]]);
+
   if (!lower_tail)
     p = 1.0 - p;
   
@@ -147,14 +150,16 @@ NumericVector cpp_qzinb(
     const NumericVector& size,
     const NumericVector& prob,
     const NumericVector& pi,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
   
-  int n  = p.length();
-  int npi = pi.length();
-  int ns = size.length();
-  int np = prob.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, npi, ns, np));
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(size.length());
+  dims.push_back(prob.length());
+  dims.push_back(pi.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
@@ -165,7 +170,7 @@ NumericVector cpp_qzinb(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_zinb(pp[i % n], size[i % ns], prob[i % np], pi[i % np]);
+    x[i] = invcdf_zinb(pp[i % dims[0]], size[i % dims[1]], prob[i % dims[2]], pi[i % dims[3]]);
   
   return x;
 }
@@ -173,19 +178,20 @@ NumericVector cpp_qzinb(
 
 // [[Rcpp::export]]
 NumericVector cpp_rzinb(
-    const int n,
+    const int& n,
     const NumericVector& size,
     const NumericVector& prob,
     const NumericVector& pi
   ) {
   
-  int npi = pi.length();
-  int ns = size.length();
-  int np = prob.length();
+  std::vector<int> dims;
+  dims.push_back(size.length());
+  dims.push_back(prob.length());
+  dims.push_back(pi.length());
   NumericVector x(n);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_zinb(size[i % ns], prob[i % np], pi[i % npi]);
+    x[i] = rng_zinb(size[i % dims[1]], prob[i % dims[1]], pi[i % dims[2]]);
   
   return x;
 }

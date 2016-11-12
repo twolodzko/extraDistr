@@ -98,18 +98,20 @@ NumericVector cpp_dgev(
     const NumericVector& mu,
     const NumericVector& sigma,
     const NumericVector& xi,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
 
-  int n  = x.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int nx = xi.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, nx));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  dims.push_back(xi.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_gev(x[i % n], mu[i % nm], sigma[i % ns], xi[i % nx]);
+    p[i] = pdf_gev(x[i % dims[0]], mu[i % dims[1]],
+                   sigma[i % dims[2]], xi[i % dims[3]]);
 
   if (log_prob)
     p = Rcpp::log(p);
@@ -127,15 +129,17 @@ NumericVector cpp_pgev(
     bool lower_tail = true, bool log_prob = false
   ) {
 
-  int n  = x.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int nx = xi.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, nx));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  dims.push_back(xi.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_gev(x[i % n], mu[i % nm], sigma[i % ns], xi[i % nx]);
+    p[i] = cdf_gev(x[i % dims[0]], mu[i % dims[1]],
+                   sigma[i % dims[2]], xi[i % dims[3]]);
 
   if (!lower_tail)
     p = 1.0 - p;
@@ -156,11 +160,12 @@ NumericVector cpp_qgev(
     bool lower_tail = true, bool log_prob = false
   ) {
 
-  int n  = p.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int nx = xi.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns, nx));
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  dims.push_back(xi.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
 
@@ -171,7 +176,8 @@ NumericVector cpp_qgev(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_gev(pp[i % n], mu[i % nm], sigma[i % ns], xi[i % nx]);
+    q[i] = invcdf_gev(pp[i % dims[0]], mu[i % dims[1]],
+                      sigma[i % dims[2]], xi[i % dims[3]]);
 
   return q;
 }
@@ -179,21 +185,22 @@ NumericVector cpp_qgev(
 
 // [[Rcpp::export]]
 NumericVector cpp_rgev(
-    const int n,
+    const int& n,
     const NumericVector& mu,
     const NumericVector& sigma,
     const NumericVector& xi
   ) {
 
   double u;
-  int nm = mu.length();
-  int ns = sigma.length();
-  int nx = xi.length();
+  std::vector<int> dims;
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  dims.push_back(xi.length());
   NumericVector x(n);
 
   for (int i = 0; i < n; i++) {
     u = rng_unif();
-    x[i] = invcdf_gev(u, mu[i % nm], sigma[i % ns], xi[i % nx]);
+    x[i] = invcdf_gev(u, mu[i % dims[0]], sigma[i % dims[1]], xi[i % dims[2]]);
   }
 
   return x;

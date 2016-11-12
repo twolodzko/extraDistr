@@ -758,7 +758,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dgev
-NumericVector cpp_dgev(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& xi, bool log_prob);
+NumericVector cpp_dgev(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& xi, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dgev(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -767,7 +767,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type xi(xiSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dgev(x, mu, sigma, xi, log_prob));
     return rcpp_result_gen;
 END_RCPP
@@ -805,12 +805,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_rgev
-NumericVector cpp_rgev(const int n, const NumericVector& mu, const NumericVector& sigma, const NumericVector& xi);
+NumericVector cpp_rgev(const int& n, const NumericVector& mu, const NumericVector& sigma, const NumericVector& xi);
 RcppExport SEXP extraDistr_cpp_rgev(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type xi(xiSEXP);
@@ -833,7 +833,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_pgompertz
-NumericVector cpp_pgompertz(const NumericVector& x, const NumericVector& a, const NumericVector& b, bool lower_tail, bool log_prob);
+NumericVector cpp_pgompertz(const NumericVector& x, const NumericVector& a, const NumericVector& b, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_pgompertz(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -841,14 +841,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type a(aSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_pgompertz(x, a, b, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qgompertz
-NumericVector cpp_qgompertz(const NumericVector& p, const NumericVector& a, const NumericVector& b, bool lower_tail, bool log_prob);
+NumericVector cpp_qgompertz(const NumericVector& p, const NumericVector& a, const NumericVector& b, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qgompertz(SEXP pSEXP, SEXP aSEXP, SEXP bSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -856,19 +856,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type a(aSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qgompertz(p, a, b, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rgompertz
-NumericVector cpp_rgompertz(const int n, const NumericVector& a, const NumericVector& b);
+NumericVector cpp_rgompertz(const int& n, const NumericVector& a, const NumericVector& b);
 RcppExport SEXP extraDistr_cpp_rgompertz(SEXP nSEXP, SEXP aSEXP, SEXP bSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type a(aSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rgompertz(n, a, b));
@@ -876,7 +876,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dgpd
-NumericVector cpp_dgpd(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& xi, bool log_prob);
+NumericVector cpp_dgpd(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& xi, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dgpd(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -885,13 +885,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type xi(xiSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dgpd(x, mu, sigma, xi, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_pgpd
-NumericVector cpp_pgpd(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& xi, bool lower_tail, bool log_prob);
+NumericVector cpp_pgpd(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& xi, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_pgpd(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -900,14 +900,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type xi(xiSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_pgpd(x, mu, sigma, xi, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qgpd
-NumericVector cpp_qgpd(const NumericVector& p, const NumericVector& mu, const NumericVector& sigma, const NumericVector& xi, bool lower_tail, bool log_prob);
+NumericVector cpp_qgpd(const NumericVector& p, const NumericVector& mu, const NumericVector& sigma, const NumericVector& xi, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qgpd(SEXP pSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -916,19 +916,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type xi(xiSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qgpd(p, mu, sigma, xi, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rgpd
-NumericVector cpp_rgpd(const int n, const NumericVector& mu, const NumericVector& sigma, const NumericVector& xi);
+NumericVector cpp_rgpd(const int& n, const NumericVector& mu, const NumericVector& sigma, const NumericVector& xi);
 RcppExport SEXP extraDistr_cpp_rgpd(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type xi(xiSEXP);
@@ -937,7 +937,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dgumbel
-NumericVector cpp_dgumbel(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, bool log_prob);
+NumericVector cpp_dgumbel(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dgumbel(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -945,13 +945,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dgumbel(x, mu, sigma, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_pgumbel
-NumericVector cpp_pgumbel(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, bool lower_tail, bool log_prob);
+NumericVector cpp_pgumbel(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_pgumbel(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -959,14 +959,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_pgumbel(x, mu, sigma, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qgumbel
-NumericVector cpp_qgumbel(const NumericVector& p, const NumericVector& mu, const NumericVector& sigma, bool lower_tail, bool log_prob);
+NumericVector cpp_qgumbel(const NumericVector& p, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qgumbel(SEXP pSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -974,19 +974,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qgumbel(p, mu, sigma, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rgumbel
-NumericVector cpp_rgumbel(const int n, const NumericVector& mu, const NumericVector& sigma);
+NumericVector cpp_rgumbel(const int& n, const NumericVector& mu, const NumericVector& sigma);
 RcppExport SEXP extraDistr_cpp_rgumbel(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rgumbel(n, mu, sigma));
@@ -994,14 +994,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dhcauchy
-NumericVector cpp_dhcauchy(const NumericVector& x, const NumericVector& sigma, bool log_prob);
+NumericVector cpp_dhcauchy(const NumericVector& x, const NumericVector& sigma, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dhcauchy(SEXP xSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dhcauchy(x, sigma, log_prob));
     return rcpp_result_gen;
 END_RCPP
@@ -1021,86 +1021,86 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_qhcauchy
-NumericVector cpp_qhcauchy(const NumericVector& p, const NumericVector& sigma, bool lower_tail, bool log_prob);
+NumericVector cpp_qhcauchy(const NumericVector& p, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qhcauchy(SEXP pSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qhcauchy(p, sigma, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rhcauchy
-NumericVector cpp_rhcauchy(const int n, const NumericVector& sigma);
+NumericVector cpp_rhcauchy(const int& n, const NumericVector& sigma);
 RcppExport SEXP extraDistr_cpp_rhcauchy(SEXP nSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rhcauchy(n, sigma));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_dhnorm
-NumericVector cpp_dhnorm(const NumericVector& x, const NumericVector& sigma, bool log_prob);
+NumericVector cpp_dhnorm(const NumericVector& x, const NumericVector& sigma, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dhnorm(SEXP xSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dhnorm(x, sigma, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_phnorm
-NumericVector cpp_phnorm(const NumericVector& x, const NumericVector& sigma, bool lower_tail, bool log_prob);
+NumericVector cpp_phnorm(const NumericVector& x, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_phnorm(SEXP xSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_phnorm(x, sigma, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qhnorm
-NumericVector cpp_qhnorm(const NumericVector& p, const NumericVector& sigma, bool lower_tail, bool log_prob);
+NumericVector cpp_qhnorm(const NumericVector& p, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qhnorm(SEXP pSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qhnorm(p, sigma, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rhnorm
-NumericVector cpp_rhnorm(const int n, const NumericVector& sigma);
+NumericVector cpp_rhnorm(const int& n, const NumericVector& sigma);
 RcppExport SEXP extraDistr_cpp_rhnorm(SEXP nSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rhnorm(n, sigma));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_dht
-NumericVector cpp_dht(const NumericVector& x, const NumericVector& nu, const NumericVector& sigma, bool log_prob);
+NumericVector cpp_dht(const NumericVector& x, const NumericVector& nu, const NumericVector& sigma, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dht(SEXP xSEXP, SEXP nuSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1108,13 +1108,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type nu(nuSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dht(x, nu, sigma, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_pht
-NumericVector cpp_pht(const NumericVector& x, const NumericVector& nu, const NumericVector& sigma, bool lower_tail, bool log_prob);
+NumericVector cpp_pht(const NumericVector& x, const NumericVector& nu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_pht(SEXP xSEXP, SEXP nuSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1122,14 +1122,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type nu(nuSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_pht(x, nu, sigma, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qht
-NumericVector cpp_qht(const NumericVector& p, const NumericVector& nu, const NumericVector& sigma, bool lower_tail, bool log_prob);
+NumericVector cpp_qht(const NumericVector& p, const NumericVector& nu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qht(SEXP pSEXP, SEXP nuSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1137,19 +1137,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type nu(nuSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qht(p, nu, sigma, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rht
-NumericVector cpp_rht(const int n, const NumericVector& nu, const NumericVector& sigma);
+NumericVector cpp_rht(const int& n, const NumericVector& nu, const NumericVector& sigma);
 RcppExport SEXP extraDistr_cpp_rht(SEXP nSEXP, SEXP nuSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type nu(nuSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rht(n, nu, sigma));
@@ -1157,7 +1157,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dhuber
-NumericVector cpp_dhuber(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& epsilon, bool log_prob);
+NumericVector cpp_dhuber(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& epsilon, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dhuber(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP epsilonSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1166,13 +1166,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type epsilon(epsilonSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dhuber(x, mu, sigma, epsilon, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_phuber
-NumericVector cpp_phuber(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& epsilon, bool lower_tail, bool log_prob);
+NumericVector cpp_phuber(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& epsilon, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_phuber(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP epsilonSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1181,14 +1181,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type epsilon(epsilonSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_phuber(x, mu, sigma, epsilon, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qhuber
-NumericVector cpp_qhuber(const NumericVector& p, const NumericVector& mu, const NumericVector& sigma, const NumericVector& epsilon, bool lower_tail, bool log_prob);
+NumericVector cpp_qhuber(const NumericVector& p, const NumericVector& mu, const NumericVector& sigma, const NumericVector& epsilon, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qhuber(SEXP pSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP epsilonSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1197,19 +1197,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type epsilon(epsilonSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qhuber(p, mu, sigma, epsilon, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rhuber
-NumericVector cpp_rhuber(const int n, const NumericVector& mu, const NumericVector& sigma, const NumericVector& epsilon);
+NumericVector cpp_rhuber(const int& n, const NumericVector& mu, const NumericVector& sigma, const NumericVector& epsilon);
 RcppExport SEXP extraDistr_cpp_rhuber(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP epsilonSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type epsilon(epsilonSEXP);
@@ -1218,7 +1218,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dinvgamma
-NumericVector cpp_dinvgamma(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, bool log_prob);
+NumericVector cpp_dinvgamma(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dinvgamma(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1226,13 +1226,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type alpha(alphaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type beta(betaSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dinvgamma(x, alpha, beta, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_dkumar
-NumericVector cpp_dkumar(const NumericVector& x, const NumericVector& a, const NumericVector& b, bool log_prob);
+NumericVector cpp_dkumar(const NumericVector& x, const NumericVector& a, const NumericVector& b, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dkumar(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1240,13 +1240,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type a(aSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dkumar(x, a, b, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_pkumar
-NumericVector cpp_pkumar(const NumericVector& x, const NumericVector& a, const NumericVector& b, bool lower_tail, bool log_prob);
+NumericVector cpp_pkumar(const NumericVector& x, const NumericVector& a, const NumericVector& b, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_pkumar(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1254,14 +1254,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type a(aSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_pkumar(x, a, b, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qkumar
-NumericVector cpp_qkumar(const NumericVector& p, const NumericVector& a, const NumericVector& b, bool lower_tail, bool log_prob);
+NumericVector cpp_qkumar(const NumericVector& p, const NumericVector& a, const NumericVector& b, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qkumar(SEXP pSEXP, SEXP aSEXP, SEXP bSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1269,19 +1269,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type a(aSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qkumar(p, a, b, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rkumar
-NumericVector cpp_rkumar(const int n, const NumericVector& a, const NumericVector& b);
+NumericVector cpp_rkumar(const int& n, const NumericVector& a, const NumericVector& b);
 RcppExport SEXP extraDistr_cpp_rkumar(SEXP nSEXP, SEXP aSEXP, SEXP bSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type a(aSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rkumar(n, a, b));
@@ -1289,7 +1289,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dlaplace
-NumericVector cpp_dlaplace(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, bool log_prob);
+NumericVector cpp_dlaplace(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dlaplace(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1297,13 +1297,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dlaplace(x, mu, sigma, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_plaplace
-NumericVector cpp_plaplace(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, bool lower_tail, bool log_prob);
+NumericVector cpp_plaplace(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_plaplace(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1311,14 +1311,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_plaplace(x, mu, sigma, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qlaplace
-NumericVector cpp_qlaplace(const NumericVector& p, const NumericVector& mu, const NumericVector& sigma, bool lower_tail, bool log_prob);
+NumericVector cpp_qlaplace(const NumericVector& p, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qlaplace(SEXP pSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1326,19 +1326,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qlaplace(p, mu, sigma, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rlaplace
-NumericVector cpp_rlaplace(const int n, const NumericVector& mu, const NumericVector& sigma);
+NumericVector cpp_rlaplace(const int& n, const NumericVector& mu, const NumericVector& sigma);
 RcppExport SEXP extraDistr_cpp_rlaplace(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rlaplace(n, mu, sigma));
@@ -1346,60 +1346,60 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dlgser
-NumericVector cpp_dlgser(const NumericVector& x, const NumericVector& theta, bool log_prob);
+NumericVector cpp_dlgser(const NumericVector& x, const NumericVector& theta, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dlgser(SEXP xSEXP, SEXP thetaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type theta(thetaSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dlgser(x, theta, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_plgser
-NumericVector cpp_plgser(const NumericVector& x, const NumericVector& theta, bool lower_tail, bool log_prob);
+NumericVector cpp_plgser(const NumericVector& x, const NumericVector& theta, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_plgser(SEXP xSEXP, SEXP thetaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type theta(thetaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_plgser(x, theta, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qlgser
-NumericVector cpp_qlgser(const NumericVector& p, const NumericVector& theta, bool lower_tail, bool log_prob);
+NumericVector cpp_qlgser(const NumericVector& p, const NumericVector& theta, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qlgser(SEXP pSEXP, SEXP thetaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type theta(thetaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qlgser(p, theta, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rlgser
-NumericVector cpp_rlgser(const int n, const NumericVector& theta);
+NumericVector cpp_rlgser(const int& n, const NumericVector& theta);
 RcppExport SEXP extraDistr_cpp_rlgser(SEXP nSEXP, SEXP thetaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type theta(thetaSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rlgser(n, theta));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_dlomax
-NumericVector cpp_dlomax(const NumericVector& x, const NumericVector& lambda, const NumericVector& kappa, bool log_prob);
+NumericVector cpp_dlomax(const NumericVector& x, const NumericVector& lambda, const NumericVector& kappa, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dlomax(SEXP xSEXP, SEXP lambdaSEXP, SEXP kappaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1407,13 +1407,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type kappa(kappaSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dlomax(x, lambda, kappa, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_plomax
-NumericVector cpp_plomax(const NumericVector& x, const NumericVector& lambda, const NumericVector& kappa, bool lower_tail, bool log_prob);
+NumericVector cpp_plomax(const NumericVector& x, const NumericVector& lambda, const NumericVector& kappa, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_plomax(SEXP xSEXP, SEXP lambdaSEXP, SEXP kappaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1421,14 +1421,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type kappa(kappaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_plomax(x, lambda, kappa, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qlomax
-NumericVector cpp_qlomax(const NumericVector& p, const NumericVector& lambda, const NumericVector& kappa, bool lower_tail, bool log_prob);
+NumericVector cpp_qlomax(const NumericVector& p, const NumericVector& lambda, const NumericVector& kappa, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qlomax(SEXP pSEXP, SEXP lambdaSEXP, SEXP kappaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1436,19 +1436,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type kappa(kappaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qlomax(p, lambda, kappa, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rlomax
-NumericVector cpp_rlomax(const int n, const NumericVector& lambda, const NumericVector& kappa);
+NumericVector cpp_rlomax(const int& n, const NumericVector& lambda, const NumericVector& kappa);
 RcppExport SEXP extraDistr_cpp_rlomax(SEXP nSEXP, SEXP lambdaSEXP, SEXP kappaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type kappa(kappaSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rlomax(n, lambda, kappa));
@@ -1456,7 +1456,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dmixnorm
-NumericVector cpp_dmixnorm(const NumericVector& x, const NumericMatrix& mu, const NumericMatrix& sigma, const NumericMatrix& alpha, bool log_prob);
+NumericVector cpp_dmixnorm(const NumericVector& x, const NumericMatrix& mu, const NumericMatrix& sigma, const NumericMatrix& alpha, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dmixnorm(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP alphaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1465,13 +1465,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericMatrix& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericMatrix& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const NumericMatrix& >::type alpha(alphaSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dmixnorm(x, mu, sigma, alpha, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_pmixnorm
-NumericVector cpp_pmixnorm(const NumericVector& x, const NumericMatrix& mu, const NumericMatrix& sigma, const NumericMatrix& alpha, bool lower_tail, bool log_prob);
+NumericVector cpp_pmixnorm(const NumericVector& x, const NumericMatrix& mu, const NumericMatrix& sigma, const NumericMatrix& alpha, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_pmixnorm(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP alphaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1480,19 +1480,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericMatrix& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericMatrix& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const NumericMatrix& >::type alpha(alphaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_pmixnorm(x, mu, sigma, alpha, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rmixnorm
-NumericVector cpp_rmixnorm(const int n, const NumericMatrix& mu, const NumericMatrix& sigma, const NumericMatrix& alpha);
+NumericVector cpp_rmixnorm(const int& n, const NumericMatrix& mu, const NumericMatrix& sigma, const NumericMatrix& alpha);
 RcppExport SEXP extraDistr_cpp_rmixnorm(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP alphaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericMatrix& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericMatrix& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const NumericMatrix& >::type alpha(alphaSEXP);
@@ -1543,7 +1543,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dmnom
-NumericVector cpp_dmnom(const NumericMatrix& x, const NumericVector& size, const NumericMatrix& prob, bool log_prob);
+NumericVector cpp_dmnom(const NumericMatrix& x, const NumericVector& size, const NumericMatrix& prob, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dmnom(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1551,7 +1551,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< const NumericMatrix& >::type prob(probSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dmnom(x, size, prob, log_prob));
     return rcpp_result_gen;
 END_RCPP
@@ -1597,7 +1597,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dnhyper
-NumericVector cpp_dnhyper(const NumericVector& x, const NumericVector& n, const NumericVector& m, const NumericVector& r, bool log_prob);
+NumericVector cpp_dnhyper(const NumericVector& x, const NumericVector& n, const NumericVector& m, const NumericVector& r, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dnhyper(SEXP xSEXP, SEXP nSEXP, SEXP mSEXP, SEXP rSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1606,13 +1606,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type m(mSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type r(rSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dnhyper(x, n, m, r, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_pnhyper
-NumericVector cpp_pnhyper(const NumericVector& x, const NumericVector& n, const NumericVector& m, const NumericVector& r, bool lower_tail, bool log_prob);
+NumericVector cpp_pnhyper(const NumericVector& x, const NumericVector& n, const NumericVector& m, const NumericVector& r, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_pnhyper(SEXP xSEXP, SEXP nSEXP, SEXP mSEXP, SEXP rSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1621,14 +1621,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type m(mSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type r(rSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_pnhyper(x, n, m, r, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qnhyper
-NumericVector cpp_qnhyper(const NumericVector& p, const NumericVector& n, const NumericVector& m, const NumericVector& r, bool lower_tail, bool log_prob);
+NumericVector cpp_qnhyper(const NumericVector& p, const NumericVector& n, const NumericVector& m, const NumericVector& r, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qnhyper(SEXP pSEXP, SEXP nSEXP, SEXP mSEXP, SEXP rSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1637,19 +1637,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type m(mSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type r(rSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qnhyper(p, n, m, r, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rnhyper
-NumericVector cpp_rnhyper(const int nn, const NumericVector& n, const NumericVector& m, const NumericVector& r);
+NumericVector cpp_rnhyper(const int& nn, const NumericVector& n, const NumericVector& m, const NumericVector& r);
 RcppExport SEXP extraDistr_cpp_rnhyper(SEXP nnSEXP, SEXP nSEXP, SEXP mSEXP, SEXP rSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type nn(nnSEXP);
+    Rcpp::traits::input_parameter< const int& >::type nn(nnSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type m(mSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type r(rSEXP);
@@ -1658,7 +1658,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dnst
-NumericVector cpp_dnst(const NumericVector& x, const NumericVector& nu, const NumericVector& mu, const NumericVector& sigma, bool log_prob);
+NumericVector cpp_dnst(const NumericVector& x, const NumericVector& nu, const NumericVector& mu, const NumericVector& sigma, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dnst(SEXP xSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1667,13 +1667,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type nu(nuSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dnst(x, nu, mu, sigma, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_pnst
-NumericVector cpp_pnst(const NumericVector& x, const NumericVector& nu, const NumericVector& mu, const NumericVector& sigma, bool lower_tail, bool log_prob);
+NumericVector cpp_pnst(const NumericVector& x, const NumericVector& nu, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_pnst(SEXP xSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1682,14 +1682,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type nu(nuSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_pnst(x, nu, mu, sigma, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qnst
-NumericVector cpp_qnst(const NumericVector& p, const NumericVector& nu, const NumericVector& mu, const NumericVector& sigma, bool lower_tail, bool log_prob);
+NumericVector cpp_qnst(const NumericVector& p, const NumericVector& nu, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qnst(SEXP pSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1698,19 +1698,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type nu(nuSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qnst(p, nu, mu, sigma, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rnst
-NumericVector cpp_rnst(const int n, const NumericVector& nu, const NumericVector& mu, const NumericVector& sigma);
+NumericVector cpp_rnst(const int& n, const NumericVector& nu, const NumericVector& mu, const NumericVector& sigma);
 RcppExport SEXP extraDistr_cpp_rnst(SEXP nSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type nu(nuSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
@@ -1719,7 +1719,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dnsbeta
-NumericVector cpp_dnsbeta(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const NumericVector& lower, const NumericVector& upper, bool log_prob);
+NumericVector cpp_dnsbeta(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const NumericVector& lower, const NumericVector& upper, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dnsbeta(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1729,13 +1729,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type beta(betaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lower(lowerSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type upper(upperSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dnsbeta(x, alpha, beta, lower, upper, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_pnsbeta
-NumericVector cpp_pnsbeta(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const NumericVector& lower, const NumericVector& upper, bool lower_tail, bool log_prob);
+NumericVector cpp_pnsbeta(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const NumericVector& lower, const NumericVector& upper, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_pnsbeta(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1745,14 +1745,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type beta(betaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lower(lowerSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type upper(upperSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_pnsbeta(x, alpha, beta, lower, upper, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qnsbeta
-NumericVector cpp_qnsbeta(const NumericVector& p, const NumericVector& alpha, const NumericVector& beta, const NumericVector& lower, const NumericVector& upper, bool lower_tail, bool log_prob);
+NumericVector cpp_qnsbeta(const NumericVector& p, const NumericVector& alpha, const NumericVector& beta, const NumericVector& lower, const NumericVector& upper, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qnsbeta(SEXP pSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1762,19 +1762,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type beta(betaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lower(lowerSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type upper(upperSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qnsbeta(p, alpha, beta, lower, upper, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rnsbeta
-NumericVector cpp_rnsbeta(const int n, const NumericVector& alpha, const NumericVector& beta, const NumericVector& lower, const NumericVector& upper);
+NumericVector cpp_rnsbeta(const int& n, const NumericVector& alpha, const NumericVector& beta, const NumericVector& lower, const NumericVector& upper);
 RcppExport SEXP extraDistr_cpp_rnsbeta(SEXP nSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lowerSEXP, SEXP upperSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type alpha(alphaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type beta(betaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lower(lowerSEXP);
@@ -1784,7 +1784,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dpareto
-NumericVector cpp_dpareto(const NumericVector& x, const NumericVector& a, const NumericVector& b, bool log_prob);
+NumericVector cpp_dpareto(const NumericVector& x, const NumericVector& a, const NumericVector& b, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dpareto(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1792,13 +1792,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type a(aSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dpareto(x, a, b, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_ppareto
-NumericVector cpp_ppareto(const NumericVector& x, const NumericVector& a, const NumericVector& b, bool lower_tail, bool log_prob);
+NumericVector cpp_ppareto(const NumericVector& x, const NumericVector& a, const NumericVector& b, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_ppareto(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1806,14 +1806,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type a(aSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_ppareto(x, a, b, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qpareto
-NumericVector cpp_qpareto(const NumericVector& p, const NumericVector& a, const NumericVector& b, bool lower_tail, bool log_prob);
+NumericVector cpp_qpareto(const NumericVector& p, const NumericVector& a, const NumericVector& b, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qpareto(SEXP pSEXP, SEXP aSEXP, SEXP bSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1821,19 +1821,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type a(aSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qpareto(p, a, b, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rpareto
-NumericVector cpp_rpareto(const int n, const NumericVector& a, const NumericVector& b);
+NumericVector cpp_rpareto(const int& n, const NumericVector& a, const NumericVector& b);
 RcppExport SEXP extraDistr_cpp_rpareto(SEXP nSEXP, SEXP aSEXP, SEXP bSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type a(aSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rpareto(n, a, b));
@@ -1841,7 +1841,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dpower
-NumericVector cpp_dpower(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, bool log_prob);
+NumericVector cpp_dpower(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dpower(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1849,13 +1849,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type alpha(alphaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type beta(betaSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dpower(x, alpha, beta, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_ppower
-NumericVector cpp_ppower(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, bool lower_tail, bool log_prob);
+NumericVector cpp_ppower(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_ppower(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1863,14 +1863,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type alpha(alphaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type beta(betaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_ppower(x, alpha, beta, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qpower
-NumericVector cpp_qpower(const NumericVector& p, const NumericVector& alpha, const NumericVector& beta, bool lower_tail, bool log_prob);
+NumericVector cpp_qpower(const NumericVector& p, const NumericVector& alpha, const NumericVector& beta, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qpower(SEXP pSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1878,19 +1878,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type alpha(alphaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type beta(betaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qpower(p, alpha, beta, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rpower
-NumericVector cpp_rpower(const int n, const NumericVector& alpha, const NumericVector& beta);
+NumericVector cpp_rpower(const int& n, const NumericVector& alpha, const NumericVector& beta);
 RcppExport SEXP extraDistr_cpp_rpower(SEXP nSEXP, SEXP alphaSEXP, SEXP betaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type alpha(alphaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type beta(betaSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rpower(n, alpha, beta));
@@ -1898,7 +1898,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dprop
-NumericVector cpp_dprop(const NumericVector& x, const NumericVector& size, const NumericVector& mean, bool log_prob);
+NumericVector cpp_dprop(const NumericVector& x, const NumericVector& size, const NumericVector& mean, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dprop(SEXP xSEXP, SEXP sizeSEXP, SEXP meanSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1906,13 +1906,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mean(meanSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dprop(x, size, mean, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_pprop
-NumericVector cpp_pprop(const NumericVector& x, const NumericVector& size, const NumericVector& mean, bool lower_tail, bool log_prob);
+NumericVector cpp_pprop(const NumericVector& x, const NumericVector& size, const NumericVector& mean, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_pprop(SEXP xSEXP, SEXP sizeSEXP, SEXP meanSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1920,14 +1920,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mean(meanSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_pprop(x, size, mean, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qprop
-NumericVector cpp_qprop(const NumericVector& p, const NumericVector& size, const NumericVector& mean, bool lower_tail, bool log_prob);
+NumericVector cpp_qprop(const NumericVector& p, const NumericVector& size, const NumericVector& mean, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qprop(SEXP pSEXP, SEXP sizeSEXP, SEXP meanSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1935,19 +1935,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mean(meanSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qprop(p, size, mean, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rprop
-NumericVector cpp_rprop(const int n, const NumericVector& size, const NumericVector& mean);
+NumericVector cpp_rprop(const int& n, const NumericVector& size, const NumericVector& mean);
 RcppExport SEXP extraDistr_cpp_rprop(SEXP nSEXP, SEXP sizeSEXP, SEXP meanSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mean(meanSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rprop(n, size, mean));
@@ -1955,60 +1955,60 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_drayleigh
-NumericVector cpp_drayleigh(const NumericVector& x, const NumericVector& sigma, bool log_prob);
+NumericVector cpp_drayleigh(const NumericVector& x, const NumericVector& sigma, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_drayleigh(SEXP xSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_drayleigh(x, sigma, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_prayleigh
-NumericVector cpp_prayleigh(const NumericVector& x, const NumericVector& sigma, bool lower_tail, bool log_prob);
+NumericVector cpp_prayleigh(const NumericVector& x, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_prayleigh(SEXP xSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_prayleigh(x, sigma, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qrayleigh
-NumericVector cpp_qrayleigh(const NumericVector& p, const NumericVector& sigma, bool lower_tail, bool log_prob);
+NumericVector cpp_qrayleigh(const NumericVector& p, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qrayleigh(SEXP pSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qrayleigh(p, sigma, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rrayleigh
-NumericVector cpp_rrayleigh(const int n, const NumericVector& sigma);
+NumericVector cpp_rrayleigh(const int& n, const NumericVector& sigma);
 RcppExport SEXP extraDistr_cpp_rrayleigh(SEXP nSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rrayleigh(n, sigma));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_dskellam
-NumericVector cpp_dskellam(const NumericVector& x, const NumericVector& mu1, const NumericVector& mu2, bool log_prob);
+NumericVector cpp_dskellam(const NumericVector& x, const NumericVector& mu1, const NumericVector& mu2, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dskellam(SEXP xSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2016,18 +2016,18 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu1(mu1SEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu2(mu2SEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dskellam(x, mu1, mu2, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rskellam
-NumericVector cpp_rskellam(const int n, const NumericVector& mu1, const NumericVector& mu2);
+NumericVector cpp_rskellam(const int& n, const NumericVector& mu1, const NumericVector& mu2);
 RcppExport SEXP extraDistr_cpp_rskellam(SEXP nSEXP, SEXP mu1SEXP, SEXP mu2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu1(mu1SEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu2(mu2SEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rskellam(n, mu1, mu2));
@@ -2035,7 +2035,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dslash
-NumericVector cpp_dslash(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, bool log_prob);
+NumericVector cpp_dslash(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dslash(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2043,13 +2043,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dslash(x, mu, sigma, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_pslash
-NumericVector cpp_pslash(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, bool lower_tail, bool log_prob);
+NumericVector cpp_pslash(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_pslash(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2057,19 +2057,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_pslash(x, mu, sigma, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rslash
-NumericVector cpp_rslash(const int n, const NumericVector& mu, const NumericVector& sigma);
+NumericVector cpp_rslash(const int& n, const NumericVector& mu, const NumericVector& sigma);
 RcppExport SEXP extraDistr_cpp_rslash(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rslash(n, mu, sigma));
@@ -2077,7 +2077,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dtriang
-NumericVector cpp_dtriang(const NumericVector& x, const NumericVector& a, const NumericVector& b, const NumericVector& c, bool log_prob);
+NumericVector cpp_dtriang(const NumericVector& x, const NumericVector& a, const NumericVector& b, const NumericVector& c, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dtriang(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP cSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2086,13 +2086,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type a(aSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type c(cSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dtriang(x, a, b, c, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_ptriang
-NumericVector cpp_ptriang(const NumericVector& x, const NumericVector& a, const NumericVector& b, const NumericVector& c, bool lower_tail, bool log_prob);
+NumericVector cpp_ptriang(const NumericVector& x, const NumericVector& a, const NumericVector& b, const NumericVector& c, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_ptriang(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP cSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2101,14 +2101,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type a(aSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type c(cSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_ptriang(x, a, b, c, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qtriang
-NumericVector cpp_qtriang(const NumericVector& p, const NumericVector& a, const NumericVector& b, const NumericVector& c, bool lower_tail, bool log_prob);
+NumericVector cpp_qtriang(const NumericVector& p, const NumericVector& a, const NumericVector& b, const NumericVector& c, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qtriang(SEXP pSEXP, SEXP aSEXP, SEXP bSEXP, SEXP cSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2117,19 +2117,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type a(aSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type c(cSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qtriang(p, a, b, c, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rtriang
-NumericVector cpp_rtriang(const int n, const NumericVector& a, const NumericVector& b, const NumericVector& c);
+NumericVector cpp_rtriang(const int& n, const NumericVector& a, const NumericVector& b, const NumericVector& c);
 RcppExport SEXP extraDistr_cpp_rtriang(SEXP nSEXP, SEXP aSEXP, SEXP bSEXP, SEXP cSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type a(aSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type c(cSEXP);
@@ -2138,7 +2138,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dtnorm
-NumericVector cpp_dtnorm(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& a, const NumericVector& b, bool log_prob);
+NumericVector cpp_dtnorm(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& a, const NumericVector& b, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dtnorm(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP aSEXP, SEXP bSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2148,13 +2148,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type a(aSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dtnorm(x, mu, sigma, a, b, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_ptnorm
-NumericVector cpp_ptnorm(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& a, const NumericVector& b, bool lower_tail, bool log_prob);
+NumericVector cpp_ptnorm(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& a, const NumericVector& b, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_ptnorm(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP aSEXP, SEXP bSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2164,14 +2164,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type a(aSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_ptnorm(x, mu, sigma, a, b, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qtnorm
-NumericVector cpp_qtnorm(const NumericVector& p, const NumericVector& mu, const NumericVector& sigma, const NumericVector& a, const NumericVector& b, bool lower_tail, bool log_prob);
+NumericVector cpp_qtnorm(const NumericVector& p, const NumericVector& mu, const NumericVector& sigma, const NumericVector& a, const NumericVector& b, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qtnorm(SEXP pSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP aSEXP, SEXP bSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2181,19 +2181,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type a(aSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qtnorm(p, mu, sigma, a, b, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rtnorm
-NumericVector cpp_rtnorm(const int n, const NumericVector& mu, const NumericVector& sigma, const NumericVector& a, const NumericVector& b);
+NumericVector cpp_rtnorm(const int& n, const NumericVector& mu, const NumericVector& sigma, const NumericVector& a, const NumericVector& b);
 RcppExport SEXP extraDistr_cpp_rtnorm(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP aSEXP, SEXP bSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type a(aSEXP);
@@ -2203,7 +2203,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dtpois
-NumericVector cpp_dtpois(const NumericVector& x, const NumericVector& lambda, const NumericVector& s, bool log_prob);
+NumericVector cpp_dtpois(const NumericVector& x, const NumericVector& lambda, const NumericVector& s, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dtpois(SEXP xSEXP, SEXP lambdaSEXP, SEXP sSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2211,13 +2211,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type s(sSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dtpois(x, lambda, s, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_ptpois
-NumericVector cpp_ptpois(const NumericVector& x, const NumericVector& lambda, const NumericVector& s, bool lower_tail, bool log_prob);
+NumericVector cpp_ptpois(const NumericVector& x, const NumericVector& lambda, const NumericVector& s, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_ptpois(SEXP xSEXP, SEXP lambdaSEXP, SEXP sSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2225,14 +2225,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type s(sSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_ptpois(x, lambda, s, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qtpois
-NumericVector cpp_qtpois(const NumericVector& p, const NumericVector& lambda, const NumericVector& s, bool lower_tail, bool log_prob);
+NumericVector cpp_qtpois(const NumericVector& p, const NumericVector& lambda, const NumericVector& s, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qtpois(SEXP pSEXP, SEXP lambdaSEXP, SEXP sSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2240,19 +2240,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type s(sSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qtpois(p, lambda, s, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rtpois
-NumericVector cpp_rtpois(const int n, const NumericVector& lambda, const NumericVector& s);
+NumericVector cpp_rtpois(const int& n, const NumericVector& lambda, const NumericVector& s);
 RcppExport SEXP extraDistr_cpp_rtpois(SEXP nSEXP, SEXP lambdaSEXP, SEXP sSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type s(sSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rtpois(n, lambda, s));
@@ -2260,33 +2260,33 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_qtlambda
-NumericVector cpp_qtlambda(const NumericVector& p, const NumericVector& lambda, bool lower_tail, bool log_prob);
+NumericVector cpp_qtlambda(const NumericVector& p, const NumericVector& lambda, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qtlambda(SEXP pSEXP, SEXP lambdaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qtlambda(p, lambda, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rtlambda
-NumericVector cpp_rtlambda(const int n, const NumericVector& lambda);
+NumericVector cpp_rtlambda(const int& n, const NumericVector& lambda);
 RcppExport SEXP extraDistr_cpp_rtlambda(SEXP nSEXP, SEXP lambdaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rtlambda(n, lambda));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_dwald
-NumericVector cpp_dwald(const NumericVector& x, const NumericVector& mu, const NumericVector& lambda, bool log_prob);
+NumericVector cpp_dwald(const NumericVector& x, const NumericVector& mu, const NumericVector& lambda, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dwald(SEXP xSEXP, SEXP muSEXP, SEXP lambdaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2294,13 +2294,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dwald(x, mu, lambda, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_pwald
-NumericVector cpp_pwald(const NumericVector& x, const NumericVector& mu, const NumericVector& lambda, bool lower_tail, bool log_prob);
+NumericVector cpp_pwald(const NumericVector& x, const NumericVector& mu, const NumericVector& lambda, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_pwald(SEXP xSEXP, SEXP muSEXP, SEXP lambdaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2308,19 +2308,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_pwald(x, mu, lambda, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rwald
-NumericVector cpp_rwald(const int n, const NumericVector& mu, const NumericVector& lambda);
+NumericVector cpp_rwald(const int& n, const NumericVector& mu, const NumericVector& lambda);
 RcppExport SEXP extraDistr_cpp_rwald(SEXP nSEXP, SEXP muSEXP, SEXP lambdaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rwald(n, mu, lambda));
@@ -2328,7 +2328,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dzib
-NumericVector cpp_dzib(const NumericVector& x, const NumericVector& size, const NumericVector& prob, const NumericVector& pi, bool log_prob);
+NumericVector cpp_dzib(const NumericVector& x, const NumericVector& size, const NumericVector& prob, const NumericVector& pi, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dzib(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2337,13 +2337,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type prob(probSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type pi(piSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dzib(x, size, prob, pi, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_pzib
-NumericVector cpp_pzib(const NumericVector& x, const NumericVector& size, const NumericVector& prob, const NumericVector& pi, bool lower_tail, bool log_prob);
+NumericVector cpp_pzib(const NumericVector& x, const NumericVector& size, const NumericVector& prob, const NumericVector& pi, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_pzib(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2352,14 +2352,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type prob(probSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type pi(piSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_pzib(x, size, prob, pi, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qzib
-NumericVector cpp_qzib(const NumericVector& p, const NumericVector& size, const NumericVector& prob, const NumericVector& pi, bool lower_tail, bool log_prob);
+NumericVector cpp_qzib(const NumericVector& p, const NumericVector& size, const NumericVector& prob, const NumericVector& pi, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qzib(SEXP pSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2368,19 +2368,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type prob(probSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type pi(piSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qzib(p, size, prob, pi, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rzib
-NumericVector cpp_rzib(const int n, const NumericVector& size, const NumericVector& prob, const NumericVector& pi);
+NumericVector cpp_rzib(const int& n, const NumericVector& size, const NumericVector& prob, const NumericVector& pi);
 RcppExport SEXP extraDistr_cpp_rzib(SEXP nSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type prob(probSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type pi(piSEXP);
@@ -2389,7 +2389,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dzinb
-NumericVector cpp_dzinb(const NumericVector& x, const NumericVector& size, const NumericVector& prob, const NumericVector& pi, bool log_prob);
+NumericVector cpp_dzinb(const NumericVector& x, const NumericVector& size, const NumericVector& prob, const NumericVector& pi, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dzinb(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2398,13 +2398,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type prob(probSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type pi(piSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dzinb(x, size, prob, pi, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_pzinb
-NumericVector cpp_pzinb(const NumericVector& x, const NumericVector& size, const NumericVector& prob, const NumericVector& pi, bool lower_tail, bool log_prob);
+NumericVector cpp_pzinb(const NumericVector& x, const NumericVector& size, const NumericVector& prob, const NumericVector& pi, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_pzinb(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2413,14 +2413,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type prob(probSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type pi(piSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_pzinb(x, size, prob, pi, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qzinb
-NumericVector cpp_qzinb(const NumericVector& p, const NumericVector& size, const NumericVector& prob, const NumericVector& pi, bool lower_tail, bool log_prob);
+NumericVector cpp_qzinb(const NumericVector& p, const NumericVector& size, const NumericVector& prob, const NumericVector& pi, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qzinb(SEXP pSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2429,19 +2429,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type prob(probSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type pi(piSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qzinb(p, size, prob, pi, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rzinb
-NumericVector cpp_rzinb(const int n, const NumericVector& size, const NumericVector& prob, const NumericVector& pi);
+NumericVector cpp_rzinb(const int& n, const NumericVector& size, const NumericVector& prob, const NumericVector& pi);
 RcppExport SEXP extraDistr_cpp_rzinb(SEXP nSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type prob(probSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type pi(piSEXP);
@@ -2450,7 +2450,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dzip
-NumericVector cpp_dzip(const NumericVector& x, const NumericVector& lambda, const NumericVector& pi, bool log_prob);
+NumericVector cpp_dzip(const NumericVector& x, const NumericVector& lambda, const NumericVector& pi, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dzip(SEXP xSEXP, SEXP lambdaSEXP, SEXP piSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2458,13 +2458,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type pi(piSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dzip(x, lambda, pi, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_pzip
-NumericVector cpp_pzip(const NumericVector& x, const NumericVector& lambda, const NumericVector& pi, bool lower_tail, bool log_prob);
+NumericVector cpp_pzip(const NumericVector& x, const NumericVector& lambda, const NumericVector& pi, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_pzip(SEXP xSEXP, SEXP lambdaSEXP, SEXP piSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2472,14 +2472,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type pi(piSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_pzip(x, lambda, pi, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qzip
-NumericVector cpp_qzip(const NumericVector& p, const NumericVector& lambda, const NumericVector& pi, bool lower_tail, bool log_prob);
+NumericVector cpp_qzip(const NumericVector& p, const NumericVector& lambda, const NumericVector& pi, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_qzip(SEXP pSEXP, SEXP lambdaSEXP, SEXP piSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -2487,19 +2487,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type pi(piSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_qzip(p, lambda, pi, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rzip
-NumericVector cpp_rzip(const int n, const NumericVector& lambda, const NumericVector& pi);
+NumericVector cpp_rzip(const int& n, const NumericVector& lambda, const NumericVector& pi);
 RcppExport SEXP extraDistr_cpp_rzip(SEXP nSEXP, SEXP lambdaSEXP, SEXP piSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type lambda(lambdaSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type pi(piSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rzip(n, lambda, pi));

@@ -74,17 +74,18 @@ NumericVector cpp_dgumbel(
     const NumericVector& x,
     const NumericVector& mu,
     const NumericVector& sigma,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
 
-  int n  = x.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_gumbel(x[i % n], mu[i % nm], sigma[i % ns]);
+    p[i] = pdf_gumbel(x[i % dims[0]], mu[i % dims[1]], sigma[i % dims[2]]);
 
   if (log_prob)
     p = Rcpp::log(p);
@@ -98,17 +99,19 @@ NumericVector cpp_pgumbel(
     const NumericVector& x,
     const NumericVector& mu,
     const NumericVector& sigma,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
 
-  int n  = x.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_gumbel(x[i % n], mu[i % nm], sigma[i % ns]);
+    p[i] = cdf_gumbel(x[i % dims[0]], mu[i % dims[1]], sigma[i % dims[2]]);
 
   if (!lower_tail)
     p = 1.0 - p;
@@ -125,13 +128,15 @@ NumericVector cpp_qgumbel(
     const NumericVector& p,
     const NumericVector& mu,
     const NumericVector& sigma,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
 
-  int n  = p.length();
-  int nm = mu.length();
-  int ns = sigma.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
 
@@ -142,7 +147,7 @@ NumericVector cpp_qgumbel(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_gumbel(pp[i % n], mu[i % nm], sigma[i % ns]);
+    q[i] = invcdf_gumbel(pp[i % dims[0]], mu[i % dims[1]], sigma[i % dims[2]]);
 
   return q;
 }
@@ -150,19 +155,20 @@ NumericVector cpp_qgumbel(
 
 // [[Rcpp::export]]
 NumericVector cpp_rgumbel(
-    const int n,
+    const int& n,
     const NumericVector& mu,
     const NumericVector& sigma
   ) {
 
   double u;
-  int nm = mu.length();
-  int ns = sigma.length();
+  std::vector<int> dims;
+  dims.push_back(mu.length());
+  dims.push_back(sigma.length());
   NumericVector x(n);
 
   for (int i = 0; i < n; i++) {
     u = rng_unif();
-    x[i] = invcdf_gumbel(u, mu[i % nm], sigma[i % ns]);
+    x[i] = invcdf_gumbel(u, mu[i % dims[0]], sigma[i % dims[1]]);
   }
 
   return x;

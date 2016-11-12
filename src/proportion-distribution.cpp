@@ -74,17 +74,18 @@ NumericVector cpp_dprop(
     const NumericVector& x,
     const NumericVector& size,
     const NumericVector& mean,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
   
-  int n  = x.length();
-  int nm = mean.length();
-  int ns = size.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(mean.length());
+  dims.push_back(size.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_prop(x[i % n], size[i % ns], mean[i % nm],
+    p[i] = pdf_prop(x[i % dims[0]], size[i % dims[1]], mean[i % dims[2]],
                     log_prob);
 
   return p;
@@ -96,17 +97,19 @@ NumericVector cpp_pprop(
     const NumericVector& x,
     const NumericVector& size,
     const NumericVector& mean,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
   
-  int n  = x.length();
-  int nm = mean.length();
-  int ns = size.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
+  std::vector<int> dims;
+  dims.push_back(x.length());
+  dims.push_back(mean.length());
+  dims.push_back(size.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_prop(x[i % n], size[i % ns], mean[i % nm],
+    p[i] = cdf_prop(x[i % dims[0]], size[i % dims[1]], mean[i % dims[2]],
                     lower_tail, log_prob);
 
   return p;
@@ -118,14 +121,16 @@ NumericVector cpp_qprop(
     const NumericVector& p,
     const NumericVector& size,
     const NumericVector& mean,
-    bool lower_tail = true, bool log_prob = false
+    const bool& lower_tail = true,
+    const bool& log_prob = false
   ) {
   
-  int n  = p.length();
-  int nm = mean.length();
-  int ns = size.length();
-  int Nmax = Rcpp::max(IntegerVector::create(n, nm, ns));
-  NumericVector q(Nmax);
+  std::vector<int> dims;
+  dims.push_back(p.length());
+  dims.push_back(mean.length());
+  dims.push_back(size.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
+  NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
   if (log_prob)
@@ -135,25 +140,26 @@ NumericVector cpp_qprop(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_prop(pp[i % n], size[i % ns], mean[i % nm]);
+    x[i] = invcdf_prop(pp[i % dims[0]], size[i % dims[1]], mean[i % dims[2]]);
   
-  return q;
+  return x;
 }
 
 
 // [[Rcpp::export]]
 NumericVector cpp_rprop(
-    const int n,
+    const int& n,
     const NumericVector& size,
     const NumericVector& mean
   ) {
   
-  int nm = mean.length();
-  int ns = size.length();
+  std::vector<int> dims;
+  dims.push_back(mean.length());
+  dims.push_back(size.length());
   NumericVector x(n);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_prop(size[i % ns], mean[i % nm]);
+    x[i] = rng_prop(size[i % dims[0]], mean[i % dims[1]]);
   
   return x;
 }
