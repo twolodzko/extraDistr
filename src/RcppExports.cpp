@@ -1557,12 +1557,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_rmnom
-NumericMatrix cpp_rmnom(const int n, const NumericVector& size, const NumericMatrix& prob);
+NumericMatrix cpp_rmnom(const int& n, const NumericVector& size, const NumericMatrix& prob);
 RcppExport SEXP extraDistr_cpp_rmnom(SEXP nSEXP, SEXP sizeSEXP, SEXP probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< const NumericMatrix& >::type prob(probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rmnom(n, size, prob));
@@ -1570,7 +1570,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dmvhyper
-NumericVector cpp_dmvhyper(const NumericMatrix& x, const NumericMatrix& n, const NumericVector& k, bool log_prob);
+NumericVector cpp_dmvhyper(const NumericMatrix& x, const NumericMatrix& n, const NumericVector& k, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dmvhyper(SEXP xSEXP, SEXP nSEXP, SEXP kSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1578,18 +1578,18 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericMatrix& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type k(kSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dmvhyper(x, n, k, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rmvhyper
-NumericMatrix cpp_rmvhyper(const int nn, const NumericMatrix& n, const NumericVector& k);
+NumericMatrix cpp_rmvhyper(const int& nn, const NumericMatrix& n, const NumericVector& k);
 RcppExport SEXP extraDistr_cpp_rmvhyper(SEXP nnSEXP, SEXP nSEXP, SEXP kSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type nn(nnSEXP);
+    Rcpp::traits::input_parameter< const int& >::type nn(nnSEXP);
     Rcpp::traits::input_parameter< const NumericMatrix& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type k(kSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rmvhyper(nn, n, k));

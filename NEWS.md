@@ -6,6 +6,7 @@
   and gamma-Poisson cdf; now recursive algorithm is used
 * Negative hypergeometric distribution (d,p,q,r) was added
 * Added lacking lower.tail and log.p options for `pbetapr`
+* Simplified code for categorical distribution
 
 ### 1.8.2
 

@@ -37,7 +37,7 @@ NumericVector cpp_dmvhyper(
     const NumericMatrix& x,
     const NumericMatrix& n,
     const NumericVector& k,
-    bool log_prob = false
+    const bool& log_prob = false
   ) {
   
   int nx = x.nrow();
@@ -120,7 +120,7 @@ NumericVector cpp_dmvhyper(
 
 // [[Rcpp::export]]
 NumericMatrix cpp_rmvhyper(
-    const int nn,
+    const int& nn,
     const NumericMatrix& n,
     const NumericVector& k
   ) {

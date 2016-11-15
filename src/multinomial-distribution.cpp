@@ -122,7 +122,7 @@ NumericVector cpp_dmnom(
 
 // [[Rcpp::export]]
 NumericMatrix cpp_rmnom(
-    const int n,
+    const int& n,
     const NumericVector& size,
     const NumericMatrix& prob
   ) {
