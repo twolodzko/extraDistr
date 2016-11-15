@@ -180,7 +180,6 @@ NumericVector cpp_rfrechet(
   dims.push_back(lambda.length());
   dims.push_back(mu.length());
   dims.push_back(sigma.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector x(n);
 
   for (int i = 0; i < n; i++) {

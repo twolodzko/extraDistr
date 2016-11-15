@@ -3,10 +3,11 @@
 
 * Fixed bug in bivariate poisson pmf (it returned underestimated probabilities)
 * Improved and simplified code for beta-binomial, beta negative-binomial,
-  and gamma-Poisson cdf; now recursive algorithm is used
+  and gamma-Poisson cdf; now recursive algorithm employing memoization tachniques
+  is used what noticably improves performance
 * Negative hypergeometric distribution (d,p,q,r) was added
-* Added lacking lower.tail and log.p options for `pbetapr`
-* Simplified code for categorical distribution
+* Now `lower.tail` and `log.p` options for `pbetapr` work properly
+* Simplified code for multinomial and categorical distributions
 
 ### 1.8.2
 

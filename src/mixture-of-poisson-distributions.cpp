@@ -155,7 +155,6 @@ NumericVector cpp_rmixpois(
   std::vector<int> dims;
   dims.push_back(lambda.nrow());
   dims.push_back(alpha.nrow());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
   int k = alpha.ncol();
   NumericVector x(n);
   

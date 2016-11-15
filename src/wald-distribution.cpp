@@ -143,7 +143,6 @@ NumericVector cpp_rwald(
   std::vector<int> dims;
   dims.push_back(mu.length());
   dims.push_back(lambda.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector x(n);
   
   for (int i = 0; i < n; i++)
