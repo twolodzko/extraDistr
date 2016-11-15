@@ -7,7 +7,8 @@
   is used what noticably improves performance
 * Negative hypergeometric distribution (d,p,q,r) was added
 * Now `lower.tail` and `log.p` options for `pbetapr` work properly
-* Simplified code for multinomial and categorical distributions
+* Simplified code for multivariate hypergeometric, multinomial,
+  Dirichlet-multinomial and categorical distributions
 
 ### 1.8.2
 

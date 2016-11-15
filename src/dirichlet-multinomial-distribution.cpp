@@ -61,6 +61,7 @@ NumericVector cpp_ddirmnom(
   bool wrong_x, wrong_param, missings;
   
   for (int i = 0; i < Nmax; i++) {
+    
     prod_tmp = 0.0;
     sum_alpha = 0.0;
     sum_x = 0.0;
@@ -68,44 +69,35 @@ NumericVector cpp_ddirmnom(
     wrong_param = false;
     missings = false;
     
-    if (ISNAN(size[i % dims[2]]))
-      missings = true;
-    
     for (int j = 0; j < k; j++) {
-      if (ISNAN(alpha(i % dims[1], j)) || ISNAN(x(i % dims[0], j))) {
+      
+      if (ISNAN(alpha(i % dims[1], j)) || ISNAN(x(i % dims[0], j)))
         missings = true;
-        break;
-      }
+      if (alpha(i % dims[1], j) <= 0.0)
+        wrong_param = true;
+      if (x(i % dims[0], j) < 0.0 || (!missings && !isInteger(x(i % dims[0], j))))
+        wrong_x = true;
+      
+      sum_x += x(i % dims[0], j);
+      prod_tmp += R::lgammafn(x(i % dims[0], j) + alpha(i % dims[1], j)) -
+        (lfactorial(x(i % dims[0], j)) + R::lgammafn(alpha(i % dims[1], j)));
+      sum_alpha += alpha(i % dims[1], j);
+      
     }
     
-    if (missings) {
+    if (missings || ISNAN(size[i % dims[2]])) {
       p[i] = NA_REAL;
       continue;
     } 
-      
-    if (size[i % dims[2]] < 0.0 || floor(size[i % dims[2]]) != size[i % dims[2]]) {
-      wrong_param = true;
-    } else {
-      for (int j = 0; j < k; j++) {
-        if (alpha(i % dims[1], j) <= 0.0) {
-          wrong_param = true;
-          break;
-        }
-        if (x(i % dims[0], j) < 0.0 || !isInteger(x(i % dims[0], j))) {
-          wrong_x = true;
-          break;
-        }
-        sum_x += x(i % dims[0], j);
-        prod_tmp += R::lgammafn(x(i % dims[0], j) + alpha(i % dims[1], j)) -
-          (lfactorial(x(i % dims[0], j)) + R::lgammafn(alpha(i % dims[1], j)));
-        sum_alpha += alpha(i % dims[1], j);
-      }
-    }
     
-    if (wrong_param) {
+    if (wrong_param || size[i % dims[2]] < 0.0 ||
+        floor(size[i % dims[2]]) != size[i % dims[2]]) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
-    } else if (sum_x < 0.0 || sum_x != size[i % dims[2]] || wrong_x) {
+      continue;
+    }
+    
+    if (sum_x < 0.0 || sum_x != size[i % dims[2]] || wrong_x) {
       p[i] = R_NegInf;
     } else {
       p[i] = (lfactorial(size[i % dims[2]]) + R::lgammafn(sum_alpha)) -
@@ -136,7 +128,7 @@ NumericMatrix cpp_rdirmnom(
   if (k < 2)
     Rcpp::stop("Number of columns in alpha should be >= 2");
   
-  double size_left, row_sum;
+  double size_left, row_sum, sum_p, p_tmp;
   bool wrong_param, missings;
   
   for (int i = 0; i < n; i++) {
@@ -146,57 +138,51 @@ NumericMatrix cpp_rdirmnom(
     missings = false;
     NumericVector pi(k);
     
-    if (ISNAN(size[i % dims[1]]))
-      missings = true;
-    
     for (int j = 0; j < k; j++) {
-      if (ISNAN(alpha(i % dims[0], j))) {
+      
+      if (ISNAN(alpha(i % dims[0], j)))
         missings = true;
-        break;
-      }
+      if (ISNAN(alpha(i % dims[0], j)))
+        missings = true;
+      if (alpha(i % dims[0], j) <= 0.0)
+        wrong_param = true;
+
+      pi[j] = R::rgamma(alpha(i % dims[0], j), 1.0);
+      row_sum += pi[j];
+      
     }
     
-    if (missings) {
+    if (missings || ISNAN(size[i % dims[1]])) {
       for (int j = 0; j < k; j++)
         x(i, j) = NA_REAL;
       continue;
     } 
     
-    if (size[i % dims[1]] < 0.0 || floor(size[i % dims[1]]) != size[i % dims[1]]) {
-      wrong_param = true;
-    } else {
-      for (int j = 0; j < k; j++) {
-        if (ISNAN(alpha(i % dims[0], j))) {
-          missings = true;
-          break;
-        }
-        if (alpha(i % dims[0], j) <= 0.0) {
-          wrong_param = true;
-          break;
-        }
-        pi[j] = R::rgamma(alpha(i % dims[0], j), 1.0);
-        row_sum += pi[j];
-      }
-    }
-    
-    if (wrong_param) {
+    if (wrong_param || size[i % dims[1]] < 0.0 ||
+        floor(size[i % dims[1]]) != size[i % dims[1]]) {
       Rcpp::warning("NaNs produced");
       for (int j = 0; j < k; j++)
         x(i, j) = NAN;
-    } else if (size[i % dims[1]] == 0.0) {
+      continue;
+    }
+    
+    if (size[i % dims[1]] == 0.0) {
       for (int j = 0; j < k; j++)
         x(i, j) = 0.0;
-    } else {
-      double sum_p = 1.0;
-      double p_tmp;
-      for (int j = 0; j < k-1; j++) {
-        p_tmp = pi[j] / row_sum;
-        x(i, j) = R::rbinom(size_left, p_tmp/sum_p);
-        size_left -= x(i, j);
-        sum_p -= p_tmp;
-      }
-      x(i, k-1) = size_left;
+      continue;
+    } 
+    
+    sum_p = 1.0;
+    
+    for (int j = 0; j < k-1; j++) {
+      p_tmp = pi[j] / row_sum;
+      x(i, j) = R::rbinom(size_left, p_tmp/sum_p);
+      size_left -= x(i, j);
+      sum_p -= p_tmp;
     }
+    
+    x(i, k-1) = size_left;
+    
   }
   
   return x;

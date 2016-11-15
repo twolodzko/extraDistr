@@ -64,9 +64,6 @@ NumericVector cpp_dmnom(
     wrong_x = false;
     missings = false;
     
-    if (ISNAN(size[i % ns]))
-      missings = true;
-    
     for (int j = 0; j < k; j++) {
       if (ISNAN(prob(i % np, j)) || ISNAN(x(i % n, j)))
         missings = true;
@@ -75,7 +72,7 @@ NumericVector cpp_dmnom(
       p_tot += prob(i % np, j);
     }
     
-    if (missings) {
+    if (missings || ISNAN(size[i % ns])) {
       p[i] = NA_REAL;
       continue;
     } 
@@ -133,9 +130,6 @@ NumericMatrix cpp_rmnom(
     wrong_param = false;
     missings = false;
     
-    if (ISNAN(size[i % ns]))
-      missings = true;
-    
     // TODO:
     // sort prob(i,_) first?
     
@@ -147,7 +141,7 @@ NumericMatrix cpp_rmnom(
       p_tot += prob(i % np, j);
     }
     
-    if (missings) {
+    if (missings || ISNAN(size[i % ns])) {
       for (int j = 0; j < k; j++)
         x(i, j) = NA_REAL;
       continue;

@@ -51,10 +51,11 @@ NumericVector cpp_ddirichlet(
   if (m != k)
     Rcpp::stop("Number of columns in x does not equal number of columns in alpha");
   
-  double prod_gamma, sum_alpha, p_tmp;
+  double prod_gamma, sum_alpha, p_tmp, beta_const;
   bool wrong_alpha, missings;
 
   for (int i = 0; i < Nmax; i++) {
+    
     prod_gamma = 0.0;
     sum_alpha = 0.0;
     p_tmp = 0.0;
@@ -89,7 +90,7 @@ NumericVector cpp_ddirichlet(
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
     } else {
-      double beta_const = prod_gamma - R::lgammafn(sum_alpha);
+      beta_const = prod_gamma - R::lgammafn(sum_alpha);
       p[i] = p_tmp - beta_const;
     }
   }

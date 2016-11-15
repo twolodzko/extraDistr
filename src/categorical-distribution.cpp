@@ -52,10 +52,7 @@ NumericVector cpp_dcat(
     p_tot = 0.0;
     wrong_param = false;
     missings = false;
-    
-    if (ISNAN(x[i % dims[0]]))
-      missings = true;
-    
+
     for (int j = 0; j < k; j++) {
       if (ISNAN(prob(i % dims[1], j)))
         missings = true;
@@ -64,7 +61,7 @@ NumericVector cpp_dcat(
       p_tot += prob(i % dims[1], j);
     }
     
-    if (missings) {
+    if (missings || ISNAN(x[i % dims[0]])) {
       p[i] = NA_REAL;
       continue;
     }
@@ -114,9 +111,6 @@ NumericVector cpp_pcat(
     wrong_param = false;
     missings = false;
     
-    if (ISNAN(x[i % dims[0]]))
-      missings = true;
-    
     int j = 0;
     while (j < static_cast<int>(x[i % dims[0]])) {
       if (ISNAN(prob(i % dims[1], j)))
@@ -140,7 +134,7 @@ NumericVector cpp_pcat(
       }
     }
     
-    if (missings) {
+    if (missings || ISNAN(x[i % dims[0]])) {
       p[i] = NA_REAL;
       continue;
     }
@@ -204,9 +198,6 @@ NumericVector cpp_qcat(
     missings = false;
     wrong_param = false;
     
-    if (ISNAN(pp[i % dims[0]]))
-      missings = true;
-    
     for (int j = 0; j < k; j++) {
       if (ISNAN(prob(i % dims[1], j)))
         missings = true;
@@ -215,7 +206,7 @@ NumericVector cpp_qcat(
       p_tot += prob(i % dims[1], j);
     }
     
-    if (missings) {
+    if (missings || ISNAN(pp[i % dims[0]])) {
       x[i] = NA_REAL;
       continue;
     }
