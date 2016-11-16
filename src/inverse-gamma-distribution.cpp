@@ -41,10 +41,9 @@ double pdf_invgamma(double x, double alpha, double beta) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (x > 0.0)
-    return (pow(x, -alpha-1.0) * exp(-1.0/(beta*x))) / (R::gammafn(alpha) * pow(beta, alpha));
-  else
+  if (x <= 0.0)
     return 0.0;
+  return (pow(x, -alpha-1.0) * exp(-1.0/(beta*x))) / (R::gammafn(alpha) * pow(beta, alpha));
 }
 
 

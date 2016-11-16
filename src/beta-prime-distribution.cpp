@@ -55,8 +55,7 @@ double logpdf_betapr(double x, double alpha, double beta, double sigma) {
   return log(pow(z, alpha-1.0)) + log(pow(z+1.0, -alpha-beta)) - R::lbeta(alpha, beta) - log(sigma);
 }
 
-double cdf_betapr(double x, double alpha, double beta, double sigma,
-                  bool lower_tail, bool log_prob) {
+double cdf_betapr(double x, double alpha, double beta, double sigma) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma))
     return NA_REAL;
   if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
@@ -68,7 +67,7 @@ double cdf_betapr(double x, double alpha, double beta, double sigma,
   if (!R_FINITE(x))
     return 1.0;
   double z = x / sigma;
-  return R::pbeta(z/(1.0+z), alpha, beta, lower_tail, log_prob);
+  return R::pbeta(z/(1.0+z), alpha, beta, true, false);
 }
 
 double invcdf_betapr(double p, double alpha, double beta, double sigma) {
@@ -145,8 +144,8 @@ NumericVector cpp_pbetapr(
   NumericVector p(Nmax);
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_betapr(x[i % dims[0]], alpha[i % dims[1]], beta[i % dims[2]],
-                      sigma[i % dims[3]], lower_tail, log_prob);
+    p[i] = cdf_betapr(x[i % dims[0]], alpha[i % dims[1]],
+                      beta[i % dims[2]], sigma[i % dims[3]]);
   
   if (!lower_tail)
     p = 1.0 - p;

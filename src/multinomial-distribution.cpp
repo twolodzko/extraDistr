@@ -54,10 +54,6 @@ NumericVector cpp_dmnom(
   
   for (int i = 0; i < Nmax; i++) {
     
-    n_fac = lfactorial(size[i % ns]);
-    prod_xfac = 0.0;
-    prod_pow_px = 0.0;
-    
     sum_x = 0.0;
     p_tot = 0.0;
     wrong_param = false;
@@ -82,6 +78,10 @@ NumericVector cpp_dmnom(
       p[i] = NAN; 
       continue;
     }
+    
+    n_fac = lfactorial(size[i % ns]);
+    prod_xfac = 0.0;
+    prod_pow_px = 0.0;
     
     for (int j = 0; j < k; j++) {
       if (x(i % n, j) < 0.0 || !isInteger(x(i % n, j))) {
@@ -147,12 +147,8 @@ NumericMatrix cpp_rmnom(
       continue;
     } 
     
-    if (size[i % ns] < 0.0 || floor(size[i % ns]) != size[i % ns]) {
-      wrong_param = true;
-      continue;
-    }
-    
-    if (wrong_param) {
+    if (wrong_param || size[i % ns] < 0.0 ||
+        floor(size[i % ns]) != size[i % ns]) {
       Rcpp::warning("NaNs produced");
       for (int j = 0; j < k; j++)
         x(i, j) = NAN;

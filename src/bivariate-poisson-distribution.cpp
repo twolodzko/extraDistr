@@ -42,16 +42,13 @@ double pmf_bpois(double x, double y, double a, double b, double c) {
   
   double tmp = exp(-(a+b+c)); 
   tmp *= (pow(a, x) / factorial(x)) * (pow(b, y) / factorial(y));
-  double xy = 0.0;
   
-  double z;
-  if (x < y)
-    z = x;
-  else
-    z = y;
-  
+  double z = (x < y) ? x : y;
   double c_ab = c/(a*b);
+  
+  double xy = 0.0;
   double k = 0.0;
+  
   do {
     xy += R::choose(x, k) * R::choose(y, k) * factorial(k) * pow(c_ab, k);
     k += 1.0;
