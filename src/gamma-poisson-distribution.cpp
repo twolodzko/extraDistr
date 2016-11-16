@@ -76,13 +76,11 @@ std::vector<double> cdf_gpois_table(double x, double alpha, double beta) {
   
   // x >= 2
   
-  double i = 2.0;
-  while (i <= x) {
-    gax += log(i + alpha - 1.0);
-    xf += log(i);
+  for (double j = 2.0; j <= x; j += 1.0) {
+    gax += log(j + alpha - 1.0);
+    xf += log(j);
     px += lp;
-    p_tab[static_cast<int>(i)] = p_tab[static_cast<int>(i)-1] + exp(gax - (xf + ga) + px + qa);
-    i += 1.0;
+    p_tab[static_cast<int>(j)] = p_tab[static_cast<int>(j)-1] + exp(gax - (xf + ga) + px + qa);
   }
   
   return p_tab;

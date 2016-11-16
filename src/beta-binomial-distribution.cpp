@@ -88,13 +88,11 @@ std::vector<double> cdf_bbinom_table(double k, double n, double alpha, double be
   
   // k >= 1
   
-  double j = 2.0;
-  while (j <= k) {
+  for (double j = 2.0; j <= k; j += 1.0) {
     nck += log((n + 1.0 - j)/j);
     gx += log(j + alpha - 1.0);
     gy -= log(n + beta - j);
     p_tab[static_cast<int>(j)] = p_tab[static_cast<int>(j)-1] + exp(nck + gx + gy - gxy - bab);
-    j += 1.0;
   }
   
   return p_tab;

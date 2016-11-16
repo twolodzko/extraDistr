@@ -61,10 +61,8 @@ double cdf_lgser(double x, double theta) {
   double a = -1.0/log(1.0 - theta);
   double b = 0.0;
   
-  for (int k = 1; k < static_cast<int>(x)+1; k++) {
-    double dk = static_cast<double>(k);
-    b += pow(theta, dk) / dk;
-  }
+  for (double k = 1.0; k <= x; k += 1.0)
+    b += pow(theta, k) / k;
   
   return a * b;
 }
@@ -90,6 +88,7 @@ double invcdf_lgser(double p, double theta) {
     pk *= theta * k/(k+1.0);
     k += 1.0;
   }
+  
   return k;
 }
 

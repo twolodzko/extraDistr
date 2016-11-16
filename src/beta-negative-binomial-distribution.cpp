@@ -92,14 +92,13 @@ std::vector<double> cdf_bnbinom_table(double k, double r, double alpha, double b
   
   // k >= 2
   
-  double i = 2.0;
-  while (i <= k) {
-    grx += log(r + i - 1.0);
-    gbx += log(beta + i - 1.0);
-    gabrx += log(alpha + beta + r + i - 1.0);
-    xf += log(i);
-    p_tab[static_cast<int>(i)] = p_tab[static_cast<int>(i)-1] + exp(grx - (xf + gr) + gar + gbx - gabrx - bab);
-    i += 1.0;
+  for (double j = 2.0; j <= k; j += 1.0) {
+    grx += log(r + j - 1.0);
+    gbx += log(beta + j - 1.0);
+    gabrx += log(alpha + beta + r + j - 1.0);
+    xf += log(j);
+    p_tab[static_cast<int>(j)] = p_tab[static_cast<int>(j)-1] +
+      exp(grx - (xf + gr) + gar + gbx - gabrx - bab);
   }
   
   return p_tab;
