@@ -185,7 +185,6 @@ NumericVector cpp_rgpois(
   std::vector<int> dims;
   dims.push_back(alpha.length());
   dims.push_back(beta.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector x(n);
 
   for (int i = 0; i < n; i++)

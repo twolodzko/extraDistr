@@ -1,6 +1,7 @@
 
 ### 1.8.3
 
+* Switched to C++11 to make use of `std::tuple` data structure
 * Fixed bug in bivariate poisson pmf (it returned underestimated probabilities)
 * Improved and simplified code for beta-binomial, beta negative-binomial,
   and gamma-Poisson cdf; now recursive algorithm employing memoization tachniques
@@ -9,6 +10,7 @@
 * Now `lower.tail` and `log.p` options for `pbetapr` work properly
 * Simplified code for multivariate hypergeometric, multinomial,
   Dirichlet-multinomial and categorical distributions
+* Code was significantly simplified and cleaned-up in multiple places
 
 ### 1.8.2
 

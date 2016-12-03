@@ -60,6 +60,14 @@ Random generation is done by inverse transform sampling.
 }
 \examples{
 
+x <- rnhyper(1e5, 60, 35, 15)
+xx <- 15:95
+plot(prop.table(table(x)))
+lines(xx, dnhyper(xx, 60, 35, 15), col = "red")
+hist(pnhyper(xx, 60, 35, 15))
+plot(ecdf(x))
+lines(xx, pnhyper(xx, 60, 35, 15), col = "red", lwd = 2)
+
 }
 \references{
 Berry, K. J., & Mielke, P. W. (1998).

@@ -104,7 +104,7 @@ NumericVector cpp_dbetapr(
     const NumericVector& beta,
     const NumericVector& sigma,
     const bool& log_prob = false
-) {
+  ) {
   
   std::vector<int> dims;
   dims.push_back(x.length());
@@ -133,7 +133,7 @@ NumericVector cpp_pbetapr(
     const NumericVector& sigma,
     const bool& lower_tail = true,
     const bool& log_prob = false
-) {
+  ) {
   
   std::vector<int> dims;
   dims.push_back(x.length());
@@ -165,7 +165,7 @@ NumericVector cpp_qbetapr(
     const NumericVector& sigma,
     const bool& lower_tail = true,
     const bool& log_prob = false
-) {
+  ) {
   
   std::vector<int> dims;
   dims.push_back(p.length());
@@ -196,7 +196,7 @@ NumericVector cpp_rbetapr(
     const NumericVector& alpha,
     const NumericVector& beta,
     const NumericVector& sigma
-) {
+  ) {
   
   std::vector<int> dims;
   dims.push_back(alpha.length());

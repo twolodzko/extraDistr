@@ -1596,6 +1596,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// nhyper_table
+std::vector<double> nhyper_table(double n, double m, double r, bool cumulative);
+RcppExport SEXP extraDistr_nhyper_table(SEXP nSEXP, SEXP mSEXP, SEXP rSEXP, SEXP cumulativeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type n(nSEXP);
+    Rcpp::traits::input_parameter< double >::type m(mSEXP);
+    Rcpp::traits::input_parameter< double >::type r(rSEXP);
+    Rcpp::traits::input_parameter< bool >::type cumulative(cumulativeSEXP);
+    rcpp_result_gen = Rcpp::wrap(nhyper_table(n, m, r, cumulative));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cpp_dnhyper
 NumericVector cpp_dnhyper(const NumericVector& x, const NumericVector& n, const NumericVector& m, const NumericVector& r, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dnhyper(SEXP xSEXP, SEXP nSEXP, SEXP mSEXP, SEXP rSEXP, SEXP log_probSEXP) {
