@@ -10,9 +10,7 @@
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
 #' @param lambda	        vector of (non-negative) means.
-#' @param s               truncation point (non-negtive); \code{s=0} (default)
-#'                        for zero-truncated Poisson, otherwise values greater
-#'                        than \code{s} are truncated.
+#' @param a,b             lower and upper truncation points (\code{a < x <= b}).
 #' @param log,log.p	      logical; if TRUE, probabilities p are given as log(p).
 #' @param lower.tail	    logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
 #'                        otherwise, \eqn{P[X > x]}.
@@ -34,7 +32,7 @@
 #' @examples 
 #' 
 #' x <- rtpois(1e5, 14, 16)
-#' xx <- seq(-1, 20)
+#' xx <- seq(-1, 50)
 #' plot(prop.table(table(x)))
 #' lines(xx, dtpois(xx, 14, 16), col = "red")
 #' hist(ptpois(x, 14, 16))
@@ -61,32 +59,32 @@
 #'
 #' @export
 
-dtpois <- function(x, lambda, s = 0, log = FALSE) {
-  cpp_dtpois(x, lambda, s, log)
+dtpois <- function(x, lambda, a = -Inf, b = Inf, log = FALSE) {
+  cpp_dtpois(x, lambda, a, b, log)
 }
 
 
 #' @rdname TruncPoisson
 #' @export
 
-ptpois <- function(q, lambda, s = 0, lower.tail = TRUE, log.p = FALSE) {
-  cpp_ptpois(q, lambda, s, lower.tail, log.p)
+ptpois <- function(q, lambda, a = -Inf, b = Inf, lower.tail = TRUE, log.p = FALSE) {
+  cpp_ptpois(q, lambda, a, b, lower.tail, log.p)
 }
 
 
 #' @rdname TruncPoisson
 #' @export
 
-qtpois <- function(p, lambda, s = 0, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qtpois(p, lambda, s, lower.tail, log.p)
+qtpois <- function(p, lambda, a = -Inf, b = Inf, lower.tail = TRUE, log.p = FALSE) {
+  cpp_qtpois(p, lambda, a, b, lower.tail, log.p)
 }
 
 
 #' @rdname TruncPoisson
 #' @export
 
-rtpois <- function(n, lambda, s = 0) {
+rtpois <- function(n, lambda, a = -Inf, b = Inf) {
   if (length(n) > 1) n <- length(n)
-  cpp_rtpois(n, lambda, s)
+  cpp_rtpois(n, lambda, a, b)
 }
 

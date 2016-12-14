@@ -74,7 +74,7 @@
 #' xx <- 15:95
 #' plot(prop.table(table(x)))
 #' lines(xx, dnhyper(xx, 60, 35, 15), col = "red")
-#' hist(pnhyper(xx, 60, 35, 15))
+#' hist(pnhyper(x, 60, 35, 15))
 #' plot(ecdf(x))
 #' lines(xx, pnhyper(xx, 60, 35, 15), col = "red", lwd = 2)
 #'
