@@ -33,7 +33,7 @@ test_that("Zero probabilities for values <0", {
   expect_equal(0, dht(-1, 5, 1))
   
   expect_equal(0, dmixpois(-1, c(1,2,3), c(1/3,1/3,1/3)))
-  expect_equal(0, dtpois(-1, lambda = 5, s = 6))
+  expect_equal(0, dtpois(-1, lambda = 5, a = 6))
   
 })
 
@@ -49,7 +49,7 @@ test_that("Zero probabilities for values < 1", {
   
   expect_equal(c(0, 0), dlgser(c(-1, 0), 0.5))
   expect_equal(c(0, 0), dpareto(c(-1, 0), 1, 1))
-  expect_equal(c(0, 0), dtpois(c(-1, 0), lambda = 5))
+  expect_equal(c(0, 0), dtpois(c(-1, 0), lambda = 5, a = 0))
   
 })
 

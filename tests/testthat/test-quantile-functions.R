@@ -28,8 +28,8 @@ test_that("Zeros in quantile functions", {
   expect_true(!is.nan(qzib(0, 1, 1, 0.5)))
   expect_true(!is.nan(qzinb(0, 1, 1, 0.5)))
   
-  expect_true(!is.nan(qtpois(0, lambda = 5, s = 0)))
-  expect_true(!is.nan(qtpois(0, lambda = 5, s = 6)))
+  expect_true(!is.nan(qtpois(0, lambda = 5, a = 0)))
+  expect_true(!is.nan(qtpois(0, lambda = 5, a = 6)))
   
 })
 
@@ -61,8 +61,8 @@ test_that("Ones in quantile functions", {
   expect_true(!is.nan(qzib(1, 1, 1, 0.5)))
   expect_true(!is.nan(qzinb(1, 1, 1, 0.5)))
   
-  expect_true(!is.nan(qtpois(1, lambda = 5, s = 0)))
-  expect_true(!is.nan(qtpois(1, lambda = 5, s = 6)))
+  expect_true(!is.nan(qtpois(1, lambda = 5, a = 0)))
+  expect_true(!is.nan(qtpois(1, lambda = 5, a = 6)))
   
 })
 

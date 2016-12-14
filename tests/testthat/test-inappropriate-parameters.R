@@ -155,9 +155,9 @@ test_that("Wrong parameter values in PDF and PMF functions", {
   expect_warning(expect_true(is.nan(dtnorm(1, 0, 1, 2, -2))))
   expect_warning(expect_true(is.nan(dtnorm(1, 0, 1, 0, 0)))) 
   
-  expect_warning(expect_true(is.nan(dtpois(1, lambda = -5, s = 0))))
-  expect_warning(expect_true(is.nan(dtpois(1, lambda = -5, s = 6))))
-  expect_warning(expect_true(is.nan(dtpois(1, lambda = 5, s = -1))))
+  expect_warning(expect_true(is.nan(dtpois(1, lambda = -5, a = 0))))
+  expect_warning(expect_true(is.nan(dtpois(1, lambda = -5, a = 6))))
+  expect_warning(expect_true(is.nan(dtpois(1, lambda = -5, a = 6, b = 5))))
 
   expect_warning(expect_true(is.nan(dtriang(1, 0, 0, 0))))
   expect_warning(expect_true(is.nan(dtriang(1, 1, -1, 0))))
@@ -314,10 +314,10 @@ test_that("Wrong parameter values in CDF functions", {
   expect_warning(expect_true(is.nan(ptnorm(1, 0, 1, 2, -2))))
   expect_warning(expect_true(is.nan(ptnorm(1, 0, 1, 0, 0))))
   
-  expect_warning(expect_true(is.nan(ptpois(1, lambda = -5, s = 0))))
-  expect_warning(expect_true(is.nan(ptpois(1, lambda = -5, s = 6))))
-  expect_warning(expect_true(is.nan(ptpois(1, lambda = 5, s = -1))))
-  
+  expect_warning(expect_true(is.nan(ptpois(1, lambda = -5, a = 0))))
+  expect_warning(expect_true(is.nan(ptpois(1, lambda = -5, a = 6))))
+  expect_warning(expect_true(is.nan(ptpois(1, lambda = -5, a = 6, b = 5))))
+
   expect_warning(expect_true(is.nan(ptriang(1, 0, 0, 0))))
   expect_warning(expect_true(is.nan(ptriang(1, 1, -1, 0))))
   expect_warning(expect_true(is.nan(ptriang(1, -1, 1, 2))))
@@ -430,10 +430,10 @@ test_that("Wrong parameter values in inverse CDF functions", {
   expect_warning(expect_true(is.nan(qtnorm(0.5, 0, 1, 2, -2))))
   expect_warning(expect_true(is.nan(qtnorm(0.5, 0, 1, 0, 0))))
   
-  expect_warning(expect_true(is.nan(qtpois(0.5, lambda = -5, s = 0))))
-  expect_warning(expect_true(is.nan(qtpois(0.5, lambda = -5, s = 6))))
-  expect_warning(expect_true(is.nan(qtpois(0.5, lambda = 5, s = -1))))
-  
+  expect_warning(expect_true(is.nan(qtpois(0.5, lambda = -5, a = 0))))
+  expect_warning(expect_true(is.nan(qtpois(0.5, lambda = -5, a = 6))))
+  expect_warning(expect_true(is.nan(qtpois(0.5, lambda = -5, a = 6, b = 5))))
+
   expect_warning(expect_true(is.nan(qtriang(0.5, 0, 0, 0))))
   expect_warning(expect_true(is.nan(qtriang(0.5, 1, -1, 0))))
   expect_warning(expect_true(is.nan(qtriang(0.5, -1, 1, 2))))
@@ -609,10 +609,10 @@ test_that("Wrong parameter values in RNG functions", {
   expect_warning(expect_true(is.nan(rtnorm(1, 0, 1, 2, -2))))
   expect_warning(expect_true(is.nan(rtnorm(1, 0, 1, 0, 0))))
   
-  expect_warning(expect_true(is.nan(rtpois(1, lambda = -5, s = 0))))
-  expect_warning(expect_true(is.nan(rtpois(1, lambda = -5, s = 6))))
-  expect_warning(expect_true(is.nan(rtpois(1, lambda = 5, s = -1))))
-  
+  expect_warning(expect_true(is.nan(rtpois(1, lambda = -5, a = 0))))
+  expect_warning(expect_true(is.nan(rtpois(1, lambda = -5, a = 6))))
+  expect_warning(expect_true(is.nan(rtpois(1, lambda = -5, a = 6, b = 5))))
+
   expect_warning(expect_true(is.nan(rtriang(1, 0, 0, 0))))
   expect_warning(expect_true(is.nan(rtriang(1, 1, -1, 0))))
   expect_warning(expect_true(is.nan(rtriang(1, -1, 1, 2))))
