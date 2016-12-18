@@ -27,7 +27,7 @@ double pmf_bpois(double x, double y, double a, double b, double c) {
     return NAN;
   }
   
-  if (!isInteger(x) || x < 0.0)
+  if (!isInteger(x) || x < 0.0 || !R_finite(x) || !R_finite(y))
     return 0.0;
   
   if (floor(y) != y) {

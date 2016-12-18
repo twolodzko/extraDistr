@@ -145,7 +145,7 @@ NumericVector cpp_pcat(
       continue;
     }
     
-    if (x[i] < 1.0) {
+    if (x[i % dims[0]] < 1.0) {
       p[i] = 0.0;
     } else if (x[i % dims[0]] >= static_cast<double>(k)) {
       p[i] = 1.0;

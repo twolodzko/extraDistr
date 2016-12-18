@@ -98,10 +98,10 @@ NumericVector cpp_dkumar(
   NumericVector p(Nmax);
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpdf_kumar(x[i % dims[0]], a[i % dims[1]], b[i % dims[2]]);
+    p[i] = pdf_kumar(x[i % dims[0]], a[i % dims[1]], b[i % dims[2]]);
 
-  if (!log_prob)
-    p = Rcpp::exp(p);
+  if (log_prob)
+    p = Rcpp::log(p);
 
   return p;
 }

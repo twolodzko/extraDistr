@@ -66,7 +66,7 @@ or casted to `<double>`; or `<int>`'s (for indexing)
 * Improvements in algorithms for discrete uniform, categorical,
 mixture of normal, mixture of Poisson distributions
 * Improvements in discrete uniform; now it accepts only integer
-valued parameters.
+valued parameters
 * Major C++ code clean-up
 
 ### 1.6.10-14
@@ -79,28 +79,21 @@ caused problems when compiling on Fedora and Solaris
 
 ### 1.6.7-9
 
-* Minor bug fixes
-* Minor improvements in documention
-* Additional tests
+* Minor changes and improvements in documention
 * Truncated normal returns normal for infinite truncation points
 * Added half-t, half-normal and half-Cauchy distributions
-* Minor changes in documentation
 * Changed naming of data-variable from `x` to `q` for CDF's
 * Added inverse-CDF for discrete normal distribution, fixed 
 random generation
-* Improvements in the C++ code
-* Improvements in documentation
 * Added tests
 * Multiple minor bug fixes (e.g. functions returning `NaN`
                             instead of `0` for `Inf` values)
 * Added Birnbaum-Saunders (fatigue life) distribution
 * New algorithm for `rtriang`
-* Minor changes in documentation
 * Added quantile functions for: zero-inflated Poisson, zero-inflated binomial
 zero-inflated negative binomial, inverse gamma, inverse chi-squared
 distributions
 * Added Huber density
-* Minor improvements in the code
 
 ### 1.6.1
 

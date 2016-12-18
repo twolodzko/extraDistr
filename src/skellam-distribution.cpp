@@ -32,7 +32,7 @@ double pmf_skellam(double x, double mu1, double mu2) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
-  if (!isInteger(x))
+  if (!isInteger(x) || !R_finite(x))
     return 0.0;
   return exp(-(mu1+mu2)) * pow(mu1/mu2, x/2.0) * R::bessel_i(2.0*sqrt(mu1*mu2), x, 1.0);
 }

@@ -69,8 +69,12 @@ NumericVector cpp_dmixpois(
       continue;
     }
     
+    if (!isInteger(x[i % dims[0]]))
+      continue;
+    
     for (int j = 0; j < k; j++)
       p[i] += (alpha(i % dims[2], j) / alpha_tot) * R::dpois(x[i % dims[0]], lambda(i % dims[1], j), false);
+
   }
   
   if (log_prob)

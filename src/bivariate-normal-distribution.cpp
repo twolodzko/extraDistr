@@ -50,6 +50,9 @@ double pdf_bnorm(double x, double y,
     return NAN;
   }
   
+  if (!R_finite(x) || !R_finite(y))
+    return 0.0;
+  
   double z1 = (x - mu1)/sigma1;
   double z2 = (y - mu2)/sigma2;
   
