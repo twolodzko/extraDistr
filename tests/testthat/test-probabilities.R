@@ -44,7 +44,7 @@ test_that("All probabilities/densities >= 0", {
   expect_true(all(dprop(x, 10, 0.5) >= 0))
   expect_true(all(drayleigh(x, 1) >= 0))
   expect_true(suppressWarnings(all(dskellam(x, 1, 1) >= 0)))
-  # expect_true(all(dslash(x, sigma = 1) >= 0)) # 0 ??
+  expect_true(all(dslash(x, sigma = 1) >= 0))
   expect_true(all(dtnorm(x, 0, 1, 1, 2) >= 0))
   expect_true(suppressWarnings(all(dtpois(x, lambda = 25, a = 0) >= 0)))
   expect_true(all(dtriang(x, 1, 2, 1.5) >= 0))
@@ -69,7 +69,7 @@ test_that("All cumulative probabilities >= 0 and <= 1", {
   expect_true(all(pbnbinom(x, 1, 1, 1) >= 0 & pbnbinom(x, 1, 1, 1) <= 1))
   # expect_true(all(pbvnorm(x, x, sd1 = 1) >= 0))
   # expect_true(all(pbvpois(x, x, 1, 1, 1) >= 0))
-  expect_true(all(pcat(x, c(0.5, 0.5)) >= 0 & pcat(x, c(0.5, 0.5)) <= 1))
+  expect_true(all(pcat(x, c(0.5, 0.5)) >= 0 & pcat(x, c(0.5, 0.5)) <= 1)) # ??? why this randomly produces errors ???
   # expect_true(all(pdirichlet(c(0.5, 0.5), c(1, 0.5)) >= 0))
   expect_true(all(pdlaplace(x, scale = 0.5) >= 0 & pdlaplace(x, scale = 0.5) <= 1))
   expect_true(all(pdnorm(x, sd = 1) >= 0 & pdnorm(x, sd = 1) <= 1))
