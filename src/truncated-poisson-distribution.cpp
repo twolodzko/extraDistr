@@ -28,8 +28,8 @@ double pdf_tpois(double x, double lambda, double a, double b) {
   if (!isInteger(x) || x < 0.0 || x <= a || x > b || !R_FINITE(x))
     return 0.0;
   
-  if (a == 0.0 && b == R_PosInf)
-    return pow(lambda, x) / (factorial(x) * (exp(lambda) - 1.0));
+  // if (a == 0.0 && b == R_PosInf)
+  //   return pow(lambda, x) / (factorial(x) * (exp(lambda) - 1.0));
   
   double pa, pb;
   pa = R::ppois(a, lambda, true, false);
@@ -51,8 +51,8 @@ double cdf_tpois(double x, double lambda, double a, double b) {
   if (x > b || !R_FINITE(x))
     return 1.0;
   
-  if (a == 0.0 && b == R_PosInf)
-    return R::ppois(x, lambda, true, false) / (1.0 - exp(-lambda));
+  // if (a == 0.0 && b == R_PosInf)
+  //   return R::ppois(x, lambda, true, false) / (1.0 - exp(-lambda));
   
   double pa, pb;
   pa = R::ppois(a, lambda, true, false);

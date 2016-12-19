@@ -78,7 +78,7 @@ NumericVector cpp_dcat(
       continue;
     }
     
-    p[i] = prob(i % dims[1], static_cast<int>(x[i % dims[0]] - 1.0)) / p_tot;
+    p[i] = prob(i % dims[1], static_cast<int>(x[i % dims[0]]) - 1) / p_tot;
     
   }
 
@@ -111,27 +111,13 @@ NumericVector cpp_pcat(
     wrong_param = false;
     missings = false;
     
-    int j = 0;
-    while (j < static_cast<int>(x[i % dims[0]])) {
-      if (ISNAN(prob(i % dims[1], j)))
+    for (int j = 0; j < k; j++) {
+      if (ISNAN(prob(i % dims[1], j))) {
         missings = true;
+        break;
+      }
       if (prob(i % dims[1], j) < 0.0)
         wrong_param = true;
-      p_tot += prob(i % dims[1], j);
-      j++;
-    }
-    
-    p[i] = p_tot;
-    
-    if (!wrong_param) {
-      while (j < k) {
-        if (ISNAN(prob(i % dims[1], j)))
-          missings = true;
-        if (prob(i % dims[1], j) < 0.0)
-          wrong_param = true;
-        p_tot += prob(i % dims[1], j);
-        j++;
-      }
     }
     
     if (missings || ISNAN(x[i % dims[0]])) {
@@ -147,11 +133,29 @@ NumericVector cpp_pcat(
     
     if (x[i % dims[0]] < 1.0) {
       p[i] = 0.0;
-    } else if (x[i % dims[0]] >= static_cast<double>(k)) {
-      p[i] = 1.0;
-    } else {
-      p[i] = p[i] / p_tot;
+      continue;
     }
+    
+    if (x[i % dims[0]] > static_cast<double>(k)) {
+      p[i] = 1.0;
+      continue;
+    }
+    
+    int j = 0;
+
+    while (j < static_cast<int>(x[i % dims[0]])) {
+      p_tot += prob(i % dims[1], j);
+      j++;
+    }
+    
+    p[i] = p_tot;
+    
+    while (j < k) {
+      p_tot += prob(i % dims[1], j);
+      j++;
+    }
+    
+    p[i] = p[i] / p_tot;
     
   }
 

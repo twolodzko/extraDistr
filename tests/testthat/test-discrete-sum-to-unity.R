@@ -43,6 +43,12 @@ test_that("Discrete probabilities sum to unity", {
   expect_equal(sum(dtpois(0:100, 30, a = -Inf, b = 32)), 1)
   expect_equal(sum(dtpois(0:100, 30, a = 25, b = 32)), 1)
   
+  expect_equal(sum(dtbinom(0:100, 100, 0.29, a = -Inf, b = Inf)), 1)
+  expect_equal(sum(dtbinom(0:100, 100, 0.29, a = 0, b = Inf)), 1)
+  expect_equal(sum(dtbinom(0:100, 100, 0.29, a = 25, b = Inf)), 1)
+  expect_equal(sum(dtbinom(0:100, 100, 0.29, a = -Inf, b = 32)), 1)
+  expect_equal(sum(dtbinom(0:100, 100, 0.29, a = 25, b = 32)), 1)
+  
   expect_equal(sum(dtbinom(0:100, 100, 0.5, a = -Inf, b = Inf)), 1)
   expect_equal(sum(dtbinom(0:100, 100, 0.5, a = 0, b = Inf)), 1)
   expect_equal(sum(dtbinom(0:100, 100, 0.5, a = 25, b = Inf)), 1)
