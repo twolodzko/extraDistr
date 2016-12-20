@@ -61,8 +61,10 @@ NumericVector cpp_dmnom(
     missings = false;
     
     for (int j = 0; j < k; j++) {
-      if (ISNAN(prob(i % np, j)) || ISNAN(x(i % n, j)))
+      if (ISNAN(prob(i % np, j)) || ISNAN(x(i % n, j))) {
         missings = true;
+        break;
+      }
       if (prob(i % np, j) < 0.0)
         wrong_param = true;
       p_tot += prob(i % np, j);

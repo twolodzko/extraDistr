@@ -36,7 +36,7 @@ using Rcpp::NumericMatrix;
 double pmf_bnbinom(double k, double r, double alpha, double beta) {
   if (ISNAN(k) || ISNAN(r) || ISNAN(alpha) || ISNAN(beta))
     return NA_REAL;
-  if (alpha <= 0.0 || beta <= 0.0 || r < 0.0 || floor(r) != r) {
+  if (alpha <= 0.0 || beta <= 0.0 || r < 0.0 || !isInteger(r, false)) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -49,7 +49,7 @@ double pmf_bnbinom(double k, double r, double alpha, double beta) {
 double logpmf_bnbinom(double k, double r, double alpha, double beta) {
   if (ISNAN(k) || ISNAN(r) || ISNAN(alpha) || ISNAN(beta))
     return NA_REAL;
-  if (alpha <= 0.0 || beta <= 0.0 || r < 0.0 || floor(r) != r) {
+  if (alpha <= 0.0 || beta <= 0.0 || r < 0.0 || !isInteger(r, false)) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -107,7 +107,7 @@ std::vector<double> cdf_bnbinom_table(double k, double r, double alpha, double b
 double rng_bnbinom(double r, double alpha, double beta) {
   if (ISNAN(r) || ISNAN(alpha) || ISNAN(beta))
     return NA_REAL;
-  if (alpha <= 0.0 || beta <= 0.0 || r < 0.0 || floor(r) != r) {
+  if (alpha <= 0.0 || beta <= 0.0 || r < 0.0 || !isInteger(r, false)) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -174,7 +174,7 @@ NumericVector cpp_pbnbinom(
         ISNAN(alpha[i % dims[2]]) || ISNAN(beta[i % dims[3]])) {
       p[i] = NA_REAL;
     } else if (alpha[i % dims[2]] <= 0.0 || beta[i % dims[3]] <= 0.0 ||
-      size[i % dims[1]] < 0.0 || floor(size[i % dims[1]]) != size[i % dims[1]]) {
+               size[i % dims[1]] < 0.0 || !isInteger(size[i % dims[1]], false)) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
     } else if (x[i % dims[0]] < 0.0) {

@@ -52,36 +52,23 @@ NumericVector cpp_ddirichlet(
     Rcpp::stop("Number of columns in x does not equal number of columns in alpha");
   
   double prod_gamma, sum_alpha, p_tmp, beta_const;
-  bool wrong_alpha, missings;
+  bool wrong_alpha, missings, wrong_x;
 
   for (int i = 0; i < Nmax; i++) {
     
-    prod_gamma = 0.0;
-    sum_alpha = 0.0;
-    p_tmp = 0.0;
     wrong_alpha = false;
     missings = false;
+    wrong_x = false;
     
     for (int j = 0; j < m; j++) {
       if (ISNAN(alpha(i % dims[1], j)) || ISNAN(x(i % dims[0], j))) {
         missings = true;
         break;
       }
-      if (alpha(i % dims[1], j) <= 0.0) {
+      if (alpha(i % dims[1], j) <= 0.0)
         wrong_alpha = true;
-        break;
-      }
-      if (x(i % dims[0], j) < 0.0 || x(i % dims[0], j) > 1.0) {
-        p[i] = R_NegInf;
-        break;
-      }
-      
-      prod_gamma += R::lgammafn(alpha(i % dims[1], j));
-      sum_alpha += alpha(i % dims[1], j);
-      p_tmp += log(x(i % dims[0], j)) * (alpha(i % dims[1], j) - 1.0);
-      
-      if (alpha(i % dims[1], j) == 1.0 && x(i % dims[0], j) == 0.0)
-        p_tmp = R_NegInf;
+      if (x(i % dims[0], j) < 0.0 || x(i % dims[0], j) > 1.0)
+        wrong_x = true;
     }
     
     if (missings) {
@@ -89,7 +76,23 @@ NumericVector cpp_ddirichlet(
     } else if (wrong_alpha) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
+    } else if (wrong_x) {
+      p[i] = R_NegInf;
     } else {
+      
+      prod_gamma = 0.0;
+      sum_alpha = 0.0;
+      p_tmp = 0.0;
+      
+      for (int j = 0; j < m; j++) {
+        prod_gamma += R::lgammafn(alpha(i % dims[1], j));
+        sum_alpha += alpha(i % dims[1], j);
+        p_tmp += log(x(i % dims[0], j)) * (alpha(i % dims[1], j) - 1.0);
+        
+        if (alpha(i % dims[1], j) == 1.0 && x(i % dims[0], j) == 0.0)
+          p_tmp = R_NegInf;
+      }
+      
       beta_const = prod_gamma - R::lgammafn(sum_alpha);
       p[i] = p_tmp - beta_const;
     }

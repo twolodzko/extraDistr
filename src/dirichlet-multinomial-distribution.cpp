@@ -71,18 +71,17 @@ NumericVector cpp_ddirmnom(
     
     for (int j = 0; j < k; j++) {
       
-      if (ISNAN(alpha(i % dims[1], j)) || ISNAN(x(i % dims[0], j)))
+      if (ISNAN(alpha(i % dims[1], j)) || ISNAN(x(i % dims[0], j))) {
         missings = true;
+        break;
+      }
       if (alpha(i % dims[1], j) <= 0.0)
         wrong_param = true;
       if (x(i % dims[0], j) < 0.0 || (!missings && !isInteger(x(i % dims[0], j))))
         wrong_x = true;
       
       sum_x += x(i % dims[0], j);
-      prod_tmp += R::lgammafn(x(i % dims[0], j) + alpha(i % dims[1], j)) -
-        (lfactorial(x(i % dims[0], j)) + R::lgammafn(alpha(i % dims[1], j)));
       sum_alpha += alpha(i % dims[1], j);
-      
     }
     
     if (missings || ISNAN(size[i % dims[2]])) {
@@ -90,8 +89,7 @@ NumericVector cpp_ddirmnom(
       continue;
     } 
     
-    if (wrong_param || size[i % dims[2]] < 0.0 ||
-        floor(size[i % dims[2]]) != size[i % dims[2]]) {
+    if (wrong_param || size[i % dims[2]] < 0.0 || !isInteger(size[i % dims[2]], false)) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
       continue;
@@ -100,8 +98,15 @@ NumericVector cpp_ddirmnom(
     if (sum_x < 0.0 || sum_x != size[i % dims[2]] || wrong_x) {
       p[i] = R_NegInf;
     } else {
+      
+      for (int j = 0; j < k; j++) {
+        prod_tmp += R::lgammafn(x(i % dims[0], j) + alpha(i % dims[1], j)) -
+          (lfactorial(x(i % dims[0], j)) + R::lgammafn(alpha(i % dims[1], j)));
+      }
+      
       p[i] = (lfactorial(size[i % dims[2]]) + R::lgammafn(sum_alpha)) -
         R::lgammafn(size[i % dims[2]] + sum_alpha) + prod_tmp;
+      
     }
   }
   
@@ -159,7 +164,7 @@ NumericMatrix cpp_rdirmnom(
     } 
     
     if (wrong_param || size[i % dims[1]] < 0.0 ||
-        floor(size[i % dims[1]]) != size[i % dims[1]]) {
+        !isInteger(size[i % dims[1]], false)) {
       Rcpp::warning("NaNs produced");
       for (int j = 0; j < k; j++)
         x(i, j) = NAN;

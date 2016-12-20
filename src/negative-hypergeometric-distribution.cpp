@@ -80,13 +80,15 @@ NumericVector cpp_dnhyper(
         ISNAN(m[i % dims[2]]) || ISNAN(r[i % dims[3]])) {
       p[i] = NA_REAL;
     } else if (r[i % dims[3]] > m[i % dims[2]] || n[i % dims[1]] < 0.0 ||
-               m[i % dims[2]] < 0.0 || r[i % dims[3]] < 0.0) {
+               m[i % dims[2]] < 0.0 || r[i % dims[3]] < 0.0 ||
+               !isInteger(n[i % dims[1]], false) ||
+               !isInteger(m[i % dims[2]], false) ||
+               !isInteger(r[i % dims[3]], false)) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
     } else if (x[i % dims[0]] < r[i % dims[3]] ||
                x[i % dims[0]] > (n[i % dims[1]] + r[i % dims[3]]) ||
-               !isInteger(x[i % dims[0]]) || !isInteger(n[i % dims[1]]) ||
-               !isInteger(m[i % dims[2]]) || !isInteger(r[i % dims[3]])) {
+               !isInteger(x[i % dims[0]])) {
       p[i] = 0.0;
     } else {
       

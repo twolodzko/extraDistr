@@ -108,7 +108,7 @@ test_that("All cumulative probabilities >= 0 and <= 1", {
   expect_true(all(ptnorm(x, 0, 1, 1, 2) >= 0 & ptnorm(x, 0, 1, 1, 2) <= 1))
   expect_true(all(ptpois(x, lambda = 25, a = 0) >= 0 & ptpois(x, lambda = 25, a = 0) <= 1))
   expect_true(all(ptbinom(x, 100, 0.67, 60, 70) >= 0 & ptbinom(x, 100, 0.67, 60, 70) <= 1))
-  expect_true(all(dtbinom(x, 100, 0.67, a = 60, b = 70) >= 0))
+  expect_true(all(ptbinom(x, 100, 0.67, a = 60, b = 70) >= 0 & ptbinom(x, 100, 0.67, a = 60, b = 70) <= 1))
   expect_true(all(ptriang(x, 1, 2, 1.5) >= 0 & ptriang(x, 1, 2, 1.5) <= 1))
   expect_true(all(pwald(x, 1, 1) >= 0 & pwald(x, 1, 1) <= 1))
   expect_true(all(pzip(x, 1, 0.5) >= 0 & pzip(x, 1, 0.5) <= 1))

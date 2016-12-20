@@ -31,7 +31,7 @@ using Rcpp::NumericMatrix;
  * 
  */
 
-double G(double x) {
+inline double G(double x) {
   return x * Phi(x) + phi(x);
 }
 

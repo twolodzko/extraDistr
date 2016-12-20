@@ -2,17 +2,17 @@
 #include "const.h"
 
 
-// Basic functions
-
-bool tol_equal(double x, double y) {
-  return std::abs(x - y) < MIN_DIFF_EPS;
+inline double round0(double x) {
+  return (x < 0.0) ? std::ceil(x) : std::floor(x);
 }
 
-bool isInteger(double x) {
-  if (std::floor(x) != x) {
-    char msg[55];
-    std::snprintf(msg, sizeof(msg), "non-integer x = %f", x);
-    Rcpp::warning(msg);
+bool isInteger(double x, bool warn) {
+  if (round0(x) != x) {
+    if (warn) {
+      char msg[55];
+      std::snprintf(msg, sizeof(msg), "non-integer x = %f", x);
+      Rcpp::warning(msg);
+    }
     return false;
   }
   return true;
@@ -56,30 +56,6 @@ bool allNA(Rcpp::NumericVector x) {
   return true;
 }
 
-// Standard normal
-
-double phi(double x) {
-  return R::dnorm(x, 0.0, 1.0, false);
-}
-
-double Phi(double x) {
-  return R::pnorm(x, 0.0, 1.0, true, false);
-}
-
-double InvPhi(double x) {
-  return R::qnorm(x, 0.0, 1.0, true, false);
-}
-
-// Factorial
-
-double factorial(double x) {
-  return R::gammafn(x + 1.0);
-}
-
-double lfactorial(double x) {
-  return R::lgammafn(x + 1.0);
-}
-
 // Random generation
 
 double rng_unif() {
@@ -105,40 +81,5 @@ double rng_bern(double p) {
 double rng_sign() {
   double u = rng_unif();
   return (u > 0.5) ? 1.0 : -1.0;
-}
-
-// Checking parameters
-
-Rcpp::NumericMatrix normalize_prob(const Rcpp::NumericMatrix& prob) {
-  
-  int n = prob.nrow();
-  int k = prob.ncol();
-  double p_tot;
-  bool wrong_param;
-  Rcpp::NumericMatrix p = Rcpp::clone(prob);
-  
-  for (int i = 0; i < n; i++) {
-    wrong_param = false;
-    p_tot = 0.0;
-    
-    for (int j = 0; j < k; j++) {
-      if (p(i, j) < 0.0 || ISNAN(p(i, j))) {
-        wrong_param = true;
-        break;
-      }
-      p_tot += p(i, j);
-    }
-    
-    if (wrong_param) {
-      Rcpp::warning("NaNs produced");
-      for (int j = 0; j < k; j++)
-        p(i, j) = NAN;
-    } else if (p_tot > 1.0) {
-      for (int j = 0; j < k; j++)
-        p(i, j) /= p_tot;
-    }
-  }
-  
-  return p;
 }
 

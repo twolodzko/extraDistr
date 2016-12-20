@@ -30,7 +30,7 @@ double pmf_bpois(double x, double y, double a, double b, double c) {
   if (!isInteger(x) || x < 0.0 || !R_finite(x) || !R_finite(y))
     return 0.0;
   
-  if (floor(y) != y) {
+  if (!isInteger(y, false)) {
     char msg[55];
     std::snprintf(msg, sizeof(msg), "non-integer y = %f", y);
     Rcpp::warning(msg);

@@ -33,7 +33,7 @@ double pmf_dunif(double x, double min, double max) {
   if (ISNAN(x) || ISNAN(min) || ISNAN(max))
     return NA_REAL;
   if (min > max || !R_FINITE(min) || !R_FINITE(max) ||
-      floor(min) != min || floor(max) != max) {
+      !isInteger(min, false) || !isInteger(max, false)) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -47,7 +47,7 @@ double cdf_dunif(double x, double min, double max) {
   if (ISNAN(x) || ISNAN(min) || ISNAN(max))
     return NA_REAL;
   if (min > max || !R_FINITE(min) || !R_FINITE(max) ||
-      floor(min) != min || floor(max) != max) {
+      !isInteger(min, false) || !isInteger(max, false)) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -62,7 +62,7 @@ double invcdf_dunif(double p, double min, double max) {
   if (ISNAN(p) || ISNAN(min) || ISNAN(max))
     return NA_REAL;
   if (min > max || !R_FINITE(min) || !R_FINITE(max) ||
-      floor(min) != min || floor(max) != max ||
+      !isInteger(min, false) || !isInteger(max, false) ||
       p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -76,7 +76,7 @@ double rng_dunif(double min, double max) {
   if (ISNAN(min) || ISNAN(max))
     return NA_REAL;
   if (min > max || !R_FINITE(min) || !R_FINITE(max) ||
-      floor(min) != min || floor(max) != max) {
+      !isInteger(min, false) || !isInteger(max, false)) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }

@@ -20,7 +20,7 @@ using Rcpp::NumericMatrix;
 double pdf_tbinom(double x, double size, double prob, double a, double b) {
   if (ISNAN(x) || ISNAN(size) || ISNAN(prob) || ISNAN(a) || ISNAN(b))
     return NA_REAL;
-  if (size < 0.0 || prob < 0.0 || prob > 1.0 || b < a) {
+  if (size < 0.0 || prob < 0.0 || prob > 1.0 || b < a || !isInteger(size, false)) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -38,7 +38,7 @@ double pdf_tbinom(double x, double size, double prob, double a, double b) {
 double cdf_tbinom(double x, double size, double prob, double a, double b) {
   if (ISNAN(x) || ISNAN(size) || ISNAN(prob) || ISNAN(a) || ISNAN(b))
     return NA_REAL;
-  if (size < 0.0 || prob < 0.0 || prob > 1.0 || b < a) {
+  if (size < 0.0 || prob < 0.0 || prob > 1.0 || b < a || !isInteger(size, false)) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -58,7 +58,8 @@ double cdf_tbinom(double x, double size, double prob, double a, double b) {
 double invcdf_tbinom(double p, double size, double prob, double a, double b) {
   if (ISNAN(p) || ISNAN(size) || ISNAN(prob) || ISNAN(a) || ISNAN(b))
     return NA_REAL;
-  if (size < 0.0 || prob < 0.0 || prob > 1.0 || b < a || p < 0.0 || p > 1.0) {
+  if (size < 0.0 || prob < 0.0 || prob > 1.0 || b < a ||
+      !isInteger(size, false) || p < 0.0 || p > 1.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -78,7 +79,7 @@ double invcdf_tbinom(double p, double size, double prob, double a, double b) {
 double rng_tbinom(double size, double prob, double a, double b) {
   if (ISNAN(size) || ISNAN(prob) || ISNAN(a) || ISNAN(b))
     return NA_REAL;
-  if (size < 0.0 || prob < 0.0 || prob > 1.0 || b < a) {
+  if (size < 0.0 || prob < 0.0 || prob > 1.0 || b < a || !isInteger(size, false)) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }

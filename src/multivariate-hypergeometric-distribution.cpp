@@ -51,7 +51,7 @@ NumericVector cpp_dmvhyper(
     Rcpp::stop("Number of columns in 'x' does not equal number of columns in 'n'.");
 
   bool missings, wrong_n, wrong_x;
-  double lNck, row_sum, lncx_prod, N;
+  double lNck, row_sum, lncx_prod, n_tot;
   
   for (int i = 0; i < Nmax; i++) {
     
@@ -60,14 +60,14 @@ NumericVector cpp_dmvhyper(
     wrong_n = false;
     row_sum = 0.0;
     lncx_prod = 0.0;
-    N = 0.0;
+    n_tot = 0.0;
     
     for (int j = 0; j < m; j++) {
       if (ISNAN(x(i % nx, j)) || ISNAN(n(i % nr, j)))
         missings = true;
-      if (floor(n(i % nr, j)) != n(i % nr, j) || n(i % nr, j) < 0.0)
+      if (!isInteger(n(i % nr, j), false) || n(i % nr, j) < 0.0)
         wrong_n = true;
-      N += n(i % nr, j);
+      n_tot += n(i % nr, j);
     }
     
     if (missings || ISNAN(k[i % nk])) {
@@ -75,19 +75,17 @@ NumericVector cpp_dmvhyper(
       continue;
     } 
     
-    if (wrong_n || k[i % nk] < 0.0 || k[i % nk] > N ||
-        floor(k[i % nk]) != k[i % nk]) {
+    if (wrong_n || k[i % nk] < 0.0 || k[i % nk] > n_tot || !isInteger(k[i % nk], false)) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
       continue;
     }
     
-    lNck = R::lchoose(N, k[i % nk]);
+    lNck = R::lchoose(n_tot, k[i % nk]);
     
     for (int j = 0; j < m; j++) {
-      if (x(i % nx, j) > n(i % nr, j) || x(i % nx, j) < 0.0 ||
-          !isInteger(x(i % nx, j))) {
-          wrong_x = true;
+      if (x(i % nx, j) > n(i % nr, j) || x(i % nx, j) < 0.0 || !isInteger(x(i % nx, j))) {
+        wrong_x = true;
       } else {
         lncx_prod += R::lchoose(n(i % nr, j), x(i % nx, j));
         row_sum += x(i % nx, j);
@@ -132,7 +130,7 @@ NumericMatrix cpp_rmvhyper(
     n_otr[0] = 0.0;
     
     for (int j = 1; j < m; j++) {
-      if (floor(n(i % nr, j)) != n(i % nr, j) || n(i % nr, j) < 0.0)
+      if (!isInteger(n(i % nr, j), false) || n(i % nr, j) < 0.0)
         wrong_n = true;
       if (ISNAN(n(i % nr, j)))
         missings = true;
@@ -145,9 +143,9 @@ NumericMatrix cpp_rmvhyper(
       continue;
     }
     
-    if (wrong_n || floor(n(i % nr, 0)) != n(i % nr, 0) ||
+    if (wrong_n || !isInteger(n(i % nr, 0), false) ||
         n(i % nr, 0) < 0 || (n_otr[0] + n(i % nr, 0)) < k[i % nk] ||
-        floor(k[i % nk]) != k[i % nk] || k[i % nk] < 0.0) {
+        !isInteger(k[i % nk], false) || k[i % nk] < 0.0) {
       Rcpp::warning("NaNs produced");
       for (int j = 0; j < m; j++)
         x(i, j) = NAN;
