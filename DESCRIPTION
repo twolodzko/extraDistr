@@ -17,11 +17,12 @@ Description: Density, distribution function, quantile function
     Gumbel, half-Cauchy, half-normal, half-t, Huber density, 
     inverse chi-squared, inverse-gamma, Kumaraswamy, Laplace,
     logarithmic, Lomax, multivariate hypergeometric, multinomial,
-    non-standard t, non-standard beta, normal mixture,
-    Poisson mixture, Pareto, power, reparametrized beta,
-    Rayleigh, Skellam, slash, triangular, truncated normal,
-    truncated Poisson, Tukey lambda, Wald, zero-inflated binomial,
-    zero-inflated negative binomial, zero-inflated Poisson.
+    negative hypergeometric, non-standard t, non-standard beta,
+    normal mixture, Poisson mixture, Pareto, power, reparametrized
+    beta, Rayleigh, Skellam, slash, triangular, truncated binomial,
+    truncated normal, truncated Poisson, Tukey lambda, Wald,
+    zero-inflated binomial, zero-inflated negative binomial,
+    zero-inflated Poisson.
 License: GPL-2
 URL: https://github.com/twolodzko/extraDistr
 BugReports: https://github.com/twolodzko/extraDistr/issues
