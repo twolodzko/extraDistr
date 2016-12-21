@@ -1,7 +1,7 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: r
-sudo: required
+sudo: false
 cache: packages
 
 r:
@@ -16,3 +16,6 @@ r_packages:
  
 r_build_args: "--no-build-vignettes"
 r_check_args: "--no-build-vignettes --as-cran"
+
+before_install:
+ - if [[ "$TRAVIS_R_VERSION_STRING" = 'devel' ]]; then mkdir ~/.R && echo 'CXX1X=g++ -std=c++0x -g -O2 -fPIC' > ~/.R/Makevars; fi
