@@ -12,3 +12,4 @@ r:
 r_packages:
  - Rcpp
  - testthat
+ - devtools
