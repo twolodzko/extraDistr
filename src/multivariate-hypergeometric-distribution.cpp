@@ -40,15 +40,16 @@ NumericVector cpp_dmvhyper(
     const bool& log_prob = false
   ) {
   
-  int nx = x.nrow();
-  int nr = n.nrow();
+  std::vector<int> dims;
+  dims.push_back(x.nrow());
+  dims.push_back(n.nrow());
+  dims.push_back(k.length());
+  int Nmax = *std::max_element(dims.begin(), dims.end());
   int m = x.ncol();
-  int nk = k.length();
-  int Nmax = Rcpp::max(IntegerVector::create(nx, nr, nk));
   NumericVector p(Nmax);
   
   if (m != n.ncol())
-    Rcpp::stop("Number of columns in 'x' does not equal number of columns in 'n'.");
+    Rcpp::stop("number of columns in x does not equal number of columns in n");
 
   bool missings, wrong_n, wrong_x;
   double lNck, row_sum, lncx_prod, n_tot;
@@ -63,36 +64,38 @@ NumericVector cpp_dmvhyper(
     n_tot = 0.0;
     
     for (int j = 0; j < m; j++) {
-      if (ISNAN(x(i % nx, j)) || ISNAN(n(i % nr, j)))
+      if (ISNAN(x(i % dims[0], j)) || ISNAN(n(i % dims[1], j)))
         missings = true;
-      if (!isInteger(n(i % nr, j), false) || n(i % nr, j) < 0.0)
+      if (!isInteger(n(i % dims[1], j), false) || n(i % dims[1], j) < 0.0)
         wrong_n = true;
-      n_tot += n(i % nr, j);
+      n_tot += n(i % dims[1], j);
     }
     
-    if (missings || ISNAN(k[i % nk])) {
+    if (missings || ISNAN(k[i % dims[2]])) {
       p[i] = NA_REAL;
       continue;
     } 
     
-    if (wrong_n || k[i % nk] < 0.0 || k[i % nk] > n_tot || !isInteger(k[i % nk], false)) {
+    if (wrong_n || k[i % dims[2]] < 0.0 || k[i % dims[2]] > n_tot ||
+        !isInteger(k[i % dims[2]], false)) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
       continue;
     }
     
-    lNck = R::lchoose(n_tot, k[i % nk]);
+    lNck = R::lchoose(n_tot, k[i % dims[2]]);
     
     for (int j = 0; j < m; j++) {
-      if (x(i % nx, j) > n(i % nr, j) || x(i % nx, j) < 0.0 || !isInteger(x(i % nx, j))) {
+      if (x(i % dims[0], j) > n(i % dims[1], j) || x(i % dims[0], j) < 0.0 ||
+          !isInteger(x(i % dims[0], j))) {
         wrong_x = true;
       } else {
-        lncx_prod += R::lchoose(n(i % nr, j), x(i % nx, j));
-        row_sum += x(i % nx, j);
+        lncx_prod += R::lchoose(n(i % dims[1], j), x(i % dims[0], j));
+        row_sum += x(i % dims[0], j);
       }
     }
     
-    if (wrong_x || row_sum != k[i % nk]) {
+    if (wrong_x || row_sum != k[i % dims[2]]) {
       p[i] = R_NegInf;
     } else {
       p[i] = lncx_prod - lNck;
@@ -114,9 +117,10 @@ NumericMatrix cpp_rmvhyper(
     const NumericVector& k
   ) {
   
-  int nr = n.nrow();
+  std::vector<int> dims;
+  dims.push_back(n.nrow());
+  dims.push_back(k.length());
   int m = n.ncol();
-  int nk = k.length();
   NumericMatrix x(nn, m);
   std::vector<double> n_otr(m);
   
@@ -130,22 +134,22 @@ NumericMatrix cpp_rmvhyper(
     n_otr[0] = 0.0;
     
     for (int j = 1; j < m; j++) {
-      if (!isInteger(n(i % nr, j), false) || n(i % nr, j) < 0.0)
+      if (!isInteger(n(i % dims[0], j), false) || n(i % dims[0], j) < 0.0)
         wrong_n = true;
-      if (ISNAN(n(i % nr, j)))
+      if (ISNAN(n(i % dims[0], j)))
         missings = true;
-      n_otr[0] += n(i % nr, j);
+      n_otr[0] += n(i % dims[0], j);
     }
     
-    if (missings || ISNAN(k[i % nk]) || ISNAN(n(i % nr, 0))) {
+    if (missings || ISNAN(k[i % dims[1]]) || ISNAN(n(i % dims[0], 0))) {
       for (int j = 0; j < m; j++)
         x(i, j) = NA_REAL;
       continue;
     }
     
-    if (wrong_n || !isInteger(n(i % nr, 0), false) ||
-        n(i % nr, 0) < 0 || (n_otr[0] + n(i % nr, 0)) < k[i % nk] ||
-        !isInteger(k[i % nk], false) || k[i % nk] < 0.0) {
+    if (wrong_n || !isInteger(n(i % dims[0], 0), false) ||
+        n(i % dims[0], 0) < 0 || (n_otr[0] + n(i % dims[0], 0)) < k[i % dims[1]] ||
+        !isInteger(k[i % dims[1]], false) || k[i % dims[1]] < 0.0) {
       Rcpp::warning("NaNs produced");
       for (int j = 0; j < m; j++)
         x(i, j) = NAN;
@@ -153,15 +157,15 @@ NumericMatrix cpp_rmvhyper(
     }
     
     for (int j = 1; j < m; j++)
-      n_otr[j] = n_otr[j-1] - n(i % nr, j);
+      n_otr[j] = n_otr[j-1] - n(i % dims[0], j);
     
-    k_left = k[i % nk];
-    x(i, 0) = R::rhyper(n(i % nr, 0), n_otr[0], k_left);
+    k_left = k[i % dims[1]];
+    x(i, 0) = R::rhyper(n(i % dims[0], 0), n_otr[0], k_left);
     k_left -= x(i, 0);
     
     if (m > 2) {
       for (int j = 1; j < m-1; j++) {
-        x(i, j) = R::rhyper(n(i % nr, j), n_otr[j], k_left);
+        x(i, j) = R::rhyper(n(i % dims[0], j), n_otr[j], k_left);
         k_left -= x(i, j);
       }
     }

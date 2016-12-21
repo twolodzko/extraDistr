@@ -136,7 +136,10 @@ NumericVector cpp_pnhyper(
         ISNAN(m[i % dims[2]]) || ISNAN(r[i % dims[3]])) {
       p[i] = NA_REAL;
     } else if (r[i % dims[3]] > m[i % dims[2]] || n[i % dims[1]] < 0.0 ||
-               m[i % dims[2]] < 0.0 || r[i % dims[3]] < 0.0) {
+               m[i % dims[2]] < 0.0 || r[i % dims[3]] < 0.0 ||
+               !isInteger(n[i % dims[1]], false) ||
+               !isInteger(m[i % dims[2]], false) ||
+               !isInteger(r[i % dims[3]], false)) {
                Rcpp::warning("NaNs produced");
       p[i] = NAN;
     } else if (x[i % dims[0]] < r[i % dims[3]]) {
@@ -200,7 +203,10 @@ NumericVector cpp_qnhyper(
       x[i] = NA_REAL;
     } else if (p[i % dims[0]] < 0.0 || p[i % dims[0]] > 1.0 ||
                r[i % dims[3]] > m[i % dims[2]] || n[i % dims[1]] < 0.0 ||
-               m[i % dims[2]] < 0.0 || r[i % dims[3]] < 0.0) {
+               m[i % dims[2]] < 0.0 || r[i % dims[3]] < 0.0 ||
+               !isInteger(n[i % dims[1]], false) ||
+               !isInteger(m[i % dims[2]], false) ||
+               !isInteger(r[i % dims[3]], false)) {
                Rcpp::warning("NaNs produced");
       x[i] = NAN;
     } else {
@@ -248,7 +254,10 @@ NumericVector cpp_rnhyper(
     if (ISNAN(n[i % dims[0]]) || ISNAN(m[i % dims[1]]) || ISNAN(r[i % dims[2]])) {
       x[i] = NA_REAL;
     } else if (r[i % dims[2]] > m[i % dims[1]] || n[i % dims[0]] < 0.0 ||
-               m[i % dims[1]] < 0.0 || r[i % dims[2]] < 0.0) {
+               m[i % dims[1]] < 0.0 || r[i % dims[2]] < 0.0 ||
+               !isInteger(n[i % dims[0]], false) ||
+               !isInteger(m[i % dims[1]], false) ||
+               !isInteger(r[i % dims[2]], false)) {
       Rcpp::warning("NaNs produced");
       x[i] = NAN;
     } else {

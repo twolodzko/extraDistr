@@ -42,7 +42,7 @@ Probability mass function
 f(x) = \frac{\Gamma(r+x)}{x! \,\Gamma(r)}
        \frac{\mathrm{B}(\alpha+r, \beta+x)}{\mathrm{B}(\alpha, \beta)}
 }{
-f(x) = \Gamma(r+x)/(x! \, \Gamma(r)) * B(\alpha+r, \beta+x) / B(\alpha, \beta)
+f(x) = \Gamma(r+x)/(x! \Gamma(r)) * B(\alpha+r, \beta+x) / B(\alpha, \beta)
 }
 
 Cumulative distribution function is calculated using recursive algorithm that employs the fact that

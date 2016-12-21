@@ -37,7 +37,7 @@ Probability density function
 \deqn{
 f(x) = \sqrt{\frac{\lambda}{2\pi x^3}} \exp\left( \frac{-\lambda(x-\mu)^2}{2\mu^2 x} \right)
 }{
-f(x) = sqrt(\lambda/(2*pi*x^3)) * exp((-\lambda*(x-\mu)^2)/(2*\mu^2*x))
+f(x) = sqrt(\lambda/(2*\pi*x^3)) * exp((-\lambda*(x-\mu)^2)/(2*\mu^2*x))
 }
 
 Cumulative distribution function
