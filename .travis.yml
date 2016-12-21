@@ -13,3 +13,6 @@ r_packages:
  - Rcpp
  - testthat
  - devtools
+ 
+r_build_args: "--no-build-vignettes"
+r_check_args: "--no-build-vignettes --as-cran"
