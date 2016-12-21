@@ -11,9 +11,9 @@ r:
  - devel
  
 r_binary_packages:
- - r-cran-rcpp
- - r-cran-testthat
- - r-cran-devtools
+ - Rcpp
+ - testthat
+ - devtools
  
 r_build_args: "--no-build-vignettes"
 r_check_args: "--no-build-vignettes --as-cran"
