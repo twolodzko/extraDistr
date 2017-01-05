@@ -35,6 +35,8 @@ test_that("Zero probabilities for values <0", {
   expect_equal(0, dmixpois(-1, c(1,2,3), c(1/3,1/3,1/3)))
   expect_equal(0, dtpois(-1, lambda = 5, a = 6))
   
+  expect_equal(0, dnhyper(-1, 60, 35, 15))
+
 })
 
 test_that("Zero probabilities for values x < mean", {

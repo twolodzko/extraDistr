@@ -151,6 +151,11 @@ test_that("Missing values in PDF and PMF functions", {
   expect_true(is.na(dmixpois(0, c(1,2,3), c(1/3,NA,1/3))))
   expect_true(is.na(dmixpois(0, c(1,2,3), c(1/3,1/3,NA))))
 
+  expect_true(is.na(dnhyper(NA, 60, 35, 15)))
+  expect_true(is.na(dnhyper(1, NA, 35, 15)))
+  expect_true(is.na(dnhyper(1, 60, NA, 15)))
+  expect_true(is.na(dnhyper(1, 60, 35, NA)))
+  
   expect_true(is.na(ddirmnom(c(NA, 1, 1), 3, c(1, 1, 1))))
   expect_true(is.na(ddirmnom(c(1, NA, 1), 3, c(1, 1, 1))))
   expect_true(is.na(ddirmnom(c(1, 1, NA), 3, c(1, 1, 1))))
@@ -376,6 +381,11 @@ test_that("Wrong parameter values in CDF functions", {
   expect_true(is.na(pmixpois(0, c(1,2,3), c(1/3,NA,1/3))))
   expect_true(is.na(pmixpois(0, c(1,2,3), c(1/3,1/3,NA))))
 
+  expect_true(is.na(pnhyper(NA, 60, 35, 15)))
+  expect_true(is.na(pnhyper(1, NA, 35, 15)))
+  expect_true(is.na(pnhyper(1, 60, NA, 15)))
+  expect_true(is.na(pnhyper(1, 60, 35, NA)))
+  
   expect_true(is.na(pnsbeta(NA, 1, 1, -2, 2)))
   expect_true(is.na(pnsbeta(0.5, NA, 1, -2, 2)))
   expect_true(is.na(pnsbeta(0.5, 1, NA, -2, 2)))
@@ -531,6 +541,11 @@ test_that("Wrong parameter values in inverse CDF functions", {
   expect_true(is.na(qlomax(0.5, NA, 1)))
   expect_true(is.na(qlomax(0.5, 1, NA)))
 
+  expect_true(is.na(qnhyper(NA, 60, 35, 15)))
+  expect_true(is.na(qnhyper(0.5, NA, 35, 15)))
+  expect_true(is.na(qnhyper(0.5, 60, NA, 15)))
+  expect_true(is.na(qnhyper(0.5, 60, 35, NA)))
+  
   expect_true(is.na(qnsbeta(NA, 1, 1, -2, 2)))
   expect_true(is.na(qnsbeta(0.5, NA, 1, -2, 2)))
   expect_true(is.na(qnsbeta(0.5, 1, NA, -2, 2)))
@@ -702,6 +717,10 @@ test_that("Wrong parameter values in RNG functions", {
   expect_true(is.na(rmixpois(1, c(1,2,3), c(NA,1/3,1/3))))
   expect_true(is.na(rmixpois(1, c(1,2,3), c(1/3,NA,1/3))))
   expect_true(is.na(rmixpois(1, c(1,2,3), c(1/3,1/3,NA))))
+  
+  expect_true(is.na(rnhyper(1, NA, 35, 15)))
+  expect_true(is.na(rnhyper(1, 60, NA, 15)))
+  expect_true(is.na(rnhyper(1, 60, 35, NA)))
   
   expect_true(all(is.na(rdirmnom(1, NA, c(1, 1, 1)))))
   expect_true(all(is.na(rdirmnom(1, 3, c(NA, 1, 1)))))

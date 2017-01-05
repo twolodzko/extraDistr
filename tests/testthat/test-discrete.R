@@ -8,6 +8,7 @@ test_that("Zero probabilities for non-integers", {
   expect_warning(expect_equal(0, ddunif(0.5, 0, 5)))
   expect_warning(expect_equal(0, dcat(0.5, c(0.5, 0.5))))
   expect_warning(expect_equal(0, dmnom(c(0.5, 1), 5, c(0.5, 0.5))))
+  expect_warning(expect_equal(0, dnhyper(0.5, 60, 35, 15)))
   expect_warning(expect_equal(0, dbern(0.5)))
   expect_warning(expect_equal(0, dbbinom(0.5, 1, 1, 1)))
   expect_warning(expect_equal(0, dbnbinom(0.5, 1, 1, 1)))

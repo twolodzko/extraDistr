@@ -86,9 +86,8 @@ NumericVector cpp_dnhyper(
                !isInteger(r[i % dims[3]], false)) {
       Rcpp::warning("NaNs produced");
       p[i] = NAN;
-    } else if (x[i % dims[0]] < r[i % dims[3]] ||
-               x[i % dims[0]] > (n[i % dims[1]] + r[i % dims[3]]) ||
-               !isInteger(x[i % dims[0]])) {
+    } else if (!isInteger(x[i % dims[0]]) || x[i % dims[0]] < r[i % dims[3]] ||
+               x[i % dims[0]] > (n[i % dims[1]] + r[i % dims[3]])) {
       p[i] = 0.0;
     } else {
       
