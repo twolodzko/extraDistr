@@ -33,6 +33,14 @@
 #' \Phi(sqrt(\lambda/\mu)*(x/\mu+1))
 #' }
 #' 
+#' Random generation is done using the algorithm described by Michael, Schucany and Haas (1976).
+#' 
+#' @references 
+#' 
+#' Michael, J.R., Schucany, W.R., and Haas, R.W. (1976).
+#' Generating Random Variates Using Transformations with Multiple Roots.
+#' The American Statistician, 30(2): 88-90.
+#' 
 #' @examples 
 #' 
 #' x <- rwald(1e5, 5, 16)
