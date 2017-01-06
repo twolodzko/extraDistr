@@ -685,11 +685,11 @@ test_that("Wrong parameter values in RNG functions", {
   expect_warning(expect_true(is.na(rhuber(1, 0, NA, 1))))
   expect_warning(expect_true(is.na(rhuber(1, 0, 1, NA))))
   
-  expect_warning(expect_true(is.na(rinvgamma(1, NA, 1))))
-  expect_warning(expect_true(is.na(rinvgamma(1, 1, NA))))
-
-  expect_warning(expect_true(is.na(rinvchisq(1, NA, 1))))
-  expect_warning(expect_true(is.na(rinvchisq(1, 1, NA))))
+  # expect_warning(expect_true(is.na(rinvgamma(1, NA, 1))))
+  # expect_warning(expect_true(is.na(rinvgamma(1, 1, NA))))
+  # 
+  # expect_warning(expect_true(is.na(rinvchisq(1, NA, 1))))
+  # expect_warning(expect_true(is.na(rinvchisq(1, 1, NA))))
   
   expect_warning(expect_true(is.na(rkumar(1, NA, 1))))
   expect_warning(expect_true(is.na(rkumar(1, 1, NA))))
