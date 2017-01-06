@@ -86,11 +86,10 @@ double invcdf_betapr(double p, double alpha, double beta, double sigma) {
 }
 
 double rng_betapr(double alpha, double beta, double sigma) {
-  if (ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma))
+  if (ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma) ||
+      alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
+    Rcpp::warning("NAs produced");
     return NA_REAL;
-  if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
   }
   double x = R::rbeta(alpha, beta);
   return x/(1.0-x) * sigma;

@@ -77,11 +77,10 @@ double invcdf_tbinom(double p, double size, double prob, double a, double b) {
 }
 
 double rng_tbinom(double size, double prob, double a, double b) {
-  if (ISNAN(size) || ISNAN(prob) || ISNAN(a) || ISNAN(b))
+  if (ISNAN(size) || ISNAN(prob) || ISNAN(a) || ISNAN(b) ||
+      size < 0.0 || prob < 0.0 || prob > 1.0 || b < a || !isInteger(size, false)) {
+    Rcpp::warning("NAs produced");
     return NA_REAL;
-  if (size < 0.0 || prob < 0.0 || prob > 1.0 || b < a || !isInteger(size, false)) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
   }
   
   double u, pa, pb;

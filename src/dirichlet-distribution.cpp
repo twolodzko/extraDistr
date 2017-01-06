@@ -119,20 +119,15 @@ NumericMatrix cpp_rdirichlet(
     Rcpp::stop("Number of columns in alpha should be >= 2");
   
   double row_sum;
-  bool wrong_alpha, missings;
+  bool throw_warning;
 
   for (int i = 0; i < n; i++) {
     row_sum = 0.0;
-    wrong_alpha = false;
-    missings = false;
+    throw_warning = false;
 
     for (int j = 0; j < k; j++) {
-      if (ISNAN(alpha(i % dims, j))) {
-        missings = true;
-        break;
-      }
-      if (alpha(i % dims, j) <= 0.0) {
-        wrong_alpha = true;
+      if (ISNAN(alpha(i % dims, j)) || alpha(i % dims, j) <= 0.0) {
+        throw_warning = true;
         break;
       }
       
@@ -140,13 +135,10 @@ NumericMatrix cpp_rdirichlet(
       row_sum += x(i, j);
     }
 
-    if (missings) {
+    if (throw_warning) {
+      Rcpp::warning("NAs produced");
       for (int j = 0; j < k; j++)
         x(i, j) = NA_REAL;
-    } else if (wrong_alpha) {
-      Rcpp::warning("NaNs produced");
-      for (int j = 0; j < k; j++)
-        x(i, j) = NAN;
     } else {
       for (int j = 0; j < k; j++)
         x(i, j) /= row_sum;

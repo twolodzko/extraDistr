@@ -10,12 +10,14 @@
 * Now `lower.tail` and `log.p` options for `pbetapr` work properly
 * Simplified code for multivariate hypergeometric, multinomial,
   Dirichlet-multinomial and categorical distributions
-* c++ code was significantly simplified and cleaned-up in multiple places
+* C++ code was significantly simplified and cleaned-up in multiple places
 * Truncated poisson distribution is now parametrized by
   lower and upper truncation points
 * Fixed bug in `dbvpois` (it returned underestimated probabilities)
 * Fixed bug in `dslash` (there was discontinuity at x=0)
-* Fixed bug in `pcat` (randomly it broke if x was greater then the upper limit) 
+* Fixed bug in `pcat` (randomly it broke if x was greater then the upper limit)
+* Random generation functions throw warnings and produce `NA`'s on `NA`'s in
+  parameters or incorrect parameters - as in base R
 
 
 ### 1.8.1-2

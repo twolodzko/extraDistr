@@ -73,11 +73,11 @@ double invcdf_zinb(double pp, double r, double p, double pi) {
 }
 
 double rng_zinb(double r, double p, double pi) {
-  if (ISNAN(r) || ISNAN(p) || ISNAN(pi))
+  if (ISNAN(r) || ISNAN(p) || ISNAN(pi) ||
+      p < 0.0 || p > 1.0 || r < 0.0 ||
+      pi < 0.0 || pi > 1.0 || !isInteger(r, false)) {
+    Rcpp::warning("NAs produced");
     return NA_REAL;
-  if (p < 0.0 || p > 1.0 || r < 0.0 || pi < 0.0 || pi > 1.0 || !isInteger(r, false)) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
   }
   double u = rng_unif();
   if (u < pi)

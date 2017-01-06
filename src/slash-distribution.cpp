@@ -56,11 +56,9 @@ double cdf_slash(double x, double mu, double sigma) {
 }
 
 double rng_slash(double mu, double sigma) {
-  if (ISNAN(mu) || ISNAN(sigma))
+  if (ISNAN(mu) || ISNAN(sigma) || sigma <= 0.0) {
+    Rcpp::warning("NAs produced");
     return NA_REAL;
-  if (sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
   }
   double z = R::norm_rand();
   double u = rng_unif();

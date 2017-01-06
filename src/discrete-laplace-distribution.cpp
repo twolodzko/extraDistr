@@ -43,11 +43,9 @@ double cdf_dlaplace(double x, double p, double mu) {
 } 
 
 double rng_dlaplace(double p, double mu) {
-  if (ISNAN(p) || ISNAN(mu))
+  if (ISNAN(p) || ISNAN(mu) || p <= 0.0 || p >= 1.0) {
+    Rcpp::warning("NAs produced");
     return NA_REAL;
-  if (p <= 0.0 || p >= 1.0) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
   }
   double q, u, v;
   q = 1.0 - p;

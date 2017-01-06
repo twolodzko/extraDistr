@@ -75,11 +75,9 @@ double invcdf_laplace(double p, double mu, double sigma) {
 }
 
 double rng_laplace(double mu, double sigma) {
-  if (ISNAN(mu) || ISNAN(sigma))
+  if (ISNAN(mu) || ISNAN(sigma) || sigma <= 0.0) {
+    Rcpp::warning("NAs produced");
     return NA_REAL;
-  if (sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
   }
   // this is slower
   // double u = R::runif(-0.5, 0.5);

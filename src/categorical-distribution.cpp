@@ -257,30 +257,24 @@ NumericVector cpp_rcat(
   
   int jj;
   double u, p_tmp, p_tot;
-  bool wrong_param, missings;
+  bool throw_warning;
 
   for (int i = 0; i < n; i++) {
     
     p_tot = 0.0;
-    wrong_param = false;
-    missings = false;
+    throw_warning = false;
 
     for (int j = 0; j < k; j++) {
-      if (ISNAN(prob(i % dims, j)))
-        missings = true;
-      if (prob(i % dims, j) < 0.0)
-        wrong_param = true;
+      if (ISNAN(prob(i % dims, j)) || prob(i % dims, j) < 0.0) {
+        throw_warning = true;
+        break;
+      }
       p_tot += prob(i % dims, j);
     }
     
-    if (missings) {
+    if (throw_warning) {
+      Rcpp::warning("NAs produced");
       x[i] = NA_REAL;
-      continue;
-    }
-    
-    if (wrong_param) {
-      Rcpp::warning("NaNs produced");
-      x[i] = NAN;
       continue;
     }
     

@@ -99,11 +99,10 @@ std::vector<double> cdf_bbinom_table(double k, double n, double alpha, double be
 }
 
 double rng_bbinom(double n, double alpha, double beta) {
-  if (ISNAN(n) || ISNAN(alpha) || ISNAN(beta))
+  if (ISNAN(n) || ISNAN(alpha) || ISNAN(beta) ||
+      alpha < 0.0 || beta < 0.0 || n < 0.0 || !isInteger(n, false)) {
+    Rcpp::warning("NAs produced");
     return NA_REAL;
-  if (alpha < 0.0 || beta < 0.0 || n < 0.0 || !isInteger(n, false)) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
   }
   double prob = R::rbeta(alpha, beta);
   return R::rbinom(n, prob);

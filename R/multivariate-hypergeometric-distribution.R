@@ -71,8 +71,10 @@ rmvhyper <- function(nn, n, k) {
     nn <- length(nn)
   
   if (is.vector(n) && length(k) == 1) {
-    if (anyNA(n) || is.na(k))
+    if (anyNA(n) || is.na(k)) {
+      warning("NAs produced")
       return(matrix(rep(NA, nn), nrow = nn, byrow = TRUE))
+    }
     if (sum(n) == k)
       return(matrix(rep(n, nn), nrow = nn, byrow = TRUE))
     n <- matrix(n, nrow = 1)

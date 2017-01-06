@@ -60,11 +60,9 @@ double cdf_wald(double x, double mu, double lambda) {
 }
 
 double rng_wald(double mu, double lambda) {
-  if (ISNAN(mu) || ISNAN(lambda))
+  if (ISNAN(mu) || ISNAN(lambda) || mu <= 0.0 || lambda <= 0.0) {
+    Rcpp::warning("NAs produced");
     return NA_REAL;
-  if (mu <= 0.0 || lambda <= 0.0) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
   }
   double u, x, y, z;
   u = rng_unif();

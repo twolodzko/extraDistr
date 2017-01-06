@@ -134,40 +134,31 @@ NumericMatrix cpp_rdirmnom(
     Rcpp::stop("Number of columns in alpha should be >= 2");
   
   double size_left, row_sum, sum_p, p_tmp;
-  bool wrong_param, missings;
+  bool throw_warning;
   
   for (int i = 0; i < n; i++) {
     size_left = size[i % dims[1]];
     row_sum = 0.0;
-    wrong_param = false;
-    missings = false;
+    throw_warning = false;
     NumericVector pi(k);
     
     for (int j = 0; j < k; j++) {
       
-      if (ISNAN(alpha(i % dims[0], j)))
-        missings = true;
-      if (ISNAN(alpha(i % dims[0], j)))
-        missings = true;
-      if (alpha(i % dims[0], j) <= 0.0)
-        wrong_param = true;
+      if (ISNAN(alpha(i % dims[0], j)) || alpha(i % dims[0], j) <= 0.0) {
+        throw_warning = true;
+        break;
+      }
 
       pi[j] = R::rgamma(alpha(i % dims[0], j), 1.0);
       row_sum += pi[j];
       
     }
     
-    if (missings || ISNAN(size[i % dims[1]])) {
+    if (throw_warning || ISNAN(size[i % dims[1]]) || size[i % dims[1]] < 0.0 ||
+        !isInteger(size[i % dims[1]], false)) {
+      Rcpp::warning("NAs produced");
       for (int j = 0; j < k; j++)
         x(i, j) = NA_REAL;
-      continue;
-    } 
-    
-    if (wrong_param || size[i % dims[1]] < 0.0 ||
-        !isInteger(size[i % dims[1]], false)) {
-      Rcpp::warning("NaNs produced");
-      for (int j = 0; j < k; j++)
-        x(i, j) = NAN;
       continue;
     }
     

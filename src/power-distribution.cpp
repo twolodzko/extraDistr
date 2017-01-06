@@ -61,6 +61,15 @@ double invcdf_power(double p, double alpha, double beta) {
   return alpha * pow(p, 1.0/beta);
 }
 
+double rng_power(double alpha, double beta) {
+  if (ISNAN(alpha) || ISNAN(beta)) {
+    Rcpp::warning("NAs produced");
+    return NA_REAL;
+  }
+  double u = rng_unif();
+  return alpha * pow(u, 1.0/beta);
+}
+
 double logpdf_power(double x, double alpha, double beta) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
     return NA_REAL;
@@ -171,16 +180,13 @@ NumericVector cpp_rpower(
     const NumericVector& beta
   ) {
 
-  double u;
   std::vector<int> dims;
   dims.push_back(alpha.length());
   dims.push_back(beta.length());
   NumericVector x(n);
 
-  for (int i = 0; i < n; i++) {
-    u = rng_unif();
-    x[i] = invcdf_power(u, alpha[i % dims[0]], beta[i % dims[1]]);
-  }
+  for (int i = 0; i < n; i++)
+    x[i] = rng_power(alpha[i % dims[0]], beta[i % dims[1]]);
 
   return x;
 }

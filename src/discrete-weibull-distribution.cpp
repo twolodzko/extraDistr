@@ -72,6 +72,15 @@ double invcdf_dweibull(double p, double q, double beta) {
   return ceil(pow(log(1.0 - p)/log(q), 1.0/beta) - 1.0);
 }
 
+double rng_dweibull(double q, double beta) {
+  if (ISNAN(q) || ISNAN(beta) || q <= 0.0 || q >= 1.0 || beta <= 0.0) {
+    Rcpp::warning("NAs produced");
+    return NA_REAL;
+  }
+  double u = rng_unif();
+  return ceil(pow(log(u)/log(q), 1.0/beta) - 1.0);
+}
+
 
 // [[Rcpp::export]]
 NumericVector cpp_ddweibull(
@@ -164,16 +173,13 @@ NumericVector cpp_rdweibull(
     const NumericVector& beta
   ) {
 
-  double u;
   std::vector<int> dims;
   dims.push_back(q.length());
   dims.push_back(beta.length());
   NumericVector x(n);
 
-  for (int i = 0; i < n; i++) {
-    u = rng_unif();
-    x[i] = invcdf_dweibull(u, q[i % dims[0]], beta[i % dims[1]]);
-  }
+  for (int i = 0; i < n; i++)
+    x[i] = rng_dweibull(q[i % dims[0]], beta[i % dims[1]]);
 
   return x;
 }

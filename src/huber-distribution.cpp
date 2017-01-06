@@ -71,7 +71,7 @@ double invcdf_huber(double p, double mu, double sigma, double c) {
   }
 
   double x, pm, A;
-  A = 2.0*SQRT_2_PI * (Phi(c) + phi(c)/c - 0.5);
+  A = 2.0 * SQRT_2_PI * (Phi(c) + phi(c)/c - 0.5);
   pm = std::min(p, 1.0 - p);
 
   if (pm <= SQRT_2_PI * phi(c)/(c*A))
@@ -80,6 +80,28 @@ double invcdf_huber(double p, double mu, double sigma, double c) {
     x = InvPhi(abs(1.0 - Phi(c) + pm*A/SQRT_2_PI - phi(c)/c));
 
   if (p < 0.5)
+    return mu + x*sigma;
+  else
+    return mu - x*sigma;
+}
+
+double rng_huber(double mu, double sigma, double c) {
+  if (ISNAN(mu) || ISNAN(sigma) || ISNAN(c) || sigma <= 0.0 || c <= 0.0) {
+    Rcpp::warning("NAs produced");
+    return NA_REAL;
+  }
+  
+  double x, pm, A, u;
+  u = rng_unif();
+  A = 2.0 * SQRT_2_PI * (Phi(c) + phi(c)/c - 0.5);
+  pm = std::min(u, 1.0 - u);
+  
+  if (pm <= SQRT_2_PI * phi(c)/(c*A))
+    x = log(c*pm*A)/c - c/2.0;
+  else
+    x = InvPhi(abs(1.0 - Phi(c) + pm*A/SQRT_2_PI - phi(c)/c));
+  
+  if (u < 0.5)
     return mu + x*sigma;
   else
     return mu - x*sigma;
@@ -187,17 +209,14 @@ NumericVector cpp_rhuber(
     const NumericVector& epsilon
   ) {
   
-  double u;
   std::vector<int> dims;
   dims.push_back(mu.length());
   dims.push_back(sigma.length());
   dims.push_back(epsilon.length());
   NumericVector x(n);
   
-  for (int i = 0; i < n; i++) {
-    u = rng_unif();
-    x[i] = invcdf_huber(u, mu[i % dims[0]], sigma[i % dims[1]], epsilon[i % dims[2]]);
-  }
+  for (int i = 0; i < n; i++)
+    x[i] = rng_huber(mu[i % dims[0]], sigma[i % dims[1]], epsilon[i % dims[2]]);
   
   return x;
 }

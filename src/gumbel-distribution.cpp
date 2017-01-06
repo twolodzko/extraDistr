@@ -68,6 +68,15 @@ double invcdf_gumbel(double p, double mu, double sigma) {
   return mu - sigma * log(-log(p));
 }
 
+double rng_gumbel(double mu, double sigma) {
+  if (ISNAN(mu) || ISNAN(sigma) || sigma <= 0.0) {
+    Rcpp::warning("NAs produced");
+    return NA_REAL;
+  }
+  double u = rng_unif();
+  return mu - sigma * log(-log(u));
+}
+
 
 // [[Rcpp::export]]
 NumericVector cpp_dgumbel(
@@ -160,16 +169,13 @@ NumericVector cpp_rgumbel(
     const NumericVector& sigma
   ) {
 
-  double u;
   std::vector<int> dims;
   dims.push_back(mu.length());
   dims.push_back(sigma.length());
   NumericVector x(n);
 
-  for (int i = 0; i < n; i++) {
-    u = rng_unif();
-    x[i] = invcdf_gumbel(u, mu[i % dims[0]], sigma[i % dims[1]]);
-  }
+  for (int i = 0; i < n; i++)
+    x[i] = rng_gumbel(mu[i % dims[0]], sigma[i % dims[1]]);
 
   return x;
 }

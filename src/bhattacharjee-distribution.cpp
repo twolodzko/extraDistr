@@ -70,11 +70,9 @@ double cdf_bhattacharjee(double x, double mu, double sigma, double a) {
 }
 
 double rng_bhattacharjee(double mu, double sigma, double a) {
-  if (ISNAN(mu) || ISNAN(sigma) || ISNAN(a))
+  if (ISNAN(mu) || ISNAN(sigma) || ISNAN(a) || sigma < 0.0 || a < 0.0) {
+    Rcpp::warning("NAs produced");
     return NA_REAL;
-  if (sigma < 0.0 || a < 0.0) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
   }
   if (sigma == 0.0)
     return R::runif(mu-a, mu+a);

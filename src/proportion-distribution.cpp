@@ -59,11 +59,10 @@ double invcdf_prop(double p, double size, double mean) {
 }
 
 double rng_prop(double size, double mean) {
-  if (ISNAN(size) || ISNAN(mean))
+  if (ISNAN(size) || ISNAN(mean) ||
+      size <= 0.0 || mean < 0.0 || mean > 1.0) {
+    Rcpp::warning("NAs produced");
     return NA_REAL;
-  if (size <= 0.0 || mean < 0.0 || mean > 1.0) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
   }
   return R::rbeta(size*mean+1.0, size*(1.0-mean)+1.0);
 }

@@ -68,6 +68,15 @@ double invcdf_rayleigh(double p, double sigma) {
   return sqrt(-2.0*pow(sigma, 2.0) * log(1.0-p));
 }
 
+double rng_rayleigh(double sigma) {
+  if (ISNAN(sigma) || sigma <= 0.0) {
+    Rcpp::warning("NAs produced");
+    return NA_REAL;
+  }
+  double u = rng_unif();
+  return sqrt(-2.0*pow(sigma, 2.0) * log(u));
+}
+
 
 // [[Rcpp::export]]
 NumericVector cpp_drayleigh(
@@ -153,14 +162,11 @@ NumericVector cpp_rrayleigh(
     const NumericVector& sigma
   ) {
 
-  double u;
   int dims = sigma.length();
   NumericVector x(n);
 
-  for (int i = 0; i < n; i++) {
-    u = rng_unif();
-    x[i] = invcdf_rayleigh(u, sigma[i % dims]);
-  }
+  for (int i = 0; i < n; i++)
+    x[i] = rng_rayleigh(sigma[i % dims]);
 
   return x;
 }

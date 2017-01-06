@@ -250,15 +250,12 @@ NumericVector cpp_rnhyper(
     if (i % 1000 == 0)
       Rcpp::checkUserInterrupt();
     
-    if (ISNAN(n[i % dims[0]]) || ISNAN(m[i % dims[1]]) || ISNAN(r[i % dims[2]])) {
+    if (ISNAN(n[i % dims[0]]) || ISNAN(m[i % dims[1]]) || ISNAN(r[i % dims[2]]) ||
+        r[i % dims[2]] > m[i % dims[1]] || n[i % dims[0]] < 0.0 ||
+        m[i % dims[1]] < 0.0 || r[i % dims[2]] < 0.0 || !isInteger(n[i % dims[0]], false) ||
+        !isInteger(m[i % dims[1]], false) || !isInteger(r[i % dims[2]], false)) {
+      Rcpp::warning("NAs produced");
       x[i] = NA_REAL;
-    } else if (r[i % dims[2]] > m[i % dims[1]] || n[i % dims[0]] < 0.0 ||
-               m[i % dims[1]] < 0.0 || r[i % dims[2]] < 0.0 ||
-               !isInteger(n[i % dims[0]], false) ||
-               !isInteger(m[i % dims[1]], false) ||
-               !isInteger(r[i % dims[2]], false)) {
-      Rcpp::warning("NaNs produced");
-      x[i] = NAN;
     } else {
       
       std::vector<double>& tmp = memo[std::make_tuple(i % dims[0], i % dims[1], i % dims[2])];

@@ -52,11 +52,9 @@ double invcdf_hcauchy(double p, double sigma) {
 }
 
 double rng_hcauchy(double sigma) {
-  if (ISNAN(sigma))
+  if (ISNAN(sigma) || sigma <= 0.0) {
+    Rcpp::warning("NAs produced");
     return NA_REAL;
-  if (sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
   }
   return abs(R::rcauchy(0.0, sigma));
 }

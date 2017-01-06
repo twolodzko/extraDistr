@@ -87,11 +87,10 @@ double invcdf_triangular(double p, double a, double b, double c) {
 }
 
 double rng_triangular(double a, double b, double c) {
-  if (ISNAN(a) || ISNAN(b) || ISNAN(c))
+  if (ISNAN(a) || ISNAN(b) || ISNAN(c) ||
+      a > c || c > b || a == b) {
+    Rcpp::warning("NAs produced");
     return NA_REAL;
-  if (a > c || c > b || a == b) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
   }
   double u, v, r, cc;
   r = b - a;

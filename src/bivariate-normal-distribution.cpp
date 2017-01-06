@@ -123,14 +123,12 @@ NumericMatrix cpp_rbnorm(
   for (int i = 0; i < n; i++) {
     if (ISNAN(mu1[i % dims[0]]) || ISNAN(mu2[i % dims[1]]) ||
         ISNAN(sigma1[i % dims[2]]) || ISNAN(sigma2[i % dims[3]]) ||
-        ISNAN(rho[i % dims[4]])) {
+        ISNAN(rho[i % dims[4]]) ||
+        sigma1[i % dims[2]] <= 0.0 || sigma2[i % dims[3]] <= 0.0 ||
+        rho[i % dims[4]] < -1.0 || rho[i % dims[4]] > 1.0) {
+      Rcpp::warning("NAs produced");
       x(i, 0) = NA_REAL;
       x(i, 1) = NA_REAL;
-    } else if (sigma1[i % dims[2]] <= 0.0 || sigma2[i % dims[3]] <= 0.0 ||
-        rho[i % dims[4]] < -1.0 || rho[i % dims[4]] > 1.0) {
-      Rcpp::warning("NaNs produced");
-      x(i, 0) = NAN;
-      x(i, 1) = NAN;
     } else if (!tol_equal(rho[i % dims[4]], 0.0)) {
       double u = R::norm_rand();
       double v = R::norm_rand();

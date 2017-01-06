@@ -73,12 +73,11 @@ double invcdf_dunif(double p, double min, double max) {
 }
 
 double rng_dunif(double min, double max) {
-  if (ISNAN(min) || ISNAN(max))
-    return NA_REAL;
-  if (min > max || !R_FINITE(min) || !R_FINITE(max) ||
+  if (ISNAN(min) || ISNAN(max) ||
+      min > max || !R_FINITE(min) || !R_FINITE(max) ||
       !isInteger(min, false) || !isInteger(max, false)) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
+    Rcpp::warning("NAs produced");
+    return NA_REAL;
   }
   if (min == max)
     return min;

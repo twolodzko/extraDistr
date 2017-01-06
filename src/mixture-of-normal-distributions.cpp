@@ -193,14 +193,9 @@ NumericVector cpp_rmixnorm(
       alpha_tot += alpha(i % dims[2], j);
     }
     
-    if (missings) {
+    if (missings || wrong_param) {
+      Rcpp::warning("NAs produced");
       x[i] = NA_REAL;
-      continue;
-    }
-    
-    if (wrong_param) {
-      Rcpp::warning("NaNs produced");
-      x[i] = NAN;
       continue;
     }
     

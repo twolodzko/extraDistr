@@ -75,6 +75,15 @@ double invcdf_gompertz(double p, double a, double b) {
   return 1.0/b * log(1.0 - b/a * log(1.0-p));
 }
 
+double rng_gompertz(double a, double b) {
+  if (ISNAN(a) || ISNAN(b) || a <= 0.0 || b <= 0.0) {
+    Rcpp::warning("NAs produced");
+    return NA_REAL;
+  }
+  double u = rng_unif();
+  return 1.0/b * log(1.0 - b/a * log(u));
+}
+
 double logpdf_gompertz(double x, double a, double b) {
   if (ISNAN(x) || ISNAN(a) || ISNAN(b))
     return NA_REAL;
@@ -179,16 +188,13 @@ NumericVector cpp_rgompertz(
     const NumericVector& b
   ) {
 
-  double u;
   std::vector<int> dims;
   dims.push_back(a.length());
   dims.push_back(b.length());
   NumericVector x(n);
 
-  for (int i = 0; i < n; i++) {
-    u = rng_unif();
-    x[i] = invcdf_gompertz(u, a[i % dims[0]], b[i % dims[1]]);
-  }
+  for (int i = 0; i < n; i++)
+    x[i] = rng_gompertz(a[i % dims[0]], b[i % dims[1]]);
 
   return x;
 }

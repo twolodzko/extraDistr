@@ -77,11 +77,9 @@ double invcdf_fatigue(double p, double alpha, double beta, double mu) {
 }
 
 double rng_fatigue(double alpha, double beta, double mu) {
-  if (ISNAN(alpha) || ISNAN(beta) || ISNAN(mu))
+  if (ISNAN(alpha) || ISNAN(beta) || ISNAN(mu) || alpha <= 0.0 || beta <= 0.0) {
+    Rcpp::warning("NAs produced");
     return NA_REAL;
-  if (alpha <= 0.0 || beta <= 0.0) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
   }
   double z = R::norm_rand();
   return pow(alpha/2.0*z + sqrt(pow(alpha/2.0*z, 2.0) + 1.0), 2.0) * beta + mu;

@@ -103,11 +103,10 @@ double invcdf_tnorm(double p, double mu, double sigma, double a, double b) {
 }
 
 double rng_tnorm(double mu, double sigma, double a, double b) {
-  if (ISNAN(mu) || ISNAN(sigma) || ISNAN(a) || ISNAN(b))
+  if (ISNAN(mu) || ISNAN(sigma) || ISNAN(a) || ISNAN(b) ||
+      sigma <= 0.0 || b <= a) {
+    Rcpp::warning("NAs produced");
     return NA_REAL;
-  if (sigma <= 0.0 || b <= a) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
   }
   
   // non-truncated normal

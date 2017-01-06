@@ -79,6 +79,15 @@ double invcdf_lomax(double p, double lambda, double kappa) {
   return (pow(1.0-p, -1.0/kappa)-1.0) / lambda;
 }
 
+double rng_lomax(double lambda, double kappa) {
+  if (ISNAN(lambda) || ISNAN(kappa) || lambda <= 0.0 || kappa <= 0.0) {
+    Rcpp::warning("NAs produced");
+    return NA_REAL;
+  }
+  double u = rng_unif();
+  return (pow(u, -1.0/kappa)-1.0) / lambda;
+}
+
 
 // [[Rcpp::export]]
 NumericVector cpp_dlomax(
@@ -171,16 +180,13 @@ NumericVector cpp_rlomax(
     const NumericVector& kappa
   ) {
 
-  double u;
   std::vector<int> dims;
   dims.push_back(lambda.length());
   dims.push_back(kappa.length());
   NumericVector x(n);
 
-  for (int i = 0; i < n; i++) {
-    u = rng_unif();
-    x[i] = invcdf_lomax(u, lambda[i % dims[0]], kappa[i % dims[1]]);
-  }
+  for (int i = 0; i < n; i++)
+    x[i] = rng_lomax(lambda[i % dims[0]], kappa[i % dims[1]]);
 
   return x;
 }

@@ -72,11 +72,10 @@ double invcdf_zip(double p, double lambda, double pi) {
 }
 
 double rng_zip(double lambda, double pi) {
-  if (ISNAN(lambda) || ISNAN(pi))
+  if (ISNAN(lambda) || ISNAN(pi) ||
+      lambda <= 0.0 || pi < 0.0 || pi > 1.0) {
+    Rcpp::warning("NAs produced");
     return NA_REAL;
-  if (lambda <= 0.0 || pi < 0.0 || pi > 1.0) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
   }
   double u = rng_unif();
   if (u < pi)

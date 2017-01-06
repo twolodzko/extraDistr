@@ -67,7 +67,6 @@ double cdf_lgser(double x, double theta) {
   return a * b;
 }
 
-
 double invcdf_lgser(double p, double theta) {
   if (ISNAN(p) || ISNAN(theta))
     return NA_REAL;
@@ -85,6 +84,25 @@ double invcdf_lgser(double p, double theta) {
   
   while (p > pk) {
     p -= pk;
+    pk *= theta * k/(k+1.0);
+    k += 1.0;
+  }
+  
+  return k;
+}
+
+double rng_lgser(double theta) {
+  if (ISNAN(theta) || theta <= 0.0 || theta >= 1.0) {
+    Rcpp::warning("NAs produced");
+    return NA_REAL;
+  }
+
+  double u = rng_unif();
+  double pk = -theta/log(1.0 - theta);
+  double k = 1.0;
+  
+  while (u > pk) {
+    u -= pk;
     pk *= theta * k/(k+1.0);
     k += 1.0;
   }
@@ -180,10 +198,8 @@ NumericVector cpp_rlgser(
   int dims = theta.length();
   NumericVector x(n);
 
-  for (int i = 0; i < n; i++) {
-    double u = rng_unif();
-    x[i] = invcdf_lgser(u, theta[i % dims]);
-  }
+  for (int i = 0; i < n; i++)
+    x[i] = rng_lgser(theta[i % dims]);
 
   return x;
 }

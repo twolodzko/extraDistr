@@ -62,11 +62,10 @@ double invcdf_nst(double p, double nu, double mu, double sigma) {
 }
 
 double rng_nst(double nu, double mu, double sigma) {
-  if (ISNAN(nu) || ISNAN(mu) || ISNAN(sigma))
+  if (ISNAN(nu) || ISNAN(mu) || ISNAN(sigma) ||
+      nu <= 0.0 || sigma <= 0.0) {
+    Rcpp::warning("NAs produced");
     return NA_REAL;
-  if (nu <= 0.0 || sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
   }
   return R::rt(nu)*sigma + mu;
 }

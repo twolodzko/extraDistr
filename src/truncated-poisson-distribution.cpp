@@ -82,11 +82,10 @@ double invcdf_tpois(double p, double lambda, double a, double b) {
 }
 
 double rng_tpois(double lambda, double a, double b) {
-  if (ISNAN(lambda) || ISNAN(a) || ISNAN(b))
+  if (ISNAN(lambda) || ISNAN(a) || ISNAN(b) ||
+      lambda < 0.0 || b < a) {
+    Rcpp::warning("NAs produced");
     return NA_REAL;
-  if (lambda < 0.0 || b < a) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
   }
 
   double u, pa, pb;

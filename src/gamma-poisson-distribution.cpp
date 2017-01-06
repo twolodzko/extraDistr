@@ -87,11 +87,9 @@ std::vector<double> cdf_gpois_table(double x, double alpha, double beta) {
 }
 
 double rng_gpois(double alpha, double beta) {
-  if (ISNAN(alpha) || ISNAN(beta))
+  if (ISNAN(alpha) || ISNAN(beta) || alpha <= 0.0 || beta <= 0.0) {
+    Rcpp::warning("NAs produced");
     return NA_REAL;
-  if (alpha <= 0.0 || beta <= 0.0) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
   }
   double lambda = R::rgamma(alpha, beta);
   return R::rpois(lambda);

@@ -78,14 +78,13 @@ double invcdf_pareto(double p, double a, double b) {
   return b / pow(1.0-p, 1.0/a);
 }
 
-double invcdf_pareto2(double p, double a, double b) {
-  if (ISNAN(p) || ISNAN(a) || ISNAN(b))
+double rng_pareto(double a, double b) {
+  if (ISNAN(a) || ISNAN(b) || a <= 0.0 || b <= 0.0) {
+    Rcpp::warning("NAs produced");
     return NA_REAL;
-  if (a <= 0.0 || b <= 0.0 || p < 0.0 || p > 1.0) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
   }
-  return exp(log(b) - log(1.0-p)*(1.0/a));
+  double u = rng_unif();
+  return b / pow(u, 1.0/a);
 }
 
 
@@ -180,16 +179,13 @@ NumericVector cpp_rpareto(
     const NumericVector& b
   ) {
 
-  double u;
   std::vector<int> dims;
   dims.push_back(a.length());
   dims.push_back(b.length());
   NumericVector x(n);
 
-  for (int i = 0; i < n; i++) {
-    u = rng_unif();
-    x[i] = invcdf_pareto(u, a[i % dims[0]], b[i % dims[1]]);
-  }
+  for (int i = 0; i < n; i++)
+    x[i] = rng_pareto(a[i % dims[0]], b[i % dims[1]]);
 
   return x;
 }

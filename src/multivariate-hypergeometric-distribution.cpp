@@ -124,35 +124,30 @@ NumericMatrix cpp_rmvhyper(
   NumericMatrix x(nn, m);
   std::vector<double> n_otr(m);
   
-  bool missings, wrong_n;
+  bool throw_warning;
   double k_left;
 
   for (int i = 0; i < nn; i++) {
     
-    missings = false;
-    wrong_n = false;
+    throw_warning = false;
     n_otr[0] = 0.0;
     
     for (int j = 1; j < m; j++) {
-      if (!isInteger(n(i % dims[0], j), false) || n(i % dims[0], j) < 0.0)
-        wrong_n = true;
-      if (ISNAN(n(i % dims[0], j)))
-        missings = true;
+      if (!isInteger(n(i % dims[0], j), false) ||
+          n(i % dims[0], j) < 0.0 || ISNAN(n(i % dims[0], j))) {
+        throw_warning = true;
+        break;
+      }
       n_otr[0] += n(i % dims[0], j);
     }
     
-    if (missings || ISNAN(k[i % dims[1]]) || ISNAN(n(i % dims[0], 0))) {
+    if (throw_warning || ISNAN(k[i % dims[1]]) || ISNAN(n(i % dims[0], 0)) ||
+        !isInteger(n(i % dims[0], 0), false) || n(i % dims[0], 0) < 0 ||
+        (n_otr[0] + n(i % dims[0], 0)) < k[i % dims[1]] ||
+        !isInteger(k[i % dims[1]], false) || k[i % dims[1]] < 0.0) {
+      Rcpp::warning("NAs produced");
       for (int j = 0; j < m; j++)
         x(i, j) = NA_REAL;
-      continue;
-    }
-    
-    if (wrong_n || !isInteger(n(i % dims[0], 0), false) ||
-        n(i % dims[0], 0) < 0 || (n_otr[0] + n(i % dims[0], 0)) < k[i % dims[1]] ||
-        !isInteger(k[i % dims[1]], false) || k[i % dims[1]] < 0.0) {
-      Rcpp::warning("NaNs produced");
-      for (int j = 0; j < m; j++)
-        x(i, j) = NAN;
       continue;
     }
     

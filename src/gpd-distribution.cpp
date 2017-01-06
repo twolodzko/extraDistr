@@ -95,6 +95,18 @@ double invcdf_gpd(double p, double mu, double sigma, double xi) {
     return mu - sigma * log(1.0-p);
 }
 
+double rng_gpd(double mu, double sigma, double xi) {
+  if (ISNAN(mu) || ISNAN(sigma) || ISNAN(xi) || sigma <= 0.0) {
+    Rcpp::warning("NAs produced");
+    return NA_REAL;
+  }
+  double u = rng_unif();
+  if (xi != 0.0)
+    return mu + sigma * (pow(u, -xi)-1.0)/xi;
+  else
+    return mu - sigma * log(u);
+}
+
 
 // [[Rcpp::export]]
 NumericVector cpp_dgpd(
@@ -197,17 +209,14 @@ NumericVector cpp_rgpd(
     const NumericVector& xi
   ) {
 
-  double u;
   std::vector<int> dims;
   dims.push_back(mu.length());
   dims.push_back(sigma.length());
   dims.push_back(xi.length());
   NumericVector x(n);
 
-  for (int i = 0; i < n; i++) {
-    u = rng_unif();
-    x[i] = invcdf_gpd(u, mu[i % dims[0]], sigma[i % dims[1]], xi[i % dims[2]]);
-  }
+  for (int i = 0; i < n; i++)
+    x[i] = rng_gpd(mu[i % dims[0]], sigma[i % dims[1]], xi[i % dims[2]]);
 
   return x;
 }

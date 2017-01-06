@@ -69,6 +69,15 @@ double invcdf_kumar(double p, double a, double b) {
   return pow(1.0 - pow(1.0 - p, 1.0/b), 1.0/a);
 }
 
+double rng_kumar(double a, double b) {
+  if (ISNAN(a) || ISNAN(b) || a <= 0.0 || b <= 0.0) {
+    Rcpp::warning("NAs produced");
+    return NA_REAL;
+  }
+  double u = rng_unif();
+  return pow(1.0 - pow(u, 1.0/b), 1.0/a);
+}
+
 double logpdf_kumar(double x, double a, double b) {
   if (ISNAN(x) || ISNAN(a) || ISNAN(b))
     return NA_REAL;
@@ -173,16 +182,13 @@ NumericVector cpp_rkumar(
     const NumericVector& b
   ) {
 
-  double u;
   std::vector<int> dims;
   dims.push_back(a.length());
   dims.push_back(b.length());
   NumericVector x(n);
 
-  for (int i = 0; i < n; i++) {
-    u = rng_unif();
-    x[i] = invcdf_kumar(u, a[i % dims[0]], b[i % dims[1]]);
-  }
+  for (int i = 0; i < n; i++)
+    x[i] = rng_kumar(a[i % dims[0]], b[i % dims[1]]);
 
   return x;
 }

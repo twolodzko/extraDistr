@@ -39,6 +39,17 @@ double invcdf_tlambda(double p, double lambda) {
   return (pow(p, lambda) - pow(1.0 - p, lambda))/lambda;
 }
 
+double rng_tlambda(double lambda) {
+  if (ISNAN(lambda)) {
+    Rcpp::warning("NAs produced");
+    return NA_REAL;
+  }
+  double u = rng_unif();
+  if (lambda == 0.0)
+    return log(u) - log(1.0 - u);
+  return (pow(u, lambda) - pow(1.0 - u, lambda))/lambda;
+}
+
 
 // [[Rcpp::export]]
 NumericVector cpp_qtlambda(
@@ -76,12 +87,9 @@ NumericVector cpp_rtlambda(
   
   int dims = lambda.length();
   NumericVector x(n);
-  double u;
     
-  for (int i = 0; i < n; i++) {
-    u = rng_unif();
-    x[i] = invcdf_tlambda(u, lambda[i % dims]);
-  }
+  for (int i = 0; i < n; i++)
+    x[i] = rng_tlambda(lambda[i % dims]);
   
   return x;
 }

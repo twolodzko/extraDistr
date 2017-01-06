@@ -65,11 +65,9 @@ double invcdf_ht(double p, double nu, double sigma) {
 }
 
 double rng_ht(double nu, double sigma) {
-  if (ISNAN(nu) || ISNAN(sigma))
+  if (ISNAN(nu) || ISNAN(sigma) || sigma <= 0.0 || nu <= 0.0) {
+    Rcpp::warning("NAs produced");
     return NA_REAL;
-  if (sigma <= 0.0 || nu <= 0.0) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
   }
   return abs(R::rt(nu) * sigma);
 }

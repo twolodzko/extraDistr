@@ -73,6 +73,16 @@ double invcdf_frechet(double p, double lambda, double mu, double sigma) {
   return mu + sigma * pow(-log(p), -1.0/lambda);
 }
 
+double rng_frechet(double lambda, double mu, double sigma) {
+  if (ISNAN(lambda) || ISNAN(mu) || ISNAN(sigma) ||
+      lambda <= 0.0 || sigma <= 0.0) {
+    Rcpp::warning("NAs produced");
+    return NA_REAL;
+  }
+  double u = rng_unif();
+  return mu + sigma * pow(-log(u), -1.0/lambda);
+}
+
 
 // [[Rcpp::export]]
 NumericVector cpp_dfrechet(
@@ -175,18 +185,14 @@ NumericVector cpp_rfrechet(
     const NumericVector& sigma
   ) {
 
-  double u;
   std::vector<int> dims;
   dims.push_back(lambda.length());
   dims.push_back(mu.length());
   dims.push_back(sigma.length());
   NumericVector x(n);
 
-  for (int i = 0; i < n; i++) {
-    u = rng_unif();
-    x[i] = invcdf_frechet(u, lambda[i % dims[0]],
-                          mu[i % dims[1]], sigma[i % dims[2]]);
-  }
+  for (int i = 0; i < n; i++)
+    x[i] = rng_frechet(lambda[i % dims[0]], mu[i % dims[1]], sigma[i % dims[2]]);
 
   return x;
 }

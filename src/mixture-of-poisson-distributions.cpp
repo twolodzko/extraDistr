@@ -190,14 +190,9 @@ NumericVector cpp_rmixpois(
       alpha_tot += alpha(i % dims[1], j);
     }
     
-    if (missings) {
+    if (missings || wrong_param) {
+      Rcpp::warning("NAs produced");
       x[i] = NA_REAL;
-      continue;
-    }
-    
-    if (wrong_param) {
-      Rcpp::warning("NaNs produced");
-      x[i] = NAN;
       continue;
     }
     

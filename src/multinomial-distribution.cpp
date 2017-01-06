@@ -122,7 +122,7 @@ NumericMatrix cpp_rmnom(
   dims.push_back(size.length());
   dims.push_back(prob.nrow());
   int k = prob.ncol();
-  bool wrong_param, missings;
+  bool throw_warning;
   double p_tmp, size_left, sum_p, p_tot;
   
   NumericMatrix x(n, k);
@@ -132,31 +132,25 @@ NumericMatrix cpp_rmnom(
     size_left = size[i % dims[0]];
     sum_p = 1.0;
     p_tot = 0.0;
-    wrong_param = false;
-    missings = false;
+    throw_warning = false;
     
     // TODO:
     // sort prob(i,_) first?
     
     for (int j = 0; j < k; j++) {
-      if (ISNAN(prob(i % dims[1], j)) || ISNAN(x(i % n, j)))
-        missings = true;
-      if (prob(i % dims[1], j) < 0.0)
-        wrong_param = true;
+      if (ISNAN(prob(i % dims[1], j)) || ISNAN(x(i % n, j)) ||
+          prob(i % dims[1], j) < 0.0) {
+        throw_warning = true;
+        break;
+      }
       p_tot += prob(i % dims[1], j);
     }
     
-    if (missings || ISNAN(size[i % dims[0]])) {
+    if (throw_warning || ISNAN(size[i % dims[0]]) || size[i % dims[0]] < 0.0 ||
+        !isInteger(size[i % dims[0]], false)) {
+      Rcpp::warning("NAs produced");
       for (int j = 0; j < k; j++)
         x(i, j) = NA_REAL;
-      continue;
-    } 
-    
-    if (wrong_param || size[i % dims[0]] < 0.0 ||
-        !isInteger(size[i % dims[0]], false)) {
-      Rcpp::warning("NaNs produced");
-      for (int j = 0; j < k; j++)
-        x(i, j) = NAN;
       continue;
     }
 

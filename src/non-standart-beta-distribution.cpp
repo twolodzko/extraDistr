@@ -65,11 +65,10 @@ double invcdf_nsbeta(double p, double alpha, double beta, double l, double u) {
 }
 
 double rng_nsbeta(double alpha, double beta, double l, double u) {
-  if (ISNAN(alpha) || ISNAN(beta) || ISNAN(l) || ISNAN(u))
+  if (ISNAN(alpha) || ISNAN(beta) || ISNAN(l) || ISNAN(u) ||
+      l >= u || alpha < 0.0 || beta < 0.0) {
+    Rcpp::warning("NAs produced");
     return NA_REAL;
-  if (l >= u || alpha < 0.0 || beta < 0.0) {
-    Rcpp::warning("NaNs produced");
-    return NAN;
   }
   return R::rbeta(alpha, beta) * (u-l) + l;
 }

@@ -94,11 +94,9 @@ rcat <- function(n, prob, labels) {
   
   if (is.vector(prob)) {
     k <- length(prob)
-    if (anyNA(prob)) {
+    if (anyNA(prob) || any(prob < 0)) {
+      warning("NAs produced")
       x <- rep(NA, n)
-    } else if (any(prob < 0)) {
-      warning("NaNs produced")
-      x <- rep(NaN, n)
     } else {
       x <- sample.int(k, size = n, replace = TRUE, prob = prob)
     }

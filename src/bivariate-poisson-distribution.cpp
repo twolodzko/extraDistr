@@ -103,13 +103,11 @@ NumericMatrix cpp_rbpois(
   NumericMatrix x(n, 2);
   
   for (int i = 0; i < n; i++) {
-    if (ISNAN(a[i % dims[0]]) || ISNAN(b[i % dims[1]]) || ISNAN(c[i % dims[2]])) {
+    if (ISNAN(a[i % dims[0]]) || ISNAN(b[i % dims[1]]) || ISNAN(c[i % dims[2]]) ||
+        a[i % dims[0]] < 0.0 || b[i % dims[1]] < 0.0 || c[i % dims[2]] < 0.0) {
+      Rcpp::warning("NAs produced");
       x(i, 0) = NA_REAL;
       x(i, 1) = NA_REAL;
-    } else if (a[i % dims[0]] < 0.0 || b[i % dims[1]] < 0.0 || c[i % dims[2]] < 0.0) {
-      Rcpp::warning("NaNs produced");
-      x(i, 0) = NAN;
-      x(i, 1) = NAN;
     } else {
       u = R::rpois(a[i % dims[0]]);
       v = R::rpois(b[i % dims[1]]);
