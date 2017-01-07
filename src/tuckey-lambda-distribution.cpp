@@ -8,13 +8,7 @@ using std::exp;
 using std::log;
 using std::floor;
 using std::ceil;
-using std::sin;
-using std::cos;
-using std::tan;
-using std::atan;
-using Rcpp::IntegerVector;
 using Rcpp::NumericVector;
-using Rcpp::NumericMatrix;
 
 /*
 Joiner, B.L., & Rosenblatt, J.R. (1971).

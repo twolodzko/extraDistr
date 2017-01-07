@@ -8,13 +8,7 @@ using std::exp;
 using std::log;
 using std::floor;
 using std::ceil;
-using std::sin;
-using std::cos;
-using std::tan;
-using std::atan;
-using Rcpp::IntegerVector;
 using Rcpp::NumericVector;
-using Rcpp::NumericMatrix;
 
 
 /*
@@ -65,6 +59,15 @@ double invcdf_bernoulli(double p, double prob) {
     return NAN;
   }
   return (p <= 1.0 - prob) ? 0.0 : 1.0;
+}
+
+double rng_bernoulli(double p) {
+  if (ISNAN(p) || p < 0.0 || p > 1.0) {
+    Rcpp::warning("NAs produced");
+    return NA_REAL;
+  }
+  double u = rng_unif();
+  return (u > p) ? 0.0 : 1.0;
 }
 
 
@@ -156,7 +159,7 @@ NumericVector cpp_rbern(
   NumericVector x(n);
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_bern(prob[i % dims]);
+    x[i] = rng_bernoulli(prob[i % dims]);
   
   return x;
 }

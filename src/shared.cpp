@@ -67,15 +67,6 @@ double rng_unif() {
   return u;
 }
 
-double rng_bern(double p) {
-  if (ISNAN(p) || p < 0.0 || p > 1.0) {
-    Rcpp::warning("NAs produced");
-    return NA_REAL;
-  }
-  double u = rng_unif();
-  return (u > p) ? 0.0 : 1.0;
-}
-
 double rng_sign() {
   double u = rng_unif();
   return (u > 0.5) ? 1.0 : -1.0;
