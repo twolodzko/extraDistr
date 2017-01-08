@@ -1501,7 +1501,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dmixpois
-NumericVector cpp_dmixpois(const NumericVector& x, const NumericMatrix& lambda, const NumericMatrix& alpha, bool log_prob);
+NumericVector cpp_dmixpois(const NumericVector& x, const NumericMatrix& lambda, const NumericMatrix& alpha, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dmixpois(SEXP xSEXP, SEXP lambdaSEXP, SEXP alphaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1509,13 +1509,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericMatrix& >::type lambda(lambdaSEXP);
     Rcpp::traits::input_parameter< const NumericMatrix& >::type alpha(alphaSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_dmixpois(x, lambda, alpha, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_pmixpois
-NumericVector cpp_pmixpois(const NumericVector& x, const NumericMatrix& lambda, const NumericMatrix& alpha, bool lower_tail, bool log_prob);
+NumericVector cpp_pmixpois(const NumericVector& x, const NumericMatrix& lambda, const NumericMatrix& alpha, const bool& lower_tail, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_pmixpois(SEXP xSEXP, SEXP lambdaSEXP, SEXP alphaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1523,19 +1523,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericMatrix& >::type lambda(lambdaSEXP);
     Rcpp::traits::input_parameter< const NumericMatrix& >::type alpha(alphaSEXP);
-    Rcpp::traits::input_parameter< bool >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_pmixpois(x, lambda, alpha, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rmixpois
-NumericVector cpp_rmixpois(const int n, const NumericMatrix& lambda, const NumericMatrix& alpha);
+NumericVector cpp_rmixpois(const int& n, const NumericMatrix& lambda, const NumericMatrix& alpha);
 RcppExport SEXP extraDistr_cpp_rmixpois(SEXP nSEXP, SEXP lambdaSEXP, SEXP alphaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericMatrix& >::type lambda(lambdaSEXP);
     Rcpp::traits::input_parameter< const NumericMatrix& >::type alpha(alphaSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rmixpois(n, lambda, alpha));

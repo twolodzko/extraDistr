@@ -17,6 +17,9 @@ std::vector<double> nhyper_table(
     bool cumulative = false
   ) {
   
+  if (n < 0.0 || m < 0.0 || r < 0.0 || r > m)
+    Rcpp::stop("inadmissible values");
+  
   double j, N, start_eps;
   int ni = static_cast<int>(n);
   N = m+n;

@@ -23,12 +23,12 @@ using Rcpp::NumericVector;
  */
 
 
-double pmf_dunif(double x, double min, double max) {
+double pmf_dunif(double x, double min, double max, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(min) || ISNAN(max))
-    return NA_REAL;
+    return x+min+max;
   if (min > max || !R_FINITE(min) || !R_FINITE(max) ||
       !isInteger(min, false) || !isInteger(max, false)) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (x < min || x > max || !isInteger(x))
@@ -37,12 +37,12 @@ double pmf_dunif(double x, double min, double max) {
 }
 
 
-double cdf_dunif(double x, double min, double max) {
+double cdf_dunif(double x, double min, double max, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(min) || ISNAN(max))
-    return NA_REAL;
+    return x+min+max;
   if (min > max || !R_FINITE(min) || !R_FINITE(max) ||
       !isInteger(min, false) || !isInteger(max, false)) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (x < min)
@@ -52,13 +52,13 @@ double cdf_dunif(double x, double min, double max) {
   return (floor(x)-min+1.0)/(max-min+1.0);
 }
 
-double invcdf_dunif(double p, double min, double max) {
+double invcdf_dunif(double p, double min, double max, bool& throw_warning) {
   if (ISNAN(p) || ISNAN(min) || ISNAN(max))
-    return NA_REAL;
+    return p+min+max;
   if (min > max || !R_FINITE(min) || !R_FINITE(max) ||
       !isInteger(min, false) || !isInteger(max, false) ||
       p < 0.0 || p > 1.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (p == 0 || min == max)
@@ -66,11 +66,11 @@ double invcdf_dunif(double p, double min, double max) {
   return ceil( p*(max-min+1.0)+min-1.0 );
 }
 
-double rng_dunif(double min, double max) {
+double rng_dunif(double min, double max, bool& throw_warning) {
   if (ISNAN(min) || ISNAN(max) ||
       min > max || !R_FINITE(min) || !R_FINITE(max) ||
       !isInteger(min, false) || !isInteger(max, false)) {
-    Rcpp::warning("NAs produced");
+    throw_warning = true;
     return NA_REAL;
   }
   if (min == max)
@@ -94,11 +94,17 @@ NumericVector cpp_ddunif(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < Nmax; i++)
-    p[i] = pmf_dunif(x[i % dims[0]], min[i % dims[1]], max[i % dims[2]]);
+    p[i] = pmf_dunif(x[i % dims[0]], min[i % dims[1]],
+                     max[i % dims[2]], throw_warning);
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -120,14 +126,20 @@ NumericVector cpp_pdunif(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_dunif(x[i % dims[0]], min[i % dims[1]], max[i % dims[2]]);
+    p[i] = cdf_dunif(x[i % dims[0]], min[i % dims[1]],
+                     max[i % dims[2]], throw_warning);
   
   if (!lower_tail)
     p = 1.0 - p;
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -150,6 +162,8 @@ NumericVector cpp_qdunif(
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
+  bool throw_warning = false;
+  
   if (log_prob)
     pp = Rcpp::exp(pp);
   
@@ -157,7 +171,11 @@ NumericVector cpp_qdunif(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_dunif(pp[i % dims[0]], min[i % dims[1]], max[i % dims[2]]);
+    q[i] = invcdf_dunif(pp[i % dims[0]], min[i % dims[1]],
+                        max[i % dims[2]], throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return q;
 }
@@ -175,8 +193,14 @@ NumericVector cpp_rdunif(
   dims.push_back(max.length());
   NumericVector x(n);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < n; i++)
-    x[i] = rng_dunif(min[i % dims[0]], max[i % dims[1]]);
+    x[i] = rng_dunif(min[i % dims[0]], max[i % dims[1]],
+                     throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
   
   return x;
 }

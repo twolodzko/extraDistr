@@ -365,7 +365,7 @@ test_that("Wrong parameter values in CDF functions", {
 
 
 
-test_that("Wrong parameter values in inverse CDF functions", {
+test_that("Wrong parameter values in quantile functions", {
 
   expect_warning(expect_true(is.nan(qbetapr(0.5, -1, 1, 1))))
   expect_warning(expect_true(is.nan(qbetapr(0.5, 1, -1, 1))))

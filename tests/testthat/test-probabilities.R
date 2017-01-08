@@ -74,7 +74,7 @@ test_that("All cumulative probabilities >= 0 and <= 1", {
   expect_true(all(pcat(x, c(0.5, 0.5)) >= 0 & pcat(x, c(0.5, 0.5)) <= 1))
   # expect_true(all(pdirichlet(c(0.5, 0.5), c(1, 0.5)) >= 0))
   expect_true(all(pdlaplace(x, scale = 0.5) >= 0 & pdlaplace(x, scale = 0.5) <= 1))
-  expect_true(all(pdnorm(x, sd = 1) >= 0 & pdnorm(x, sd = 1) <= 1))
+  expect_true(all(pdnorm(x, sd = 50) >= 0 & pdnorm(x, sd = 50) <= 1))
   expect_true(all(pdunif(x, min = 10, max = 100) >= 0 & pdunif(x, min = 10, max = 100) <= 1))
   expect_true(all(pdweibull(x, 0.5, 1) >= 0 & pdweibull(x, 0.5, 1) <= 1))
   expect_true(all(pfatigue(x, 1, 1) >= 0 & pfatigue(x, 1, 1) <= 1))

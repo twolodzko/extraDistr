@@ -30,11 +30,11 @@ using Rcpp::NumericVector;
 *
 */
 
-double pdf_dweibull(double x, double q, double beta) {
+double pdf_dweibull(double x, double q, double beta, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(q) || ISNAN(beta))
-    return NA_REAL;
+    return x+q+beta;
   if (q <= 0.0 || q >= 1.0 || beta <= 0.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (!isInteger(x) || x < 0.0)
@@ -42,11 +42,11 @@ double pdf_dweibull(double x, double q, double beta) {
   return pow(q, pow(x, beta)) - pow(q, pow(x+1.0, beta));
 }
 
-double cdf_dweibull(double x, double q, double beta) {
+double cdf_dweibull(double x, double q, double beta, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(q) || ISNAN(beta))
-    return NA_REAL;
+    return x+q+beta;
   if (q <= 0.0 || q >= 1.0 || beta <= 0.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (x < 0.0)
@@ -54,11 +54,11 @@ double cdf_dweibull(double x, double q, double beta) {
   return 1.0 - pow(q, pow(x+1.0, beta));
 }
 
-double invcdf_dweibull(double p, double q, double beta) {
+double invcdf_dweibull(double p, double q, double beta, bool& throw_warning) {
   if (ISNAN(p) || ISNAN(q) || ISNAN(beta))
-    return NA_REAL;
+    return p+q+beta;
   if (q <= 0.0 || q >= 1.0 || beta <= 0.0 || p < 0.0 || p > 1.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (p == 0.0)
@@ -66,9 +66,9 @@ double invcdf_dweibull(double p, double q, double beta) {
   return ceil(pow(log(1.0 - p)/log(q), 1.0/beta) - 1.0);
 }
 
-double rng_dweibull(double q, double beta) {
+double rng_dweibull(double q, double beta, bool& throw_warning) {
   if (ISNAN(q) || ISNAN(beta) || q <= 0.0 || q >= 1.0 || beta <= 0.0) {
-    Rcpp::warning("NAs produced");
+    throw_warning = true;
     return NA_REAL;
   }
   double u = rng_unif();
@@ -90,12 +90,18 @@ NumericVector cpp_ddweibull(
   dims.push_back(beta.length());
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
+  
+  bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_dweibull(x[i % dims[0]], q[i % dims[1]], beta[i % dims[2]]);
+    p[i] = pdf_dweibull(x[i % dims[0]], q[i % dims[1]],
+                        beta[i % dims[2]], throw_warning);
 
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
 
   return p;
 }
@@ -116,15 +122,21 @@ NumericVector cpp_pdweibull(
   dims.push_back(beta.length());
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
+  
+  bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_dweibull(x[i % dims[0]], q[i % dims[1]], beta[i % dims[2]]);
+    p[i] = cdf_dweibull(x[i % dims[0]], q[i % dims[1]],
+                        beta[i % dims[2]], throw_warning);
 
   if (!lower_tail)
     p = 1.0 - p;
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -146,6 +158,8 @@ NumericVector cpp_qdweibull(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
+  
+  bool throw_warning = false;
 
   if (log_prob)
     pp = Rcpp::exp(pp);
@@ -154,7 +168,11 @@ NumericVector cpp_qdweibull(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_dweibull(pp[i % dims[0]], q[i % dims[1]], beta[i % dims[2]]);
+    x[i] = invcdf_dweibull(pp[i % dims[0]], q[i % dims[1]],
+                           beta[i % dims[2]], throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
 
   return x;
 }
@@ -171,9 +189,15 @@ NumericVector cpp_rdweibull(
   dims.push_back(q.length());
   dims.push_back(beta.length());
   NumericVector x(n);
+  
+  bool throw_warning = false;
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_dweibull(q[i % dims[0]], beta[i % dims[1]]);
+    x[i] = rng_dweibull(q[i % dims[0]], beta[i % dims[1]],
+                        throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
 
   return x;
 }

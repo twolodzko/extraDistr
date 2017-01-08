@@ -20,7 +20,7 @@ NumericVector cpp_dmixnorm(
     const NumericMatrix& sigma,
     const NumericMatrix& alpha,
     const bool& log_prob = false
-) {
+  ) {
   
   std::vector<int> dims;
   dims.push_back(x.length());
@@ -85,7 +85,7 @@ NumericVector cpp_pmixnorm(
     const NumericMatrix& alpha,
     const bool& lower_tail = true,
     const bool& log_prob = false
-) {
+  ) {
   
   std::vector<int> dims;
   dims.push_back(x.length());
@@ -151,7 +151,7 @@ NumericVector cpp_rmixnorm(
     const NumericMatrix& mu,
     const NumericMatrix& sigma,
     const NumericMatrix& alpha
-) {
+  ) {
   
   std::vector<int> dims;
   dims.push_back(mu.nrow());

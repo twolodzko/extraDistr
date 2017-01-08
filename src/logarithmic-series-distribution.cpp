@@ -26,11 +26,11 @@ using Rcpp::NumericVector;
 */
 
 
-double pdf_lgser(double x, double theta) {
+double pdf_lgser(double x, double theta, bool& throw_warnin) {
   if (ISNAN(x) || ISNAN(theta))
-    return NA_REAL;
+    return x+theta;
   if (theta <= 0.0 || theta >= 1.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warnin = true;
     return NAN;
   }
   if (!isInteger(x) || x < 1.0)
@@ -40,11 +40,11 @@ double pdf_lgser(double x, double theta) {
 }
 
 
-double cdf_lgser(double x, double theta) {
+double cdf_lgser(double x, double theta, bool& throw_warnin) {
   if (ISNAN(x) || ISNAN(theta))
-    return NA_REAL;
+    return x+theta;
   if (theta <= 0.0 || theta >= 1.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warnin = true;
     return NAN;
   }
   if (x < 1.0)
@@ -61,11 +61,11 @@ double cdf_lgser(double x, double theta) {
   return a * b;
 }
 
-double invcdf_lgser(double p, double theta) {
+double invcdf_lgser(double p, double theta, bool& throw_warnin) {
   if (ISNAN(p) || ISNAN(theta))
-    return NA_REAL;
+    return p+theta;
   if (theta <= 0.0 || theta >= 1.0 || p < 0.0 || p > 1.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warnin = true;
     return NAN;
   }
   if (p == 0.0)
@@ -85,9 +85,9 @@ double invcdf_lgser(double p, double theta) {
   return k;
 }
 
-double rng_lgser(double theta) {
+double rng_lgser(double theta, bool& throw_warnin) {
   if (ISNAN(theta) || theta <= 0.0 || theta >= 1.0) {
-    Rcpp::warning("NAs produced");
+    throw_warnin = true;
     return NA_REAL;
   }
 
@@ -117,12 +117,18 @@ NumericVector cpp_dlgser(
   dims.push_back(theta.length());
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
+  
+  bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_lgser(x[i % dims[0]], theta[i % dims[1]]);
+    p[i] = pdf_lgser(x[i % dims[0]], theta[i % dims[1]],
+                     throw_warning);
  
  if (log_prob)
    p = Rcpp::log(p);
+ 
+ if (throw_warning)
+   Rcpp::warning("NaNs produced");
 
   return p;
 }
@@ -141,9 +147,12 @@ NumericVector cpp_plgser(
   dims.push_back(theta.length());
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
+  
+  bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_lgser(x[i % dims[0]], theta[i % dims[1]]);
+    p[i] = cdf_lgser(x[i % dims[0]], theta[i % dims[1]],
+                     throw_warning);
 
   if (!lower_tail)
     p = 1.0 - p;
@@ -151,6 +160,9 @@ NumericVector cpp_plgser(
   if (log_prob)
     p = Rcpp::log(p);
 
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
+  
   return p;
 }
 
@@ -170,6 +182,8 @@ NumericVector cpp_qlgser(
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
+  bool throw_warning = false;
+  
   if (log_prob)
     pp = Rcpp::exp(pp);
   
@@ -177,7 +191,11 @@ NumericVector cpp_qlgser(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_lgser(pp[i % dims[0]], theta[i % dims[1]]);
+    x[i] = invcdf_lgser(pp[i % dims[0]], theta[i % dims[1]],
+                        throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return x;
 }
@@ -191,9 +209,14 @@ NumericVector cpp_rlgser(
 
   int dims = theta.length();
   NumericVector x(n);
+  
+  bool throw_warning = false;
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_lgser(theta[i % dims]);
+    x[i] = rng_lgser(theta[i % dims], throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
 
   return x;
 }

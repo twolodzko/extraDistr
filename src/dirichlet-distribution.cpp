@@ -42,12 +42,14 @@ NumericVector cpp_ddirichlet(
   k = std::min(m, k);
   NumericVector p(Nmax);
   
-  if (k < 2)
-    Rcpp::stop("Number of columns in alpha should be >= 2");
-  if (m != k)
-    Rcpp::stop("Number of columns in x does not equal number of columns in alpha");
+  bool throw_warning = false;
   
-  double prod_gamma, sum_alpha, p_tmp, beta_const;
+  if (k < 2)
+    Rcpp::stop("number of columns in alpha should be >= 2");
+  if (m != k)
+    Rcpp::stop("number of columns in x does not equal number of columns in alpha");
+  
+  double prod_gamma, sum_alpha, p_tmp, beta_const, sum_x;
   bool wrong_alpha, missings, wrong_x;
 
   for (int i = 0; i < Nmax; i++) {
@@ -55,34 +57,32 @@ NumericVector cpp_ddirichlet(
     wrong_alpha = false;
     missings = false;
     wrong_x = false;
+    sum_alpha = 0.0;
+    sum_x = 0.0;
     
     for (int j = 0; j < m; j++) {
-      if (ISNAN(alpha(i % dims[1], j)) || ISNAN(x(i % dims[0], j))) {
-        missings = true;
-        break;
-      }
+      sum_alpha += alpha(i % dims[1], j);
+      sum_x += x(i % dims[0], j);
       if (alpha(i % dims[1], j) <= 0.0)
         wrong_alpha = true;
       if (x(i % dims[0], j) < 0.0 || x(i % dims[0], j) > 1.0)
         wrong_x = true;
     }
     
-    if (missings) {
-      p[i] = NA_REAL;
+    if (ISNAN(sum_x + sum_alpha)) {
+      p[i] = sum_x + sum_alpha;
     } else if (wrong_alpha) {
-      Rcpp::warning("NaNs produced");
+      throw_warning = true;
       p[i] = NAN;
     } else if (wrong_x) {
       p[i] = R_NegInf;
     } else {
       
       prod_gamma = 0.0;
-      sum_alpha = 0.0;
       p_tmp = 0.0;
       
       for (int j = 0; j < m; j++) {
         prod_gamma += R::lgammafn(alpha(i % dims[1], j));
-        sum_alpha += alpha(i % dims[1], j);
         p_tmp += log(x(i % dims[0], j)) * (alpha(i % dims[1], j) - 1.0);
         
         if (alpha(i % dims[1], j) == 1.0 && x(i % dims[0], j) == 0.0)
@@ -96,6 +96,9 @@ NumericVector cpp_ddirichlet(
 
   if (!log_prob)
     p = Rcpp::exp(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
 
   return p;
 }
@@ -111,19 +114,23 @@ NumericMatrix cpp_rdirichlet(
   int dims = alpha.nrow();
   NumericMatrix x(n, k);
   
+  bool throw_warning = false;
+  
   if (k < 2)
     Rcpp::stop("Number of columns in alpha should be >= 2");
   
-  double row_sum;
-  bool throw_warning;
+  double row_sum, sum_alpha;
+  bool wrong_values;
 
   for (int i = 0; i < n; i++) {
+    sum_alpha = 0.0;
     row_sum = 0.0;
-    throw_warning = false;
+    wrong_values = false;
 
     for (int j = 0; j < k; j++) {
-      if (ISNAN(alpha(i % dims, j)) || alpha(i % dims, j) <= 0.0) {
-        throw_warning = true;
+      sum_alpha += alpha(i % dims, j);
+      if (alpha(i % dims, j) <= 0.0) {
+        wrong_values = true;
         break;
       }
       
@@ -131,8 +138,8 @@ NumericMatrix cpp_rdirichlet(
       row_sum += x(i, j);
     }
 
-    if (throw_warning) {
-      Rcpp::warning("NAs produced");
+    if (ISNAN(sum_alpha) || wrong_values) {
+      throw_warning = true;
       for (int j = 0; j < k; j++)
         x(i, j) = NA_REAL;
     } else {
@@ -140,6 +147,9 @@ NumericMatrix cpp_rdirichlet(
         x(i, j) /= row_sum;
     }
   }
+  
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
 
   return x;
 }

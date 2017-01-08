@@ -33,11 +33,12 @@ using Rcpp::NumericVector;
 */
 
 
-double pdf_gompertz(double x, double a, double b) {
+double pdf_gompertz(double x, double a,
+                    double b, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(a) || ISNAN(b))
-    return NA_REAL;
+    return x+a+b;
   if (a <= 0.0 || b <= 0.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (x < 0.0 || !R_FINITE(x))
@@ -45,11 +46,12 @@ double pdf_gompertz(double x, double a, double b) {
   return a * exp(b*x - a/b * (exp(b*x) - 1.0));
 }
 
-double cdf_gompertz(double x, double a, double b) {
+double cdf_gompertz(double x, double a,
+                    double b, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(a) || ISNAN(b))
-    return NA_REAL;
+    return x+a+b;
   if (a <= 0.0 || b <= 0.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (x < 0.0)
@@ -59,30 +61,32 @@ double cdf_gompertz(double x, double a, double b) {
   return 1.0 - exp(-a/b * (exp(b*x) - 1.0));
 }
 
-double invcdf_gompertz(double p, double a, double b) {
+double invcdf_gompertz(double p, double a,
+                       double b, bool& throw_warning) {
   if (ISNAN(p) || ISNAN(a) || ISNAN(b))
-    return NA_REAL;
+    return p+a+b;
   if (a <= 0.0 || b <= 0.0 || p < 0.0 || p > 1.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   return 1.0/b * log(1.0 - b/a * log(1.0-p));
 }
 
-double rng_gompertz(double a, double b) {
+double rng_gompertz(double a, double b, bool& throw_warning) {
   if (ISNAN(a) || ISNAN(b) || a <= 0.0 || b <= 0.0) {
-    Rcpp::warning("NAs produced");
+    throw_warning = true;
     return NA_REAL;
   }
   double u = rng_unif();
   return 1.0/b * log(1.0 - b/a * log(u));
 }
 
-double logpdf_gompertz(double x, double a, double b) {
+double logpdf_gompertz(double x, double a,
+                       double b, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(a) || ISNAN(b))
-    return NA_REAL;
+    return x+a+b;
   if (a <= 0.0 || b <= 0.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (x < 0.0 || !R_FINITE(x))
@@ -105,12 +109,18 @@ NumericVector cpp_dgompertz(
   dims.push_back(b.length());
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
+  
+  bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpdf_gompertz(x[i % dims[0]], a[i % dims[1]], b[i % dims[2]]);
+    p[i] = logpdf_gompertz(x[i % dims[0]], a[i % dims[1]],
+                           b[i % dims[2]], throw_warning);
 
   if (!log_prob)
     p = Rcpp::exp(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
 
   return p;
 }
@@ -131,15 +141,21 @@ NumericVector cpp_pgompertz(
   dims.push_back(b.length());
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
+  
+  bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_gompertz(x[i % dims[0]], a[i % dims[1]], b[i % dims[2]]);
+    p[i] = cdf_gompertz(x[i % dims[0]], a[i % dims[1]],
+                        b[i % dims[2]], throw_warning);
 
   if (!lower_tail)
     p = 1.0 - p;
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
 
   return p;
 }
@@ -162,6 +178,8 @@ NumericVector cpp_qgompertz(
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
+  bool throw_warning = false;
+  
   if (log_prob)
     pp = Rcpp::exp(pp);
   
@@ -169,7 +187,11 @@ NumericVector cpp_qgompertz(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_gompertz(pp[i % dims[0]], a[i % dims[1]], b[i % dims[2]]);
+    q[i] = invcdf_gompertz(pp[i % dims[0]], a[i % dims[1]],
+                           b[i % dims[2]], throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
 
   return q;
 }
@@ -186,9 +208,15 @@ NumericVector cpp_rgompertz(
   dims.push_back(a.length());
   dims.push_back(b.length());
   NumericVector x(n);
+  
+  bool throw_warning = false;
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_gompertz(a[i % dims[0]], b[i % dims[1]]);
+    x[i] = rng_gompertz(a[i % dims[0]], b[i % dims[1]],
+                        throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
 
   return x;
 }

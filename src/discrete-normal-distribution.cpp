@@ -24,11 +24,12 @@ using Rcpp::NumericVector;
 */
 
 
-double pmf_dnorm(double x, double mu, double sigma) {
+double pmf_dnorm(double x, double mu,
+                 double sigma, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
-    return NA_REAL;
+    return x+mu+sigma;
   if (sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (!isInteger(x))
@@ -53,11 +54,17 @@ NumericVector cpp_ddnorm(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < Nmax; i++)
-    p[i] = pmf_dnorm(x[i % dims[0]], mu[i % dims[1]], sigma[i % dims[2]]);
+    p[i] = pmf_dnorm(x[i % dims[0]], mu[i % dims[1]],
+                     sigma[i % dims[2]], throw_warning);
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }

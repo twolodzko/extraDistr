@@ -6,7 +6,6 @@
 #ifndef EDCPP_SHARED_H
 #define EDCPP_SHARED_H
 
-
 // Basic functions
 
 bool isInteger(double x, bool warn = true);

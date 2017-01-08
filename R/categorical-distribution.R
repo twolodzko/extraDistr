@@ -35,6 +35,19 @@
 #' x <- rcat(1e5, c(0.2, 0.4, 0.3, 0.1))
 #' plot(prop.table(table(x)), type = "h")
 #' lines(0:5, dcat(0:5, c(0.2, 0.4, 0.3, 0.1)), col = "red")
+#' 
+#' p <- rdirichlet(1, rep(1, 20))
+#' x <- rcat(1e5, matrix(rep(p, 2), nrow = 2, byrow = TRUE))
+#' xx <- 0:21
+#' plot(prop.table(table(x)))
+#' lines(xx, dcat(xx, p), col = "red")
+#' 
+#' plot(ecdf(x))
+#' lines(xx, pcat(xx, p), col = "red")
+#' 
+#' pp <- seq(0, 1, by = 0.001)
+#' plot(ecdf(x))
+#' lines(qcat(pp, p), pp, col = "red")
 #'
 #' @name Categorical
 #' @aliases Categorical

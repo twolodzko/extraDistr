@@ -18,8 +18,8 @@ NumericVector cpp_dmixpois(
     const NumericVector& x,
     const NumericMatrix& lambda,
     const NumericMatrix& alpha,
-    bool log_prob = false
-) {
+    const bool& log_prob = false
+  ) {
   
   std::vector<int> dims;
   dims.push_back(x.length());
@@ -84,8 +84,9 @@ NumericVector cpp_pmixpois(
     const NumericVector& x,
     const NumericMatrix& lambda,
     const NumericMatrix& alpha,
-    bool lower_tail = true, bool log_prob = false
-) {
+    const bool& lower_tail = true,
+    const bool& log_prob = false
+  ) {
   
   std::vector<int> dims;
   dims.push_back(x.length());
@@ -146,7 +147,7 @@ NumericVector cpp_pmixpois(
 
 // [[Rcpp::export]]
 NumericVector cpp_rmixpois(
-    const int n,
+    const int& n,
     const NumericMatrix& lambda,
     const NumericMatrix& alpha
 ) {

@@ -12,17 +12,18 @@ using Rcpp::NumericVector;
 using Rcpp::NumericMatrix;
 
 
-double pmf_bpois(double x, double y, double a, double b, double c) {
+double pmf_bpois(double x, double y, double a, double b, double c,
+                 bool& throw_warning) {
   
   if (ISNAN(x) || ISNAN(y) || ISNAN(a) || ISNAN(b) || ISNAN(c))
-    return NA_REAL;
+    return x+y+a+b+c;
   
   if (a < 0.0 || b < 0.0 || c < 0.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   
-  if (!isInteger(x) || x < 0.0 || !R_finite(x) || !R_finite(y))
+  if (!isInteger(x) || x < 0.0 || !R_FINITE(x) || !R_FINITE(y))
     return 0.0;
   
   if (!isInteger(y, false)) {
@@ -68,15 +69,21 @@ NumericVector cpp_dbpois(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   if (dims[0] != dims[1])
     Rcpp::stop("lengths of x and y differ");
   
   for (int i = 0; i < Nmax; i++)
     p[i] = pmf_bpois(x[i % dims[0]], y[i % dims[1]],
-                     a[i % dims[2]], b[i % dims[3]], c[i % dims[4]]);
+                     a[i % dims[2]], b[i % dims[3]],
+                     c[i % dims[4]], throw_warning);
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -90,17 +97,19 @@ NumericMatrix cpp_rbpois(
     const NumericVector& c
   ) {
   
-  double u, v, w;
   std::vector<int> dims;
   dims.push_back(a.length());
   dims.push_back(b.length());
   dims.push_back(c.length());
   NumericMatrix x(n, 2);
+  double u, v, w;
+  
+  bool throw_warning = false;
   
   for (int i = 0; i < n; i++) {
-    if (ISNAN(a[i % dims[0]]) || ISNAN(b[i % dims[1]]) || ISNAN(c[i % dims[2]]) ||
+    if (ISNAN(a[i % dims[0]]) || ISNAN(b[i % dims[1]]) || ISNAN(c[i % dims[2]]) || 
         a[i % dims[0]] < 0.0 || b[i % dims[1]] < 0.0 || c[i % dims[2]] < 0.0) {
-      Rcpp::warning("NAs produced");
+      throw_warning = true;
       x(i, 0) = NA_REAL;
       x(i, 1) = NA_REAL;
     } else {
@@ -112,6 +121,9 @@ NumericMatrix cpp_rbpois(
     }
   }
 
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
+  
   return x;
 }
 

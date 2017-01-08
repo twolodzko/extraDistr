@@ -27,11 +27,12 @@ using Rcpp::NumericVector;
 *
 */
 
-double pdf_lomax(double x, double lambda, double kappa) {
+double pdf_lomax(double x, double lambda, double kappa,
+                 bool& throw_warning) {
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(kappa))
-    return NA_REAL;
+    return x+lambda+kappa;
   if (lambda <= 0.0 || kappa <= 0.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (x <= 0.0)
@@ -39,11 +40,12 @@ double pdf_lomax(double x, double lambda, double kappa) {
   return lambda*kappa / pow(1.0+lambda*x, kappa+1.0);
 }
 
-double logpdf_lomax(double x, double lambda, double kappa) {
+double logpdf_lomax(double x, double lambda, double kappa,
+                    bool& throw_warning) {
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(kappa))
-    return NA_REAL;
+    return x+lambda+kappa;
   if (lambda <= 0.0 || kappa <= 0.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (x <= 0.0)
@@ -51,11 +53,12 @@ double logpdf_lomax(double x, double lambda, double kappa) {
   return log(lambda) + log(kappa) - log(1.0+lambda*x)*(kappa+1.0);
 }
 
-double cdf_lomax(double x, double lambda, double kappa) {
+double cdf_lomax(double x, double lambda, double kappa,
+                 bool& throw_warning) {
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(kappa))
-    return NA_REAL;
+    return x+lambda+kappa;
   if (lambda <= 0.0 || kappa <= 0.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (x <= 0.0)
@@ -63,19 +66,20 @@ double cdf_lomax(double x, double lambda, double kappa) {
   return 1.0 - pow(1.0+lambda*x, -kappa);
 }
 
-double invcdf_lomax(double p, double lambda, double kappa) {
+double invcdf_lomax(double p, double lambda, double kappa,
+                    bool& throw_warning) {
   if (ISNAN(p) || ISNAN(lambda) || ISNAN(kappa))
-    return NA_REAL;
+    return p+lambda+kappa;
   if (lambda <= 0.0 || kappa <= 0.0 || p < 0.0 || p > 1.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   return (pow(1.0-p, -1.0/kappa)-1.0) / lambda;
 }
 
-double rng_lomax(double lambda, double kappa) {
+double rng_lomax(double lambda, double kappa, bool& throw_warning) {
   if (ISNAN(lambda) || ISNAN(kappa) || lambda <= 0.0 || kappa <= 0.0) {
-    Rcpp::warning("NAs produced");
+    throw_warning = true;
     return NA_REAL;
   }
   double u = rng_unif();
@@ -97,12 +101,18 @@ NumericVector cpp_dlomax(
   dims.push_back(kappa.length());
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
+  
+  bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpdf_lomax(x[i % dims[0]], lambda[i % dims[1]], kappa[i % dims[2]]);
+    p[i] = logpdf_lomax(x[i % dims[0]], lambda[i % dims[1]],
+                        kappa[i % dims[2]], throw_warning);
 
   if (!log_prob)
     p = Rcpp::exp(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
 
   return p;
 }
@@ -123,15 +133,21 @@ NumericVector cpp_plomax(
   dims.push_back(kappa.length());
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
+  
+  bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_lomax(x[i % dims[0]], lambda[i % dims[1]], kappa[i % dims[2]]);
+    p[i] = cdf_lomax(x[i % dims[0]], lambda[i % dims[1]],
+                     kappa[i % dims[2]], throw_warning);
 
   if (!lower_tail)
     p = 1.0 - p;
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
 
   return p;
 }
@@ -153,6 +169,8 @@ NumericVector cpp_qlomax(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
+  
+  bool throw_warning = false;
 
   if (log_prob)
     pp = Rcpp::exp(pp);
@@ -161,7 +179,11 @@ NumericVector cpp_qlomax(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_lomax(pp[i % dims[0]], lambda[i % dims[1]], kappa[i % dims[2]]);
+    x[i] = invcdf_lomax(pp[i % dims[0]], lambda[i % dims[1]],
+                        kappa[i % dims[2]], throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
 
   return x;
 }
@@ -178,9 +200,15 @@ NumericVector cpp_rlomax(
   dims.push_back(lambda.length());
   dims.push_back(kappa.length());
   NumericVector x(n);
+  
+  bool throw_warning = false;
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_lomax(lambda[i % dims[0]], kappa[i % dims[1]]);
+    x[i] = rng_lomax(lambda[i % dims[0]], kappa[i % dims[1]],
+                     throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
 
   return x;
 }

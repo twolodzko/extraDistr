@@ -11,11 +11,12 @@ using std::ceil;
 using Rcpp::NumericVector;
 
 
-double pmf_dlaplace(double x, double p, double mu) {
+double pmf_dlaplace(double x, double p,
+                    double mu, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(p) || ISNAN(mu))
-    return NA_REAL;
+    return x+p+mu;
   if (p <= 0.0 || p >= 1.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (!isInteger(x))
@@ -23,11 +24,12 @@ double pmf_dlaplace(double x, double p, double mu) {
   return (1.0-p)/(1.0+p) * pow(p, abs(x-mu));
 } 
 
-double cdf_dlaplace(double x, double p, double mu) {
+double cdf_dlaplace(double x, double p,
+                    double mu, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(p) || ISNAN(mu))
-    return NA_REAL;
+    return x+p+mu;
   if (p <= 0.0 || p >= 1.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (x < 0.0)
@@ -36,9 +38,9 @@ double cdf_dlaplace(double x, double p, double mu) {
     return 1.0 - (pow(p, floor(x-mu)+1.0)/(1.0+p));
 } 
 
-double rng_dlaplace(double p, double mu) {
+double rng_dlaplace(double p, double mu, bool& throw_warning) {
   if (ISNAN(p) || ISNAN(mu) || p <= 0.0 || p >= 1.0) {
-    Rcpp::warning("NAs produced");
+    throw_warning = true;
     return NA_REAL;
   }
   double q, u, v;
@@ -64,11 +66,17 @@ NumericVector cpp_ddlaplace(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < Nmax; i++)
-    p[i] = pmf_dlaplace(x[i % dims[0]], scale[i % dims[1]], location[i % dims[2]]);
+    p[i] = pmf_dlaplace(x[i % dims[0]], scale[i % dims[1]],
+                        location[i % dims[2]], throw_warning);
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -90,14 +98,20 @@ NumericVector cpp_pdlaplace(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_dlaplace(x[i % dims[0]], scale[i % dims[1]], location[i % dims[2]]);
+    p[i] = cdf_dlaplace(x[i % dims[0]], scale[i % dims[1]],
+                        location[i % dims[2]], throw_warning);
   
   if (!lower_tail)
     p = 1.0 - p;
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -115,8 +129,14 @@ NumericVector cpp_rdlaplace(
   dims.push_back(location.length());
   NumericVector x(n);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < n; i++)
-    x[i] = rng_dlaplace(scale[i % dims[0]], location[i % dims[1]]);
+    x[i] = rng_dlaplace(scale[i % dims[0]], location[i % dims[1]],
+                        throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
   
   return x;
 }

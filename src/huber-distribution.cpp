@@ -12,11 +12,12 @@ using std::ceil;
 using Rcpp::NumericVector;
 
 
-double pdf_huber(double x, double mu, double sigma, double c) {
+double pdf_huber(double x, double mu, double sigma,
+                 double c, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(c))
-    return NA_REAL;
+    return x+mu+sigma+c;
   if (sigma <= 0.0 || c <= 0.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   
@@ -32,11 +33,12 @@ double pdf_huber(double x, double mu, double sigma, double c) {
   return exp(-rho)/A/sigma;
 }
 
-double cdf_huber(double x, double mu, double sigma, double c) {
+double cdf_huber(double x, double mu, double sigma,
+                 double c, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(c))
-    return NA_REAL;
+    return x+mu+sigma+c;
   if (sigma <= 0.0 || c <= 0.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
 
@@ -56,11 +58,12 @@ double cdf_huber(double x, double mu, double sigma, double c) {
     return 1.0 - p;
 }
 
-double invcdf_huber(double p, double mu, double sigma, double c) {
+double invcdf_huber(double p, double mu, double sigma,
+                    double c, bool& throw_warning) {
   if (ISNAN(p) || ISNAN(mu) || ISNAN(sigma) || ISNAN(c))
-    return NA_REAL;
+    return p+mu+sigma+c;
   if (sigma <= 0.0 || c <= 0.0 || p < 0.0 || p > 1.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
 
@@ -79,9 +82,9 @@ double invcdf_huber(double p, double mu, double sigma, double c) {
     return mu - x*sigma;
 }
 
-double rng_huber(double mu, double sigma, double c) {
+double rng_huber(double mu, double sigma, double c, bool& throw_warning) {
   if (ISNAN(mu) || ISNAN(sigma) || ISNAN(c) || sigma <= 0.0 || c <= 0.0) {
-    Rcpp::warning("NAs produced");
+    throw_warning = true;
     return NA_REAL;
   }
   
@@ -119,12 +122,18 @@ NumericVector cpp_dhuber(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < Nmax; i++)
     p[i] = pdf_huber(x[i % dims[0]], mu[i % dims[1]],
-                     sigma[i % dims[2]], epsilon[i % dims[3]]);
+                     sigma[i % dims[2]], epsilon[i % dims[3]],
+                     throw_warning);
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -148,15 +157,21 @@ NumericVector cpp_phuber(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < Nmax; i++)
     p[i] = cdf_huber(x[i % dims[0]], mu[i % dims[1]],
-                     sigma[i % dims[2]], epsilon[i % dims[3]]);
+                     sigma[i % dims[2]], epsilon[i % dims[3]],
+                     throw_warning);
   
   if (!lower_tail)
     p = 1.0 - p;
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -181,6 +196,8 @@ NumericVector cpp_qhuber(
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
+  bool throw_warning = false;
+  
   if (log_prob)
     pp = Rcpp::exp(pp);
   
@@ -189,7 +206,11 @@ NumericVector cpp_qhuber(
   
   for (int i = 0; i < Nmax; i++)
     q[i] = invcdf_huber(pp[i % dims[0]], mu[i % dims[1]],
-                        sigma[i % dims[2]], epsilon[i % dims[3]]);
+                        sigma[i % dims[2]], epsilon[i % dims[3]],
+                        throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return q;
 }
@@ -209,8 +230,14 @@ NumericVector cpp_rhuber(
   dims.push_back(epsilon.length());
   NumericVector x(n);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < n; i++)
-    x[i] = rng_huber(mu[i % dims[0]], sigma[i % dims[1]], epsilon[i % dims[2]]);
+    x[i] = rng_huber(mu[i % dims[0]], sigma[i % dims[1]],
+                     epsilon[i % dims[2]], throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
   
   return x;
 }

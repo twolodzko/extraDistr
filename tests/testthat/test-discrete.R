@@ -1,5 +1,4 @@
 
-
 test_that("Zero probabilities for non-integers", {
   
   expect_warning(expect_equal(0, ddlaplace(0.5, 0.5)))
@@ -22,6 +21,37 @@ test_that("Zero probabilities for non-integers", {
   expect_warning(expect_equal(0, dzib(0.5, 1, 0.5, 0.5)))
   expect_warning(expect_equal(0, dzinb(0.5, 1, 0.5, 0.5)))
   expect_warning(expect_equal(0, dmixpois(0.5, c(1,2,3), c(1/3,1/3,1/3))))
+  
+})
+
+test_that("cdf vs cumsum(pdf)", {
+  
+  xx <- seq(-200, 200, by = 1)
+  epsilon <- 1e-6 # sqrt(.Machine$double.eps)
+  
+  expect_equal(cumsum(ddlaplace(xx, 0.5)), pdlaplace(xx, 0.5), tolerance = epsilon)
+
+  xx <- seq(0, 200, by = 1)
+  expect_equal(cumsum(ddweibull(xx, .32, 1)), pdweibull(xx, .32, 1), tolerance = epsilon)
+  expect_equal(cumsum(ddunif(xx, 1, 199)), pdunif(xx, 1, 199), tolerance = epsilon)
+  expect_equal(cumsum(ddnorm(xx, 0, 50)), pdnorm(xx, 0, 50), tolerance = epsilon)
+  
+  p <- rdirichlet(1, rep(1, 100))
+  expect_equal(cumsum(dcat(xx, p)), pcat(xx, p), tolerance = epsilon)
+  expect_equal(cumsum(dnhyper(xx, 60, 35, 15)), pnhyper(xx, 60, 35, 15), tolerance = epsilon)
+  
+  expect_equal(cumsum(dbbinom(xx, 200, 5, 13)), pbbinom(xx, 200, 5, 13), tolerance = epsilon)
+  expect_equal(cumsum(dbnbinom(xx, 70, 5, 13)), pbnbinom(xx, 70, 5, 13), tolerance = epsilon)
+  expect_equal(cumsum(dgpois(xx, 500, 16)), pgpois(xx, 500, 16), tolerance = epsilon)
+  
+  expect_equal(cumsum(dlgser(xx, 0.9)), plgser(xx, 0.9), tolerance = epsilon)
+  expect_equal(cumsum(dtpois(xx, 100, a = 80, b = 150)), ptpois(xx, 100, a = 80, b = 150), tolerance = epsilon)
+  expect_equal(cumsum(dtbinom(xx, 100, 0.5, a = 80, b = 150)), ptbinom(xx, 100, 0.5, a = 80, b = 150), tolerance = epsilon)
+  
+  expect_equal(cumsum(dzip(xx, 70, 0.5)), pzip(xx, 70, 0.5), tolerance = epsilon)
+  expect_equal(cumsum(dzib(xx, 200, 0.5, 0.5)), pzib(xx, 200, 0.5, 0.5), tolerance = epsilon)
+  expect_equal(cumsum(dzinb(xx, 70, 0.5, 0.5)), pzinb(xx, 70, 0.5, 0.5), tolerance = epsilon)
+  expect_equal(cumsum(dmixpois(xx, c(40,50,70), c(1/3,1/3,1/3))), pmixpois(xx, c(40,50,70), c(1/3,1/3,1/3)), tolerance = epsilon)
   
 })
 

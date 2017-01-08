@@ -13,9 +13,9 @@
 * C++ code was significantly simplified and cleaned-up in multiple places
 * Truncated poisson distribution is now parametrized by
   lower and upper truncation points
-* Fixed bug in `dbvpois` (it returned underestimated probabilities)
-* Fixed bug in `dslash` (there was discontinuity at x=0)
-* Fixed bug in `pcat` (randomly it broke if x was greater then the upper limit)
+* Fixed bugs in `dbvpois` (it returned underestimated probabilities),
+  `dslash` (there was discontinuity at x=0), `pcat` (randomly it broke
+  if x was greater then the upper limit), and `pdnorm`.
 * Random generation functions throw warnings and produce `NA`'s on `NA`'s in
   parameters or incorrect parameters - as in base R
 

@@ -39,46 +39,49 @@ NumericVector cpp_dcat(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   int k = prob.ncol();
   NumericVector p(Nmax);
-  bool missings, wrong_param;
   double p_tot;
   
-  for (int i = 0; i < Nmax; i++) {
-    
+  bool throw_warning = false;
+  
+  if (k < 2)
+    Rcpp::stop("number of columns in prob is < 2");
+  
+  NumericMatrix prob_tab = Rcpp::clone(prob);
+  
+  for (int i = 0; i < dims[1]; i++) {
     p_tot = 0.0;
-    wrong_param = false;
-    missings = false;
-
     for (int j = 0; j < k; j++) {
-      if (ISNAN(prob(i % dims[1], j)))
-        missings = true;
-      if (prob(i % dims[1], j) < 0.0)
-        wrong_param = true;
-      p_tot += prob(i % dims[1], j);
+      p_tot += prob_tab(i, j);
+      if (ISNAN(p_tot))
+        break;
+      if (prob_tab(i, j) < 0.0) {
+        p_tot = NAN;
+        throw_warning = true;
+        break;
+      }
     }
-    
-    if (missings || ISNAN(x[i % dims[0]])) {
-      p[i] = NA_REAL;
+    for (int j = 0; j < k; j++)
+      prob_tab(i, j) /= p_tot;
+  }
+  
+  for (int i = 0; i < Nmax; i++) {
+    if (ISNAN(x[i % dims[0]])) {
+      p[i] = x[i % dims[0]];
       continue;
     }
-    
-    if (wrong_param) {
-      Rcpp::warning("NaNs produced");
-      p[i] = NAN;
-      continue;
-    }
-    
     if (!isInteger(x[i % dims[0]]) || x[i % dims[0]] < 1.0 ||
         x[i % dims[0]] > static_cast<double>(k)) {
       p[i] = 0.0;
       continue;
     }
-    
-    p[i] = prob(i % dims[1], static_cast<int>(x[i % dims[0]]) - 1) / p_tot;
-    
+    p[i] = prob_tab(i % dims[1], static_cast<int>(x[i % dims[0]]) - 1);
   }
 
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
     
   return p;
 }
@@ -97,61 +100,48 @@ NumericVector cpp_pcat(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   int k = prob.ncol();
   NumericVector p(Nmax);
-  bool missings, wrong_param;
   double p_tot;
   
-  for (int i = 0; i < Nmax; i++) {
-    
+  bool throw_warning = false;
+  
+  if (k < 2)
+    Rcpp::stop("number of columns in prob is < 2");
+  
+  NumericMatrix prob_tab = Rcpp::clone(prob);
+  
+  for (int i = 0; i < dims[1]; i++) {
     p_tot = 0.0;
-    wrong_param = false;
-    missings = false;
-    
     for (int j = 0; j < k; j++) {
-      if (ISNAN(prob(i % dims[1], j))) {
-        missings = true;
+      p_tot += prob_tab(i, j);
+      if (ISNAN(p_tot))
+        break;
+      if (prob_tab(i, j) < 0.0) {
+        p_tot = NAN;
+        throw_warning = true;
         break;
       }
-      if (prob(i % dims[1], j) < 0.0)
-        wrong_param = true;
     }
-    
-    if (missings || ISNAN(x[i % dims[0]])) {
-      p[i] = NA_REAL;
+    prob_tab(i, 0) /= p_tot;
+    for (int j = 1; j < k; j++) {
+      prob_tab(i, j) /= p_tot;
+      prob_tab(i, j) += prob_tab(i, j-1);
+    }
+  }
+  
+  for (int i = 0; i < Nmax; i++) {
+    if (ISNAN(x[i % dims[0]])) {
+      p[i] = x[i % dims[0]];
       continue;
     }
-    
-    if (wrong_param) {
-      Rcpp::warning("NaNs produced");
-      p[i] = NAN;
-      continue;
-    }
-    
     if (x[i % dims[0]] < 1.0) {
       p[i] = 0.0;
       continue;
     }
-    
     if (x[i % dims[0]] >= static_cast<double>(k)) {
       p[i] = 1.0;
       continue;
     }
-    
-    int j = 0;
-
-    while (j < static_cast<int>(x[i % dims[0]])) {
-      p_tot += prob(i % dims[1], j);
-      j++;
-    }
-    
-    p[i] = p_tot;
-    
-    while (j < k) {
-      p_tot += prob(i % dims[1], j);
-      j++;
-    }
-    
-    p[i] = p[i] / p_tot;
-    
+    p[i] = prob_tab(i % dims[1], static_cast<int>(x[i % dims[0]]) - 1);
   }
 
   if (!lower_tail)
@@ -159,6 +149,9 @@ NumericVector cpp_pcat(
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
       
   return p;
 }
@@ -179,6 +172,13 @@ NumericVector cpp_qcat(
   int k = prob.ncol();
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
+  int jj;
+  double p_tot;
+  
+  bool throw_warning = false;
+  
+  if (k < 2)
+    Rcpp::stop("number of columns in prob is < 2");
   
   if (log_prob)
     pp = Rcpp::exp(pp);
@@ -186,55 +186,62 @@ NumericVector cpp_qcat(
   if (!lower_tail)
     pp = 1.0 - pp;
   
-  int jj;
-  double pp_norm, p_tmp, p_tot;
-  bool wrong_param, missings;
-    
-  for (int i = 0; i < Nmax; i++) {
-    
-    p_tmp = 1.0;
+  NumericMatrix prob_tab = Rcpp::clone(prob);
+  
+  for (int i = 0; i < dims[1]; i++) {
     p_tot = 0.0;
-    missings = false;
-    wrong_param = false;
-    
     for (int j = 0; j < k; j++) {
-      if (ISNAN(prob(i % dims[1], j)))
-        missings = true;
-      if (prob(i % dims[1], j) < 0.0)
-        wrong_param = true;
-      p_tot += prob(i % dims[1], j);
-    }
-    
-    if (missings || ISNAN(pp[i % dims[0]])) {
-      x[i] = NA_REAL;
-      continue;
-    }
-    
-    if (wrong_param || pp[i % dims[0]] < 0.0 || pp[i % dims[0]] > 1.0) {
-      Rcpp::warning("NaNs produced");
-      x[i] = NAN;
-      continue;
-    } 
-    
-    if (pp[i % dims[0]] == 0.0) {
-      x[i] = 1.0; 
-    } else {
-      
-      pp_norm = pp[i % dims[0]];
-      jj = 0;
-      
-      for (int j = k-1; j >= 0; j--) {
-        p_tmp -= prob(i % dims[1], j) / p_tot;
-        if (pp_norm > p_tmp) {
-          jj = j;
-          break;
-        }
+      p_tot += prob_tab(i, j);
+      if (ISNAN(p_tot))
+        break;
+      if (prob_tab(i, j) < 0.0) {
+        p_tot = NAN;
+        throw_warning = true;
+        break;
       }
-
-      x[i] = static_cast<double>(jj+1);
-      
+    }
+    prob_tab(i, 0) /= p_tot;
+    for (int j = 1; j < k; j++) {
+      prob_tab(i, j) /= p_tot;
+      prob_tab(i, j) += prob_tab(i, j-1);
     }
   }
+  
+  for (int i = 0; i < Nmax; i++) {
+    if (ISNAN(p[i % dims[0]])) {
+      x[i] = p[i % dims[0]];
+      continue;
+    }
+    if (ISNAN(prob_tab(i % dims[1], 0))) {
+      x[i] = prob_tab(i % dims[1], 0);
+      continue;
+    }
+    if (p[i % dims[0]] < 0.0 || p[i % dims[0]] > 1.0) {
+      x[i] = NAN;
+      throw_warning = true;
+      continue;
+    }
+    if (p[i % dims[0]] == 0.0) {
+      x[i] = 1.0;
+      continue;
+    }
+    if (p[i % dims[0]] == 1.0) {
+      x[i] = static_cast<double>(k);
+      continue;
+    }
+    
+    jj = 1;
+    for (int j = 0; j < k; j++) {
+      if (prob_tab(i % dims[1], j) >= p[i % dims[0]]) {
+        jj = j+1;
+        break;
+      }
+    }
+    x[i] = static_cast<double>(jj);
+  }
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
       
   return x;
 }
@@ -249,45 +256,55 @@ NumericVector cpp_rcat(
   int dims = prob.nrow();
   int k = prob.ncol();
   NumericVector x(n);
-  
   int jj;
-  double u, p_tmp, p_tot;
-  bool throw_warning;
+  double u, p_tot;
+  
+  bool throw_warning = false;
+  
+  if (k < 2)
+    Rcpp::stop("number of columns in prob is < 2");
 
-  for (int i = 0; i < n; i++) {
-    
+  NumericMatrix prob_tab = Rcpp::clone(prob);
+  
+  for (int i = 0; i < dims; i++) {
     p_tot = 0.0;
-    throw_warning = false;
-
     for (int j = 0; j < k; j++) {
-      if (ISNAN(prob(i % dims, j)) || prob(i % dims, j) < 0.0) {
+      p_tot += prob_tab(i, j);
+      if (ISNAN(p_tot))
+        break;
+      if (prob_tab(i, j) < 0.0) {
+        p_tot = NAN;
         throw_warning = true;
         break;
       }
-      p_tot += prob(i % dims, j);
     }
-    
-    if (throw_warning) {
-      Rcpp::warning("NAs produced");
-      x[i] = NA_REAL;
+    prob_tab(i, 0) /= p_tot;
+    for (int j = 1; j < k; j++) {
+      prob_tab(i, j) /= p_tot;
+      prob_tab(i, j) += prob_tab(i, j-1);
+    }
+  }
+  
+  for (int i = 0; i < n; i++) {
+    if (ISNAN(prob_tab(i % dims, 0))) {
+      x[i] = prob_tab(i % dims, 0);
       continue;
     }
     
     u = rng_unif();
-    p_tmp = 1.0;
-    jj = 0;
+    jj = 1;
     
-    for (int j = k-1; j >= 0; j--) {
-      p_tmp -= prob(i % dims, j) / p_tot;
-      if (u > p_tmp) {
-        jj = j;
+    for (int j = 0; j < k; j++) {
+      if (prob_tab(i % dims, j) >= u) {
+        jj = j+1;
         break;
       }
     }
-    
-    x[i] = static_cast<double>(jj+1);
-    
+    x[i] = static_cast<double>(jj);
   }
+  
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
   
   return x;
 }

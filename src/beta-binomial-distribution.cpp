@@ -27,11 +27,12 @@ using Rcpp::NumericVector;
 *
 */
 
-double pmf_bbinom(double k, double n, double alpha, double beta) {
+double pmf_bbinom(double k, double n, double alpha,
+                  double beta, bool& throw_warning) {
   if (ISNAN(k) || ISNAN(n) || ISNAN(alpha) || ISNAN(beta))
-    return NA_REAL;
+    return k+n+alpha+beta;
   if (alpha < 0.0 || beta < 0.0 || n < 0.0 || !isInteger(n, false)) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (!isInteger(k) || k < 0.0 || k > n)
@@ -39,11 +40,12 @@ double pmf_bbinom(double k, double n, double alpha, double beta) {
   return R::choose(n, k) * R::beta(k+alpha, n-k+beta) / R::beta(alpha, beta);
 }
 
-double logpmf_bbinom(double k, double n, double alpha, double beta) {
+double logpmf_bbinom(double k, double n, double alpha,
+                     double beta, bool& throw_warning) {
   if (ISNAN(k) || ISNAN(n) || ISNAN(alpha) || ISNAN(beta))
-    return NA_REAL;
+    return k+n+alpha+beta;
   if (alpha < 0.0 || beta < 0.0 || n < 0.0 || !isInteger(n, false)) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (!isInteger(k) || k < 0.0 || k > n)
@@ -52,6 +54,9 @@ double logpmf_bbinom(double k, double n, double alpha, double beta) {
 }
 
 std::vector<double> cdf_bbinom_table(double k, double n, double alpha, double beta) {
+  
+  if (k < 0.0 || k > n || alpha < 0.0 || beta < 0.0)
+    Rcpp::stop("inadmissible values");
 
   k = floor(k);
   std::vector<double> p_tab(static_cast<int>(k)+1);
@@ -92,10 +97,11 @@ std::vector<double> cdf_bbinom_table(double k, double n, double alpha, double be
   return p_tab;
 }
 
-double rng_bbinom(double n, double alpha, double beta) {
+double rng_bbinom(double n, double alpha,
+                  double beta, bool& throw_warning) {
   if (ISNAN(n) || ISNAN(alpha) || ISNAN(beta) ||
       alpha < 0.0 || beta < 0.0 || n < 0.0 || !isInteger(n, false)) {
-    Rcpp::warning("NAs produced");
+    throw_warning = true;
     return NA_REAL;
   }
   double prob = R::rbeta(alpha, beta);
@@ -119,13 +125,19 @@ NumericVector cpp_dbbinom(
   dims.push_back(beta.length());
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
+  
+  bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
     p[i] = logpmf_bbinom(x[i % dims[0]], size[i % dims[1]],
-                         alpha[i % dims[2]], beta[i % dims[3]]);
+                         alpha[i % dims[2]], beta[i % dims[3]],
+                         throw_warning);
 
   if (!log_prob)
     p = Rcpp::exp(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
 
   return p;
 }
@@ -149,6 +161,8 @@ NumericVector cpp_pbbinom(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
   double mx = std::min(finite_max(x), finite_max(size));
   
@@ -159,10 +173,10 @@ NumericVector cpp_pbbinom(
     
     if (ISNAN(x[i % dims[0]]) || ISNAN(size[i % dims[1]]) ||
         ISNAN(alpha[i % dims[2]]) || ISNAN(beta[i % dims[3]])) {
-      p[i] = NA_REAL;
+      p[i] = x[i % dims[0]] + size[i % dims[1]] + alpha[i % dims[2]] + beta[i % dims[3]];
     } else if (alpha[i % dims[2]] <= 0.0 || beta[i % dims[3]] <= 0.0 ||
                size[i % dims[1]] < 0.0 || !isInteger(size[i % dims[1]], false)) {
-      Rcpp::warning("NaNs produced");
+      throw_warning = true;
       p[i] = NAN;
     } else if (x[i % dims[0]] < 0.0) {
       p[i] = 0.0;
@@ -185,6 +199,9 @@ NumericVector cpp_pbbinom(
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
 
   return p;
 }
@@ -203,9 +220,14 @@ NumericVector cpp_rbbinom(
   dims.push_back(alpha.length());
   dims.push_back(beta.length());
   NumericVector x(n);
+  
+  bool throw_warning = false;
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_bbinom(size[i % dims[0]], alpha[i % dims[1]], beta[i % dims[2]]);
+    x[i] = rng_bbinom(size[i % dims[0]], alpha[i % dims[1]], beta[i % dims[2]], throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
 
   return x;
 }
