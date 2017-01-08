@@ -27,14 +27,14 @@ test_that("Zero probabilities for non-integers", {
 test_that("cdf vs cumsum(pdf)", {
   
   xx <- seq(-200, 200, by = 1)
-  epsilon <- 1e-6 # sqrt(.Machine$double.eps)
+  epsilon <- 1e-4 # sqrt(.Machine$double.eps)
   
   expect_equal(cumsum(ddlaplace(xx, 0.5)), pdlaplace(xx, 0.5), tolerance = epsilon)
-
+  expect_equal(cumsum(ddnorm(xx, 0, 50)), pdnorm(xx, 0, 50), tolerance = epsilon)
+  
   xx <- seq(0, 200, by = 1)
   expect_equal(cumsum(ddweibull(xx, .32, 1)), pdweibull(xx, .32, 1), tolerance = epsilon)
   expect_equal(cumsum(ddunif(xx, 1, 199)), pdunif(xx, 1, 199), tolerance = epsilon)
-  expect_equal(cumsum(ddnorm(xx, 0, 50)), pdnorm(xx, 0, 50), tolerance = epsilon)
   
   p <- rdirichlet(1, rep(1, 100))
   expect_equal(cumsum(dcat(xx, p)), pcat(xx, p), tolerance = epsilon)

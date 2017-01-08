@@ -56,7 +56,7 @@ ddnorm <- function(x, mean = 0, sd = 1, log = FALSE) {
 #' @export
 
 pdnorm <- function(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE) {
-  pnorm(ceiling(q), mean, sd, lower.tail, log.p)
+  pnorm(ceiling(q)+1, mean, sd, lower.tail, log.p)
 }
 
 
