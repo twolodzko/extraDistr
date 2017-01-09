@@ -45,6 +45,14 @@ f(x) = \Phi\left(\frac{x-\mu+1}{\sigma}\right) - \Phi\left(\frac{x-\mu}{\sigma}\
 }{
 f(x) = \Phi((x-\mu+1)/\sigma) - \Phi((x-\mu)/\sigma)
 }
+
+Cumulative distribution function
+
+\deqn{
+F(x) = \Phi\left(\frac{\lceil x \rceil + 1 - \mu}{\sigma}\right)
+}{
+F(x) = \Phi((ceiling(x)+1-\mu)/\sigma)
+}
 }
 \examples{
 

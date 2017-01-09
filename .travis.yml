@@ -15,6 +15,9 @@ r_binary_packages:
  - testthat
  - devtools
  
+r_packages:
+ - covr
+ 
 r_build_args: "--no-build-vignettes"
 r_check_args: "--no-build-vignettes --as-cran"
 
@@ -26,5 +29,8 @@ notifications:
   email:
     on_success: change
     on_failure: change
+    
+after_success:
+ - Rscript -e 'library(covr); codecov()'
     
     

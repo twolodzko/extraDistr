@@ -31,47 +31,49 @@ NumericVector cpp_dmixnorm(
   int k = alpha.ncol();
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   if (k != mu.ncol() || k != sigma.ncol())
     Rcpp::stop("sizes of mu, sigma, and alpha do not match");
   
-  bool wrong_param, missings;
-  double alpha_tot;
+  bool wrong_param;
+  double alpha_tot, nans_sum;
   
   for (int i = 0; i < Nmax; i++) {
     wrong_param = false;
     alpha_tot = 0.0;
+    nans_sum = 0.0;
     p[i] = 0.0;
-    missings = false;
     
     for (int j = 0; j < k; j++) {
-      if (ISNAN(alpha(i % dims[3], j)) || ISNAN(mu(i % dims[1], j)) || ISNAN(sigma(i % dims[2], j))) {
-        missings = true;
-        break;
-      }
-      if (alpha(i % dims[3], j) < 0.0 || sigma(i % dims[2], j) <= 0.0) {
+      if (alpha(i % dims[3], j) < 0.0 || sigma(i % dims[2], j) <= 0.0)
         wrong_param = true;
-        break;
-      }
+      nans_sum += mu(i % dims[1], j) + sigma(i % dims[2], j);
       alpha_tot += alpha(i % dims[3], j);
     }
     
-    if (missings || ISNAN(x[i % dims[0]])) {
-      p[i] = NA_REAL;
+    if (ISNAN(nans_sum + alpha_tot + x[i % dims[0]])) {
+      p[i] = nans_sum + alpha_tot + x[i % dims[0]];
       continue;
     }
     
     if (wrong_param) {
-      Rcpp::warning("NaNs produced");
+      throw_warning = true;
       p[i] = NAN;
       continue;
     }
     
-    for (int j = 0; j < k; j++)
-      p[i] += (alpha(i % dims[3], j) / alpha_tot) * R::dnorm(x[i % dims[0]], mu(i % dims[1], j), sigma(i % dims[2], j), false);
+    for (int j = 0; j < k; j++) {
+      p[i] += (alpha(i % dims[3], j) / alpha_tot) *
+        R::dnorm(x[i % dims[0]], mu(i % dims[1], j), sigma(i % dims[2], j), false);
+    }
   }
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -96,43 +98,44 @@ NumericVector cpp_pmixnorm(
   int k = alpha.ncol();
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   if (k != mu.ncol() || k != sigma.ncol())
     Rcpp::stop("sizes of mu, sigma, and alpha do not match");
   
-  bool wrong_param, missings;
-  double alpha_tot;
+  bool wrong_param;
+  double alpha_tot, nans_sum;
   
   for (int i = 0; i < Nmax; i++) {
     wrong_param = false;
     alpha_tot = 0.0;
+    nans_sum = 0.0;
     p[i] = 0.0;
-    missings = false;
     
     for (int j = 0; j < k; j++) {
-      if (ISNAN(alpha(i % dims[3], j)) || ISNAN(mu(i % dims[1], j)) || ISNAN(sigma(i % dims[2], j))) {
-        missings = true;
-        break;
-      }
       if (alpha(i % dims[3], j) < 0.0 || sigma(i % dims[2], j) < 0.0) {
         wrong_param = true;
         break;
       }
+      nans_sum += mu(i % dims[1], j) + sigma(i % dims[2], j);
       alpha_tot += alpha(i % dims[3], j);
     }
     
-    if (missings || ISNAN(x[i % dims[0]])) {
-      p[i] = NA_REAL;
+    if (ISNAN(nans_sum + alpha_tot + x[i % dims[0]])) {
+      p[i] = nans_sum + alpha_tot + x[i % dims[0]];
       continue;
     }
     
     if (wrong_param) {
-      Rcpp::warning("NaNs produced");
+      throw_warning = true;
       p[i] = NAN;
       continue;
     }
     
-    for (int j = 0; j < k; j++)
-      p[i] += (alpha(i % dims[3], j) / alpha_tot) * R::pnorm(x[i % dims[0]], mu(i % dims[1], j), sigma(i % dims[2], j), lower_tail, false);
+    for (int j = 0; j < k; j++) {
+      p[i] += (alpha(i % dims[3], j) / alpha_tot) *
+        R::pnorm(x[i % dims[0]], mu(i % dims[1], j), sigma(i % dims[2], j), true, false);
+    }
   }
   
   if (!lower_tail)
@@ -140,6 +143,9 @@ NumericVector cpp_pmixnorm(
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -160,12 +166,14 @@ NumericVector cpp_rmixnorm(
   int k = alpha.ncol();
   NumericVector x(n);
   
+  bool throw_warning = false;
+  
   if (k != mu.ncol() || k != sigma.ncol())
     Rcpp::stop("sizes of mu, sigma, and alpha do not match");
   
   int jj;
-  bool wrong_param, missings;
-  double u, p_tmp, alpha_tot;
+  bool wrong_param;
+  double alpha_tot, nans_sum, u, p_tmp;
   NumericVector prob(k);
   
   for (int i = 0; i < n; i++) {
@@ -174,22 +182,18 @@ NumericVector cpp_rmixnorm(
     u = rng_unif();
     p_tmp = 1.0;
     alpha_tot = 0.0;
-    missings = false;
     
     for (int j = 0; j < k; j++) {
-      if (ISNAN(alpha(i % dims[2], j)) || ISNAN(mu(i % dims[0], j)) || ISNAN(sigma(i % dims[1], j))) {
-        missings = true;
-        break;
-      }
       if (alpha(i % dims[2], j) < 0.0 || sigma(i % dims[1], j) < 0.0) {
         wrong_param = true;
         break;
       }
+      nans_sum += mu(i % dims[0], j) + sigma(i % dims[1], j);
       alpha_tot += alpha(i % dims[2], j);
     }
     
-    if (missings || wrong_param) {
-      Rcpp::warning("NAs produced");
+    if (ISNAN(nans_sum + alpha_tot) || wrong_param) {
+      throw_warning = true;
       x[i] = NA_REAL;
       continue;
     }
@@ -204,6 +208,9 @@ NumericVector cpp_rmixnorm(
 
     x[i] = R::rnorm(mu(i % dims[0], jj), sigma(i % dims[1], jj)); 
   }
+  
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
   
   return x;
 }

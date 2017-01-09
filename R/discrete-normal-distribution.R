@@ -24,6 +24,14 @@
 #' f(x) = \Phi((x-\mu+1)/\sigma) - \Phi((x-\mu)/\sigma)
 #' }
 #' 
+#' Cumulative distribution function
+#' 
+#' \deqn{
+#' F(x) = \Phi\left(\frac{\lceil x \rceil + 1 - \mu}{\sigma}\right)
+#' }{
+#' F(x) = \Phi((ceiling(x)+1-\mu)/\sigma)
+#' }
+#' 
 #' @references 
 #' Roy, D. (2003). The discrete normal distribution.
 #' Communications in Statistics-Theory and Methods, 32, 1871-1883.

@@ -26,7 +26,7 @@ test_that("Zero probabilities for non-integers", {
 
 test_that("cdf vs cumsum(pdf)", {
   
-  xx <- seq(-200, 200, by = 1)
+  xx <- seq(-500, 500, by = 1)
   epsilon <- 1e-4 # sqrt(.Machine$double.eps)
   
   expect_equal(cumsum(ddlaplace(xx, 0.5)), pdlaplace(xx, 0.5), tolerance = epsilon)

@@ -67,6 +67,8 @@ NumericVector cpp_dnhyper(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
   
   for (int i = 0; i < Nmax; i++) {
@@ -75,13 +77,13 @@ NumericVector cpp_dnhyper(
     
     if (ISNAN(x[i % dims[0]]) || ISNAN(n[i % dims[1]]) ||
         ISNAN(m[i % dims[2]]) || ISNAN(r[i % dims[3]])) {
-      p[i] = NA_REAL;
+      p[i] = x[i % dims[0]] + n[i % dims[1]] + m[i % dims[2]] + r[i % dims[3]];
     } else if (r[i % dims[3]] > m[i % dims[2]] || n[i % dims[1]] < 0.0 ||
                m[i % dims[2]] < 0.0 || r[i % dims[3]] < 0.0 ||
                !isInteger(n[i % dims[1]], false) ||
                !isInteger(m[i % dims[2]], false) ||
                !isInteger(r[i % dims[3]], false)) {
-      Rcpp::warning("NaNs produced");
+      throw_warning = true;
       p[i] = NAN;
     } else if (!isInteger(x[i % dims[0]]) || x[i % dims[0]] < r[i % dims[3]] ||
                x[i % dims[0]] > (n[i % dims[1]] + r[i % dims[3]])) {
@@ -99,6 +101,9 @@ NumericVector cpp_dnhyper(
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -122,6 +127,8 @@ NumericVector cpp_pnhyper(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
   
   for (int i = 0; i < Nmax; i++) {
@@ -130,13 +137,13 @@ NumericVector cpp_pnhyper(
     
     if (ISNAN(x[i % dims[0]]) || ISNAN(n[i % dims[1]]) ||
         ISNAN(m[i % dims[2]]) || ISNAN(r[i % dims[3]])) {
-      p[i] = NA_REAL;
+      p[i] = x[i % dims[0]] + n[i % dims[1]] + m[i % dims[2]] + r[i % dims[3]];
     } else if (r[i % dims[3]] > m[i % dims[2]] || n[i % dims[1]] < 0.0 ||
                m[i % dims[2]] < 0.0 || r[i % dims[3]] < 0.0 ||
                !isInteger(n[i % dims[1]], false) ||
                !isInteger(m[i % dims[2]], false) ||
                !isInteger(r[i % dims[3]], false)) {
-               Rcpp::warning("NaNs produced");
+      throw_warning = true;
       p[i] = NAN;
     } else if (x[i % dims[0]] < r[i % dims[3]]) {
       p[i] = 0.0;
@@ -158,6 +165,9 @@ NumericVector cpp_pnhyper(
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -182,6 +192,8 @@ NumericVector cpp_qnhyper(
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
+  bool throw_warning = false;
+  
   if (log_prob)
     pp = Rcpp::exp(pp);
   
@@ -196,14 +208,14 @@ NumericVector cpp_qnhyper(
     
     if (ISNAN(p[i % dims[0]]) || ISNAN(n[i % dims[1]]) ||
         ISNAN(m[i % dims[2]]) || ISNAN(r[i % dims[3]])) {
-      x[i] = NA_REAL;
+      x[i] = p[i % dims[0]] + n[i % dims[1]] + m[i % dims[2]] + r[i % dims[3]];
     } else if (p[i % dims[0]] < 0.0 || p[i % dims[0]] > 1.0 ||
                r[i % dims[3]] > m[i % dims[2]] || n[i % dims[1]] < 0.0 ||
                m[i % dims[2]] < 0.0 || r[i % dims[3]] < 0.0 ||
                !isInteger(n[i % dims[1]], false) ||
                !isInteger(m[i % dims[2]], false) ||
                !isInteger(r[i % dims[3]], false)) {
-               Rcpp::warning("NaNs produced");
+      throw_warning = true;
       x[i] = NAN;
     } else {
       
@@ -221,6 +233,9 @@ NumericVector cpp_qnhyper(
       
     }
   } 
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return x;
 }
@@ -241,6 +256,8 @@ NumericVector cpp_rnhyper(
   dims.push_back(r.length());
   NumericVector x(nn);
   
+  bool throw_warning = false;
+  
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
   
   for (int i = 0; i < nn; i++) {
@@ -251,7 +268,7 @@ NumericVector cpp_rnhyper(
         r[i % dims[2]] > m[i % dims[1]] || n[i % dims[0]] < 0.0 ||
         m[i % dims[1]] < 0.0 || r[i % dims[2]] < 0.0 || !isInteger(n[i % dims[0]], false) ||
         !isInteger(m[i % dims[1]], false) || !isInteger(r[i % dims[2]], false)) {
-      Rcpp::warning("NAs produced");
+      throw_warning = true;
       x[i] = NA_REAL;
     } else {
       
@@ -271,6 +288,9 @@ NumericVector cpp_rnhyper(
       
     }
   } 
+  
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
   
   return x;
 }
