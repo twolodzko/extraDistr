@@ -27,17 +27,19 @@ using Rcpp::NumericVector;
 *
 */
 
-double pdf_power(double x, double alpha, double beta) {
+double pdf_power(double x, double alpha, double beta,
+                 bool& throw_warning) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
-    return NA_REAL;
+    return x+alpha+beta;
   if (x <= 0.0 || x >= alpha)
     return 0.0;
   return beta * pow(x, beta-1.0) / pow(alpha, beta);
 }
 
-double cdf_power(double x, double alpha, double beta) {
+double cdf_power(double x, double alpha, double beta,
+                 bool& throw_warning) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
-    return NA_REAL;
+    return x+alpha+beta;
   if (x <= 0.0)
     return 0.0;
   if (x >= alpha)
@@ -45,36 +47,40 @@ double cdf_power(double x, double alpha, double beta) {
   return pow(x, beta) / pow(alpha, beta);
 }
 
-double invcdf_power(double p, double alpha, double beta) {
+double invcdf_power(double p, double alpha, double beta,
+                    bool& throw_warning) {
   if (ISNAN(p) || ISNAN(alpha) || ISNAN(beta))
-    return NA_REAL;
+    return p+alpha+beta;
   if (p < 0.0 || p > 1.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   return alpha * pow(p, 1.0/beta);
 }
 
-double rng_power(double alpha, double beta) {
+double rng_power(double alpha, double beta,
+                 bool& throw_warning) {
   if (ISNAN(alpha) || ISNAN(beta)) {
-    Rcpp::warning("NAs produced");
+    throw_warning = true;
     return NA_REAL;
   }
   double u = rng_unif();
   return alpha * pow(u, 1.0/beta);
 }
 
-double logpdf_power(double x, double alpha, double beta) {
+double logpdf_power(double x, double alpha, double beta,
+                    bool& throw_warning) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
-    return NA_REAL;
+    return x+alpha+beta;
   if (x <= 0.0 || x >= alpha)
     return R_NegInf;
   return log(beta) + log(x)*(beta-1.0) - log(alpha)*beta;
 }
 
-double logcdf_power(double x, double alpha, double beta) {
+double logcdf_power(double x, double alpha, double beta,
+                    bool& throw_warning) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
-    return NA_REAL;
+    return x+alpha+beta;
   if (x <= 0.0)
     return R_NegInf;
   if (x >= alpha)
@@ -97,12 +103,18 @@ NumericVector cpp_dpower(
   dims.push_back(beta.length());
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
+  
+  bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpdf_power(x[i % dims[0]], alpha[i % dims[1]], beta[i % dims[2]]);
+    p[i] = logpdf_power(x[i % dims[0]], alpha[i % dims[1]],
+                        beta[i % dims[2]], throw_warning);
 
   if (!log_prob)
     p = Rcpp::exp(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
 
   return p;
 }
@@ -123,15 +135,21 @@ NumericVector cpp_ppower(
   dims.push_back(beta.length());
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
+  
+  bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logcdf_power(x[i % dims[0]], alpha[i % dims[1]], beta[i % dims[2]]);
+    p[i] = logcdf_power(x[i % dims[0]], alpha[i % dims[1]],
+                        beta[i % dims[2]], throw_warning);
 
   if (!lower_tail)
     p = 1.0 - p;
 
   if (!log_prob)
     p = Rcpp::exp(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
 
   return p;
 }
@@ -153,6 +171,8 @@ NumericVector cpp_qpower(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
+  
+  bool throw_warning = false;
 
   if (log_prob)
     pp = Rcpp::exp(pp);
@@ -161,7 +181,11 @@ NumericVector cpp_qpower(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_power(pp[i % dims[0]], alpha[i % dims[1]], beta[i % dims[2]]);
+    x[i] = invcdf_power(pp[i % dims[0]], alpha[i % dims[1]],
+                        beta[i % dims[2]], throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
 
   return x;
 }
@@ -178,9 +202,15 @@ NumericVector cpp_rpower(
   dims.push_back(alpha.length());
   dims.push_back(beta.length());
   NumericVector x(n);
+  
+  bool throw_warning = false;
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_power(alpha[i % dims[0]], beta[i % dims[1]]);
+    x[i] = rng_power(alpha[i % dims[0]], beta[i % dims[1]],
+                     throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
 
   return x;
 }

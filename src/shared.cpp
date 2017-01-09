@@ -1,13 +1,13 @@
 #include <Rcpp.h>
 
-inline double round0(double x) {
-  return (x < 0.0) ? std::ceil(x) : std::floor(x);
-}
+// inline double round0(double x) {
+//   return (x < 0.0) ? std::ceil(x) : std::floor(x);
+// }
 
 bool isInteger(double x, bool warn) {
   if (ISNAN(x))
     return false;
-  if (round0(x) != x) {
+  if (((x < 0.0) ? std::ceil(x) : std::floor(x)) != x) {
     if (warn) {
       char msg[55];
       std::snprintf(msg, sizeof(msg), "non-integer x = %f", x);

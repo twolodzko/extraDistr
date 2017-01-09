@@ -24,42 +24,46 @@ using Rcpp::NumericVector;
 *
 */
 
-double pdf_nst(double x, double nu, double mu, double sigma) {
+double pdf_nst(double x, double nu, double mu, double sigma,
+               bool& throw_warning) {
   if (ISNAN(x) || ISNAN(nu) || ISNAN(mu) || ISNAN(sigma))
-    return NA_REAL;
+    return x+nu+mu+sigma;
   if (nu <= 0.0 || sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   double z = (x - mu)/sigma;
   return R::dt(z, nu, false)/sigma;
 }
 
-double cdf_nst(double x, double nu, double mu, double sigma) {
+double cdf_nst(double x, double nu, double mu, double sigma,
+               bool& throw_warning) {
   if (ISNAN(x) || ISNAN(nu) || ISNAN(mu) || ISNAN(sigma))
-    return NA_REAL;
+    return x+nu+mu+sigma;
   if (nu <= 0.0 || sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   double z = (x - mu)/sigma;
   return R::pt(z, nu, true, false);
 }
 
-double invcdf_nst(double p, double nu, double mu, double sigma) {
+double invcdf_nst(double p, double nu, double mu, double sigma,
+                  bool& throw_warning) {
   if (ISNAN(p) || ISNAN(nu) || ISNAN(mu) || ISNAN(sigma))
-    return NA_REAL;
+    return p+nu+mu+sigma;
   if (nu <= 0.0 || sigma <= 0.0 || p < 0.0 || p > 1.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   return R::qt(p, nu, true, false)*sigma + mu;
 }
 
-double rng_nst(double nu, double mu, double sigma) {
+double rng_nst(double nu, double mu, double sigma,
+               bool& throw_warning) {
   if (ISNAN(nu) || ISNAN(mu) || ISNAN(sigma) ||
       nu <= 0.0 || sigma <= 0.0) {
-    Rcpp::warning("NAs produced");
+    throw_warning = true;
     return NA_REAL;
   }
   return R::rt(nu)*sigma + mu;
@@ -83,11 +87,18 @@ NumericVector cpp_dnst(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_nst(x[i % dims[0]], nu[i % dims[1]], mu[i % dims[2]], sigma[i % dims[3]]);
+    p[i] = pdf_nst(x[i % dims[0]], nu[i % dims[1]],
+                   mu[i % dims[2]], sigma[i % dims[3]],
+                   throw_warning);
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -111,14 +122,21 @@ NumericVector cpp_pnst(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_nst(x[i % dims[0]], nu[i % dims[1]], mu[i % dims[2]], sigma[i % dims[3]]);
+    p[i] = cdf_nst(x[i % dims[0]], nu[i % dims[1]],
+                   mu[i % dims[2]], sigma[i % dims[3]],
+                   throw_warning);
   
   if (!lower_tail)
     p = 1.0 - p;
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -143,6 +161,8 @@ NumericVector cpp_qnst(
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
+  bool throw_warning = false;
+  
   if (log_prob)
     pp = Rcpp::exp(pp);
   
@@ -150,7 +170,12 @@ NumericVector cpp_qnst(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_nst(pp[i % dims[0]], nu[i % dims[1]], mu[i % dims[2]], sigma[i % dims[3]]);
+    x[i] = invcdf_nst(pp[i % dims[0]], nu[i % dims[1]],
+                      mu[i % dims[2]], sigma[i % dims[3]],
+                      throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return x;
 }
@@ -170,8 +195,14 @@ NumericVector cpp_rnst(
   dims.push_back(sigma.length());
   NumericVector x(n);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < n; i++)
-    x[i] = rng_nst(nu[i % dims[0]], mu[i % dims[1]], sigma[i % dims[2]]);
+    x[i] = rng_nst(nu[i % dims[0]], mu[i % dims[1]],
+                   sigma[i % dims[2]], throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
   
   return x;
 }

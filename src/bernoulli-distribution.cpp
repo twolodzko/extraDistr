@@ -62,7 +62,7 @@ double invcdf_bernoulli(double p, double prob, bool& throw_warning) {
     throw_warning = true;
     return NAN;
   }
-  return (p <= 1.0 - prob) ? 0.0 : 1.0;
+  return (p <= (1.0 - prob)) ? 0.0 : 1.0;
 }
 
 double rng_bernoulli(double p, bool& throw_warning) {

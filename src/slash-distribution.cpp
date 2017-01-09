@@ -23,11 +23,12 @@ using Rcpp::NumericVector;
  */
 
 
-double pdf_slash(double x, double mu, double sigma) {
+double pdf_slash(double x, double mu, double sigma,
+                 bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
-    return NA_REAL;
+    return x+mu+sigma;
   if (sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   double z = (x - mu)/sigma;
@@ -36,11 +37,12 @@ double pdf_slash(double x, double mu, double sigma) {
   return ((PHI_0 - phi(z))/pow(z, 2.0))/sigma;
 }
 
-double cdf_slash(double x, double mu, double sigma) {
+double cdf_slash(double x, double mu, double sigma,
+                 bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
-    return NA_REAL;
+    return x+mu+sigma;
   if (sigma <= 0.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   double z = (x - mu)/sigma;
@@ -49,9 +51,10 @@ double cdf_slash(double x, double mu, double sigma) {
   return Phi(z) - (PHI_0 - phi(z))/z;
 }
 
-double rng_slash(double mu, double sigma) {
+double rng_slash(double mu, double sigma,
+                 bool& throw_warning) {
   if (ISNAN(mu) || ISNAN(sigma) || sigma <= 0.0) {
-    Rcpp::warning("NAs produced");
+    throw_warning = true;
     return NA_REAL;
   }
   double z = R::norm_rand();
@@ -76,11 +79,17 @@ NumericVector cpp_dslash(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_slash(x[i % dims[0]], mu[i % dims[1]], sigma[i % dims[2]]);
+    p[i] = pdf_slash(x[i % dims[0]], mu[i % dims[1]],
+                     sigma[i % dims[2]], throw_warning);
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -102,14 +111,20 @@ NumericVector cpp_pslash(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_slash(x[i % dims[0]], mu[i % dims[1]], sigma[i % dims[2]]);
+    p[i] = cdf_slash(x[i % dims[0]], mu[i % dims[1]],
+                     sigma[i % dims[2]], throw_warning);
   
   if (!lower_tail)
     p = 1.0 - p;
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -127,8 +142,14 @@ NumericVector cpp_rslash(
   dims.push_back(sigma.length());
   NumericVector x(n);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < n; i++)
-    x[i] = rng_slash(mu[i % dims[0]], sigma[i % dims[1]]);
+    x[i] = rng_slash(mu[i % dims[0]], sigma[i % dims[1]],
+                     throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
   
   return x;
 }

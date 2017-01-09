@@ -1,8 +1,10 @@
 
 # extraDistr
 
-[![Build Status](https://travis-ci.org/twolodzko/extraDistr.svg?branch=master)](https://travis-ci.org/twolodzko/extraDistr)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/extraDistr)](http://CRAN.R-project.org/package=extraDistr)
+[![Build Status](https://travis-ci.org/twolodzko/extraDistr.svg?branch=master)](https://travis-ci.org/twolodzko/extraDistr)
+[![Coverage Status](https://img.shields.io/codecov/c/github/twolodzko/extraDistr/master.svg)](https://codecov.io/github/twolodzko/extraDistr?branch=master)
+
 
 Density, distribution function, quantile function and random
 generation for a number of univariate and multivariate distributions.

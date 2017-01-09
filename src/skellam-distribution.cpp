@@ -19,21 +19,23 @@ using Rcpp::NumericVector;
  * 
  */
 
-double pmf_skellam(double x, double mu1, double mu2) {
+double pmf_skellam(double x, double mu1, double mu2,
+                   bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu1) || ISNAN(mu2))
-    return NA_REAL;
+    return x+mu1+mu2;
   if (mu1 < 0.0 || mu2 < 0.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
-  if (!isInteger(x) || !R_finite(x))
+  if (!isInteger(x) || !R_FINITE(x))
     return 0.0;
-  return exp(-(mu1+mu2)) * pow(mu1/mu2, x/2.0) * R::bessel_i(2.0*sqrt(mu1*mu2), x, 1.0);
+  return exp(-(mu1+mu2)) * pow(mu1/mu2, x/2.0) *
+    R::bessel_i(2.0*sqrt(mu1*mu2), x, 1.0);
 }
 
-double rng_skellam(double mu1, double mu2) {
+double rng_skellam(double mu1, double mu2, bool& throw_warning) {
   if (ISNAN(mu1) || ISNAN(mu2) || mu1 < 0.0 || mu2 < 0.0) {
-    Rcpp::warning("NAs produced");
+    throw_warning = true;
     return NA_REAL;
   }
   return R::rpois(mu1) - R::rpois(mu2);
@@ -56,11 +58,17 @@ NumericVector cpp_dskellam(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < Nmax; i++)
-    p[i] = pmf_skellam(x[i % dims[0]], mu1[i % dims[1]], mu2[i % dims[2]]);
+    p[i] = pmf_skellam(x[i % dims[0]], mu1[i % dims[1]],
+                       mu2[i % dims[2]], throw_warning);
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -78,8 +86,14 @@ NumericVector cpp_rskellam(
   dims.push_back(mu2.length());
   NumericVector x(n);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < n; i++)
-    x[i] = rng_skellam(mu1[i % dims[0]], mu2[i % dims[1]]);
+    x[i] = rng_skellam(mu1[i % dims[0]], mu2[i % dims[1]],
+                       throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
   
   return x;
 }
