@@ -31,11 +31,12 @@ using Rcpp::NumericVector;
 *            { b - sqrt((1-p)*(b-a)*(b-c));
 */
 
-double pdf_triangular(double x, double a, double b, double c) {
+double pdf_triangular(double x, double a, double b,
+                      double c, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(a) || ISNAN(b) || ISNAN(c))
-    return NA_REAL;
+    return x+a+b+c;
   if (a > c || c > b || a == b) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (x < a || x > b) {
@@ -49,11 +50,12 @@ double pdf_triangular(double x, double a, double b, double c) {
   }
 }
 
-double cdf_triangular(double x, double a, double b, double c) {
+double cdf_triangular(double x, double a, double b,
+                      double c, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(a) || ISNAN(b) || ISNAN(c))
-    return NA_REAL;
+    return x+a+b+c;
   if (a > c || c > b || a == b) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (x < a) {
@@ -67,11 +69,12 @@ double cdf_triangular(double x, double a, double b, double c) {
   }
 }
 
-double invcdf_triangular(double p, double a, double b, double c) {
+double invcdf_triangular(double p, double a, double b,
+                         double c, bool& throw_warning) {
   if (ISNAN(p) || ISNAN(a) || ISNAN(b) || ISNAN(c))
-    return NA_REAL;
+    return p+a+b+c;
   if (a > c || c > b || a == b || p < 0.0 || p > 1.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   double fc = (c-a)/(b-a);
@@ -80,10 +83,11 @@ double invcdf_triangular(double p, double a, double b, double c) {
   return b - sqrt((1.0-p)*(b-a)*(b-c));
 }
 
-double rng_triangular(double a, double b, double c) {
+double rng_triangular(double a, double b, double c,
+                      bool& throw_warning) {
   if (ISNAN(a) || ISNAN(b) || ISNAN(c) ||
       a > c || c > b || a == b) {
-    Rcpp::warning("NAs produced");
+    throw_warning = true;
     return NA_REAL;
   }
   double u, v, r, cc;
@@ -111,12 +115,19 @@ NumericVector cpp_dtriang(
   dims.push_back(c.length());
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
+  
+  bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_triangular(x[i % dims[0]], a[i % dims[1]], b[i % dims[2]], c[i % dims[3]]);
+    p[i] = pdf_triangular(x[i % dims[0]], a[i % dims[1]],
+                          b[i % dims[2]], c[i % dims[3]],
+                          throw_warning);
 
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
 
   return p;
 }
@@ -139,9 +150,13 @@ NumericVector cpp_ptriang(
   dims.push_back(c.length());
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
+  
+  bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_triangular(x[i % dims[0]], a[i % dims[1]], b[i % dims[2]], c[i % dims[3]]);
+    p[i] = cdf_triangular(x[i % dims[0]], a[i % dims[1]],
+                          b[i % dims[2]], c[i % dims[3]],
+                          throw_warning);
 
   if (!lower_tail)
     p = 1.0 - p;
@@ -149,6 +164,9 @@ NumericVector cpp_ptriang(
   if (log_prob)
     p = Rcpp::log(p);
 
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
+  
   return p;
 }
 
@@ -171,6 +189,8 @@ NumericVector cpp_qtriang(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
+  
+  bool throw_warning = false;
 
   if (log_prob)
     pp = Rcpp::exp(pp);
@@ -179,7 +199,12 @@ NumericVector cpp_qtriang(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_triangular(pp[i % dims[0]], a[i % dims[1]], b[i % dims[2]], c[i % dims[3]]);
+    x[i] = invcdf_triangular(pp[i % dims[0]], a[i % dims[1]],
+                             b[i % dims[2]], c[i % dims[3]],
+                             throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
 
   return x;
 }
@@ -198,9 +223,15 @@ NumericVector cpp_rtriang(
   dims.push_back(b.length());
   dims.push_back(c.length());
   NumericVector x(n);
+  
+  bool throw_warning = false;
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_triangular(a[i % dims[0]], b[i % dims[1]], c[i % dims[2]]);
+    x[i] = rng_triangular(a[i % dims[0]], b[i % dims[1]],
+                          c[i % dims[2]], throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
 
   return x;
 }

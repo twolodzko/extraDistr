@@ -11,11 +11,13 @@ using std::ceil;
 using Rcpp::NumericVector;
 
 
-double pdf_tbinom(double x, double size, double prob, double a, double b) {
+double pdf_tbinom(double x, double size, double prob,
+                  double a, double b, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(size) || ISNAN(prob) || ISNAN(a) || ISNAN(b))
-    return NA_REAL;
-  if (size < 0.0 || prob < 0.0 || prob > 1.0 || b < a || !isInteger(size, false)) {
-    Rcpp::warning("NaNs produced");
+    return x+size+prob+a+b;
+  if (size < 0.0 || prob < 0.0 || prob > 1.0 || b < a ||
+      !isInteger(size, false)) {
+    throw_warning = true;
     return NAN;
   }
   
@@ -29,11 +31,13 @@ double pdf_tbinom(double x, double size, double prob, double a, double b) {
   return R::dbinom(x, size, prob, false) / (pb-pa);
 }
 
-double cdf_tbinom(double x, double size, double prob, double a, double b) {
+double cdf_tbinom(double x, double size, double prob,
+                  double a, double b, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(size) || ISNAN(prob) || ISNAN(a) || ISNAN(b))
-    return NA_REAL;
-  if (size < 0.0 || prob < 0.0 || prob > 1.0 || b < a || !isInteger(size, false)) {
-    Rcpp::warning("NaNs produced");
+    return x+size+prob+a+b;
+  if (size < 0.0 || prob < 0.0 || prob > 1.0 || b < a ||
+      !isInteger(size, false)) {
+    throw_warning = true;
     return NAN;
   }
   
@@ -49,12 +53,13 @@ double cdf_tbinom(double x, double size, double prob, double a, double b) {
   return (R::pbinom(x, size, prob, true, false) - pa) / (pb-pa);
 }
 
-double invcdf_tbinom(double p, double size, double prob, double a, double b) {
+double invcdf_tbinom(double p, double size, double prob,
+                     double a, double b, bool& throw_warning) {
   if (ISNAN(p) || ISNAN(size) || ISNAN(prob) || ISNAN(a) || ISNAN(b))
-    return NA_REAL;
+    return p+size+prob+a+b;
   if (size < 0.0 || prob < 0.0 || prob > 1.0 || b < a ||
       !isInteger(size, false) || p < 0.0 || p > 1.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   
@@ -70,10 +75,12 @@ double invcdf_tbinom(double p, double size, double prob, double a, double b) {
   return R::qbinom(pa + p*(pb-pa), size, prob, true, false);
 }
 
-double rng_tbinom(double size, double prob, double a, double b) {
+double rng_tbinom(double size, double prob, double a,
+                  double b, bool& throw_warning) {
   if (ISNAN(size) || ISNAN(prob) || ISNAN(a) || ISNAN(b) ||
-      size < 0.0 || prob < 0.0 || prob > 1.0 || b < a || !isInteger(size, false)) {
-    Rcpp::warning("NAs produced");
+      size < 0.0 || prob < 0.0 || prob > 1.0 || b < a ||
+      !isInteger(size, false)) {
+    throw_warning = true;
     return NA_REAL;
   }
   
@@ -105,12 +112,18 @@ NumericVector cpp_dtbinom(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_tbinom(x[i % dims[0]], size[i % dims[1]], prob[i % dims[2]],
-                      a[i % dims[3]], b[i % dims[4]]);
+    p[i] = pdf_tbinom(x[i % dims[0]], size[i % dims[1]],
+                      prob[i % dims[2]], a[i % dims[3]],
+                      b[i % dims[4]], throw_warning);
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -136,15 +149,21 @@ NumericVector cpp_ptbinom(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_tbinom(x[i % dims[0]], size[i % dims[1]], prob[i % dims[2]],
-                      a[i % dims[3]], b[i % dims[4]]);
+    p[i] = cdf_tbinom(x[i % dims[0]], size[i % dims[1]],
+                      prob[i % dims[2]], a[i % dims[3]],
+                      b[i % dims[4]], throw_warning);
   
   if (!lower_tail)
     p = 1.0 - p;
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -171,6 +190,8 @@ NumericVector cpp_qtbinom(
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
+  bool throw_warning = false;
+  
   if (log_prob)
     pp = Rcpp::exp(pp);
   
@@ -178,8 +199,12 @@ NumericVector cpp_qtbinom(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_tbinom(pp[i % dims[0]], size[i % dims[1]], prob[i % dims[2]],
-                         a[i % dims[3]], b[i % dims[4]]);
+    x[i] = invcdf_tbinom(pp[i % dims[0]], size[i % dims[1]],
+                         prob[i % dims[2]], a[i % dims[3]],
+                         b[i % dims[4]], throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return x;
 }
@@ -201,8 +226,15 @@ NumericVector cpp_rtbinom(
   dims.push_back(b.length());
   NumericVector x(n);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < n; i++)
-    x[i] = rng_tbinom(size[i % dims[0]], prob[i % dims[1]], a[i % dims[2]], b[i % dims[3]]);
+    x[i] = rng_tbinom(size[i % dims[0]], prob[i % dims[1]],
+                      a[i % dims[2]], b[i % dims[3]],
+                      throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
   
   return x;
 }

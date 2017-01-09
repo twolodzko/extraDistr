@@ -21,11 +21,12 @@ The Annals of Mathematical Statistics, 413-426.
 */
 
 
-double invcdf_tlambda(double p, double lambda) {
+double invcdf_tlambda(double p, double lambda,
+                      bool& throw_warning) {
   if (ISNAN(p) || ISNAN(lambda))
-    return NA_REAL;
+    return p+lambda;
   if (p < 0.0 || p > 1.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (lambda == 0.0)
@@ -33,9 +34,9 @@ double invcdf_tlambda(double p, double lambda) {
   return (pow(p, lambda) - pow(1.0 - p, lambda))/lambda;
 }
 
-double rng_tlambda(double lambda) {
+double rng_tlambda(double lambda, bool& throw_warning) {
   if (ISNAN(lambda)) {
-    Rcpp::warning("NAs produced");
+    throw_warning = true;
     return NA_REAL;
   }
   double u = rng_unif();
@@ -60,6 +61,8 @@ NumericVector cpp_qtlambda(
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
+  bool throw_warning = false;
+  
   if (log_prob)
     pp = exp(pp);
   
@@ -67,7 +70,11 @@ NumericVector cpp_qtlambda(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_tlambda(pp[i % dims[0]], lambda[i % dims[1]]);
+    q[i] = invcdf_tlambda(pp[i % dims[0]], lambda[i % dims[1]],
+                          throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return q;
 }
@@ -81,9 +88,14 @@ NumericVector cpp_rtlambda(
   
   int dims = lambda.length();
   NumericVector x(n);
+  
+  bool throw_warning = false;
     
   for (int i = 0; i < n; i++)
-    x[i] = rng_tlambda(lambda[i % dims]);
+    x[i] = rng_tlambda(lambda[i % dims], throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
   
   return x;
 }

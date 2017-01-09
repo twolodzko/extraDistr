@@ -23,11 +23,13 @@ using Rcpp::NumericVector;
 *
 */
 
-double pdf_zib(double x, double n, double p, double pi) {
+double pdf_zib(double x, double n, double p,
+               double pi, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(n) || ISNAN(p) || ISNAN(pi))
-    return NA_REAL;
-  if (p < 0.0 || p > 1.0 || n < 0.0 || pi < 0.0 || pi > 1.0 || !isInteger(n, false)) {
-    Rcpp::warning("NaNs produced");
+    return x+n+p+pi;
+  if (p < 0.0 || p > 1.0 || n < 0.0 || pi < 0.0 || pi > 1.0 ||
+      !isInteger(n, false)) {
+    throw_warning = true;
     return NAN;
   }
   if (x < 0.0 || !isInteger(x) || !R_FINITE(x))
@@ -38,11 +40,13 @@ double pdf_zib(double x, double n, double p, double pi) {
     return (1.0-pi) * R::dbinom(x, n, p, false);
 }
 
-double cdf_zib(double x, double n, double p, double pi) {
+double cdf_zib(double x, double n, double p,
+               double pi, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(n) || ISNAN(p) || ISNAN(pi))
-    return NA_REAL;
-  if (p < 0.0 || p > 1.0 || n < 0.0 || pi < 0.0 || pi > 1.0 || !isInteger(n, false)) {
-    Rcpp::warning("NaNs produced");
+    return x+n+p+pi;
+  if (p < 0.0 || p > 1.0 || n < 0.0 || pi < 0.0 || pi > 1.0 ||
+      !isInteger(n, false)) {
+    throw_warning = true;
     return NAN;
   }
   if (x < 0.0)
@@ -52,12 +56,13 @@ double cdf_zib(double x, double n, double p, double pi) {
   return pi + (1.0-pi) * R::pbinom(x, n, p, true, false);
 }
 
-double invcdf_zib(double pp, double n, double p, double pi) {
+double invcdf_zib(double pp, double n, double p,
+                  double pi, bool& throw_warning) {
   if (ISNAN(pp) || ISNAN(n) || ISNAN(p) || ISNAN(pi))
-    return NA_REAL;
+    return pp+n+p+pi;
   if (p < 0.0 || p > 1.0 || n < 0.0 || pi < 0.0 || pi > 1.0 ||
       !isInteger(n, false) || pp < 0.0 || pp > 1.0) {
-    Rcpp::warning("NaNs produced");
+      throw_warning = true;
     return NAN;
   }
   if (pp < pi)
@@ -66,11 +71,12 @@ double invcdf_zib(double pp, double n, double p, double pi) {
     return R::qbinom((pp - pi) / (1.0-pi), n, p, true, false);
 }
 
-double rng_zib(double n, double p, double pi) {
+double rng_zib(double n, double p, double pi,
+               bool& throw_warning) {
   if (ISNAN(n) || ISNAN(p) || ISNAN(pi) ||
       p < 0.0 || p > 1.0 || n < 0.0 ||
       pi < 0.0 || pi > 1.0 || !isInteger(n, false)) {
-    Rcpp::warning("NAs produced");
+    throw_warning = true;
     return NA_REAL;
   }
   double u = rng_unif();
@@ -98,12 +104,18 @@ NumericVector cpp_dzib(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < Nmax; i++)
     p[i] = pdf_zib(x[i % dims[0]], size[i % dims[1]],
-                   prob[i % dims[2]], pi[i % dims[3]]);
+                   prob[i % dims[2]], pi[i % dims[3]],
+                   throw_warning);
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -127,15 +139,21 @@ NumericVector cpp_pzib(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < Nmax; i++)
     p[i] = cdf_zib(x[i % dims[0]], size[i % dims[1]],
-                   prob[i % dims[2]], pi[i % dims[3]]);
+                   prob[i % dims[2]], pi[i % dims[3]],
+                   throw_warning);
   
   if (!lower_tail)
     p = 1.0 - p;
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -160,6 +178,8 @@ NumericVector cpp_qzib(
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
+  bool throw_warning = false;
+  
   if (log_prob)
     pp = Rcpp::exp(pp);
   
@@ -168,7 +188,11 @@ NumericVector cpp_qzib(
   
   for (int i = 0; i < Nmax; i++)
     x[i] = invcdf_zib(pp[i % dims[0]], size[i % dims[1]],
-                      prob[i % dims[2]], pi[i % dims[3]]);
+                      prob[i % dims[2]], pi[i % dims[3]],
+                      throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return x;
 }
@@ -188,8 +212,14 @@ NumericVector cpp_rzib(
   dims.push_back(pi.length());
   NumericVector x(n);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < n; i++)
-    x[i] = rng_zib(size[i % dims[0]], prob[i % dims[1]], pi[i % dims[2]]);
+    x[i] = rng_zib(size[i % dims[0]], prob[i % dims[1]],
+                   pi[i % dims[2]], throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
   
   return x;
 }

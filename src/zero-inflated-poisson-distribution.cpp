@@ -23,13 +23,14 @@ using Rcpp::NumericVector;
 *
 */
 
-double pdf_zip(double x, double lambda, double pi) {
+double pdf_zip(double x, double lambda, double pi,
+               bool& throw_warning) {
+  if (ISNAN(x) || ISNAN(lambda) || ISNAN(pi))
+    return x+lambda+pi;
   if (lambda <= 0.0 || pi < 0.0 || pi > 1.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
-  if (ISNAN(x) || ISNAN(lambda) || ISNAN(pi))
-    return NA_REAL;
   if (x < 0.0 || !isInteger(x) || !R_FINITE(x))
     return 0.0;
   if (x == 0.0)
@@ -38,11 +39,12 @@ double pdf_zip(double x, double lambda, double pi) {
     return (1.0-pi) * R::dpois(x, lambda, false);
 }
 
-double cdf_zip(double x, double lambda, double pi) {
+double cdf_zip(double x, double lambda, double pi,
+               bool& throw_warning) {
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(pi))
-    return NA_REAL;
+    return x+lambda+pi;
   if (lambda <= 0.0 || pi < 0.0 || pi > 1.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (x < 0.0)
@@ -52,11 +54,13 @@ double cdf_zip(double x, double lambda, double pi) {
   return pi + (1.0-pi) * R::ppois(x, lambda, true, false);
 }
 
-double invcdf_zip(double p, double lambda, double pi) {
+double invcdf_zip(double p, double lambda, double pi,
+                  bool& throw_warning) {
   if (ISNAN(p) || ISNAN(lambda) || ISNAN(pi))
-    return NA_REAL;
-  if (lambda <= 0.0 || pi < 0.0 || pi > 1.0 || p < 0.0 || p > 1.0) {
-    Rcpp::warning("NaNs produced");
+    return p+lambda+pi;
+  if (lambda <= 0.0 || pi < 0.0 || pi > 1.0 ||
+      p < 0.0 || p > 1.0) {
+    throw_warning = true;
     return NAN;
   }
   if (p < pi)
@@ -65,10 +69,10 @@ double invcdf_zip(double p, double lambda, double pi) {
     return R::qpois((p - pi) / (1.0-pi), lambda, true, false);
 }
 
-double rng_zip(double lambda, double pi) {
+double rng_zip(double lambda, double pi, bool& throw_warning) {
   if (ISNAN(lambda) || ISNAN(pi) ||
       lambda <= 0.0 || pi < 0.0 || pi > 1.0) {
-    Rcpp::warning("NAs produced");
+    throw_warning = true;
     return NA_REAL;
   }
   double u = rng_unif();
@@ -94,11 +98,17 @@ NumericVector cpp_dzip(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_zip(x[i % dims[0]], lambda[i % dims[1]], pi[i % dims[2]]);
+    p[i] = pdf_zip(x[i % dims[0]], lambda[i % dims[1]],
+                   pi[i % dims[2]], throw_warning);
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -120,14 +130,20 @@ NumericVector cpp_pzip(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_zip(x[i % dims[0]], lambda[i % dims[1]], pi[i % dims[2]]);
+    p[i] = cdf_zip(x[i % dims[0]], lambda[i % dims[1]],
+                   pi[i % dims[2]], throw_warning);
   
   if (!lower_tail)
     p = 1.0 - p;
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -150,6 +166,8 @@ NumericVector cpp_qzip(
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
+  bool throw_warning = false;
+  
   if (log_prob)
     pp = Rcpp::exp(pp);
   
@@ -157,7 +175,11 @@ NumericVector cpp_qzip(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_zip(pp[i % dims[0]], lambda[i % dims[1]], pi[i % dims[2]]);
+    x[i] = invcdf_zip(pp[i % dims[0]], lambda[i % dims[1]],
+                      pi[i % dims[2]], throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return x;
 }
@@ -175,8 +197,14 @@ NumericVector cpp_rzip(
   dims.push_back(pi.length());
   NumericVector x(n);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < n; i++)
-    x[i] = rng_zip(lambda[i % dims[0]], pi[i % dims[1]]);
+    x[i] = rng_zip(lambda[i % dims[0]], pi[i % dims[1]],
+                   throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return x;
 }

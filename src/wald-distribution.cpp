@@ -24,11 +24,12 @@ using Rcpp::NumericVector;
  * 
  */
 
-double pdf_wald(double x, double mu, double lambda) {
+double pdf_wald(double x, double mu, double lambda,
+                bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(lambda))
-    return NA_REAL;
+    return x+mu+lambda;
   if (mu <= 0.0 || lambda <= 0.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (x <= 0.0 || !R_FINITE(x))
@@ -37,11 +38,12 @@ double pdf_wald(double x, double mu, double lambda) {
          exp((-lambda*pow(x-mu, 2.0))/(2.0*pow(mu, 2.0)*x));
 }
 
-double cdf_wald(double x, double mu, double lambda) {
+double cdf_wald(double x, double mu, double lambda,
+                bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(lambda))
-    return NA_REAL;
+    return x+mu+lambda;
   if (mu <= 0.0 || lambda <= 0.0) {
-    Rcpp::warning("NaNs produced");
+    throw_warning = true;
     return NAN;
   }
   if (x <= 0.0)
@@ -53,9 +55,9 @@ double cdf_wald(double x, double mu, double lambda) {
          Phi(-sqrt(lambda/x)*(x/mu+1.0));
 }
 
-double rng_wald(double mu, double lambda) {
+double rng_wald(double mu, double lambda, bool& throw_warning) {
   if (ISNAN(mu) || ISNAN(lambda) || mu <= 0.0 || lambda <= 0.0) {
-    Rcpp::warning("NAs produced");
+    throw_warning = true;
     return NA_REAL;
   }
   double u, x, y, z;
@@ -86,11 +88,17 @@ NumericVector cpp_dwald(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_wald(x[i % dims[0]], mu[i % dims[1]], lambda[i % dims[2]]);
+    p[i] = pdf_wald(x[i % dims[0]], mu[i % dims[1]],
+                    lambda[i % dims[2]], throw_warning);
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -112,14 +120,20 @@ NumericVector cpp_pwald(
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_wald(x[i % dims[0]], mu[i % dims[1]], lambda[i % dims[2]]);
+    p[i] = cdf_wald(x[i % dims[0]], mu[i % dims[1]],
+                    lambda[i % dims[2]], throw_warning);
   
   if (!lower_tail)
     p = 1.0 - p;
   
   if (log_prob)
     p = Rcpp::log(p);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
   
   return p;
 }
@@ -137,8 +151,14 @@ NumericVector cpp_rwald(
   dims.push_back(lambda.length());
   NumericVector x(n);
   
+  bool throw_warning = false;
+  
   for (int i = 0; i < n; i++)
-    x[i] = rng_wald(mu[i % dims[0]], lambda[i % dims[1]]);
+    x[i] = rng_wald(mu[i % dims[0]], lambda[i % dims[1]],
+                    throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NAs produced");
   
   return x;
 }
