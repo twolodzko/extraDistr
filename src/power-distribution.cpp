@@ -27,6 +27,7 @@ using Rcpp::NumericVector;
 *
 */
 
+/*
 double pdf_power(double x, double alpha, double beta,
                  bool& throw_warning) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
@@ -46,6 +47,7 @@ double cdf_power(double x, double alpha, double beta,
     return 1.0;
   return pow(x, beta) / pow(alpha, beta);
 }
+*/
 
 double invcdf_power(double p, double alpha, double beta,
                     bool& throw_warning) {

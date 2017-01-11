@@ -18,15 +18,13 @@ bool isInteger(double x, bool warn) {
   return true;
 }
 
-// Dealing with Inf and NAs
-
-bool anyFinite(Rcpp::NumericVector x) {
-  int n = x.length();
-  for (int i = 0; i < n; i++)
-    if (R_FINITE(x[i]))
-      return true;
-  return false;
-}
+// bool anyFinite(Rcpp::NumericVector x) {
+//   int n = x.length();
+//   for (int i = 0; i < n; i++)
+//     if (R_FINITE(x[i]))
+//       return true;
+//   return false;
+// }
 
 double finite_max(Rcpp::NumericVector x) {
   double max_x = 0.0;
@@ -48,13 +46,13 @@ double finite_max(Rcpp::NumericVector x) {
   return max_x;
 }
 
-bool allNA(Rcpp::NumericVector x) {
-  int n = x.length();
-  for (int i = 0; i < n; i++)
-    if (!ISNAN(x[i]))
-      return false;
-  return true;
-}
+// bool allNA(Rcpp::NumericVector x) {
+//   int n = x.length();
+//   for (int i = 0; i < n; i++)
+//     if (!ISNAN(x[i]))
+//       return false;
+//   return true;
+// }
 
 // Random generation
 

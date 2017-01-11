@@ -78,8 +78,6 @@ NumericVector cpp_dmvhyper(
       continue;
     }
     
-    lNck = R::lchoose(n_tot, k[i % dims[2]]);
-    
     for (int j = 0; j < m; j++) {
       if (x(i % dims[0], j) > n(i % dims[1], j) || x(i % dims[0], j) < 0.0 ||
           !isInteger(x(i % dims[0], j))) {
@@ -92,6 +90,7 @@ NumericVector cpp_dmvhyper(
     if (wrong_x || sum_x != k[i % dims[2]]) {
       p[i] = R_NegInf;
     } else {
+      lNck = R::lchoose(n_tot, k[i % dims[2]]);
       p[i] = lncx_prod - lNck;
     }
     

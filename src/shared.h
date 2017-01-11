@@ -9,12 +9,7 @@
 // Basic functions
 
 bool isInteger(double x, bool warn = true);
-
-// Dealing with Inf and NAs
-
-bool anyFinite(Rcpp::NumericVector x);
 double finite_max(Rcpp::NumericVector x);
-bool allNA(Rcpp::NumericVector x);
 
 // Random generation
 

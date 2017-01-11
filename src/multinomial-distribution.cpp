@@ -76,7 +76,6 @@ NumericVector cpp_dmnom(
       continue;
     }
     
-    n_fac = lfactorial(size[i % dims[1]]);
     prod_xfac = 0.0;
     prod_pow_px = 0.0;
     
@@ -92,6 +91,7 @@ NumericVector cpp_dmnom(
     if (wrong_x || sum_x < 0.0 || sum_x != size[i % dims[1]]) {
       p[i] = R_NegInf;
     } else {
+      n_fac = lfactorial(size[i % dims[1]]);
       p[i] = n_fac - prod_xfac + prod_pow_px;
     }
   }
