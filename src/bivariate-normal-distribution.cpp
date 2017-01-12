@@ -31,10 +31,9 @@ using Rcpp::NumericMatrix;
 */
 
 
-double pdf_bnorm(double x, double y,
-                 double mu1, double mu2,
-                 double sigma1, double sigma2,
-                 double rho, bool& throw_warning) {
+inline double pdf_bnorm(double x, double y, double mu1, double mu2,
+                        double sigma1, double sigma2, double rho,
+                        bool& throw_warning) {
   
   if (ISNAN(x) || ISNAN(y) || ISNAN(mu1) || ISNAN(mu2) ||
       ISNAN(sigma1) || ISNAN(sigma2) || ISNAN(rho))
@@ -87,10 +86,10 @@ NumericVector cpp_dbnorm(
     Rcpp::stop("lengths of x and y differ");
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_bnorm(x[i % dims[0]], y[i % dims[1]],
-                     mu1[i % dims[2]], mu2[i % dims[3]],
-                     sigma1[i % dims[4]], sigma2[i % dims[5]],
-                     rho[i % dims[6]], throw_warning);
+    p[i] = pdf_bnorm(GETV(x, i), GETV(y, i), GETV(mu1, i),
+                     GETV(mu2, i), GETV(sigma1, i),
+                     GETV(sigma2, i), GETV(rho, i),
+                     throw_warning);
 
   if (log_prob)
     p = Rcpp::log(p);
@@ -124,23 +123,23 @@ NumericMatrix cpp_rbnorm(
   bool throw_warning = false;
 
   for (int i = 0; i < n; i++) {
-    if (ISNAN(mu1[i % dims[0]]) || ISNAN(mu2[i % dims[1]]) ||
-        ISNAN(sigma1[i % dims[2]]) || ISNAN(sigma2[i % dims[3]]) ||
-        ISNAN(rho[i % dims[4]]) ||
-        sigma1[i % dims[2]] <= 0.0 || sigma2[i % dims[3]] <= 0.0 ||
-        rho[i % dims[4]] < -1.0 || rho[i % dims[4]] > 1.0) {
+    if (ISNAN(GETV(mu1, i)) || ISNAN(GETV(mu2, i)) ||
+        ISNAN(GETV(sigma1, i)) || ISNAN(GETV(sigma2, i)) ||
+        ISNAN(GETV(rho, i)) || GETV(sigma1, i) <= 0.0 ||
+        GETV(sigma2, i) <= 0.0 || GETV(rho, i) < -1.0 ||
+        GETV(rho, i) > 1.0) {
       throw_warning = true;
       x(i, 0) = NA_REAL;
       x(i, 1) = NA_REAL;
-    } else if (!tol_equal(rho[i % dims[4]], 0.0)) {
+    } else if (!tol_equal(GETV(rho, i), 0.0)) {
       u = R::norm_rand();
       v = R::norm_rand();
-      corr = (rho[i % dims[4]]*u + sqrt(1.0 - pow(rho[i % dims[4]], 2.0))*v);
-      x(i, 0) = mu1[i % dims[0]] + sigma1[i % dims[2]] * u;
-      x(i, 1) = mu2[i % dims[1]] + sigma2[i % dims[3]] * corr;
+      corr = (GETV(rho, i)*u + sqrt(1.0 - pow(GETV(rho, i), 2.0))*v);
+      x(i, 0) = GETV(mu1, i) + GETV(sigma1, i) * u;
+      x(i, 1) = GETV(mu2, i) + GETV(sigma2, i) * corr;
     } else {
-      x(i, 0) = R::rnorm(mu1[i % dims[0]], sigma1[i % dims[2]]);
-      x(i, 1) = R::rnorm(mu2[i % dims[1]], sigma2[i % dims[3]]);
+      x(i, 0) = R::rnorm(GETV(mu1, i), GETV(sigma1, i));
+      x(i, 1) = R::rnorm(GETV(mu2, i), GETV(sigma2, i));
     }
   }
   

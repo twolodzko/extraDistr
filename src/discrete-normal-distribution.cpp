@@ -24,8 +24,8 @@ using Rcpp::NumericVector;
 */
 
 
-double pmf_dnorm(double x, double mu,
-                 double sigma, bool& throw_warning) {
+inline double pmf_dnorm(double x, double mu, double sigma,
+                        bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
     return x+mu+sigma;
   if (sigma <= 0.0) {
@@ -57,8 +57,8 @@ NumericVector cpp_ddnorm(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pmf_dnorm(x[i % dims[0]], mu[i % dims[1]],
-                     sigma[i % dims[2]], throw_warning);
+    p[i] = pmf_dnorm(GETV(x, i), GETV(mu, i),
+                     GETV(sigma, i), throw_warning);
   
   if (log_prob)
     p = Rcpp::log(p);

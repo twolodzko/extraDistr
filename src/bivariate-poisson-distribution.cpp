@@ -12,12 +12,12 @@ using Rcpp::NumericVector;
 using Rcpp::NumericMatrix;
 
 
-double pmf_bpois(double x, double y, double a, double b, double c,
-                 bool& throw_warning) {
+inline double pmf_bpois(double x, double y, double a, double b, double c,
+                        bool& throw_warning) {
   
   if (ISNAN(x) || ISNAN(y) || ISNAN(a) || ISNAN(b) || ISNAN(c))
     return x+y+a+b+c;
-  
+
   if (a < 0.0 || b < 0.0 || c < 0.0) {
     throw_warning = true;
     return NAN;
@@ -75,9 +75,8 @@ NumericVector cpp_dbpois(
     Rcpp::stop("lengths of x and y differ");
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pmf_bpois(x[i % dims[0]], y[i % dims[1]],
-                     a[i % dims[2]], b[i % dims[3]],
-                     c[i % dims[4]], throw_warning);
+    p[i] = pmf_bpois(GETV(x, i), GETV(y, i), GETV(a, i),
+                     GETV(b, i), GETV(c, i), throw_warning);
   
   if (log_prob)
     p = Rcpp::log(p);
@@ -107,15 +106,15 @@ NumericMatrix cpp_rbpois(
   bool throw_warning = false;
   
   for (int i = 0; i < n; i++) {
-    if (ISNAN(a[i % dims[0]]) || ISNAN(b[i % dims[1]]) || ISNAN(c[i % dims[2]]) || 
-        a[i % dims[0]] < 0.0 || b[i % dims[1]] < 0.0 || c[i % dims[2]] < 0.0) {
+    if (ISNAN(GETV(a, i)) || ISNAN(GETV(b, i)) || ISNAN(GETV(c, i)) || 
+        GETV(a, i) < 0.0 || GETV(b, i) < 0.0 || GETV(c, i) < 0.0) {
       throw_warning = true;
       x(i, 0) = NA_REAL;
       x(i, 1) = NA_REAL;
     } else {
-      u = R::rpois(a[i % dims[0]]);
-      v = R::rpois(b[i % dims[1]]);
-      w = R::rpois(c[i % dims[2]]);
+      u = R::rpois(GETV(a, i));
+      v = R::rpois(GETV(b, i));
+      w = R::rpois(GETV(c, i));
       x(i, 0) = u+w;
       x(i, 1) = v+w;
     }

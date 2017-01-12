@@ -24,8 +24,8 @@ using Rcpp::NumericVector;
 *
 */
 
-double logpmf_gpois(double x, double alpha,
-                    double beta, bool& throw_warning) {
+inline double logpmf_gpois(double x, double alpha, double beta,
+                           bool& throw_warning) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
     return x+alpha+beta;
   if (alpha <= 0.0 || beta <= 0.0) {
@@ -39,13 +39,13 @@ double logpmf_gpois(double x, double alpha,
     log(p)*x + log(1.0-p)*alpha;
 }
 
-std::vector<double> cdf_gpois_table(double x, double alpha, double beta) {
+inline std::vector<double> cdf_gpois_table(double x, double alpha, double beta) {
   
   if (x < 0.0 || !R_FINITE(x) || alpha < 0.0 || beta < 0.0)
     Rcpp::stop("inadmissible values");
   
   x = floor(x);
-  std::vector<double> p_tab(static_cast<int>(x)+1);
+  std::vector<double> p_tab(TO_INT(x)+1);
   double p, qa, ga, gax, xf, px, lp;
   
   p = beta/(1.0+beta);
@@ -78,13 +78,14 @@ std::vector<double> cdf_gpois_table(double x, double alpha, double beta) {
     gax += log(j + alpha - 1.0);
     xf += log(j);
     px += lp;
-    p_tab[static_cast<int>(j)] = p_tab[static_cast<int>(j)-1] + exp(gax - (xf + ga) + px + qa);
+    p_tab[TO_INT(j)] = p_tab[TO_INT(j)-1] + exp(gax - (xf + ga) + px + qa);
   }
   
   return p_tab;
 }
 
-double rng_gpois(double alpha, double beta, bool& throw_warning) {
+inline double rng_gpois(double alpha, double beta,
+                        bool& throw_warning) {
   if (ISNAN(alpha) || ISNAN(beta) || alpha <= 0.0 || beta <= 0.0) {
     throw_warning = true;
     return NA_REAL;
@@ -112,8 +113,8 @@ NumericVector cpp_dgpois(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpmf_gpois(x[i % dims[0]], alpha[i % dims[1]],
-                        beta[i % dims[2]], throw_warning);
+    p[i] = logpmf_gpois(GETV(x, i), GETV(alpha, i),
+                        GETV(beta, i), throw_warning);
 
   if (!log_prob)
     p = Rcpp::exp(p);
@@ -149,22 +150,22 @@ NumericVector cpp_pgpois(
   for (int i = 0; i < Nmax; i++) {
     if (i % 1000 == 0)
       Rcpp::checkUserInterrupt();
-    if (ISNAN(x[i % dims[0]]) || ISNAN(alpha[i % dims[1]]) || ISNAN(beta[i % dims[2]])) {
-      p[i] = x[i % dims[0]] + alpha[i % dims[1]] + beta[i % dims[2]];
-    } else if (alpha[i % dims[1]] <= 0.0 || beta[i % dims[2]] <= 0.0) {
+    if (ISNAN(GETV(x, i)) || ISNAN(GETV(alpha, i)) || ISNAN(GETV(beta, i))) {
+      p[i] = GETV(x, i) + GETV(alpha, i) + GETV(beta, i);
+    } else if (GETV(alpha, i) <= 0.0 || GETV(beta, i) <= 0.0) {
       throw_warning = true;
       p[i] = NAN;
-    } else if (x[i % dims[0]] < 0.0) {
+    } else if (GETV(x, i) < 0.0) {
       p[i] = 0.0;
-    } else if (x[i % dims[0]] == R_PosInf) {
+    } else if (GETV(x, i) == R_PosInf) {
       p[i] = 1.0;
     } else {
       
       std::vector<double>& tmp = memo[std::make_tuple(i % dims[1], i % dims[2])];
       if (!tmp.size()) {
-        tmp = cdf_gpois_table(mx, alpha[i % dims[1]], beta[i % dims[2]]);
+        tmp = cdf_gpois_table(mx, GETV(alpha, i), GETV(beta, i));
       }
-      p[i] = tmp[static_cast<int>(x[i % dims[0]])];
+      p[i] = tmp[TO_INT(GETV(x, i))];
       
     }
   } 
@@ -197,7 +198,7 @@ NumericVector cpp_rgpois(
   bool throw_warning = false;
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_gpois(alpha[i % dims[0]], beta[i % dims[1]],
+    x[i] = rng_gpois(GETV(alpha, i), beta[i % dims[1]],
                      throw_warning);
   
   if (throw_warning)

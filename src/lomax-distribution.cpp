@@ -27,8 +27,8 @@ using Rcpp::NumericVector;
 *
 */
 
-double pdf_lomax(double x, double lambda, double kappa,
-                 bool& throw_warning) {
+inline double pdf_lomax(double x, double lambda, double kappa,
+                        bool& throw_warning) {
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(kappa))
     return x+lambda+kappa;
   if (lambda <= 0.0 || kappa <= 0.0) {
@@ -40,8 +40,8 @@ double pdf_lomax(double x, double lambda, double kappa,
   return lambda*kappa / pow(1.0+lambda*x, kappa+1.0);
 }
 
-double logpdf_lomax(double x, double lambda, double kappa,
-                    bool& throw_warning) {
+inline double logpdf_lomax(double x, double lambda, double kappa,
+                           bool& throw_warning) {
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(kappa))
     return x+lambda+kappa;
   if (lambda <= 0.0 || kappa <= 0.0) {
@@ -53,8 +53,8 @@ double logpdf_lomax(double x, double lambda, double kappa,
   return log(lambda) + log(kappa) - log(1.0+lambda*x)*(kappa+1.0);
 }
 
-double cdf_lomax(double x, double lambda, double kappa,
-                 bool& throw_warning) {
+inline double cdf_lomax(double x, double lambda, double kappa,
+                        bool& throw_warning) {
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(kappa))
     return x+lambda+kappa;
   if (lambda <= 0.0 || kappa <= 0.0) {
@@ -66,18 +66,18 @@ double cdf_lomax(double x, double lambda, double kappa,
   return 1.0 - pow(1.0+lambda*x, -kappa);
 }
 
-double invcdf_lomax(double p, double lambda, double kappa,
-                    bool& throw_warning) {
+inline double invcdf_lomax(double p, double lambda, double kappa,
+                           bool& throw_warning) {
   if (ISNAN(p) || ISNAN(lambda) || ISNAN(kappa))
     return p+lambda+kappa;
-  if (lambda <= 0.0 || kappa <= 0.0 || p < 0.0 || p > 1.0) {
+  if (lambda <= 0.0 || kappa <= 0.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;
   }
   return (pow(1.0-p, -1.0/kappa)-1.0) / lambda;
 }
 
-double rng_lomax(double lambda, double kappa, bool& throw_warning) {
+inline double rng_lomax(double lambda, double kappa, bool& throw_warning) {
   if (ISNAN(lambda) || ISNAN(kappa) || lambda <= 0.0 || kappa <= 0.0) {
     throw_warning = true;
     return NA_REAL;

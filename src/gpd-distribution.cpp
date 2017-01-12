@@ -34,8 +34,8 @@ using Rcpp::NumericVector;
 *
 */
 
-double pdf_gpd(double x, double mu, double sigma, double xi,
-               bool& throw_warning) {
+inline double pdf_gpd(double x, double mu, double sigma, double xi,
+                      bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
     return x+mu+sigma+xi;
   if (sigma <= 0.0) {
@@ -56,8 +56,8 @@ double pdf_gpd(double x, double mu, double sigma, double xi,
   }
 }
 
-double cdf_gpd(double x, double mu, double sigma, double xi,
-               bool& throw_warning) {
+inline double cdf_gpd(double x, double mu, double sigma, double xi,
+                      bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
     return x+mu+sigma+xi;
   if (sigma <= 0.0) {
@@ -78,11 +78,11 @@ double cdf_gpd(double x, double mu, double sigma, double xi,
   }
 }
 
-double invcdf_gpd(double p, double mu, double sigma, double xi,
-                  bool& throw_warning) {
+inline double invcdf_gpd(double p, double mu, double sigma, double xi,
+                         bool& throw_warning) {
   if (ISNAN(p) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
     return p+mu+sigma+xi;
-  if (sigma <= 0.0 || p < 0.0 || p > 1.0) {
+  if (sigma <= 0.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;
   }
@@ -92,7 +92,8 @@ double invcdf_gpd(double p, double mu, double sigma, double xi,
     return mu - sigma * log(1.0-p);
 }
 
-double rng_gpd(double mu, double sigma, double xi, bool& throw_warning) {
+inline double rng_gpd(double mu, double sigma, double xi,
+                      bool& throw_warning) {
   if (ISNAN(mu) || ISNAN(sigma) || ISNAN(xi) || sigma <= 0.0) {
     throw_warning = true;
     return NA_REAL;
@@ -125,8 +126,8 @@ NumericVector cpp_dgpd(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_gpd(x[i % dims[0]], mu[i % dims[1]],
-                   sigma[i % dims[2]], xi[i % dims[3]],
+    p[i] = pdf_gpd(GETV(x, i), GETV(mu, i),
+                   GETV(sigma, i), GETV(xi, i),
                    throw_warning);
 
   if (log_prob)
@@ -160,8 +161,8 @@ NumericVector cpp_pgpd(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_gpd(x[i % dims[0]], mu[i % dims[1]],
-                   sigma[i % dims[2]], xi[i % dims[3]],
+    p[i] = cdf_gpd(GETV(x, i), GETV(mu, i),
+                   GETV(sigma, i), GETV(xi, i),
                    throw_warning);
 
   if (!lower_tail)
@@ -205,8 +206,8 @@ NumericVector cpp_qgpd(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_gpd(pp[i % dims[0]], mu[i % dims[1]],
-                      sigma[i % dims[2]], xi[i % dims[3]],
+    q[i] = invcdf_gpd(GETV(pp, i), GETV(mu, i),
+                      GETV(sigma, i), GETV(xi, i),
                       throw_warning);
   
   if (throw_warning)
@@ -233,8 +234,8 @@ NumericVector cpp_rgpd(
   bool throw_warning = false;
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_gpd(mu[i % dims[0]], sigma[i % dims[1]],
-                   xi[i % dims[2]], throw_warning);
+    x[i] = rng_gpd(GETV(mu, i), GETV(sigma, i),
+                   GETV(xi, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NAs produced");

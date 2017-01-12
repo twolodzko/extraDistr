@@ -24,8 +24,8 @@ using Rcpp::NumericVector;
 *
 */
 
-double pdf_betapr(double x, double alpha, double beta,
-                  double sigma, bool& throw_warning) {
+inline double pdf_betapr(double x, double alpha, double beta,
+                         double sigma, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma))
     return x+alpha+beta+sigma;
   if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
@@ -38,8 +38,8 @@ double pdf_betapr(double x, double alpha, double beta,
   return pow(z, alpha-1.0) * pow(z+1.0, -alpha-beta) / R::beta(alpha, beta) / sigma;
 }
 
-double logpdf_betapr(double x, double alpha, double beta,
-                     double sigma, bool& throw_warning) {
+inline double logpdf_betapr(double x, double alpha, double beta,
+                            double sigma, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma))
     return x+alpha+beta+sigma;
   if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
@@ -52,8 +52,8 @@ double logpdf_betapr(double x, double alpha, double beta,
   return log(pow(z, alpha-1.0)) + log(pow(z+1.0, -alpha-beta)) - R::lbeta(alpha, beta) - log(sigma);
 }
 
-double cdf_betapr(double x, double alpha, double beta,
-                  double sigma, bool& throw_warning) {
+inline double cdf_betapr(double x, double alpha, double beta,
+                         double sigma, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma))
     return x+alpha+beta+sigma;
   if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
@@ -68,11 +68,11 @@ double cdf_betapr(double x, double alpha, double beta,
   return R::pbeta(z/(1.0+z), alpha, beta, true, false);
 }
 
-double invcdf_betapr(double p, double alpha, double beta,
-                     double sigma, bool& throw_warning) {
+inline double invcdf_betapr(double p, double alpha, double beta,
+                            double sigma, bool& throw_warning) {
   if (ISNAN(p) || ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma))
     return p+alpha+beta+sigma;
-  if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0 || p < 0.0 || p > 1.0) {
+  if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;
   }
@@ -84,8 +84,8 @@ double invcdf_betapr(double p, double alpha, double beta,
   return x/(1.0-x) * sigma;
 }
 
-double rng_betapr(double alpha, double beta,
-                  double sigma, bool& throw_warning) {
+inline double rng_betapr(double alpha, double beta,
+                         double sigma, bool& throw_warning) {
   if (ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma) ||
       alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
     throw_warning = true;
@@ -116,8 +116,8 @@ NumericVector cpp_dbetapr(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_betapr(x[i % dims[0]], alpha[i % dims[1]],
-                      beta[i % dims[2]], sigma[i % dims[3]],
+    p[i] = pdf_betapr(GETV(x, i), GETV(alpha, i),
+                      GETV(beta, i), GETV(sigma, i),
                       throw_warning);
   
   if (log_prob)
@@ -151,8 +151,8 @@ NumericVector cpp_pbetapr(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_betapr(x[i % dims[0]], alpha[i % dims[1]],
-                      beta[i % dims[2]], sigma[i % dims[3]],
+    p[i] = cdf_betapr(GETV(x, i), GETV(alpha, i),
+                      GETV(beta, i), GETV(sigma, i),
                       throw_warning);
   
   if (!lower_tail)
@@ -196,8 +196,8 @@ NumericVector cpp_qbetapr(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_betapr(pp[i % dims[0]], alpha[i % dims[1]],
-                         beta[i % dims[2]], sigma[i % dims[3]],
+    q[i] = invcdf_betapr(GETV(pp, i), GETV(alpha, i),
+                         GETV(beta, i), GETV(sigma, i),
                          throw_warning);
   
   if (throw_warning)
@@ -224,8 +224,8 @@ NumericVector cpp_rbetapr(
   bool throw_warning = false;
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_betapr(alpha[i % dims[0]], beta[i % dims[1]],
-                      sigma[i % dims[2]], throw_warning);
+    x[i] = rng_betapr(GETV(alpha, i), GETV(beta, i),
+                      GETV(sigma, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NAs produced");

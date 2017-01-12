@@ -12,8 +12,8 @@ using std::ceil;
 using Rcpp::NumericVector;
 
 
-double pdf_huber(double x, double mu, double sigma,
-                 double c, bool& throw_warning) {
+inline double pdf_huber(double x, double mu, double sigma,
+                        double c, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(c))
     return x+mu+sigma+c;
   if (sigma <= 0.0 || c <= 0.0) {
@@ -33,8 +33,8 @@ double pdf_huber(double x, double mu, double sigma,
   return exp(-rho)/A/sigma;
 }
 
-double cdf_huber(double x, double mu, double sigma,
-                 double c, bool& throw_warning) {
+inline double cdf_huber(double x, double mu, double sigma,
+                        double c, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(c))
     return x+mu+sigma+c;
   if (sigma <= 0.0 || c <= 0.0) {
@@ -58,11 +58,11 @@ double cdf_huber(double x, double mu, double sigma,
     return 1.0 - p;
 }
 
-double invcdf_huber(double p, double mu, double sigma,
-                    double c, bool& throw_warning) {
+inline double invcdf_huber(double p, double mu, double sigma,
+                           double c, bool& throw_warning) {
   if (ISNAN(p) || ISNAN(mu) || ISNAN(sigma) || ISNAN(c))
     return p+mu+sigma+c;
-  if (sigma <= 0.0 || c <= 0.0 || p < 0.0 || p > 1.0) {
+  if (sigma <= 0.0 || c <= 0.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;
   }
@@ -82,8 +82,10 @@ double invcdf_huber(double p, double mu, double sigma,
     return mu - x*sigma;
 }
 
-double rng_huber(double mu, double sigma, double c, bool& throw_warning) {
-  if (ISNAN(mu) || ISNAN(sigma) || ISNAN(c) || sigma <= 0.0 || c <= 0.0) {
+inline double rng_huber(double mu, double sigma, double c,
+                        bool& throw_warning) {
+  if (ISNAN(mu) || ISNAN(sigma) || ISNAN(c) ||
+      sigma <= 0.0 || c <= 0.0) {
     throw_warning = true;
     return NA_REAL;
   }
@@ -125,8 +127,8 @@ NumericVector cpp_dhuber(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_huber(x[i % dims[0]], mu[i % dims[1]],
-                     sigma[i % dims[2]], epsilon[i % dims[3]],
+    p[i] = pdf_huber(GETV(x, i), GETV(mu, i),
+                     GETV(sigma, i), GETV(epsilon, i),
                      throw_warning);
   
   if (log_prob)
@@ -160,8 +162,8 @@ NumericVector cpp_phuber(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_huber(x[i % dims[0]], mu[i % dims[1]],
-                     sigma[i % dims[2]], epsilon[i % dims[3]],
+    p[i] = cdf_huber(GETV(x, i), GETV(mu, i),
+                     GETV(sigma, i), GETV(epsilon, i),
                      throw_warning);
   
   if (!lower_tail)
@@ -205,8 +207,8 @@ NumericVector cpp_qhuber(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_huber(pp[i % dims[0]], mu[i % dims[1]],
-                        sigma[i % dims[2]], epsilon[i % dims[3]],
+    q[i] = invcdf_huber(GETV(pp, i), GETV(mu, i),
+                        GETV(sigma, i), GETV(epsilon, i),
                         throw_warning);
   
   if (throw_warning)
@@ -233,8 +235,8 @@ NumericVector cpp_rhuber(
   bool throw_warning = false;
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_huber(mu[i % dims[0]], sigma[i % dims[1]],
-                     epsilon[i % dims[2]], throw_warning);
+    x[i] = rng_huber(GETV(mu, i), GETV(sigma, i),
+                     GETV(epsilon, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NAs produced");

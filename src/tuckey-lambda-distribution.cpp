@@ -21,11 +21,11 @@ The Annals of Mathematical Statistics, 413-426.
 */
 
 
-double invcdf_tlambda(double p, double lambda,
-                      bool& throw_warning) {
+inline double invcdf_tlambda(double p, double lambda,
+                             bool& throw_warning) {
   if (ISNAN(p) || ISNAN(lambda))
     return p+lambda;
-  if (p < 0.0 || p > 1.0) {
+  if (!VALID_PROB(p)) {
     throw_warning = true;
     return NAN;
   }
@@ -34,7 +34,7 @@ double invcdf_tlambda(double p, double lambda,
   return (pow(p, lambda) - pow(1.0 - p, lambda))/lambda;
 }
 
-double rng_tlambda(double lambda, bool& throw_warning) {
+inline double rng_tlambda(double lambda, bool& throw_warning) {
   if (ISNAN(lambda)) {
     throw_warning = true;
     return NA_REAL;

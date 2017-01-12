@@ -11,12 +11,11 @@ using std::ceil;
 using Rcpp::NumericVector;
 
 
-double pdf_tbinom(double x, double size, double prob,
-                  double a, double b, bool& throw_warning) {
+inline double pdf_tbinom(double x, double size, double prob, double a,
+                         double b, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(size) || ISNAN(prob) || ISNAN(a) || ISNAN(b))
     return x+size+prob+a+b;
-  if (size < 0.0 || prob < 0.0 || prob > 1.0 || b < a ||
-      !isInteger(size, false)) {
+  if (size < 0.0 || !VALID_PROB(prob) || b < a || !isInteger(size, false)) {
     throw_warning = true;
     return NAN;
   }
@@ -31,11 +30,11 @@ double pdf_tbinom(double x, double size, double prob,
   return R::dbinom(x, size, prob, false) / (pb-pa);
 }
 
-double cdf_tbinom(double x, double size, double prob,
-                  double a, double b, bool& throw_warning) {
+inline double cdf_tbinom(double x, double size, double prob, double a,
+                         double b, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(size) || ISNAN(prob) || ISNAN(a) || ISNAN(b))
     return x+size+prob+a+b;
-  if (size < 0.0 || prob < 0.0 || prob > 1.0 || b < a ||
+  if (size < 0.0 || !VALID_PROB(prob) || b < a ||
       !isInteger(size, false)) {
     throw_warning = true;
     return NAN;
@@ -53,12 +52,12 @@ double cdf_tbinom(double x, double size, double prob,
   return (R::pbinom(x, size, prob, true, false) - pa) / (pb-pa);
 }
 
-double invcdf_tbinom(double p, double size, double prob,
-                     double a, double b, bool& throw_warning) {
+inline double invcdf_tbinom(double p, double size, double prob,
+                            double a, double b, bool& throw_warning) {
   if (ISNAN(p) || ISNAN(size) || ISNAN(prob) || ISNAN(a) || ISNAN(b))
     return p+size+prob+a+b;
-  if (size < 0.0 || prob < 0.0 || prob > 1.0 || b < a ||
-      !isInteger(size, false) || p < 0.0 || p > 1.0) {
+  if (size < 0.0 || !VALID_PROB(prob) || b < a ||
+      !isInteger(size, false) || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;
   }
@@ -75,10 +74,10 @@ double invcdf_tbinom(double p, double size, double prob,
   return R::qbinom(pa + p*(pb-pa), size, prob, true, false);
 }
 
-double rng_tbinom(double size, double prob, double a,
-                  double b, bool& throw_warning) {
+inline double rng_tbinom(double size, double prob, double a,
+                         double b, bool& throw_warning) {
   if (ISNAN(size) || ISNAN(prob) || ISNAN(a) || ISNAN(b) ||
-      size < 0.0 || prob < 0.0 || prob > 1.0 || b < a ||
+      size < 0.0 || !VALID_PROB(prob) || b < a ||
       !isInteger(size, false)) {
     throw_warning = true;
     return NA_REAL;

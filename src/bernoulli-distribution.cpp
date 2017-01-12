@@ -22,10 +22,11 @@ using Rcpp::NumericVector;
 *
 */
 
-double pdf_bernoulli(double x, double prob, bool& throw_warning) {
+inline double pdf_bernoulli(double x, double prob,
+                            bool& throw_warning) {
   if (ISNAN(x) || ISNAN(prob))
     return x+prob;
-  if (prob < 0.0 || prob > 1.0) {
+  if (!VALID_PROB(prob)) {
     throw_warning = true;
     return NAN;
   }
@@ -41,10 +42,11 @@ double pdf_bernoulli(double x, double prob, bool& throw_warning) {
   return 0.0;
 }
 
-double cdf_bernoulli(double x, double prob, bool& throw_warning) {
+inline double cdf_bernoulli(double x, double prob,
+                            bool& throw_warning) {
   if (ISNAN(x) || ISNAN(prob))
     return x+prob;
-  if (prob < 0.0 || prob > 1.0) {
+  if (!VALID_PROB(prob)) {
     throw_warning = true;
     return NAN;
   }
@@ -55,23 +57,24 @@ double cdf_bernoulli(double x, double prob, bool& throw_warning) {
   return 1.0;
 }
 
-double invcdf_bernoulli(double p, double prob, bool& throw_warning) {
+inline double invcdf_bernoulli(double p, double prob,
+                               bool& throw_warning) {
   if (ISNAN(p) || ISNAN(prob))
     return p+prob;
-  if (prob < 0.0 || prob > 1.0 || p < 0.0 || p > 1.0) {
+  if (!VALID_PROB(prob) || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;
   }
   return (p <= (1.0 - prob)) ? 0.0 : 1.0;
 }
 
-double rng_bernoulli(double p, bool& throw_warning) {
-  if (ISNAN(p) || p < 0.0 || p > 1.0) {
+inline double rng_bernoulli(double prob, bool& throw_warning) {
+  if (ISNAN(prob) || !VALID_PROB(prob)) {
     throw_warning = true;
     return NA_REAL;
   }
   double u = rng_unif();
-  return (u > p) ? 0.0 : 1.0;
+  return (u > prob) ? 0.0 : 1.0;
 }
 
 
@@ -91,7 +94,7 @@ NumericVector cpp_dbern(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_bernoulli(x[i % dims[0]], prob[i % dims[1]],
+    p[i] = pdf_bernoulli(GETV(x, i), GETV(prob, i),
                          throw_warning);
   
   if (log_prob)
@@ -121,7 +124,7 @@ NumericVector cpp_pbern(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_bernoulli(x[i % dims[0]], prob[i % dims[1]],
+    p[i] = cdf_bernoulli(GETV(x, i), GETV(prob, i),
                          throw_warning);
   
   if (!lower_tail)
@@ -161,7 +164,7 @@ NumericVector cpp_qbern(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_bernoulli(pp[i % dims[0]], prob[i % dims[1]],
+    q[i] = invcdf_bernoulli(GETV(pp, i), GETV(prob, i),
                             throw_warning);
   
   if (throw_warning)
@@ -183,7 +186,7 @@ NumericVector cpp_rbern(
   bool throw_warning = false;
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_bernoulli(prob[i % dims], throw_warning);
+    x[i] = rng_bernoulli(GETV(prob, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NAs produced");

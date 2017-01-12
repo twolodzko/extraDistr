@@ -65,16 +65,16 @@ NumericVector cpp_dcat(
   }
   
   for (int i = 0; i < Nmax; i++) {
-    if (ISNAN(x[i % dims[0]])) {
-      p[i] = x[i % dims[0]];
+    if (ISNAN(GETV(x, i))) {
+      p[i] = GETV(x, i);
       continue;
     }
-    if (!isInteger(x[i % dims[0]]) || x[i % dims[0]] < 1.0 ||
-        x[i % dims[0]] > static_cast<double>(k)) {
+    if (!isInteger(GETV(x, i)) || GETV(x, i) < 1.0 ||
+        GETV(x, i) > TO_DBL(k)) {
       p[i] = 0.0;
       continue;
     }
-    p[i] = prob_tab(i % dims[1], static_cast<int>(x[i % dims[0]]) - 1);
+    p[i] = prob_tab(i % dims[1], TO_INT(GETV(x, i)) - 1);
   }
 
   if (log_prob)
@@ -129,19 +129,19 @@ NumericVector cpp_pcat(
   }
   
   for (int i = 0; i < Nmax; i++) {
-    if (ISNAN(x[i % dims[0]])) {
-      p[i] = x[i % dims[0]];
+    if (ISNAN(GETV(x, i))) {
+      p[i] = GETV(x, i);
       continue;
     }
-    if (x[i % dims[0]] < 1.0) {
+    if (GETV(x, i) < 1.0) {
       p[i] = 0.0;
       continue;
     }
-    if (x[i % dims[0]] >= static_cast<double>(k)) {
+    if (GETV(x, i) >= TO_DBL(k)) {
       p[i] = 1.0;
       continue;
     }
-    p[i] = prob_tab(i % dims[1], static_cast<int>(x[i % dims[0]]) - 1);
+    p[i] = prob_tab(i % dims[1], TO_INT(GETV(x, i)) - 1);
   }
 
   if (!lower_tail)
@@ -208,36 +208,36 @@ NumericVector cpp_qcat(
   }
   
   for (int i = 0; i < Nmax; i++) {
-    if (ISNAN(p[i % dims[0]])) {
-      x[i] = p[i % dims[0]];
+    if (ISNAN(GETV(p, i))) {
+      x[i] = GETV(p, i);
       continue;
     }
     if (ISNAN(prob_tab(i % dims[1], 0))) {
       x[i] = prob_tab(i % dims[1], 0);
       continue;
     }
-    if (p[i % dims[0]] < 0.0 || p[i % dims[0]] > 1.0) {
+    if (GETV(p, i) < 0.0 || GETV(p, i) > 1.0) {
       x[i] = NAN;
       throw_warning = true;
       continue;
     }
-    if (p[i % dims[0]] == 0.0) {
+    if (GETV(p, i) == 0.0) {
       x[i] = 1.0;
       continue;
     }
-    if (p[i % dims[0]] == 1.0) {
-      x[i] = static_cast<double>(k);
+    if (GETV(p, i) == 1.0) {
+      x[i] = TO_DBL(k);
       continue;
     }
     
     jj = 1;
     for (int j = 0; j < k; j++) {
-      if (prob_tab(i % dims[1], j) >= p[i % dims[0]]) {
+      if (prob_tab(i % dims[1], j) >= GETV(p, i)) {
         jj = j+1;
         break;
       }
     }
-    x[i] = static_cast<double>(jj);
+    x[i] = TO_DBL(jj);
   }
   
   if (throw_warning)
@@ -300,7 +300,7 @@ NumericVector cpp_rcat(
         break;
       }
     }
-    x[i] = static_cast<double>(jj);
+    x[i] = TO_DBL(jj);
   }
   
   if (throw_warning)

@@ -27,7 +27,8 @@ using Rcpp::NumericVector;
 *
 */
 
-double pmf_bnbinom(double k, double r, double alpha, double beta, bool& throw_warning) {
+inline double pmf_bnbinom(double k, double r, double alpha,
+                          double beta, bool& throw_warning) {
   if (ISNAN(k) || ISNAN(r) || ISNAN(alpha) || ISNAN(beta))
     return k+r+alpha+beta;
   if (alpha <= 0.0 || beta <= 0.0 || r < 0.0 || !isInteger(r, false)) {
@@ -40,7 +41,8 @@ double pmf_bnbinom(double k, double r, double alpha, double beta, bool& throw_wa
           R::beta(alpha+r, beta+k) / R::beta(alpha, beta);
 }
 
-double logpmf_bnbinom(double k, double r, double alpha, double beta, bool& throw_warning) {
+inline double logpmf_bnbinom(double k, double r, double alpha,
+                             double beta, bool& throw_warning) {
   if (ISNAN(k) || ISNAN(r) || ISNAN(alpha) || ISNAN(beta))
     return k+r+alpha+beta;
   if (alpha <= 0.0 || beta <= 0.0 || r < 0.0 || !isInteger(r, false)) {
@@ -53,13 +55,14 @@ double logpmf_bnbinom(double k, double r, double alpha, double beta, bool& throw
     R::lbeta(alpha+r, beta+k) - R::lbeta(alpha, beta);
 }
 
-std::vector<double> cdf_bnbinom_table(double k, double r, double alpha, double beta) {
+inline std::vector<double> cdf_bnbinom_table(double k, double r,
+                                             double alpha, double beta) {
   
   if (k < 0.0 || !R_FINITE(k) || r < 0.0 || alpha < 0.0 || beta < 0.0)
     Rcpp::stop("inadmissible values");
 
   k = floor(k);
-  std::vector<double> p_tab(static_cast<int>(k)+1);
+  std::vector<double> p_tab(TO_INT(k)+1);
   double grx, xf, gr, gar, gbx, gabrx, bab;
   
   bab = R::lbeta(alpha, beta);
@@ -94,16 +97,17 @@ std::vector<double> cdf_bnbinom_table(double k, double r, double alpha, double b
     gbx += log(beta + j - 1.0);
     gabrx += log(alpha + beta + r + j - 1.0);
     xf += log(j);
-    p_tab[static_cast<int>(j)] = p_tab[static_cast<int>(j)-1] +
+    p_tab[TO_INT(j)] = p_tab[TO_INT(j)-1] +
       exp(grx - (xf + gr) + gar + gbx - gabrx - bab);
   }
   
   return p_tab;
 }
 
-double rng_bnbinom(double r, double alpha, double beta, bool& throw_warning) {
-  if (ISNAN(r) || ISNAN(alpha) || ISNAN(beta) || alpha <= 0.0 || beta <= 0.0 ||
-      r < 0.0 || !isInteger(r, false)) {
+inline double rng_bnbinom(double r, double alpha,
+                          double beta, bool& throw_warning) {
+  if (ISNAN(r) || ISNAN(alpha) || ISNAN(beta) || alpha <= 0.0 ||
+      beta <= 0.0 || r < 0.0 || !isInteger(r, false)) {
     throw_warning = true;
     return NA_REAL;
   }
@@ -132,8 +136,8 @@ NumericVector cpp_dbnbinom(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpmf_bnbinom(x[i % dims[0]], size[i % dims[1]],
-                          alpha[i % dims[2]], beta[i % dims[3]], throw_warning);
+    p[i] = logpmf_bnbinom(GETV(x, i), GETV(size, i), GETV(alpha, i),
+                          GETV(beta, i), throw_warning);
 
   if (!log_prob)
     p = Rcpp::exp(p);
@@ -173,25 +177,24 @@ NumericVector cpp_pbnbinom(
     if (i % 1000 == 0)
       Rcpp::checkUserInterrupt();
     
-    if (ISNAN(x[i % dims[0]]) || ISNAN(size[i % dims[1]]) ||
-        ISNAN(alpha[i % dims[2]]) || ISNAN(beta[i % dims[3]])) {
-      p[i] = x[i % dims[0]] + size[i % dims[1]] + alpha[i % dims[2]] + beta[i % dims[3]];
-    } else if (alpha[i % dims[2]] <= 0.0 || beta[i % dims[3]] <= 0.0 ||
-               size[i % dims[1]] < 0.0 || !isInteger(size[i % dims[1]], false)) {
+    if (ISNAN(GETV(x, i)) || ISNAN(GETV(size, i)) ||
+        ISNAN(GETV(alpha, i)) || ISNAN(GETV(beta, i))) {
+      p[i] = GETV(x, i) + GETV(size, i) + GETV(alpha, i) + GETV(beta, i);
+    } else if (GETV(alpha, i) <= 0.0 || GETV(beta, i) <= 0.0 ||
+               GETV(size, i) < 0.0 || !isInteger(GETV(size, i), false)) {
       throw_warning = true;
       p[i] = NAN;
-    } else if (x[i % dims[0]] < 0.0) {
+    } else if (GETV(x, i) < 0.0) {
       p[i] = 0.0;
-    } else if (!R_FINITE(x[i % dims[0]])) {
+    } else if (!R_FINITE(GETV(x, i))) {
       p[i] = 1.0;
     } else {
       
       std::vector<double>& tmp = memo[std::make_tuple(i % dims[1], i % dims[2], i % dims[3])];
       if (!tmp.size()) {
-        tmp = cdf_bnbinom_table(mx, size[i % dims[1]],
-                                alpha[i % dims[2]], beta[i % dims[3]]);
+        tmp = cdf_bnbinom_table(mx, GETV(size, i), GETV(alpha, i), GETV(beta, i));
       }
-      p[i] = tmp[static_cast<int>(x[i % dims[0]])];
+      p[i] = tmp[TO_INT(GETV(x, i))];
       
     }
   }
@@ -226,7 +229,7 @@ NumericVector cpp_rbnbinom(
   bool throw_warning = false;
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_bnbinom(size[i % dims[0]], alpha[i % dims[1]], beta[i % dims[2]], throw_warning);
+    x[i] = rng_bnbinom(GETV(size, i), GETV(alpha, i), GETV(beta, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NAs produced");

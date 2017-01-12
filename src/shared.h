@@ -6,6 +6,14 @@
 #ifndef EDCPP_SHARED_H
 #define EDCPP_SHARED_H
 
+// Macros
+
+#define GETV(x, i)      x[i % x.length()]    // wrapped indexing of vector
+#define GETM(x, i, j)   x(i % x.nrow(), j)   // wrapped indexing of matrix
+#define TO_INT(x)       static_cast<int>(x)
+#define TO_DBL(x)       static_cast<double>(x)
+#define VALID_PROB(p)   ((p >= 0.0) && (p <= 1.0))
+
 // Basic functions
 
 bool isInteger(double x, bool warn = true);

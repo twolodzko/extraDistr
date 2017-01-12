@@ -64,7 +64,7 @@ double cdf_lgser(double x, double theta, bool& throw_warnin) {
 double invcdf_lgser(double p, double theta, bool& throw_warnin) {
   if (ISNAN(p) || ISNAN(theta))
     return p+theta;
-  if (theta <= 0.0 || theta >= 1.0 || p < 0.0 || p > 1.0) {
+  if (theta <= 0.0 || theta >= 1.0 || !VALID_PROB(p)) {
     throw_warnin = true;
     return NAN;
   }

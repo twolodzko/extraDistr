@@ -27,7 +27,8 @@ using Rcpp::NumericVector;
 *
 */
 
-double pdf_kumar(double x, double a, double b, bool& throw_warning) {
+inline double pdf_kumar(double x, double a, double b,
+                        bool& throw_warning) {
   if (ISNAN(x) || ISNAN(a) || ISNAN(b))
     return x+a+b;
   if (a <= 0.0 || b <= 0.0) {
@@ -39,7 +40,8 @@ double pdf_kumar(double x, double a, double b, bool& throw_warning) {
   return a*b * pow(x, a-1.0) * pow(1.0-pow(x, a), b-1.0);
 }
 
-double cdf_kumar(double x, double a, double b, bool& throw_warning) {
+inline double cdf_kumar(double x, double a, double b,
+                        bool& throw_warning) {
   if (ISNAN(x) || ISNAN(a) || ISNAN(b))
     return x+a+b;
   if (a <= 0.0 || b <= 0.0) {
@@ -53,17 +55,18 @@ double cdf_kumar(double x, double a, double b, bool& throw_warning) {
   return 1.0 - pow(1.0 - pow(x, a), b);
 }
 
-double invcdf_kumar(double p, double a, double b, bool& throw_warning) {
+inline double invcdf_kumar(double p, double a, double b,
+                           bool& throw_warning) {
   if (ISNAN(p) || ISNAN(a) || ISNAN(b))
     return p+a+b;
-  if (a <= 0.0 || b <= 0.0 || p < 0.0 || p > 1.0) {
+  if (a <= 0.0 || b <= 0.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;
   }
   return pow(1.0 - pow(1.0 - p, 1.0/b), 1.0/a);
 }
 
-double rng_kumar(double a, double b, bool& throw_warning) {
+inline double rng_kumar(double a, double b, bool& throw_warning) {
   if (ISNAN(a) || ISNAN(b) || a <= 0.0 || b <= 0.0) {
     throw_warning = true;
     return NA_REAL;
@@ -72,7 +75,8 @@ double rng_kumar(double a, double b, bool& throw_warning) {
   return pow(1.0 - pow(u, 1.0/b), 1.0/a);
 }
 
-double logpdf_kumar(double x, double a, double b, bool& throw_warning) {
+inline double logpdf_kumar(double x, double a, double b,
+                           bool& throw_warning) {
   if (ISNAN(x) || ISNAN(a) || ISNAN(b))
     return NA_REAL;
   if (a <= 0.0 || b <= 0.0) {

@@ -23,42 +23,43 @@ using Rcpp::NumericVector;
 *
 */
 
-double pdf_prop(double x, double size, double mean,
-                bool& throw_warning) {
+inline double pdf_prop(double x, double size, double mean,
+                       bool& throw_warning) {
   if (ISNAN(x) || ISNAN(size) || ISNAN(mean))
     return x+size+mean;
-  if (size <= 0.0 || mean < 0.0 || mean > 1.0) {
+  if (size <= 0.0 || mean <= 0.0 || mean >= 1.0) {
     throw_warning = true;
     return NAN;
   }
   return R::dbeta(x, size*mean+1.0, size*(1.0-mean)+1.0, false);
 }
 
-double cdf_prop(double x, double size, double mean,
-                bool& throw_warning) {
+inline double cdf_prop(double x, double size, double mean,
+                       bool& throw_warning) {
   if (ISNAN(x) || ISNAN(size) || ISNAN(mean))
     return x+size+mean;
-  if (size <= 0.0 || mean < 0.0 || mean > 1.0) {
+  if (size <= 0.0 || mean <= 0.0 || mean >= 1.0) {
     throw_warning = true;
     return NAN;
   }
   return R::pbeta(x, size*mean+1.0, size*(1.0-mean)+1.0, true, false);
 }
 
-double invcdf_prop(double p, double size, double mean,
-                   bool& throw_warning) {
+inline double invcdf_prop(double p, double size, double mean,
+                          bool& throw_warning) {
   if (ISNAN(p) || ISNAN(size) || ISNAN(mean))
     return p+size+mean;
-  if (size <= 0.0 || mean < 0.0 || mean > 1.0 || p < 0.0 || p > 1.0) {
+  if (size <= 0.0 || mean <= 0.0 || mean >= 1.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;
   }
   return R::qbeta(p, size*mean+1.0, size*(1.0-mean)+1.0, true, false);
 }
 
-double rng_prop(double size, double mean, bool& throw_warning) {
+inline double rng_prop(double size, double mean,
+                       bool& throw_warning) {
   if (ISNAN(size) || ISNAN(mean) ||
-      size <= 0.0 || mean < 0.0 || mean > 1.0) {
+      size <= 0.0 || mean <= 0.0 || mean >= 1.0) {
     throw_warning = true;
     return NA_REAL;
   }

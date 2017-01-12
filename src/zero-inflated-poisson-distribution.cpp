@@ -23,11 +23,11 @@ using Rcpp::NumericVector;
 *
 */
 
-double pdf_zip(double x, double lambda, double pi,
-               bool& throw_warning) {
+inline double pdf_zip(double x, double lambda, double pi,
+                      bool& throw_warning) {
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(pi))
     return x+lambda+pi;
-  if (lambda <= 0.0 || pi < 0.0 || pi > 1.0) {
+  if (lambda <= 0.0 || !VALID_PROB(pi)) {
     throw_warning = true;
     return NAN;
   }
@@ -39,11 +39,11 @@ double pdf_zip(double x, double lambda, double pi,
     return (1.0-pi) * R::dpois(x, lambda, false);
 }
 
-double cdf_zip(double x, double lambda, double pi,
-               bool& throw_warning) {
+inline double cdf_zip(double x, double lambda, double pi,
+                      bool& throw_warning) {
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(pi))
     return x+lambda+pi;
-  if (lambda <= 0.0 || pi < 0.0 || pi > 1.0) {
+  if (lambda <= 0.0 || !VALID_PROB(pi)) {
     throw_warning = true;
     return NAN;
   }
@@ -54,12 +54,11 @@ double cdf_zip(double x, double lambda, double pi,
   return pi + (1.0-pi) * R::ppois(x, lambda, true, false);
 }
 
-double invcdf_zip(double p, double lambda, double pi,
-                  bool& throw_warning) {
+inline double invcdf_zip(double p, double lambda, double pi,
+                         bool& throw_warning) {
   if (ISNAN(p) || ISNAN(lambda) || ISNAN(pi))
     return p+lambda+pi;
-  if (lambda <= 0.0 || pi < 0.0 || pi > 1.0 ||
-      p < 0.0 || p > 1.0) {
+  if (lambda <= 0.0 || !VALID_PROB(pi) || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;
   }
@@ -69,9 +68,9 @@ double invcdf_zip(double p, double lambda, double pi,
     return R::qpois((p - pi) / (1.0-pi), lambda, true, false);
 }
 
-double rng_zip(double lambda, double pi, bool& throw_warning) {
+inline double rng_zip(double lambda, double pi, bool& throw_warning) {
   if (ISNAN(lambda) || ISNAN(pi) ||
-      lambda <= 0.0 || pi < 0.0 || pi > 1.0) {
+      lambda <= 0.0 || !VALID_PROB(pi)) {
     throw_warning = true;
     return NA_REAL;
   }

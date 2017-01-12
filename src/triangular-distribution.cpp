@@ -31,8 +31,8 @@ using Rcpp::NumericVector;
 *            { b - sqrt((1-p)*(b-a)*(b-c));
 */
 
-double pdf_triangular(double x, double a, double b,
-                      double c, bool& throw_warning) {
+inline double pdf_triangular(double x, double a, double b,
+                             double c, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(a) || ISNAN(b) || ISNAN(c))
     return x+a+b+c;
   if (a > c || c > b || a == b) {
@@ -50,8 +50,8 @@ double pdf_triangular(double x, double a, double b,
   }
 }
 
-double cdf_triangular(double x, double a, double b,
-                      double c, bool& throw_warning) {
+inline double cdf_triangular(double x, double a, double b,
+                             double c, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(a) || ISNAN(b) || ISNAN(c))
     return x+a+b+c;
   if (a > c || c > b || a == b) {
@@ -69,11 +69,11 @@ double cdf_triangular(double x, double a, double b,
   }
 }
 
-double invcdf_triangular(double p, double a, double b,
-                         double c, bool& throw_warning) {
+inline double invcdf_triangular(double p, double a, double b,
+                                double c, bool& throw_warning) {
   if (ISNAN(p) || ISNAN(a) || ISNAN(b) || ISNAN(c))
     return p+a+b+c;
-  if (a > c || c > b || a == b || p < 0.0 || p > 1.0) {
+  if (a > c || c > b || a == b || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;
   }
@@ -83,8 +83,8 @@ double invcdf_triangular(double p, double a, double b,
   return b - sqrt((1.0-p)*(b-a)*(b-c));
 }
 
-double rng_triangular(double a, double b, double c,
-                      bool& throw_warning) {
+inline double rng_triangular(double a, double b, double c,
+                             bool& throw_warning) {
   if (ISNAN(a) || ISNAN(b) || ISNAN(c) ||
       a > c || c > b || a == b) {
     throw_warning = true;

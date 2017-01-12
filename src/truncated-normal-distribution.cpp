@@ -86,7 +86,7 @@ double invcdf_tnorm(double p, double mu, double sigma,
                     double a, double b, bool& throw_warning) {
   if (ISNAN(p) || ISNAN(mu) || ISNAN(sigma) || ISNAN(a) || ISNAN(b))
     return p+mu+sigma+a+b;
-  if (sigma <= 0.0 || b <= a || p < 0.0 || p > 1.0) {
+  if (sigma <= 0.0 || b <= a || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;
   }

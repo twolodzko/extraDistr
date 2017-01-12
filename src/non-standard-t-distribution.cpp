@@ -24,8 +24,8 @@ using Rcpp::NumericVector;
 *
 */
 
-double pdf_nst(double x, double nu, double mu, double sigma,
-               bool& throw_warning) {
+inline double pdf_nst(double x, double nu, double mu, double sigma,
+                      bool& throw_warning) {
   if (ISNAN(x) || ISNAN(nu) || ISNAN(mu) || ISNAN(sigma))
     return x+nu+mu+sigma;
   if (nu <= 0.0 || sigma <= 0.0) {
@@ -36,8 +36,8 @@ double pdf_nst(double x, double nu, double mu, double sigma,
   return R::dt(z, nu, false)/sigma;
 }
 
-double cdf_nst(double x, double nu, double mu, double sigma,
-               bool& throw_warning) {
+inline double cdf_nst(double x, double nu, double mu, double sigma,
+                      bool& throw_warning) {
   if (ISNAN(x) || ISNAN(nu) || ISNAN(mu) || ISNAN(sigma))
     return x+nu+mu+sigma;
   if (nu <= 0.0 || sigma <= 0.0) {
@@ -48,19 +48,19 @@ double cdf_nst(double x, double nu, double mu, double sigma,
   return R::pt(z, nu, true, false);
 }
 
-double invcdf_nst(double p, double nu, double mu, double sigma,
-                  bool& throw_warning) {
+inline double invcdf_nst(double p, double nu, double mu, double sigma,
+                         bool& throw_warning) {
   if (ISNAN(p) || ISNAN(nu) || ISNAN(mu) || ISNAN(sigma))
     return p+nu+mu+sigma;
-  if (nu <= 0.0 || sigma <= 0.0 || p < 0.0 || p > 1.0) {
+  if (nu <= 0.0 || sigma <= 0.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;
   }
   return R::qt(p, nu, true, false)*sigma + mu;
 }
 
-double rng_nst(double nu, double mu, double sigma,
-               bool& throw_warning) {
+inline double rng_nst(double nu, double mu, double sigma,
+                      bool& throw_warning) {
   if (ISNAN(nu) || ISNAN(mu) || ISNAN(sigma) ||
       nu <= 0.0 || sigma <= 0.0) {
     throw_warning = true;

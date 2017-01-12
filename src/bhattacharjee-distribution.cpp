@@ -29,8 +29,8 @@ inline double G(double x) {
   return x * Phi(x) + phi(x);
 }
 
-double pdf_bhattacharjee(double x, double mu, double sigma,
-                         double a, bool& throw_warning) {
+inline double pdf_bhattacharjee(double x, double mu, double sigma,
+                                double a, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(a))
     return x+mu+sigma+a;
   if (sigma < 0.0 || a < 0.0) {
@@ -45,8 +45,8 @@ double pdf_bhattacharjee(double x, double mu, double sigma,
   return (Phi((z+a)/sigma) - Phi((z-a)/sigma)) / (2.0*a);
 }
 
-double cdf_bhattacharjee(double x, double mu, double sigma,
-                         double a, bool& throw_warning) {
+inline double cdf_bhattacharjee(double x, double mu, double sigma,
+                                double a, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(a))
     return x+mu+sigma+a;
   if (sigma < 0.0 || a < 0.0) {
@@ -65,8 +65,8 @@ double cdf_bhattacharjee(double x, double mu, double sigma,
   return sigma/(2.0*a) * (G((z+a)/sigma) - G((z-a)/sigma));
 }
 
-double rng_bhattacharjee(double mu, double sigma,
-                         double a, bool& throw_warning) {
+inline double rng_bhattacharjee(double mu, double sigma,
+                                double a, bool& throw_warning) {
   if (ISNAN(mu) || ISNAN(sigma) || ISNAN(a) || sigma < 0.0 || a < 0.0) {
     throw_warning = true;
     return NA_REAL;
@@ -77,7 +77,6 @@ double rng_bhattacharjee(double mu, double sigma,
     return R::rnorm(mu, sigma);
   return R::runif(-a, a) + R::norm_rand() * sigma + mu;
 }
-
 
 
 // [[Rcpp::export]]
@@ -100,8 +99,8 @@ NumericVector cpp_dbhatt(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_bhattacharjee(x[i % dims[0]], mu[i % dims[1]],
-                             sigma[i % dims[2]], a[i % dims[3]],
+    p[i] = pdf_bhattacharjee(GETV(x, i), GETV(mu, i),
+                             GETV(sigma, i), GETV(a, i),
                              throw_warning);
   
   if (log_prob)
@@ -135,8 +134,8 @@ NumericVector cpp_pbhatt(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_bhattacharjee(x[i % dims[0]], mu[i % dims[1]],
-                             sigma[i % dims[2]], a[i % dims[3]],
+    p[i] = cdf_bhattacharjee(GETV(x, i), GETV(mu, i),
+                             GETV(sigma, i), GETV(a, i),
                              throw_warning);
   
   if (!lower_tail)
@@ -169,8 +168,8 @@ NumericVector cpp_rbhatt(
   bool throw_warning = false;
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_bhattacharjee(mu[i % dims[0]], sigma[i % dims[1]],
-                             a[i % dims[2]], throw_warning);
+    x[i] = rng_bhattacharjee(GETV(mu, i), GETV(sigma, i),
+                             GETV(a, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NAs produced");

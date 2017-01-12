@@ -30,8 +30,8 @@ using Rcpp::NumericVector;
  *
  */
 
-double pdf_laplace(double x, double mu, double sigma,
-                   bool& throw_warning) {
+inline double pdf_laplace(double x, double mu, double sigma,
+                          bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
     return x+mu+sigma;
   if (sigma <= 0.0) {
@@ -42,8 +42,8 @@ double pdf_laplace(double x, double mu, double sigma,
   return exp(-z)/(2.0*sigma);
 }
 
-double cdf_laplace(double x, double mu, double sigma,
-                   bool& throw_warning) {
+inline double cdf_laplace(double x, double mu, double sigma,
+                          bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
     return x+mu+sigma;
   if (sigma <= 0.0) {
@@ -57,11 +57,11 @@ double cdf_laplace(double x, double mu, double sigma,
     return 1.0 - exp(-z)/2.0;
 }
 
-double invcdf_laplace(double p, double mu, double sigma,
-                      bool& throw_warning) {
+inline double invcdf_laplace(double p, double mu, double sigma,
+                             bool& throw_warning) {
   if (ISNAN(p) || ISNAN(mu) || ISNAN(sigma))
     return p+mu+sigma;
-  if (sigma <= 0.0 || p < 0.0 || p > 1.0) {
+  if (sigma <= 0.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;
   }
@@ -71,7 +71,7 @@ double invcdf_laplace(double p, double mu, double sigma,
     return mu - sigma * log(2.0*(1.0-p));
 }
 
-double rng_laplace(double mu, double sigma, bool& throw_warning) {
+inline double rng_laplace(double mu, double sigma, bool& throw_warning) {
   if (ISNAN(mu) || ISNAN(sigma) || sigma <= 0.0) {
     throw_warning = true;
     return NA_REAL;

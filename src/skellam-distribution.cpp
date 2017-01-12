@@ -19,8 +19,8 @@ using Rcpp::NumericVector;
  * 
  */
 
-double pmf_skellam(double x, double mu1, double mu2,
-                   bool& throw_warning) {
+inline double pmf_skellam(double x, double mu1, double mu2,
+                          bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu1) || ISNAN(mu2))
     return x+mu1+mu2;
   if (mu1 < 0.0 || mu2 < 0.0) {
@@ -33,7 +33,8 @@ double pmf_skellam(double x, double mu1, double mu2,
     R::bessel_i(2.0*sqrt(mu1*mu2), x, 1.0);
 }
 
-double rng_skellam(double mu1, double mu2, bool& throw_warning) {
+inline double rng_skellam(double mu1, double mu2,
+                          bool& throw_warning) {
   if (ISNAN(mu1) || ISNAN(mu2) || mu1 < 0.0 || mu2 < 0.0) {
     throw_warning = true;
     return NA_REAL;

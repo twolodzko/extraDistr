@@ -28,8 +28,8 @@ using Rcpp::NumericVector;
 */
 
 /*
-double pdf_power(double x, double alpha, double beta,
-                 bool& throw_warning) {
+ inline double pdf_power(double x, double alpha, double beta,
+                         bool& throw_warning) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
     return x+alpha+beta;
   if (x <= 0.0 || x >= alpha)
@@ -37,7 +37,7 @@ double pdf_power(double x, double alpha, double beta,
   return beta * pow(x, beta-1.0) / pow(alpha, beta);
 }
 
-double cdf_power(double x, double alpha, double beta,
+ inline double cdf_power(double x, double alpha, double beta,
                  bool& throw_warning) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
     return x+alpha+beta;
@@ -49,19 +49,19 @@ double cdf_power(double x, double alpha, double beta,
 }
 */
 
-double invcdf_power(double p, double alpha, double beta,
-                    bool& throw_warning) {
+inline double invcdf_power(double p, double alpha, double beta,
+                           bool& throw_warning) {
   if (ISNAN(p) || ISNAN(alpha) || ISNAN(beta))
     return p+alpha+beta;
-  if (p < 0.0 || p > 1.0) {
+  if (!VALID_PROB(p)) {
     throw_warning = true;
     return NAN;
   }
   return alpha * pow(p, 1.0/beta);
 }
 
-double rng_power(double alpha, double beta,
-                 bool& throw_warning) {
+inline double rng_power(double alpha, double beta,
+                        bool& throw_warning) {
   if (ISNAN(alpha) || ISNAN(beta)) {
     throw_warning = true;
     return NA_REAL;
@@ -70,8 +70,8 @@ double rng_power(double alpha, double beta,
   return alpha * pow(u, 1.0/beta);
 }
 
-double logpdf_power(double x, double alpha, double beta,
-                    bool& throw_warning) {
+inline double logpdf_power(double x, double alpha, double beta,
+                           bool& throw_warning) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
     return x+alpha+beta;
   if (x <= 0.0 || x >= alpha)
@@ -79,8 +79,8 @@ double logpdf_power(double x, double alpha, double beta,
   return log(beta) + log(x)*(beta-1.0) - log(alpha)*beta;
 }
 
-double logcdf_power(double x, double alpha, double beta,
-                    bool& throw_warning) {
+inline double logcdf_power(double x, double alpha, double beta,
+                           bool& throw_warning) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
     return x+alpha+beta;
   if (x <= 0.0)

@@ -26,8 +26,8 @@ using Rcpp::NumericVector;
  *
  */
 
-double pdf_rayleigh(double x, double sigma,
-                    bool& throw_warning) {
+inline double pdf_rayleigh(double x, double sigma,
+                           bool& throw_warning) {
   if (ISNAN(x) || ISNAN(sigma))
     return x+sigma;
   if (sigma <= 0.0) {
@@ -39,8 +39,8 @@ double pdf_rayleigh(double x, double sigma,
   return x/pow(sigma, 2.0) * exp(-pow(x, 2.0) / (2.0*pow(sigma, 2.0)));
 }
 
-double cdf_rayleigh(double x, double sigma,
-                    bool& throw_warning) {
+inline double cdf_rayleigh(double x, double sigma,
+                           bool& throw_warning) {
   if (ISNAN(x) || ISNAN(sigma))
     return x+sigma;
   if (sigma <= 0.0) {
@@ -54,18 +54,18 @@ double cdf_rayleigh(double x, double sigma,
   return 1.0 - exp(-pow(x, 2.0) / (2.0*pow(sigma, 2.0)));
 }
 
-double invcdf_rayleigh(double p, double sigma,
-                       bool& throw_warning) {
+inline double invcdf_rayleigh(double p, double sigma,
+                              bool& throw_warning) {
   if (ISNAN(p) || ISNAN(sigma))
     return p+sigma;
-  if (p < 0.0 || p > 1.0 || sigma <= 0.0) {
+  if (!VALID_PROB(p) || sigma <= 0.0) {
     throw_warning = true;
     return NAN;
   }
   return sqrt(-2.0*pow(sigma, 2.0) * log(1.0-p));
 }
 
-double rng_rayleigh(double sigma, bool& throw_warning) {
+inline double rng_rayleigh(double sigma, bool& throw_warning) {
   if (ISNAN(sigma) || sigma <= 0.0) {
     throw_warning = true;
     return NA_REAL;

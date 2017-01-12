@@ -23,8 +23,8 @@ using Rcpp::NumericVector;
  */
 
 
-double pdf_slash(double x, double mu, double sigma,
-                 bool& throw_warning) {
+inline double pdf_slash(double x, double mu, double sigma,
+                        bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
     return x+mu+sigma;
   if (sigma <= 0.0) {
@@ -37,8 +37,8 @@ double pdf_slash(double x, double mu, double sigma,
   return ((PHI_0 - phi(z))/pow(z, 2.0))/sigma;
 }
 
-double cdf_slash(double x, double mu, double sigma,
-                 bool& throw_warning) {
+inline double cdf_slash(double x, double mu, double sigma,
+                        bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
     return x+mu+sigma;
   if (sigma <= 0.0) {
@@ -51,8 +51,8 @@ double cdf_slash(double x, double mu, double sigma,
   return Phi(z) - (PHI_0 - phi(z))/z;
 }
 
-double rng_slash(double mu, double sigma,
-                 bool& throw_warning) {
+inline double rng_slash(double mu, double sigma,
+                        bool& throw_warning) {
   if (ISNAN(mu) || ISNAN(sigma) || sigma <= 0.0) {
     throw_warning = true;
     return NA_REAL;

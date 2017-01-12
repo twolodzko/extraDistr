@@ -23,12 +23,11 @@ using Rcpp::NumericVector;
 *
 */
 
-double pdf_zinb(double x, double r, double p,
-                double pi, bool& throw_warning) {
+inline double pdf_zinb(double x, double r, double p, double pi,
+                       bool& throw_warning) {
   if (ISNAN(x) || ISNAN(r) || ISNAN(p) || ISNAN(pi))
     return x+r+p+pi;
-  if (p < 0.0 || p > 1.0 || r < 0.0 || pi < 0.0 || pi > 1.0 ||
-      !isInteger(r, false)) {
+  if (!VALID_PROB(p) || r < 0.0 || !VALID_PROB(pi) || !isInteger(r, false)) {
     throw_warning = true;
     return NAN;
   }
@@ -40,12 +39,11 @@ double pdf_zinb(double x, double r, double p,
     return (1.0-pi) * R::dnbinom(x, r, p, false);
 }
 
-double cdf_zinb(double x, double r, double p,
-                double pi, bool& throw_warning) {
+inline double cdf_zinb(double x, double r, double p, double pi,
+                       bool& throw_warning) {
   if (ISNAN(x) || ISNAN(r) || ISNAN(p) || ISNAN(pi))
     return x+r+p+pi;
-  if (p < 0.0 || p > 1.0 || r < 0.0 || pi < 0.0 || pi > 1.0 ||
-      !isInteger(r, false)) {
+  if (!VALID_PROB(p) || r < 0.0 || !VALID_PROB(pi) || !isInteger(r, false)) {
     throw_warning = true;
     return NAN;
   }
@@ -56,12 +54,12 @@ double cdf_zinb(double x, double r, double p,
   return pi + (1.0-pi) * R::pnbinom(x, r, p, true, false);
 }
 
-double invcdf_zinb(double pp, double r, double p,
-                   double pi, bool& throw_warning) {
+inline double invcdf_zinb(double pp, double r, double p, double pi,
+                          bool& throw_warning) {
   if (ISNAN(pp) || ISNAN(r) || ISNAN(p) || ISNAN(pi))
     return pp+r+p+pi;
-  if (p < 0.0 || p > 1.0 || r < 0.0 || pi < 0.0 || pi > 1.0 ||
-      !isInteger(r, false) || pp < 0.0 || pp > 1.0) {
+  if (!VALID_PROB(p) || r < 0.0 || !VALID_PROB(pi) ||
+      !isInteger(r, false) || !VALID_PROB(pp)) {
     throw_warning = true;
     return NAN;
   }
@@ -71,11 +69,10 @@ double invcdf_zinb(double pp, double r, double p,
     return R::qnbinom((pp - pi) / (1.0-pi), r, p, true, false);
 }
 
-double rng_zinb(double r, double p, double pi,
-                bool& throw_warning) {
-  if (ISNAN(r) || ISNAN(p) || ISNAN(pi) ||
-      p < 0.0 || p > 1.0 || r < 0.0 ||
-      pi < 0.0 || pi > 1.0 || !isInteger(r, false)) {
+inline double rng_zinb(double r, double p, double pi,
+                       bool& throw_warning) {
+  if (ISNAN(r) || ISNAN(p) || ISNAN(pi) || !VALID_PROB(p) ||
+      r < 0.0 || !VALID_PROB(pi) || !isInteger(r, false)) {
     throw_warning = true;
     return NA_REAL;
   }

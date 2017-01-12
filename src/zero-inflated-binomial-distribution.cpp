@@ -23,11 +23,11 @@ using Rcpp::NumericVector;
 *
 */
 
-double pdf_zib(double x, double n, double p,
-               double pi, bool& throw_warning) {
+inline double pdf_zib(double x, double n, double p,
+                      double pi, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(n) || ISNAN(p) || ISNAN(pi))
     return x+n+p+pi;
-  if (p < 0.0 || p > 1.0 || n < 0.0 || pi < 0.0 || pi > 1.0 ||
+  if (!VALID_PROB(p) || n < 0.0 || !VALID_PROB(pi) ||
       !isInteger(n, false)) {
     throw_warning = true;
     return NAN;
@@ -40,11 +40,11 @@ double pdf_zib(double x, double n, double p,
     return (1.0-pi) * R::dbinom(x, n, p, false);
 }
 
-double cdf_zib(double x, double n, double p,
-               double pi, bool& throw_warning) {
+inline double cdf_zib(double x, double n, double p,
+                      double pi, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(n) || ISNAN(p) || ISNAN(pi))
     return x+n+p+pi;
-  if (p < 0.0 || p > 1.0 || n < 0.0 || pi < 0.0 || pi > 1.0 ||
+  if (!VALID_PROB(p) || n < 0.0 || !VALID_PROB(pi) ||
       !isInteger(n, false)) {
     throw_warning = true;
     return NAN;
@@ -56,12 +56,12 @@ double cdf_zib(double x, double n, double p,
   return pi + (1.0-pi) * R::pbinom(x, n, p, true, false);
 }
 
-double invcdf_zib(double pp, double n, double p,
-                  double pi, bool& throw_warning) {
+inline double invcdf_zib(double pp, double n, double p,
+                         double pi, bool& throw_warning) {
   if (ISNAN(pp) || ISNAN(n) || ISNAN(p) || ISNAN(pi))
     return pp+n+p+pi;
-  if (p < 0.0 || p > 1.0 || n < 0.0 || pi < 0.0 || pi > 1.0 ||
-      !isInteger(n, false) || pp < 0.0 || pp > 1.0) {
+  if (!VALID_PROB(p) || n < 0.0 || !VALID_PROB(pi) ||
+      !isInteger(n, false) || !VALID_PROB(pp)) {
       throw_warning = true;
     return NAN;
   }
@@ -71,11 +71,10 @@ double invcdf_zib(double pp, double n, double p,
     return R::qbinom((pp - pi) / (1.0-pi), n, p, true, false);
 }
 
-double rng_zib(double n, double p, double pi,
-               bool& throw_warning) {
-  if (ISNAN(n) || ISNAN(p) || ISNAN(pi) ||
-      p < 0.0 || p > 1.0 || n < 0.0 ||
-      pi < 0.0 || pi > 1.0 || !isInteger(n, false)) {
+inline double rng_zib(double n, double p, double pi,
+                      bool& throw_warning) {
+  if (ISNAN(n) || ISNAN(p) || ISNAN(pi) || !VALID_PROB(p) ||
+      n < 0.0 || !VALID_PROB(pi) || !isInteger(n, false)) {
     throw_warning = true;
     return NA_REAL;
   }

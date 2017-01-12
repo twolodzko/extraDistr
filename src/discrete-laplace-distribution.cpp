@@ -11,8 +11,8 @@ using std::ceil;
 using Rcpp::NumericVector;
 
 
-double pmf_dlaplace(double x, double p,
-                    double mu, bool& throw_warning) {
+inline double pmf_dlaplace(double x, double p, double mu,
+                           bool& throw_warning) {
   if (ISNAN(x) || ISNAN(p) || ISNAN(mu))
     return x+p+mu;
   if (p <= 0.0 || p >= 1.0) {
@@ -24,8 +24,8 @@ double pmf_dlaplace(double x, double p,
   return (1.0-p)/(1.0+p) * pow(p, abs(x-mu));
 } 
 
-double cdf_dlaplace(double x, double p,
-                    double mu, bool& throw_warning) {
+inline double cdf_dlaplace(double x, double p, double mu,
+                           bool& throw_warning) {
   if (ISNAN(x) || ISNAN(p) || ISNAN(mu))
     return x+p+mu;
   if (p <= 0.0 || p >= 1.0) {
@@ -38,7 +38,8 @@ double cdf_dlaplace(double x, double p,
     return 1.0 - (pow(p, floor(x-mu)+1.0)/(1.0+p));
 } 
 
-double rng_dlaplace(double p, double mu, bool& throw_warning) {
+inline double rng_dlaplace(double p, double mu,
+                           bool& throw_warning) {
   if (ISNAN(p) || ISNAN(mu) || p <= 0.0 || p >= 1.0) {
     throw_warning = true;
     return NA_REAL;
@@ -69,8 +70,8 @@ NumericVector cpp_ddlaplace(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pmf_dlaplace(x[i % dims[0]], scale[i % dims[1]],
-                        location[i % dims[2]], throw_warning);
+    p[i] = pmf_dlaplace(GETV(x, i), GETV(scale, i),
+                        GETV(location, i), throw_warning);
   
   if (log_prob)
     p = Rcpp::log(p);
@@ -101,8 +102,8 @@ NumericVector cpp_pdlaplace(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_dlaplace(x[i % dims[0]], scale[i % dims[1]],
-                        location[i % dims[2]], throw_warning);
+    p[i] = cdf_dlaplace(GETV(x, i), GETV(scale, i),
+                        GETV(location, i), throw_warning);
   
   if (!lower_tail)
     p = 1.0 - p;
@@ -132,7 +133,7 @@ NumericVector cpp_rdlaplace(
   bool throw_warning = false;
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_dlaplace(scale[i % dims[0]], location[i % dims[1]],
+    x[i] = rng_dlaplace(GETV(scale, i), GETV(location, i),
                         throw_warning);
   
   if (throw_warning)

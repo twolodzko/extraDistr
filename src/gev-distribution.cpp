@@ -34,8 +34,8 @@ using Rcpp::NumericVector;
  *
  */
 
-double pdf_gev(double x, double mu, double sigma,
-               double xi, bool& throw_warning) {
+inline double pdf_gev(double x, double mu, double sigma,
+                      double xi, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
     return x+mu+sigma+xi;
   if (sigma <= 0.0) {
@@ -53,8 +53,8 @@ double pdf_gev(double x, double mu, double sigma,
   }
 }
 
-double cdf_gev(double x, double mu, double sigma,
-               double xi, bool& throw_warning) {
+inline double cdf_gev(double x, double mu, double sigma,
+                      double xi, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
     return x+mu+sigma+xi;
   if (sigma <= 0.0) {
@@ -72,11 +72,11 @@ double cdf_gev(double x, double mu, double sigma,
   }
 }
 
-double invcdf_gev(double p, double mu, double sigma,
-                  double xi, bool& throw_warning) {
+inline double invcdf_gev(double p, double mu, double sigma,
+                         double xi, bool& throw_warning) {
   if (ISNAN(p) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
     return p+mu+sigma+xi;
-  if (sigma <= 0.0 || p < 0.0 || p > 1.0) {
+  if (sigma <= 0.0 || !VALID_PROB(p)) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
@@ -88,8 +88,8 @@ double invcdf_gev(double p, double mu, double sigma,
     return mu - sigma * log(-log(p));
 }
 
-double rng_gev(double mu, double sigma,
-               double xi, bool& throw_warning) {
+inline double rng_gev(double mu, double sigma, double xi,
+                      bool& throw_warning) {
   if (ISNAN(mu) || ISNAN(sigma) || ISNAN(xi) || sigma <= 0.0) {
     Rcpp::warning("NAs produced");
     return NA_REAL;
@@ -122,8 +122,8 @@ NumericVector cpp_dgev(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_gev(x[i % dims[0]], mu[i % dims[1]],
-                   sigma[i % dims[2]], xi[i % dims[3]],
+    p[i] = pdf_gev(GETV(x, i), GETV(mu, i),
+                   GETV(sigma, i), GETV(xi, i),
                    throw_warning);
 
   if (log_prob)
@@ -156,8 +156,8 @@ NumericVector cpp_pgev(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_gev(x[i % dims[0]], mu[i % dims[1]],
-                   sigma[i % dims[2]], xi[i % dims[3]],
+    p[i] = cdf_gev(GETV(x, i), GETV(mu, i),
+                   GETV(sigma, i), GETV(xi, i),
                    throw_warning);
 
   if (!lower_tail)
@@ -200,8 +200,8 @@ NumericVector cpp_qgev(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_gev(pp[i % dims[0]], mu[i % dims[1]],
-                      sigma[i % dims[2]], xi[i % dims[3]],
+    q[i] = invcdf_gev(GETV(pp, i), GETV(mu, i),
+                      GETV(sigma, i), GETV(xi, i),
                       throw_warning);
   
   if (throw_warning)
@@ -228,8 +228,8 @@ NumericVector cpp_rgev(
   bool throw_warning = false;
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_gev(mu[i % dims[0]], sigma[i % dims[1]],
-                   xi[i % dims[2]], throw_warning);
+    x[i] = rng_gev(GETV(mu, i), GETV(sigma, i),
+                   GETV(xi, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NAs produced");

@@ -11,7 +11,7 @@ using std::ceil;
 using Rcpp::NumericVector;
 
 
-double pdf_hnorm(double x, double sigma, bool& throw_warning) {
+inline double pdf_hnorm(double x, double sigma, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(sigma))
     return x+sigma;
   if (sigma <= 0.0) {
@@ -23,7 +23,7 @@ double pdf_hnorm(double x, double sigma, bool& throw_warning) {
   return 2.0 * R::dnorm(x, 0.0, sigma, false);
 }
 
-double cdf_hnorm(double x, double sigma, bool& throw_warning) {
+inline double cdf_hnorm(double x, double sigma, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(sigma))
     return x+sigma;
   if (sigma <= 0.0) {
@@ -35,17 +35,17 @@ double cdf_hnorm(double x, double sigma, bool& throw_warning) {
   return 2.0 * R::pnorm(x, 0.0, sigma, true, false) - 1.0;
 }
 
-double invcdf_hnorm(double p, double sigma, bool& throw_warning) {
+inline double invcdf_hnorm(double p, double sigma, bool& throw_warning) {
   if (ISNAN(p) || ISNAN(sigma))
     return p+sigma;
-  if (sigma <= 0.0 || p < 0.0 || p > 1.0) {
+  if (sigma <= 0.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;
   }
   return R::qnorm((p+1.0)/2.0, 0.0, sigma, true, false);
 }
 
-double rng_hnorm(double sigma, bool& throw_warning) {
+inline double rng_hnorm(double sigma, bool& throw_warning) {
   if (ISNAN(sigma) || sigma <= 0.0) {
     throw_warning = true;
     return NA_REAL;
@@ -70,7 +70,7 @@ NumericVector cpp_dhnorm(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_hnorm(x[i % dims[0]], sigma[i % dims[1]],
+    p[i] = pdf_hnorm(GETV(x, i), GETV(sigma, i),
                      throw_warning);
   
   if (log_prob)
@@ -100,7 +100,7 @@ NumericVector cpp_phnorm(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_hnorm(x[i % dims[0]], sigma[i % dims[1]],
+    p[i] = cdf_hnorm(GETV(x, i), GETV(sigma, i),
                      throw_warning);
   
   if (!lower_tail)
@@ -140,7 +140,7 @@ NumericVector cpp_qhnorm(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_hnorm(pp[i % dims[0]], sigma[i % dims[1]],
+    q[i] = invcdf_hnorm(GETV(pp, i), GETV(sigma, i),
                         throw_warning);
   
   if (throw_warning)
@@ -162,7 +162,7 @@ NumericVector cpp_rhnorm(
   bool throw_warning = false;
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_hnorm(sigma[i % dims], throw_warning);
+    x[i] = rng_hnorm(GETV(sigma, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NAs produced");

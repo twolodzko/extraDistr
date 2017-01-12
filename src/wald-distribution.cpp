@@ -24,8 +24,8 @@ using Rcpp::NumericVector;
  * 
  */
 
-double pdf_wald(double x, double mu, double lambda,
-                bool& throw_warning) {
+inline double pdf_wald(double x, double mu, double lambda,
+                       bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(lambda))
     return x+mu+lambda;
   if (mu <= 0.0 || lambda <= 0.0) {
@@ -38,8 +38,8 @@ double pdf_wald(double x, double mu, double lambda,
          exp((-lambda*pow(x-mu, 2.0))/(2.0*pow(mu, 2.0)*x));
 }
 
-double cdf_wald(double x, double mu, double lambda,
-                bool& throw_warning) {
+inline double cdf_wald(double x, double mu, double lambda,
+                       bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(lambda))
     return x+mu+lambda;
   if (mu <= 0.0 || lambda <= 0.0) {
@@ -55,7 +55,7 @@ double cdf_wald(double x, double mu, double lambda,
          Phi(-sqrt(lambda/x)*(x/mu+1.0));
 }
 
-double rng_wald(double mu, double lambda, bool& throw_warning) {
+inline double rng_wald(double mu, double lambda, bool& throw_warning) {
   if (ISNAN(mu) || ISNAN(lambda) || mu <= 0.0 || lambda <= 0.0) {
     throw_warning = true;
     return NA_REAL;

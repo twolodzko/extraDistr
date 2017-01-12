@@ -11,8 +11,8 @@ using std::ceil;
 using Rcpp::NumericVector;
 
 
-double pdf_tpois(double x, double lambda,
-                 double a, double b, bool& throw_warning) {
+inline double pdf_tpois(double x, double lambda, double a,
+                        double b, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(a) || ISNAN(b))
     return x+lambda+a+b;
   if (lambda < 0.0 || b < a) {
@@ -33,8 +33,8 @@ double pdf_tpois(double x, double lambda,
   return R::dpois(x, lambda, false) / (pb-pa);
 }
 
-double cdf_tpois(double x, double lambda,
-                 double a, double b, bool& throw_warning) {
+inline double cdf_tpois(double x, double lambda, double a,
+                        double b, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(a) || ISNAN(b))
     return x+lambda+a+b;
   if (lambda <= 0.0 || b < a) {
@@ -57,11 +57,11 @@ double cdf_tpois(double x, double lambda,
   return (R::ppois(x, lambda, true, false) - pa) / (pb-pa);
 }
 
-double invcdf_tpois(double p, double lambda,
-                    double a, double b, bool& throw_warning) {
+inline double invcdf_tpois(double p, double lambda, double a,
+                           double b, bool& throw_warning) {
   if (ISNAN(p) || ISNAN(lambda) || ISNAN(a) || ISNAN(b))
     return p+lambda+a+b;
-  if (lambda < 0.0 || b < a || p < 0.0 || p > 1.0) {
+  if (lambda < 0.0 || b < a || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;
   }
@@ -78,8 +78,8 @@ double invcdf_tpois(double p, double lambda,
   return R::qpois(pa + p*(pb-pa), lambda, true, false);
 }
 
-double rng_tpois(double lambda, double a,
-                 double b, bool& throw_warning) {
+inline double rng_tpois(double lambda, double a, double b,
+                        bool& throw_warning) {
   if (ISNAN(lambda) || ISNAN(a) || ISNAN(b) ||
       lambda < 0.0 || b < a) {
     throw_warning = true;

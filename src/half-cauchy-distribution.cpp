@@ -13,7 +13,7 @@ using std::tan;
 using std::atan;
 
 
-double pdf_hcauchy(double x, double sigma, bool& throw_warning) {
+inline double pdf_hcauchy(double x, double sigma, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(sigma))
     return x+sigma;
   if (sigma <= 0.0) {
@@ -37,17 +37,18 @@ double cdf_hcauchy(double x, double sigma, bool& throw_warning) {
   return 2.0/M_PI * atan(x/sigma);
 }
 
-double invcdf_hcauchy(double p, double sigma, bool& throw_warning) {
+inline double invcdf_hcauchy(double p, double sigma,
+                             bool& throw_warning) {
   if (ISNAN(p) || ISNAN(sigma))
     return p+sigma;
-  if (sigma <= 0.0 || p < 0.0 || p > 1.0) {
+  if (sigma <= 0.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;
   }
   return sigma * tan((M_PI*p)/2.0);
 }
 
-double rng_hcauchy(double sigma, bool& throw_warning) {
+inline double rng_hcauchy(double sigma, bool& throw_warning) {
   if (ISNAN(sigma) || sigma <= 0.0) {
     throw_warning = true;
     return NA_REAL;
@@ -72,7 +73,7 @@ NumericVector cpp_dhcauchy(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_hcauchy(x[i % dims[0]], sigma[i % dims[1]],
+    p[i] = pdf_hcauchy(GETV(x, i), GETV(sigma, i),
                        throw_warning);
   
   if (log_prob)
@@ -101,7 +102,7 @@ NumericVector cpp_phcauchy(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_hcauchy(x[i % dims[0]], sigma[i % dims[1]],
+    p[i] = cdf_hcauchy(GETV(x, i), GETV(sigma, i),
                        throw_warning);
   
   if (!lower_tail)
@@ -141,7 +142,7 @@ NumericVector cpp_qhcauchy(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_hcauchy(pp[i % dims[0]], sigma[i % dims[1]],
+    q[i] = invcdf_hcauchy(GETV(pp, i), GETV(sigma, i),
                           throw_warning);
   
   if (throw_warning)
@@ -163,7 +164,7 @@ NumericVector cpp_rhcauchy(
   bool throw_warning = false;
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_hcauchy(sigma[i % dims], throw_warning);
+    x[i] = rng_hcauchy(GETV(sigma, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NAs produced");

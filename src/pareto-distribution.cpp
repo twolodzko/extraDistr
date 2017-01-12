@@ -26,8 +26,8 @@ using Rcpp::NumericVector;
  *
  */
 
-double pdf_pareto(double x, double a, double b,
-                  bool& throw_warning) {
+inline double pdf_pareto(double x, double a, double b,
+                         bool& throw_warning) {
   if (ISNAN(x) || ISNAN(a) || ISNAN(b))
     return x+a+b;
   if (a <= 0.0 || b <= 0.0) {
@@ -39,8 +39,8 @@ double pdf_pareto(double x, double a, double b,
   return a * pow(b, a) / pow(x, a+1.0);
 }
 
-double logpdf_pareto(double x, double a, double b,
-                     bool& throw_warning) {
+inline double logpdf_pareto(double x, double a, double b,
+                            bool& throw_warning) {
   if (ISNAN(x) || ISNAN(a) || ISNAN(b))
     return x+a+b;
   if (a <= 0.0 || b <= 0.0) {
@@ -52,8 +52,8 @@ double logpdf_pareto(double x, double a, double b,
   return log(a) + log(b)*a - log(x)*(a+1.0);
 }
 
-double cdf_pareto(double x, double a, double b,
-                  bool& throw_warning) {
+inline double cdf_pareto(double x, double a, double b,
+                         bool& throw_warning) {
   if (ISNAN(x) || ISNAN(a) || ISNAN(b))
     return x+a+b;
   if (a <= 0.0 || b <= 0.0) {
@@ -65,18 +65,18 @@ double cdf_pareto(double x, double a, double b,
   return 1.0 - pow(b/x, a);
 }
 
-double invcdf_pareto(double p, double a, double b,
-                     bool& throw_warning) {
+inline double invcdf_pareto(double p, double a, double b,
+                            bool& throw_warning) {
   if (ISNAN(p) || ISNAN(a) || ISNAN(b))
     return p+a+b;
-  if (a <= 0.0 || b <= 0.0 || p < 0.0 || p > 1.0) {
+  if (a <= 0.0 || b <= 0.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;
   }
   return b / pow(1.0-p, 1.0/a);
 }
 
-double rng_pareto(double a, double b, bool& throw_warning) {
+inline double rng_pareto(double a, double b, bool& throw_warning) {
   if (ISNAN(a) || ISNAN(b) || a <= 0.0 || b <= 0.0) {
     throw_warning = true;
     return NA_REAL;

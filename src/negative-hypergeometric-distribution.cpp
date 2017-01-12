@@ -21,7 +21,7 @@ std::vector<double> nhyper_table(
     Rcpp::stop("inadmissible values");
   
   double j, N, start_eps;
-  int ni = static_cast<int>(n);
+  int ni = TO_INT(n);
   N = m+n;
   
   std::vector<double> t(ni), h(ni), p(ni+1);
@@ -30,7 +30,7 @@ std::vector<double> nhyper_table(
   t[0] = start_eps + h[0];
 
   for (int i = 1; i <= ni-1; i++) {
-    j = static_cast<double>(i) + r;
+    j = TO_DBL(i) + r;
     h[i] = h[i-1] * j*(n+r-j)/(N-j)/(j+1.0-r);
     t[i] = t[i-1] + h[i];
   }
@@ -94,7 +94,7 @@ NumericVector cpp_dnhyper(
       if (!tmp.size()) {
         tmp = nhyper_table(n[i % dims[1]], m[i % dims[2]], r[i % dims[3]], false);
       }
-      p[i] = tmp[static_cast<int>( x[i % dims[0]] - r[i % dims[3]] )];
+      p[i] = tmp[TO_INT( x[i % dims[0]] - r[i % dims[3]] )];
       
     }
   } 
@@ -155,7 +155,7 @@ NumericVector cpp_pnhyper(
       if (!tmp.size()) {
         tmp = nhyper_table(n[i % dims[1]], m[i % dims[2]], r[i % dims[3]], true);
       }
-      p[i] = tmp[static_cast<int>( x[i % dims[0]] - r[i % dims[3]] )];
+      p[i] = tmp[TO_INT( x[i % dims[0]] - r[i % dims[3]] )];
       
     }
   } 
@@ -209,7 +209,7 @@ NumericVector cpp_qnhyper(
     if (ISNAN(p[i % dims[0]]) || ISNAN(n[i % dims[1]]) ||
         ISNAN(m[i % dims[2]]) || ISNAN(r[i % dims[3]])) {
       x[i] = p[i % dims[0]] + n[i % dims[1]] + m[i % dims[2]] + r[i % dims[3]];
-    } else if (p[i % dims[0]] < 0.0 || p[i % dims[0]] > 1.0 ||
+    } else if (!VALID_PROB(p[i % dims[0]]) ||
                r[i % dims[3]] > m[i % dims[2]] || n[i % dims[1]] < 0.0 ||
                m[i % dims[2]] < 0.0 || r[i % dims[3]] < 0.0 ||
                !isInteger(n[i % dims[1]], false) ||
@@ -224,9 +224,9 @@ NumericVector cpp_qnhyper(
         tmp = nhyper_table(n[i % dims[1]], m[i % dims[2]], r[i % dims[3]], true);
       }
       
-      for (int j = 0; j <= static_cast<int>( n[i % dims[1]] ); j++) {
+      for (int j = 0; j <= TO_INT( n[i % dims[1]] ); j++) {
         if (tmp[j] >= p[i % dims[0]]) {
-          x[i] = static_cast<double>(j) + r[i % dims[3]];
+          x[i] = TO_DBL(j) + r[i % dims[3]];
           break;
         }
       }
@@ -279,9 +279,9 @@ NumericVector cpp_rnhyper(
       
       u = rng_unif();
       
-      for (int j = 0; j <= static_cast<int>( n[i % dims[0]] ); j++) {
+      for (int j = 0; j <= TO_INT( n[i % dims[0]] ); j++) {
         if (tmp[j] >= u) {
-          x[i] = static_cast<double>(j) + r[i % dims[2]];
+          x[i] = TO_DBL(j) + r[i % dims[2]];
           break;
         }
       }

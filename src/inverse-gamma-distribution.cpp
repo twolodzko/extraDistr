@@ -29,8 +29,8 @@ using Rcpp::NumericVector;
 *
 */
 
-double pdf_invgamma(double x, double alpha, double beta,
-                    bool& throw_warning) {
+inline double pdf_invgamma(double x, double alpha, double beta,
+                           bool& throw_warning) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
     return x+alpha+beta;
   if (alpha <= 0.0 || beta <= 0.0) {
@@ -62,8 +62,8 @@ NumericVector cpp_dinvgamma(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_invgamma(x[i % dims[0]], alpha[i % dims[1]],
-                        beta[i % dims[2]], throw_warning);
+    p[i] = pdf_invgamma(GETV(x, i), GETV(alpha, i),
+                        GETV(beta, i), throw_warning);
 
   if (log_prob)
     p = Rcpp::log(p);

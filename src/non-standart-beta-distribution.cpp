@@ -55,7 +55,7 @@ double invcdf_nsbeta(double p, double alpha, double beta, double l,
                      double u, bool& throw_warning) {
   if (ISNAN(p) || ISNAN(alpha) || ISNAN(beta) || ISNAN(l) || ISNAN(u))
     return p+alpha+beta+l+u;
-  if (l >= u || alpha < 0.0 || beta < 0.0 || p < 0.0 || p > 1.0) {
+  if (l >= u || alpha < 0.0 || beta < 0.0 || !VALID_PROB(p)) {
     Rcpp::warning("NaNs produced");
     return NAN;
   }
