@@ -99,24 +99,24 @@ inline double rng_tpois(double lambda, double a, double b,
 NumericVector cpp_dtpois(
     const NumericVector& x,
     const NumericVector& lambda,
-    const NumericVector& a,
-    const NumericVector& b,
+    const NumericVector& lower,
+    const NumericVector& upper,
     const bool& log_prob = false
   ) {
   
   std::vector<int> dims;
   dims.push_back(x.length());
   dims.push_back(lambda.length());
-  dims.push_back(a.length());
-  dims.push_back(b.length());
+  dims.push_back(lower.length());
+  dims.push_back(upper.length());
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_tpois(x[i % dims[0]], lambda[i % dims[1]],
-                     a[i % dims[2]], b[i % dims[3]],
+    p[i] = pdf_tpois(GETV(x, i), GETV(lambda, i),
+                     GETV(lower, i), GETV(upper, i),
                      throw_warning);
   
   if (log_prob)
@@ -133,8 +133,8 @@ NumericVector cpp_dtpois(
 NumericVector cpp_ptpois(
     const NumericVector& x,
     const NumericVector& lambda,
-    const NumericVector& a,
-    const NumericVector& b,
+    const NumericVector& lower,
+    const NumericVector& upper,
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
@@ -142,16 +142,16 @@ NumericVector cpp_ptpois(
   std::vector<int> dims;
   dims.push_back(x.length());
   dims.push_back(lambda.length());
-  dims.push_back(a.length());
-  dims.push_back(b.length());
+  dims.push_back(lower.length());
+  dims.push_back(upper.length());
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_tpois(x[i % dims[0]], lambda[i % dims[1]],
-                     a[i % dims[2]], b[i % dims[3]],
+    p[i] = cdf_tpois(GETV(x, i), GETV(lambda, i),
+                     GETV(lower, i), GETV(upper, i),
                      throw_warning);
   
   if (!lower_tail)
@@ -171,8 +171,8 @@ NumericVector cpp_ptpois(
 NumericVector cpp_qtpois(
     const NumericVector& p,
     const NumericVector& lambda,
-    const NumericVector& a,
-    const NumericVector& b,
+    const NumericVector& lower,
+    const NumericVector& upper,
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
@@ -180,8 +180,8 @@ NumericVector cpp_qtpois(
   std::vector<int> dims;
   dims.push_back(p.length());
   dims.push_back(lambda.length());
-  dims.push_back(a.length());
-  dims.push_back(b.length());
+  dims.push_back(lower.length());
+  dims.push_back(upper.length());
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
@@ -195,8 +195,8 @@ NumericVector cpp_qtpois(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_tpois(pp[i % dims[0]], lambda[i % dims[1]],
-                        a[i % dims[2]], b[i % dims[3]],
+    x[i] = invcdf_tpois(GETV(pp, i), GETV(lambda, i),
+                        GETV(lower, i), GETV(upper, i),
                         throw_warning);
   
   if (throw_warning)
@@ -210,21 +210,21 @@ NumericVector cpp_qtpois(
 NumericVector cpp_rtpois(
     const int& n,
     const NumericVector& lambda,
-    const NumericVector& a,
-    const NumericVector& b
+    const NumericVector& lower,
+    const NumericVector& upper
   ) {
   
   std::vector<int> dims;
   dims.push_back(lambda.length());
-  dims.push_back(a.length());
-  dims.push_back(b.length());
+  dims.push_back(lower.length());
+  dims.push_back(upper.length());
   NumericVector x(n);
   
   bool throw_warning = false;
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_tpois(lambda[i % dims[0]], a[i % dims[1]],
-                     b[i % dims[2]], throw_warning);
+    x[i] = rng_tpois(GETV(lambda, i), GETV(lower, i),
+                     GETV(upper, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NAs produced");

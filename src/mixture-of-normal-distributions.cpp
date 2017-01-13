@@ -1,5 +1,4 @@
 #include <Rcpp.h>
-#include "const.h"
 #include "shared.h"
 
 using std::pow;
@@ -46,14 +45,14 @@ NumericVector cpp_dmixnorm(
     p[i] = 0.0;
     
     for (int j = 0; j < k; j++) {
-      if (alpha(i % dims[3], j) < 0.0 || sigma(i % dims[2], j) <= 0.0)
+      if (GETM(alpha, i, j) < 0.0 || GETM(sigma, i, j) <= 0.0)
         wrong_param = true;
-      nans_sum += mu(i % dims[1], j) + sigma(i % dims[2], j);
-      alpha_tot += alpha(i % dims[3], j);
+      nans_sum += GETM(mu, i, j) + GETM(sigma, i, j);
+      alpha_tot += GETM(alpha, i, j);
     }
     
-    if (ISNAN(nans_sum + alpha_tot + x[i % dims[0]])) {
-      p[i] = nans_sum + alpha_tot + x[i % dims[0]];
+    if (ISNAN(nans_sum + alpha_tot + GETV(x, i))) {
+      p[i] = nans_sum + alpha_tot + GETV(x, i);
       continue;
     }
     
@@ -64,8 +63,8 @@ NumericVector cpp_dmixnorm(
     }
     
     for (int j = 0; j < k; j++) {
-      p[i] += (alpha(i % dims[3], j) / alpha_tot) *
-        R::dnorm(x[i % dims[0]], mu(i % dims[1], j), sigma(i % dims[2], j), false);
+      p[i] += (GETM(alpha, i, j) / alpha_tot) *
+        R::dnorm(GETV(x, i), GETM(mu, i, j), GETM(sigma, i, j), false);
     }
   }
   
@@ -113,16 +112,16 @@ NumericVector cpp_pmixnorm(
     p[i] = 0.0;
     
     for (int j = 0; j < k; j++) {
-      if (alpha(i % dims[3], j) < 0.0 || sigma(i % dims[2], j) < 0.0) {
+      if (GETM(alpha, i, j) < 0.0 || GETM(sigma, i, j) < 0.0) {
         wrong_param = true;
         break;
       }
-      nans_sum += mu(i % dims[1], j) + sigma(i % dims[2], j);
-      alpha_tot += alpha(i % dims[3], j);
+      nans_sum += GETM(mu, i, j) + GETM(sigma, i, j);
+      alpha_tot += GETM(alpha, i, j);
     }
     
-    if (ISNAN(nans_sum + alpha_tot + x[i % dims[0]])) {
-      p[i] = nans_sum + alpha_tot + x[i % dims[0]];
+    if (ISNAN(nans_sum + alpha_tot + GETV(x, i))) {
+      p[i] = nans_sum + alpha_tot + GETV(x, i);
       continue;
     }
     
@@ -133,8 +132,8 @@ NumericVector cpp_pmixnorm(
     }
     
     for (int j = 0; j < k; j++) {
-      p[i] += (alpha(i % dims[3], j) / alpha_tot) *
-        R::pnorm(x[i % dims[0]], mu(i % dims[1], j), sigma(i % dims[2], j), true, false);
+      p[i] += (GETM(alpha, i, j) / alpha_tot) *
+        R::pnorm(GETV(x, i), GETM(mu, i, j), GETM(sigma, i, j), true, false);
     }
   }
   
@@ -184,12 +183,12 @@ NumericVector cpp_rmixnorm(
     alpha_tot = 0.0;
     
     for (int j = 0; j < k; j++) {
-      if (alpha(i % dims[2], j) < 0.0 || sigma(i % dims[1], j) < 0.0) {
+      if (GETM(alpha, i, j) < 0.0 || GETM(sigma, i, j) < 0.0) {
         wrong_param = true;
         break;
       }
-      nans_sum += mu(i % dims[0], j) + sigma(i % dims[1], j);
-      alpha_tot += alpha(i % dims[2], j);
+      nans_sum += GETM(mu, i, j) + GETM(sigma, i, j);
+      alpha_tot += GETM(alpha, i, j);
     }
     
     if (ISNAN(nans_sum + alpha_tot) || wrong_param) {
@@ -199,14 +198,14 @@ NumericVector cpp_rmixnorm(
     }
     
     for (int j = k-1; j >= 0; j--) {
-      p_tmp -= alpha(i % dims[2], j) / alpha_tot;
+      p_tmp -= GETM(alpha, i, j) / alpha_tot;
       if (u > p_tmp) {
         jj = j;
         break;
       }
     }
 
-    x[i] = R::rnorm(mu(i % dims[0], jj), sigma(i % dims[1], jj)); 
+    x[i] = R::rnorm(GETM(mu, i, jj), GETM(sigma, i, jj)); 
   }
   
   if (throw_warning)

@@ -66,37 +66,37 @@ NumericVector cpp_ddirmnom(
     wrong_param = false;
     
     for (int j = 0; j < k; j++) {
-      if (alpha(i % dims[1], j) <= 0.0)
+      if (GETM(alpha, i, j) <= 0.0)
         wrong_param = true;
-      if (x(i % dims[0], j) < 0.0 || !isInteger(x(i % dims[0], j)))
+      if (GETM(x, i, j) < 0.0 || !isInteger(GETM(x, i, j)))
         wrong_x = true;
       
-      sum_x += x(i % dims[0], j);
-      sum_alpha += alpha(i % dims[1], j);
+      sum_x += GETM(x, i, j);
+      sum_alpha += GETM(alpha, i, j);
     }
     
-    if (ISNAN(sum_x + sum_alpha + size[i % dims[2]])) {
-      p[i] = sum_x + sum_alpha + size[i % dims[2]];
+    if (ISNAN(sum_x + sum_alpha + GETV(size, i))) {
+      p[i] = sum_x + sum_alpha + GETV(size, i);
       continue;
     } 
     
-    if (wrong_param || size[i % dims[2]] < 0.0 || !isInteger(size[i % dims[2]], false)) {
+    if (wrong_param || GETV(size, i) < 0.0 || !isInteger(GETV(size, i), false)) {
       throw_warning = true;
       p[i] = NAN;
       continue;
     }
     
-    if (sum_x < 0.0 || sum_x != size[i % dims[2]] || wrong_x) {
+    if (sum_x < 0.0 || sum_x != GETV(size, i) || wrong_x) {
       p[i] = R_NegInf;
     } else {
       
       for (int j = 0; j < k; j++) {
-        prod_tmp += R::lgammafn(x(i % dims[0], j) + alpha(i % dims[1], j)) -
-          (lfactorial(x(i % dims[0], j)) + R::lgammafn(alpha(i % dims[1], j)));
+        prod_tmp += R::lgammafn(GETM(x, i, j) + GETM(alpha, i, j)) -
+          (lfactorial(GETM(x, i, j)) + R::lgammafn(GETM(alpha, i, j)));
       }
       
-      p[i] = (lfactorial(size[i % dims[2]]) + R::lgammafn(sum_alpha)) -
-        R::lgammafn(size[i % dims[2]] + sum_alpha) + prod_tmp;
+      p[i] = (lfactorial(GETV(size, i)) + R::lgammafn(sum_alpha)) -
+        R::lgammafn(GETV(size, i) + sum_alpha) + prod_tmp;
     }
   }
   
@@ -132,33 +132,33 @@ NumericMatrix cpp_rdirmnom(
   bool wrong_values;
   
   for (int i = 0; i < n; i++) {
-    size_left = size[i % dims[1]];
+    size_left = GETV(size, i);
     row_sum = 0.0;
     wrong_values = false;
     NumericVector pi(k);
     sum_alpha = 0.0;
     
     for (int j = 0; j < k; j++) {
-      sum_alpha += alpha(i % dims[0], j);
+      sum_alpha += GETM(alpha, i, j);
       
-      if (alpha(i % dims[0], j) <= 0.0) {
+      if (GETM(alpha, i, j) <= 0.0) {
         wrong_values = true;
         break;
       }
 
-      pi[j] = R::rgamma(alpha(i % dims[0], j), 1.0);
+      pi[j] = R::rgamma(GETM(alpha, i, j), 1.0);
       row_sum += pi[j];
     }
     
-    if (wrong_values || ISNAN(sum_alpha + size[i % dims[1]]) ||
-        size[i % dims[1]] < 0.0 || !isInteger(size[i % dims[1]], false)) {
+    if (wrong_values || ISNAN(sum_alpha + GETV(size, i)) ||
+        GETV(size, i) < 0.0 || !isInteger(GETV(size, i), false)) {
       throw_warning = true;
       for (int j = 0; j < k; j++)
         x(i, j) = NA_REAL;
       continue;
     }
     
-    if (size[i % dims[1]] == 0.0) {
+    if (GETV(size, i) == 0.0) {
       for (int j = 0; j < k; j++)
         x(i, j) = 0.0;
       continue;

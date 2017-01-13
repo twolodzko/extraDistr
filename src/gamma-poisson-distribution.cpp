@@ -1,5 +1,4 @@
 #include <Rcpp.h>
-#include "const.h"
 #include "shared.h"
 
 using std::pow;
@@ -198,7 +197,7 @@ NumericVector cpp_rgpois(
   bool throw_warning = false;
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_gpois(GETV(alpha, i), beta[i % dims[1]],
+    x[i] = rng_gpois(GETV(alpha, i), GETV(beta, i),
                      throw_warning);
   
   if (throw_warning)

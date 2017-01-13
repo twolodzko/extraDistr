@@ -104,8 +104,8 @@ NumericVector cpp_dzinb(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_zinb(x[i % dims[0]], size[i % dims[1]],
-                    prob[i % dims[2]], pi[i % dims[3]],
+    p[i] = pdf_zinb(GETV(x, i), GETV(size, i),
+                    GETV(prob, i), GETV(pi, i),
                     throw_warning);
   
   if (log_prob)
@@ -139,8 +139,8 @@ NumericVector cpp_pzinb(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_zinb(x[i % dims[0]], size[i % dims[1]],
-                    prob[i % dims[2]], pi[i % dims[3]],
+    p[i] = cdf_zinb(GETV(x, i), GETV(size, i),
+                    GETV(prob, i), GETV(pi, i),
                     throw_warning);
 
   if (!lower_tail)
@@ -184,8 +184,8 @@ NumericVector cpp_qzinb(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_zinb(pp[i % dims[0]], size[i % dims[1]],
-                       prob[i % dims[2]], pi[i % dims[3]],
+    x[i] = invcdf_zinb(GETV(pp, i), GETV(size, i),
+                       GETV(prob, i), GETV(pi, i),
                        throw_warning);
   
   if (throw_warning)
@@ -212,8 +212,8 @@ NumericVector cpp_rzinb(
   bool throw_warning = false;
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_zinb(size[i % dims[1]], prob[i % dims[1]],
-                    pi[i % dims[2]], throw_warning);
+    x[i] = rng_zinb(GETV(size, i), GETV(prob, i),
+                    GETV(pi, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NAs produced");

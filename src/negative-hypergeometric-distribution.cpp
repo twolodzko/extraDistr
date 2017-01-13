@@ -75,26 +75,26 @@ NumericVector cpp_dnhyper(
     if (i % 1000 == 0)
       Rcpp::checkUserInterrupt();
     
-    if (ISNAN(x[i % dims[0]]) || ISNAN(n[i % dims[1]]) ||
-        ISNAN(m[i % dims[2]]) || ISNAN(r[i % dims[3]])) {
-      p[i] = x[i % dims[0]] + n[i % dims[1]] + m[i % dims[2]] + r[i % dims[3]];
-    } else if (r[i % dims[3]] > m[i % dims[2]] || n[i % dims[1]] < 0.0 ||
-               m[i % dims[2]] < 0.0 || r[i % dims[3]] < 0.0 ||
-               !isInteger(n[i % dims[1]], false) ||
-               !isInteger(m[i % dims[2]], false) ||
-               !isInteger(r[i % dims[3]], false)) {
+    if (ISNAN(GETV(x, i)) || ISNAN(GETV(n, i)) ||
+        ISNAN(GETV(m, i)) || ISNAN(GETV(r, i))) {
+      p[i] = GETV(x, i) + GETV(n, i) + GETV(m, i) + GETV(r, i);
+    } else if (GETV(r, i) > GETV(m, i) || GETV(n, i) < 0.0 ||
+               GETV(m, i) < 0.0 || GETV(r, i) < 0.0 ||
+               !isInteger(GETV(n, i), false) ||
+               !isInteger(GETV(m, i), false) ||
+               !isInteger(GETV(r, i), false)) {
       throw_warning = true;
       p[i] = NAN;
-    } else if (!isInteger(x[i % dims[0]]) || x[i % dims[0]] < r[i % dims[3]] ||
-               x[i % dims[0]] > (n[i % dims[1]] + r[i % dims[3]])) {
+    } else if (!isInteger(GETV(x, i)) || GETV(x, i) < GETV(r, i) ||
+               GETV(x, i) > (GETV(n, i) + GETV(r, i))) {
       p[i] = 0.0;
     } else {
       
       std::vector<double>& tmp = memo[std::make_tuple(i % dims[1], i % dims[2], i % dims[3])];
       if (!tmp.size()) {
-        tmp = nhyper_table(n[i % dims[1]], m[i % dims[2]], r[i % dims[3]], false);
+        tmp = nhyper_table(GETV(n, i), GETV(m, i), GETV(r, i), false);
       }
-      p[i] = tmp[TO_INT( x[i % dims[0]] - r[i % dims[3]] )];
+      p[i] = tmp[TO_INT( GETV(x, i) - GETV(r, i) )];
       
     }
   } 
@@ -135,27 +135,27 @@ NumericVector cpp_pnhyper(
     if (i % 1000 == 0)
       Rcpp::checkUserInterrupt();
     
-    if (ISNAN(x[i % dims[0]]) || ISNAN(n[i % dims[1]]) ||
-        ISNAN(m[i % dims[2]]) || ISNAN(r[i % dims[3]])) {
-      p[i] = x[i % dims[0]] + n[i % dims[1]] + m[i % dims[2]] + r[i % dims[3]];
-    } else if (r[i % dims[3]] > m[i % dims[2]] || n[i % dims[1]] < 0.0 ||
-               m[i % dims[2]] < 0.0 || r[i % dims[3]] < 0.0 ||
-               !isInteger(n[i % dims[1]], false) ||
-               !isInteger(m[i % dims[2]], false) ||
-               !isInteger(r[i % dims[3]], false)) {
+    if (ISNAN(GETV(x, i)) || ISNAN(GETV(n, i)) ||
+        ISNAN(GETV(m, i)) || ISNAN(GETV(r, i))) {
+      p[i] = GETV(x, i) + GETV(n, i) + GETV(m, i) + GETV(r, i);
+    } else if (GETV(r, i) > GETV(m, i) || GETV(n, i) < 0.0 ||
+               GETV(m, i) < 0.0 || GETV(r, i) < 0.0 ||
+               !isInteger(GETV(n, i), false) ||
+               !isInteger(GETV(m, i), false) ||
+               !isInteger(GETV(r, i), false)) {
       throw_warning = true;
       p[i] = NAN;
-    } else if (x[i % dims[0]] < r[i % dims[3]]) {
+    } else if (GETV(x, i) < GETV(r, i)) {
       p[i] = 0.0;
-    } else if (x[i % dims[0]] >= (n[i % dims[1]] + r[i % dims[3]])) {
+    } else if (GETV(x, i) >= (GETV(n, i) + GETV(r, i))) {
       p[i] = 1.0;
     } else {
       
       std::vector<double>& tmp = memo[std::make_tuple(i % dims[1], i % dims[2], i % dims[3])];
       if (!tmp.size()) {
-        tmp = nhyper_table(n[i % dims[1]], m[i % dims[2]], r[i % dims[3]], true);
+        tmp = nhyper_table(GETV(n, i), GETV(m, i), GETV(r, i), true);
       }
-      p[i] = tmp[TO_INT( x[i % dims[0]] - r[i % dims[3]] )];
+      p[i] = tmp[TO_INT( GETV(x, i) - GETV(r, i) )];
       
     }
   } 
@@ -206,27 +206,27 @@ NumericVector cpp_qnhyper(
     if (i % 1000 == 0)
       Rcpp::checkUserInterrupt();
     
-    if (ISNAN(p[i % dims[0]]) || ISNAN(n[i % dims[1]]) ||
-        ISNAN(m[i % dims[2]]) || ISNAN(r[i % dims[3]])) {
-      x[i] = p[i % dims[0]] + n[i % dims[1]] + m[i % dims[2]] + r[i % dims[3]];
-    } else if (!VALID_PROB(p[i % dims[0]]) ||
-               r[i % dims[3]] > m[i % dims[2]] || n[i % dims[1]] < 0.0 ||
-               m[i % dims[2]] < 0.0 || r[i % dims[3]] < 0.0 ||
-               !isInteger(n[i % dims[1]], false) ||
-               !isInteger(m[i % dims[2]], false) ||
-               !isInteger(r[i % dims[3]], false)) {
+    if (ISNAN(GETV(pp, i)) || ISNAN(GETV(n, i)) ||
+        ISNAN(GETV(m, i)) || ISNAN(GETV(r, i))) {
+      x[i] = GETV(pp, i) + GETV(n, i) + GETV(m, i) + GETV(r, i);
+    } else if (!VALID_PROB(pp[i % dims[0]]) ||
+               GETV(r, i) > GETV(m, i) || GETV(n, i) < 0.0 ||
+               GETV(m, i) < 0.0 || GETV(r, i) < 0.0 ||
+               !isInteger(GETV(n, i), false) ||
+               !isInteger(GETV(m, i), false) ||
+               !isInteger(GETV(r, i), false)) {
       throw_warning = true;
       x[i] = NAN;
     } else {
       
       std::vector<double>& tmp = memo[std::make_tuple(i % dims[1], i % dims[2], i % dims[3])];
       if (!tmp.size()) {
-        tmp = nhyper_table(n[i % dims[1]], m[i % dims[2]], r[i % dims[3]], true);
+        tmp = nhyper_table(GETV(n, i), GETV(m, i), GETV(r, i), true);
       }
       
-      for (int j = 0; j <= TO_INT( n[i % dims[1]] ); j++) {
-        if (tmp[j] >= p[i % dims[0]]) {
-          x[i] = TO_DBL(j) + r[i % dims[3]];
+      for (int j = 0; j <= TO_INT( GETV(n, i) ); j++) {
+        if (tmp[j] >= pp[i % dims[0]]) {
+          x[i] = TO_DBL(j) + GETV(r, i);
           break;
         }
       }
@@ -264,24 +264,24 @@ NumericVector cpp_rnhyper(
     if (i % 1000 == 0)
       Rcpp::checkUserInterrupt();
     
-    if (ISNAN(n[i % dims[0]]) || ISNAN(m[i % dims[1]]) || ISNAN(r[i % dims[2]]) ||
-        r[i % dims[2]] > m[i % dims[1]] || n[i % dims[0]] < 0.0 ||
-        m[i % dims[1]] < 0.0 || r[i % dims[2]] < 0.0 || !isInteger(n[i % dims[0]], false) ||
-        !isInteger(m[i % dims[1]], false) || !isInteger(r[i % dims[2]], false)) {
+    if (ISNAN(GETV(n, i)) || ISNAN(GETV(m, i)) || ISNAN(GETV(r, i)) ||
+        GETV(r, i) > GETV(m, i) || GETV(n, i) < 0.0 ||
+        GETV(m, i) < 0.0 || GETV(r, i) < 0.0 || !isInteger(GETV(n, i), false) ||
+        !isInteger(GETV(m, i), false) || !isInteger(GETV(r, i), false)) {
       throw_warning = true;
       x[i] = NA_REAL;
     } else {
       
       std::vector<double>& tmp = memo[std::make_tuple(i % dims[0], i % dims[1], i % dims[2])];
       if (!tmp.size()) {
-        tmp = nhyper_table(n[i % dims[0]], m[i % dims[1]], r[i % dims[2]], true);
+        tmp = nhyper_table(GETV(n, i), GETV(m, i), GETV(r, i), true);
       }
       
       u = rng_unif();
       
-      for (int j = 0; j <= TO_INT( n[i % dims[0]] ); j++) {
+      for (int j = 0; j <= TO_INT( GETV(n, i) ); j++) {
         if (tmp[j] >= u) {
-          x[i] = TO_DBL(j) + r[i % dims[2]];
+          x[i] = TO_DBL(j) + GETV(r, i);
           break;
         }
       }

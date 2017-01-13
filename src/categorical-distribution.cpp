@@ -1,5 +1,4 @@
 #include <Rcpp.h>
-#include "const.h"
 #include "shared.h"
 
 using std::pow;

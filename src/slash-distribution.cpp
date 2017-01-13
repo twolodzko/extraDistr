@@ -1,5 +1,4 @@
 #include <Rcpp.h>
-#include "const.h"
 #include "shared.h"
 
 using std::pow;
@@ -82,8 +81,8 @@ NumericVector cpp_dslash(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_slash(x[i % dims[0]], mu[i % dims[1]],
-                     sigma[i % dims[2]], throw_warning);
+    p[i] = pdf_slash(GETV(x, i), GETV(mu, i),
+                     GETV(sigma, i), throw_warning);
   
   if (log_prob)
     p = Rcpp::log(p);
@@ -114,8 +113,8 @@ NumericVector cpp_pslash(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_slash(x[i % dims[0]], mu[i % dims[1]],
-                     sigma[i % dims[2]], throw_warning);
+    p[i] = cdf_slash(GETV(x, i), GETV(mu, i),
+                     GETV(sigma, i), throw_warning);
   
   if (!lower_tail)
     p = 1.0 - p;
@@ -145,7 +144,7 @@ NumericVector cpp_rslash(
   bool throw_warning = false;
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_slash(mu[i % dims[0]], sigma[i % dims[1]],
+    x[i] = rng_slash(GETV(mu, i), GETV(sigma, i),
                      throw_warning);
   
   if (throw_warning)

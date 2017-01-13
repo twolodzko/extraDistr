@@ -97,8 +97,8 @@ NumericVector cpp_dtbinom(
     const NumericVector& x,
     const NumericVector& size,
     const NumericVector& prob,
-    const NumericVector& a,
-    const NumericVector& b,
+    const NumericVector& lower,
+    const NumericVector& upper,
     const bool& log_prob = false
   ) {
   
@@ -106,17 +106,17 @@ NumericVector cpp_dtbinom(
   dims.push_back(x.length());
   dims.push_back(size.length());
   dims.push_back(prob.length());
-  dims.push_back(a.length());
-  dims.push_back(b.length());
+  dims.push_back(lower.length());
+  dims.push_back(upper.length());
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_tbinom(x[i % dims[0]], size[i % dims[1]],
-                      prob[i % dims[2]], a[i % dims[3]],
-                      b[i % dims[4]], throw_warning);
+    p[i] = pdf_tbinom(GETV(x, i), GETV(size, i),
+                      GETV(prob, i), GETV(lower, i),
+                      GETV(upper, i), throw_warning);
   
   if (log_prob)
     p = Rcpp::log(p);
@@ -133,8 +133,8 @@ NumericVector cpp_ptbinom(
     const NumericVector& x,
     const NumericVector& size,
     const NumericVector& prob,
-    const NumericVector& a,
-    const NumericVector& b,
+    const NumericVector& lower,
+    const NumericVector& upper,
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
@@ -143,17 +143,17 @@ NumericVector cpp_ptbinom(
   dims.push_back(x.length());
   dims.push_back(size.length());
   dims.push_back(prob.length());
-  dims.push_back(a.length());
-  dims.push_back(b.length());
+  dims.push_back(lower.length());
+  dims.push_back(upper.length());
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector p(Nmax);
   
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_tbinom(x[i % dims[0]], size[i % dims[1]],
-                      prob[i % dims[2]], a[i % dims[3]],
-                      b[i % dims[4]], throw_warning);
+    p[i] = cdf_tbinom(GETV(x, i), GETV(size, i),
+                      GETV(prob, i), GETV(lower, i),
+                      GETV(upper, i), throw_warning);
   
   if (!lower_tail)
     p = 1.0 - p;
@@ -173,8 +173,8 @@ NumericVector cpp_qtbinom(
     const NumericVector& p,
     const NumericVector& size,
     const NumericVector& prob,
-    const NumericVector& a,
-    const NumericVector& b,
+    const NumericVector& lower,
+    const NumericVector& upper,
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
@@ -183,8 +183,8 @@ NumericVector cpp_qtbinom(
   dims.push_back(p.length());
   dims.push_back(size.length());
   dims.push_back(prob.length());
-  dims.push_back(a.length());
-  dims.push_back(b.length());
+  dims.push_back(lower.length());
+  dims.push_back(upper.length());
   int Nmax = *std::max_element(dims.begin(), dims.end());
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
@@ -198,9 +198,9 @@ NumericVector cpp_qtbinom(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_tbinom(pp[i % dims[0]], size[i % dims[1]],
-                         prob[i % dims[2]], a[i % dims[3]],
-                         b[i % dims[4]], throw_warning);
+    x[i] = invcdf_tbinom(GETV(pp, i), GETV(size, i),
+                         GETV(prob, i), GETV(lower, i),
+                         GETV(upper, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");
@@ -214,22 +214,22 @@ NumericVector cpp_rtbinom(
     const int& n,
     const NumericVector& size,
     const NumericVector& prob,
-    const NumericVector& a,
-    const NumericVector& b
+    const NumericVector& lower,
+    const NumericVector& upper
   ) {
   
   std::vector<int> dims;
   dims.push_back(size.length());
   dims.push_back(prob.length());
-  dims.push_back(a.length());
-  dims.push_back(b.length());
+  dims.push_back(lower.length());
+  dims.push_back(upper.length());
   NumericVector x(n);
   
   bool throw_warning = false;
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_tbinom(size[i % dims[0]], prob[i % dims[1]],
-                      a[i % dims[2]], b[i % dims[3]],
+    x[i] = rng_tbinom(GETV(size, i), GETV(prob, i),
+                      GETV(lower, i), GETV(upper, i),
                       throw_warning);
   
   if (throw_warning)

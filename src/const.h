@@ -1,8 +1,0 @@
-
-#ifndef SQRT_2_PI
-#define SQRT_2_PI 2.506628274631000241612
-#endif
-
-#ifndef PHI_0
-#define PHI_0 0.3989422804014327028632
-#endif

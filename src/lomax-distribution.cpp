@@ -105,8 +105,8 @@ NumericVector cpp_dlomax(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpdf_lomax(x[i % dims[0]], lambda[i % dims[1]],
-                        kappa[i % dims[2]], throw_warning);
+    p[i] = logpdf_lomax(GETV(x, i), GETV(lambda, i),
+                        GETV(kappa, i), throw_warning);
 
   if (!log_prob)
     p = Rcpp::exp(p);
@@ -137,8 +137,8 @@ NumericVector cpp_plomax(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_lomax(x[i % dims[0]], lambda[i % dims[1]],
-                     kappa[i % dims[2]], throw_warning);
+    p[i] = cdf_lomax(GETV(x, i), GETV(lambda, i),
+                     GETV(kappa, i), throw_warning);
 
   if (!lower_tail)
     p = 1.0 - p;
@@ -179,8 +179,8 @@ NumericVector cpp_qlomax(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_lomax(pp[i % dims[0]], lambda[i % dims[1]],
-                        kappa[i % dims[2]], throw_warning);
+    x[i] = invcdf_lomax(GETV(pp, i), GETV(lambda, i),
+                        GETV(kappa, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");
@@ -204,7 +204,7 @@ NumericVector cpp_rlomax(
   bool throw_warning = false;
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_lomax(lambda[i % dims[0]], kappa[i % dims[1]],
+    x[i] = rng_lomax(GETV(lambda, i), GETV(kappa, i),
                      throw_warning);
   
   if (throw_warning)

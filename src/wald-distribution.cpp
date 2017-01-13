@@ -91,8 +91,8 @@ NumericVector cpp_dwald(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_wald(x[i % dims[0]], mu[i % dims[1]],
-                    lambda[i % dims[2]], throw_warning);
+    p[i] = pdf_wald(GETV(x, i), GETV(mu, i),
+                    GETV(lambda, i), throw_warning);
   
   if (log_prob)
     p = Rcpp::log(p);
@@ -123,8 +123,8 @@ NumericVector cpp_pwald(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_wald(x[i % dims[0]], mu[i % dims[1]],
-                    lambda[i % dims[2]], throw_warning);
+    p[i] = cdf_wald(GETV(x, i), GETV(mu, i),
+                    GETV(lambda, i), throw_warning);
   
   if (!lower_tail)
     p = 1.0 - p;
@@ -154,7 +154,7 @@ NumericVector cpp_rwald(
   bool throw_warning = false;
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_wald(mu[i % dims[0]], lambda[i % dims[1]],
+    x[i] = rng_wald(GETV(mu, i), GETV(lambda, i),
                     throw_warning);
   
   if (throw_warning)

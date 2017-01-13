@@ -100,8 +100,8 @@ NumericVector cpp_dzip(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_zip(x[i % dims[0]], lambda[i % dims[1]],
-                   pi[i % dims[2]], throw_warning);
+    p[i] = pdf_zip(GETV(x, i), GETV(lambda, i),
+                   GETV(pi, i), throw_warning);
   
   if (log_prob)
     p = Rcpp::log(p);
@@ -132,8 +132,8 @@ NumericVector cpp_pzip(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_zip(x[i % dims[0]], lambda[i % dims[1]],
-                   pi[i % dims[2]], throw_warning);
+    p[i] = cdf_zip(GETV(x, i), GETV(lambda, i),
+                   GETV(pi, i), throw_warning);
   
   if (!lower_tail)
     p = 1.0 - p;
@@ -174,8 +174,8 @@ NumericVector cpp_qzip(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_zip(pp[i % dims[0]], lambda[i % dims[1]],
-                      pi[i % dims[2]], throw_warning);
+    x[i] = invcdf_zip(GETV(pp, i), GETV(lambda, i),
+                      GETV(pi, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");
@@ -199,7 +199,7 @@ NumericVector cpp_rzip(
   bool throw_warning = false;
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_zip(lambda[i % dims[0]], pi[i % dims[1]],
+    x[i] = rng_zip(GETV(lambda, i), GETV(pi, i),
                    throw_warning);
   
   if (throw_warning)

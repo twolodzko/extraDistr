@@ -103,8 +103,8 @@ NumericVector cpp_dlaplace(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_laplace(x[i % dims[0]], mu[i % dims[1]],
-                       sigma[i % dims[2]], throw_warning);
+    p[i] = pdf_laplace(GETV(x, i), GETV(mu, i),
+                       GETV(sigma, i), throw_warning);
 
   if (log_prob)
     p = Rcpp::log(p);
@@ -135,8 +135,8 @@ NumericVector cpp_plaplace(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_laplace(x[i % dims[0]], mu[i % dims[1]],
-                       sigma[i % dims[2]], throw_warning);
+    p[i] = cdf_laplace(GETV(x, i), GETV(mu, i),
+                       GETV(sigma, i), throw_warning);
 
   if (!lower_tail)
     p = 1.0 - p;
@@ -177,8 +177,8 @@ NumericVector cpp_qlaplace(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_laplace(pp[i % dims[0]], mu[i % dims[1]],
-                          sigma[i % dims[2]], throw_warning);
+    q[i] = invcdf_laplace(GETV(pp, i), GETV(mu, i),
+                          GETV(sigma, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");
@@ -202,7 +202,7 @@ NumericVector cpp_rlaplace(
   bool throw_warning = false;
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_laplace(mu[i % dims[0]], sigma[i % dims[1]],
+    x[i] = rng_laplace(GETV(mu, i), GETV(sigma, i),
                        throw_warning);
   
   if (throw_warning)

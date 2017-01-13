@@ -121,7 +121,7 @@ NumericVector cpp_dlgser(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_lgser(x[i % dims[0]], theta[i % dims[1]],
+    p[i] = pdf_lgser(GETV(x, i), GETV(theta, i),
                      throw_warning);
  
  if (log_prob)
@@ -151,7 +151,7 @@ NumericVector cpp_plgser(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_lgser(x[i % dims[0]], theta[i % dims[1]],
+    p[i] = cdf_lgser(GETV(x, i), GETV(theta, i),
                      throw_warning);
 
   if (!lower_tail)
@@ -191,7 +191,7 @@ NumericVector cpp_qlgser(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_lgser(pp[i % dims[0]], theta[i % dims[1]],
+    x[i] = invcdf_lgser(GETV(pp, i), GETV(theta, i),
                         throw_warning);
   
   if (throw_warning)
@@ -213,7 +213,7 @@ NumericVector cpp_rlgser(
   bool throw_warning = false;
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_lgser(theta[i % dims], throw_warning);
+    x[i] = rng_lgser(GETV(theta, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NAs produced");

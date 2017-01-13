@@ -90,8 +90,8 @@ NumericVector cpp_dnst(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_nst(x[i % dims[0]], nu[i % dims[1]],
-                   mu[i % dims[2]], sigma[i % dims[3]],
+    p[i] = pdf_nst(GETV(x, i), GETV(nu, i),
+                   GETV(mu, i), GETV(sigma, i),
                    throw_warning);
   
   if (log_prob)
@@ -125,8 +125,8 @@ NumericVector cpp_pnst(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_nst(x[i % dims[0]], nu[i % dims[1]],
-                   mu[i % dims[2]], sigma[i % dims[3]],
+    p[i] = cdf_nst(GETV(x, i), GETV(nu, i),
+                   GETV(mu, i), GETV(sigma, i),
                    throw_warning);
   
   if (!lower_tail)
@@ -170,8 +170,8 @@ NumericVector cpp_qnst(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_nst(pp[i % dims[0]], nu[i % dims[1]],
-                      mu[i % dims[2]], sigma[i % dims[3]],
+    x[i] = invcdf_nst(GETV(pp, i), GETV(nu, i),
+                      GETV(mu, i), GETV(sigma, i),
                       throw_warning);
   
   if (throw_warning)
@@ -198,8 +198,8 @@ NumericVector cpp_rnst(
   bool throw_warning = false;
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_nst(nu[i % dims[0]], mu[i % dims[1]],
-                   sigma[i % dims[2]], throw_warning);
+    x[i] = rng_nst(GETV(nu, i), GETV(mu, i),
+                   GETV(sigma, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NAs produced");

@@ -61,11 +61,11 @@ NumericVector cpp_ddirichlet(
     sum_x = 0.0;
     
     for (int j = 0; j < m; j++) {
-      sum_alpha += alpha(i % dims[1], j);
-      sum_x += x(i % dims[0], j);
-      if (alpha(i % dims[1], j) <= 0.0)
+      sum_alpha += GETM(alpha, i, j);
+      sum_x += GETM(x, i, j);
+      if (GETM(alpha, i, j) <= 0.0)
         wrong_alpha = true;
-      if (x(i % dims[0], j) < 0.0 || x(i % dims[0], j) > 1.0)
+      if (GETM(x, i, j) < 0.0 || GETM(x, i, j) > 1.0)
         wrong_x = true;
     }
     
@@ -82,10 +82,10 @@ NumericVector cpp_ddirichlet(
       p_tmp = 0.0;
       
       for (int j = 0; j < m; j++) {
-        prod_gamma += R::lgammafn(alpha(i % dims[1], j));
-        p_tmp += log(x(i % dims[0], j)) * (alpha(i % dims[1], j) - 1.0);
+        prod_gamma += R::lgammafn(GETM(alpha, i, j));
+        p_tmp += log(GETM(x, i, j)) * (GETM(alpha, i, j) - 1.0);
         
-        if (alpha(i % dims[1], j) == 1.0 && x(i % dims[0], j) == 0.0)
+        if (GETM(alpha, i, j) == 1.0 && GETM(x, i, j) == 0.0)
           p_tmp = R_NegInf;
       }
       
@@ -128,13 +128,13 @@ NumericMatrix cpp_rdirichlet(
     wrong_values = false;
 
     for (int j = 0; j < k; j++) {
-      sum_alpha += alpha(i % dims, j);
-      if (alpha(i % dims, j) <= 0.0) {
+      sum_alpha += GETM(alpha, i, j);
+      if (GETM(alpha, i, j) <= 0.0) {
         wrong_values = true;
         break;
       }
       
-      x(i, j) = R::rgamma(alpha(i % dims, j), 1.0);
+      x(i, j) = R::rgamma(GETM(alpha, i, j), 1.0);
       row_sum += x(i, j);
     }
 

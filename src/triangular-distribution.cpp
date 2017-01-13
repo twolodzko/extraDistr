@@ -119,8 +119,8 @@ NumericVector cpp_dtriang(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_triangular(x[i % dims[0]], a[i % dims[1]],
-                          b[i % dims[2]], c[i % dims[3]],
+    p[i] = pdf_triangular(GETV(x, i), GETV(a, i),
+                          GETV(b, i), GETV(c, i),
                           throw_warning);
 
   if (log_prob)
@@ -154,8 +154,8 @@ NumericVector cpp_ptriang(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_triangular(x[i % dims[0]], a[i % dims[1]],
-                          b[i % dims[2]], c[i % dims[3]],
+    p[i] = cdf_triangular(GETV(x, i), GETV(a, i),
+                          GETV(b, i), GETV(c, i),
                           throw_warning);
 
   if (!lower_tail)
@@ -199,8 +199,8 @@ NumericVector cpp_qtriang(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_triangular(pp[i % dims[0]], a[i % dims[1]],
-                             b[i % dims[2]], c[i % dims[3]],
+    x[i] = invcdf_triangular(GETV(pp, i), GETV(a, i),
+                             GETV(b, i), GETV(c, i),
                              throw_warning);
   
   if (throw_warning)
@@ -227,8 +227,8 @@ NumericVector cpp_rtriang(
   bool throw_warning = false;
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_triangular(a[i % dims[0]], b[i % dims[1]],
-                          c[i % dims[2]], throw_warning);
+    x[i] = rng_triangular(GETV(a, i), GETV(b, i),
+                          GETV(c, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NAs produced");

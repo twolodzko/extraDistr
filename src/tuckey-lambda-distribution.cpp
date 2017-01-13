@@ -70,7 +70,7 @@ NumericVector cpp_qtlambda(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_tlambda(pp[i % dims[0]], lambda[i % dims[1]],
+    q[i] = invcdf_tlambda(GETV(pp, i), GETV(lambda, i),
                           throw_warning);
   
   if (throw_warning)
@@ -92,7 +92,7 @@ NumericVector cpp_rtlambda(
   bool throw_warning = false;
     
   for (int i = 0; i < n; i++)
-    x[i] = rng_tlambda(lambda[i % dims], throw_warning);
+    x[i] = rng_tlambda(GETV(lambda, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NAs produced");

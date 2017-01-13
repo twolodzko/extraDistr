@@ -104,8 +104,8 @@ NumericVector cpp_dpareto(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpdf_pareto(x[i % dims[0]], a[i % dims[1]],
-                         b[i % dims[2]], throw_warning);
+    p[i] = logpdf_pareto(GETV(x, i), GETV(a, i),
+                         GETV(b, i), throw_warning);
 
   if (!log_prob)
     p = Rcpp::exp(p);
@@ -136,8 +136,8 @@ NumericVector cpp_ppareto(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_pareto(x[i % dims[0]], a[i % dims[1]],
-                      b[i % dims[2]], throw_warning);
+    p[i] = cdf_pareto(GETV(x, i), GETV(a, i),
+                      GETV(b, i), throw_warning);
 
   if (!lower_tail)
     p = 1.0 - p;
@@ -178,8 +178,8 @@ NumericVector cpp_qpareto(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_pareto(pp[i % dims[0]], a[i % dims[1]],
-                         b[i % dims[2]], throw_warning);
+    x[i] = invcdf_pareto(GETV(pp, i), GETV(a, i),
+                         GETV(b, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");
@@ -203,7 +203,7 @@ NumericVector cpp_rpareto(
   bool throw_warning = false;
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_pareto(a[i % dims[0]], b[i % dims[1]],
+    x[i] = rng_pareto(GETV(a, i), GETV(b, i),
                       throw_warning);
   
   if (throw_warning)

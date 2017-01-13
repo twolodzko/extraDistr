@@ -109,8 +109,8 @@ NumericVector cpp_dpower(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpdf_power(x[i % dims[0]], alpha[i % dims[1]],
-                        beta[i % dims[2]], throw_warning);
+    p[i] = logpdf_power(GETV(x, i), GETV(alpha, i),
+                        GETV(beta, i), throw_warning);
 
   if (!log_prob)
     p = Rcpp::exp(p);
@@ -141,8 +141,8 @@ NumericVector cpp_ppower(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logcdf_power(x[i % dims[0]], alpha[i % dims[1]],
-                        beta[i % dims[2]], throw_warning);
+    p[i] = logcdf_power(GETV(x, i), GETV(alpha, i),
+                        GETV(beta, i), throw_warning);
 
   if (!lower_tail)
     p = 1.0 - p;
@@ -183,8 +183,8 @@ NumericVector cpp_qpower(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_power(pp[i % dims[0]], alpha[i % dims[1]],
-                        beta[i % dims[2]], throw_warning);
+    x[i] = invcdf_power(GETV(pp, i), GETV(alpha, i),
+                        GETV(beta, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");
@@ -208,7 +208,7 @@ NumericVector cpp_rpower(
   bool throw_warning = false;
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_power(alpha[i % dims[0]], beta[i % dims[1]],
+    x[i] = rng_power(GETV(alpha, i), GETV(beta, i),
                      throw_warning);
   
   if (throw_warning)

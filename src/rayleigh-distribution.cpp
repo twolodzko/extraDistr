@@ -91,7 +91,7 @@ NumericVector cpp_drayleigh(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_rayleigh(x[i % dims[0]], sigma[i % dims[1]],
+    p[i] = pdf_rayleigh(GETV(x, i), GETV(sigma, i),
                         throw_warning);
 
   if (log_prob)
@@ -121,7 +121,7 @@ NumericVector cpp_prayleigh(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_rayleigh(x[i % dims[0]], sigma[i % dims[1]],
+    p[i] = cdf_rayleigh(GETV(x, i), GETV(sigma, i),
                         throw_warning);
 
   if (!lower_tail)
@@ -161,7 +161,7 @@ NumericVector cpp_qrayleigh(
     pp = 1.0 - pp;
 
   for (int i = 0; i < Nmax; i++)
-    q[i] = invcdf_rayleigh(pp[i % dims[0]], sigma[i % dims[1]],
+    q[i] = invcdf_rayleigh(GETV(pp, i), GETV(sigma, i),
                            throw_warning);
   
   if (throw_warning)
@@ -183,7 +183,7 @@ NumericVector cpp_rrayleigh(
   bool throw_warning = false;
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_rayleigh(sigma[i % dims], throw_warning);
+    x[i] = rng_rayleigh(GETV(sigma, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NAs produced");

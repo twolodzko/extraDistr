@@ -95,9 +95,9 @@ NumericVector cpp_dnsbeta(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_nsbeta(x[i % dims[0]], alpha[i % dims[1]],
-                      beta[i % dims[2]], lower[i % dims[3]],
-                      upper[i % dims[4]], log_prob, throw_warning);
+    p[i] = pdf_nsbeta(GETV(x, i), GETV(alpha, i),
+                      GETV(beta, i), GETV(lower, i),
+                      GETV(upper, i), log_prob, throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");
@@ -129,9 +129,9 @@ NumericVector cpp_pnsbeta(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_nsbeta(x[i % dims[0]], alpha[i % dims[1]],
-                      beta[i % dims[2]], lower[i % dims[3]],
-                      upper[i % dims[4]], lower_tail,
+    p[i] = cdf_nsbeta(GETV(x, i), GETV(alpha, i),
+                      GETV(beta, i), GETV(lower, i),
+                      GETV(upper, i), lower_tail,
                       log_prob, throw_warning);
   
   if (throw_warning)
@@ -171,9 +171,9 @@ NumericVector cpp_qnsbeta(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_nsbeta(pp[i % dims[0]], alpha[i % dims[1]],
-                         beta[i % dims[2]], lower[i % dims[3]],
-                         upper[i % dims[4]], throw_warning);
+    x[i] = invcdf_nsbeta(GETV(pp, i), GETV(alpha, i),
+                         GETV(beta, i), GETV(lower, i),
+                         GETV(upper, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");
@@ -201,8 +201,8 @@ NumericVector cpp_rnsbeta(
   bool throw_warning = false;
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_nsbeta(alpha[i % dims[0]], beta[i % dims[1]],
-                      lower[i % dims[2]], upper[i % dims[3]],
+    x[i] = rng_nsbeta(GETV(alpha, i), GETV(beta, i),
+                      GETV(lower, i), GETV(upper, i),
                       throw_warning);
   
   if (throw_warning)

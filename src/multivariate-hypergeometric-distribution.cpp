@@ -60,37 +60,37 @@ NumericVector cpp_dmvhyper(
     n_tot = 0.0;
     
     for (int j = 0; j < m; j++) {
-      if (!isInteger(n(i % dims[1], j), false) || n(i % dims[1], j) < 0.0)
+      if (!isInteger(GETM(n, i, j), false) || GETM(n, i, j) < 0.0)
         wrong_n = true;
-      sum_x += x(i % dims[0], j);
-      n_tot += n(i % dims[1], j);
+      sum_x += GETM(x, i, j);
+      n_tot += GETM(n, i, j);
     }
     
-    if (ISNAN(sum_x + n_tot + k[i % dims[2]])) {
-      p[i] = sum_x + n_tot + k[i % dims[2]];
+    if (ISNAN(sum_x + n_tot + GETV(k, i))) {
+      p[i] = sum_x + n_tot + GETV(k, i);
       continue;
     } 
     
-    if (wrong_n || k[i % dims[2]] < 0.0 || k[i % dims[2]] > n_tot ||
-        !isInteger(k[i % dims[2]], false)) {
+    if (wrong_n || GETV(k, i) < 0.0 || GETV(k, i) > n_tot ||
+        !isInteger(GETV(k, i), false)) {
       throw_warning = true;
       p[i] = NAN;
       continue;
     }
     
     for (int j = 0; j < m; j++) {
-      if (x(i % dims[0], j) > n(i % dims[1], j) || x(i % dims[0], j) < 0.0 ||
-          !isInteger(x(i % dims[0], j))) {
+      if (GETM(x, i, j) > GETM(n, i, j) || GETM(x, i, j) < 0.0 ||
+          !isInteger(GETM(x, i, j))) {
         wrong_x = true;
       } else {
-        lncx_prod += R::lchoose(n(i % dims[1], j), x(i % dims[0], j));
+        lncx_prod += R::lchoose(GETM(n, i, j), GETM(x, i, j));
       }
     }
     
-    if (wrong_x || sum_x != k[i % dims[2]]) {
+    if (wrong_x || sum_x != GETV(k, i)) {
       p[i] = R_NegInf;
     } else {
-      lNck = R::lchoose(n_tot, k[i % dims[2]]);
+      lNck = R::lchoose(n_tot, GETV(k, i));
       p[i] = lncx_prod - lNck;
     }
     
@@ -131,18 +131,18 @@ NumericMatrix cpp_rmvhyper(
     n_otr[0] = 0.0;
     
     for (int j = 1; j < m; j++) {
-      if (!isInteger(n(i % dims[0], j), false) ||
-          n(i % dims[0], j) < 0.0 || ISNAN(n(i % dims[0], j))) {
+      if (!isInteger(GETM(n, i, j), false) ||
+          GETM(n, i, j) < 0.0 || ISNAN(GETM(n, i, j))) {
         wrong_values = true;
         break;
       }
-      n_otr[0] += n(i % dims[0], j);
+      n_otr[0] += GETM(n, i, j);
     }
     
-    if (wrong_values || ISNAN(k[i % dims[1]]) || ISNAN(n(i % dims[0], 0)) ||
-        !isInteger(n(i % dims[0], 0), false) || n(i % dims[0], 0) < 0 ||
-        (n_otr[0] + n(i % dims[0], 0)) < k[i % dims[1]] ||
-        !isInteger(k[i % dims[1]], false) || k[i % dims[1]] < 0.0) {
+    if (wrong_values || ISNAN(GETV(k, i)) || ISNAN(GETM(n, i, 0)) ||
+        !isInteger(GETM(n, i, 0), false) || GETM(n, i, 0) < 0 ||
+        (n_otr[0] + GETM(n, i, 0)) < GETV(k, i) ||
+        !isInteger(GETV(k, i), false) || GETV(k, i) < 0.0) {
       throw_warning = true;
       for (int j = 0; j < m; j++)
         x(i, j) = NA_REAL;
@@ -150,15 +150,15 @@ NumericMatrix cpp_rmvhyper(
     }
     
     for (int j = 1; j < m; j++)
-      n_otr[j] = n_otr[j-1] - n(i % dims[0], j);
+      n_otr[j] = n_otr[j-1] - GETM(n, i, j);
     
-    k_left = k[i % dims[1]];
-    x(i, 0) = R::rhyper(n(i % dims[0], 0), n_otr[0], k_left);
+    k_left = GETV(k, i);
+    x(i, 0) = R::rhyper(GETM(n, i, 0), n_otr[0], k_left);
     k_left -= x(i, 0);
     
     if (m > 2) {
       for (int j = 1; j < m-1; j++) {
-        x(i, j) = R::rhyper(n(i % dims[0], j), n_otr[j], k_left);
+        x(i, j) = R::rhyper(GETM(n, i, j), n_otr[j], k_left);
         k_left -= x(i, j);
       }
     }

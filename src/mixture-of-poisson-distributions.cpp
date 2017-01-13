@@ -1,5 +1,4 @@
 #include <Rcpp.h>
-#include "const.h"
 #include "shared.h"
 
 using std::pow;
@@ -44,16 +43,16 @@ NumericVector cpp_dmixpois(
     p[i] = 0.0;
     
     for (int j = 0; j < k; j++) {
-      if (alpha(i % dims[2], j) < 0.0 || lambda(i % dims[1], j) < 0.0) {
+      if (GETM(alpha, i, j) < 0.0 || GETM(lambda, i, j) < 0.0) {
         wrong_param = true;
         break;
       }
-      nans_sum += lambda(i % dims[1], j);
-      alpha_tot += alpha(i % dims[2], j);
+      nans_sum += GETM(lambda, i, j);
+      alpha_tot += GETM(alpha, i, j);
     }
     
-    if (ISNAN(nans_sum + alpha_tot + x[i % dims[0]])) {
-      p[i] = nans_sum + alpha_tot + x[i % dims[0]];
+    if (ISNAN(nans_sum + alpha_tot + GETV(x, i))) {
+      p[i] = nans_sum + alpha_tot + GETV(x, i);
       continue;
     }
     
@@ -63,14 +62,14 @@ NumericVector cpp_dmixpois(
       continue;
     }
     
-    if (x[i % dims[0]] < 0.0 || !isInteger(x[i % dims[0]])) {
+    if (GETV(x, i) < 0.0 || !isInteger(GETV(x, i))) {
       p[i] = 0.0;
       continue;
     }
     
     for (int j = 0; j < k; j++) {
-      p[i] += (alpha(i % dims[2], j) / alpha_tot) *
-        R::dpois(x[i % dims[0]], lambda(i % dims[1], j), false);
+      p[i] += (GETM(alpha, i, j) / alpha_tot) *
+        R::dpois(GETV(x, i), GETM(lambda, i, j), false);
     }
   }
   
@@ -115,16 +114,16 @@ NumericVector cpp_pmixpois(
     p[i] = 0.0;
     
     for (int j = 0; j < k; j++) {
-      if (alpha(i % dims[2], j) < 0.0 || lambda(i % dims[1], j) < 0.0) {
+      if (GETM(alpha, i, j) < 0.0 || GETM(lambda, i, j) < 0.0) {
         wrong_param = true;
         break;
       }
-      nans_sum += lambda(i % dims[1], j);
-      alpha_tot += alpha(i % dims[2], j);
+      nans_sum += GETM(lambda, i, j);
+      alpha_tot += GETM(alpha, i, j);
     }
     
-    if (ISNAN(nans_sum + alpha_tot + x[i % dims[0]])) {
-      p[i] = nans_sum + alpha_tot + x[i % dims[0]];
+    if (ISNAN(nans_sum + alpha_tot + GETV(x, i))) {
+      p[i] = nans_sum + alpha_tot + GETV(x, i);
       continue;
     }
     
@@ -134,14 +133,14 @@ NumericVector cpp_pmixpois(
       continue;
     }
     
-    if (x[i % dims[0]] < 0.0) {
+    if (GETV(x, i) < 0.0) {
       p[i] = 0.0;
       continue;
     }
     
     for (int j = 0; j < k; j++) {
-      p[i] += (alpha(i % dims[2], j) / alpha_tot) *
-        R::ppois(x[i % dims[0]], lambda(i % dims[1], j), true, false);
+      p[i] += (GETM(alpha, i, j) / alpha_tot) *
+        R::ppois(GETV(x, i), GETM(lambda, i, j), true, false);
     }
   }
   
@@ -189,12 +188,12 @@ NumericVector cpp_rmixpois(
     alpha_tot = 0.0;
     
     for (int j = 0; j < k; j++) {
-      if (alpha(i % dims[1], j) < 0.0 || lambda(i % dims[0], j) < 0.0) {
+      if (GETM(alpha, i, j) < 0.0 || GETM(lambda, i, j) < 0.0) {
         wrong_param = true;
         break;
       }
-      nans_sum += lambda(i % dims[0], j);
-      alpha_tot += alpha(i % dims[1], j);
+      nans_sum += GETM(lambda, i, j);
+      alpha_tot += GETM(alpha, i, j);
     }
     
     if (ISNAN(nans_sum + alpha_tot) || wrong_param) {
@@ -204,14 +203,14 @@ NumericVector cpp_rmixpois(
     }
     
     for (int j = k-1; j >= 0; j--) {
-      p_tmp -= alpha(i % dims[1], j) / alpha_tot;
+      p_tmp -= GETM(alpha, i, j) / alpha_tot;
       if (u > p_tmp) {
         jj = j;
         break;
       }
     }
     
-    x[i] = R::rpois(lambda(i % dims[0], jj)); 
+    x[i] = R::rpois(GETM(lambda, i, jj)); 
   }
   
   if (throw_warning)
