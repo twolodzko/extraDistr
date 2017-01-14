@@ -214,10 +214,6 @@ NumericVector cpp_rtpois(
     const NumericVector& upper
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(lambda.length());
-  dims.push_back(lower.length());
-  dims.push_back(upper.length());
   NumericVector x(n);
   
   bool throw_warning = false;

@@ -196,9 +196,6 @@ NumericVector cpp_rlomax(
     const NumericVector& kappa
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(lambda.length());
-  dims.push_back(kappa.length());
   NumericVector x(n);
   
   bool throw_warning = false;

@@ -207,7 +207,6 @@ NumericVector cpp_rlgser(
     const NumericVector& theta
   ) {
 
-  int dims = theta.length();
   NumericVector x(n);
   
   bool throw_warning = false;

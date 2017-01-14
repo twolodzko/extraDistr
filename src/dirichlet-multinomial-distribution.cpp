@@ -118,9 +118,6 @@ NumericMatrix cpp_rdirmnom(
   ) {
   
   int k = alpha.ncol();
-  std::vector<int> dims;
-  dims.push_back(alpha.nrow());
-  dims.push_back(size.length());
   NumericMatrix x(n, k);
   
   bool throw_warning = false;

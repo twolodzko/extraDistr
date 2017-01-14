@@ -308,11 +308,6 @@ NumericVector cpp_rtnorm(
     const NumericVector& upper
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(mu.length());
-  dims.push_back(sigma.length());
-  dims.push_back(lower.length());
-  dims.push_back(upper.length());
   NumericVector x(n);
   
   bool throw_warning = false;

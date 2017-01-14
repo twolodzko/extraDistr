@@ -82,9 +82,6 @@ NumericVector cpp_rskellam(
     const NumericVector& mu2
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(mu1.length());
-  dims.push_back(mu2.length());
   NumericVector x(n);
   
   bool throw_warning = false;

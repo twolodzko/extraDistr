@@ -59,7 +59,7 @@ NumericVector cpp_dhnorm(
     const NumericVector& x,
     const NumericVector& sigma,
     const bool& log_prob = false
-) {
+  ) {
   
   std::vector<int> dims;
   dims.push_back(x.length());
@@ -89,7 +89,7 @@ NumericVector cpp_phnorm(
     const NumericVector& sigma,
     const bool& lower_tail = true,
     const bool& log_prob = false
-) {
+  ) {
   
   std::vector<int> dims;
   dims.push_back(x.length());
@@ -122,7 +122,7 @@ NumericVector cpp_qhnorm(
     const NumericVector& sigma,
     const bool& lower_tail = true,
     const bool& log_prob = false
-) {
+  ) {
   
   std::vector<int> dims;
   dims.push_back(p.length());
@@ -154,9 +154,8 @@ NumericVector cpp_qhnorm(
 NumericVector cpp_rhnorm(
     const int& n,
     const NumericVector& sigma
-) {
+  ) {
   
-  int dims = sigma.length();
   NumericVector x(n);
   
   bool throw_warning = false;

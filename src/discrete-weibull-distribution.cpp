@@ -190,9 +190,6 @@ NumericVector cpp_rdweibull(
     const NumericVector& beta
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(q.length());
-  dims.push_back(beta.length());
   NumericVector x(n);
   
   bool throw_warning = false;

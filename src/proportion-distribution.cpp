@@ -176,9 +176,6 @@ NumericVector cpp_rprop(
     const NumericVector& mean
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(mean.length());
-  dims.push_back(size.length());
   NumericVector x(n);
   
   bool throw_warning = false;

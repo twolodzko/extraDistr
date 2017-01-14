@@ -112,9 +112,6 @@ NumericMatrix cpp_rmnom(
     const NumericMatrix& prob
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(size.length());
-  dims.push_back(prob.nrow());
   int k = prob.ncol();
   bool wrong_values;
   double p_tmp, size_left, sum_p, p_tot;

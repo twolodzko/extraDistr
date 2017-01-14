@@ -252,7 +252,6 @@ NumericVector cpp_rcat(
     const NumericMatrix& prob
   ) {
   
-  int dims = prob.nrow();
   int k = prob.ncol();
   NumericVector x(n);
   int jj;
@@ -265,7 +264,7 @@ NumericVector cpp_rcat(
 
   NumericMatrix prob_tab = Rcpp::clone(prob);
   
-  for (int i = 0; i < dims; i++) {
+  for (int i = 0; i < prob_tab.nrow(); i++) {
     p_tot = 0.0;
     for (int j = 0; j < k; j++) {
       p_tot += prob_tab(i, j);
@@ -285,8 +284,8 @@ NumericVector cpp_rcat(
   }
   
   for (int i = 0; i < n; i++) {
-    if (ISNAN(prob_tab(i % dims, 0))) {
-      x[i] = prob_tab(i % dims, 0);
+    if (ISNAN(GETM(prob_tab, i , 0))) {
+      x[i] = GETM(prob_tab, i, 0);
       continue;
     }
     
@@ -294,7 +293,7 @@ NumericVector cpp_rcat(
     jj = 1;
     
     for (int j = 0; j < k; j++) {
-      if (prob_tab(i % dims, j) >= u) {
+      if (GETM(prob_tab, i, j) >= u) {
         jj = j+1;
         break;
       }

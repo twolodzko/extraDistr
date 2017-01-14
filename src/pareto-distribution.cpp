@@ -195,9 +195,6 @@ NumericVector cpp_rpareto(
     const NumericVector& b
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(a.length());
-  dims.push_back(b.length());
   NumericVector x(n);
   
   bool throw_warning = false;

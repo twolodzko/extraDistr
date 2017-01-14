@@ -96,10 +96,6 @@ NumericMatrix cpp_rbpois(
     const NumericVector& c
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(a.length());
-  dims.push_back(b.length());
-  dims.push_back(c.length());
   NumericMatrix x(n, 2);
   double u, v, w;
   

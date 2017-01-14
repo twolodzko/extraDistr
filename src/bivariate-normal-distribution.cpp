@@ -111,12 +111,6 @@ NumericMatrix cpp_rbnorm(
     const NumericVector& rho
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(mu1.length());
-  dims.push_back(mu2.length());
-  dims.push_back(sigma1.length());
-  dims.push_back(sigma2.length());
-  dims.push_back(rho.length());
   NumericMatrix x(n, 2);
   double u, v, corr;
   

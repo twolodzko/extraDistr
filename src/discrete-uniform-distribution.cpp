@@ -191,9 +191,6 @@ NumericVector cpp_rdunif(
     const NumericVector& max
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(min.length());
-  dims.push_back(max.length());
   NumericVector x(n);
   
   bool throw_warning = false;

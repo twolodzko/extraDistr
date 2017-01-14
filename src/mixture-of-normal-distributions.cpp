@@ -158,10 +158,6 @@ NumericVector cpp_rmixnorm(
     const NumericMatrix& alpha
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(mu.nrow());
-  dims.push_back(sigma.nrow());
-  dims.push_back(alpha.nrow());
   int k = alpha.ncol();
   NumericVector x(n);
   

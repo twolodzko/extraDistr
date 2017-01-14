@@ -218,10 +218,6 @@ NumericVector cpp_rtriang(
     const NumericVector& c
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(a.length());
-  dims.push_back(b.length());
-  dims.push_back(c.length());
   NumericVector x(n);
   
   bool throw_warning = false;

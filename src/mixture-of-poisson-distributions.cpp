@@ -164,9 +164,6 @@ NumericVector cpp_rmixpois(
     const NumericMatrix& alpha
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(lambda.nrow());
-  dims.push_back(alpha.nrow());
   int k = alpha.ncol();
   NumericVector x(n);
   

@@ -203,10 +203,6 @@ NumericVector cpp_rfatigue(
     const NumericVector& mu
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(alpha.length());
-  dims.push_back(beta.length());
-  dims.push_back(mu.length());
   NumericVector x(n);
   
   bool throw_warning = false;

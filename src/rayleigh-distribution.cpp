@@ -177,7 +177,6 @@ NumericVector cpp_rrayleigh(
     const NumericVector& sigma
   ) {
 
-  int dims = sigma.length();
   NumericVector x(n);
   
   bool throw_warning = false;

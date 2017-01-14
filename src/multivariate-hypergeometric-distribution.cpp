@@ -113,9 +113,6 @@ NumericMatrix cpp_rmvhyper(
     const NumericVector& k
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(n.nrow());
-  dims.push_back(k.length());
   int m = n.ncol();
   NumericMatrix x(nn, m);
   std::vector<double> n_otr(m);

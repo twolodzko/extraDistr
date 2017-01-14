@@ -179,9 +179,6 @@ NumericVector cpp_rht(
     const NumericVector& sigma
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(nu.length());
-  dims.push_back(sigma.length());
   NumericVector x(n);
   
   bool throw_warning = false;

@@ -201,10 +201,6 @@ NumericVector cpp_rfrechet(
     const NumericVector& sigma
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(lambda.length());
-  dims.push_back(mu.length());
-  dims.push_back(sigma.length());
   NumericVector x(n);
   
   bool throw_warning = false;

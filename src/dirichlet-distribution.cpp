@@ -111,7 +111,6 @@ NumericMatrix cpp_rdirichlet(
   ) {
 
   int k = alpha.ncol();
-  int dims = alpha.nrow();
   NumericMatrix x(n, k);
   
   bool throw_warning = false;
