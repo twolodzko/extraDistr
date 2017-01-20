@@ -567,6 +567,9 @@ test_that("Wrong parameter values in inverse CDF functions", {
   
   expect_true(is.na(qrayleigh(NA, 1)))
   expect_true(is.na(qrayleigh(0.5, NA)))
+  
+  expect_true(is.na(qtlambda(NA, 0.5)))
+  expect_true(is.na(qtlambda(0, NA)))
 
   expect_true(is.na(qtnorm(NA, 0, 1, -2, 2)))
   expect_true(is.na(qtnorm(0.5, NA, 1, -2, 2)))
@@ -753,6 +756,8 @@ test_that("Wrong parameter values in RNG functions", {
   expect_warning(expect_true(is.na(rprop(1, 10, NA))))
   
   expect_warning(expect_true(is.na(rrayleigh(1, NA))))
+  
+  expect_warning(expect_true(is.na(rtlambda(1, NA))))
   
   expect_warning(expect_true(is.na(rskellam(1, NA, 1))))
   expect_warning(expect_true(is.na(rskellam(1, 1, NA))))
