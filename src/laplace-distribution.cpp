@@ -26,7 +26,7 @@ using Rcpp::NumericVector;
  *  F(x)    = { 1/2 * exp(z)                 if   x < mu
  *            { 1 - 1/2 * exp(z)             otherwise
  *  F^-1(p) = { mu + sigma * log(2*p)        if p <= 0.5
- *            { mu + sigma * log(2*(1-p))    otherwise
+ *            { mu - sigma * log(2*(1-p))    otherwise
  *
  */
 

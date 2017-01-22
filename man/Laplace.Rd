@@ -56,11 +56,11 @@ F(x) = [if x < mu:] 1/2 * exp((x-\mu)/\sigma)
 Quantile function
 \deqn{ F^{-1}(p) = \left\{\begin{array}{ll}
 \mu + \sigma \log(2p)     & p < 0.5 \\
-\mu + \sigma \log(2(1-p)) & p \geq 0.5
+\mu - \sigma \log(2(1-p)) & p \geq 0.5
 \end{array}\right.
 }{
 F^-1(p) = [if p < 0.5:] \mu + \sigma * log(2*p)
-          [else:] \mu + \sigma * log(2*(1-p))
+          [else:] \mu - \sigma * log(2*(1-p))
 }
 }
 \examples{

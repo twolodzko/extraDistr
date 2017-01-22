@@ -42,8 +42,9 @@
 #' plot(prop.table(table(x)))
 #' lines(xx, dcat(xx, p), col = "red")
 #' 
+#' xx <- seq(0, 21, by = 0.01)
 #' plot(ecdf(x))
-#' lines(xx, pcat(xx, p), col = "red")
+#' lines(xx, pcat(xx, p), col = "red", lwd = 2)
 #' 
 #' pp <- seq(0, 1, by = 0.001)
 #' plot(ecdf(x))

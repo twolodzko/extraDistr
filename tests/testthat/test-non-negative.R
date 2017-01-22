@@ -36,6 +36,8 @@ test_that("Zero probabilities for values <0", {
   expect_equal(0, dtpois(-1, lambda = 5, a = 6))
   
   expect_equal(0, dnhyper(-1, 60, 35, 15))
+  
+  expect_equal(0, ddgamma(-1, 9, 1))
 
 })
 

@@ -34,6 +34,9 @@ test_that("Zeros in quantile functions", {
   expect_true(!is.nan(qtpois(0, lambda = 5, a = 0)))
   expect_true(!is.nan(qtpois(0, lambda = 5, a = 6)))
   
+  expect_true(!is.nan(pdgamma(0, 9, 1)))
+  expect_true(!is.nan(pdnorm(0, 1, 2)))
+  
 })
 
 test_that("Ones in quantile functions", {

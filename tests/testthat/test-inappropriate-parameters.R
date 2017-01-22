@@ -41,6 +41,9 @@ test_that("Wrong parameter values in PDF and PMF functions", {
   
   expect_warning(expect_true(is.nan(ddnorm(1, sd = -1))))
   
+  expect_warning(expect_true(is.nan(ddgamma(1, -9, 1))))
+  expect_warning(expect_true(is.nan(ddgamma(1, 9, -1))))
+  
   expect_warning(expect_true(is.nan(ddunif(1, min = 10, max = 1))))
   expect_warning(expect_true(is.nan(ddunif(1, min = 0, max = Inf))))
   expect_warning(expect_true(is.nan(ddunif(1, min = -Inf, max = Inf))))
@@ -235,6 +238,9 @@ test_that("Wrong parameter values in CDF functions", {
   
   expect_warning(expect_true(is.nan(pdnorm(1, sd = -1))))
   
+  expect_warning(expect_true(is.nan(pdgamma(1, -9, 1))))
+  expect_warning(expect_true(is.nan(pdgamma(1, 9, -1))))
+  
   expect_warning(expect_true(is.nan(pdunif(1, min = 10, max = 1))))
   expect_warning(expect_true(is.nan(pdunif(1, min = 0, max = Inf))))
   expect_warning(expect_true(is.nan(pdunif(1, min = -Inf, max = Inf))))
@@ -376,8 +382,6 @@ test_that("Wrong parameter values in quantile functions", {
 
   expect_warning(expect_true(is.nan(qcat(0.5, c(-1, 0.5)))))
   expect_warning(expect_true(is.nan(qcat(0.5, c(0.5, -1)))))
-
-  expect_warning(expect_true(is.nan(qdnorm(0.5, sd = -1))))
   
   expect_warning(expect_true(is.nan(qdunif(0.5, min = 10, max = 1))))
   expect_warning(expect_true(is.nan(qdunif(0.5, min = 0, max = Inf))))
@@ -527,6 +531,9 @@ test_that("Wrong parameter values in RNG functions", {
   expect_warning(expect_true(all(is.na(rdirichlet(1, c(0.5, -1))))))
   
   expect_warning(expect_true(is.na(rdnorm(1, sd = -1))))
+  
+  expect_warning(expect_true(is.nan(rdgamma(1, -9, 1))))
+  expect_warning(expect_true(is.nan(rdgamma(1, 9, -1))))
   
   expect_warning(expect_true(is.na(rdunif(1, min = 10, max = 1))))
   expect_warning(expect_true(is.na(rdunif(1, min = 0, max = Inf))))

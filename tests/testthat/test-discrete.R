@@ -3,6 +3,7 @@ test_that("Zero probabilities for non-integers", {
   
   expect_warning(expect_equal(0, ddlaplace(0.5, 0.5)))
   expect_warning(expect_equal(0, ddnorm(0.5)))
+  expect_warning(expect_equal(0, ddgamma(0.5, 9, 1)))
   expect_warning(expect_equal(0, ddweibull(0.5, 0.5, 1)))
   expect_warning(expect_equal(0, ddunif(0.5, 0, 5)))
   expect_warning(expect_equal(0, dcat(0.5, c(0.5, 0.5))))
@@ -35,6 +36,7 @@ test_that("cdf vs cumsum(pdf)", {
   xx <- seq(0, 200, by = 1)
   expect_equal(cumsum(ddweibull(xx, .32, 1)), pdweibull(xx, .32, 1), tolerance = epsilon)
   expect_equal(cumsum(ddunif(xx, 1, 199)), pdunif(xx, 1, 199), tolerance = epsilon)
+  expect_equal(cumsum(ddgamma(xx, 9, 1)), pdgamma(xx, 9, 1), tolerance = epsilon)
   
   p <- rdirichlet(1, rep(1, 100))
   expect_equal(cumsum(dcat(xx, p)), pcat(xx, p), tolerance = epsilon)

@@ -6,7 +6,8 @@
 * Improved and simplified code for beta-binomial, beta negative-binomial,
   and gamma-Poisson cdf; now recursive algorithm employing memoization tachniques
   is used what noticably improves performance
-* Negative hypergeometric and truncated binomial distributions (d,p,q,r) were added
+* Discrete gamma, negative hypergeometric and truncated binomial distributions
+  (d,p,q,r) were added
 * Now `lower.tail` and `log.p` options for `pbetapr` work properly
 * Simplified code for multivariate hypergeometric, multinomial,
   Dirichlet-multinomial and categorical distributions

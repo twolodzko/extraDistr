@@ -484,6 +484,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// cpp_ddgamma
+NumericVector cpp_ddgamma(const NumericVector& x, const NumericVector& shape, const NumericVector& scale, const bool& log_prob);
+RcppExport SEXP extraDistr_cpp_ddgamma(SEXP xSEXP, SEXP shapeSEXP, SEXP scaleSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type shape(shapeSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type scale(scaleSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_ddgamma(x, shape, scale, log_prob));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cpp_ddlaplace
 NumericVector cpp_ddlaplace(const NumericVector& x, const NumericVector& scale, const NumericVector& location, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_ddlaplace(SEXP xSEXP, SEXP scaleSEXP, SEXP locationSEXP, SEXP log_probSEXP) {

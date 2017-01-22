@@ -75,6 +75,7 @@ xx <- seq(0, 12000, by = 1)
 hist(x, 100, freq = FALSE)
 lines(xx, dgpois(xx, 7, 0.002), col = "red")
 hist(pgpois(x, 7, 0.002))
+xx <- seq(0, 12000, by = 0.1)
 plot(ecdf(x))
 lines(xx, pgpois(xx, 7, 0.002), col = "red", lwd = 2)
 

@@ -4,15 +4,12 @@
 \alias{DiscreteNormal}
 \alias{ddnorm}
 \alias{pdnorm}
-\alias{qdnorm}
 \alias{rdnorm}
 \title{Discrete normal distribution}
 \usage{
 ddnorm(x, mean = 0, sd = 1, log = FALSE)
 
 pdnorm(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
-
-qdnorm(p, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
 
 rdnorm(n, mean = 0, sd = 1)
 }
@@ -27,8 +24,6 @@ rdnorm(n, mean = 0, sd = 1)
 
 \item{lower.tail}{logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
 otherwise, \eqn{P[X > x]}.}
-
-\item{p}{vector of probabilities.}
 
 \item{n}{number of observations. If \code{length(n) > 1},
 the length is taken to be the number required.}
@@ -49,9 +44,9 @@ f(x) = \Phi((x-\mu+1)/\sigma) - \Phi((x-\mu)/\sigma)
 Cumulative distribution function
 
 \deqn{
-F(x) = \Phi\left(\frac{\lceil x \rceil - \mu}{\sigma}\right)
+F(x) = \Phi\left(\frac{\lfloor x \rfloor + 1 - \mu}{\sigma}\right)
 }{
-F(x) = \Phi((ceiling(x)-\mu)/\sigma)
+F(x) = \Phi((floor(x)+1-\mu)/\sigma)
 }
 }
 \examples{

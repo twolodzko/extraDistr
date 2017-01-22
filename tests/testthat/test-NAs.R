@@ -56,6 +56,10 @@ test_that("Missing values in PDF and PMF functions", {
   expect_true(is.na(ddnorm(1, NA, 1)))
   expect_true(is.na(ddnorm(1, 1, NA)))
   
+  expect_true(is.na(ddgamma(NA, 9, 1)))
+  expect_true(is.na(ddgamma(1, NA, 1)))
+  expect_true(is.na(ddgamma(1, 9, NA)))
+  
   expect_true(is.na(ddunif(NA, 1, 10)))
   expect_true(is.na(ddunif(1, NA, 10)))
   expect_true(is.na(ddunif(1, 1, NA)))
@@ -286,6 +290,10 @@ test_that("Wrong parameter values in CDF functions", {
   expect_true(is.na(pdnorm(1, NA, 1)))
   expect_true(is.na(pdnorm(1, 1, NA)))
   
+  expect_true(is.na(pdgamma(NA, 9, 1)))
+  expect_true(is.na(pdgamma(1, NA, 1)))
+  expect_true(is.na(pdgamma(1, 9, NA)))
+  
   expect_true(is.na(pdunif(NA, 1, 10)))
   expect_true(is.na(pdunif(1, NA, 10)))
   expect_true(is.na(pdunif(1, 1, NA)))
@@ -463,11 +471,7 @@ test_that("Wrong parameter values in inverse CDF functions", {
   expect_true(is.na(qcat(NA, c(0.5, 0.5))))
   expect_true(is.na(qcat(0.5, c(NA, 0.5))))
   expect_true(is.na(qcat(0.5, c(0.5, NA))))
-  
-  expect_true(is.na(qdnorm(NA, 1, 1)))
-  expect_true(is.na(qdnorm(0.5, NA, 1)))
-  expect_true(is.na(qdnorm(0.5, 1, NA)))
-  
+
   expect_true(is.na(qdunif(NA, 1, 10)))
   expect_true(is.na(qdunif(0.5, NA, 10)))
   expect_true(is.na(qdunif(0.5, 1, NA)))
@@ -646,6 +650,9 @@ test_that("Wrong parameter values in RNG functions", {
   
   expect_warning(expect_true(is.na(rdnorm(1, NA, 1))))
   expect_warning(expect_true(is.na(rdnorm(1, 1, NA))))
+  
+  expect_warning(expect_true(is.na(rdgamma(1, NA, 1))))
+  expect_warning(expect_true(is.na(rdgamma(1, 9, NA))))
   
   expect_warning(expect_true(is.na(rdunif(1, NA, 10))))
   expect_warning(expect_true(is.na(rdunif(1, 1, NA))))

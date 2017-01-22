@@ -6,7 +6,6 @@
 #' for discrete normal distribution.
 #'
 #' @param x,q	            vector of quantiles.
-#' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
 #' @param mean            vector of means.
@@ -27,9 +26,9 @@
 #' Cumulative distribution function
 #' 
 #' \deqn{
-#' F(x) = \Phi\left(\frac{\lceil x \rceil - \mu}{\sigma}\right)
+#' F(x) = \Phi\left(\frac{\lfloor x \rfloor + 1 - \mu}{\sigma}\right)
 #' }{
-#' F(x) = \Phi((ceiling(x)-\mu)/\sigma)
+#' F(x) = \Phi((floor(x)+1-\mu)/\sigma)
 #' }
 #' 
 #' @references 
@@ -66,14 +65,6 @@ ddnorm <- function(x, mean = 0, sd = 1, log = FALSE) {
 
 pdnorm <- function(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE) {
   pnorm(floor(q)+1, mean, sd, lower.tail, log.p)
-}
-
-
-#' @rdname DiscreteNormal
-#' @export
-
-qdnorm <- function(p, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE) {
-  floor(qnorm(p, mean, sd, lower.tail, log.p))
 }
 
 
