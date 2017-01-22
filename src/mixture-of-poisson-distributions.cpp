@@ -111,6 +111,7 @@ NumericVector cpp_pmixpois(
   for (int i = 0; i < Nmax; i++) {
     wrong_param = false;
     alpha_tot = 0.0;
+    nans_sum = 0.0;
     p[i] = 0.0;
     
     for (int j = 0; j < k; j++) {
@@ -183,6 +184,7 @@ NumericVector cpp_rmixpois(
     u = rng_unif();
     p_tmp = 1.0;
     alpha_tot = 0.0;
+    nans_sum = 0.0;
     
     for (int j = 0; j < k; j++) {
       if (GETM(alpha, i, j) < 0.0 || GETM(lambda, i, j) < 0.0) {

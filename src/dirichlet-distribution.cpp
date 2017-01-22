@@ -50,12 +50,11 @@ NumericVector cpp_ddirichlet(
     Rcpp::stop("number of columns in x does not equal number of columns in alpha");
   
   double prod_gamma, sum_alpha, p_tmp, beta_const, sum_x;
-  bool wrong_alpha, missings, wrong_x;
+  bool wrong_alpha, wrong_x;
 
   for (int i = 0; i < Nmax; i++) {
     
     wrong_alpha = false;
-    missings = false;
     wrong_x = false;
     sum_alpha = 0.0;
     sum_x = 0.0;

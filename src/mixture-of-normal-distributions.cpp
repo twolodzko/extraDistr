@@ -177,6 +177,7 @@ NumericVector cpp_rmixnorm(
     u = rng_unif();
     p_tmp = 1.0;
     alpha_tot = 0.0;
+    nans_sum = 0.0;
     
     for (int j = 0; j < k; j++) {
       if (GETM(alpha, i, j) < 0.0 || GETM(sigma, i, j) < 0.0) {

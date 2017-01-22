@@ -4,10 +4,10 @@
   speed improvement for beta-binomial, beta-negative-binomial, gamma-Poisson and
   negative hypergeometric distributions
 * Improved and simplified code for beta-binomial, beta negative-binomial,
-  and gamma-Poisson cdf; now recursive algorithm employing memoization tachniques
-  is used what noticably improves performance
-* Discrete gamma, negative hypergeometric and truncated binomial distributions
-  (d,p,q,r) were added
+  and gamma-Poisson cdf; now recursive algorithm employing memoization techniques
+  is used what noticeably improves performance
+* Discrete gamma (d,p,r), negative hypergeometric and truncated binomial
+  distributions (d,p,q,r) were added
 * Now `lower.tail` and `log.p` options for `pbetapr` work properly
 * Simplified code for multivariate hypergeometric, multinomial,
   Dirichlet-multinomial and categorical distributions
@@ -65,10 +65,10 @@
 
 ### 1.7.0
 
-* Cleaning namespace - now mathematical functions are explicitely
+* Cleaning namespace - now mathematical functions are explicitly
   called from std library
 * "using namespace Rcpp" was removed from all the files
-* All the numerical values are now explicitely `<double>`'s,
+* All the numerical values are now explicitly `<double>`'s,
   or casted to `<double>`; or `<int>`'s (for indexing)
 * Improvements in algorithms for discrete uniform, categorical,
   mixture of normal, mixture of Poisson distributions
