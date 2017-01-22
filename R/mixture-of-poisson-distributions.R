@@ -41,6 +41,8 @@
 #' plot(prop.table(table(x)))
 #' lines(xx, dmixpois(xx, c(5, 12, 19), c(1/3, 1/3, 1/3)), col = "red")
 #' hist(pmixpois(x, c(5, 12, 19), c(1/3, 1/3, 1/3)))
+#' 
+#' xx <- seq(0, 50, by = 0.01)
 #' plot(ecdf(x))
 #' lines(xx, pmixpois(xx, c(5, 12, 19), c(1/3, 1/3, 1/3)), col = "red", lwd = 2)
 #'

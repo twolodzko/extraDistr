@@ -63,6 +63,7 @@ lines(xx, dlgser(xx, 0.66), col = "red")
 # Notice: distribution of F(X) is far from uniform:
 hist(plgser(x, 0.66), 50)
 
+xx <- seq(0, 100, by = 0.01)
 plot(ecdf(x))
 lines(xx, plgser(xx, 0.66), col = "red", lwd = 2)
 

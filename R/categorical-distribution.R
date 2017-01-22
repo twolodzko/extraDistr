@@ -48,7 +48,7 @@
 #' 
 #' pp <- seq(0, 1, by = 0.001)
 #' plot(ecdf(x))
-#' lines(qcat(pp, p), pp, col = "red")
+#' lines(qcat(pp, p), pp, col = "red", lwd = 2)
 #'
 #' @name Categorical
 #' @aliases Categorical
