@@ -43,8 +43,8 @@ inline std::vector<double> cdf_gpois_table(double x, double alpha, double beta) 
   if (x < 0.0 || !R_FINITE(x) || alpha < 0.0 || beta < 0.0)
     Rcpp::stop("inadmissible values");
   
-  x = floor(x);
-  std::vector<double> p_tab(TO_INT(x)+1);
+  unsigned long int ix = TO_INT(x);
+  std::vector<double> p_tab(ix+1);
   double p, qa, ga, gax, xf, px, lp;
   
   p = beta/(1.0+beta);
@@ -59,7 +59,7 @@ inline std::vector<double> cdf_gpois_table(double x, double alpha, double beta) 
   px = 0.0;
   p_tab[0] = exp(qa);
   
-  if (x < 1.0)
+  if (ix < 1)
     return p_tab;
   
   // x < 2
@@ -68,16 +68,19 @@ inline std::vector<double> cdf_gpois_table(double x, double alpha, double beta) 
   px += lp;
   p_tab[1] = p_tab[0] + exp(gax - ga + px + qa);
   
-  if (x < 2.0)
+  if (ix < 2)
     return p_tab;
   
   // x >= 2
   
-  for (double j = 2.0; j <= x; j += 1.0) {
-    gax += log(j + alpha - 1.0);
-    xf += log(j);
+  double dj;
+  
+  for (unsigned long int j = 2; j <= ix; j++) {
+    dj = TO_DBL(j);
+    gax += log(dj + alpha - 1.0);
+    xf += log(dj);
     px += lp;
-    p_tab[TO_INT(j)] = p_tab[TO_INT(j)-1] + exp(gax - (xf + ga) + px + qa);
+    p_tab[j] = p_tab[j-1] + exp(gax - (xf + ga) + px + qa);
   }
   
   return p_tab;

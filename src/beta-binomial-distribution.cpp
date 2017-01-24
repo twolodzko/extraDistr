@@ -58,8 +58,8 @@ inline std::vector<double> cdf_bbinom_table(double k, double n,
   if (k < 0.0 || k > n || alpha < 0.0 || beta < 0.0)
     Rcpp::stop("inadmissible values");
 
-  k = floor(k);
-  std::vector<double> p_tab(TO_INT(k)+1);
+  unsigned long int ik = TO_INT(k);
+  std::vector<double> p_tab(ik+1);
   double nck, bab, gx, gy, gxy;
   
   bab = R::lbeta(alpha, beta);
@@ -72,7 +72,7 @@ inline std::vector<double> cdf_bbinom_table(double k, double n,
   gy = R::lgammafn(beta + n);
   p_tab[0] = exp(nck + gx + gy - gxy - bab);
   
-  if (k < 1.0)
+  if (ik < 1)
     return p_tab;
   
   // k < 2
@@ -82,16 +82,19 @@ inline std::vector<double> cdf_bbinom_table(double k, double n,
   gy -= log(n + beta - 1.0);
   p_tab[1] = p_tab[0] + exp(nck + gx + gy - gxy - bab);
   
-  if (k < 2.0)
+  if (ik < 2)
     return p_tab;
   
   // k >= 1
   
-  for (double j = 2.0; j <= k; j += 1.0) {
-    nck += log((n + 1.0 - j)/j);
-    gx += log(j + alpha - 1.0);
-    gy -= log(n + beta - j);
-    p_tab[TO_INT(j)] = p_tab[TO_INT(j)-1] + exp(nck + gx + gy - gxy - bab);
+  double dj;
+  
+  for (unsigned long int j = 2; j <= ik; j++) {
+    dj = TO_DBL(j);
+    nck += log((n + 1.0 - dj)/dj);
+    gx += log(dj + alpha - 1.0);
+    gy -= log(n + beta - dj);
+    p_tab[j] = p_tab[j-1] + exp(nck + gx + gy - gxy - bab);
   }
   
   return p_tab;

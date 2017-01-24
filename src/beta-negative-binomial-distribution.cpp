@@ -60,8 +60,8 @@ inline std::vector<double> cdf_bnbinom_table(double k, double r,
   if (k < 0.0 || !R_FINITE(k) || r < 0.0 || alpha < 0.0 || beta < 0.0)
     Rcpp::stop("inadmissible values");
 
-  k = floor(k);
-  std::vector<double> p_tab(TO_INT(k)+1);
+  unsigned long int ik = TO_INT(k);
+  std::vector<double> p_tab(ik+1);
   double grx, xf, gr, gar, gbx, gabrx, bab;
   
   bab = R::lbeta(alpha, beta);
@@ -76,7 +76,7 @@ inline std::vector<double> cdf_bnbinom_table(double k, double r,
   gabrx = R::lgammafn(alpha + beta + r);
   p_tab[0] = exp(grx - gr + gar + gbx - gabrx - bab);
   
-  if (k < 1.0)
+  if (ik < 1)
     return p_tab;
   
   // k < 2
@@ -86,17 +86,20 @@ inline std::vector<double> cdf_bnbinom_table(double k, double r,
   gabrx += log(alpha + beta + r);
   p_tab[1] = p_tab[0] + exp(grx - gr + gar + gbx - gabrx - bab);
   
-  if (k < 2.0)
+  if (ik < 2)
     return p_tab;
   
   // k >= 2
   
-  for (double j = 2.0; j <= k; j += 1.0) {
-    grx += log(r + j - 1.0);
-    gbx += log(beta + j - 1.0);
-    gabrx += log(alpha + beta + r + j - 1.0);
-    xf += log(j);
-    p_tab[TO_INT(j)] = p_tab[TO_INT(j)-1] +
+  double dj;
+  
+  for (unsigned long int j = 2; j <= ik; j++) {
+    dj = TO_DBL(j);
+    grx += log(r + dj - 1.0);
+    gbx += log(beta + dj - 1.0);
+    gabrx += log(alpha + beta + r + dj - 1.0);
+    xf += log(dj);
+    p_tab[j] = p_tab[j-1] +
       exp(grx - (xf + gr) + gar + gbx - gabrx - bab);
   }
   

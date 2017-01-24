@@ -54,9 +54,13 @@ double cdf_lgser(double x, double theta, bool& throw_warnin) {
   
   double a = -1.0/log(1.0 - theta);
   double b = 0.0;
+  double dk;
+  unsigned long int ix = TO_INT(x);
   
-  for (double k = 1.0; k <= x; k += 1.0)
-    b += pow(theta, k) / k;
+  for (unsigned long int k = 1; k <= ix; k++) {
+    dk = TO_DBL(k);
+    b += pow(theta, dk) / dk;
+  }
   
   return a * b;
 }
