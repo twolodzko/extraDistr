@@ -21,7 +21,7 @@ std::vector<double> nhyper_table(
     Rcpp::stop("inadmissible values");
   
   double j, N, start_eps;
-  int ni = TO_INT(n);
+  unsigned long int ni = TO_INT(n);
   N = m+n;
   
   std::vector<double> t(ni), h(ni), p(ni+1);
