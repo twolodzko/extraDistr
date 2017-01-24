@@ -29,7 +29,7 @@ std::vector<double> nhyper_table(
   h[0] = start_eps * r*n/(N-r);
   t[0] = start_eps + h[0];
 
-  for (int i = 1; i <= ni-1; i++) {
+  for (unsigned long int i = 1; i <= ni-1; i++) {
     j = TO_DBL(i) + r;
     h[i] = h[i-1] * j*(n+r-j)/(N-j)/(j+1.0-r);
     t[i] = t[i-1] + h[i];
@@ -38,11 +38,11 @@ std::vector<double> nhyper_table(
   p[0] = start_eps / t[ni-1];
   
   if (cumulative) {
-    for (int i = 1; i < ni; i++)
+    for (unsigned long int i = 1; i < ni; i++)
       p[i] = t[i-1] / t[ni-1];
     p[ni] = 1.0;
   } else {
-    for (int i = 1; i <= ni; i++)
+    for (unsigned long int i = 1; i <= ni; i++)
       p[i] = h[i-1] / t[ni-1];
   }
   
