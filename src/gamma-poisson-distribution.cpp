@@ -165,7 +165,7 @@ NumericVector cpp_pgpois(
       p[i] = 1.0;
     } else {
       
-      std::vector<double>& tmp = memo[std::make_tuple(i % alpha.length(), beta.length())];
+      std::vector<double>& tmp = memo[std::make_tuple(i % alpha.length(), i % beta.length())];
       if (!tmp.size()) {
         tmp = cdf_gpois_table(mx, GETV(alpha, i), GETV(beta, i));
       }
