@@ -75,11 +75,11 @@ NumericVector cpp_dprop(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(mean.length());
-  dims.push_back(size.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    mean.length(),
+    size.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -107,11 +107,11 @@ NumericVector cpp_pprop(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(mean.length());
-  dims.push_back(size.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    mean.length(),
+    size.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -142,11 +142,11 @@ NumericVector cpp_qprop(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(p.length());
-  dims.push_back(mean.length());
-  dims.push_back(size.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    p.length(),
+    mean.length(),
+    size.length()
+  });
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   

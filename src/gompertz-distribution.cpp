@@ -103,11 +103,11 @@ NumericVector cpp_dgompertz(
     bool log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(a.length());
-  dims.push_back(b.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    a.length(),
+    b.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -135,11 +135,11 @@ NumericVector cpp_pgompertz(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(a.length());
-  dims.push_back(b.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    a.length(),
+    b.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -170,11 +170,11 @@ NumericVector cpp_qgompertz(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(p.length());
-  dims.push_back(a.length());
-  dims.push_back(b.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    p.length(),
+    a.length(),
+    b.length()
+  });
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
   

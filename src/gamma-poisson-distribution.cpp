@@ -43,7 +43,7 @@ inline std::vector<double> cdf_gpois_table(double x, double alpha, double beta) 
   if (x < 0.0 || !R_FINITE(x) || alpha < 0.0 || beta < 0.0)
     Rcpp::stop("inadmissible values");
   
-  unsigned long int ix = TO_INT(x);
+  long int ix = TO_INT(x);
   std::vector<double> p_tab(ix+1);
   double p, qa, ga, gax, xf, px, lp;
   
@@ -75,7 +75,7 @@ inline std::vector<double> cdf_gpois_table(double x, double alpha, double beta) 
   
   double dj;
   
-  for (unsigned long int j = 2; j <= ix; j++) {
+  for (long int j = 2; j <= ix; j++) {
     dj = TO_DBL(j);
     gax += log(dj + alpha - 1.0);
     xf += log(dj);
@@ -105,11 +105,11 @@ NumericVector cpp_dgpois(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(alpha.length());
-  dims.push_back(beta.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    alpha.length(),
+    beta.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -137,14 +137,16 @@ NumericVector cpp_pgpois(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(alpha.length());
-  dims.push_back(beta.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    alpha.length(),
+    beta.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
+  
+  check_max_int(x);
   
   std::map<std::tuple<int, int>, std::vector<double>> memo;
   double mx = finite_max(x);
@@ -163,7 +165,7 @@ NumericVector cpp_pgpois(
       p[i] = 1.0;
     } else {
       
-      std::vector<double>& tmp = memo[std::make_tuple(i % dims[1], i % dims[2])];
+      std::vector<double>& tmp = memo[std::make_tuple(i % alpha.length(), beta.length())];
       if (!tmp.size()) {
         tmp = cdf_gpois_table(mx, GETV(alpha, i), GETV(beta, i));
       }

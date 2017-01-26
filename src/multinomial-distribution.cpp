@@ -32,11 +32,11 @@ NumericVector cpp_dmnom(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.nrow());
-  dims.push_back(size.length());
-  dims.push_back(prob.nrow());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    static_cast<long int>(x.nrow()),
+    size.length(),
+    static_cast<long int>(prob.nrow())
+  });
   int m = x.ncol();
   int k = prob.ncol();
   NumericVector p(Nmax);

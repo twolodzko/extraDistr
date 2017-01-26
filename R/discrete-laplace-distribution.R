@@ -54,13 +54,13 @@
 #' @examples 
 #' 
 #' p <- 0.45
-#' x <- rdlaplace(1e5, p)
+#' x <- rdlaplace(1e5, 0, p)
 #' xx <- seq(-200, 200, by = 1)
 #' plot(prop.table(table(x)))
-#' lines(xx, ddlaplace(xx, p), col = "red")
-#' hist(pdlaplace(x, p))
+#' lines(xx, ddlaplace(xx, 0, p), col = "red")
+#' hist(pdlaplace(x, 0, p))
 #' plot(ecdf(x))
-#' lines(xx, pdlaplace(xx, p), col = "red")
+#' lines(xx, pdlaplace(xx, 0, p), col = "red")
 #' 
 #' @name DiscreteLaplace
 #' @aliases DiscreteLaplace
@@ -69,24 +69,24 @@
 #' 
 #' @export
 
-ddlaplace <- function(x, scale, location = 0, log = FALSE) {
-  cpp_ddlaplace(x, scale, location, log)
+ddlaplace <- function(x, location, scale, log = FALSE) {
+  cpp_ddlaplace(x, location, scale, log)
 }
 
 
 #' @rdname DiscreteLaplace
 #' @export
 
-pdlaplace <- function(q, scale, location = 0, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pdlaplace(q, scale, location, lower.tail, log.p)
+pdlaplace <- function(q, location, scale, lower.tail = TRUE, log.p = FALSE) {
+  cpp_pdlaplace(q, location, scale, lower.tail, log.p)
 }
 
 
 #' @rdname DiscreteLaplace
 #' @export
 
-rdlaplace <- function(n, scale, location = 0) {
+rdlaplace <- function(n, location, scale) {
   if (length(n) > 1) n <- length(n)
-  cpp_rdlaplace(n, scale, location)
+  cpp_rdlaplace(n, location, scale)
 }
 

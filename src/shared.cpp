@@ -26,7 +26,7 @@ bool isInteger(double x, bool warn) {
 //   return false;
 // }
 
-double finite_max(Rcpp::NumericVector x) {
+double finite_max(const Rcpp::NumericVector& x) {
   double max_x = 0.0;
   int n = x.length();
   int i = 0;
@@ -63,10 +63,5 @@ double rng_unif() {
     u = R::unif_rand();
   } while (u <= 0.0 || u >= 1.0);
   return u;
-}
-
-double rng_sign() {
-  double u = rng_unif();
-  return (u > 0.5) ? 1.0 : -1.0;
 }
 

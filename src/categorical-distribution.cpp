@@ -32,10 +32,10 @@ NumericVector cpp_dcat(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(prob.nrow());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    static_cast<long int>(prob.nrow())
+  });
   int k = prob.ncol();
   NumericVector p(Nmax);
   double p_tot;
@@ -45,9 +45,11 @@ NumericVector cpp_dcat(
   if (k < 2)
     Rcpp::stop("number of columns in prob is < 2");
   
+  check_max_int(x);
+  
   NumericMatrix prob_tab = Rcpp::clone(prob);
   
-  for (int i = 0; i < dims[1]; i++) {
+  for (int i = 0; i < prob.nrow(); i++) {
     p_tot = 0.0;
     for (int j = 0; j < k; j++) {
       p_tot += prob_tab(i, j);
@@ -73,7 +75,7 @@ NumericVector cpp_dcat(
       p[i] = 0.0;
       continue;
     }
-    p[i] = prob_tab(i % dims[1], TO_INT(GETV(x, i)) - 1);
+    p[i] = GETM(prob_tab, i, TO_INT(GETV(x, i)) - 1);
   }
 
   if (log_prob)
@@ -93,22 +95,24 @@ NumericVector cpp_pcat(
     bool lower_tail = true, bool log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(prob.nrow());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    static_cast<long int>(prob.nrow())
+  });
   int k = prob.ncol();
   NumericVector p(Nmax);
   double p_tot;
   
   bool throw_warning = false;
-  
+
   if (k < 2)
     Rcpp::stop("number of columns in prob is < 2");
   
+  check_max_int(x);
+  
   NumericMatrix prob_tab = Rcpp::clone(prob);
   
-  for (int i = 0; i < dims[1]; i++) {
+  for (int i = 0; i < prob.nrow(); i++) {
     p_tot = 0.0;
     for (int j = 0; j < k; j++) {
       p_tot += prob_tab(i, j);
@@ -140,7 +144,7 @@ NumericVector cpp_pcat(
       p[i] = 1.0;
       continue;
     }
-    p[i] = prob_tab(i % dims[1], TO_INT(GETV(x, i)) - 1);
+    p[i] = GETM(prob_tab, i, TO_INT(GETV(x, i)) - 1);
   }
 
   if (!lower_tail)
@@ -164,10 +168,10 @@ NumericVector cpp_qcat(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(p.length());
-  dims.push_back(prob.nrow());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    p.length(),
+    static_cast<long int>(prob.nrow())
+  });
   int k = prob.ncol();
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
@@ -187,7 +191,7 @@ NumericVector cpp_qcat(
   
   NumericMatrix prob_tab = Rcpp::clone(prob);
   
-  for (int i = 0; i < dims[1]; i++) {
+  for (int i = 0; i < prob.nrow(); i++) {
     p_tot = 0.0;
     for (int j = 0; j < k; j++) {
       p_tot += prob_tab(i, j);
@@ -211,8 +215,8 @@ NumericVector cpp_qcat(
       x[i] = GETV(p, i);
       continue;
     }
-    if (ISNAN(prob_tab(i % dims[1], 0))) {
-      x[i] = prob_tab(i % dims[1], 0);
+    if (ISNAN(GETM(prob_tab, i, 0))) {
+      x[i] = GETM(prob_tab, i, 0);
       continue;
     }
     if (GETV(p, i) < 0.0 || GETV(p, i) > 1.0) {
@@ -231,7 +235,7 @@ NumericVector cpp_qcat(
     
     jj = 1;
     for (int j = 0; j < k; j++) {
-      if (prob_tab(i % dims[1], j) >= GETV(p, i)) {
+      if (GETM(prob_tab, i, j) >= GETV(p, i)) {
         jj = j+1;
         break;
       }

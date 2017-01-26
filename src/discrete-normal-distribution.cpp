@@ -47,11 +47,11 @@ NumericVector cpp_ddnorm(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(mu.length());
-  dims.push_back(sigma.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    mu.length(),
+    sigma.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;

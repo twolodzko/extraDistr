@@ -52,11 +52,11 @@ NumericVector cpp_dskellam(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(mu1.length());
-  dims.push_back(mu2.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    mu1.length(),
+    mu2.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;

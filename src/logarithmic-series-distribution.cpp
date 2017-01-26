@@ -55,9 +55,9 @@ double cdf_lgser(double x, double theta, bool& throw_warnin) {
   double a = -1.0/log(1.0 - theta);
   double b = 0.0;
   double dk;
-  unsigned long int ix = TO_INT(x);
+  long int ix = TO_INT(x);
   
-  for (unsigned long int k = 1; k <= ix; k++) {
+  for (long int k = 1; k <= ix; k++) {
     dk = TO_DBL(k);
     b += pow(theta, dk) / dk;
   }
@@ -116,10 +116,10 @@ NumericVector cpp_dlgser(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(theta.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    theta.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -146,13 +146,15 @@ NumericVector cpp_plgser(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(theta.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    theta.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
+  
+  check_max_int(x);
 
   for (int i = 0; i < Nmax; i++)
     p[i] = cdf_lgser(GETV(x, i), GETV(theta, i),
@@ -179,10 +181,10 @@ NumericVector cpp_qlgser(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(p.length());
-  dims.push_back(theta.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    p.length(),
+    theta.length()
+  });
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   

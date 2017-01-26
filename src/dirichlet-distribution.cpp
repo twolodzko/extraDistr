@@ -33,10 +33,10 @@ NumericVector cpp_ddirichlet(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(x.nrow());
-  dims.push_back(alpha.nrow());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.nrow(),
+    alpha.nrow()
+  });
   int m = x.ncol();
   int k = alpha.ncol();
   k = std::min(m, k);
@@ -115,7 +115,7 @@ NumericMatrix cpp_rdirichlet(
   bool throw_warning = false;
   
   if (k < 2)
-    Rcpp::stop("Number of columns in alpha should be >= 2");
+    Rcpp::stop("number of columns in alpha should be >= 2");
   
   double row_sum, sum_alpha;
   bool wrong_values;

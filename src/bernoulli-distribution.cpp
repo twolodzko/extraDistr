@@ -85,10 +85,10 @@ NumericVector cpp_dbern(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(prob.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    prob.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -115,10 +115,10 @@ NumericVector cpp_pbern(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(prob.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    prob.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -148,10 +148,10 @@ NumericVector cpp_qbern(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(p.length());
-  dims.push_back(prob.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    p.length(),
+    prob.length()
+  });
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
   

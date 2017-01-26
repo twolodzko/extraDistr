@@ -99,11 +99,11 @@ NumericVector cpp_dpower(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(alpha.length());
-  dims.push_back(beta.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    alpha.length(),
+    beta.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -131,11 +131,11 @@ NumericVector cpp_ppower(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(alpha.length());
-  dims.push_back(beta.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    alpha.length(),
+    beta.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -166,11 +166,11 @@ NumericVector cpp_qpower(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(p.length());
-  dims.push_back(alpha.length());
-  dims.push_back(beta.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    p.length(),
+    alpha.length(),
+    beta.length()
+  });
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   

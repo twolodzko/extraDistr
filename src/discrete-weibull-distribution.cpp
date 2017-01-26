@@ -89,11 +89,11 @@ NumericVector cpp_ddweibull(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(q.length());
-  dims.push_back(beta.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    q.length(),
+    beta.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -121,11 +121,11 @@ NumericVector cpp_pdweibull(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(q.length());
-  dims.push_back(beta.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    q.length(),
+    beta.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -156,11 +156,11 @@ NumericVector cpp_qdweibull(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(p.length());
-  dims.push_back(q.length());
-  dims.push_back(beta.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    p.length(),
+    q.length(),
+    beta.length()
+  });
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   

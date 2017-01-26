@@ -1,8 +1,8 @@
 ### 1.8.3
 
-* Switched to C++11 to make use of `std::tuple` data structure; this leads to major
-  speed improvement for beta-binomial, beta-negative-binomial, gamma-Poisson and
-  negative hypergeometric distributions
+* Switched to C++11, underlying code was simplified and improved
+* Using memoization techniques for `pbbinom`, `pbnbinom`, `pgpois` and
+  negative hypergeometric distribution that lead to major speed improvements
 * Improved and simplified code for beta-binomial, beta negative-binomial,
   and gamma-Poisson cdf; now recursive algorithm employing memoization techniques
   is used what noticeably improves performance
@@ -11,14 +11,17 @@
 * Now `lower.tail` and `log.p` options for `pbetapr` work properly
 * Simplified code for multivariate hypergeometric, multinomial,
   Dirichlet-multinomial and categorical distributions
-* C++ code was significantly simplified and cleaned-up in multiple places
-* Truncated poisson distribution is now parametrized by
-  lower and upper truncation points
+* Truncated poisson distribution is now parametrized by lower and upper
+  truncation points
 * Fixed bugs in `dbvpois` (it returned underestimated probabilities),
   `dslash` (there was discontinuity at x=0), `pcat` (randomly it broke
   if x was greater then the upper limit), and `pdnorm`.
 * Random generation functions throw warnings and produce `NA`'s on `NA`'s in
   parameters or incorrect parameters - as in base R
+* Order of parameters in discrete Laplace distribution was changed to
+  location and scale (vs scale and location) for consistency with other
+  distributions (e.g. continous Laplace)
+* Improved exception handling
 
 
 ### 1.8.1-2

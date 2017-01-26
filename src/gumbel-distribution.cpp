@@ -84,11 +84,11 @@ NumericVector cpp_dgumbel(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(mu.length());
-  dims.push_back(sigma.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    mu.length(),
+    sigma.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -116,11 +116,11 @@ NumericVector cpp_pgumbel(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(mu.length());
-  dims.push_back(sigma.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    mu.length(),
+    sigma.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -151,11 +151,11 @@ NumericVector cpp_qgumbel(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(p.length());
-  dims.push_back(mu.length());
-  dims.push_back(sigma.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    p.length(),
+    mu.length(),
+    sigma.length()
+  });
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
   

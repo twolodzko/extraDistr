@@ -60,7 +60,7 @@ inline std::vector<double> cdf_bnbinom_table(double k, double r,
   if (k < 0.0 || !R_FINITE(k) || r < 0.0 || alpha < 0.0 || beta < 0.0)
     Rcpp::stop("inadmissible values");
 
-  unsigned long int ik = TO_INT(k);
+  long int ik = TO_INT(k);
   std::vector<double> p_tab(ik+1);
   double grx, xf, gr, gar, gbx, gabrx, bab;
   
@@ -93,7 +93,7 @@ inline std::vector<double> cdf_bnbinom_table(double k, double r,
   
   double dj;
   
-  for (unsigned long int j = 2; j <= ik; j++) {
+  for (long int j = 2; j <= ik; j++) {
     dj = TO_DBL(j);
     grx += log(r + dj - 1.0);
     gbx += log(beta + dj - 1.0);
@@ -127,12 +127,12 @@ NumericVector cpp_dbnbinom(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(size.length());
-  dims.push_back(alpha.length());
-  dims.push_back(beta.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    size.length(),
+    alpha.length(),
+    beta.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -161,15 +161,17 @@ NumericVector cpp_pbnbinom(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(size.length());
-  dims.push_back(alpha.length());
-  dims.push_back(beta.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    size.length(),
+    alpha.length(),
+    beta.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
+  
+  check_max_int(x);
 
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
   double mx = finite_max(x);
@@ -192,7 +194,9 @@ NumericVector cpp_pbnbinom(
       p[i] = 1.0;
     } else {
       
-      std::vector<double>& tmp = memo[std::make_tuple(i % dims[1], i % dims[2], i % dims[3])];
+      std::vector<double>& tmp = memo[std::make_tuple(i % size.length(),
+                                                      i % alpha.length(),
+                                                      i % beta.length())];
       if (!tmp.size()) {
         tmp = cdf_bnbinom_table(mx, GETV(size, i), GETV(alpha, i), GETV(beta, i));
       }

@@ -20,20 +20,16 @@
 
 #define GETV(x, i)      x[i % x.length()]    // wrapped indexing of vector
 #define GETM(x, i, j)   x(i % x.nrow(), j)   // wrapped indexing of matrix
-#define TO_INT(x)       static_cast<unsigned long int>(x)
+#define TO_INT(x)       static_cast<long int>(x)
 #define TO_DBL(x)       static_cast<double>(x)
 #define VALID_PROB(p)   ((p >= 0.0) && (p <= 1.0))
 
 // Basic functions
 
 bool isInteger(double x, bool warn = true);
-double finite_max(Rcpp::NumericVector x);
-
-// Random generation
-
+double finite_max(const Rcpp::NumericVector& x);
+void check_max_int(const Rcpp::NumericVector& x);
 double rng_unif();         // standard uniform
-double rng_sign();         // Rademacher distribution
-
 
 // ====================================================================
 //                      Inline functions
@@ -45,6 +41,8 @@ inline double Phi(double x);
 inline double InvPhi(double x);
 inline double factorial(double x);
 inline double lfactorial(double x);
+inline double rng_sign();
+inline void check_max_int(const Rcpp::NumericVector& x);
 
 
 inline bool tol_equal(double x, double y) {
@@ -69,6 +67,18 @@ inline double factorial(double x) {
 
 inline double lfactorial(double x) {
   return R::lgammafn(x + 1.0);
+}
+
+inline double rng_sign() {
+  double u = rng_unif();
+  return (u > 0.5) ? 1.0 : -1.0;
+}
+
+inline void check_max_int(const Rcpp::NumericVector& x) {
+  for (int i = 0; i < x.length(); i++) {
+    if (R_FINITE(x[i]) && x[i] > std::numeric_limits<long int>::max())
+      Rcpp::stop("reached largest integer which can be represented as <long int>");
+  }
 }
 
 

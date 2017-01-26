@@ -69,20 +69,20 @@ NumericVector cpp_dbnorm(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(y.length());
-  dims.push_back(mu1.length());
-  dims.push_back(mu2.length());
-  dims.push_back(sigma1.length());
-  dims.push_back(sigma2.length());
-  dims.push_back(rho.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    y.length(),
+    mu1.length(),
+    mu2.length(),
+    sigma1.length(),
+    sigma2.length(),
+    rho.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
   
-  if (dims[0] != dims[1])
+  if (x.length() != y.length())
     Rcpp::stop("lengths of x and y differ");
 
   for (int i = 0; i < Nmax; i++)

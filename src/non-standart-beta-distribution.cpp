@@ -83,13 +83,13 @@ NumericVector cpp_dnsbeta(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(alpha.length());
-  dims.push_back(beta.length());
-  dims.push_back(lower.length());
-  dims.push_back(upper.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    alpha.length(),
+    beta.length(),
+    lower.length(),
+    upper.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -117,13 +117,13 @@ NumericVector cpp_pnsbeta(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(alpha.length());
-  dims.push_back(beta.length());
-  dims.push_back(lower.length());
-  dims.push_back(upper.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    alpha.length(),
+    beta.length(),
+    lower.length(),
+    upper.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -152,13 +152,13 @@ NumericVector cpp_qnsbeta(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(p.length());
-  dims.push_back(alpha.length());
-  dims.push_back(beta.length());
-  dims.push_back(lower.length());
-  dims.push_back(upper.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    p.length(),
+    alpha.length(),
+    beta.length(),
+    lower.length(),
+    upper.length()
+  });
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   

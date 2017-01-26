@@ -36,12 +36,12 @@ NumericVector cpp_ddirmnom(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.nrow());
-  dims.push_back(alpha.nrow());
-  dims.push_back(size.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
-  
+  int Nmax = std::max({
+    static_cast<long int>(x.nrow()),
+    size.length(),
+    static_cast<long int>(alpha.nrow())
+  });
+
   int m = x.ncol();
   int k = alpha.ncol();
   k = std::min(m, k);

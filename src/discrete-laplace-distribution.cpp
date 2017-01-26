@@ -55,16 +55,16 @@ inline double rng_dlaplace(double p, double mu,
 // [[Rcpp::export]]
 NumericVector cpp_ddlaplace(
     const NumericVector& x,
-    const NumericVector& scale,
     const NumericVector& location,
+    const NumericVector& scale,
     const bool& log_prob = false
-) {
+  ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(scale.length());
-  dims.push_back(location.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    scale.length(),
+    location.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -86,17 +86,17 @@ NumericVector cpp_ddlaplace(
 // [[Rcpp::export]]
 NumericVector cpp_pdlaplace(
     const NumericVector& x,
-    const NumericVector& scale,
     const NumericVector& location,
+    const NumericVector& scale,
     const bool& lower_tail = true,
     const bool& log_prob = false
-) {
+  ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(scale.length());
-  dims.push_back(location.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    scale.length(),
+    location.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -121,13 +121,10 @@ NumericVector cpp_pdlaplace(
 // [[Rcpp::export]]
 NumericVector cpp_rdlaplace(
     const int& n,
-    const NumericVector& scale,
-    const NumericVector& location
-) {
+    const NumericVector& location,
+    const NumericVector& scale
+  ) {
   
-  std::vector<int> dims;
-  dims.push_back(scale.length());
-  dims.push_back(location.length());
   NumericVector x(n);
   
   bool throw_warning = false;

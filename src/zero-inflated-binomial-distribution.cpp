@@ -95,12 +95,12 @@ NumericVector cpp_dzib(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(size.length());
-  dims.push_back(prob.length());
-  dims.push_back(pi.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    size.length(),
+    prob.length(),
+    pi.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -130,12 +130,12 @@ NumericVector cpp_pzib(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(size.length());
-  dims.push_back(prob.length());
-  dims.push_back(pi.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    size.length(),
+    prob.length(),
+    pi.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -168,12 +168,12 @@ NumericVector cpp_qzib(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(p.length());
-  dims.push_back(size.length());
-  dims.push_back(prob.length());
-  dims.push_back(pi.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    p.length(),
+    size.length(),
+    prob.length(),
+    pi.length()
+  });
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   

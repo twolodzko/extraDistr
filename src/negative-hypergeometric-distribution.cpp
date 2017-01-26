@@ -21,7 +21,7 @@ std::vector<double> nhyper_table(
     Rcpp::stop("inadmissible values");
   
   double j, N, start_eps;
-  unsigned long int ni = TO_INT(n);
+  long int ni = TO_INT(n);
   N = m+n;
   
   std::vector<double> t(ni), h(ni), p(ni+1);
@@ -29,7 +29,7 @@ std::vector<double> nhyper_table(
   h[0] = start_eps * r*n/(N-r);
   t[0] = start_eps + h[0];
 
-  for (unsigned long int i = 1; i <= ni-1; i++) {
+  for (long int i = 1; i <= ni-1; i++) {
     j = TO_DBL(i) + r;
     h[i] = h[i-1] * j*(n+r-j)/(N-j)/(j+1.0-r);
     t[i] = t[i-1] + h[i];
@@ -38,11 +38,11 @@ std::vector<double> nhyper_table(
   p[0] = start_eps / t[ni-1];
   
   if (cumulative) {
-    for (unsigned long int i = 1; i < ni; i++)
+    for (long int i = 1; i < ni; i++)
       p[i] = t[i-1] / t[ni-1];
     p[ni] = 1.0;
   } else {
-    for (unsigned long int i = 1; i <= ni; i++)
+    for (long int i = 1; i <= ni; i++)
       p[i] = h[i-1] / t[ni-1];
   }
   
@@ -59,15 +59,19 @@ NumericVector cpp_dnhyper(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(n.length());
-  dims.push_back(m.length());
-  dims.push_back(r.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    n.length(),
+    m.length(),
+    r.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
+  
+  check_max_int(x);
+  check_max_int(n);
+  check_max_int(r);
   
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
   
@@ -90,7 +94,9 @@ NumericVector cpp_dnhyper(
       p[i] = 0.0;
     } else {
       
-      std::vector<double>& tmp = memo[std::make_tuple(i % dims[1], i % dims[2], i % dims[3])];
+      std::vector<double>& tmp = memo[std::make_tuple(i % n.length(),
+                                                      i % m.length(),
+                                                      i % r.length())];
       if (!tmp.size()) {
         tmp = nhyper_table(GETV(n, i), GETV(m, i), GETV(r, i), false);
       }
@@ -119,15 +125,19 @@ NumericVector cpp_pnhyper(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(n.length());
-  dims.push_back(m.length());
-  dims.push_back(r.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    n.length(),
+    m.length(),
+    r.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
+  
+  check_max_int(x);
+  check_max_int(n);
+  check_max_int(r);
   
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
   
@@ -151,7 +161,9 @@ NumericVector cpp_pnhyper(
       p[i] = 1.0;
     } else {
       
-      std::vector<double>& tmp = memo[std::make_tuple(i % dims[1], i % dims[2], i % dims[3])];
+      std::vector<double>& tmp = memo[std::make_tuple(i % n.length(),
+                                                      i % m.length(),
+                                                      i % r.length())];
       if (!tmp.size()) {
         tmp = nhyper_table(GETV(n, i), GETV(m, i), GETV(r, i), true);
       }
@@ -183,14 +195,17 @@ NumericVector cpp_qnhyper(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(p.length());
-  dims.push_back(n.length());
-  dims.push_back(m.length());
-  dims.push_back(r.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    p.length(),
+    n.length(),
+    m.length(),
+    r.length()
+  });
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
+  
+  check_max_int(n);
+  check_max_int(r);
   
   bool throw_warning = false;
   
@@ -209,7 +224,7 @@ NumericVector cpp_qnhyper(
     if (ISNAN(GETV(pp, i)) || ISNAN(GETV(n, i)) ||
         ISNAN(GETV(m, i)) || ISNAN(GETV(r, i))) {
       x[i] = GETV(pp, i) + GETV(n, i) + GETV(m, i) + GETV(r, i);
-    } else if (!VALID_PROB(pp[i % dims[0]]) ||
+    } else if (!VALID_PROB(GETV(pp, i)) ||
                GETV(r, i) > GETV(m, i) || GETV(n, i) < 0.0 ||
                GETV(m, i) < 0.0 || GETV(r, i) < 0.0 ||
                !isInteger(GETV(n, i), false) ||
@@ -219,13 +234,15 @@ NumericVector cpp_qnhyper(
       x[i] = NAN;
     } else {
       
-      std::vector<double>& tmp = memo[std::make_tuple(i % dims[1], i % dims[2], i % dims[3])];
+      std::vector<double>& tmp = memo[std::make_tuple(i % n.length(),
+                                                      i % m.length(),
+                                                      i % r.length())];
       if (!tmp.size()) {
         tmp = nhyper_table(GETV(n, i), GETV(m, i), GETV(r, i), true);
       }
       
       for (int j = 0; j <= TO_INT( GETV(n, i) ); j++) {
-        if (tmp[j] >= pp[i % dims[0]]) {
+        if (tmp[j] >= GETV(pp, i)) {
           x[i] = TO_DBL(j) + GETV(r, i);
           break;
         }
@@ -250,13 +267,12 @@ NumericVector cpp_rnhyper(
   ) {
   
   double u;
-  std::vector<int> dims;
-  dims.push_back(n.length());
-  dims.push_back(m.length());
-  dims.push_back(r.length());
   NumericVector x(nn);
   
   bool throw_warning = false;
+  
+  check_max_int(n);
+  check_max_int(r);
   
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
   
@@ -272,7 +288,9 @@ NumericVector cpp_rnhyper(
       x[i] = NA_REAL;
     } else {
       
-      std::vector<double>& tmp = memo[std::make_tuple(i % dims[0], i % dims[1], i % dims[2])];
+      std::vector<double>& tmp = memo[std::make_tuple(i % n.length(),
+                                                      i % m.length(),
+                                                      i % r.length())];
       if (!tmp.size()) {
         tmp = nhyper_table(GETV(n, i), GETV(m, i), GETV(r, i), true);
       }

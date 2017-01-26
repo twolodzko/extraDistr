@@ -58,7 +58,7 @@ inline std::vector<double> cdf_bbinom_table(double k, double n,
   if (k < 0.0 || k > n || alpha < 0.0 || beta < 0.0)
     Rcpp::stop("inadmissible values");
 
-  unsigned long int ik = TO_INT(k);
+  long int ik = TO_INT(k);
   std::vector<double> p_tab(ik+1);
   double nck, bab, gx, gy, gxy;
   
@@ -89,7 +89,7 @@ inline std::vector<double> cdf_bbinom_table(double k, double n,
   
   double dj;
   
-  for (unsigned long int j = 2; j <= ik; j++) {
+  for (long int j = 2; j <= ik; j++) {
     dj = TO_DBL(j);
     nck += log((n + 1.0 - dj)/dj);
     gx += log(dj + alpha - 1.0);
@@ -121,12 +121,12 @@ NumericVector cpp_dbbinom(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(size.length());
-  dims.push_back(alpha.length());
-  dims.push_back(beta.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    size.length(),
+    alpha.length(),
+    beta.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -156,15 +156,17 @@ NumericVector cpp_pbbinom(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(size.length());
-  dims.push_back(alpha.length());
-  dims.push_back(beta.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    size.length(),
+    alpha.length(),
+    beta.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
+  
+  check_max_int(x);
   
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
   double mx = std::min(finite_max(x), finite_max(size));
@@ -187,7 +189,9 @@ NumericVector cpp_pbbinom(
       p[i] = 1.0;
     } else {
       
-      std::vector<double>& tmp = memo[std::make_tuple(i % dims[1], i % dims[2], i % dims[3])];
+      std::vector<double>& tmp = memo[std::make_tuple(i % size.length(),
+                                                      i % alpha.length(),
+                                                      i % beta.length())];
       if (!tmp.size()) {
         tmp = cdf_bbinom_table(mx, GETV(size, i), GETV(alpha, i), GETV(beta, i));
       }

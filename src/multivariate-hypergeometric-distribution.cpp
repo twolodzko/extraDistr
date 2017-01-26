@@ -35,11 +35,11 @@ NumericVector cpp_dmvhyper(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.nrow());
-  dims.push_back(n.nrow());
-  dims.push_back(k.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    static_cast<long int>(x.nrow()),
+    static_cast<long int>(n.nrow()),
+    k.length()
+  });
   int m = x.ncol();
   NumericVector p(Nmax);
   

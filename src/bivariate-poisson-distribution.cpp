@@ -60,18 +60,18 @@ NumericVector cpp_dbpois(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(y.length());
-  dims.push_back(a.length());
-  dims.push_back(b.length());
-  dims.push_back(c.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    y.length(),
+    a.length(),
+    b.length(),
+    c.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
   
-  if (dims[0] != dims[1])
+  if (x.length() != y.length())
     Rcpp::stop("lengths of x and y differ");
   
   for (int i = 0; i < Nmax; i++)

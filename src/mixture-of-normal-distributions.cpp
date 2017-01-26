@@ -21,12 +21,12 @@ NumericVector cpp_dmixnorm(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(mu.nrow());
-  dims.push_back(sigma.nrow());
-  dims.push_back(alpha.nrow());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    static_cast<long int>(mu.nrow()),
+    static_cast<long int>(sigma.nrow()),
+    static_cast<long int>(alpha.nrow())
+  });
   int k = alpha.ncol();
   NumericVector p(Nmax);
   
@@ -88,12 +88,12 @@ NumericVector cpp_pmixnorm(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(mu.nrow());
-  dims.push_back(sigma.nrow());
-  dims.push_back(alpha.nrow());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    static_cast<long int>(mu.nrow()),
+    static_cast<long int>(sigma.nrow()),
+    static_cast<long int>(alpha.nrow())
+  });
   int k = alpha.ncol();
   NumericVector p(Nmax);
   

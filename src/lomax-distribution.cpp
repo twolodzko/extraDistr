@@ -95,11 +95,11 @@ NumericVector cpp_dlomax(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(lambda.length());
-  dims.push_back(kappa.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    lambda.length(),
+    kappa.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -127,11 +127,11 @@ NumericVector cpp_plomax(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(lambda.length());
-  dims.push_back(kappa.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    lambda.length(),
+    kappa.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -162,11 +162,11 @@ NumericVector cpp_qlomax(
     const bool& log_prob = false
   ) {
 
-  std::vector<int> dims;
-  dims.push_back(p.length());
-  dims.push_back(lambda.length());
-  dims.push_back(kappa.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    p.length(),
+    lambda.length(),
+    kappa.length()
+  });
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   

@@ -499,44 +499,44 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_ddlaplace
-NumericVector cpp_ddlaplace(const NumericVector& x, const NumericVector& scale, const NumericVector& location, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_ddlaplace(SEXP xSEXP, SEXP scaleSEXP, SEXP locationSEXP, SEXP log_probSEXP) {
+NumericVector cpp_ddlaplace(const NumericVector& x, const NumericVector& location, const NumericVector& scale, const bool& log_prob);
+RcppExport SEXP extraDistr_cpp_ddlaplace(SEXP xSEXP, SEXP locationSEXP, SEXP scaleSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type scale(scaleSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type location(locationSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type scale(scaleSEXP);
     Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_ddlaplace(x, scale, location, log_prob));
+    rcpp_result_gen = Rcpp::wrap(cpp_ddlaplace(x, location, scale, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_pdlaplace
-NumericVector cpp_pdlaplace(const NumericVector& x, const NumericVector& scale, const NumericVector& location, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pdlaplace(SEXP xSEXP, SEXP scaleSEXP, SEXP locationSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+NumericVector cpp_pdlaplace(const NumericVector& x, const NumericVector& location, const NumericVector& scale, const bool& lower_tail, const bool& log_prob);
+RcppExport SEXP extraDistr_cpp_pdlaplace(SEXP xSEXP, SEXP locationSEXP, SEXP scaleSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type scale(scaleSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type location(locationSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type scale(scaleSEXP);
     Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
     Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_pdlaplace(x, scale, location, lower_tail, log_prob));
+    rcpp_result_gen = Rcpp::wrap(cpp_pdlaplace(x, location, scale, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rdlaplace
-NumericVector cpp_rdlaplace(const int& n, const NumericVector& scale, const NumericVector& location);
-RcppExport SEXP extraDistr_cpp_rdlaplace(SEXP nSEXP, SEXP scaleSEXP, SEXP locationSEXP) {
+NumericVector cpp_rdlaplace(const int& n, const NumericVector& location, const NumericVector& scale);
+RcppExport SEXP extraDistr_cpp_rdlaplace(SEXP nSEXP, SEXP locationSEXP, SEXP scaleSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type scale(scaleSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type location(locationSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_rdlaplace(n, scale, location));
+    Rcpp::traits::input_parameter< const NumericVector& >::type scale(scaleSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_rdlaplace(n, location, scale));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1979,6 +1979,17 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mean(meanSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rprop(n, size, mean));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_rsign
+NumericVector cpp_rsign(const int& n);
+RcppExport SEXP extraDistr_cpp_rsign(SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_rsign(n));
     return rcpp_result_gen;
 END_RCPP
 }

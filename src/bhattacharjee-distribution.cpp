@@ -88,12 +88,12 @@ NumericVector cpp_dbhatt(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(mu.length());
-  dims.push_back(sigma.length());
-  dims.push_back(a.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    mu.length(),
+    sigma.length(),
+    a.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -123,12 +123,12 @@ NumericVector cpp_pbhatt(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(mu.length());
-  dims.push_back(sigma.length());
-  dims.push_back(a.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    mu.length(),
+    sigma.length(),
+    a.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;

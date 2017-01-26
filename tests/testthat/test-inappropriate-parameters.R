@@ -36,8 +36,8 @@ test_that("Wrong parameter values in PDF and PMF functions", {
   expect_warning(expect_true(is.nan(ddirichlet(c(0.5, 0.5), c(-1, 0.5)))))
   expect_warning(expect_true(is.nan(ddirichlet(c(0.5, 0.5), c(0.5, -1)))))
   
-  expect_warning(expect_true(is.nan(ddlaplace(1, scale = -1))))
-  expect_warning(expect_true(is.nan(ddlaplace(1, scale = 2))))
+  expect_warning(expect_true(is.nan(ddlaplace(1, 0, scale = -1))))
+  expect_warning(expect_true(is.nan(ddlaplace(1, 0, scale = 2))))
   
   expect_warning(expect_true(is.nan(ddnorm(1, sd = -1))))
   
@@ -233,8 +233,8 @@ test_that("Wrong parameter values in CDF functions", {
   expect_warning(expect_true(is.nan(pcat(1, c(-1, 0.5)))))
   expect_warning(expect_true(is.nan(pcat(1, c(0.5, -1)))))
 
-  expect_warning(expect_true(is.nan(pdlaplace(1, scale = -1))))
-  expect_warning(expect_true(is.nan(pdlaplace(1, scale = 2))))
+  expect_warning(expect_true(is.nan(pdlaplace(1, 0, scale = -1))))
+  expect_warning(expect_true(is.nan(pdlaplace(1, 0, scale = 2))))
   
   expect_warning(expect_true(is.nan(pdnorm(1, sd = -1))))
   

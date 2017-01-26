@@ -1,7 +1,7 @@
 
 test_that("Zero probabilities for non-integers", {
   
-  expect_warning(expect_equal(0, ddlaplace(0.5, 0.5)))
+  expect_warning(expect_equal(0, ddlaplace(0.5, 0, 0.5)))
   expect_warning(expect_equal(0, ddnorm(0.5)))
   expect_warning(expect_equal(0, ddgamma(0.5, 9, 1)))
   expect_warning(expect_equal(0, ddweibull(0.5, 0.5, 1)))
@@ -30,7 +30,7 @@ test_that("cdf vs cumsum(pdf)", {
   xx <- seq(-500, 500, by = 1)
   epsilon <- 1e-4 # sqrt(.Machine$double.eps)
   
-  expect_equal(cumsum(ddlaplace(xx, 0.5)), pdlaplace(xx, 0.5), tolerance = epsilon)
+  expect_equal(cumsum(ddlaplace(xx, 0, 0.5)), pdlaplace(xx, 0, 0.5), tolerance = epsilon)
   expect_equal(cumsum(ddnorm(xx, 0, 15)), pdnorm(xx, 0, 15), tolerance = epsilon)
   
   xx <- seq(0, 200, by = 1)

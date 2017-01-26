@@ -19,9 +19,9 @@ test_that("Discrete probabilities sum to unity", {
   
   expect_equal(sum(dcat(1:10, divBySum(runif(10)))), 1)
   
-  expect_equal(sum(ddlaplace(-50:50, 0.5)), 1)
-  expect_equal(sum(ddlaplace(-50:50, 0.1)), 1)
-  expect_equal(sum(ddlaplace(-50:50, 0.7)), 1)
+  expect_equal(sum(ddlaplace(-50:50, 0, 0.5)), 1)
+  expect_equal(sum(ddlaplace(-50:50, 0, 0.1)), 1)
+  expect_equal(sum(ddlaplace(-50:50, 0, 0.7)), 1)
   
   expect_equal(sum(ddnorm(-50:50, sd = 5)), 1)
   expect_equal(sum(ddnorm(-50:50, sd = 7)), 1)

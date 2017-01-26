@@ -7,18 +7,18 @@
 \alias{rdlaplace}
 \title{Discrete Laplace distribution}
 \usage{
-ddlaplace(x, scale, location = 0, log = FALSE)
+ddlaplace(x, location, scale, log = FALSE)
 
-pdlaplace(q, scale, location = 0, lower.tail = TRUE, log.p = FALSE)
+pdlaplace(q, location, scale, lower.tail = TRUE, log.p = FALSE)
 
-rdlaplace(n, scale, location = 0)
+rdlaplace(n, location, scale)
 }
 \arguments{
 \item{x, q}{vector of quantiles.}
 
-\item{scale}{scale parameter; \code{0 < scale < 1}.}
-
 \item{location}{location parameter.}
+
+\item{scale}{scale parameter; \code{0 < scale < 1}.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 
@@ -61,13 +61,13 @@ F(x) = [if x < 0:] p^-floor(x-\mu))/(1+p) [else:] 1-(p^(floor(x-\mu)+1))/(1+p)
 \examples{
 
 p <- 0.45
-x <- rdlaplace(1e5, p)
+x <- rdlaplace(1e5, 0, p)
 xx <- seq(-200, 200, by = 1)
 plot(prop.table(table(x)))
-lines(xx, ddlaplace(xx, p), col = "red")
-hist(pdlaplace(x, p))
+lines(xx, ddlaplace(xx, 0, p), col = "red")
+hist(pdlaplace(x, 0, p))
 plot(ecdf(x))
-lines(xx, pdlaplace(xx, p), col = "red")
+lines(xx, pdlaplace(xx, 0, p), col = "red")
 
 }
 \references{

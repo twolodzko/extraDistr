@@ -20,11 +20,11 @@ NumericVector cpp_dmixpois(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(lambda.nrow());
-  dims.push_back(alpha.nrow());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    static_cast<long int>(lambda.nrow()),
+    static_cast<long int>(alpha.nrow())
+  });
   int k = alpha.ncol();
   NumericVector p(Nmax);
   
@@ -92,11 +92,11 @@ NumericVector cpp_pmixpois(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(lambda.nrow());
-  dims.push_back(alpha.nrow());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    static_cast<long int>(lambda.nrow()),
+    static_cast<long int>(alpha.nrow())
+  });
   int k = alpha.ncol();
   NumericVector p(Nmax);
   

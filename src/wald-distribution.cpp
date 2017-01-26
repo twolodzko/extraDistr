@@ -81,11 +81,11 @@ NumericVector cpp_dwald(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(mu.length());
-  dims.push_back(lambda.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    mu.length(),
+    lambda.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -113,11 +113,11 @@ NumericVector cpp_pwald(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(mu.length());
-  dims.push_back(lambda.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    mu.length(),
+    lambda.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;

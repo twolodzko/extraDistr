@@ -137,16 +137,16 @@ cpp_ddgamma <- function(x, shape, scale, log_prob = FALSE) {
     .Call('extraDistr_cpp_ddgamma', PACKAGE = 'extraDistr', x, shape, scale, log_prob)
 }
 
-cpp_ddlaplace <- function(x, scale, location, log_prob = FALSE) {
-    .Call('extraDistr_cpp_ddlaplace', PACKAGE = 'extraDistr', x, scale, location, log_prob)
+cpp_ddlaplace <- function(x, location, scale, log_prob = FALSE) {
+    .Call('extraDistr_cpp_ddlaplace', PACKAGE = 'extraDistr', x, location, scale, log_prob)
 }
 
-cpp_pdlaplace <- function(x, scale, location, lower_tail = TRUE, log_prob = FALSE) {
-    .Call('extraDistr_cpp_pdlaplace', PACKAGE = 'extraDistr', x, scale, location, lower_tail, log_prob)
+cpp_pdlaplace <- function(x, location, scale, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_pdlaplace', PACKAGE = 'extraDistr', x, location, scale, lower_tail, log_prob)
 }
 
-cpp_rdlaplace <- function(n, scale, location) {
-    .Call('extraDistr_cpp_rdlaplace', PACKAGE = 'extraDistr', n, scale, location)
+cpp_rdlaplace <- function(n, location, scale) {
+    .Call('extraDistr_cpp_rdlaplace', PACKAGE = 'extraDistr', n, location, scale)
 }
 
 cpp_ddnorm <- function(x, mu, sigma, log_prob = FALSE) {
@@ -547,6 +547,10 @@ cpp_qprop <- function(p, size, mean, lower_tail = TRUE, log_prob = FALSE) {
 
 cpp_rprop <- function(n, size, mean) {
     .Call('extraDistr_cpp_rprop', PACKAGE = 'extraDistr', n, size, mean)
+}
+
+cpp_rsign <- function(n) {
+    .Call('extraDistr_cpp_rsign', PACKAGE = 'extraDistr', n)
 }
 
 cpp_drayleigh <- function(x, sigma, log_prob = FALSE) {

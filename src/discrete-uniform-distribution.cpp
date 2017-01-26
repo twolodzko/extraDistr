@@ -90,11 +90,11 @@ NumericVector cpp_ddunif(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(min.length());
-  dims.push_back(max.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    min.length(),
+    max.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -122,11 +122,11 @@ NumericVector cpp_pdunif(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(x.length());
-  dims.push_back(min.length());
-  dims.push_back(max.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    x.length(),
+    min.length(),
+    max.length()
+  });
   NumericVector p(Nmax);
   
   bool throw_warning = false;
@@ -157,11 +157,11 @@ NumericVector cpp_qdunif(
     const bool& log_prob = false
   ) {
   
-  std::vector<int> dims;
-  dims.push_back(p.length());
-  dims.push_back(min.length());
-  dims.push_back(max.length());
-  int Nmax = *std::max_element(dims.begin(), dims.end());
+  int Nmax = std::max({
+    p.length(),
+    min.length(),
+    max.length()
+  });
   NumericVector q(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
