@@ -22,7 +22,7 @@ NumericVector cpp_dmixnorm(
   ) {
   
   int Nmax = std::max({
-    x.length(),
+    static_cast<long int>(x.length()),
     static_cast<long int>(mu.nrow()),
     static_cast<long int>(sigma.nrow()),
     static_cast<long int>(alpha.nrow())
@@ -89,7 +89,7 @@ NumericVector cpp_pmixnorm(
   ) {
   
   int Nmax = std::max({
-    x.length(),
+    static_cast<long int>(x.length()),
     static_cast<long int>(mu.nrow()),
     static_cast<long int>(sigma.nrow()),
     static_cast<long int>(alpha.nrow())

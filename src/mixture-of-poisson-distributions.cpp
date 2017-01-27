@@ -21,7 +21,7 @@ NumericVector cpp_dmixpois(
   ) {
   
   int Nmax = std::max({
-    x.length(),
+    static_cast<long int>(x.length()),
     static_cast<long int>(lambda.nrow()),
     static_cast<long int>(alpha.nrow())
   });
@@ -93,7 +93,7 @@ NumericVector cpp_pmixpois(
   ) {
   
   int Nmax = std::max({
-    x.length(),
+    static_cast<long int>(x.length()),
     static_cast<long int>(lambda.nrow()),
     static_cast<long int>(alpha.nrow())
   });

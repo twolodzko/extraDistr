@@ -38,7 +38,7 @@ NumericVector cpp_dmvhyper(
   int Nmax = std::max({
     static_cast<long int>(x.nrow()),
     static_cast<long int>(n.nrow()),
-    k.length()
+    static_cast<long int>(k.length())
   });
   int m = x.ncol();
   NumericVector p(Nmax);

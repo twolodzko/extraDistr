@@ -33,7 +33,7 @@ NumericVector cpp_dcat(
   ) {
   
   int Nmax = std::max({
-    x.length(),
+    static_cast<long int>(x.length()),
     static_cast<long int>(prob.nrow())
   });
   int k = prob.ncol();
@@ -94,7 +94,7 @@ NumericVector cpp_pcat(
   ) {
   
   int Nmax = std::max({
-    x.length(),
+    static_cast<long int>(x.length()),
     static_cast<long int>(prob.nrow())
   });
   int k = prob.ncol();
@@ -165,7 +165,7 @@ NumericVector cpp_qcat(
   ) {
   
   int Nmax = std::max({
-    p.length(),
+    static_cast<long int>(p.length()),
     static_cast<long int>(prob.nrow())
   });
   int k = prob.ncol();

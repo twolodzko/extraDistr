@@ -34,7 +34,7 @@ NumericVector cpp_dmnom(
   
   int Nmax = std::max({
     static_cast<long int>(x.nrow()),
-    size.length(),
+    static_cast<long int>(size.length()),
     static_cast<long int>(prob.nrow())
   });
   int m = x.ncol();
