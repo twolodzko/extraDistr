@@ -43,7 +43,7 @@ inline std::vector<double> cdf_gpois_table(double x, double alpha, double beta) 
   if (x < 0.0 || !R_FINITE(x) || alpha < 0.0 || beta < 0.0)
     Rcpp::stop("inadmissible values");
   
-  long int ix = TO_INT(x);
+  long int ix = to_int(x);
   std::vector<double> p_tab(ix+1);
   double p, qa, ga, gax, xf, px, lp;
   
@@ -76,7 +76,7 @@ inline std::vector<double> cdf_gpois_table(double x, double alpha, double beta) 
   double dj;
   
   for (long int j = 2; j <= ix; j++) {
-    dj = TO_DBL(j);
+    dj = to_dbl(j);
     gax += log(dj + alpha - 1.0);
     xf += log(dj);
     px += lp;
@@ -145,9 +145,7 @@ NumericVector cpp_pgpois(
   NumericVector p(Nmax);
   
   bool throw_warning = false;
-  
-  check_max_int(x);
-  
+
   std::map<std::tuple<int, int>, std::vector<double>> memo;
   double mx = finite_max(x);
   
@@ -169,7 +167,7 @@ NumericVector cpp_pgpois(
       if (!tmp.size()) {
         tmp = cdf_gpois_table(mx, GETV(alpha, i), GETV(beta, i));
       }
-      p[i] = tmp[TO_INT(GETV(x, i))];
+      p[i] = tmp[to_int(GETV(x, i))];
       
     }
   } 

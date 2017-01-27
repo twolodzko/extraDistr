@@ -21,7 +21,7 @@ std::vector<double> nhyper_table(
     Rcpp::stop("inadmissible values");
   
   double j, N, start_eps;
-  long int ni = TO_INT(n);
+  long int ni = to_int(n);
   N = m+n;
   
   std::vector<double> t(ni), h(ni), p(ni+1);
@@ -30,7 +30,7 @@ std::vector<double> nhyper_table(
   t[0] = start_eps + h[0];
 
   for (long int i = 1; i <= ni-1; i++) {
-    j = TO_DBL(i) + r;
+    j = to_dbl(i) + r;
     h[i] = h[i-1] * j*(n+r-j)/(N-j)/(j+1.0-r);
     t[i] = t[i-1] + h[i];
   }
@@ -69,10 +69,6 @@ NumericVector cpp_dnhyper(
   
   bool throw_warning = false;
   
-  check_max_int(x);
-  check_max_int(n);
-  check_max_int(r);
-  
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
   
   for (int i = 0; i < Nmax; i++) {
@@ -100,7 +96,7 @@ NumericVector cpp_dnhyper(
       if (!tmp.size()) {
         tmp = nhyper_table(GETV(n, i), GETV(m, i), GETV(r, i), false);
       }
-      p[i] = tmp[TO_INT( GETV(x, i) - GETV(r, i) )];
+      p[i] = tmp[to_int( GETV(x, i) - GETV(r, i) )];
       
     }
   } 
@@ -135,10 +131,6 @@ NumericVector cpp_pnhyper(
   
   bool throw_warning = false;
   
-  check_max_int(x);
-  check_max_int(n);
-  check_max_int(r);
-  
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
   
   for (int i = 0; i < Nmax; i++) {
@@ -167,7 +159,7 @@ NumericVector cpp_pnhyper(
       if (!tmp.size()) {
         tmp = nhyper_table(GETV(n, i), GETV(m, i), GETV(r, i), true);
       }
-      p[i] = tmp[TO_INT( GETV(x, i) - GETV(r, i) )];
+      p[i] = tmp[to_int( GETV(x, i) - GETV(r, i) )];
       
     }
   } 
@@ -204,9 +196,6 @@ NumericVector cpp_qnhyper(
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
   
-  check_max_int(n);
-  check_max_int(r);
-  
   bool throw_warning = false;
   
   if (log_prob)
@@ -241,9 +230,9 @@ NumericVector cpp_qnhyper(
         tmp = nhyper_table(GETV(n, i), GETV(m, i), GETV(r, i), true);
       }
       
-      for (int j = 0; j <= TO_INT( GETV(n, i) ); j++) {
+      for (int j = 0; j <= to_int( GETV(n, i) ); j++) {
         if (tmp[j] >= GETV(pp, i)) {
-          x[i] = TO_DBL(j) + GETV(r, i);
+          x[i] = to_dbl(j) + GETV(r, i);
           break;
         }
       }
@@ -271,9 +260,6 @@ NumericVector cpp_rnhyper(
   
   bool throw_warning = false;
   
-  check_max_int(n);
-  check_max_int(r);
-  
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
   
   for (int i = 0; i < nn; i++) {
@@ -297,9 +283,9 @@ NumericVector cpp_rnhyper(
       
       u = rng_unif();
       
-      for (int j = 0; j <= TO_INT( GETV(n, i) ); j++) {
+      for (int j = 0; j <= to_int( GETV(n, i) ); j++) {
         if (tmp[j] >= u) {
-          x[i] = TO_DBL(j) + GETV(r, i);
+          x[i] = to_dbl(j) + GETV(r, i);
           break;
         }
       }

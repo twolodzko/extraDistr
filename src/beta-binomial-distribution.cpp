@@ -58,7 +58,7 @@ inline std::vector<double> cdf_bbinom_table(double k, double n,
   if (k < 0.0 || k > n || alpha < 0.0 || beta < 0.0)
     Rcpp::stop("inadmissible values");
 
-  long int ik = TO_INT(k);
+  long int ik = to_int(k);
   std::vector<double> p_tab(ik+1);
   double nck, bab, gx, gy, gxy;
   
@@ -90,7 +90,7 @@ inline std::vector<double> cdf_bbinom_table(double k, double n,
   double dj;
   
   for (long int j = 2; j <= ik; j++) {
-    dj = TO_DBL(j);
+    dj = to_dbl(j);
     nck += log((n + 1.0 - dj)/dj);
     gx += log(dj + alpha - 1.0);
     gy -= log(n + beta - dj);
@@ -166,8 +166,6 @@ NumericVector cpp_pbbinom(
   
   bool throw_warning = false;
   
-  check_max_int(x);
-  
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
   double mx = std::min(finite_max(x), finite_max(size));
   
@@ -195,7 +193,7 @@ NumericVector cpp_pbbinom(
       if (!tmp.size()) {
         tmp = cdf_bbinom_table(mx, GETV(size, i), GETV(alpha, i), GETV(beta, i));
       }
-      p[i] = tmp[TO_INT(GETV(x, i))];
+      p[i] = tmp[to_int(GETV(x, i))];
       
     }
   }

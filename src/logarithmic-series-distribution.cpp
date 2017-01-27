@@ -55,10 +55,10 @@ double cdf_lgser(double x, double theta, bool& throw_warnin) {
   double a = -1.0/log(1.0 - theta);
   double b = 0.0;
   double dk;
-  long int ix = TO_INT(x);
+  long int ix = to_int(x);
   
   for (long int k = 1; k <= ix; k++) {
-    dk = TO_DBL(k);
+    dk = to_dbl(k);
     b += pow(theta, dk) / dk;
   }
   
@@ -153,8 +153,6 @@ NumericVector cpp_plgser(
   NumericVector p(Nmax);
   
   bool throw_warning = false;
-  
-  check_max_int(x);
 
   for (int i = 0; i < Nmax; i++)
     p[i] = cdf_lgser(GETV(x, i), GETV(theta, i),

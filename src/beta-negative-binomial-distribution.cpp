@@ -60,7 +60,7 @@ inline std::vector<double> cdf_bnbinom_table(double k, double r,
   if (k < 0.0 || !R_FINITE(k) || r < 0.0 || alpha < 0.0 || beta < 0.0)
     Rcpp::stop("inadmissible values");
 
-  long int ik = TO_INT(k);
+  long int ik = to_int(k);
   std::vector<double> p_tab(ik+1);
   double grx, xf, gr, gar, gbx, gabrx, bab;
   
@@ -94,7 +94,7 @@ inline std::vector<double> cdf_bnbinom_table(double k, double r,
   double dj;
   
   for (long int j = 2; j <= ik; j++) {
-    dj = TO_DBL(j);
+    dj = to_dbl(j);
     grx += log(r + dj - 1.0);
     gbx += log(beta + dj - 1.0);
     gabrx += log(alpha + beta + r + dj - 1.0);
@@ -170,8 +170,6 @@ NumericVector cpp_pbnbinom(
   NumericVector p(Nmax);
   
   bool throw_warning = false;
-  
-  check_max_int(x);
 
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
   double mx = finite_max(x);
@@ -200,7 +198,7 @@ NumericVector cpp_pbnbinom(
       if (!tmp.size()) {
         tmp = cdf_bnbinom_table(mx, GETV(size, i), GETV(alpha, i), GETV(beta, i));
       }
-      p[i] = tmp[TO_INT(GETV(x, i))];
+      p[i] = tmp[to_int(GETV(x, i))];
       
     }
   }

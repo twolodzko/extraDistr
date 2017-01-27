@@ -45,8 +45,6 @@ NumericVector cpp_dcat(
   if (k < 2)
     Rcpp::stop("number of columns in prob is < 2");
   
-  check_max_int(x);
-  
   NumericMatrix prob_tab = Rcpp::clone(prob);
   
   for (int i = 0; i < prob.nrow(); i++) {
@@ -71,11 +69,11 @@ NumericVector cpp_dcat(
       continue;
     }
     if (!isInteger(GETV(x, i)) || GETV(x, i) < 1.0 ||
-        GETV(x, i) > TO_DBL(k)) {
+        GETV(x, i) > to_dbl(k)) {
       p[i] = 0.0;
       continue;
     }
-    p[i] = GETM(prob_tab, i, TO_INT(GETV(x, i)) - 1);
+    p[i] = GETM(prob_tab, i, to_int(GETV(x, i)) - 1);
   }
 
   if (log_prob)
@@ -108,8 +106,6 @@ NumericVector cpp_pcat(
   if (k < 2)
     Rcpp::stop("number of columns in prob is < 2");
   
-  check_max_int(x);
-  
   NumericMatrix prob_tab = Rcpp::clone(prob);
   
   for (int i = 0; i < prob.nrow(); i++) {
@@ -140,11 +136,11 @@ NumericVector cpp_pcat(
       p[i] = 0.0;
       continue;
     }
-    if (GETV(x, i) >= TO_DBL(k)) {
+    if (GETV(x, i) >= to_dbl(k)) {
       p[i] = 1.0;
       continue;
     }
-    p[i] = GETM(prob_tab, i, TO_INT(GETV(x, i)) - 1);
+    p[i] = GETM(prob_tab, i, to_int(GETV(x, i)) - 1);
   }
 
   if (!lower_tail)
@@ -229,7 +225,7 @@ NumericVector cpp_qcat(
       continue;
     }
     if (GETV(p, i) == 1.0) {
-      x[i] = TO_DBL(k);
+      x[i] = to_dbl(k);
       continue;
     }
     
@@ -240,7 +236,7 @@ NumericVector cpp_qcat(
         break;
       }
     }
-    x[i] = TO_DBL(jj);
+    x[i] = to_dbl(jj);
   }
   
   if (throw_warning)
@@ -302,7 +298,7 @@ NumericVector cpp_rcat(
         break;
       }
     }
-    x[i] = TO_DBL(jj);
+    x[i] = to_dbl(jj);
   }
   
   if (throw_warning)
