@@ -42,6 +42,10 @@ test_that("cdf vs cumsum(pdf)", {
   expect_equal(cumsum(dcat(xx, p)), pcat(xx, p), tolerance = epsilon)
   expect_equal(cumsum(dnhyper(xx, 60, 35, 15)), pnhyper(xx, 60, 35, 15), tolerance = epsilon)
   
+  dnhyper2 <- function(x, n, m, r) ifelse(x<r | x>=(n+r), 0, choose(x-1, r-1)*choose(m+n-x, m-r)/choose(m+n, n))
+  expect_equal(dnhyper2(xx, 60, 35, 15), dnhyper(xx, 60, 35, 15), tolerance = epsilon)
+  expect_equal(cumsum(dnhyper2(xx, 60, 35, 15)), pnhyper(xx, 60, 35, 15), tolerance = epsilon)
+  
   expect_equal(cumsum(dbbinom(xx, 200, 5, 13)), pbbinom(xx, 200, 5, 13), tolerance = epsilon)
   expect_equal(cumsum(dbnbinom(xx, 70, 5, 13)), pbnbinom(xx, 70, 5, 13), tolerance = epsilon)
   expect_equal(cumsum(dgpois(xx, 500, 16)), pgpois(xx, 500, 16), tolerance = epsilon)

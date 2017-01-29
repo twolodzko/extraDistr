@@ -449,10 +449,6 @@ cpp_rmvhyper <- function(nn, n, k) {
     .Call('extraDistr_cpp_rmvhyper', PACKAGE = 'extraDistr', nn, n, k)
 }
 
-nhyper_table <- function(n, m, r, cumulative = FALSE) {
-    .Call('extraDistr_nhyper_table', PACKAGE = 'extraDistr', n, m, r, cumulative)
-}
-
 cpp_dnhyper <- function(x, n, m, r, log_prob = FALSE) {
     .Call('extraDistr_cpp_dnhyper', PACKAGE = 'extraDistr', x, n, m, r, log_prob)
 }

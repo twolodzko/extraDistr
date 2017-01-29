@@ -1,5 +1,6 @@
 #include <Rcpp.h>
 #include "shared.h"
+// [[Rcpp::plugins(cpp11)]]
 
 using std::pow;
 using std::sqrt;
@@ -11,7 +12,6 @@ using std::ceil;
 using Rcpp::NumericVector;
 
 
-// [[Rcpp::export]]
 std::vector<double> nhyper_table(
     double n, double m, double r,
     bool cumulative = false
