@@ -209,6 +209,10 @@ test_that("Missing values in PDF and PMF functions", {
   expect_true(is.na(dskellam(NA, 1, 1)))
   expect_true(is.na(dskellam(1, NA, 1)))
   expect_true(is.na(dskellam(1, 1, NA)))
+  
+  expect_true(is.na(dsgomp(NA, 0.4, 1)))
+  expect_true(is.na(dsgomp(1, NA, 1)))
+  expect_true(is.na(dsgomp(1, 0.4, NA)))
 
   expect_true(is.na(dslash(NA, 1, 1)))
   expect_true(is.na(dslash(1, NA, 1)))
@@ -415,6 +419,10 @@ test_that("Wrong parameter values in CDF functions", {
   
   expect_true(is.na(prayleigh(NA, 1)))
   expect_true(is.na(prayleigh(1, NA)))
+  
+  expect_true(is.na(psgomp(NA, 0.4, 1)))
+  expect_true(is.na(psgomp(1, NA, 1)))
+  expect_true(is.na(psgomp(1, 0.4, NA)))
 
   expect_true(is.na(pslash(NA, 1, 1)))
   expect_true(is.na(pslash(1, NA, 1)))
@@ -765,6 +773,9 @@ test_that("Wrong parameter values in RNG functions", {
   expect_warning(expect_true(is.na(rrayleigh(1, NA))))
   
   expect_warning(expect_true(is.na(rtlambda(1, NA))))
+  
+  expect_warning(expect_true(is.na(rsgomp(1, NA, 1))))
+  expect_warning(expect_true(is.na(rsgomp(1, 0.4, NA))))
   
   expect_warning(expect_true(is.na(rskellam(1, NA, 1))))
   expect_warning(expect_true(is.na(rskellam(1, 1, NA))))

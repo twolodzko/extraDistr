@@ -25,6 +25,7 @@ test_that("Zero probabilities for values <0", {
   expect_equal(0, dgpois(-1, 1, 1))
   expect_equal(0, dlomax(-1, 1, 1))
   expect_equal(0, dpower(-1, 1, 0.5))
+  expect_equal(0, dsgomp(-1, 0.4, 1))
   expect_equal(0, drayleigh(-1, 1))
   expect_equal(0, dwald(-1, 1, 1))
   
