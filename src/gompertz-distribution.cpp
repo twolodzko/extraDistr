@@ -70,7 +70,7 @@ inline double invcdf_gompertz(double p, double a, double b,
     throw_warning = true;
     return NAN;
   }
-  return 1.0/b * log(1.0 - b/a * log(1.0-p));
+  return log(1.0 - b/a * log(1.0-p)) / b;
 }
 
 inline double rng_gompertz(double a, double b, bool& throw_warning) {
@@ -79,7 +79,7 @@ inline double rng_gompertz(double a, double b, bool& throw_warning) {
     return NA_REAL;
   }
   double u = rng_unif();
-  return 1.0/b * log(1.0 - b/a * log(u));
+  return log(1.0 - b/a * log(u)) / b;
 }
 
 inline double logpdf_gompertz(double x, double a, double b,

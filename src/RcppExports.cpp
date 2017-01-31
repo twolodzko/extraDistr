@@ -2032,6 +2032,48 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// cpp_dshgomp
+NumericVector cpp_dshgomp(const NumericVector& x, const NumericVector& b, const NumericVector& eta, bool log_prob);
+RcppExport SEXP extraDistr_cpp_dshgomp(SEXP xSEXP, SEXP bSEXP, SEXP etaSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type eta(etaSEXP);
+    Rcpp::traits::input_parameter< bool >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_dshgomp(x, b, eta, log_prob));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_pshgomp
+NumericVector cpp_pshgomp(const NumericVector& x, const NumericVector& b, const NumericVector& eta, const bool& lower_tail, const bool& log_prob);
+RcppExport SEXP extraDistr_cpp_pshgomp(SEXP xSEXP, SEXP bSEXP, SEXP etaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type eta(etaSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_pshgomp(x, b, eta, lower_tail, log_prob));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_rshgomp
+NumericVector cpp_rshgomp(const int& n, const NumericVector& b, const NumericVector& eta);
+RcppExport SEXP extraDistr_cpp_rshgomp(SEXP nSEXP, SEXP bSEXP, SEXP etaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type b(bSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type eta(etaSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_rshgomp(n, b, eta));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cpp_dskellam
 NumericVector cpp_dskellam(const NumericVector& x, const NumericVector& mu1, const NumericVector& mu2, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_dskellam(SEXP xSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP log_probSEXP) {

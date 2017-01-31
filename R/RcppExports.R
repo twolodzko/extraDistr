@@ -565,6 +565,18 @@ cpp_rrayleigh <- function(n, sigma) {
     .Call('extraDistr_cpp_rrayleigh', PACKAGE = 'extraDistr', n, sigma)
 }
 
+cpp_dshgomp <- function(x, b, eta, log_prob = FALSE) {
+    .Call('extraDistr_cpp_dshgomp', PACKAGE = 'extraDistr', x, b, eta, log_prob)
+}
+
+cpp_pshgomp <- function(x, b, eta, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_pshgomp', PACKAGE = 'extraDistr', x, b, eta, lower_tail, log_prob)
+}
+
+cpp_rshgomp <- function(n, b, eta) {
+    .Call('extraDistr_cpp_rshgomp', PACKAGE = 'extraDistr', n, b, eta)
+}
+
 cpp_dskellam <- function(x, mu1, mu2, log_prob = FALSE) {
     .Call('extraDistr_cpp_dskellam', PACKAGE = 'extraDistr', x, mu1, mu2, log_prob)
 }

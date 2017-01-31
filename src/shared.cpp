@@ -1,8 +1,5 @@
 #include <Rcpp.h>
 
-// inline double round0(double x) {
-//   return (x < 0.0) ? std::ceil(x) : std::floor(x);
-// }
 
 bool isInteger(double x, bool warn) {
   if (ISNAN(x))
@@ -17,14 +14,6 @@ bool isInteger(double x, bool warn) {
   }
   return true;
 }
-
-// bool anyFinite(Rcpp::NumericVector x) {
-//   int n = x.length();
-//   for (int i = 0; i < n; i++)
-//     if (R_FINITE(x[i]))
-//       return true;
-//   return false;
-// }
 
 double finite_max(const Rcpp::NumericVector& x) {
   double max_x = 0.0;
@@ -45,16 +34,6 @@ double finite_max(const Rcpp::NumericVector& x) {
   }
   return max_x;
 }
-
-// bool allNA(Rcpp::NumericVector x) {
-//   int n = x.length();
-//   for (int i = 0; i < n; i++)
-//     if (!ISNAN(x[i]))
-//       return false;
-//   return true;
-// }
-
-// Random generation
 
 double rng_unif() {
   double u;

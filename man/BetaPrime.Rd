@@ -44,7 +44,7 @@ If \eqn{X \sim \mathrm{Beta}(\alpha, \beta)}{X ~ Beta(\alpha, \beta)}, then
 Probability density function
 
 \deqn{
-f(x) = \frac{(x/\sigma)^{\alpha-1} (1+x/\sigma)^{-\alpha -\beta}}{B(\alpha,\beta)\sigma}
+f(x) = \frac{(x/\sigma)^{\alpha-1} (1+x/\sigma)^{-\alpha -\beta}}{\mathrm{B}(\alpha,\beta)\sigma}
 }{
 f(x) = ((x/\sigma)^(\alpha-1) * (1 + x/\sigma)^(-\alpha-\beta)) / (B(\alpha,\beta) * \sigma)
 }
