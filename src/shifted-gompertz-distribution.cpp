@@ -44,7 +44,7 @@ using Rcpp::NumericVector;
 */
 
 
-inline double pdf_shgomp(double x, double b, double eta,
+inline double pdf_sgomp(double x, double b, double eta,
                            bool& throw_warning) {
   if (ISNAN(x) || ISNAN(b) || ISNAN(eta))
     return x+b+eta;
@@ -58,7 +58,7 @@ inline double pdf_shgomp(double x, double b, double eta,
   return b*ebx * exp(-eta*ebx) * (1+eta*(1-ebx));
 }
 
-inline double cdf_shgomp(double x, double b, double eta,
+inline double cdf_sgomp(double x, double b, double eta,
                            bool& throw_warning) {
   if (ISNAN(x) || ISNAN(b) || ISNAN(eta))
     return x+b+eta;
@@ -74,7 +74,7 @@ inline double cdf_shgomp(double x, double b, double eta,
   return (1-ebx) * exp(-eta*ebx);
 }
 
-inline double rng_shgomp(double b, double eta, bool& throw_warning) {
+inline double rng_sgomp(double b, double eta, bool& throw_warning) {
   if (ISNAN(b) || ISNAN(eta) || b <= 0.0 || eta <= 0.0) {
     throw_warning = true;
     return NA_REAL;
@@ -88,7 +88,7 @@ inline double rng_shgomp(double b, double eta, bool& throw_warning) {
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dshgomp(
+NumericVector cpp_dsgomp(
     const NumericVector& x,
     const NumericVector& b,
     const NumericVector& eta,
@@ -105,8 +105,8 @@ NumericVector cpp_dshgomp(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_shgomp(GETV(x, i), GETV(b, i),
-                      GETV(eta, i), throw_warning);
+    p[i] = pdf_sgomp(GETV(x, i), GETV(b, i),
+                     GETV(eta, i), throw_warning);
   
   if (log_prob)
     p = Rcpp::log(p);
@@ -119,7 +119,7 @@ NumericVector cpp_dshgomp(
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pshgomp(
+NumericVector cpp_psgomp(
     const NumericVector& x,
     const NumericVector& b,
     const NumericVector& eta,
@@ -137,8 +137,8 @@ NumericVector cpp_pshgomp(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_shgomp(GETV(x, i), GETV(b, i),
-                      GETV(eta, i), throw_warning);
+    p[i] = cdf_sgomp(GETV(x, i), GETV(b, i),
+                     GETV(eta, i), throw_warning);
   
   if (!lower_tail)
     p = 1.0 - p;
@@ -154,7 +154,7 @@ NumericVector cpp_pshgomp(
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rshgomp(
+NumericVector cpp_rsgomp(
     const int& n,
     const NumericVector& b,
     const NumericVector& eta
@@ -165,8 +165,8 @@ NumericVector cpp_rshgomp(
   bool throw_warning = false;
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_shgomp(GETV(b, i), GETV(eta, i),
-                      throw_warning);
+    x[i] = rng_sgomp(GETV(b, i), GETV(eta, i),
+                     throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NAs produced");

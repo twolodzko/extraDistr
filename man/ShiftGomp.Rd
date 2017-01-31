@@ -2,16 +2,16 @@
 % Please edit documentation in R/shifted-gompertz-distribution.R
 \name{ShiftGomp}
 \alias{ShiftGomp}
-\alias{dshgomp}
-\alias{pshgomp}
-\alias{rshgomp}
+\alias{dsgomp}
+\alias{psgomp}
+\alias{rsgomp}
 \title{Shifted Gompertz distribution}
 \usage{
-dshgomp(x, b, eta, log = FALSE)
+dsgomp(x, b, eta, log = FALSE)
 
-pshgomp(q, b, eta, lower.tail = TRUE, log.p = FALSE)
+psgomp(q, b, eta, lower.tail = TRUE, log.p = FALSE)
 
-rshgomp(n, b, eta)
+rsgomp(n, b, eta)
 }
 \arguments{
 \item{x, q}{vector of quantiles.}
@@ -37,7 +37,7 @@ If \eqn{X} follows exponential distribution parametrized by scale \eqn{b} and
 \eqn{F(x) = \exp(-\eta  e^{-bx})}{F(x) = exp(-\eta*exp(-b*x))} parametrized by 
 scale \eqn{b} and shape \eqn{\eta}, then \eqn{\max(X,Y)}{max(X,Y)} follows shifted
 Gompertz distribution parametrized by scale \eqn{b>0} and shape \eqn{\eta>0}.
-The above relation is used by \code{rshgomp} function for random generation from
+The above relation is used by \code{rsgomp} function for random generation from
 shifted Gompertz distribution.
 
 Probability density function
@@ -56,13 +56,13 @@ F(x) = (1-exp(-b*x)) * exp(-\eta*exp(-b*x))
 }
 \examples{
 
-x <- rshgomp(1e5, 0.4, 1)
+x <- rsgomp(1e5, 0.4, 1)
 xx <- seq(0, 100, by = 0.1)
 hist(x, 50, freq = FALSE)
-lines(xx, dshgomp(xx, 0.4, 1), col = "red")
-hist(pshgomp(x, 0.4, 1))
+lines(xx, dsgomp(xx, 0.4, 1), col = "red")
+hist(psgomp(x, 0.4, 1))
 plot(ecdf(x))
-lines(xx, pshgomp(xx, 0.4, 1), col = "red", lwd = 2)
+lines(xx, psgomp(xx, 0.4, 1), col = "red", lwd = 2)
 
 }
 \references{

@@ -21,7 +21,7 @@
 #' \eqn{F(x) = \exp(-\eta  e^{-bx})}{F(x) = exp(-\eta*exp(-b*x))} parametrized by 
 #' scale \eqn{b} and shape \eqn{\eta}, then \eqn{\max(X,Y)}{max(X,Y)} follows shifted
 #' Gompertz distribution parametrized by scale \eqn{b>0} and shape \eqn{\eta>0}.
-#' The above relation is used by \code{rshgomp} function for random generation from
+#' The above relation is used by \code{rsgomp} function for random generation from
 #' shifted Gompertz distribution.
 #'
 #' Probability density function
@@ -57,39 +57,39 @@
 #' 
 #' @examples 
 #' 
-#' x <- rshgomp(1e5, 0.4, 1)
+#' x <- rsgomp(1e5, 0.4, 1)
 #' xx <- seq(0, 100, by = 0.1)
 #' hist(x, 50, freq = FALSE)
-#' lines(xx, dshgomp(xx, 0.4, 1), col = "red")
-#' hist(pshgomp(x, 0.4, 1))
+#' lines(xx, dsgomp(xx, 0.4, 1), col = "red")
+#' hist(psgomp(x, 0.4, 1))
 #' plot(ecdf(x))
-#' lines(xx, pshgomp(xx, 0.4, 1), col = "red", lwd = 2)
+#' lines(xx, psgomp(xx, 0.4, 1), col = "red", lwd = 2)
 #'
 #' @name ShiftGomp
 #' @aliases ShiftGomp
-#' @aliases dshgomp
+#' @aliases dsgomp
 #' @keywords distribution
 #'
 #' @export
 
-dshgomp <- function(x, b, eta, log = FALSE) {
-  cpp_dshgomp(x, b, eta, log)
+dsgomp <- function(x, b, eta, log = FALSE) {
+  cpp_dsgomp(x, b, eta, log)
 }
 
 
 #' @rdname ShiftGomp
 #' @export
 
-pshgomp <- function(q, b, eta, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pshgomp(q, b, eta, lower.tail, log.p)
+psgomp <- function(q, b, eta, lower.tail = TRUE, log.p = FALSE) {
+  cpp_psgomp(q, b, eta, lower.tail, log.p)
 }
 
 
 #' @rdname ShiftGomp
 #' @export
 
-rshgomp <- function(n, b, eta) {
+rsgomp <- function(n, b, eta) {
   if (length(n) > 1) n <- length(n)
-  cpp_rshgomp(n, b, eta)
+  cpp_rsgomp(n, b, eta)
 }
 
