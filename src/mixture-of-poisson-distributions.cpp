@@ -22,9 +22,9 @@ NumericVector cpp_dmixpois(
   ) {
   
   int Nmax = std::max({
-    static_cast<long int>(x.length()),
-    static_cast<long int>(lambda.nrow()),
-    static_cast<long int>(alpha.nrow())
+    static_cast<int>(x.length()),
+    static_cast<int>(lambda.nrow()),
+    static_cast<int>(alpha.nrow())
   });
   int k = alpha.ncol();
   NumericVector p(Nmax);
@@ -94,9 +94,9 @@ NumericVector cpp_pmixpois(
   ) {
   
   int Nmax = std::max({
-    static_cast<long int>(x.length()),
-    static_cast<long int>(lambda.nrow()),
-    static_cast<long int>(alpha.nrow())
+    static_cast<int>(x.length()),
+    static_cast<int>(lambda.nrow()),
+    static_cast<int>(alpha.nrow())
   });
   int k = alpha.ncol();
   NumericVector p(Nmax);

@@ -61,7 +61,7 @@ inline std::vector<double> cdf_bnbinom_table(double k, double r,
   if (k < 0.0 || !R_FINITE(k) || r < 0.0 || alpha < 0.0 || beta < 0.0)
     Rcpp::stop("inadmissible values");
 
-  long int ik = to_int(k);
+  int ik = to_pos_int(k);
   std::vector<double> p_tab(ik+1);
   double grx, xf, gr, gar, gbx, gabrx, bab;
   
@@ -94,7 +94,7 @@ inline std::vector<double> cdf_bnbinom_table(double k, double r,
   
   double dj;
   
-  for (long int j = 2; j <= ik; j++) {
+  for (int j = 2; j <= ik; j++) {
     dj = to_dbl(j);
     grx += log(r + dj - 1.0);
     gbx += log(beta + dj - 1.0);
@@ -173,7 +173,7 @@ NumericVector cpp_pbnbinom(
   bool throw_warning = false;
 
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
-  double mx = finite_max(x);
+  double mx = finite_max_int(x);
   
   for (int i = 0; i < Nmax; i++) {
     
@@ -191,6 +191,9 @@ NumericVector cpp_pbnbinom(
       p[i] = 0.0;
     } else if (!R_FINITE(GETV(x, i))) {
       p[i] = 1.0;
+    } else if (is_large_int(GETV(x, i))) {
+      p[i] = NA_REAL;
+      Rcpp::warning("NAs introduced by coercion to integer range");
     } else {
       
       std::vector<double>& tmp = memo[std::make_tuple(i % size.length(),
@@ -199,7 +202,7 @@ NumericVector cpp_pbnbinom(
       if (!tmp.size()) {
         tmp = cdf_bnbinom_table(mx, GETV(size, i), GETV(alpha, i), GETV(beta, i));
       }
-      p[i] = tmp[to_int(GETV(x, i))];
+      p[i] = tmp[to_pos_int(GETV(x, i))];
       
     }
   }

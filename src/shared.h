@@ -19,7 +19,7 @@ static const double MIN_DIFF_EPS = 1e-8;
 // functions
 
 bool isInteger(double x, bool warn = true);
-double finite_max(const Rcpp::NumericVector& x);
+double finite_max_int(const Rcpp::NumericVector& x);
 double rng_unif();         // standard uniform
 
 // inline functions
@@ -31,10 +31,11 @@ inline double InvPhi(double x);
 inline double factorial(double x);
 inline double lfactorial(double x);
 inline double rng_sign();
-inline double to_dbl(long int x);
-inline long int to_int(double x);
+inline bool is_large_int(double x); 
+inline double to_dbl(int x);
+inline int to_pos_int(double x);
 
-#include "inline_funs.h"
+#include "shared_inline_funs.h"
 
 
 #endif

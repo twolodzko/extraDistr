@@ -44,7 +44,7 @@ inline std::vector<double> cdf_gpois_table(double x, double alpha, double beta) 
   if (x < 0.0 || !R_FINITE(x) || alpha < 0.0 || beta < 0.0)
     Rcpp::stop("inadmissible values");
   
-  long int ix = to_int(x);
+  int ix = to_pos_int(x);
   std::vector<double> p_tab(ix+1);
   double p, qa, ga, gax, xf, px, lp;
   
@@ -76,7 +76,7 @@ inline std::vector<double> cdf_gpois_table(double x, double alpha, double beta) 
   
   double dj;
   
-  for (long int j = 2; j <= ix; j++) {
+  for (int j = 2; j <= ix; j++) {
     dj = to_dbl(j);
     gax += log(dj + alpha - 1.0);
     xf += log(dj);
@@ -148,7 +148,7 @@ NumericVector cpp_pgpois(
   bool throw_warning = false;
 
   std::map<std::tuple<int, int>, std::vector<double>> memo;
-  double mx = finite_max(x);
+  double mx = finite_max_int(x);
   
   for (int i = 0; i < Nmax; i++) {
     if (i % 1000 == 0)
@@ -162,13 +162,16 @@ NumericVector cpp_pgpois(
       p[i] = 0.0;
     } else if (GETV(x, i) == R_PosInf) {
       p[i] = 1.0;
+    } else if (is_large_int(GETV(x, i))) {
+      p[i] = NA_REAL;
+      Rcpp::warning("NAs introduced by coercion to integer range");
     } else {
       
       std::vector<double>& tmp = memo[std::make_tuple(i % alpha.length(), i % beta.length())];
       if (!tmp.size()) {
         tmp = cdf_gpois_table(mx, GETV(alpha, i), GETV(beta, i));
       }
-      p[i] = tmp[to_int(GETV(x, i))];
+      p[i] = tmp[to_pos_int(GETV(x, i))];
       
     }
   } 

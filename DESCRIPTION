@@ -19,8 +19,8 @@ Description: Density, distribution function, quantile function
     Laplace, logarithmic, Lomax, multivariate hypergeometric,
     multinomial, negative hypergeometric, non-standard t,
     non-standard beta, normal mixture, Poisson mixture, Pareto,
-    power, reparametrized beta, Rayleigh, Skellam, slash,
-    triangular, truncated binomial, truncated normal,
+    power, reparametrized beta, Rayleigh, shifted Gompertz, Skellam,
+    slash, triangular, truncated binomial, truncated normal,
     truncated Poisson, Tukey lambda, Wald, zero-inflated binomial,
     zero-inflated negative binomial, zero-inflated Poisson.
 License: GPL-2

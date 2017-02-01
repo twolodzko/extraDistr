@@ -34,8 +34,8 @@ NumericVector cpp_dcat(
   ) {
   
   int Nmax = std::max({
-    static_cast<long int>(x.length()),
-    static_cast<long int>(prob.nrow())
+    static_cast<int>(x.length()),
+    static_cast<int>(prob.nrow())
   });
   int k = prob.ncol();
   NumericVector p(Nmax);
@@ -74,7 +74,11 @@ NumericVector cpp_dcat(
       p[i] = 0.0;
       continue;
     }
-    p[i] = GETM(prob_tab, i, to_int(GETV(x, i)) - 1);
+    if (is_large_int(GETV(x, i))) {
+      Rcpp::warning("NAs introduced by coercion to integer range");
+      p[i] = NA_REAL;
+    }
+    p[i] = GETM(prob_tab, i, to_pos_int(GETV(x, i)) - 1);
   }
 
   if (log_prob)
@@ -95,8 +99,8 @@ NumericVector cpp_pcat(
   ) {
   
   int Nmax = std::max({
-    static_cast<long int>(x.length()),
-    static_cast<long int>(prob.nrow())
+    static_cast<int>(x.length()),
+    static_cast<int>(prob.nrow())
   });
   int k = prob.ncol();
   NumericVector p(Nmax);
@@ -141,7 +145,11 @@ NumericVector cpp_pcat(
       p[i] = 1.0;
       continue;
     }
-    p[i] = GETM(prob_tab, i, to_int(GETV(x, i)) - 1);
+    if (is_large_int(GETV(x, i))) {
+      Rcpp::warning("NAs introduced by coercion to integer range");
+      p[i] = NA_REAL;
+    }
+    p[i] = GETM(prob_tab, i, to_pos_int(GETV(x, i)) - 1);
   }
 
   if (!lower_tail)
@@ -166,8 +174,8 @@ NumericVector cpp_qcat(
   ) {
   
   int Nmax = std::max({
-    static_cast<long int>(p.length()),
-    static_cast<long int>(prob.nrow())
+    static_cast<int>(p.length()),
+    static_cast<int>(prob.nrow())
   });
   int k = prob.ncol();
   NumericVector x(Nmax);

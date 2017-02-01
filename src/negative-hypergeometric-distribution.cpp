@@ -21,7 +21,7 @@ std::vector<double> nhyper_table(
     Rcpp::stop("inadmissible values");
   
   double j, N, start_eps;
-  long int ni = to_int(n);
+  int ni = to_pos_int(n);
   N = m+n;
   
   std::vector<double> t(ni), h(ni), p(ni+1);
@@ -29,7 +29,7 @@ std::vector<double> nhyper_table(
   h[0] = start_eps * r*n/(N-r);
   t[0] = start_eps + h[0];
 
-  for (long int i = 1; i <= ni-1; i++) {
+  for (int i = 1; i <= ni-1; i++) {
     j = to_dbl(i) + r;
     h[i] = h[i-1] * j*(n+r-j)/(N-j)/(j+1.0-r);
     t[i] = t[i-1] + h[i];
@@ -38,11 +38,11 @@ std::vector<double> nhyper_table(
   p[0] = start_eps / t[ni-1];
   
   if (cumulative) {
-    for (long int i = 1; i < ni; i++)
+    for (int i = 1; i < ni; i++)
       p[i] = t[i-1] / t[ni-1];
     p[ni] = 1.0;
   } else {
-    for (long int i = 1; i <= ni; i++)
+    for (int i = 1; i <= ni; i++)
       p[i] = h[i-1] / t[ni-1];
   }
   
@@ -96,7 +96,7 @@ NumericVector cpp_dnhyper(
       if (!tmp.size()) {
         tmp = nhyper_table(GETV(n, i), GETV(m, i), GETV(r, i), false);
       }
-      p[i] = tmp[to_int( GETV(x, i) - GETV(r, i) )];
+      p[i] = tmp[to_pos_int( GETV(x, i) - GETV(r, i) )];
       
     }
   } 
@@ -159,7 +159,7 @@ NumericVector cpp_pnhyper(
       if (!tmp.size()) {
         tmp = nhyper_table(GETV(n, i), GETV(m, i), GETV(r, i), true);
       }
-      p[i] = tmp[to_int( GETV(x, i) - GETV(r, i) )];
+      p[i] = tmp[to_pos_int( GETV(x, i) - GETV(r, i) )];
       
     }
   } 
@@ -230,7 +230,7 @@ NumericVector cpp_qnhyper(
         tmp = nhyper_table(GETV(n, i), GETV(m, i), GETV(r, i), true);
       }
       
-      for (int j = 0; j <= to_int( GETV(n, i) ); j++) {
+      for (int j = 0; j <= to_pos_int( GETV(n, i) ); j++) {
         if (tmp[j] >= GETV(pp, i)) {
           x[i] = to_dbl(j) + GETV(r, i);
           break;
@@ -283,7 +283,7 @@ NumericVector cpp_rnhyper(
       
       u = rng_unif();
       
-      for (int j = 0; j <= to_int( GETV(n, i) ); j++) {
+      for (int j = 0; j <= to_pos_int( GETV(n, i) ); j++) {
         if (tmp[j] >= u) {
           x[i] = to_dbl(j) + GETV(r, i);
           break;

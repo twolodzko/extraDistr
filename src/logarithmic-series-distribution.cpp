@@ -52,13 +52,17 @@ double cdf_lgser(double x, double theta, bool& throw_warnin) {
     return 0.0;
   if (!R_FINITE(x))
     return 1.0;
+  if (is_large_int(x)) {
+    Rcpp::warning("NAs introduced by coercion to integer range");
+    return NA_REAL;
+  }
   
   double a = -1.0/log(1.0 - theta);
   double b = 0.0;
   double dk;
-  long int ix = to_int(x);
+  int ix = to_pos_int(x);
   
-  for (long int k = 1; k <= ix; k++) {
+  for (int k = 1; k <= ix; k++) {
     dk = to_dbl(k);
     b += pow(theta, dk) / dk;
   }

@@ -35,14 +35,22 @@ inline double rng_sign() {
   return (u > 0.5) ? 1.0 : -1.0;
 }
 
-inline double to_dbl(long int x) {
+inline bool is_large_int(double x) {
+  if (x > std::numeric_limits<int>::max())
+    return true;
+  return false;
+}
+
+inline double to_dbl(int x) {
   return static_cast<double>(x);
 }
 
-inline long int to_int(double x) {
-  if (R_FINITE(x) && x > std::numeric_limits<long int>::max())
-    Rcpp::stop("reached largest integer which can be represented as <long int>");
-  return static_cast<long int>(x);
+inline int to_pos_int(double x) {
+  if (x < 0.0 || ISNAN(x))
+    Rcpp::stop("value cannot be coerced to integer");
+  if (is_large_int(x))
+    Rcpp::stop("value out of integer range");
+  return static_cast<int>(x);
 }
 
 

@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include "shared.h"
 
 
 bool isInteger(double x, bool warn) {
@@ -15,19 +16,19 @@ bool isInteger(double x, bool warn) {
   return true;
 }
 
-double finite_max(const Rcpp::NumericVector& x) {
+double finite_max_int(const Rcpp::NumericVector& x) {
   double max_x = 0.0;
   int n = x.length();
   int i = 0;
   do {
-    if (R_FINITE(x[i])) {
+    if (x[i] > 0.0 && !is_large_int(x[i])) {
       max_x = x[i];
       break;
     }
     i++;
   } while (i < n);
   while (i < n) {
-    if (R_FINITE(x[i]) && x[i] > max_x) {
+    if (x[i] > max_x && !is_large_int(x[i])) {
       max_x = x[i];
     }
     i++;

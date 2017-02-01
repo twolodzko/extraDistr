@@ -23,10 +23,10 @@ NumericVector cpp_dmixnorm(
   ) {
   
   int Nmax = std::max({
-    static_cast<long int>(x.length()),
-    static_cast<long int>(mu.nrow()),
-    static_cast<long int>(sigma.nrow()),
-    static_cast<long int>(alpha.nrow())
+    static_cast<int>(x.length()),
+    static_cast<int>(mu.nrow()),
+    static_cast<int>(sigma.nrow()),
+    static_cast<int>(alpha.nrow())
   });
   int k = alpha.ncol();
   NumericVector p(Nmax);
@@ -90,10 +90,10 @@ NumericVector cpp_pmixnorm(
   ) {
   
   int Nmax = std::max({
-    static_cast<long int>(x.length()),
-    static_cast<long int>(mu.nrow()),
-    static_cast<long int>(sigma.nrow()),
-    static_cast<long int>(alpha.nrow())
+    static_cast<int>(x.length()),
+    static_cast<int>(mu.nrow()),
+    static_cast<int>(sigma.nrow()),
+    static_cast<int>(alpha.nrow())
   });
   int k = alpha.ncol();
   NumericVector p(Nmax);

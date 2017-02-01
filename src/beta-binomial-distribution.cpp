@@ -59,7 +59,7 @@ inline std::vector<double> cdf_bbinom_table(double k, double n,
   if (k < 0.0 || k > n || alpha < 0.0 || beta < 0.0)
     Rcpp::stop("inadmissible values");
 
-  long int ik = to_int(k);
+  int ik = to_pos_int(k);
   std::vector<double> p_tab(ik+1);
   double nck, bab, gx, gy, gxy;
   
@@ -90,7 +90,7 @@ inline std::vector<double> cdf_bbinom_table(double k, double n,
   
   double dj;
   
-  for (long int j = 2; j <= ik; j++) {
+  for (int j = 2; j <= ik; j++) {
     dj = to_dbl(j);
     nck += log((n + 1.0 - dj)/dj);
     gx += log(dj + alpha - 1.0);
@@ -168,7 +168,7 @@ NumericVector cpp_pbbinom(
   bool throw_warning = false;
   
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
-  double mx = std::min(finite_max(x), finite_max(size));
+  double mx = std::min(finite_max_int(x), finite_max_int(size));
   
   for (int i = 0; i < Nmax; i++) {
     
@@ -186,6 +186,9 @@ NumericVector cpp_pbbinom(
       p[i] = 0.0;
     } else if (GETV(x, i) >= GETV(size, i)) {
       p[i] = 1.0;
+    } else if (is_large_int(GETV(x, i))) {
+      p[i] = NA_REAL;
+      Rcpp::warning("NAs introduced by coercion to integer range");
     } else {
       
       std::vector<double>& tmp = memo[std::make_tuple(i % size.length(),
@@ -194,7 +197,7 @@ NumericVector cpp_pbbinom(
       if (!tmp.size()) {
         tmp = cdf_bbinom_table(mx, GETV(size, i), GETV(alpha, i), GETV(beta, i));
       }
-      p[i] = tmp[to_int(GETV(x, i))];
+      p[i] = tmp[to_pos_int(GETV(x, i))];
       
     }
   }
