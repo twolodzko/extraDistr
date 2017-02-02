@@ -25,7 +25,7 @@ std::vector<double> nhyper_table(
   N = m+n;
   
   std::vector<double> t(ni), h(ni), p(ni+1);
-  start_eps = 1e-100;
+  start_eps = 1e-200;
   h[0] = start_eps * r*n/(N-r);
   t[0] = start_eps + h[0];
 
@@ -88,6 +88,9 @@ NumericVector cpp_dnhyper(
     } else if (!isInteger(GETV(x, i)) || GETV(x, i) < GETV(r, i) ||
                GETV(x, i) > (GETV(n, i) + GETV(r, i))) {
       p[i] = 0.0;
+    } else if (is_large_int(GETV(x, i))) {
+      p[i] = NA_REAL;
+      Rcpp::warning("NAs introduced by coercion to integer range");
     } else {
       
       std::vector<double>& tmp = memo[std::make_tuple(i % n.length(),
@@ -151,6 +154,9 @@ NumericVector cpp_pnhyper(
       p[i] = 0.0;
     } else if (GETV(x, i) >= (GETV(n, i) + GETV(r, i))) {
       p[i] = 1.0;
+    } else if (is_large_int(GETV(x, i))) {
+      p[i] = NA_REAL;
+      Rcpp::warning("NAs introduced by coercion to integer range");
     } else {
       
       std::vector<double>& tmp = memo[std::make_tuple(i % n.length(),
