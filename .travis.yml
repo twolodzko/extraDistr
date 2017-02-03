@@ -5,10 +5,18 @@ sudo: false
 cache: packages
 warnings_are_errors: true
 
-r:
- - oldrel
- - release
- - devel
+matrix:
+ include:
+   - os: linux
+     r: oldrel
+   - os: linux
+     r: release
+   - os: linux
+     r: devel
+   - os: osx
+     r: release
+     latex: false
+     disable_homebrew: true
  
 r_binary_packages:
  - Rcpp
@@ -34,11 +42,6 @@ notifications:
 after_success:
  - Rscript -e 'library(covr); codecov()'
  
-os:
- - linux
- - osx
- 
-disable_homebrew: true
  
  
     
