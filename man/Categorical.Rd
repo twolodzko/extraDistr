@@ -74,4 +74,3 @@ lines(qcat(pp, p), pp, col = "red", lwd = 2)
 
 }
 \keyword{distribution}
-

@@ -57,4 +57,3 @@ lines(xx, pnst(xx, 1000, 5, 13), col = "red", lwd = 2)
 \code{\link[stats]{TDist}}
 }
 \keyword{distribution}
-

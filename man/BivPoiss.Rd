@@ -61,4 +61,3 @@ Poisson distribution. Kodai mathematical journal, 7(2), 211-221.
 \code{\link[stats]{Poisson}}
 }
 \keyword{distribution}
-

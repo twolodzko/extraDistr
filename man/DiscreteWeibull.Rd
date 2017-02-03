@@ -89,4 +89,3 @@ IEEE Transactions on Reliability, 38(3), 348-350.
 \code{\link[stats]{Weibull}}
 }
 \keyword{distribution}
-

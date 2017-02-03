@@ -69,4 +69,3 @@ lines(xx, ppower(xx, 5, 16), col = "red", lwd = 2)
 
 }
 \keyword{distribution}
-

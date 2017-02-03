@@ -64,4 +64,3 @@ lines(xx, pzip(xx, 6, 0.33), col = "red")
 \code{\link[stats]{Poisson}}
 }
 \keyword{distribution}
-

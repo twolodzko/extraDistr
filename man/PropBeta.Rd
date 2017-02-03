@@ -69,4 +69,3 @@ Ferrari, S., & Cribari-Neto, F. (2004). Beta regression for modelling rates and 
 Journal of Applied Statistics, 31(7), 799-815.
 }
 \keyword{distribution}
-

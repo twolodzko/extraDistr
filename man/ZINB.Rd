@@ -69,4 +69,3 @@ lines(xx, pzinb(xx, 100, 0.6, 0.33), col = "red")
 \code{\link[stats]{NegBinomial}}
 }
 \keyword{distribution}
-

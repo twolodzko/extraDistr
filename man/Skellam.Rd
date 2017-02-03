@@ -49,4 +49,3 @@ Karlis, D., & Ntzoufras, I. (2006). Bayesian analysis of the differences of coun
 Statistics in medicine, 25(11), 1885-1905.
 }
 \keyword{distribution}
-

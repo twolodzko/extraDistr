@@ -76,4 +76,3 @@ Bury, K. (1999). Statistical Distributions in Engineering.
 Cambridge University Press.
 }
 \keyword{distribution}
-

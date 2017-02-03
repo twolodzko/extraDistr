@@ -80,4 +80,3 @@ to communications, economics, engineering, and finance.
 Springer Science & Business Media.
 }
 \keyword{distribution}
-

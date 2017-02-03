@@ -55,4 +55,3 @@ lines(xx, pnsbeta(xx, 5, 13, -4, 8), col = "red", lwd = 2)
 \code{\link[stats]{Beta}}
 }
 \keyword{distribution}
-

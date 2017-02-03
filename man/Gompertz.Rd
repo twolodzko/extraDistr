@@ -74,4 +74,3 @@ of its parameters - a revision. MPIDR WORKING PAPER WP 2012-008.
 \url{http://www.demogr.mpg.de/papers/working/wp-2012-008.pdf}
 }
 \keyword{distribution}
-

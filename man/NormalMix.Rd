@@ -66,4 +66,3 @@ lines(xx, pmixnorm(xx, c(0.5, 3, 6), c(3, 1, 1), c(1/3, 1/3, 1/3)), col = "red",
 
 }
 \keyword{distribution}
-

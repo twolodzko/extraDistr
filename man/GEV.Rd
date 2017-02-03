@@ -82,4 +82,3 @@ Coles, S. (2001). An Introduction to Statistical Modeling of Extreme Values.
 Springer.
 }
 \keyword{distribution}
-

@@ -69,4 +69,3 @@ Communications in Statistics-Theory and Methods, 32, 1871-1883.
 \code{\link[stats]{Normal}}
 }
 \keyword{distribution}
-

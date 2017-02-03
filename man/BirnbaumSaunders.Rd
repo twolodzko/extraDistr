@@ -93,4 +93,3 @@ Random number generators for the generalized Birnbaum-Saunders distribution.
 Journal of Statistical Computation and Simulation, 78(11), 1105-1118.
 }
 \keyword{distribution}
-

@@ -116,4 +116,3 @@ Burkardt, J. (17 October 2014). The Truncated Normal Distribution. Florida State
 \url{http://people.sc.fsu.edu/~jburkardt/presentations/truncated_normal.pdf}
 }
 \keyword{distribution}
-

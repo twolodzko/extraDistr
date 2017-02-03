@@ -72,4 +72,3 @@ Relationships. American Statistician 62(1): 45-53.
 \code{\link[stats]{GammaDist}}
 }
 \keyword{distribution}
-

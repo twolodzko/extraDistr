@@ -71,4 +71,3 @@ Chapman & Hall/CRC
 \code{\link[stats]{Normal}}
 }
 \keyword{distribution}
-

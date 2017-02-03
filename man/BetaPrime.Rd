@@ -72,4 +72,3 @@ lines(xx, pbetapr(xx, 5, 3, 2), col = "red")
 \code{\link[stats]{Beta}}
 }
 \keyword{distribution}
-

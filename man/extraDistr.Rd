@@ -23,4 +23,3 @@ negative values in functions with non-negative support).
 
 All the functions vectorized and coded in C++ using \pkg{Rcpp}.
 }
-

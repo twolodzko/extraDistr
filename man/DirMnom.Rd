@@ -49,4 +49,3 @@ Naval Research Logistics, 48, 1-17.
 \code{\link{Dirichlet}}, \code{\link{Multinomial}}
 }
 \keyword{distribution}
-

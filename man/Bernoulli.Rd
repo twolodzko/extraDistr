@@ -44,4 +44,3 @@ prop.table(table(rbern(1e5, 0.5)))
 \code{\link[stats]{Binomial}}
 }
 \keyword{distribution}
-

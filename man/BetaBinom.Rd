@@ -91,4 +91,3 @@ lines(xx, pbbinom(xx, 1000, 5, 13), col = "red", lwd = 2)
 \code{\link[stats]{Beta}}, \code{\link[stats]{Binomial}}
 }
 \keyword{distribution}
-

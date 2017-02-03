@@ -72,4 +72,3 @@ Low moments for small samples: a comparative study of order statistics.
 The Annals of Mathematical Statistics, 413-426.
 }
 \keyword{distribution}
-

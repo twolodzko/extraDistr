@@ -64,4 +64,3 @@ International Journal of Statistika and Mathematika, 3(2), 77-81.
 \code{\link{HalfNormal}}, \code{\link{HalfCauchy}}
 }
 \keyword{distribution}
-

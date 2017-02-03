@@ -72,4 +72,3 @@ lines(xx, pinvchisq(xx, 10, 5), col = "red", lwd = 2)
 \code{\link[stats]{Chisquare}}, \code{\link[stats]{GammaDist}}
 }
 \keyword{distribution}
-

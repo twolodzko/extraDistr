@@ -74,4 +74,3 @@ Dimensional chains involving rectangular and normal error-distributions.
 Technometrics, 5, 404-406.
 }
 \keyword{distribution}
-

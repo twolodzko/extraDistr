@@ -100,4 +100,3 @@ UNLV Theses, Dissertations, Professional Papers, and Capstones. Paper 1846.
 \code{\link[stats]{Hypergeometric}}
 }
 \keyword{distribution}
-

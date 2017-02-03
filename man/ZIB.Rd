@@ -66,4 +66,3 @@ lines(xx, pzib(xx, 10, 0.6, 0.33), col = "red")
 \code{\link[stats]{Binomial}}
 }
 \keyword{distribution}
-

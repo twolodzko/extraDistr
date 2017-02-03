@@ -51,4 +51,3 @@ rdirichlet(10, alpha)
 Devroye, L. (1986). Non-Uniform Random Variate Generation. Springer-Verlag.
 }
 \keyword{distribution}
-

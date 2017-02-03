@@ -16,4 +16,3 @@ Random generation for the Rademacher distribution (values -1 and +1
 with equal probability).
 }
 \keyword{distribution}
-

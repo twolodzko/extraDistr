@@ -31,4 +31,4 @@ LinkingTo: Rcpp
 Imports: Rcpp
 Suggests: testthat
 SystemRequirements: C++11
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.0

@@ -73,4 +73,3 @@ Krishnamoorthy, K. (2006). Handbook of Statistical Distributions
 with Applications. Chapman & Hall/CRC
 }
 \keyword{distribution}
-

@@ -67,4 +67,3 @@ lines(xx, pslash(xx, 5, 3), col = "red", lwd = 2)
 
 }
 \keyword{distribution}
-

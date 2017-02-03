@@ -51,4 +51,3 @@ lines(xx, pdunif(xx, 1, 10), col = "red")
 
 }
 \keyword{distribution}
-

@@ -60,4 +60,3 @@ Communications in Statistics-Theory and Methods, 41(18), 3301-3324.
 \code{\link[stats]{GammaDist}}, \code{\link{DiscreteNormal}}
 }
 \keyword{distribution}
-

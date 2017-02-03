@@ -56,4 +56,3 @@ Gentle, J.E. (2006). Random number generation and Monte Carlo methods. Springer.
 \code{\link[stats]{Hypergeometric}}
 }
 \keyword{distribution}
-
