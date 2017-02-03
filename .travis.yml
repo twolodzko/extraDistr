@@ -1,23 +1,17 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+# https://docs.travis-ci.com/user/multi-os/
+# https://ropensci.org/blog/blog/2016/07/12/travis-osx
 
 language: r
 sudo: false
 cache: packages
 warnings_are_errors: true
 
-matrix:
- include:
-   - os: linux
-     r: oldrel
-   - os: linux
-     r: release
-   - os: linux
-     r: devel
-   - os: osx
-     r: release
-     latex: false
-     disable_homebrew: true
- 
+r:
+ - oldrel
+ - release
+ - devel
+
 r_binary_packages:
  - Rcpp
  - testthat
@@ -40,8 +34,3 @@ notifications:
     
 after_success:
  - Rscript -e 'library(covr); codecov()'
- 
- 
- 
-    
-    
