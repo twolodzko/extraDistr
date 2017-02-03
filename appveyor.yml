@@ -40,3 +40,6 @@ artifacts:
 
   - path: '\*_*.zip'
     name: Bits
+    
+  - path: '*.Rcheck\**\*.pdf'
+    name: Pdfs
