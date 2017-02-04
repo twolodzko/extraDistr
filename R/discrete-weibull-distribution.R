@@ -66,7 +66,7 @@
 #' hist(pdweibull(x, .32, 1), 50)
 #' 
 #' plot(ecdf(x))
-#' lines(xx, pdweibull(xx, .32, 1), col = "red", lwd = 2)
+#' lines(xx, pdweibull(xx, .32, 1), col = "red", lwd = 2, type = "s")
 #'
 #' @name DiscreteWeibull
 #' @aliases DiscreteWeibull

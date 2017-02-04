@@ -50,7 +50,7 @@ plot(ecdf(x))
 lines(xx, ptpois(xx, 14, 16), col = "red", lwd = 2)
 
 uu <- seq(0, 1, by = 0.001)
-lines(qtpois(uu, 14, 16), uu, col = "blue")
+lines(qtpois(uu, 14, 16), uu, col = "blue", lty = 2)
 
 # Zero-truncated Poisson
 

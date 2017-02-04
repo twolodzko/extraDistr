@@ -60,7 +60,7 @@
 #' lines(xx, ddlaplace(xx, 0, p), col = "red")
 #' hist(pdlaplace(x, 0, p))
 #' plot(ecdf(x))
-#' lines(xx, pdlaplace(xx, 0, p), col = "red")
+#' lines(xx, pdlaplace(xx, 0, p), col = "red", type = "s")
 #' 
 #' @name DiscreteLaplace
 #' @aliases DiscreteLaplace
