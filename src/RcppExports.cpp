@@ -432,6 +432,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// cpp_rcatlp
+NumericVector cpp_rcatlp(const int& n, const NumericMatrix& log_prob);
+RcppExport SEXP extraDistr_cpp_rcatlp(SEXP nSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_rcatlp(n, log_prob));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cpp_ddirichlet
 NumericVector cpp_ddirichlet(const NumericMatrix& x, const NumericMatrix& alpha, const bool& log_prob);
 RcppExport SEXP extraDistr_cpp_ddirichlet(SEXP xSEXP, SEXP alphaSEXP, SEXP log_probSEXP) {

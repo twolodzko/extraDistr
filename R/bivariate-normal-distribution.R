@@ -19,20 +19,14 @@
 #' Probability density function
 #' \deqn{
 #' f(x) = \frac{1}{2\pi\sqrt{1-\rho^2}\sigma_1\sigma_2}
-#'        \exp\left(-\frac{1}{2(1-\rho^2)} (z_1^2 - 2\rho z_1 z_2 + z_2^2)\right)
+#'        \exp\left\{-\frac{1}{2(1-\rho^2)} \left[\left(\frac{x_1 - \mu_1}{\sigma_1}\right)^2 -
+#'        2\rho \left(\frac{x_1 - \mu_1}{\sigma_1}\right) \left(\frac{x_2 - \mu_2}{\sigma_2}\right) +
+#'        \left(\frac{x_2 - \mu_2}{\sigma_2}\right)^2\right]\right\}
 #' }{
-#' f(x) = 1/(2*\pi*sqrt(1-\rho^2)*\sigma1*\sigma2) * exp(-(1/(2*(1-\rho^2)*(z1^2 - 2*\rho*z1*z2 * z2^2))))
+#' f(x) = 1/(2*\pi*sqrt(1-\rho^2)*\sigma1*\sigma2) * exp(-(1/(2*(1-\rho^2)*
+#'        (((x1-\mu1)/\sigma1)^2 - 2*\rho*((x1-\mu1)/\sigma2)*((x2-\mu2)/\sigma2) *
+#'        ((x2-\mu2)/\sigma2)^2))))
 #' }
-#'
-#' where \eqn{
-#' z_1 = \frac{x_1 - \mu_1}{\sigma_1}
-#' }{
-#' z1 = (x1 - \mu1)/\sigma1
-#' } and \eqn{
-#' z_2 = \frac{x_2 - \mu_2}{\sigma_2}
-#' }{
-#' z2 = (x2 - \mu2)/\sigma2
-#' }.
 #'
 #' @references
 #' Krishnamoorthy, K. (2006). Handbook of Statistical Distributions

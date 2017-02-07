@@ -1,3 +1,10 @@
+
+### 1.8.4
+
+* Random generation from categorical distribution parametrized by
+  log-probabilities `rcatlp`
+* Improvements in documentation and examples
+
 ### 1.8.3
 
 * Switched to C++11, underlying code was simplified and improved

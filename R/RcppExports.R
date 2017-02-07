@@ -117,6 +117,10 @@ cpp_rcat <- function(n, prob) {
     .Call('extraDistr_cpp_rcat', PACKAGE = 'extraDistr', n, prob)
 }
 
+cpp_rcatlp <- function(n, log_prob) {
+    .Call('extraDistr_cpp_rcatlp', PACKAGE = 'extraDistr', n, log_prob)
+}
+
 cpp_ddirichlet <- function(x, alpha, log_prob = FALSE) {
     .Call('extraDistr_cpp_ddirichlet', PACKAGE = 'extraDistr', x, alpha, log_prob)
 }

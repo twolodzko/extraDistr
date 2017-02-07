@@ -9,14 +9,47 @@
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
-#' @param prob            vector of length \eqn{k}, or \eqn{k}-column matrix
-#'                        of probabilities. Probabilities need to sum up to 1.
+#' @param prob,log_prob   vector of length \eqn{m}, or \eqn{m}-column matrix
+#'                        of non-negative weights, or their logarithms.
 #' @param log,log.p	      logical; if TRUE, probabilities p are given as log(p).
 #' @param lower.tail	    logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
 #'                        otherwise, \eqn{P[X > x]}.
 #' @param labels          if provided, labeled \code{factor} vector is returned.
 #'                        Number of labels needs to be the same as
 #'                        number of categories (number of columns in prob).
+#'                        
+#' @details 
+#' Probability mass function
+#' 
+#' \deqn{
+#' \Pr(X = k) = \frac{w_k}{\sum_{j=1}^m w_j}
+#' }{
+#' Pr(X = k) = w[k]/sum(w)
+#' }
+#' 
+#' Cumulative distribution function
+#' \deqn{
+#' \Pr(X \le k) = \frac{\sum_{i=1}^k w_i}{\sum_{j=1}^m w_j}
+#' }{
+#' Pr(X <= k) = sum(w[1:k])/sum(w)
+#' }
+#' 
+#' It is possible to sample from categorical distribution parametrized
+#' by vector of unnormalized log-probabilities
+#' \eqn{\alpha_1,\dots,\alpha_m}{\alpha[1],...,\alpha[m]}
+#' without leaving the log space using Gumbel-max trick (Maddison, Tarlow and Minka, 2014).
+#' If \eqn{g_1,\dots,g_m}{g[1],...,g[m]} are samples from standard Gumbel distribution,
+#' then \eqn{k = \mathrm{arg\,max}_i \{g_i + \alpha_i\}}{k = which.max(g[i]+\alpha[i])}
+#' is a draw from categorical distribution parametrized by
+#' vector of probabilities \eqn{p_1,\dots,p_m}{p[1]....,p[m]}, such that
+#' \eqn{p_i = \exp(\alpha_i) / [\sum_{j=1}^m \exp(\alpha_j)]}{p[i] = exp(\alpha[i])/sum(exp(\alpha))}.
+#' This is implemented in \code{rcatlp} function parametrized by vector of
+#' log-probabilities \code{log_prob}.
+#' 
+#' @references 
+#' Maddison, C. J., Tarlow, D., & Minka, T. (2014). A* sampling.
+#' [In:] Advances in Neural Information Processing Systems (pp. 3086-3094).
+#' \url{https://arxiv.org/abs/1411.0030}
 #'
 #' @examples 
 #' 
@@ -119,6 +152,29 @@ rcat <- function(n, prob, labels) {
     x <- cpp_rcat(n, prob)
   }
   
+  if (!missing(labels)) {
+    if (length(labels) != k)
+      warning("Wrong number of labels.")
+    else
+      return(factor(x, levels = 1:k, labels = labels))
+  }
+  
+  return(x)
+}
+
+
+#' @rdname Categorical
+#' @export
+
+rcatlp <- function(n, log_prob, labels) {
+  if (length(n) > 1) n <- length(n)
+  
+  if (is.vector(log_prob))
+    log_prob <- matrix(log_prob, nrow = 1)
+  
+  x <- cpp_rcatlp(n, log_prob)
+  
+  k <- ncol(log_prob)
   if (!missing(labels)) {
     if (length(labels) != k)
       warning("Wrong number of labels.")

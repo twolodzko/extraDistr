@@ -6,6 +6,7 @@
 \alias{pcat}
 \alias{qcat}
 \alias{rcat}
+\alias{rcatlp}
 \title{Categorical distribution}
 \usage{
 dcat(x, prob, log = FALSE)
@@ -15,12 +16,14 @@ pcat(q, prob, lower.tail = TRUE, log.p = FALSE)
 qcat(p, prob, lower.tail = TRUE, log.p = FALSE, labels)
 
 rcat(n, prob, labels)
+
+rcatlp(n, log_prob, labels)
 }
 \arguments{
 \item{x, q}{vector of quantiles.}
 
-\item{prob}{vector of length \eqn{k}, or \eqn{k}-column matrix
-of probabilities. Probabilities need to sum up to 1.}
+\item{prob, log_prob}{vector of length \eqn{m}, or \eqn{m}-column matrix
+of non-negative weights, or their logarithms.}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 
@@ -39,6 +42,34 @@ the length is taken to be the number required.}
 \description{
 Probability mass function, distribution function, quantile function and random generation
 for the categorical distribution.
+}
+\details{
+Probability mass function
+
+\deqn{
+\Pr(X = k) = \frac{w_k}{\sum_{j=1}^m w_j}
+}{
+Pr(X = k) = w[k]/sum(w)
+}
+
+Cumulative distribution function
+\deqn{
+\Pr(X \le k) = \frac{\sum_{i=1}^k w_i}{\sum_{j=1}^m w_j}
+}{
+Pr(X <= k) = sum(w[1:k])/sum(w)
+}
+
+It is possible to sample from categorical distribution parametrized
+by vector of unnormalized log-probabilities
+\eqn{\alpha_1,\dots,\alpha_m}{\alpha[1],...,\alpha[m]}
+without leaving the log space using Gumbel-max trick (Maddison, Tarlow and Minka, 2014).
+If \eqn{g_1,\dots,g_m}{g[1],...,g[m]} are samples from standard Gumbel distribution,
+then \eqn{k = \mathrm{arg\,max}_i \{g_i + \alpha_i\}}{k = which.max(g[i]+\alpha[i])}
+is a draw from categorical distribution parametrized by
+vector of probabilities \eqn{p_1,\dots,p_m}{p[1]....,p[m]}, such that
+\eqn{p_i = \exp(\alpha_i) / [\sum_{j=1}^m \exp(\alpha_j)]}{p[i] = exp(\alpha[i])/sum(exp(\alpha))}.
+This is implemented in \code{rcatlp} function parametrized by vector of
+log-probabilities \code{log_prob}.
 }
 \examples{
 
@@ -72,5 +103,10 @@ pp <- seq(0, 1, by = 0.001)
 plot(ecdf(x))
 lines(qcat(pp, p), pp, col = "red", lwd = 2)
 
+}
+\references{
+Maddison, C. J., Tarlow, D., & Minka, T. (2014). A* sampling.
+[In:] Advances in Neural Information Processing Systems (pp. 3086-3094).
+\url{https://arxiv.org/abs/1411.0030}
 }
 \keyword{distribution}
