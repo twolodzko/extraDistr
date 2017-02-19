@@ -1924,59 +1924,63 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dprop
-NumericVector cpp_dprop(const NumericVector& x, const NumericVector& size, const NumericVector& mean, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dprop(SEXP xSEXP, SEXP sizeSEXP, SEXP meanSEXP, SEXP log_probSEXP) {
+NumericVector cpp_dprop(const NumericVector& x, const NumericVector& size, const NumericVector& mean, const NumericVector& prior, const bool& log_prob);
+RcppExport SEXP extraDistr_cpp_dprop(SEXP xSEXP, SEXP sizeSEXP, SEXP meanSEXP, SEXP priorSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mean(meanSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type prior(priorSEXP);
     Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_dprop(x, size, mean, log_prob));
+    rcpp_result_gen = Rcpp::wrap(cpp_dprop(x, size, mean, prior, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_pprop
-NumericVector cpp_pprop(const NumericVector& x, const NumericVector& size, const NumericVector& mean, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pprop(SEXP xSEXP, SEXP sizeSEXP, SEXP meanSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+NumericVector cpp_pprop(const NumericVector& x, const NumericVector& size, const NumericVector& mean, const NumericVector& prior, const bool& lower_tail, const bool& log_prob);
+RcppExport SEXP extraDistr_cpp_pprop(SEXP xSEXP, SEXP sizeSEXP, SEXP meanSEXP, SEXP priorSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mean(meanSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type prior(priorSEXP);
     Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
     Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_pprop(x, size, mean, lower_tail, log_prob));
+    rcpp_result_gen = Rcpp::wrap(cpp_pprop(x, size, mean, prior, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_qprop
-NumericVector cpp_qprop(const NumericVector& p, const NumericVector& size, const NumericVector& mean, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qprop(SEXP pSEXP, SEXP sizeSEXP, SEXP meanSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+NumericVector cpp_qprop(const NumericVector& p, const NumericVector& size, const NumericVector& mean, const NumericVector& prior, const bool& lower_tail, const bool& log_prob);
+RcppExport SEXP extraDistr_cpp_qprop(SEXP pSEXP, SEXP sizeSEXP, SEXP meanSEXP, SEXP priorSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mean(meanSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type prior(priorSEXP);
     Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
     Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_qprop(p, size, mean, lower_tail, log_prob));
+    rcpp_result_gen = Rcpp::wrap(cpp_qprop(p, size, mean, prior, lower_tail, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_rprop
-NumericVector cpp_rprop(const int& n, const NumericVector& size, const NumericVector& mean);
-RcppExport SEXP extraDistr_cpp_rprop(SEXP nSEXP, SEXP sizeSEXP, SEXP meanSEXP) {
+NumericVector cpp_rprop(const int& n, const NumericVector& size, const NumericVector& mean, const NumericVector& prior);
+RcppExport SEXP extraDistr_cpp_rprop(SEXP nSEXP, SEXP sizeSEXP, SEXP meanSEXP, SEXP priorSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type mean(meanSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_rprop(n, size, mean));
+    Rcpp::traits::input_parameter< const NumericVector& >::type prior(priorSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_rprop(n, size, mean, prior));
     return rcpp_result_gen;
 END_RCPP
 }

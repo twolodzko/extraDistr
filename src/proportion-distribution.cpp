@@ -21,50 +21,51 @@ using Rcpp::NumericVector;
 *  Parameters:
 *  0 <= mean <= 1
 *  size > 0
+*  prior >= 0
 *
 */
 
-inline double pdf_prop(double x, double size, double mean,
+inline double pdf_prop(double x, double size, double mean, double prior,
                        bool& throw_warning) {
-  if (ISNAN(x) || ISNAN(size) || ISNAN(mean))
-    return x+size+mean;
-  if (size <= 0.0 || mean <= 0.0 || mean >= 1.0) {
+  if (ISNAN(x) || ISNAN(size) || ISNAN(mean) || ISNAN(prior))
+    return x+size+mean+prior;
+  if (size <= 0.0 || mean <= 0.0 || mean >= 1.0 || prior < 0) {
     throw_warning = true;
     return NAN;
   }
-  return R::dbeta(x, size*mean+1.0, size*(1.0-mean)+1.0, false);
+  return R::dbeta(x, size*mean+prior, size*(1.0-mean)+prior, false);
 }
 
-inline double cdf_prop(double x, double size, double mean,
+inline double cdf_prop(double x, double size, double mean, double prior,
                        bool& throw_warning) {
-  if (ISNAN(x) || ISNAN(size) || ISNAN(mean))
-    return x+size+mean;
-  if (size <= 0.0 || mean <= 0.0 || mean >= 1.0) {
+  if (ISNAN(x) || ISNAN(size) || ISNAN(mean) || ISNAN(prior))
+    return x+size+mean+prior;
+  if (size <= 0.0 || mean <= 0.0 || mean >= 1.0 || prior < 0) {
     throw_warning = true;
     return NAN;
   }
-  return R::pbeta(x, size*mean+1.0, size*(1.0-mean)+1.0, true, false);
+  return R::pbeta(x, size*mean+prior, size*(1.0-mean)+prior, true, false);
 }
 
-inline double invcdf_prop(double p, double size, double mean,
+inline double invcdf_prop(double p, double size, double mean, double prior,
                           bool& throw_warning) {
-  if (ISNAN(p) || ISNAN(size) || ISNAN(mean))
-    return p+size+mean;
-  if (size <= 0.0 || mean <= 0.0 || mean >= 1.0 || !VALID_PROB(p)) {
+  if (ISNAN(p) || ISNAN(size) || ISNAN(mean) || ISNAN(prior))
+    return p+size+mean+prior;
+  if (size <= 0.0 || mean <= 0.0 || mean >= 1.0 || prior < 0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;
   }
-  return R::qbeta(p, size*mean+1.0, size*(1.0-mean)+1.0, true, false);
+  return R::qbeta(p, size*mean+prior, size*(1.0-mean)+prior, true, false);
 }
 
-inline double rng_prop(double size, double mean,
+inline double rng_prop(double size, double mean, double prior,
                        bool& throw_warning) {
-  if (ISNAN(size) || ISNAN(mean) ||
-      size <= 0.0 || mean <= 0.0 || mean >= 1.0) {
+  if (ISNAN(size) || ISNAN(mean) || ISNAN(prior) ||
+      size <= 0.0 || mean <= 0.0 || mean >= 1.0 || prior < 0) {
     throw_warning = true;
     return NA_REAL;
   }
-  return R::rbeta(size*mean+1.0, size*(1.0-mean)+1.0);
+  return R::rbeta(size*mean+prior, size*(1.0-mean)+prior);
 }
 
 
@@ -73,13 +74,15 @@ NumericVector cpp_dprop(
     const NumericVector& x,
     const NumericVector& size,
     const NumericVector& mean,
+    const NumericVector& prior,
     const bool& log_prob = false
   ) {
   
   int Nmax = std::max({
     x.length(),
+    size.length(),
     mean.length(),
-    size.length()
+    prior.length()
   });
   NumericVector p(Nmax);
   
@@ -87,7 +90,8 @@ NumericVector cpp_dprop(
   
   for (int i = 0; i < Nmax; i++)
     p[i] = pdf_prop(GETV(x, i), GETV(size, i),
-                    GETV(mean, i), throw_warning);
+                    GETV(mean, i), GETV(prior, i),
+                    throw_warning);
   
   if (log_prob)
     p = Rcpp::log(p);
@@ -104,14 +108,16 @@ NumericVector cpp_pprop(
     const NumericVector& x,
     const NumericVector& size,
     const NumericVector& mean,
+    const NumericVector& prior,
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
   
   int Nmax = std::max({
     x.length(),
+    size.length(),
     mean.length(),
-    size.length()
+    prior.length()
   });
   NumericVector p(Nmax);
   
@@ -119,7 +125,8 @@ NumericVector cpp_pprop(
   
   for (int i = 0; i < Nmax; i++)
     p[i] = cdf_prop(GETV(x, i), GETV(size, i),
-                    GETV(mean, i), throw_warning);
+                    GETV(mean, i), GETV(prior, i),
+                    throw_warning);
   
   if (!lower_tail)
     p = 1.0 - p;
@@ -139,14 +146,16 @@ NumericVector cpp_qprop(
     const NumericVector& p,
     const NumericVector& size,
     const NumericVector& mean,
+    const NumericVector& prior,
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
   
   int Nmax = std::max({
     p.length(),
+    size.length(),
     mean.length(),
-    size.length()
+    prior.length()
   });
   NumericVector x(Nmax);
   NumericVector pp = Rcpp::clone(p);
@@ -161,7 +170,8 @@ NumericVector cpp_qprop(
   
   for (int i = 0; i < Nmax; i++)
     x[i] = invcdf_prop(GETV(pp, i), GETV(size, i),
-                       GETV(mean, i), throw_warning);
+                       GETV(mean, i), GETV(prior, i),
+                       throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");
@@ -174,7 +184,8 @@ NumericVector cpp_qprop(
 NumericVector cpp_rprop(
     const int& n,
     const NumericVector& size,
-    const NumericVector& mean
+    const NumericVector& mean,
+    const NumericVector& prior
   ) {
   
   NumericVector x(n);
@@ -183,7 +194,7 @@ NumericVector cpp_rprop(
   
   for (int i = 0; i < n; i++)
     x[i] = rng_prop(GETV(size, i), GETV(mean, i),
-                    throw_warning);
+                    GETV(prior, i), throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NAs produced");

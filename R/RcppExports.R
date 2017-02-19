@@ -533,20 +533,20 @@ cpp_rpower <- function(n, alpha, beta) {
     .Call('extraDistr_cpp_rpower', PACKAGE = 'extraDistr', n, alpha, beta)
 }
 
-cpp_dprop <- function(x, size, mean, log_prob = FALSE) {
-    .Call('extraDistr_cpp_dprop', PACKAGE = 'extraDistr', x, size, mean, log_prob)
+cpp_dprop <- function(x, size, mean, prior, log_prob = FALSE) {
+    .Call('extraDistr_cpp_dprop', PACKAGE = 'extraDistr', x, size, mean, prior, log_prob)
 }
 
-cpp_pprop <- function(x, size, mean, lower_tail = TRUE, log_prob = FALSE) {
-    .Call('extraDistr_cpp_pprop', PACKAGE = 'extraDistr', x, size, mean, lower_tail, log_prob)
+cpp_pprop <- function(x, size, mean, prior, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_pprop', PACKAGE = 'extraDistr', x, size, mean, prior, lower_tail, log_prob)
 }
 
-cpp_qprop <- function(p, size, mean, lower_tail = TRUE, log_prob = FALSE) {
-    .Call('extraDistr_cpp_qprop', PACKAGE = 'extraDistr', p, size, mean, lower_tail, log_prob)
+cpp_qprop <- function(p, size, mean, prior, lower_tail = TRUE, log_prob = FALSE) {
+    .Call('extraDistr_cpp_qprop', PACKAGE = 'extraDistr', p, size, mean, prior, lower_tail, log_prob)
 }
 
-cpp_rprop <- function(n, size, mean) {
-    .Call('extraDistr_cpp_rprop', PACKAGE = 'extraDistr', n, size, mean)
+cpp_rprop <- function(n, size, mean, prior) {
+    .Call('extraDistr_cpp_rprop', PACKAGE = 'extraDistr', n, size, mean, prior)
 }
 
 cpp_rsign <- function(n) {

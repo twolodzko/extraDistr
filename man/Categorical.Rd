@@ -23,7 +23,7 @@ rcatlp(n, log_prob, labels)
 \item{x, q}{vector of quantiles.}
 
 \item{prob, log_prob}{vector of length \eqn{m}, or \eqn{m}-column matrix
-of non-negative weights, or their logarithms.}
+of non-negative weights (or their logarithms in \code{log_prob}).}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 

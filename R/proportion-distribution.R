@@ -9,42 +9,72 @@
 #' @param p	              vector of probabilities.
 #' @param n	              number of observations. If \code{length(n) > 1},
 #'                        the length is taken to be the number required.
-#' @param size            precision or number of binomial trials (zero or more).
+#' @param size            non-negative real number; precision or number of binomial trials.
 #' @param mean            mean proportion or probability of success on each trial;
 #'                        \code{0 < mean < 1}.
+#' @param prior           (see below) with \code{prior = 0} (default)
+#'                        the distribution corresponds to re-parametrized beta
+#'                        distribution used in beta regression. This parameter needs
+#'                        to be non-negative.
 #' @param log,log.p	      logical; if TRUE, probabilities p are given as log(p).
 #' @param lower.tail	    logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
 #'                        otherwise, \eqn{P[X > x]}.
 #'                        
 #' @details
 #' 
-#' Beta can be understood as a distribution of \eqn{x = k/n} proportions in
-#' \eqn{n} trials where the average proportion is denoted as \eqn{\mu},
-#' so it's parameters become \eqn{\alpha = n\mu+1} and
-#' \eqn{\beta = n(1-\mu)+1} and it's density function becomes:
+#' Beta can be understood as a distribution of \eqn{x = k/\phi} proportions in
+#' \eqn{\phi} trials where the average proportion is denoted as \eqn{\mu},
+#' so it's parameters become \eqn{\alpha = \phi\mu} and
+#' \eqn{\beta = \phi(1-\mu)} and it's density function becomes
 #' 
 #' \deqn{
-#' f(x) = \frac{1}{\mathrm{B}(n\mu+1, n(1-\mu)+1)} x^{n\mu} (1-x)^{n(1-\mu)}
+#' f(x) = \frac{x^{\phi\mu+\pi-1} (1-x)^{\phi(1-\mu)+\pi-1}}{\mathrm{B}(\phi\mu+\pi, \phi(1-\mu)+\pi)}
 #' }{
-#' f(x) = 1/(B(n\mu+1, n(1-\mu)+1)) * x^(n\mu) * (1-x)^(n(1-\mu))
+#' f(x) = (x^(\phi\mu+\pi-1) * (1-x)^(\phi(1-\mu)+\pi-1))/B(\phi\mu+\pi, \phi(1-\mu)+\pi)
 #' }
 #' 
-#' Alternatively \eqn{n} may be understood as precision parameter
-#' as described Ferrari and Cribari-Neto (2004).
+#' where \eqn{\pi} is a \emph{prior} parameter, so the distribution is a
+#' \emph{posterior} distribution after observing \eqn{\phi\mu} successes and
+#' \eqn{\phi(1-\mu)} failures in \eqn{\phi} trials with binomial likelihood
+#' and symmetric \eqn{\mathrm{Beta}(\pi, \pi)}{Beta(\pi, \pi)} prior for
+#' probability of success. Parameter value \eqn{\pi = 1} corresponds to
+#' uniform prior; \eqn{\pi = 1/2} corresponds to Jeffreys prior; \eqn{\pi = 0}
+#' corresponds to "uninformative" Haldane prior, this ia also the re-parametrized
+#' distribution used in beta regression. With \eqn{\pi = 0} the distribution
+#' can be understood as a continous analog to binomial distribution dealing
+#' with proportions rather then counts. Alternatively \eqn{\phi} may be
+#' understood as precision parameter (as in beta regression).
+#' 
+#' Notice that in pre-1.8.4 versions of this library, \code{prior} was not settable
+#' and by default fixed to one, instead of zero. To obtain the same results as in
+#' the previous versions, use \code{prior = 1} in each of the functions. 
+#' 
+#' @seealso
+#' \code{\link{beta}}, \code{\link{binomial}}
 #' 
 #' @references
 #' Ferrari, S., & Cribari-Neto, F. (2004). Beta regression for modelling rates and proportions.
 #' Journal of Applied Statistics, 31(7), 799-815.
 #' 
+#' @references 
+#' Smithson, M., & Verkuilen, J. (2006). A better lemon squeezer? Maximum-likelihood regression
+#' with beta-distribued dependent variables.
+#' Psychological Methods, 11(1), 54-71.
+#' 
 #' @examples 
 #' 
 #' x <- rprop(1e5, 100, 0.33)
-#' xx <- seq(0, 1, by = 0.01)
 #' hist(x, 100, freq = FALSE)
-#' lines(xx, dprop(xx, 100, 0.33), col = "red")
+#' curve(dprop(x, 100, 0.33), from = 0, to = 1, col = "red", add = TRUE)
 #' hist(pprop(x, 100, 0.33))
 #' plot(ecdf(x))
-#' lines(xx, pprop(xx, 100, 0.33), col = "red", lwd = 2)
+#' curve(pprop(x, 100, 0.33), from = 0, to = 1, col = "red", lwd = 2, add = TRUE)
+#' 
+#' n <- 500
+#' p <- 0.23
+#' k <- rbinom(1e5, n, p)
+#' hist(k/n, freq = FALSE, 100)
+#' curve(dprop(x, n, p), from = 0, to = 1, col = "red", add = TRUE, n = 500)
 #'                        
 #' @name PropBeta
 #' @aliases PropBeta
@@ -53,32 +83,32 @@
 #'
 #' @export
 
-dprop <- function(x, size, mean, log = FALSE) {
-  cpp_dprop(x, size, mean, log)
+dprop <- function(x, size, mean, prior = 0, log = FALSE) {
+  cpp_dprop(x, size, mean, prior, log)
 }
 
 
 #' @rdname PropBeta
 #' @export
 
-pprop <- function(q, size, mean, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pprop(q, size, mean, lower.tail, log.p)
+pprop <- function(q, size, mean, prior = 0, lower.tail = TRUE, log.p = FALSE) {
+  cpp_pprop(q, size, mean, prior, lower.tail, log.p)
 }
 
 
 #' @rdname PropBeta
 #' @export
 
-qprop <- function(p, size, mean, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qprop(p, size, mean, lower.tail, log.p)
+qprop <- function(p, size, mean, prior = 0, lower.tail = TRUE, log.p = FALSE) {
+  cpp_qprop(p, size, mean, prior, lower.tail, log.p)
 }
 
 
 #' @rdname PropBeta
 #' @export
 
-rprop <- function(n, size, mean) {
+rprop <- function(n, size, mean, prior = 0) {
   if (length(n) > 1) n <- length(n)
-  cpp_rprop(n, size, mean)
+  cpp_rprop(n, size, mean, prior)
 }
 
