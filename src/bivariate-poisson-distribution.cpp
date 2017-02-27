@@ -24,15 +24,9 @@ inline double pmf_bpois(double x, double y, double a, double b, double c,
     return NAN;
   }
   
-  if (!isInteger(x) || x < 0.0 || !R_FINITE(x) || !R_FINITE(y))
+  if (!isInteger(x) || x < 0.0 || !R_FINITE(x) ||
+      !R_FINITE(y) || !isInteger(y))
     return 0.0;
-  
-  if (!isInteger(y, false)) {
-    char msg[55];
-    std::snprintf(msg, sizeof(msg), "non-integer y = %f", y);
-    Rcpp::warning(msg);
-    return 0.0;
-  }
   
   if (y < 0.0)
     return 0.0;

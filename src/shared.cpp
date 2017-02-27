@@ -8,7 +8,7 @@ bool isInteger(double x, bool warn) {
   if (((x < 0.0) ? std::ceil(x) : std::floor(x)) != x) {
     if (warn) {
       char msg[55];
-      std::snprintf(msg, sizeof(msg), "non-integer x = %f", x);
+      std::snprintf(msg, sizeof(msg), "non-integer: %f", x);
       Rcpp::warning(msg);
     }
     return false;
