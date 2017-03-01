@@ -10,6 +10,8 @@
   commonly used in the literature. This change is documented in
   the `?PropBeta` documentation
 * Improvements in documentation and examples
+* Fixed bugs in `pbbinom`, `pbnbinom`, `pgpois`, `*nhyper` that
+  prevented on compiling on RedHat Linux (#2)
 
 ### 1.8.3
 

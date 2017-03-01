@@ -93,9 +93,12 @@ NumericVector cpp_dnhyper(
       Rcpp::warning("NAs introduced by coercion to integer range");
     } else {
       
-      std::vector<double>& tmp = memo[std::make_tuple(static_cast<int>(i % n.length()),
-                                                      static_cast<int>(i % m.length()),
-                                                      static_cast<int>(i % r.length()))];
+      std::vector<double>& tmp = memo[std::make_tuple(
+        static_cast<int>(i % n.length()),
+        static_cast<int>(i % m.length()),
+        static_cast<int>(i % r.length())
+      )];
+      
       if (!tmp.size()) {
         tmp = nhyper_table(GETV(n, i), GETV(m, i), GETV(r, i), false);
       }
@@ -159,9 +162,12 @@ NumericVector cpp_pnhyper(
       Rcpp::warning("NAs introduced by coercion to integer range");
     } else {
       
-      std::vector<double>& tmp = memo[std::make_tuple(static_cast<int>(i % n.length()),
-                                                      static_cast<int>(i % m.length()),
-                                                      static_cast<int>(i % r.length()))];
+      std::vector<double>& tmp = memo[std::make_tuple(
+        static_cast<int>(i % n.length()),
+        static_cast<int>(i % m.length()),
+        static_cast<int>(i % r.length())
+      )];
+      
       if (!tmp.size()) {
         tmp = nhyper_table(GETV(n, i), GETV(m, i), GETV(r, i), true);
       }
@@ -229,9 +235,12 @@ NumericVector cpp_qnhyper(
       x[i] = NAN;
     } else {
       
-      std::vector<double>& tmp = memo[std::make_tuple(static_cast<int>(i % n.length()),
-                                                      static_cast<int>(i % m.length()),
-                                                      static_cast<int>(i % r.length()))];
+      std::vector<double>& tmp = memo[std::make_tuple(
+        static_cast<int>(i % n.length()),
+        static_cast<int>(i % m.length()),
+        static_cast<int>(i % r.length())
+      )];
+      
       if (!tmp.size()) {
         tmp = nhyper_table(GETV(n, i), GETV(m, i), GETV(r, i), true);
       }
@@ -279,10 +288,13 @@ NumericVector cpp_rnhyper(
       throw_warning = true;
       x[i] = NA_REAL;
     } else {
+
+      std::vector<double>& tmp = memo[std::make_tuple(
+        static_cast<int>(i % n.length()),
+        static_cast<int>(i % m.length()),
+        static_cast<int>(i % r.length())
+      )];
       
-      std::vector<double>& tmp = memo[std::make_tuple(static_cast<int>(i % n.length()),
-                                                      static_cast<int>(i % m.length()),
-                                                      static_cast<int>(i % r.length()))];
       if (!tmp.size()) {
         tmp = nhyper_table(GETV(n, i), GETV(m, i), GETV(r, i), true);
       }
