@@ -167,7 +167,8 @@ NumericVector cpp_pgpois(
       Rcpp::warning("NAs introduced by coercion to integer range");
     } else {
       
-      std::vector<double>& tmp = memo[std::make_tuple(i % alpha.length(), i % beta.length())];
+      std::vector<double>& tmp = memo[std::make_tuple(static_cast<int>(i % alpha.length()),
+                                                      static_cast<int>(i % beta.length()))];
       if (!tmp.size()) {
         tmp = cdf_gpois_table(mx, GETV(alpha, i), GETV(beta, i));
       }

@@ -47,5 +47,9 @@ lines(xx, dskellam(xx, 5, 13), col = "red")
 \references{
 Karlis, D., & Ntzoufras, I. (2006). Bayesian analysis of the differences of count data.
 Statistics in medicine, 25(11), 1885-1905.
+
+Skellam, J.G. (1946). The frequency distribution of the difference between
+two Poisson variates belonging to different populations.
+Journal of the Royal Statistical Society, series A, 109(3), 26.
 }
 \keyword{distribution}
