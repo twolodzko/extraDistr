@@ -58,12 +58,11 @@
 #' @examples 
 #' 
 #' x <- rhuber(1e5, 5, 2, 3)
-#' xx <- seq(-20, 20, by = 0.1)
 #' hist(x, 100, freq = FALSE)
-#' lines(xx, dhuber(xx, 5, 2, 3), col = "red")
+#' curve(dhuber(x, 5, 2, 3), -20, 20, col = "red", add = TRUE)
 #' hist(phuber(x, 5, 2, 3))
 #' plot(ecdf(x))
-#' lines(xx, phuber(xx, 5, 2, 3), col = "red", lwd = 2)
+#' curve(phuber(x, 5, 2, 3), -20, 20, col = "red", lwd = 2, add = TRUE)
 #'
 #' @name Huber
 #' @aliases Huber

@@ -34,12 +34,11 @@
 #' @examples 
 #' 
 #' x <- rht(1e5, 2, 2)
-#' xx <- seq(-1, 100, by = 0.01)
 #' hist(x, 500, freq = FALSE, xlim = c(0, 100))
-#' lines(xx, dht(xx, 2, 2), col = "red")
+#' curve(dht(x, 2, 2), 0, 100, col = "red", add = TRUE)
 #' hist(pht(x, 2, 2))
 #' plot(ecdf(x), xlim = c(0, 100))
-#' lines(xx, pht(xx, 2, 2), col = "red", lwd = 2)
+#' curve(pht(x, 2, 2), 0, 100, col = "red", lwd = 2, add = TRUE)
 #'
 #' @name HalfT
 #' @aliases HalfT

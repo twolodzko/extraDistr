@@ -38,8 +38,9 @@
 #' by vector of unnormalized log-probabilities
 #' \eqn{\alpha_1,\dots,\alpha_m}{\alpha[1],...,\alpha[m]}
 #' without leaving the log space using Gumbel-max trick (Maddison, Tarlow and Minka, 2014).
-#' If \eqn{g_1,\dots,g_m}{g[1],...,g[m]} are samples from standard Gumbel distribution,
-#' then \eqn{k = \mathrm{arg\,max}_i \{g_i + \alpha_i\}}{k = which.max(g[i]+\alpha[i])}
+#' If \eqn{g_1,\dots,g_m}{g[1],...,g[m]} are samples from Gumbel distribution with
+#' cumulative distribution function \eqn{F(g) = \exp(-\exp(-g))}{F(g) = exp(-exp(-g))},
+#' then \eqn{k = \mathrm{arg\,max}_i \{g_i + \alpha_i\}}{k = argmax(g[i]+\alpha[i])}
 #' is a draw from categorical distribution parametrized by
 #' vector of probabilities \eqn{p_1,\dots,p_m}{p[1]....,p[m]}, such that
 #' \eqn{p_i = \exp(\alpha_i) / [\sum_{j=1}^m \exp(\alpha_j)]}{p[i] = exp(\alpha[i])/sum(exp(\alpha))}.

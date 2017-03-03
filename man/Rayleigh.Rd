@@ -60,12 +60,11 @@ F^-1(p) = sqrt(-2*\sigma^2 * log(1-p))
 \examples{
 
 x <- rrayleigh(1e5, 13)
-xx <- seq(-100, 100, by = 0.001)
 hist(x, 100, freq = FALSE)
-lines(xx, drayleigh(xx, 13), col = "red")
+curve(drayleigh(x, 13), 0, 60, col = "red", add = TRUE)
 hist(prayleigh(x, 13)) 
 plot(ecdf(x))
-lines(xx, prayleigh(xx, 13), col = "red", lwd = 2) 
+curve(prayleigh(x, 13), 0, 60, col = "red", lwd = 2, add = TRUE) 
 
 }
 \references{

@@ -66,12 +66,11 @@
 #' @examples 
 #' 
 #' x <- rtriang(1e5, 5, 7, 6)
-#' xx <- seq(-10, 10, by = 0.001)
 #' hist(x, 100, freq = FALSE)
-#' lines(xx, dtriang(xx, 5, 7, 6), col = "red")
+#' curve(dtriang(x, 5, 7, 6), 3, 10, n = 500, col = "red", add = TRUE)
 #' hist(ptriang(x, 5, 7, 6))
 #' plot(ecdf(x))
-#' lines(xx, ptriang(xx, 5, 7, 6), col = "red", lwd = 2)
+#' curve(ptriang(x, 5, 7, 6), 3, 10, n = 500, col = "red", lwd = 2, add = TRUE)
 #'
 #' @name Triangular
 #' @aliases Triangular

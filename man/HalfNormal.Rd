@@ -44,12 +44,11 @@ degrees of freedom converges to half-normal distribution.
 \examples{
 
 x <- rhnorm(1e5, 2)
-xx <- seq(-1, 100, by = 0.01)
 hist(x, 100, freq = FALSE)
-lines(xx, dhnorm(xx, 2), col = "red")
+curve(dhnorm(x, 2), 0, 8, col = "red", add = TRUE)
 hist(phnorm(x, 2))
 plot(ecdf(x))
-lines(xx, phnorm(xx, 2), col = "red", lwd = 2)
+curve(phnorm(x, 2), 0, 8, col = "red", lwd = 2, add = TRUE)
 
 }
 \references{

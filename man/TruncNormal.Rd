@@ -71,39 +71,38 @@ For random generation algorithm described by Robert (1995) is used.
 \examples{
 
 x <- rtnorm(1e5, 5, 3, b = 7)
-xx <- seq(-10, 10, by = 0.001)
 hist(x, 100, freq = FALSE)
-lines(xx, dtnorm(xx, 5, 3, b = 7), col = "red")
+curve(dtnorm(x, 5, 3, b = 7), -8, 8, col = "red", add = TRUE)
 hist(ptnorm(x, 5, 3, b = 7))
 plot(ecdf(x))
-lines(xx, ptnorm(xx, 5, 3, b = 7), col = "red", lwd = 2)
+curve(ptnorm(x, 5, 3, b = 7), -8, 8, col = "red", lwd = 2, add = TRUE)
 
 R <- 1e5
 partmp <- par(mfrow = c(2,4), mar = c(2,2,2,2))
 
 hist(rtnorm(R), freq= FALSE, main = "", xlab = "", ylab = "")
-lines(xx, dtnorm(xx), col = "red")
+curve(dtnorm(x), -5, 5, col = "red", add = TRUE)
 
 hist(rtnorm(R, a = 0), freq= FALSE, main = "", xlab = "", ylab = "")
-lines(xx, dtnorm(xx, a = 0), col = "red")
+curve(dtnorm(x, a = 0), -1, 5, col = "red", add = TRUE)
 
 hist(rtnorm(R, b = 0), freq= FALSE, main = "", xlab = "", ylab = "")
-lines(xx, dtnorm(xx, b = 0), col = "red")
+curve(dtnorm(x, b = 0), -5, 5, col = "red", add = TRUE)
 
 hist(rtnorm(R, a = 0, b = 1), freq= FALSE, main = "", xlab = "", ylab = "")
-lines(xx, dtnorm(xx, a = 0, b = 1), col = "red")
+curve(dtnorm(x, a = 0, b = 1), -1, 2, col = "red", add = TRUE)
 
 hist(rtnorm(R, a = -1, b = 0), freq= FALSE, main = "", xlab = "", ylab = "")
-lines(xx, dtnorm(xx, a = -1, b = 0), col = "red")
+curve(dtnorm(x, a = -1, b = 0), -2, 2, col = "red", add = TRUE)
 
 hist(rtnorm(R, mean = -6, a = 0), freq= FALSE, main = "", xlab = "", ylab = "")
-lines(xx, dtnorm(xx, mean = -6, a = 0), col = "red")
+curve(dtnorm(x, mean = -6, a = 0), -2, 1, col = "red", add = TRUE)
 
 hist(rtnorm(R, mean = 8, b = 0), freq= FALSE, main = "", xlab = "", ylab = "")
-lines(xx, dtnorm(xx, mean = 8, b = 0), col = "red")
+curve(dtnorm(x, mean = 8, b = 0), -2, 1, col = "red", add = TRUE)
 
 hist(rtnorm(R, a = 3, b = 5), freq= FALSE, main = "", xlab = "", ylab = "")
-lines(xx, dtnorm(xx, a = 3, b = 5), col = "red")
+curve(dtnorm(x, a = 3, b = 5), 2, 5, col = "red", add = TRUE)
 
 par(partmp)
 

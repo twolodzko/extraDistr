@@ -60,12 +60,11 @@ F^-1(p) = ((1-p)^(-1/\kappa)-1) / \lambda
 \examples{
 
 x <- rlomax(1e5, 5, 16)
-xx <- seq(-100, 100, by = 0.001)
 hist(x, 100, freq = FALSE)
-lines(xx, dlomax(xx, 5, 16), col = "red")
+curve(dlomax(x, 5, 16), 0, 1, col = "red", add = TRUE)
 hist(plomax(x, 5, 16))
 plot(ecdf(x))
-lines(xx, plomax(xx, 5, 16), col = "red", lwd = 2)
+curve(plomax(x, 5, 16), 0, 1, col = "red", lwd = 2, add = TRUE)
 
 }
 \keyword{distribution}

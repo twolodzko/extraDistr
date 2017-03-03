@@ -50,22 +50,20 @@ chi-squared distribution.
 \examples{
 
 x <- rinvchisq(1e5, 20)
-xx <- seq(0, 6, by = 0.001)
 hist(x, 100, freq = FALSE)
-lines(xx, dinvchisq(xx, 20), col = "red")
+curve(dinvchisq(x, 20), 0, 1, col = "red", add = TRUE)
 hist(pinvchisq(x, 20))
 plot(ecdf(x))
-lines(xx, pinvchisq(xx, 20), col = "red", lwd = 2)
+curve(pinvchisq(x, 20), 0, 1, col = "red", lwd = 2, add = TRUE)
 
 # scaled
 
 x <- rinvchisq(1e5, 10, 5)
-xx <- seq(0, 700, by = 0.01)
 hist(x, 100, freq = FALSE)
-lines(xx, dinvchisq(xx, 10, 5), col = "red")
+curve(dinvchisq(x, 10, 5), 0, 150, col = "red", add = TRUE)
 hist(pinvchisq(x, 10, 5))
 plot(ecdf(x))
-lines(xx, pinvchisq(xx, 10, 5), col = "red", lwd = 2)
+curve(pinvchisq(x, 10, 5), 0, 150, col = "red", lwd = 2, add = TRUE)
 
 }
 \seealso{

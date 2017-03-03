@@ -43,12 +43,11 @@
 #' @examples 
 #' 
 #' x <- rinvgamma(1e5, 20, 3)
-#' xx <- seq(0, 1, by = 0.001)
 #' hist(x, 100, freq = FALSE)
-#' lines(xx, dinvgamma(xx, 20, 3), col = "red")
+#' curve(dinvgamma(x, 20, 3), 0, 1, col = "red", add = TRUE)
 #' hist(pinvgamma(x, 20, 3))
 #' plot(ecdf(x))
-#' lines(xx, pinvgamma(xx, 20, 3), col = "red", lwd = 2) 
+#' curve(pinvgamma(x, 20, 3), 0, 1, col = "red", lwd = 2, add = TRUE) 
 #'
 #' @name InvGamma
 #' @aliases InvGamma

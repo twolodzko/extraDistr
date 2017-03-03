@@ -60,12 +60,11 @@ F^-1(p) = b/(1-p)^(1-a)
 \examples{
 
 x <- rpareto(1e5, 5, 16)
-xx <- seq(-100, 100, by = 0.001)
 hist(x, 100, freq = FALSE)
-lines(xx, dpareto(xx, 5, 16), col = "red")
+curve(dpareto(x, 5, 16), 0, 200, col = "red", add = TRUE)
 hist(ppareto(x, 5, 16))
 plot(ecdf(x))
-lines(xx, ppareto(xx, 5, 16), col = "red", lwd = 2)
+curve(ppareto(x, 5, 16), 0, 200, col = "red", lwd = 2, add = TRUE)
 
 }
 \references{

@@ -41,12 +41,11 @@
 #' @examples 
 #' 
 #' x <- rslash(1e5, 5, 3)
-#' xx <- seq(-100, 100, by = 0.001)
 #' hist(x, 1e5, freq = FALSE, xlim = c(-100, 100))
-#' lines(xx, dslash(xx, 5, 3), col = "red")
+#' curve(dslash(x, 5, 3), -100, 100, col = "red", n = 500, add = TRUE)
 #' hist(pslash(x, 5, 3))
 #' plot(ecdf(x), xlim = c(-100, 100))
-#' lines(xx, pslash(xx, 5, 3), col = "red", lwd = 2)
+#' curve(pslash(x, 5, 3), -100, 100, col = "red", lwd = 2, n = 500, add = TRUE)
 #' 
 #' @name Slash
 #' @aliases Slash

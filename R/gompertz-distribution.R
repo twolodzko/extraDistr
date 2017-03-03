@@ -45,12 +45,11 @@
 #' @examples 
 #' 
 #' x <- rgompertz(1e5, 5, 2)
-#' xx <- seq(0, 1000, by = 0.1)
 #' hist(x, 100, freq = FALSE)
-#' lines(xx, dgompertz(xx, 5, 2), col = "red")
+#' curve(dgompertz(x, 5, 2), 0, 1, col = "red", add = TRUE)
 #' hist(pgompertz(x, 5, 2))
 #' plot(ecdf(x))
-#' lines(xx, pgompertz(xx, 5, 2), col = "red", lwd = 2)
+#' curve(pgompertz(x, 5, 2), 0, 1, col = "red", lwd = 2, add = TRUE)
 #'
 #' @name Gompertz
 #' @aliases Gompertz

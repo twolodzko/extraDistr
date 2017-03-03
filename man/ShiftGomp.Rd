@@ -57,12 +57,11 @@ F(x) = (1-exp(-b*x)) * exp(-\eta*exp(-b*x))
 \examples{
 
 x <- rsgomp(1e5, 0.4, 1)
-xx <- seq(0, 100, by = 0.1)
 hist(x, 50, freq = FALSE)
-lines(xx, dsgomp(xx, 0.4, 1), col = "red")
+curve(dsgomp(x, 0.4, 1), 0, 30, col = "red", add = TRUE)
 hist(psgomp(x, 0.4, 1))
 plot(ecdf(x))
-lines(xx, psgomp(xx, 0.4, 1), col = "red", lwd = 2)
+curve(psgomp(x, 0.4, 1), 0, 30, col = "red", lwd = 2, add = TRUE)
 
 }
 \references{

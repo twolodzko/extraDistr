@@ -48,12 +48,11 @@
 #' @examples 
 #' 
 #' x <- rkumar(1e5, 5, 16)
-#' xx <- seq(0, 1, by = 0.001)
 #' hist(x, 100, freq = FALSE)
-#' lines(xx, dkumar(xx, 5, 16), col = "red")
+#' curve(dkumar(x, 5, 16), 0, 1, col = "red", add = TRUE)
 #' hist(pkumar(x, 5, 16))
 #' plot(ecdf(x))
-#' lines(xx, pkumar(xx, 5, 16), col = "red", lwd = 2)
+#' curve(pkumar(x, 5, 16), 0, 1, col = "red", lwd = 2, add = TRUE)
 #'
 #' @name Kumaraswamy
 #' @aliases Kumaraswamy

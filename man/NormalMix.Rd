@@ -57,12 +57,13 @@ where \eqn{\sum_i \alpha_i = 1}{sum(\alpha[i]) == 1}.
 \examples{
 
 x <- rmixnorm(1e5, c(0.5, 3, 6), c(3, 1, 1), c(1/3, 1/3, 1/3))
-xx <- seq(-20, 20, by = 0.1)
 hist(x, 100, freq = FALSE)
-lines(xx, dmixnorm(xx, c(0.5, 3, 6), c(3, 1, 1), c(1/3, 1/3, 1/3)), col = "red")
+curve(dmixnorm(x, c(0.5, 3, 6), c(3, 1, 1), c(1/3, 1/3, 1/3)),
+      -20, 20, n = 500, col = "red", add = TRUE)
 hist(pmixnorm(x, c(0.5, 3, 6), c(3, 1, 1), c(1/3, 1/3, 1/3)))
 plot(ecdf(x))
-lines(xx, pmixnorm(xx, c(0.5, 3, 6), c(3, 1, 1), c(1/3, 1/3, 1/3)), col = "red", lwd = 2)
+curve(pmixnorm(x, c(0.5, 3, 6), c(3, 1, 1), c(1/3, 1/3, 1/3)),
+      -20, 20, n = 500, col = "red", lwd = 2, add = TRUE)
 
 }
 \keyword{distribution}

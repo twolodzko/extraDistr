@@ -67,12 +67,11 @@
 #' @examples 
 #' 
 #' x <- rfatigue(1e5, .5, 2, 5)
-#' xx <- seq(0, 1000, by = 0.1)
 #' hist(x, 100, freq = FALSE)
-#' lines(xx, dfatigue(xx, .5, 2, 5), col = "red")
+#' curve(dfatigue(x, .5, 2, 5), 2, 20, col = "red", add = TRUE)
 #' hist(pfatigue(x, .5, 2, 5))
 #' plot(ecdf(x))
-#' lines(xx, pfatigue(xx, .5, 2, 5), col = "red", lwd = 2)
+#' curve(pfatigue(x, .5, 2, 5), 2, 20, col = "red", lwd = 2, add = TRUE)
 #'
 #' @name BirnbaumSaunders
 #' @aliases BirnbaumSaunders

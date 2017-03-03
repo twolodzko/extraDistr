@@ -45,12 +45,11 @@ degrees of freedom \eqn{\nu}, is parametrized using additional parameters
 \examples{
 
 x <- rnst(1e5, 1000, 5, 13)
-xx <- seq(-60, 60, by = 0.01)
 hist(x, 100, freq = FALSE)
-lines(xx-0.5, dnst(xx, 1000, 5, 13), col = "red")
+curve(dnst(x, 1000, 5, 13), -60, 60, col = "red", add = TRUE)
 hist(pnst(x, 1000, 5, 13))
 plot(ecdf(x))
-lines(xx, pnst(xx, 1000, 5, 13), col = "red", lwd = 2)
+curve(pnst(x, 1000, 5, 13), -60, 60, col = "red", lwd = 2, add = TRUE)
 
 }
 \seealso{

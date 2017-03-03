@@ -55,12 +55,11 @@ Random generation is done using the algorithm described by Michael, Schucany and
 \examples{
 
 x <- rwald(1e5, 5, 16)
-xx <- seq(0, 100, by = 0.001)
 hist(x, 100, freq = FALSE)
-lines(xx, dwald(xx, 5, 16), col = "red")
+curve(dwald(x, 5, 16), 0, 50, col = "red", add = TRUE)
 hist(pwald(x, 5, 16))
 plot(ecdf(x))
-lines(xx, pwald(xx, 5, 16), col = "red", lwd = 2)
+curve(pwald(x, 5, 16), 0, 50, col = "red", lwd = 2, add = TRUE)
 
 }
 \references{

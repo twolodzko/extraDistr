@@ -44,12 +44,11 @@ distribution with \eqn{\nu=1} degrees of freedom.
 \examples{
 
 x <- rhcauchy(1e5, 2)
-xx <- seq(-1, 100, by = 0.01)
 hist(x, 2e5, freq = FALSE, xlim = c(0, 100))
-lines(xx, dhcauchy(xx, 2), col = "red")
+curve(dhcauchy(x, 2), 0, 100, col = "red", add = TRUE)
 hist(phcauchy(x, 2))
 plot(ecdf(x), xlim = c(0, 100))
-lines(xx, phcauchy(xx, 2), col = "red", lwd = 2)
+curve(phcauchy(x, 2), col = "red", lwd = 2, add = TRUE)
 
 }
 \references{

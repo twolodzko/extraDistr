@@ -53,12 +53,11 @@
 #' @examples 
 #' 
 #' x <- rgpd(1e5, 5, 2, .1)
-#' xx <- seq(0, 1000, by = 0.1)
 #' hist(x, 100, freq = FALSE, xlim = c(0, 50))
-#' lines(xx, dgpd(xx, 5, 2, .1), col = "red")
+#' curve(dgpd(x, 5, 2, .1), 0, 50, col = "red", add = TRUE)
 #' hist(pgpd(x, 5, 2, .1))
 #' plot(ecdf(x))
-#' lines(xx, pgpd(xx, 5, 2, .1), col = "red", lwd = 2)
+#' curve(pgpd(x, 5, 2, .1), 0, 50, col = "red", lwd = 2, add = TRUE)
 #'
 #' @name GPD
 #' @aliases GPD

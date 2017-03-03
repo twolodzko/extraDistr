@@ -53,12 +53,11 @@
 #' @examples 
 #' 
 #' x <- rgev(1e5, 5, 2, .5)
-#' xx <- seq(0, 1000, by = 0.1)
 #' hist(x, 1000, freq = FALSE, xlim = c(0, 50))
-#' lines(xx, dgev(xx, 5, 2, .5), col = "red")
+#' curve(dgev(x, 5, 2, .5), 0, 50, col = "red", add = TRUE)
 #' hist(pgev(x, 5, 2, .5))
 #' plot(ecdf(x))
-#' lines(xx, pgev(xx, 5, 2, .5), col = "red", lwd = 2)
+#' curve(pgev(x, 5, 2, .5), 0, 50, col = "red", lwd = 2, add = TRUE)
 #'
 #' @name GEV
 #' @aliases GEV

@@ -66,12 +66,11 @@ F^-1(p) = [if p < 0.5:] \mu + \sigma * log(2*p)
 \examples{
 
 x <- rlaplace(1e5, 5, 16)
-xx <- seq(-100, 100, by = 0.01)
 hist(x, 100, freq = FALSE)
-lines(xx, dlaplace(xx, 5, 16), col = "red")
+curve(dlaplace(x, 5, 16), -200, 200, n = 500, col = "red", add = TRUE)
 hist(plaplace(x, 5, 16))
 plot(ecdf(x))
-lines(xx, plaplace(xx, 5, 16), col = "red", lwd = 2)
+curve(plaplace(x, 5, 16), -200, 200, n = 500, col = "red", lwd = 2, add = TRUE)
 
 }
 \references{

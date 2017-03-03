@@ -43,12 +43,11 @@ and \code{max=1} what leads to standard beta distribution.
 \examples{
 
 x <- rnsbeta(1e5, 5, 13, -4, 8)
-xx <- seq(-20, 20, by = 0.1)
 hist(x, 100, freq = FALSE)
-lines(xx, dnsbeta(xx, 5, 13, -4, 8), col = "red") 
+curve(dnsbeta(x, 5, 13, -4, 8), -4, 6, col = "red", add = TRUE) 
 hist(pnsbeta(x, 5, 13, -4, 8))
 plot(ecdf(x))
-lines(xx, pnsbeta(xx, 5, 13, -4, 8), col = "red", lwd = 2)
+curve(pnsbeta(x, 5, 13, -4, 8), -4, 6, col = "red", lwd = 2, add = TRUE)
 
 }
 \seealso{
