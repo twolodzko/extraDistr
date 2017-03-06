@@ -53,8 +53,10 @@
 #' @name Gumbel
 #' @aliases Gumbel
 #' @aliases dgumbel
-#' @keywords Univariate
-#' @keywords Continuous
+#' 
+#' @keywords distribution
+#' @concept Univariate
+#' @concept Continuous
 #'
 #' @export
 

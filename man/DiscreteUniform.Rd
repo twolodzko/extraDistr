@@ -50,5 +50,9 @@ plot(ecdf(x))
 lines(xx, pdunif(xx, 1, 10), col = "red")
 
 }
-\keyword{Discrete}
-\keyword{Univariate}
+\concept{
+Univariate
+
+Discrete
+}
+\keyword{distribution}

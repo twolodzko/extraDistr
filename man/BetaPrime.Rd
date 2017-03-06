@@ -70,5 +70,9 @@ curve(pbetapr(x, 5, 3, 2), 0, 100, col = "red", add = TRUE, n = 500)
 \seealso{
 \code{\link[stats]{Beta}}
 }
-\keyword{Continuous}
-\keyword{Univariate}
+\concept{
+Univariate
+
+Continuous
+}
+\keyword{distribution}

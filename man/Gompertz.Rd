@@ -72,5 +72,9 @@ Lenart, A. (2012). The Gompertz distribution and Maximum Likelihood Estimation
 of its parameters - a revision. MPIDR WORKING PAPER WP 2012-008.
 \url{http://www.demogr.mpg.de/papers/working/wp-2012-008.pdf}
 }
-\keyword{Continuous}
-\keyword{Univariate}
+\concept{
+Univariate
+
+Continuous
+}
+\keyword{distribution}

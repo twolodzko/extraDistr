@@ -40,8 +40,10 @@
 #' @name Dirichlet
 #' @aliases Dirichlet
 #' @aliases ddirichlet
-#' @keywords Multivariate
-#' @keywords Continuous
+#' 
+#' @keywords distribution
+#' @concept Multivariate
+#' @concept Continuous
 #' 
 #' @export
 

@@ -44,8 +44,10 @@
 #' @name HalfCauchy
 #' @aliases HalfCauchy
 #' @aliases dhcauchy
-#' @keywords Univariate
-#' @keywords Continuous
+#' 
+#' @keywords distribution
+#' @concept Univariate
+#' @concept Continuous
 #'
 #' @export
 

@@ -54,8 +54,10 @@
 #' @name Gompertz
 #' @aliases Gompertz
 #' @aliases dgompertz
-#' @keywords Univariate
-#' @keywords Continuous
+#' 
+#' @keywords distribution
+#' @concept Univariate
+#' @concept Continuous
 #'
 #' @export
 

@@ -68,5 +68,9 @@ Communications in Statistics-Theory and Methods, 32, 1871-1883.
 \seealso{
 \code{\link[stats]{Normal}}
 }
-\keyword{Discrete}
-\keyword{Univariate}
+\concept{
+Univariate
+
+Discrete
+}
+\keyword{distribution}

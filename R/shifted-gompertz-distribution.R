@@ -67,8 +67,10 @@
 #' @name ShiftGomp
 #' @aliases ShiftGomp
 #' @aliases dsgomp
-#' @keywords Univariate
-#' @keywords Continuous
+#' 
+#' @keywords distribution
+#' @concept Univariate
+#' @concept Continuous
 #'
 #' @export
 

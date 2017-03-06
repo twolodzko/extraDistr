@@ -67,8 +67,10 @@
 #' @name Huber
 #' @aliases Huber
 #' @aliases dhuber
-#' @keywords Univariate
-#' @keywords Continuous
+#' 
+#' @keywords distribution
+#' @concept Univariate
+#' @concept Continuous
 #'
 #' @export
 

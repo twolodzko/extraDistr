@@ -49,8 +49,10 @@
 #' @name NormalMix
 #' @aliases NormalMix
 #' @aliases dmixnorm
-#' @keywords Univariate
-#' @keywords Continuous
+#' 
+#' @keywords distribution
+#' @concept Univariate
+#' @concept Continuous
 #'
 #' @export
 

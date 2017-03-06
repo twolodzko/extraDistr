@@ -49,8 +49,10 @@
 #' @name InvChiSq
 #' @aliases InvChiSq
 #' @aliases dinvchisq
-#' @keywords Univariate
-#' @keywords Continuous
+#' 
+#' @keywords distribution
+#' @concept Univariate
+#' @concept Continuous
 #'
 #' @export
 

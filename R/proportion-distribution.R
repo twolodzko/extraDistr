@@ -79,8 +79,10 @@
 #' @name PropBeta
 #' @aliases PropBeta
 #' @aliases dprop
-#' @keywords Univariate
-#' @keywords Continuous
+#' 
+#' @keywords distribution
+#' @concept Univariate
+#' @concept Continuous
 #'
 #' @export
 

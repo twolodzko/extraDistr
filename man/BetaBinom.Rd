@@ -90,5 +90,9 @@ lines(xx, pbbinom(xx, 1000, 5, 13), col = "red", lwd = 2)
 \seealso{
 \code{\link[stats]{Beta}}, \code{\link[stats]{Binomial}}
 }
-\keyword{Discrete}
-\keyword{Univariate}
+\concept{
+Univariate
+
+Discrete
+}
+\keyword{distribution}

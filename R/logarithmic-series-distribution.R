@@ -58,8 +58,10 @@
 #' @name LogSeries
 #' @aliases LogSeries
 #' @aliases dlgser
-#' @keywords Univariate
-#' @keywords Discrete
+#' 
+#' @keywords distribution
+#' @concept Univariate
+#' @concept Discrete
 #' 
 #' @export
 

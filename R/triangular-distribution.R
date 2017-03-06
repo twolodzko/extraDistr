@@ -75,8 +75,10 @@
 #' @name Triangular
 #' @aliases Triangular
 #' @aliases dtriang
-#' @keywords Univariate
-#' @keywords Continuous
+#' 
+#' @keywords distribution
+#' @concept Univariate
+#' @concept Continuous
 #'
 #' @export
 

@@ -68,5 +68,9 @@ lines(xx, pzinb(xx, 100, 0.6, 0.33), col = "red")
 \seealso{
 \code{\link[stats]{NegBinomial}}
 }
-\keyword{Discrete}
-\keyword{Univariate}
+\concept{
+Univariate
+
+Discrete
+}
+\keyword{distribution}

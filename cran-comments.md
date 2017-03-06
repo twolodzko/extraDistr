@@ -1,2 +1,6 @@
 
-This update fixes bugs preventing compiling the code on RedHat linux (and possibly other operating systems other then Windows, Mac OS X, Ubuntu, or other ones used in CRAN checks). Moreover minor changes in documentation were made, interface for *prop distribution functions was changed and additional possibility for sampling from categorical distribution was added.
+This update fixes bugs preventing code from compiling on RedHat linux. The reason for this issue is a mistery for me, but it was easy to fix. I'm providing the update so the code compiles on any platform.
+
+Moreover minor changes in documentation were made, interface for *prop distribution functions was changed and additional possibility for sampling from categorical distribution was added.
+
+The changes can be compared here: https://github.com/twolodzko/extraDistr/compare/d0d912f92e6e9ce7588b30f4052f25b7626c4025...683099dbd43b94477dcd66a2ee2cce495250a12c

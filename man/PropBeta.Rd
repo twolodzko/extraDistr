@@ -98,5 +98,9 @@ Psychological Methods, 11(1), 54-71.
 \seealso{
 \code{\link{beta}}, \code{\link{binomial}}
 }
-\keyword{Continuous}
-\keyword{Univariate}
+\concept{
+Univariate
+
+Continuous
+}
+\keyword{distribution}

@@ -49,8 +49,10 @@
 #' @name Lomax
 #' @aliases Lomax
 #' @aliases dlomax
-#' @keywords Univariate
-#' @keywords Continuous
+#' 
+#' @keywords distribution
+#' @concept Univariate
+#' @concept Continuous
 #'
 #' @export
 

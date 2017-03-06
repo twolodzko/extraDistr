@@ -62,8 +62,10 @@
 #' @name GEV
 #' @aliases GEV
 #' @aliases dgev
-#' @keywords Univariate
-#' @keywords Continuous
+#' 
+#' @keywords distribution
+#' @concept Univariate
+#' @concept Continuous
 #'
 #' @export
 

@@ -51,8 +51,10 @@
 #' @name BivNormal
 #' @aliases BivNormal
 #' @aliases dbvnorm
-#' @keywords Multivariate
-#' @keywords Continuous
+#' 
+#' @keywords distribution
+#' @concept Multivariate
+#' @concept Continuous
 #'
 #' @export
 

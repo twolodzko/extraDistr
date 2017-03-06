@@ -55,4 +55,9 @@ Gentle, J.E. (2006). Random number generation and Monte Carlo methods. Springer.
 \seealso{
 \code{\link[stats]{Hypergeometric}}
 }
-\keyword{Multivariate}
+\concept{
+Multivariate
+
+Discrete
+}
+\keyword{distribution}

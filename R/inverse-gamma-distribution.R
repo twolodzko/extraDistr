@@ -52,8 +52,10 @@
 #' @name InvGamma
 #' @aliases InvGamma
 #' @aliases dinvgamma
-#' @keywords Univariate
-#' @keywords Continuous
+#' 
+#' @keywords distribution
+#' @concept Univariate
+#' @concept Continuous
 #'
 #' @export
 

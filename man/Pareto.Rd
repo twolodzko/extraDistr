@@ -71,5 +71,9 @@ curve(ppareto(x, 5, 16), 0, 200, col = "red", lwd = 2, add = TRUE)
 Krishnamoorthy, K. (2006). Handbook of Statistical Distributions
 with Applications. Chapman & Hall/CRC
 }
-\keyword{Continuous}
-\keyword{Univariate}
+\concept{
+Univariate
+
+Continuous
+}
+\keyword{distribution}

@@ -49,8 +49,10 @@
 #' @name PowerDist
 #' @aliases PowerDist
 #' @aliases dpower
-#' @keywords Univariate
-#' @keywords Continuous
+#' 
+#' @keywords distribution
+#' @concept Univariate
+#' @concept Continuous
 #'
 #' @export
 

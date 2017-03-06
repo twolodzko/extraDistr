@@ -83,5 +83,9 @@ lines(xx, pgpois(xx, 7, 0.002), col = "red", lwd = 2)
 \seealso{
 \code{\link[stats]{Gamma}}, \code{\link[stats]{Poisson}}
 }
-\keyword{Discrete}
-\keyword{Univariate}
+\concept{
+Univariate
+
+Discrete
+}
+\keyword{distribution}

@@ -62,8 +62,10 @@
 #' @name GPD
 #' @aliases GPD
 #' @aliases dgpd
-#' @keywords Univariate
-#' @keywords Continuous
+#' 
+#' @keywords distribution
+#' @concept Univariate
+#' @concept Continuous
 #'
 #' @export
 

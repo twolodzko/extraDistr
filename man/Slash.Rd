@@ -65,5 +65,9 @@ plot(ecdf(x), xlim = c(-100, 100))
 curve(pslash(x, 5, 3), -100, 100, col = "red", lwd = 2, n = 500, add = TRUE)
 
 }
-\keyword{Continuous}
-\keyword{Univariate}
+\concept{
+Univariate
+
+Continuous
+}
+\keyword{distribution}

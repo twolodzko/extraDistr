@@ -53,8 +53,10 @@
 #' @name BivPoiss
 #' @aliases BivPoiss
 #' @aliases dbvpois
-#' @keywords Multivariate
-#' @keywords Discrete
+#' 
+#' @keywords distribution
+#' @concept Multivariate
+#' @concept Discrete
 #'
 #' @export
 

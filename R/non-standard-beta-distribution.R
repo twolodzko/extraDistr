@@ -29,8 +29,10 @@
 #' @name NSBeta
 #' @aliases NSBeta
 #' @aliases dgbeta
-#' @keywords Univariate
-#' @keywords Continuous
+#' 
+#' @keywords distribution
+#' @concept Univariate
+#' @concept Continuous
 #'                     
 #' @export
 

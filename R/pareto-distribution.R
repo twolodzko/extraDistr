@@ -53,8 +53,10 @@
 #' @name Pareto
 #' @aliases Pareto
 #' @aliases dpareto
-#' @keywords Univariate
-#' @keywords Continuous
+#' 
+#' @keywords distribution
+#' @concept Univariate
+#' @concept Continuous
 #'
 #' @export
 
