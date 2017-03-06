@@ -86,4 +86,5 @@ lines(xx, pbnbinom(xx, 1000, 5, 13), col = "red", lwd = 2)
 \seealso{
 \code{\link[stats]{Beta}}, \code{\link[stats]{NegBinomial}}
 }
-\keyword{distribution}
+\keyword{Discrete}
+\keyword{Univariate}

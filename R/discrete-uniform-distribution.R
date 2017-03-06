@@ -32,7 +32,8 @@
 #' @name DiscreteUniform
 #' @aliases DiscreteUniform
 #' @aliases ddunif
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Discrete
 #'
 #' @export
 

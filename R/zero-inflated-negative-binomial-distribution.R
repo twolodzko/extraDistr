@@ -47,7 +47,8 @@
 #' @name ZINB
 #' @aliases ZINB
 #' @aliases dzinb
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Discrete
 #'
 #' @export
 

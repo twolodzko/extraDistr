@@ -1,0 +1,2 @@
+
+This update fixes bugs preventing compiling the code on RedHat linux (and possibly other operating systems other then Windows, Mac OS X, Ubuntu, or other ones used in CRAN checks). Moreover minor changes in documentation were made, interface for *prop distribution functions was changed and additional possibility for sampling from categorical distribution was added.

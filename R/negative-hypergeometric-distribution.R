@@ -83,7 +83,7 @@
 #' @name NegHyper
 #' @aliases NegHyper
 #' @aliases dnhyper
-#' @keywords distribution
+#' @keywords Univariate
 #'
 #' @export
 

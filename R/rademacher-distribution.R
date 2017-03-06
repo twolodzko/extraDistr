@@ -11,7 +11,6 @@
 #' @name Rademacher
 #' @aliases Rademacher
 #' @aliases rsign
-#' @keywords distribution
 #'
 #' @export
 

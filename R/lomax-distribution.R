@@ -49,7 +49,8 @@
 #' @name Lomax
 #' @aliases Lomax
 #' @aliases dlomax
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Continuous
 #'
 #' @export
 

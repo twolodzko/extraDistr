@@ -94,7 +94,7 @@
 #' @name TruncNormal
 #' @aliases TruncNormal
 #' @aliases dtnorm
-#' @keywords distribution
+#' @keywords Univariate
 #'
 #' @export
 

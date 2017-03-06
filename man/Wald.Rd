@@ -67,4 +67,5 @@ Michael, J.R., Schucany, W.R., and Haas, R.W. (1976).
 Generating Random Variates Using Transformations with Multiple Roots.
 The American Statistician, 30(2): 88-90.
 }
-\keyword{distribution}
+\keyword{Continuous}
+\keyword{Univariate}

@@ -41,7 +41,8 @@
 #' @name Multinomial
 #' @aliases Multinomial
 #' @aliases dmnom
-#' @keywords distribution
+#' @keywords Multivariate
+#' @keywords Discrete
 #'
 #' @export
 

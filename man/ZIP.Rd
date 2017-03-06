@@ -63,4 +63,5 @@ lines(xx, pzip(xx, 6, 0.33), col = "red")
 \seealso{
 \code{\link[stats]{Poisson}}
 }
-\keyword{distribution}
+\keyword{Discrete}
+\keyword{Univariate}

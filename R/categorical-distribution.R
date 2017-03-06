@@ -87,7 +87,8 @@
 #' @name Categorical
 #' @aliases Categorical
 #' @aliases dcat
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Discrete
 #'
 #' @export
 

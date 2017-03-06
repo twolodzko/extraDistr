@@ -29,7 +29,8 @@
 #' @name NSBeta
 #' @aliases NSBeta
 #' @aliases dgbeta
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Continuous
 #'                     
 #' @export
 

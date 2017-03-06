@@ -53,4 +53,5 @@ curve(pnsbeta(x, 5, 13, -4, 8), -4, 6, col = "red", lwd = 2, add = TRUE)
 \seealso{
 \code{\link[stats]{Beta}}
 }
-\keyword{distribution}
+\keyword{Continuous}
+\keyword{Univariate}

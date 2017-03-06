@@ -64,4 +64,5 @@ Chapman & Hall/CRC
 \seealso{
 \code{\link[stats]{Normal}}
 }
-\keyword{distribution}
+\keyword{Continuous}
+\keyword{Multivariate}

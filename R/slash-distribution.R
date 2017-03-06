@@ -50,7 +50,8 @@
 #' @name Slash
 #' @aliases Slash
 #' @aliases dslash
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Continuous
 #' 
 #' @export
 

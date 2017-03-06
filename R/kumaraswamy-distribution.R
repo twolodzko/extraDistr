@@ -57,7 +57,8 @@
 #' @name Kumaraswamy
 #' @aliases Kumaraswamy
 #' @aliases dkumar
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Continuous
 #'
 #' @export
 

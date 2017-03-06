@@ -33,7 +33,8 @@
 #' @name NonStandardT
 #' @aliases NonStandardT
 #' @aliases dnst
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Continuous
 #' 
 #' @export
 

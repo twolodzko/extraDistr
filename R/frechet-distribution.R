@@ -55,7 +55,8 @@
 #' @name Frechet
 #' @aliases Frechet
 #' @aliases dfrechet
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Continuous
 #'
 #' @export
 

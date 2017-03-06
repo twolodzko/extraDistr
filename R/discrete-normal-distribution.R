@@ -51,7 +51,8 @@
 #' @name DiscreteNormal
 #' @aliases DiscreteNormal
 #' @aliases ddnorm
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Discrete
 #' 
 #' @export
 

@@ -62,4 +62,5 @@ International Journal of Statistika and Mathematika, 3(2), 77-81.
 \seealso{
 \code{\link{HalfNormal}}, \code{\link{HalfCauchy}}
 }
-\keyword{distribution}
+\keyword{Continuous}
+\keyword{Univariate}

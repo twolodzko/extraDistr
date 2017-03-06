@@ -54,7 +54,8 @@
 #' @name Gompertz
 #' @aliases Gompertz
 #' @aliases dgompertz
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Continuous
 #'
 #' @export
 

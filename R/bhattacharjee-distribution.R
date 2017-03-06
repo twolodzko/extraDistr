@@ -57,7 +57,8 @@
 #' @name Bhattacharjee
 #' @aliases Bhattacharjee
 #' @aliases dbhatt
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Continuous
 #'
 #' @export
 

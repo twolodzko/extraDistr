@@ -75,7 +75,8 @@
 #' @name Triangular
 #' @aliases Triangular
 #' @aliases dtriang
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Continuous
 #'
 #' @export
 

@@ -53,7 +53,8 @@
 #' @name Wald
 #' @aliases Wald
 #' @aliases dwald
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Continuous
 #'
 #' @export
 

@@ -114,4 +114,4 @@ Statistics and Computing 5(2): 121-125. \url{http://arxiv.org/abs/0907.4010}
 Burkardt, J. (17 October 2014). The Truncated Normal Distribution. Florida State University.
 \url{http://people.sc.fsu.edu/~jburkardt/presentations/truncated_normal.pdf}
 }
-\keyword{distribution}
+\keyword{Univariate}

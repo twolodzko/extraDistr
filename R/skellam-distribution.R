@@ -43,7 +43,8 @@
 #' @name Skellam
 #' @aliases Skellam
 #' @aliases dskellam
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Discrete
 #'
 #' @export
 

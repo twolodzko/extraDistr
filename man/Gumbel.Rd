@@ -60,16 +60,16 @@ F^-1(p) = \mu - \sigma * log(-log(p))
 \examples{
 
 x <- rgumbel(1e5, 5, 2)
-xx <- seq(0, 1000, by = 0.1)
 hist(x, 100, freq = FALSE)
-lines(xx, dgumbel(xx, 5, 2), col = "red")
+curve(dgumbel(x, 5, 2), 0, 25, col = "red", add = TRUE)
 hist(pgumbel(x, 5, 2))
 plot(ecdf(x))
-lines(xx, pgumbel(xx, 5, 2), col = "red", lwd = 2)
+curve(pgumbel(x, 5, 2), 0, 25, col = "red", lwd = 2, add = TRUE)
 
 }
 \references{
 Bury, K. (1999). Statistical Distributions in Engineering.
 Cambridge University Press.
 }
-\keyword{distribution}
+\keyword{Continuous}
+\keyword{Univariate}

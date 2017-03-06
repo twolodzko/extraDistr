@@ -44,7 +44,8 @@
 #' @name HalfNormal
 #' @aliases HalfNormal
 #' @aliases dhnorm
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Continuous
 #'
 #' @export
 

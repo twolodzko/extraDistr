@@ -54,8 +54,7 @@ NumericVector cpp_rcatlp(
       
       wrong_prob = false;
       
-      if (GETM(log_prob, i, j) < 0.0 ||
-          ISNAN(GETM(log_prob, i, j))) {
+      if (ISNAN(GETM(log_prob, i, j))) {
         throw_warning = wrong_prob = true;
         break;
       }

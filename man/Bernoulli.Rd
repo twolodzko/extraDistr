@@ -43,4 +43,5 @@ prop.table(table(rbern(1e5, 0.5)))
 \seealso{
 \code{\link[stats]{Binomial}}
 }
-\keyword{distribution}
+\keyword{Discrete}
+\keyword{Univariate}

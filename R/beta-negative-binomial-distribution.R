@@ -71,7 +71,8 @@
 #' @name BetaNegBinom
 #' @aliases BetaNegBinom
 #' @aliases dbnbinom
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Discrete
 #'
 #' @export
 

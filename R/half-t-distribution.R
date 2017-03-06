@@ -43,7 +43,8 @@
 #' @name HalfT
 #' @aliases HalfT
 #' @aliases dht
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Continuous
 #'
 #' @export
 

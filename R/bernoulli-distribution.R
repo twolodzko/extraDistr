@@ -23,7 +23,8 @@
 #' @name Bernoulli
 #' @aliases Bernoulli
 #' @aliases dbern
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Discrete
 #'
 #' @export
 

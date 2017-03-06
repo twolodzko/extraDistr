@@ -42,7 +42,8 @@
 #' @name DiscreteGamma
 #' @aliases DiscreteGamma
 #' @aliases ddgamma
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Discrete
 #' 
 #' @export
 

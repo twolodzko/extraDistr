@@ -79,4 +79,5 @@ Estimation of the Parameters of the Shifted Gompertz Distribution,
 Using Least Squares, Maximum Likelihood and Moments Methods.
 Journal of Computational and Applied Mathematics, 255(1), 867-877.
 }
-\keyword{distribution}
+\keyword{Continuous}
+\keyword{Univariate}

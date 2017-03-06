@@ -71,4 +71,5 @@ Hastings Jr, C., Mosteller, F., Tukey, J.W., & Winsor, C.P. (1947).
 Low moments for small samples: a comparative study of order statistics.
 The Annals of Mathematical Statistics, 413-426.
 }
-\keyword{distribution}
+\keyword{Continuous}
+\keyword{Univariate}

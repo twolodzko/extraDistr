@@ -44,7 +44,8 @@
 #' @name ZIB
 #' @aliases ZIB
 #' @aliases dzib
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Discrete
 #'
 #' @export
 

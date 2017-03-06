@@ -52,7 +52,8 @@
 #' @name InvGamma
 #' @aliases InvGamma
 #' @aliases dinvgamma
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Continuous
 #'
 #' @export
 

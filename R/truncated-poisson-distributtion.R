@@ -60,7 +60,7 @@
 #' @name TruncPoisson
 #' @aliases TruncPoisson
 #' @aliases dtpois
-#' @keywords distribution
+#' @keywords Univariate
 #'
 #' @export
 

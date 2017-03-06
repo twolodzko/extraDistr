@@ -63,7 +63,8 @@
 #' @name Laplace
 #' @aliases Laplace
 #' @aliases dlaplace
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Continuous
 #'
 #' @export
 

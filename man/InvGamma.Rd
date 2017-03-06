@@ -70,4 +70,5 @@ Relationships. American Statistician 62(1): 45-53.
 \seealso{
 \code{\link[stats]{GammaDist}}
 }
-\keyword{distribution}
+\keyword{Continuous}
+\keyword{Univariate}

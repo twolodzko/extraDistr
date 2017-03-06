@@ -65,7 +65,8 @@
 #' @name DiscreteLaplace
 #' @aliases DiscreteLaplace
 #' @aliases ddlaplace
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Discrete
 #' 
 #' @export
 

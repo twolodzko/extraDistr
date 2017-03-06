@@ -56,4 +56,4 @@ uu <- seq(0, 1, by = 0.001)
 lines(qtbinom(uu, 100, 0.83, 76, 86), uu, col = "blue", lty = 2)
 
 }
-\keyword{distribution}
+\keyword{Univariate}

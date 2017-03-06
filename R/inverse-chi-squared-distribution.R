@@ -49,7 +49,8 @@
 #' @name InvChiSq
 #' @aliases InvChiSq
 #' @aliases dinvchisq
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Continuous
 #'
 #' @export
 

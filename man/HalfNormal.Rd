@@ -63,4 +63,5 @@ International Journal of Statistika and Mathematika, 3(2), 77-81.
 \seealso{
 \code{\link{HalfT}}
 }
-\keyword{distribution}
+\keyword{Continuous}
+\keyword{Univariate}

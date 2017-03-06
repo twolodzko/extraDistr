@@ -80,4 +80,5 @@ curve(pgev(x, 5, 2, .5), 0, 50, col = "red", lwd = 2, add = TRUE)
 Coles, S. (2001). An Introduction to Statistical Modeling of Extreme Values.
 Springer.
 }
-\keyword{distribution}
+\keyword{Continuous}
+\keyword{Univariate}

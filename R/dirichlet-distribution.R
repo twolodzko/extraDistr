@@ -40,7 +40,8 @@
 #' @name Dirichlet
 #' @aliases Dirichlet
 #' @aliases ddirichlet
-#' @keywords distribution
+#' @keywords Multivariate
+#' @keywords Continuous
 #' 
 #' @export
 

@@ -76,7 +76,8 @@
 #' @name BirnbaumSaunders
 #' @aliases BirnbaumSaunders
 #' @aliases dfatigue
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Continuous
 #'
 #' @export
 

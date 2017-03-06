@@ -57,7 +57,7 @@
 #' @name Rayleigh
 #' @aliases Rayleigh
 #' @aliases drayleigh
-#' @keywords distribution
+#' @keywords Univariate
 #'
 #' @export
 

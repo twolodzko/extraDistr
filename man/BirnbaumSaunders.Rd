@@ -91,4 +91,5 @@ Leiva, V., Sanhueza, A., Sen, P. K., and Paula, G. A. (2008).
 Random number generators for the generalized Birnbaum-Saunders distribution.
 Journal of Statistical Computation and Simulation, 78(11), 1105-1118.
 }
-\keyword{distribution}
+\keyword{Continuous}
+\keyword{Univariate}

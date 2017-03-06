@@ -50,7 +50,8 @@
 #' @name BetaPrime
 #' @aliases BetaPrime
 #' @aliases dbetapr
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Continuous
 #'
 #' @export
 

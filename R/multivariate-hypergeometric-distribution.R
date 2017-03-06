@@ -44,7 +44,7 @@
 #' @name MultiHypergeometric
 #' @aliases MultiHypergeometric
 #' @aliases dmvhyper
-#' @keywords distribution
+#' @keywords Multivariate
 #'
 #' @export
 

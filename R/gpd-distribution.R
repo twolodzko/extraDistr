@@ -62,7 +62,8 @@
 #' @name GPD
 #' @aliases GPD
 #' @aliases dgpd
-#' @keywords distribution
+#' @keywords Univariate
+#' @keywords Continuous
 #'
 #' @export
 

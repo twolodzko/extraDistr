@@ -67,4 +67,5 @@ plot(ecdf(x))
 curve(ppower(x, 5, 16), 2, 6, col = "red", lwd = 2, add = TRUE)
 
 }
-\keyword{distribution}
+\keyword{Continuous}
+\keyword{Univariate}

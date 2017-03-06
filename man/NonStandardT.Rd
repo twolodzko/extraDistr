@@ -55,4 +55,5 @@ curve(pnst(x, 1000, 5, 13), -60, 60, col = "red", lwd = 2, add = TRUE)
 \seealso{
 \code{\link[stats]{TDist}}
 }
-\keyword{distribution}
+\keyword{Continuous}
+\keyword{Univariate}

@@ -67,4 +67,5 @@ plot(ecdf(x))
 curve(plomax(x, 5, 16), 0, 1, col = "red", lwd = 2, add = TRUE)
 
 }
-\keyword{distribution}
+\keyword{Continuous}
+\keyword{Univariate}

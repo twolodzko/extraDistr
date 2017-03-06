@@ -99,4 +99,4 @@ UNLV Theses, Dissertations, Professional Papers, and Capstones. Paper 1846.
 \seealso{
 \code{\link[stats]{Hypergeometric}}
 }
-\keyword{distribution}
+\keyword{Univariate}

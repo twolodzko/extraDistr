@@ -53,4 +53,5 @@ Gentle, J.E. (2006). Random number generation and Monte Carlo methods. Springer.
 \seealso{
 \code{\link[stats]{Binomial}}, \code{\link[stats]{Multinomial}}
 }
-\keyword{distribution}
+\keyword{Discrete}
+\keyword{Multivariate}
