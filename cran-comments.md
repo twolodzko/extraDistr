@@ -1,5 +1,5 @@
 
-This update fixes bugs preventing code from compiling on RedHat linux. The reason for this issue is a mistery for me, but it was easy to fix. I'm providing the update so the code compiles on any platform.
+This update fixes bugs preventing code from compiling on RedHat linux. I'm providing the update so the code compiles on any platform.
 
 Moreover minor changes in documentation were made, interface for *prop distribution functions was changed and additional possibility for sampling from categorical distribution was added.
 
