@@ -22,7 +22,7 @@
 #' @docType package
 #' @name extraDistr
 #' 
-#' @useDynLib extraDistr
+#' @useDynLib extraDistr, .registration = TRUE 
 #' @importFrom Rcpp sourceCpp
 #' 
 #' @importFrom stats pgamma qgamma rgamma
