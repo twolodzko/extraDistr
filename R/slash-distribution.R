@@ -22,9 +22,12 @@
 #' Probability density function
 #' 
 #' \deqn{
-#' f(x) = \frac{\phi(0) - \phi(x)}{x^2}
+#' f(x) = \left\{\begin{array}{ll}
+#' \frac{\phi(0) - \phi(x)}{x^2} & x \ne 0 \\
+#' \frac{1}{2\sqrt{2\pi}} & x = 0
+#' \end{array}\right.
 #' }{
-#' f(x) = [\phi(0)-\phi(x)]/x^2
+#' f(x) = [if x != 0:] (\phi(0)-\phi(x))/x^2 [else:] 1/(2*sqrt(2*\pi))
 #' }
 #' 
 #' Cumulative distribution function
