@@ -61,13 +61,13 @@ where \eqn{\pi} is a \emph{prior} parameter, so the distribution is a
 and symmetric \eqn{\mathrm{Beta}(\pi, \pi)}{Beta(\pi, \pi)} prior for
 probability of success. Parameter value \eqn{\pi = 1} corresponds to
 uniform prior; \eqn{\pi = 1/2} corresponds to Jeffreys prior; \eqn{\pi = 0}
-corresponds to "uninformative" Haldane prior, this ia also the re-parametrized
+corresponds to "uninformative" Haldane prior, this is also the re-parametrized
 distribution used in beta regression. With \eqn{\pi = 0} the distribution
 can be understood as a continous analog to binomial distribution dealing
 with proportions rather then counts. Alternatively \eqn{\phi} may be
 understood as precision parameter (as in beta regression).
 
-Notice that in pre-1.8.4 versions of this library, \code{prior} was not settable
+Notice that in pre-1.8.4 versions of this package, \code{prior} was not settable
 and by default fixed to one, instead of zero. To obtain the same results as in
 the previous versions, use \code{prior = 1} in each of the functions.
 }
