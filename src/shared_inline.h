@@ -53,6 +53,10 @@ inline int to_pos_int(double x) {
   return static_cast<int>(x);
 }
 
+inline double trunc_p(double x) {
+  return x < 0.0 ? 0.0 : (x > 1.0 ? 1.0 : x); 
+}
+
 
 #endif
 

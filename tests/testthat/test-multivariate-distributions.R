@@ -48,3 +48,9 @@ test_that("Evaluate wrong parameters first", {
   expect_warning(expect_true(is.nan(dmvhyper(c(-1, 2, 2), c(2,3,4), -5))))
 
 })
+
+
+test_that("Check if rmnom and rdirmnom deal with underflow", {
+  expect_false(anyNA(rmnom(5000, 100, c(0.504115095275327, 2.669522645838e-39, 0, 2.58539638831141, 0))))
+  expect_false(anyNA(rdirmnom(5000, 100, c(1.480592e+00, 1.394943e-03, 4.529932e-06, 3.263573e+00, 4.554952e-06))))
+})

@@ -34,6 +34,7 @@ inline double rng_sign();
 inline bool is_large_int(double x); 
 inline double to_dbl(int x);
 inline int to_pos_int(double x);
+inline double trunc_p(double x);
 
 #include "shared_inline.h"
 

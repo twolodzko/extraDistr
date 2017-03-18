@@ -1,4 +1,9 @@
 
+### 1.8.5
+
+* Now `rmnom` and `rdirmnom` (issue #3) do not return `NaN`'s due to
+  underflow issues.
+
 ### 1.8.4
 
 * Random generation from categorical distribution parametrized by
