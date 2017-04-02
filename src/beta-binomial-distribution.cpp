@@ -121,6 +121,11 @@ NumericVector cpp_dbbinom(
     const NumericVector& beta,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), size.length(),
+                alpha.length(), beta.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -156,6 +161,11 @@ NumericVector cpp_pbbinom(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), size.length(),
+                alpha.length(), beta.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -225,6 +235,11 @@ NumericVector cpp_rbbinom(
     const NumericVector& alpha,
     const NumericVector& beta
   ) {
+  
+  if (std::min({size.length(), alpha.length(), beta.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
 
   NumericVector x(n);
   

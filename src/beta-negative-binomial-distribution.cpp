@@ -127,6 +127,11 @@ NumericVector cpp_dbnbinom(
     const NumericVector& beta,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), size.length(),
+                alpha.length(), beta.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -161,6 +166,11 @@ NumericVector cpp_pbnbinom(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), size.length(),
+                alpha.length(), beta.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -230,13 +240,19 @@ NumericVector cpp_rbnbinom(
     const NumericVector& alpha,
     const NumericVector& beta
   ) {
+  
+  if (std::min({size.length(), alpha.length(), beta.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
 
   NumericVector x(n);
   
   bool throw_warning = false;
 
   for (int i = 0; i < n; i++)
-    x[i] = rng_bnbinom(GETV(size, i), GETV(alpha, i), GETV(beta, i), throw_warning);
+    x[i] = rng_bnbinom(GETV(size, i), GETV(alpha, i), GETV(beta, i),
+                       throw_warning);
   
   if (throw_warning)
     Rcpp::warning("NAs produced");

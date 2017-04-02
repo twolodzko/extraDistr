@@ -37,6 +37,11 @@ NumericVector cpp_rcatlp(
     const NumericMatrix& log_prob
   ) {
   
+  if (log_prob.length() <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
+  
   NumericVector x(n);
   int k = log_prob.ncol();
   double u, glp, max_val;

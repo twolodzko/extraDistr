@@ -55,6 +55,12 @@ NumericVector cpp_dbpois(
     const bool& log_prob = false
   ) {
   
+  if (std::min({x.length(), y.length(),
+                a.length(), b.length(),
+                c.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     x.length(),
     y.length(),
@@ -90,6 +96,13 @@ NumericMatrix cpp_rbpois(
     const NumericVector& b,
     const NumericVector& c
   ) {
+  
+  if (std::min({a.length(), b.length(), c.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    NumericMatrix out(n, 2);
+    std::fill(out.begin(), out.end(), NA_REAL);
+    return out;
+  }
   
   NumericMatrix x(n, 2);
   double u, v, w;

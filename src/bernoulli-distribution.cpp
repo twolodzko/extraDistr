@@ -86,6 +86,10 @@ NumericVector cpp_dbern(
     const bool& log_prob = false
   ) {
   
+  if (std::min({x.length(), prob.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     x.length(),
     prob.length()
@@ -116,12 +120,16 @@ NumericVector cpp_pbern(
     const bool& log_prob = false
   ) {
   
+  if (std::min({x.length(), prob.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     x.length(),
     prob.length()
   });
   NumericVector p(Nmax);
-  
+
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
@@ -148,6 +156,10 @@ NumericVector cpp_qbern(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({p.length(), prob.length()}) <= 0) {
+    return NumericVector(0);
+  }
   
   int Nmax = std::max({
     p.length(),
@@ -180,6 +192,11 @@ NumericVector cpp_rbern(
     const int& n,
     const NumericVector& prob
   ) {
+  
+  if (prob.length() <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
   
   NumericVector x(n);
   

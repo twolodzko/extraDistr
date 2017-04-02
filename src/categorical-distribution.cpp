@@ -33,6 +33,10 @@ NumericVector cpp_dcat(
     const bool& log_prob = false
   ) {
   
+  if (std::min({x.length(), prob.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     static_cast<int>(x.length()),
     static_cast<int>(prob.nrow())
@@ -97,6 +101,10 @@ NumericVector cpp_pcat(
     const NumericMatrix& prob,
     bool lower_tail = true, bool log_prob = false
   ) {
+  
+  if (std::min({x.length(), prob.length()}) <= 0) {
+    return NumericVector(0);
+  }
   
   int Nmax = std::max({
     static_cast<int>(x.length()),
@@ -172,6 +180,10 @@ NumericVector cpp_qcat(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({p.length(), prob.length()}) <= 0) {
+    return NumericVector(0);
+  }
   
   int Nmax = std::max({
     static_cast<int>(p.length()),
@@ -260,6 +272,11 @@ NumericVector cpp_rcat(
     const int& n,
     const NumericMatrix& prob
   ) {
+  
+  if (prob.length() <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
   
   int k = prob.ncol();
   NumericVector x(n);

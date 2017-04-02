@@ -94,6 +94,11 @@ NumericVector cpp_dfatigue(
     const bool& log_prob = false
   ) {
   
+  if (std::min({x.length(), alpha.length(),
+                beta.length(), mu.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     x.length(),
     alpha.length(),
@@ -128,6 +133,11 @@ NumericVector cpp_pfatigue(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), alpha.length(),
+                beta.length(), mu.length()}) <= 0) {
+    return NumericVector(0);
+  }
   
   int Nmax = std::max({
     x.length(),
@@ -167,6 +177,11 @@ NumericVector cpp_qfatigue(
     const bool& log_prob = false
   ) {
   
+  if (std::min({p.length(), alpha.length(),
+                beta.length(), mu.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     p.length(),
     alpha.length(),
@@ -203,6 +218,11 @@ NumericVector cpp_rfatigue(
     const NumericVector& beta,
     const NumericVector& mu
   ) {
+  
+  if (std::min({alpha.length(), beta.length(), mu.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
   
   NumericVector x(n);
   

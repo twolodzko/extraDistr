@@ -37,6 +37,14 @@ NumericVector cpp_ddirmnom(
     const bool& log_prob = false
   ) {
   
+  if (std::min({static_cast<int>(x.nrow()),
+                static_cast<int>(x.ncol()),
+                static_cast<int>(size.length()),
+                static_cast<int>(alpha.nrow()),
+                static_cast<int>(alpha.ncol())}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     static_cast<int>(x.nrow()),
     static_cast<int>(size.length()),
@@ -119,6 +127,16 @@ NumericMatrix cpp_rdirmnom(
   ) {
   
   int k = alpha.ncol();
+  
+  if (std::min({static_cast<int>(size.length()),
+                static_cast<int>(alpha.nrow()),
+                static_cast<int>(alpha.ncol())}) <= 0) {
+    Rcpp::warning("NAs produced");
+    NumericMatrix out(n, k);
+    std::fill(out.begin(), out.end(), NA_REAL);
+    return out;
+  }
+  
   NumericMatrix x(n, k);
   
   bool throw_warning = false;
