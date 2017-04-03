@@ -120,6 +120,10 @@ NumericVector cpp_dlgser(
     const NumericVector& theta,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), theta.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -150,6 +154,10 @@ NumericVector cpp_plgser(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), theta.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -184,6 +192,10 @@ NumericVector cpp_qlgser(
     const bool& log_prob = false
   ) {
   
+  if (std::min({p.length(), theta.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     p.length(),
     theta.length()
@@ -215,6 +227,11 @@ NumericVector cpp_rlgser(
     const int& n,
     const NumericVector& theta
   ) {
+  
+  if (theta.length() <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
 
   NumericVector x(n);
   

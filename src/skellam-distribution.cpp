@@ -53,6 +53,10 @@ NumericVector cpp_dskellam(
     const bool& log_prob = false
   ) {
   
+  if (std::min({x.length(), mu1.length(), mu2.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     x.length(),
     mu1.length(),
@@ -82,6 +86,11 @@ NumericVector cpp_rskellam(
     const NumericVector& mu1,
     const NumericVector& mu2
   ) {
+  
+  if (std::min({mu1.length(), mu2.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
   
   NumericVector x(n);
   

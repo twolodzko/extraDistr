@@ -55,6 +55,10 @@ NumericVector cpp_qtlambda(
     const bool& log_prob = false
   ) {
   
+  if (std::min({p.length(), lambda.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     p.length(),
     lambda.length()
@@ -86,6 +90,11 @@ NumericVector cpp_rtlambda(
     const int& n,
     const NumericVector& lambda
   ) {
+  
+  if (lambda.length() <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
   
   NumericVector x(n);
   

@@ -95,6 +95,10 @@ NumericVector cpp_dlomax(
     const NumericVector& kappa,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), lambda.length(), kappa.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -127,6 +131,10 @@ NumericVector cpp_plomax(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), lambda.length(), kappa.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -162,6 +170,10 @@ NumericVector cpp_qlomax(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({p.length(), lambda.length(), kappa.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     p.length(),
@@ -196,6 +208,11 @@ NumericVector cpp_rlomax(
     const NumericVector& lambda,
     const NumericVector& kappa
   ) {
+  
+  if (std::min({lambda.length(), kappa.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
 
   NumericVector x(n);
   

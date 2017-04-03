@@ -84,6 +84,10 @@ NumericVector cpp_dgumbel(
     const NumericVector& sigma,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), mu.length(), sigma.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -116,6 +120,10 @@ NumericVector cpp_pgumbel(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), mu.length(), sigma.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -151,6 +159,10 @@ NumericVector cpp_qgumbel(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({p.length(), mu.length(), sigma.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     p.length(),
@@ -185,6 +197,11 @@ NumericVector cpp_rgumbel(
     const NumericVector& mu,
     const NumericVector& sigma
   ) {
+  
+  if (std::min({mu.length(), sigma.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
 
   NumericVector x(n);
   

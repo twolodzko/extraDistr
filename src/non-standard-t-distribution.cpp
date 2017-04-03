@@ -80,6 +80,11 @@ NumericVector cpp_dnst(
     const bool& log_prob = false
   ) {
   
+  if (std::min({x.length(), nu.length(),
+                mu.length(), sigma.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     x.length(),
     nu.length(),
@@ -114,6 +119,11 @@ NumericVector cpp_pnst(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), nu.length(),
+                mu.length(), sigma.length()}) <= 0) {
+    return NumericVector(0);
+  }
   
   int Nmax = std::max({
     x.length(),
@@ -153,6 +163,11 @@ NumericVector cpp_qnst(
     const bool& log_prob = false
   ) {
   
+  if (std::min({p.length(), nu.length(),
+                mu.length(), sigma.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     p.length(),
     nu.length(),
@@ -189,6 +204,11 @@ NumericVector cpp_rnst(
     const NumericVector& mu,
     const NumericVector& sigma
   ) {
+  
+  if (std::min({nu.length(), mu.length(), sigma.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
   
   NumericVector x(n);
   

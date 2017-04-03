@@ -103,6 +103,11 @@ NumericVector cpp_dtbinom(
     const bool& log_prob = false
   ) {
   
+  if (std::min({x.length(), size.length(), prob.length(),
+                lower.length(), upper.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     x.length(),
     size.length(),
@@ -139,6 +144,11 @@ NumericVector cpp_ptbinom(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), size.length(), prob.length(),
+                lower.length(), upper.length()}) <= 0) {
+    return NumericVector(0);
+  }
   
   int Nmax = std::max({
     x.length(),
@@ -180,6 +190,11 @@ NumericVector cpp_qtbinom(
     const bool& log_prob = false
   ) {
   
+  if (std::min({p.length(), size.length(), prob.length(),
+                lower.length(), upper.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     p.length(),
     size.length(),
@@ -218,6 +233,12 @@ NumericVector cpp_rtbinom(
     const NumericVector& lower,
     const NumericVector& upper
   ) {
+  
+  if (std::min({size.length(), prob.length(),
+                lower.length(), upper.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
   
   NumericVector x(n);
   

@@ -32,19 +32,19 @@
 #' 
 #' x <- rinvchisq(1e5, 20)
 #' hist(x, 100, freq = FALSE)
-#' curve(dinvchisq(x, 20), 0, 1, col = "red", add = TRUE)
+#' curve(dinvchisq(x, 20), 0, 1, n = 501, col = "red", add = TRUE)
 #' hist(pinvchisq(x, 20))
 #' plot(ecdf(x))
-#' curve(pinvchisq(x, 20), 0, 1, col = "red", lwd = 2, add = TRUE)
+#' curve(pinvchisq(x, 20), 0, 1, n = 501, col = "red", lwd = 2, add = TRUE)
 #' 
 #' # scaled
 #' 
 #' x <- rinvchisq(1e5, 10, 5)
 #' hist(x, 100, freq = FALSE)
-#' curve(dinvchisq(x, 10, 5), 0, 150, col = "red", add = TRUE)
+#' curve(dinvchisq(x, 10, 5), 0, 150, n = 501, col = "red", add = TRUE)
 #' hist(pinvchisq(x, 10, 5))
 #' plot(ecdf(x))
-#' curve(pinvchisq(x, 10, 5), 0, 150, col = "red", lwd = 2, add = TRUE)
+#' curve(pinvchisq(x, 10, 5), 0, 150, n = 501, col = "red", lwd = 2, add = TRUE)
 #'
 #' @name InvChiSq
 #' @aliases InvChiSq

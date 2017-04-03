@@ -34,7 +34,7 @@ inline double pdf_slash(double x, double mu, double sigma,
   double z = (x - mu)/sigma;
   if (z == 0.0)
     return 1.0/(2.0 * SQRT_2_PI);
-  return ((PHI_0 - phi(z))/pow(z, 2.0))/sigma;
+  return ((PHI_0 - phi(z))/(z*z))/sigma;
 }
 
 inline double cdf_slash(double x, double mu, double sigma,
@@ -72,6 +72,10 @@ NumericVector cpp_dslash(
     const bool& log_prob = false
   ) {
   
+  if (std::min({x.length(), mu.length(), sigma.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     x.length(),
     mu.length(),
@@ -103,6 +107,10 @@ NumericVector cpp_pslash(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), mu.length(), sigma.length()}) <= 0) {
+    return NumericVector(0);
+  }
   
   int Nmax = std::max({
     x.length(),
@@ -136,6 +144,11 @@ NumericVector cpp_rslash(
     const NumericVector& mu,
     const NumericVector& sigma
   ) {
+  
+  if (std::min({mu.length(), sigma.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
   
   NumericVector x(n);
   

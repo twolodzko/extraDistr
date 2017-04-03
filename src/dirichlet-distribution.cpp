@@ -115,15 +115,14 @@ NumericMatrix cpp_rdirichlet(
     const NumericMatrix& alpha
   ) {
   
-  int k = alpha.ncol();
-  
   if (std::min({alpha.nrow(), alpha.ncol()}) <= 0) {
     Rcpp::warning("NAs produced");
-    NumericMatrix out(n, k);
+    NumericMatrix out(n, alpha.ncol());
     std::fill(out.begin(), out.end(), NA_REAL);
     return out;
   }
 
+  int k = alpha.ncol();
   NumericMatrix x(n, k);
   
   bool throw_warning = false;

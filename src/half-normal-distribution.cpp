@@ -62,6 +62,10 @@ NumericVector cpp_dhnorm(
     const bool& log_prob = false
   ) {
   
+  if (std::min({x.length(), sigma.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     x.length(),
     sigma.length()
@@ -91,6 +95,10 @@ NumericVector cpp_phnorm(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), sigma.length()}) <= 0) {
+    return NumericVector(0);
+  }
   
   int Nmax = std::max({
     x.length(),
@@ -125,6 +133,10 @@ NumericVector cpp_qhnorm(
     const bool& log_prob = false
   ) {
   
+  if (std::min({p.length(), sigma.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     p.length(),
     sigma.length()
@@ -156,6 +168,11 @@ NumericVector cpp_rhnorm(
     const int& n,
     const NumericVector& sigma
   ) {
+  
+  if (sigma.length() <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
   
   NumericVector x(n);
   

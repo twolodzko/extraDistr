@@ -84,6 +84,12 @@ NumericVector cpp_dnsbeta(
     const bool& log_prob = false
   ) {
   
+  if (std::min({x.length(), alpha.length(),
+                beta.length(), lower.length(),
+                upper.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     x.length(),
     alpha.length(),
@@ -117,6 +123,12 @@ NumericVector cpp_pnsbeta(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), alpha.length(),
+                beta.length(), lower.length(),
+                upper.length()}) <= 0) {
+    return NumericVector(0);
+  }
   
   int Nmax = std::max({
     x.length(),
@@ -152,6 +164,12 @@ NumericVector cpp_qnsbeta(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({p.length(), alpha.length(),
+                beta.length(), lower.length(),
+                upper.length()}) <= 0) {
+    return NumericVector(0);
+  }
   
   int Nmax = std::max({
     p.length(),
@@ -191,6 +209,12 @@ NumericVector cpp_rnsbeta(
     const NumericVector& lower,
     const NumericVector& upper
   ) {
+  
+  if (std::min({alpha.length(), beta.length(),
+                lower.length(), upper.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
   
   NumericVector x(n);
   

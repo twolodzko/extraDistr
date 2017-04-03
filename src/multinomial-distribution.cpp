@@ -33,6 +33,14 @@ NumericVector cpp_dmnom(
     const bool& log_prob = false
   ) {
   
+  if (std::min({static_cast<int>(x.nrow()),
+                static_cast<int>(x.ncol()),
+                static_cast<int>(size.length()),
+                static_cast<int>(prob.nrow()),
+                static_cast<int>(prob.ncol())}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     static_cast<int>(x.nrow()),
     static_cast<int>(size.length()),
@@ -112,6 +120,15 @@ NumericMatrix cpp_rmnom(
     const NumericVector& size,
     const NumericMatrix& prob
   ) {
+  
+  if (std::min({static_cast<int>(size.length()),
+                static_cast<int>(prob.nrow()),
+                static_cast<int>(prob.ncol())}) <= 0) {
+    Rcpp::warning("NAs produced");
+    NumericMatrix out(n, prob.ncol());
+    std::fill(out.begin(), out.end(), NA_REAL);
+    return out;
+  }
   
   int k = prob.ncol();
   bool wrong_values;

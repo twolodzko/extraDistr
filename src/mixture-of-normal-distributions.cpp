@@ -22,6 +22,16 @@ NumericVector cpp_dmixnorm(
     const bool& log_prob = false
   ) {
   
+  if (std::min({static_cast<int>(x.length()),
+                static_cast<int>(mu.nrow()),
+                static_cast<int>(mu.ncol()),
+                static_cast<int>(sigma.nrow()),
+                static_cast<int>(sigma.ncol()),
+                static_cast<int>(alpha.nrow()),
+                static_cast<int>(alpha.ncol())}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     static_cast<int>(x.length()),
     static_cast<int>(mu.nrow()),
@@ -88,6 +98,16 @@ NumericVector cpp_pmixnorm(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({static_cast<int>(x.length()),
+                static_cast<int>(mu.nrow()),
+                static_cast<int>(mu.ncol()),
+                static_cast<int>(sigma.nrow()),
+                static_cast<int>(sigma.ncol()),
+                static_cast<int>(alpha.nrow()),
+                static_cast<int>(alpha.ncol())}) <= 0) {
+    return NumericVector(0);
+  }
   
   int Nmax = std::max({
     static_cast<int>(x.length()),
@@ -158,6 +178,16 @@ NumericVector cpp_rmixnorm(
     const NumericMatrix& sigma,
     const NumericMatrix& alpha
   ) {
+  
+  if (std::min({static_cast<int>(mu.nrow()),
+                static_cast<int>(mu.ncol()),
+                static_cast<int>(sigma.nrow()),
+                static_cast<int>(sigma.ncol()),
+                static_cast<int>(alpha.nrow()),
+                static_cast<int>(alpha.ncol())}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
   
   int k = alpha.ncol();
   NumericVector x(n);

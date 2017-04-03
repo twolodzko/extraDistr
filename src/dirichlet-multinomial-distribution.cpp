@@ -126,17 +126,16 @@ NumericMatrix cpp_rdirmnom(
     const NumericMatrix& alpha
   ) {
   
-  int k = alpha.ncol();
-  
   if (std::min({static_cast<int>(size.length()),
                 static_cast<int>(alpha.nrow()),
                 static_cast<int>(alpha.ncol())}) <= 0) {
     Rcpp::warning("NAs produced");
-    NumericMatrix out(n, k);
+    NumericMatrix out(n, alpha.ncol());
     std::fill(out.begin(), out.end(), NA_REAL);
     return out;
   }
   
+  int k = alpha.ncol();
   NumericMatrix x(n, k);
   
   bool throw_warning = false;

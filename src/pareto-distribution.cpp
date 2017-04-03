@@ -94,6 +94,10 @@ NumericVector cpp_dpareto(
     const NumericVector& b,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), a.length(), b.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -126,6 +130,10 @@ NumericVector cpp_ppareto(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), a.length(), b.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -161,6 +169,10 @@ NumericVector cpp_qpareto(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({p.length(), a.length(), b.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     p.length(),
@@ -195,6 +207,11 @@ NumericVector cpp_rpareto(
     const NumericVector& a,
     const NumericVector& b
   ) {
+  
+  if (std::min({a.length(), b.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
 
   NumericVector x(n);
   

@@ -36,6 +36,14 @@ NumericVector cpp_dmvhyper(
     const bool& log_prob = false
   ) {
   
+  if (std::min({static_cast<int>(x.nrow()),
+                static_cast<int>(x.ncol()),
+                static_cast<int>(n.nrow()),
+                static_cast<int>(n.ncol()),
+                static_cast<int>(k.length())}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     static_cast<int>(x.nrow()),
     static_cast<int>(n.nrow()),
@@ -113,6 +121,15 @@ NumericMatrix cpp_rmvhyper(
     const NumericMatrix& n,
     const NumericVector& k
   ) {
+  
+  if (std::min({static_cast<int>(n.nrow()),
+                static_cast<int>(n.ncol()),
+                static_cast<int>(k.length())}) <= 0) {
+    Rcpp::warning("NAs produced");
+    NumericMatrix out(nn, n.ncol());
+    std::fill(out.begin(), out.end(), NA_REAL);
+    return out;
+  }
   
   int m = n.ncol();
   NumericMatrix x(nn, m);

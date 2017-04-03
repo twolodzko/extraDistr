@@ -48,6 +48,10 @@ NumericVector cpp_ddnorm(
     const bool& log_prob = false
   ) {
   
+  if (std::min({x.length(), mu.length(), sigma.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     x.length(),
     mu.length(),

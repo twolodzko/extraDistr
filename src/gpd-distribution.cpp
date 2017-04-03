@@ -115,6 +115,11 @@ NumericVector cpp_dgpd(
     const NumericVector& xi,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), mu.length(),
+                sigma.length(), xi.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -150,6 +155,11 @@ NumericVector cpp_pgpd(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), mu.length(),
+                sigma.length(), xi.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -188,6 +198,11 @@ NumericVector cpp_qgpd(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({p.length(), mu.length(),
+                sigma.length(), xi.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     p.length(),
@@ -225,6 +240,11 @@ NumericVector cpp_rgpd(
     const NumericVector& sigma,
     const NumericVector& xi
   ) {
+  
+  if (std::min({mu.length(), sigma.length(), xi.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
 
   NumericVector x(n);
   

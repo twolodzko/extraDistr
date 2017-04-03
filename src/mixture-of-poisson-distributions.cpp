@@ -21,6 +21,14 @@ NumericVector cpp_dmixpois(
     const bool& log_prob = false
   ) {
   
+  if (std::min({static_cast<int>(x.length()),
+                static_cast<int>(lambda.nrow()),
+                static_cast<int>(lambda.ncol()),
+                static_cast<int>(alpha.nrow()),
+                static_cast<int>(alpha.ncol())}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     static_cast<int>(x.length()),
     static_cast<int>(lambda.nrow()),
@@ -92,6 +100,14 @@ NumericVector cpp_pmixpois(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({static_cast<int>(x.length()),
+                static_cast<int>(lambda.nrow()),
+                static_cast<int>(lambda.ncol()),
+                static_cast<int>(alpha.nrow()),
+                static_cast<int>(alpha.ncol())}) <= 0) {
+    return NumericVector(0);
+  }
   
   int Nmax = std::max({
     static_cast<int>(x.length()),
@@ -165,6 +181,14 @@ NumericVector cpp_rmixpois(
     const NumericMatrix& lambda,
     const NumericMatrix& alpha
   ) {
+  
+  if (std::min({static_cast<int>(lambda.nrow()),
+                static_cast<int>(lambda.ncol()),
+                static_cast<int>(alpha.nrow()),
+                static_cast<int>(alpha.ncol())}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
   
   int k = alpha.ncol();
   NumericVector x(n);

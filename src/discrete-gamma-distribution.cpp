@@ -48,6 +48,10 @@ NumericVector cpp_ddgamma(
     const bool& log_prob = false
   ) {
   
+  if (std::min({x.length(), shape.length(), scale.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     x.length(),
     shape.length(),

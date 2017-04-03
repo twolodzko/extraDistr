@@ -61,10 +61,10 @@ F^-1(p) = ((1-p)^(-1/\kappa)-1) / \lambda
 
 x <- rlomax(1e5, 5, 16)
 hist(x, 100, freq = FALSE)
-curve(dlomax(x, 5, 16), 0, 1, col = "red", add = TRUE)
+curve(dlomax(x, 5, 16), 0, 1, n = 501, col = "red", add = TRUE)
 hist(plomax(x, 5, 16))
 plot(ecdf(x))
-curve(plomax(x, 5, 16), 0, 1, col = "red", lwd = 2, add = TRUE)
+curve(plomax(x, 5, 16), 0, 1, n = 501, col = "red", lwd = 2, add = TRUE)
 
 }
 \concept{

@@ -61,6 +61,10 @@ NumericVector cpp_ddlaplace(
     const bool& log_prob = false
   ) {
   
+  if (std::min({x.length(), location.length(), scale.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     x.length(),
     scale.length(),
@@ -92,6 +96,10 @@ NumericVector cpp_pdlaplace(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), location.length(), scale.length()}) <= 0) {
+    return NumericVector(0);
+  }
   
   int Nmax = std::max({
     x.length(),
@@ -125,6 +133,11 @@ NumericVector cpp_rdlaplace(
     const NumericVector& location,
     const NumericVector& scale
   ) {
+  
+  if (std::min({location.length(), scale.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
   
   NumericVector x(n);
   

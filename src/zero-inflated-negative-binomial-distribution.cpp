@@ -94,6 +94,11 @@ NumericVector cpp_dzinb(
     const bool& log_prob = false
   ) {
   
+  if (std::min({x.length(), size.length(),
+                prob.length(), pi.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     x.length(),
     size.length(),
@@ -128,6 +133,11 @@ NumericVector cpp_pzinb(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), size.length(),
+                prob.length(), pi.length()}) <= 0) {
+    return NumericVector(0);
+  }
   
   int Nmax = std::max({
     x.length(),
@@ -167,6 +177,11 @@ NumericVector cpp_qzinb(
     const bool& log_prob = false
   ) {
   
+  if (std::min({p.length(), size.length(),
+                prob.length(), pi.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     p.length(),
     size.length(),
@@ -203,6 +218,11 @@ NumericVector cpp_rzinb(
     const NumericVector& prob,
     const NumericVector& pi
   ) {
+  
+  if (std::min({size.length(), prob.length(), pi.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
   
   NumericVector x(n);
   

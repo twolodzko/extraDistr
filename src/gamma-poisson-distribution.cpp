@@ -105,6 +105,10 @@ NumericVector cpp_dgpois(
     const NumericVector& beta,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), alpha.length(), beta.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -137,6 +141,10 @@ NumericVector cpp_pgpois(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), alpha.length(), beta.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -199,6 +207,11 @@ NumericVector cpp_rgpois(
     const NumericVector& alpha,
     const NumericVector& beta
   ) {
+  
+  if (std::min({alpha.length(), beta.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
 
   NumericVector x(n);
   

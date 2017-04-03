@@ -91,6 +91,11 @@ NumericVector cpp_dfrechet(
     const NumericVector& sigma,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), lambda.length(),
+                mu.length(), sigma.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -126,6 +131,11 @@ NumericVector cpp_pfrechet(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), lambda.length(),
+                mu.length(), sigma.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -164,6 +174,11 @@ NumericVector cpp_qfrechet(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({p.length(), lambda.length(),
+                mu.length(), sigma.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     p.length(),
@@ -201,6 +216,11 @@ NumericVector cpp_rfrechet(
     const NumericVector& mu,
     const NumericVector& sigma
   ) {
+  
+  if (std::min({lambda.length(), mu.length(), sigma.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
 
   NumericVector x(n);
   

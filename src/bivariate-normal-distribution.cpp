@@ -51,10 +51,10 @@ inline double pdf_bnorm(double x, double y, double mu1, double mu2,
   double z1 = (x - mu1)/sigma1;
   double z2 = (y - mu2)/sigma2;
   
-  double c1 = 1.0/(2.0*M_PI*sqrt(1.0 - pow(rho, 2.0))*sigma1*sigma2);
-  double c2 = -1.0/(2.0*(1.0 - pow(rho, 2.0)));
+  double c1 = 1.0/(2.0*M_PI*sqrt(1.0 - (rho*rho))*sigma1*sigma2);
+  double c2 = -1.0/(2.0*(1.0 - (rho*rho)));
   
-  return c1 * exp(c2 * (pow(z1, 2.0) - 2.0*rho*z1*z2 + pow(z2, 2.0)));
+  return c1 * exp(c2 * ((z1*z1) - 2.0*rho*z1*z2 + (z2*z2)));
 }
 
 

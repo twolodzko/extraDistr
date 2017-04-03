@@ -35,8 +35,8 @@ inline double pdf_wald(double x, double mu, double lambda,
   }
   if (x <= 0.0 || !R_FINITE(x))
     return 0.0;
-  return sqrt(lambda/(2.0*PI*pow(x, 3.0))) *
-         exp((-lambda*pow(x-mu, 2.0))/(2.0*pow(mu, 2.0)*x));
+  return sqrt(lambda/(2.0*PI*(x*x*x))) *
+         exp((-lambda*(x-mu)*(x-mu))/(2.0*(mu*mu)*x));
 }
 
 inline double cdf_wald(double x, double mu, double lambda,
@@ -64,13 +64,13 @@ inline double rng_wald(double mu, double lambda, bool& throw_warning) {
   double u, x, y, z;
   u = rng_unif();
   z = R::norm_rand();
-  y = pow(z, 2.0);
-  x = mu + (pow(mu, 2.0)*y)/(2.0*lambda) - mu/(2.0*lambda) *
-      sqrt(4.0*mu*lambda*y+pow(mu, 2.0)*pow(y, 2.0));
+  y = z*z;
+  x = mu + (mu*mu*y)/(2.0*lambda) - mu/(2.0*lambda) *
+      sqrt(4.0*mu*lambda*y+(mu*mu)*(y*y));
   if (u <= mu/(mu+x))
     return x;
   else
-    return pow(mu, 2.0)/x;
+    return (mu*mu)/x;
 }
 
 
@@ -81,6 +81,10 @@ NumericVector cpp_dwald(
     const NumericVector& lambda,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), mu.length(), lambda.length()}) <= 0) {
+    return NumericVector(0);
+  }
   
   int Nmax = std::max({
     x.length(),
@@ -114,6 +118,10 @@ NumericVector cpp_pwald(
     const bool& log_prob = false
   ) {
   
+  if (std::min({x.length(), mu.length(), lambda.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     x.length(),
     mu.length(),
@@ -146,6 +154,11 @@ NumericVector cpp_rwald(
     const NumericVector& mu,
     const NumericVector& lambda
   ) {
+  
+  if (std::min({mu.length(), lambda.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
   
   NumericVector x(n);
   

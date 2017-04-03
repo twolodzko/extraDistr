@@ -37,7 +37,7 @@ inline double pdf_rayleigh(double x, double sigma,
   }
   if (x < 0.0 || !R_FINITE(x))
     return 0.0;
-  return x/pow(sigma, 2.0) * exp(-pow(x, 2.0) / (2.0*pow(sigma, 2.0)));
+  return x/(sigma*sigma) * exp(-(x*x) / (2.0*(sigma*sigma)));
 }
 
 inline double cdf_rayleigh(double x, double sigma,
@@ -52,7 +52,7 @@ inline double cdf_rayleigh(double x, double sigma,
     return 0.0;
   if (!R_FINITE(x))
     return 1.0;
-  return 1.0 - exp(-pow(x, 2.0) / (2.0*pow(sigma, 2.0)));
+  return 1.0 - exp(-(x*x) / (2.0*(sigma*sigma)));
 }
 
 inline double invcdf_rayleigh(double p, double sigma,
@@ -63,7 +63,7 @@ inline double invcdf_rayleigh(double p, double sigma,
     throw_warning = true;
     return NAN;
   }
-  return sqrt(-2.0*pow(sigma, 2.0) * log(1.0-p));
+  return sqrt(-2.0*(sigma*sigma) * log(1.0-p));
 }
 
 inline double rng_rayleigh(double sigma, bool& throw_warning) {
@@ -72,7 +72,7 @@ inline double rng_rayleigh(double sigma, bool& throw_warning) {
     return NA_REAL;
   }
   double u = rng_unif();
-  return sqrt(-2.0*pow(sigma, 2.0) * log(u));
+  return sqrt(-2.0*(sigma*sigma) * log(u));
 }
 
 
@@ -82,6 +82,10 @@ NumericVector cpp_drayleigh(
     const NumericVector& sigma,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), sigma.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -112,6 +116,10 @@ NumericVector cpp_prayleigh(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), sigma.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -145,6 +153,10 @@ NumericVector cpp_qrayleigh(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({p.length(), sigma.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     p.length(),
@@ -177,6 +189,11 @@ NumericVector cpp_rrayleigh(
     const int& n,
     const NumericVector& sigma
   ) {
+  
+  if (sigma.length() <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
 
   NumericVector x(n);
   

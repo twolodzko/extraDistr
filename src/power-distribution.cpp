@@ -99,6 +99,10 @@ NumericVector cpp_dpower(
     const NumericVector& beta,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), alpha.length(), beta.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -131,6 +135,10 @@ NumericVector cpp_ppower(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), alpha.length(), beta.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -166,6 +174,10 @@ NumericVector cpp_qpower(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({p.length(), alpha.length(), beta.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     p.length(),
@@ -200,6 +212,11 @@ NumericVector cpp_rpower(
     const NumericVector& alpha,
     const NumericVector& beta
   ) {
+  
+  if (std::min({alpha.length(), beta.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
 
   NumericVector x(n);
   

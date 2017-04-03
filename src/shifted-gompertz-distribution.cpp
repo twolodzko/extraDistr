@@ -95,6 +95,10 @@ NumericVector cpp_dsgomp(
     bool log_prob = false
   ) {
   
+  if (std::min({x.length(), b.length(), eta.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     x.length(),
     b.length(),
@@ -126,6 +130,10 @@ NumericVector cpp_psgomp(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), b.length(), eta.length()}) <= 0) {
+    return NumericVector(0);
+  }
   
   int Nmax = std::max({
     x.length(),
@@ -159,6 +167,11 @@ NumericVector cpp_rsgomp(
     const NumericVector& b,
     const NumericVector& eta
   ) {
+  
+  if (std::min({b.length(), eta.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
   
   NumericVector x(n);
   

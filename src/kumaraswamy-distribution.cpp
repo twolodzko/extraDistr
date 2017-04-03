@@ -97,6 +97,10 @@ NumericVector cpp_dkumar(
     const NumericVector& b,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), a.length(), b.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -129,6 +133,10 @@ NumericVector cpp_pkumar(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), a.length(), b.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -164,6 +172,10 @@ NumericVector cpp_qkumar(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({p.length(), a.length(), b.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     p.length(),
@@ -198,6 +210,11 @@ NumericVector cpp_rkumar(
     const NumericVector& a,
     const NumericVector& b
   ) {
+  
+  if (std::min({a.length(), b.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
 
   NumericVector x(n);
   

@@ -50,7 +50,7 @@ double pdf_tnorm(double x, double mu, double sigma,
   if (x > a && x < b) {
     Phi_a = Phi((a-mu)/sigma);
     Phi_b = Phi((b-mu)/sigma);
-    return exp(-pow(x-mu, 2.0) / (2.0*pow(sigma, 2.0))) /
+    return exp(-((x-mu)*(x-mu)) / (2.0*(sigma*sigma))) /
               (SQRT_2_PI*sigma * (Phi_b - Phi_a));
   } else {
     return 0.0;
@@ -117,8 +117,8 @@ double rng_tnorm(double mu, double sigma, double a,
 
   za = (a-mu)/sigma;
   zb = (b-mu)/sigma;
-  za_sq = pow(za, 2.0);
-  zb_sq = pow(zb, 2.0);
+  za_sq = za * za;
+  zb_sq = zb * zb;
   
   if (abs(za) <= 1e-16 && zb == R_PosInf) {
     r = R::norm_rand();
@@ -143,7 +143,7 @@ double rng_tnorm(double mu, double sigma, double a,
     while (!stop) {
       r = R::exp_rand() / aa + za;
       u = rng_unif();
-      if ((u <= exp(-pow(r-aa, 2.0) / 2.0)) && (r <= zb))
+      if ((u <= exp(-((r-aa)*(r-aa)) / 2.0)) && (r <= zb))
         stop = true;
     }
   } else if (zb <= 0.0 && (-za > -zb + 2.0*sqrt(M_E) / (-zb + sqrt(zb_sq + 4.0))
@@ -152,7 +152,7 @@ double rng_tnorm(double mu, double sigma, double a,
     while (!stop) {
       r = R::exp_rand() / aa - zb;
       u = rng_unif();
-      if ((u <= exp(-pow(r-aa, 2.0) / 2.0)) && (r >= za)) {
+      if ((u <= exp(-((r-aa)*(r-aa)) / 2.0)) && (r >= za)) {
         r = -r;
         stop = true;
       }
@@ -162,19 +162,19 @@ double rng_tnorm(double mu, double sigma, double a,
       while (!stop) {
         r = R::runif(za, zb);
         u = rng_unif();
-        stop = (u <= exp((za_sq - pow(r, 2.0))/2.0));
+        stop = (u <= exp((za_sq - r*r)/2.0));
       }
     } else if (zb < 0.0) {
       while (!stop) {
         r = R::runif(za, zb);
         u = rng_unif();
-        stop = (u <= exp((zb_sq - pow(r, 2.0))/2.0));
+        stop = (u <= exp((zb_sq - r*r)/2.0));
       }
     } else {
       while (!stop) {
         r = R::runif(za, zb);
         u = rng_unif();
-        stop = (u <= exp(-pow(r, 2.0)/2.0));
+        stop = (u <= exp(-(r*r)/2.0));
       }
     }
   }
@@ -192,6 +192,11 @@ NumericVector cpp_dtnorm(
     const NumericVector& upper,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), mu.length(), sigma.length(),
+                lower.length(), upper.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -229,6 +234,11 @@ NumericVector cpp_ptnorm(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), mu.length(), sigma.length(),
+                lower.length(), upper.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -269,6 +279,11 @@ NumericVector cpp_qtnorm(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({p.length(), mu.length(), sigma.length(),
+                lower.length(), upper.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     p.length(),
@@ -308,6 +323,12 @@ NumericVector cpp_rtnorm(
     const NumericVector& lower,
     const NumericVector& upper
   ) {
+  
+  if (std::min({mu.length(), sigma.length(),
+                lower.length(), upper.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
 
   NumericVector x(n);
   

@@ -91,6 +91,10 @@ NumericVector cpp_dzip(
     const bool& log_prob = false
   ) {
   
+  if (std::min({x.length(), lambda.length(), pi.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     x.length(),
     lambda.length(),
@@ -122,6 +126,10 @@ NumericVector cpp_pzip(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), lambda.length(), pi.length()}) <= 0) {
+    return NumericVector(0);
+  }
   
   int Nmax = std::max({
     x.length(),
@@ -158,6 +166,10 @@ NumericVector cpp_qzip(
     const bool& log_prob = false
   ) {
   
+  if (std::min({p.length(), lambda.length(), pi.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     p.length(),
     lambda.length(),
@@ -191,6 +203,11 @@ NumericVector cpp_rzip(
     const NumericVector& lambda,
     const NumericVector& pi
   ) {
+  
+  if (std::min({lambda.length(), pi.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
   
   NumericVector x(n);
   

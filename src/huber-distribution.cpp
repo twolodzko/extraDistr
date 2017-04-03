@@ -26,9 +26,9 @@ inline double pdf_huber(double x, double mu, double sigma,
   A = 2.0*SQRT_2_PI * (Phi(c) + phi(c)/c - 0.5);
 
   if (z <= c)
-    rho = pow(z, 2.0)/2.0;
+    rho = (z*z)/2.0;
   else
-    rho = c*z - pow(c, 2.0)/2.0;
+    rho = c*z - (c*c)/2.0;
 
   return exp(-rho)/A/sigma;
 }
@@ -48,7 +48,7 @@ inline double cdf_huber(double x, double mu, double sigma,
   az = -abs(z);
   
   if (az <= -c) 
-    p = exp(pow(c, 2.0)/2.0)/c * exp(c*az) / SQRT_2_PI/A;
+    p = exp((c*c)/2.0)/c * exp(c*az) / SQRT_2_PI/A;
   else
     p = (phi(c)/c + Phi(az) - Phi(-c))/A;
   
@@ -116,6 +116,11 @@ NumericVector cpp_dhuber(
     const bool& log_prob = false
   ) {
   
+  if (std::min({x.length(), mu.length(),
+                sigma.length(), epsilon.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     x.length(),
     mu.length(),
@@ -150,6 +155,11 @@ NumericVector cpp_phuber(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), mu.length(),
+                sigma.length(), epsilon.length()}) <= 0) {
+    return NumericVector(0);
+  }
   
   int Nmax = std::max({
     x.length(),
@@ -189,6 +199,11 @@ NumericVector cpp_qhuber(
     const bool& log_prob = false
   ) {
   
+  if (std::min({p.length(), mu.length(),
+                sigma.length(), epsilon.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     p.length(),
     mu.length(),
@@ -225,6 +240,11 @@ NumericVector cpp_rhuber(
     const NumericVector& sigma,
     const NumericVector& epsilon
   ) {
+  
+  if (std::min({mu.length(), sigma.length(), epsilon.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
   
   NumericVector x(n);
   

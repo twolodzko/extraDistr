@@ -52,6 +52,10 @@ NumericVector cpp_dinvgamma(
     const NumericVector& beta,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), alpha.length(), beta.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),

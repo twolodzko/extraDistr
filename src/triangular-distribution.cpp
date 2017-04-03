@@ -64,9 +64,9 @@ inline double cdf_triangular(double x, double a, double b,
   } else if (x >= b) {
     return 1.0;
   } else if (x <= c) {
-    return pow(x-a, 2.0) / ((b-a)*(c-a));
+    return ((x-a)*(x-a)) / ((b-a)*(c-a));
   } else {
-    return 1.0 - (pow(b-x, 2.0) / ((b-a)*(b-c)));
+    return 1.0 - (((b-x)*(b-x)) / ((b-a)*(b-c)));
   }
 }
 
@@ -108,6 +108,11 @@ NumericVector cpp_dtriang(
     const NumericVector& c,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), a.length(),
+                b.length(), c.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -143,6 +148,11 @@ NumericVector cpp_ptriang(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), a.length(),
+                b.length(), c.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     x.length(),
@@ -181,6 +191,11 @@ NumericVector cpp_qtriang(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({p.length(), a.length(),
+                b.length(), c.length()}) <= 0) {
+    return NumericVector(0);
+  }
 
   int Nmax = std::max({
     p.length(),
@@ -218,6 +233,11 @@ NumericVector cpp_rtriang(
     const NumericVector& b,
     const NumericVector& c
   ) {
+  
+  if (std::min({a.length(), b.length(), c.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
 
   NumericVector x(n);
   

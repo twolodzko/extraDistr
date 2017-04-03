@@ -65,6 +65,10 @@ NumericVector cpp_dhcauchy(
     const bool& log_prob = false
   ) {
   
+  if (std::min({x.length(), sigma.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     x.length(),
     sigma.length()
@@ -93,6 +97,10 @@ NumericVector cpp_phcauchy(
     const NumericVector& sigma,
     bool lower_tail = true, bool log_prob = false
   ) {
+  
+  if (std::min({x.length(), sigma.length()}) <= 0) {
+    return NumericVector(0);
+  }
   
   int Nmax = std::max({
     x.length(),
@@ -127,6 +135,10 @@ NumericVector cpp_qhcauchy(
     const bool& log_prob = false
   ) {
   
+  if (std::min({p.length(), sigma.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     p.length(),
     sigma.length()
@@ -158,6 +170,11 @@ NumericVector cpp_rhcauchy(
     const int& n,
     const NumericVector& sigma
   ) {
+  
+  if (sigma.length() <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(n, NA_REAL);
+  }
   
   NumericVector x(n);
   
