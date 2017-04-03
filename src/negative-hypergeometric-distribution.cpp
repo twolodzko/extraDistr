@@ -59,6 +59,11 @@ NumericVector cpp_dnhyper(
     const bool& log_prob = false
   ) {
   
+  if (std::min({x.length(), n.length(),
+                m.length(), r.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     x.length(),
     n.length(),
@@ -126,6 +131,11 @@ NumericVector cpp_pnhyper(
     const bool& lower_tail = true,
     const bool& log_prob = false
   ) {
+  
+  if (std::min({x.length(), n.length(),
+                m.length(), r.length()}) <= 0) {
+    return NumericVector(0);
+  }
   
   int Nmax = std::max({
     x.length(),
@@ -199,6 +209,11 @@ NumericVector cpp_qnhyper(
     const bool& log_prob = false
   ) {
   
+  if (std::min({p.length(), n.length(),
+                m.length(), r.length()}) <= 0) {
+    return NumericVector(0);
+  }
+  
   int Nmax = std::max({
     p.length(),
     n.length(),
@@ -269,6 +284,11 @@ NumericVector cpp_rnhyper(
     const NumericVector& m,
     const NumericVector& r
   ) {
+  
+  if (std::min({n.length(), m.length(), r.length()}) <= 0) {
+    Rcpp::warning("NAs produced");
+    return NumericVector(nn, NA_REAL);
+  }
   
   double u;
   NumericVector x(nn);
