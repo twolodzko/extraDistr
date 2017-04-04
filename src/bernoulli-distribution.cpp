@@ -86,7 +86,7 @@ NumericVector cpp_dbern(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), prob.length()}) <= 0) {
+  if (std::min({x.length(), prob.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -120,7 +120,7 @@ NumericVector cpp_pbern(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), prob.length()}) <= 0) {
+  if (std::min({x.length(), prob.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -157,7 +157,7 @@ NumericVector cpp_qbern(
     const bool& log_prob = false
   ) {
   
-  if (std::min({p.length(), prob.length()}) <= 0) {
+  if (std::min({p.length(), prob.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -193,7 +193,7 @@ NumericVector cpp_rbern(
     const NumericVector& prob
   ) {
   
-  if (prob.length() <= 0) {
+  if (prob.length() < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

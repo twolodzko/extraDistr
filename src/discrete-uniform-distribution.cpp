@@ -91,7 +91,7 @@ NumericVector cpp_ddunif(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), min.length(), max.length()}) <= 0) {
+  if (std::min({x.length(), min.length(), max.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -127,7 +127,7 @@ NumericVector cpp_pdunif(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), min.length(), max.length()}) <= 0) {
+  if (std::min({x.length(), min.length(), max.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -166,7 +166,7 @@ NumericVector cpp_qdunif(
     const bool& log_prob = false
   ) {
   
-  if (std::min({p.length(), min.length(), max.length()}) <= 0) {
+  if (std::min({p.length(), min.length(), max.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -204,7 +204,7 @@ NumericVector cpp_rdunif(
     const NumericVector& max
   ) {
   
-  if (std::min({min.length(), max.length()}) <= 0) {
+  if (std::min({min.length(), max.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

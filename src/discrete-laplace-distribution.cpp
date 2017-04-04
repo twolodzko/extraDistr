@@ -61,7 +61,7 @@ NumericVector cpp_ddlaplace(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), location.length(), scale.length()}) <= 0) {
+  if (std::min({x.length(), location.length(), scale.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -97,7 +97,7 @@ NumericVector cpp_pdlaplace(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), location.length(), scale.length()}) <= 0) {
+  if (std::min({x.length(), location.length(), scale.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -134,7 +134,7 @@ NumericVector cpp_rdlaplace(
     const NumericVector& scale
   ) {
   
-  if (std::min({location.length(), scale.length()}) <= 0) {
+  if (std::min({location.length(), scale.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

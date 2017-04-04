@@ -110,7 +110,7 @@ NumericVector cpp_dtriang(
   ) {
   
   if (std::min({x.length(), a.length(),
-                b.length(), c.length()}) <= 0) {
+                b.length(), c.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -150,7 +150,7 @@ NumericVector cpp_ptriang(
   ) {
   
   if (std::min({x.length(), a.length(),
-                b.length(), c.length()}) <= 0) {
+                b.length(), c.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -193,7 +193,7 @@ NumericVector cpp_qtriang(
   ) {
   
   if (std::min({p.length(), a.length(),
-                b.length(), c.length()}) <= 0) {
+                b.length(), c.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -234,7 +234,7 @@ NumericVector cpp_rtriang(
     const NumericVector& c
   ) {
   
-  if (std::min({a.length(), b.length(), c.length()}) <= 0) {
+  if (std::min({a.length(), b.length(), c.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

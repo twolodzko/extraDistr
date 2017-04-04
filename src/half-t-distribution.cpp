@@ -79,7 +79,7 @@ NumericVector cpp_dht(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), nu.length(), sigma.length()}) <= 0) {
+  if (std::min({x.length(), nu.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -115,7 +115,7 @@ NumericVector cpp_pht(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), nu.length(), sigma.length()}) <= 0) {
+  if (std::min({x.length(), nu.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -154,7 +154,7 @@ NumericVector cpp_qht(
     const bool& log_prob = false
   ) {
   
-  if (std::min({p.length(), nu.length(), sigma.length()}) <= 0) {
+  if (std::min({p.length(), nu.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -192,7 +192,7 @@ NumericVector cpp_rht(
     const NumericVector& sigma
   ) {
   
-  if (std::min({nu.length(), sigma.length()}) <= 0) {
+  if (std::min({nu.length(), sigma.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

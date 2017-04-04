@@ -48,7 +48,7 @@ NumericVector cpp_ddgamma(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), shape.length(), scale.length()}) <= 0) {
+  if (std::min({x.length(), shape.length(), scale.length()}) < 1) {
     return NumericVector(0);
   }
   

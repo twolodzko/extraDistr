@@ -97,7 +97,7 @@ NumericVector cpp_dzib(
   ) {
   
   if (std::min({x.length(), size.length(),
-                prob.length(), pi.length()}) <= 0) {
+                prob.length(), pi.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -137,7 +137,7 @@ NumericVector cpp_pzib(
   ) {
   
   if (std::min({x.length(), size.length(),
-                prob.length(), pi.length()}) <= 0) {
+                prob.length(), pi.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -180,7 +180,7 @@ NumericVector cpp_qzib(
   ) {
   
   if (std::min({p.length(), size.length(),
-                prob.length(), pi.length()}) <= 0) {
+                prob.length(), pi.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -221,7 +221,7 @@ NumericVector cpp_rzib(
     const NumericVector& pi
   ) {
   
-  if (std::min({size.length(), prob.length(), pi.length()}) <= 0) {
+  if (std::min({size.length(), prob.length(), pi.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

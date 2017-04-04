@@ -62,7 +62,7 @@ Pr(X <= k) = sum(w[1:k])/sum(w)
 It is possible to sample from categorical distribution parametrized
 by vector of unnormalized log-probabilities
 \eqn{\alpha_1,\dots,\alpha_m}{\alpha[1],...,\alpha[m]}
-without leaving the log space using Gumbel-max trick (Maddison, Tarlow and Minka, 2014).
+without leaving the log space by employing the Gumbel-max trick (Maddison, Tarlow and Minka, 2014).
 If \eqn{g_1,\dots,g_m}{g[1],...,g[m]} are samples from Gumbel distribution with
 cumulative distribution function \eqn{F(g) = \exp(-\exp(-g))}{F(g) = exp(-exp(-g))},
 then \eqn{k = \mathrm{arg\,max}_i \{g_i + \alpha_i\}}{k = argmax(g[i]+\alpha[i])}

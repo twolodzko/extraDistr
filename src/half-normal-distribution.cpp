@@ -62,7 +62,7 @@ NumericVector cpp_dhnorm(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), sigma.length()}) <= 0) {
+  if (std::min({x.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -96,7 +96,7 @@ NumericVector cpp_phnorm(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), sigma.length()}) <= 0) {
+  if (std::min({x.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -133,7 +133,7 @@ NumericVector cpp_qhnorm(
     const bool& log_prob = false
   ) {
   
-  if (std::min({p.length(), sigma.length()}) <= 0) {
+  if (std::min({p.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -169,7 +169,7 @@ NumericVector cpp_rhnorm(
     const NumericVector& sigma
   ) {
   
-  if (sigma.length() <= 0) {
+  if (sigma.length() < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

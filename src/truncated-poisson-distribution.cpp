@@ -106,7 +106,7 @@ NumericVector cpp_dtpois(
   ) {
   
   if (std::min({x.length(), lambda.length(),
-                lower.length(), upper.length()}) <= 0) {
+                lower.length(), upper.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -146,7 +146,7 @@ NumericVector cpp_ptpois(
   ) {
   
   if (std::min({x.length(), lambda.length(),
-                lower.length(), upper.length()}) <= 0) {
+                lower.length(), upper.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -189,7 +189,7 @@ NumericVector cpp_qtpois(
   ) {
   
   if (std::min({p.length(), lambda.length(),
-                lower.length(), upper.length()}) <= 0) {
+                lower.length(), upper.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -230,7 +230,7 @@ NumericVector cpp_rtpois(
     const NumericVector& upper
   ) {
   
-  if (std::min({lambda.length(), lower.length(), upper.length()}) <= 0) {
+  if (std::min({lambda.length(), lower.length(), upper.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

@@ -55,7 +55,7 @@ NumericVector cpp_qtlambda(
     const bool& log_prob = false
   ) {
   
-  if (std::min({p.length(), lambda.length()}) <= 0) {
+  if (std::min({p.length(), lambda.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -91,7 +91,7 @@ NumericVector cpp_rtlambda(
     const NumericVector& lambda
   ) {
   
-  if (lambda.length() <= 0) {
+  if (lambda.length() < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

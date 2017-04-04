@@ -82,7 +82,7 @@ NumericVector cpp_dwald(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), mu.length(), lambda.length()}) <= 0) {
+  if (std::min({x.length(), mu.length(), lambda.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -118,7 +118,7 @@ NumericVector cpp_pwald(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), mu.length(), lambda.length()}) <= 0) {
+  if (std::min({x.length(), mu.length(), lambda.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -155,7 +155,7 @@ NumericVector cpp_rwald(
     const NumericVector& lambda
   ) {
   
-  if (std::min({mu.length(), lambda.length()}) <= 0) {
+  if (std::min({mu.length(), lambda.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

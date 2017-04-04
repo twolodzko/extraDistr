@@ -121,7 +121,7 @@ NumericVector cpp_dlgser(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), theta.length()}) <= 0) {
+  if (std::min({x.length(), theta.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -155,7 +155,7 @@ NumericVector cpp_plgser(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), theta.length()}) <= 0) {
+  if (std::min({x.length(), theta.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -192,7 +192,7 @@ NumericVector cpp_qlgser(
     const bool& log_prob = false
   ) {
   
-  if (std::min({p.length(), theta.length()}) <= 0) {
+  if (std::min({p.length(), theta.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -228,7 +228,7 @@ NumericVector cpp_rlgser(
     const NumericVector& theta
   ) {
   
-  if (theta.length() <= 0) {
+  if (theta.length() < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

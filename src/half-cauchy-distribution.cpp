@@ -65,7 +65,7 @@ NumericVector cpp_dhcauchy(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), sigma.length()}) <= 0) {
+  if (std::min({x.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -98,7 +98,7 @@ NumericVector cpp_phcauchy(
     bool lower_tail = true, bool log_prob = false
   ) {
   
-  if (std::min({x.length(), sigma.length()}) <= 0) {
+  if (std::min({x.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -135,7 +135,7 @@ NumericVector cpp_qhcauchy(
     const bool& log_prob = false
   ) {
   
-  if (std::min({p.length(), sigma.length()}) <= 0) {
+  if (std::min({p.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -171,7 +171,7 @@ NumericVector cpp_rhcauchy(
     const NumericVector& sigma
   ) {
   
-  if (sigma.length() <= 0) {
+  if (sigma.length() < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

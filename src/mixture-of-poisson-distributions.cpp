@@ -25,7 +25,7 @@ NumericVector cpp_dmixpois(
                 static_cast<int>(lambda.nrow()),
                 static_cast<int>(lambda.ncol()),
                 static_cast<int>(alpha.nrow()),
-                static_cast<int>(alpha.ncol())}) <= 0) {
+                static_cast<int>(alpha.ncol())}) < 1) {
     return NumericVector(0);
   }
   
@@ -105,7 +105,7 @@ NumericVector cpp_pmixpois(
                 static_cast<int>(lambda.nrow()),
                 static_cast<int>(lambda.ncol()),
                 static_cast<int>(alpha.nrow()),
-                static_cast<int>(alpha.ncol())}) <= 0) {
+                static_cast<int>(alpha.ncol())}) < 1) {
     return NumericVector(0);
   }
   
@@ -185,7 +185,7 @@ NumericVector cpp_rmixpois(
   if (std::min({static_cast<int>(lambda.nrow()),
                 static_cast<int>(lambda.ncol()),
                 static_cast<int>(alpha.nrow()),
-                static_cast<int>(alpha.ncol())}) <= 0) {
+                static_cast<int>(alpha.ncol())}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

@@ -73,7 +73,7 @@ NumericVector cpp_dbnorm(
   if (std::min({x.length(), y.length(),
                 mu1.length(), mu2.length(),
                 sigma1.length(), sigma2.length(),
-                rho.length()}) <= 0) {
+                rho.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -121,7 +121,7 @@ NumericMatrix cpp_rbnorm(
   
   if (std::min({mu1.length(), mu2.length(),
                 sigma1.length(), sigma2.length(),
-                rho.length()}) <= 0) {
+                rho.length()}) < 1) {
     Rcpp::warning("NAs produced");
     NumericMatrix out(n, 2);
     std::fill(out.begin(), out.end(), NA_REAL);

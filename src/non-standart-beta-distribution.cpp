@@ -86,7 +86,7 @@ NumericVector cpp_dnsbeta(
   
   if (std::min({x.length(), alpha.length(),
                 beta.length(), lower.length(),
-                upper.length()}) <= 0) {
+                upper.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -126,7 +126,7 @@ NumericVector cpp_pnsbeta(
   
   if (std::min({x.length(), alpha.length(),
                 beta.length(), lower.length(),
-                upper.length()}) <= 0) {
+                upper.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -167,7 +167,7 @@ NumericVector cpp_qnsbeta(
   
   if (std::min({p.length(), alpha.length(),
                 beta.length(), lower.length(),
-                upper.length()}) <= 0) {
+                upper.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -211,7 +211,7 @@ NumericVector cpp_rnsbeta(
   ) {
   
   if (std::min({alpha.length(), beta.length(),
-                lower.length(), upper.length()}) <= 0) {
+                lower.length(), upper.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

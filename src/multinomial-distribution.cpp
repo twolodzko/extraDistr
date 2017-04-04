@@ -37,7 +37,7 @@ NumericVector cpp_dmnom(
                 static_cast<int>(x.ncol()),
                 static_cast<int>(size.length()),
                 static_cast<int>(prob.nrow()),
-                static_cast<int>(prob.ncol())}) <= 0) {
+                static_cast<int>(prob.ncol())}) < 1) {
     return NumericVector(0);
   }
   
@@ -123,7 +123,7 @@ NumericMatrix cpp_rmnom(
   
   if (std::min({static_cast<int>(size.length()),
                 static_cast<int>(prob.nrow()),
-                static_cast<int>(prob.ncol())}) <= 0) {
+                static_cast<int>(prob.ncol())}) < 1) {
     Rcpp::warning("NAs produced");
     NumericMatrix out(n, prob.ncol());
     std::fill(out.begin(), out.end(), NA_REAL);

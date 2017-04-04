@@ -91,7 +91,7 @@ NumericVector cpp_dzip(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), lambda.length(), pi.length()}) <= 0) {
+  if (std::min({x.length(), lambda.length(), pi.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -127,7 +127,7 @@ NumericVector cpp_pzip(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), lambda.length(), pi.length()}) <= 0) {
+  if (std::min({x.length(), lambda.length(), pi.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -166,7 +166,7 @@ NumericVector cpp_qzip(
     const bool& log_prob = false
   ) {
   
-  if (std::min({p.length(), lambda.length(), pi.length()}) <= 0) {
+  if (std::min({p.length(), lambda.length(), pi.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -204,7 +204,7 @@ NumericVector cpp_rzip(
     const NumericVector& pi
   ) {
   
-  if (std::min({lambda.length(), pi.length()}) <= 0) {
+  if (std::min({lambda.length(), pi.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

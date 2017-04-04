@@ -33,7 +33,7 @@ NumericVector cpp_dcat(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), prob.length()}) <= 0) {
+  if (std::min({x.length(), prob.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -102,7 +102,7 @@ NumericVector cpp_pcat(
     bool lower_tail = true, bool log_prob = false
   ) {
   
-  if (std::min({x.length(), prob.length()}) <= 0) {
+  if (std::min({x.length(), prob.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -181,7 +181,7 @@ NumericVector cpp_qcat(
     const bool& log_prob = false
   ) {
   
-  if (std::min({p.length(), prob.length()}) <= 0) {
+  if (std::min({p.length(), prob.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -273,7 +273,7 @@ NumericVector cpp_rcat(
     const NumericMatrix& prob
   ) {
   
-  if (prob.length() <= 0) {
+  if (prob.length() < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

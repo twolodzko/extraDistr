@@ -48,7 +48,7 @@ NumericVector cpp_ddnorm(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), mu.length(), sigma.length()}) <= 0) {
+  if (std::min({x.length(), mu.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
   

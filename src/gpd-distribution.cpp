@@ -117,7 +117,7 @@ NumericVector cpp_dgpd(
   ) {
   
   if (std::min({x.length(), mu.length(),
-                sigma.length(), xi.length()}) <= 0) {
+                sigma.length(), xi.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -157,7 +157,7 @@ NumericVector cpp_pgpd(
   ) {
   
   if (std::min({x.length(), mu.length(),
-                sigma.length(), xi.length()}) <= 0) {
+                sigma.length(), xi.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -200,7 +200,7 @@ NumericVector cpp_qgpd(
   ) {
   
   if (std::min({p.length(), mu.length(),
-                sigma.length(), xi.length()}) <= 0) {
+                sigma.length(), xi.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -241,7 +241,7 @@ NumericVector cpp_rgpd(
     const NumericVector& xi
   ) {
   
-  if (std::min({mu.length(), sigma.length(), xi.length()}) <= 0) {
+  if (std::min({mu.length(), sigma.length(), xi.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

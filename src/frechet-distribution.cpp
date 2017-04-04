@@ -93,7 +93,7 @@ NumericVector cpp_dfrechet(
   ) {
   
   if (std::min({x.length(), lambda.length(),
-                mu.length(), sigma.length()}) <= 0) {
+                mu.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -133,7 +133,7 @@ NumericVector cpp_pfrechet(
   ) {
   
   if (std::min({x.length(), lambda.length(),
-                mu.length(), sigma.length()}) <= 0) {
+                mu.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -176,7 +176,7 @@ NumericVector cpp_qfrechet(
   ) {
   
   if (std::min({p.length(), lambda.length(),
-                mu.length(), sigma.length()}) <= 0) {
+                mu.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -217,7 +217,7 @@ NumericVector cpp_rfrechet(
     const NumericVector& sigma
   ) {
   
-  if (std::min({lambda.length(), mu.length(), sigma.length()}) <= 0) {
+  if (std::min({lambda.length(), mu.length(), sigma.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

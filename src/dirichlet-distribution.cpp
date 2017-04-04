@@ -35,7 +35,7 @@ NumericVector cpp_ddirichlet(
   ) {
   
   if (std::min({x.nrow(), x.ncol(),
-                alpha.nrow(), alpha.ncol()}) <= 0) {
+                alpha.nrow(), alpha.ncol()}) < 1) {
     return NumericVector(0);
   }
 
@@ -115,7 +115,7 @@ NumericMatrix cpp_rdirichlet(
     const NumericMatrix& alpha
   ) {
   
-  if (std::min({alpha.nrow(), alpha.ncol()}) <= 0) {
+  if (std::min({alpha.nrow(), alpha.ncol()}) < 1) {
     Rcpp::warning("NAs produced");
     NumericMatrix out(n, alpha.ncol());
     std::fill(out.begin(), out.end(), NA_REAL);

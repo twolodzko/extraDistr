@@ -98,7 +98,7 @@ NumericVector cpp_dkumar(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), a.length(), b.length()}) <= 0) {
+  if (std::min({x.length(), a.length(), b.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -134,7 +134,7 @@ NumericVector cpp_pkumar(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), a.length(), b.length()}) <= 0) {
+  if (std::min({x.length(), a.length(), b.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -173,7 +173,7 @@ NumericVector cpp_qkumar(
     const bool& log_prob = false
   ) {
   
-  if (std::min({p.length(), a.length(), b.length()}) <= 0) {
+  if (std::min({p.length(), a.length(), b.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -211,7 +211,7 @@ NumericVector cpp_rkumar(
     const NumericVector& b
   ) {
   
-  if (std::min({a.length(), b.length()}) <= 0) {
+  if (std::min({a.length(), b.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

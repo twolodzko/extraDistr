@@ -107,7 +107,7 @@ NumericVector cpp_dbetapr(
   ) {
   
   if (std::min({x.length(), alpha.length(),
-                beta.length(), sigma.length()}) <= 0) {
+                beta.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -147,7 +147,7 @@ NumericVector cpp_pbetapr(
   ) {
   
   if (std::min({x.length(), alpha.length(),
-                beta.length(), sigma.length()}) <= 0) {
+                beta.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -190,7 +190,7 @@ NumericVector cpp_qbetapr(
   ) {
   
   if (std::min({p.length(), alpha.length(),
-                beta.length(), sigma.length()}) <= 0) {
+                beta.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -231,7 +231,7 @@ NumericVector cpp_rbetapr(
     const NumericVector& sigma
   ) {
   
-  if (std::min({alpha.length(), beta.length(), sigma.length()}) <= 0) {
+  if (std::min({alpha.length(), beta.length(), sigma.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

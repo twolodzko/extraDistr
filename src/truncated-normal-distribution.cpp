@@ -194,7 +194,7 @@ NumericVector cpp_dtnorm(
   ) {
   
   if (std::min({x.length(), mu.length(), sigma.length(),
-                lower.length(), upper.length()}) <= 0) {
+                lower.length(), upper.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -236,7 +236,7 @@ NumericVector cpp_ptnorm(
   ) {
   
   if (std::min({x.length(), mu.length(), sigma.length(),
-                lower.length(), upper.length()}) <= 0) {
+                lower.length(), upper.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -281,7 +281,7 @@ NumericVector cpp_qtnorm(
   ) {
   
   if (std::min({p.length(), mu.length(), sigma.length(),
-                lower.length(), upper.length()}) <= 0) {
+                lower.length(), upper.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -325,7 +325,7 @@ NumericVector cpp_rtnorm(
   ) {
   
   if (std::min({mu.length(), sigma.length(),
-                lower.length(), upper.length()}) <= 0) {
+                lower.length(), upper.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

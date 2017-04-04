@@ -117,7 +117,7 @@ NumericVector cpp_dhuber(
   ) {
   
   if (std::min({x.length(), mu.length(),
-                sigma.length(), epsilon.length()}) <= 0) {
+                sigma.length(), epsilon.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -157,7 +157,7 @@ NumericVector cpp_phuber(
   ) {
   
   if (std::min({x.length(), mu.length(),
-                sigma.length(), epsilon.length()}) <= 0) {
+                sigma.length(), epsilon.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -200,7 +200,7 @@ NumericVector cpp_qhuber(
   ) {
   
   if (std::min({p.length(), mu.length(),
-                sigma.length(), epsilon.length()}) <= 0) {
+                sigma.length(), epsilon.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -241,7 +241,7 @@ NumericVector cpp_rhuber(
     const NumericVector& epsilon
   ) {
   
-  if (std::min({mu.length(), sigma.length(), epsilon.length()}) <= 0) {
+  if (std::min({mu.length(), sigma.length(), epsilon.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

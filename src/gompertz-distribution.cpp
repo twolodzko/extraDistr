@@ -104,7 +104,7 @@ NumericVector cpp_dgompertz(
     bool log_prob = false
   ) {
   
-  if (std::min({x.length(), a.length(), b.length()}) <= 0) {
+  if (std::min({x.length(), a.length(), b.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -140,7 +140,7 @@ NumericVector cpp_pgompertz(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), a.length(), b.length()}) <= 0) {
+  if (std::min({x.length(), a.length(), b.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -179,7 +179,7 @@ NumericVector cpp_qgompertz(
     const bool& log_prob = false
   ) {
   
-  if (std::min({p.length(), a.length(), b.length()}) <= 0) {
+  if (std::min({p.length(), a.length(), b.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -217,7 +217,7 @@ NumericVector cpp_rgompertz(
     const NumericVector& b
   ) {
   
-  if (std::min({a.length(), b.length()}) <= 0) {
+  if (std::min({a.length(), b.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

@@ -57,7 +57,7 @@ NumericVector cpp_dbpois(
   
   if (std::min({x.length(), y.length(),
                 a.length(), b.length(),
-                c.length()}) <= 0) {
+                c.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -97,7 +97,7 @@ NumericMatrix cpp_rbpois(
     const NumericVector& c
   ) {
   
-  if (std::min({a.length(), b.length(), c.length()}) <= 0) {
+  if (std::min({a.length(), b.length(), c.length()}) < 1) {
     Rcpp::warning("NAs produced");
     NumericMatrix out(n, 2);
     std::fill(out.begin(), out.end(), NA_REAL);

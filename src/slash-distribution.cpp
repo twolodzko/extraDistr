@@ -72,7 +72,7 @@ NumericVector cpp_dslash(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), mu.length(), sigma.length()}) <= 0) {
+  if (std::min({x.length(), mu.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -108,7 +108,7 @@ NumericVector cpp_pslash(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), mu.length(), sigma.length()}) <= 0) {
+  if (std::min({x.length(), mu.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -145,7 +145,7 @@ NumericVector cpp_rslash(
     const NumericVector& sigma
   ) {
   
-  if (std::min({mu.length(), sigma.length()}) <= 0) {
+  if (std::min({mu.length(), sigma.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

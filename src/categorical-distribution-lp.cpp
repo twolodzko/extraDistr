@@ -37,7 +37,7 @@ NumericVector cpp_rcatlp(
     const NumericMatrix& log_prob
   ) {
   
-  if (log_prob.length() <= 0) {
+  if (log_prob.length() < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

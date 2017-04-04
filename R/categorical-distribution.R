@@ -37,7 +37,7 @@
 #' It is possible to sample from categorical distribution parametrized
 #' by vector of unnormalized log-probabilities
 #' \eqn{\alpha_1,\dots,\alpha_m}{\alpha[1],...,\alpha[m]}
-#' without leaving the log space using Gumbel-max trick (Maddison, Tarlow and Minka, 2014).
+#' without leaving the log space by employing the Gumbel-max trick (Maddison, Tarlow and Minka, 2014).
 #' If \eqn{g_1,\dots,g_m}{g[1],...,g[m]} are samples from Gumbel distribution with
 #' cumulative distribution function \eqn{F(g) = \exp(-\exp(-g))}{F(g) = exp(-exp(-g))},
 #' then \eqn{k = \mathrm{arg\,max}_i \{g_i + \alpha_i\}}{k = argmax(g[i]+\alpha[i])}
@@ -96,7 +96,7 @@
 
 dcat <- function(x, prob, log = FALSE) {
   if (is.vector(prob))
-    prob <- matrix(prob, nrow = 1)
+    prob <- matrix(prob, nrow = 1L)
   else if (!is.matrix(prob))
     prob <- as.matrix(prob)
   cpp_dcat(as.numeric(x), prob, log)
@@ -108,7 +108,7 @@ dcat <- function(x, prob, log = FALSE) {
 
 pcat <- function(q, prob, lower.tail = TRUE, log.p = FALSE) {
   if (is.vector(prob))
-    prob <- matrix(prob, nrow = 1)
+    prob <- matrix(prob, nrow = 1L)
   else if (!is.matrix(prob))
     prob <- as.matrix(prob)
   cpp_pcat(as.numeric(q), prob, lower.tail, log.p)
@@ -120,7 +120,7 @@ pcat <- function(q, prob, lower.tail = TRUE, log.p = FALSE) {
 
 qcat <- function(p, prob, lower.tail = TRUE, log.p = FALSE, labels) {
   if (is.vector(prob))
-    prob <- matrix(prob, nrow = 1)
+    prob <- matrix(prob, nrow = 1L)
   else if (!is.matrix(prob))
     prob <- as.matrix(prob)
   
@@ -145,7 +145,7 @@ rcat <- function(n, prob, labels) {
   
   if (is.vector(prob)) {
     k <- length(prob)
-    if (anyNA(prob) || any(prob < 0)) {
+    if (anyNA(prob) || any(prob < 0) || length(prob) == 0) {
       warning("NAs produced")
       x <- rep(NA, n)
     } else {
@@ -174,7 +174,7 @@ rcatlp <- function(n, log_prob, labels) {
   if (length(n) > 1) n <- length(n)
   
   if (is.vector(log_prob))
-    log_prob <- matrix(log_prob, nrow = 1)
+    log_prob <- matrix(log_prob, nrow = 1L)
   
   x <- cpp_rcatlp(n, log_prob)
   

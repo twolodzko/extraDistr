@@ -90,7 +90,7 @@ NumericVector cpp_ddweibull(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), q.length(), beta.length()}) <= 0) {
+  if (std::min({x.length(), q.length(), beta.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -126,7 +126,7 @@ NumericVector cpp_pdweibull(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), q.length(), beta.length()}) <= 0) {
+  if (std::min({x.length(), q.length(), beta.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -165,7 +165,7 @@ NumericVector cpp_qdweibull(
     const bool& log_prob = false
   ) {
   
-  if (std::min({p.length(), q.length(), beta.length()}) <= 0) {
+  if (std::min({p.length(), q.length(), beta.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -203,7 +203,7 @@ NumericVector cpp_rdweibull(
     const NumericVector& beta
   ) {
   
-  if (std::min({q.length(), beta.length()}) <= 0) {
+  if (std::min({q.length(), beta.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

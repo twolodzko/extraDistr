@@ -28,7 +28,7 @@ NumericVector cpp_dmixnorm(
                 static_cast<int>(sigma.nrow()),
                 static_cast<int>(sigma.ncol()),
                 static_cast<int>(alpha.nrow()),
-                static_cast<int>(alpha.ncol())}) <= 0) {
+                static_cast<int>(alpha.ncol())}) < 1) {
     return NumericVector(0);
   }
   
@@ -105,7 +105,7 @@ NumericVector cpp_pmixnorm(
                 static_cast<int>(sigma.nrow()),
                 static_cast<int>(sigma.ncol()),
                 static_cast<int>(alpha.nrow()),
-                static_cast<int>(alpha.ncol())}) <= 0) {
+                static_cast<int>(alpha.ncol())}) < 1) {
     return NumericVector(0);
   }
   
@@ -184,7 +184,7 @@ NumericVector cpp_rmixnorm(
                 static_cast<int>(sigma.nrow()),
                 static_cast<int>(sigma.ncol()),
                 static_cast<int>(alpha.nrow()),
-                static_cast<int>(alpha.ncol())}) <= 0) {
+                static_cast<int>(alpha.ncol())}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

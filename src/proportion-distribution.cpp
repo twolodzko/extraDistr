@@ -79,7 +79,7 @@ NumericVector cpp_dprop(
   ) {
   
   if (std::min({x.length(), size.length(),
-                mean.length(), prior.length()}) <= 0) {
+                mean.length(), prior.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -119,7 +119,7 @@ NumericVector cpp_pprop(
   ) {
   
   if (std::min({x.length(), size.length(),
-                mean.length(), prior.length()}) <= 0) {
+                mean.length(), prior.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -162,7 +162,7 @@ NumericVector cpp_qprop(
   ) {
   
   if (std::min({p.length(), size.length(),
-                mean.length(), prior.length()}) <= 0) {
+                mean.length(), prior.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -203,7 +203,7 @@ NumericVector cpp_rprop(
     const NumericVector& prior
   ) {
   
-  if (std::min({size.length(), mean.length(), prior.length()}) <= 0) {
+  if (std::min({size.length(), mean.length(), prior.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

@@ -90,7 +90,7 @@ NumericVector cpp_dbhatt(
   ) {
   
   if (std::min({x.length(), mu.length(),
-                sigma.length(), a.length()}) <= 0) {
+                sigma.length(), a.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -130,7 +130,7 @@ NumericVector cpp_pbhatt(
   ) {
   
   if (std::min({x.length(), mu.length(),
-                sigma.length(), a.length()}) <= 0) {
+                sigma.length(), a.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -170,7 +170,7 @@ NumericVector cpp_rbhatt(
     const NumericVector& a
   ) {
   
-  if (std::min({mu.length(), sigma.length(), a.length()}) <= 0) {
+  if (std::min({mu.length(), sigma.length(), a.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

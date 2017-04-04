@@ -83,7 +83,7 @@ NumericVector cpp_drayleigh(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), sigma.length()}) <= 0) {
+  if (std::min({x.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -117,7 +117,7 @@ NumericVector cpp_prayleigh(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), sigma.length()}) <= 0) {
+  if (std::min({x.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -154,7 +154,7 @@ NumericVector cpp_qrayleigh(
     const bool& log_prob = false
   ) {
   
-  if (std::min({p.length(), sigma.length()}) <= 0) {
+  if (std::min({p.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -190,7 +190,7 @@ NumericVector cpp_rrayleigh(
     const NumericVector& sigma
   ) {
   
-  if (sigma.length() <= 0) {
+  if (sigma.length() < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

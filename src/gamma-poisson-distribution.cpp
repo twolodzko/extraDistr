@@ -106,7 +106,7 @@ NumericVector cpp_dgpois(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), alpha.length(), beta.length()}) <= 0) {
+  if (std::min({x.length(), alpha.length(), beta.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -142,7 +142,7 @@ NumericVector cpp_pgpois(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), alpha.length(), beta.length()}) <= 0) {
+  if (std::min({x.length(), alpha.length(), beta.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -208,7 +208,7 @@ NumericVector cpp_rgpois(
     const NumericVector& beta
   ) {
   
-  if (std::min({alpha.length(), beta.length()}) <= 0) {
+  if (std::min({alpha.length(), beta.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

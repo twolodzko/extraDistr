@@ -129,7 +129,7 @@ NumericVector cpp_dbnbinom(
   ) {
   
   if (std::min({x.length(), size.length(),
-                alpha.length(), beta.length()}) <= 0) {
+                alpha.length(), beta.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -168,7 +168,7 @@ NumericVector cpp_pbnbinom(
   ) {
   
   if (std::min({x.length(), size.length(),
-                alpha.length(), beta.length()}) <= 0) {
+                alpha.length(), beta.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -241,7 +241,7 @@ NumericVector cpp_rbnbinom(
     const NumericVector& beta
   ) {
   
-  if (std::min({size.length(), alpha.length(), beta.length()}) <= 0) {
+  if (std::min({size.length(), alpha.length(), beta.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

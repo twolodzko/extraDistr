@@ -96,7 +96,7 @@ NumericVector cpp_dlomax(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), lambda.length(), kappa.length()}) <= 0) {
+  if (std::min({x.length(), lambda.length(), kappa.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -132,7 +132,7 @@ NumericVector cpp_plomax(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), lambda.length(), kappa.length()}) <= 0) {
+  if (std::min({x.length(), lambda.length(), kappa.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -171,7 +171,7 @@ NumericVector cpp_qlomax(
     const bool& log_prob = false
   ) {
   
-  if (std::min({p.length(), lambda.length(), kappa.length()}) <= 0) {
+  if (std::min({p.length(), lambda.length(), kappa.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -209,7 +209,7 @@ NumericVector cpp_rlomax(
     const NumericVector& kappa
   ) {
   
-  if (std::min({lambda.length(), kappa.length()}) <= 0) {
+  if (std::min({lambda.length(), kappa.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

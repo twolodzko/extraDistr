@@ -104,7 +104,7 @@ NumericVector cpp_dtbinom(
   ) {
   
   if (std::min({x.length(), size.length(), prob.length(),
-                lower.length(), upper.length()}) <= 0) {
+                lower.length(), upper.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -146,7 +146,7 @@ NumericVector cpp_ptbinom(
   ) {
   
   if (std::min({x.length(), size.length(), prob.length(),
-                lower.length(), upper.length()}) <= 0) {
+                lower.length(), upper.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -191,7 +191,7 @@ NumericVector cpp_qtbinom(
   ) {
   
   if (std::min({p.length(), size.length(), prob.length(),
-                lower.length(), upper.length()}) <= 0) {
+                lower.length(), upper.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -235,7 +235,7 @@ NumericVector cpp_rtbinom(
   ) {
   
   if (std::min({size.length(), prob.length(),
-                lower.length(), upper.length()}) <= 0) {
+                lower.length(), upper.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

@@ -53,7 +53,7 @@ NumericVector cpp_dinvgamma(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), alpha.length(), beta.length()}) <= 0) {
+  if (std::min({x.length(), alpha.length(), beta.length()}) < 1) {
     return NumericVector(0);
   }
 

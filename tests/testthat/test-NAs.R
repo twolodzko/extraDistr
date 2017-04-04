@@ -646,9 +646,12 @@ test_that("Wrong parameter values in RNG functions", {
   expect_warning(expect_true(all(is.na(rbvpois(1, NA, 1, 1)))))
   expect_warning(expect_true(all(is.na(rbvpois(1, 1, NA, 1)))))
   expect_warning(expect_true(all(is.na(rbvpois(1, 1, 1, NA)))))
-  
+
   expect_warning(expect_true(is.na(rcat(1, c(NA, 0.5)))))
   expect_warning(expect_true(is.na(rcat(1, c(0.5, NA)))))
+  
+  expect_warning(expect_true(is.na(rcatlp(1, c(NA, 0.5)))))
+  expect_warning(expect_true(is.na(rcatlp(1, c(0.5, NA)))))
 
   expect_warning(expect_true(all(is.na(rdirichlet(1, c(NA, 0.5))))))
   expect_warning(expect_true(all(is.na(rdirichlet(1, c(0.5, NA))))))

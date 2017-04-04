@@ -53,7 +53,7 @@ NumericVector cpp_dskellam(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), mu1.length(), mu2.length()}) <= 0) {
+  if (std::min({x.length(), mu1.length(), mu2.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -87,7 +87,7 @@ NumericVector cpp_rskellam(
     const NumericVector& mu2
   ) {
   
-  if (std::min({mu1.length(), mu2.length()}) <= 0) {
+  if (std::min({mu1.length(), mu2.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

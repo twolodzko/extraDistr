@@ -60,7 +60,7 @@ NumericVector cpp_dnhyper(
   ) {
   
   if (std::min({x.length(), n.length(),
-                m.length(), r.length()}) <= 0) {
+                m.length(), r.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -133,7 +133,7 @@ NumericVector cpp_pnhyper(
   ) {
   
   if (std::min({x.length(), n.length(),
-                m.length(), r.length()}) <= 0) {
+                m.length(), r.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -210,7 +210,7 @@ NumericVector cpp_qnhyper(
   ) {
   
   if (std::min({p.length(), n.length(),
-                m.length(), r.length()}) <= 0) {
+                m.length(), r.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -285,7 +285,7 @@ NumericVector cpp_rnhyper(
     const NumericVector& r
   ) {
   
-  if (std::min({n.length(), m.length(), r.length()}) <= 0) {
+  if (std::min({n.length(), m.length(), r.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(nn, NA_REAL);
   }

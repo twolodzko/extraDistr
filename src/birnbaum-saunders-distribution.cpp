@@ -95,7 +95,7 @@ NumericVector cpp_dfatigue(
   ) {
   
   if (std::min({x.length(), alpha.length(),
-                beta.length(), mu.length()}) <= 0) {
+                beta.length(), mu.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -135,7 +135,7 @@ NumericVector cpp_pfatigue(
   ) {
   
   if (std::min({x.length(), alpha.length(),
-                beta.length(), mu.length()}) <= 0) {
+                beta.length(), mu.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -178,7 +178,7 @@ NumericVector cpp_qfatigue(
   ) {
   
   if (std::min({p.length(), alpha.length(),
-                beta.length(), mu.length()}) <= 0) {
+                beta.length(), mu.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -219,7 +219,7 @@ NumericVector cpp_rfatigue(
     const NumericVector& mu
   ) {
   
-  if (std::min({alpha.length(), beta.length(), mu.length()}) <= 0) {
+  if (std::min({alpha.length(), beta.length(), mu.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

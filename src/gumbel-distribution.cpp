@@ -85,7 +85,7 @@ NumericVector cpp_dgumbel(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), mu.length(), sigma.length()}) <= 0) {
+  if (std::min({x.length(), mu.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -121,7 +121,7 @@ NumericVector cpp_pgumbel(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), mu.length(), sigma.length()}) <= 0) {
+  if (std::min({x.length(), mu.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -160,7 +160,7 @@ NumericVector cpp_qgumbel(
     const bool& log_prob = false
   ) {
   
-  if (std::min({p.length(), mu.length(), sigma.length()}) <= 0) {
+  if (std::min({p.length(), mu.length(), sigma.length()}) < 1) {
     return NumericVector(0);
   }
 
@@ -198,7 +198,7 @@ NumericVector cpp_rgumbel(
     const NumericVector& sigma
   ) {
   
-  if (std::min({mu.length(), sigma.length()}) <= 0) {
+  if (std::min({mu.length(), sigma.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

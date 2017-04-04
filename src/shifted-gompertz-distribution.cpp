@@ -95,7 +95,7 @@ NumericVector cpp_dsgomp(
     bool log_prob = false
   ) {
   
-  if (std::min({x.length(), b.length(), eta.length()}) <= 0) {
+  if (std::min({x.length(), b.length(), eta.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -131,7 +131,7 @@ NumericVector cpp_psgomp(
     const bool& log_prob = false
   ) {
   
-  if (std::min({x.length(), b.length(), eta.length()}) <= 0) {
+  if (std::min({x.length(), b.length(), eta.length()}) < 1) {
     return NumericVector(0);
   }
   
@@ -168,7 +168,7 @@ NumericVector cpp_rsgomp(
     const NumericVector& eta
   ) {
   
-  if (std::min({b.length(), eta.length()}) <= 0) {
+  if (std::min({b.length(), eta.length()}) < 1) {
     Rcpp::warning("NAs produced");
     return NumericVector(n, NA_REAL);
   }

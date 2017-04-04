@@ -41,7 +41,7 @@ NumericVector cpp_ddirmnom(
                 static_cast<int>(x.ncol()),
                 static_cast<int>(size.length()),
                 static_cast<int>(alpha.nrow()),
-                static_cast<int>(alpha.ncol())}) <= 0) {
+                static_cast<int>(alpha.ncol())}) < 1) {
     return NumericVector(0);
   }
   
@@ -128,7 +128,7 @@ NumericMatrix cpp_rdirmnom(
   
   if (std::min({static_cast<int>(size.length()),
                 static_cast<int>(alpha.nrow()),
-                static_cast<int>(alpha.ncol())}) <= 0) {
+                static_cast<int>(alpha.ncol())}) < 1) {
     Rcpp::warning("NAs produced");
     NumericMatrix out(n, alpha.ncol());
     std::fill(out.begin(), out.end(), NA_REAL);
