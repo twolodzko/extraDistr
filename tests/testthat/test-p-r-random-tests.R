@@ -59,9 +59,6 @@ test_that("p-r random tests", {
   expect_true(dkwtest("bnbinom", 1, 1, 1))
   expect_true(dkwtest("bnbinom", 10, 1, 1))
   expect_true(dkwtest("bnbinom", 10, 100, 1))
-  expect_true(dkwtest("bnbinom", 100, 1, 1))
-  expect_true(dkwtest("bnbinom", 100, 100, 1))
-  expect_true(dkwtest("bnbinom", 100, 1, 5))
   
   expect_true(dkwtest("cat", c(0.5, 0.5)))
   expect_true(dkwtest("cat", c(1e-6, 1, 2.5, 100)))
