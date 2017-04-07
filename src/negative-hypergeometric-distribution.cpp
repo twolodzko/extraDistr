@@ -77,7 +77,7 @@ NumericVector cpp_dnhyper(
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
   
   for (int i = 0; i < Nmax; i++) {
-    if (i % 1000 == 0)
+    if (i % 100 == 0)
       Rcpp::checkUserInterrupt();
     
     if (ISNAN(GETV(x, i)) || ISNAN(GETV(n, i)) ||
@@ -150,7 +150,7 @@ NumericVector cpp_pnhyper(
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
   
   for (int i = 0; i < Nmax; i++) {
-    if (i % 1000 == 0)
+    if (i % 100 == 0)
       Rcpp::checkUserInterrupt();
     
     if (ISNAN(GETV(x, i)) || ISNAN(GETV(n, i)) ||
@@ -234,7 +234,7 @@ NumericVector cpp_qnhyper(
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
   
   for (int i = 0; i < Nmax; i++) {
-    if (i % 1000 == 0)
+    if (i % 100 == 0)
       Rcpp::checkUserInterrupt();
     
     if (ISNAN(GETV(pp, i)) || ISNAN(GETV(n, i)) ||
@@ -298,7 +298,7 @@ NumericVector cpp_rnhyper(
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
   
   for (int i = 0; i < nn; i++) {
-    if (i % 1000 == 0)
+    if (i % 100 == 0)
       Rcpp::checkUserInterrupt();
     
     if (ISNAN(GETV(n, i)) || ISNAN(GETV(m, i)) || ISNAN(GETV(r, i)) ||

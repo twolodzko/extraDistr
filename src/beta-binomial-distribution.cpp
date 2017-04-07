@@ -182,7 +182,7 @@ NumericVector cpp_pbbinom(
   
   for (int i = 0; i < Nmax; i++) {
     
-    if (i % 1000 == 0)
+    if (i % 100 == 0)
       Rcpp::checkUserInterrupt();
     
     if (ISNAN(GETV(x, i)) || ISNAN(GETV(size, i)) ||

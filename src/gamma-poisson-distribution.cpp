@@ -159,7 +159,7 @@ NumericVector cpp_pgpois(
   double mx = finite_max_int(x);
   
   for (int i = 0; i < Nmax; i++) {
-    if (i % 1000 == 0)
+    if (i % 100 == 0)
       Rcpp::checkUserInterrupt();
     if (ISNAN(GETV(x, i)) || ISNAN(GETV(alpha, i)) || ISNAN(GETV(beta, i))) {
       p[i] = GETV(x, i) + GETV(alpha, i) + GETV(beta, i);
