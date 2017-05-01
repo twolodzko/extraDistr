@@ -59,7 +59,7 @@
 #' @export
 
 ddnorm <- function(x, mean = 0, sd = 1, log = FALSE) {
-  cpp_ddnorm(x, mean, sd, log)
+  cpp_ddnorm(x, mean, sd, log[1L])
 }
 
 
@@ -67,7 +67,7 @@ ddnorm <- function(x, mean = 0, sd = 1, log = FALSE) {
 #' @export
 
 pdnorm <- function(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE) {
-  pnorm(floor(q)+1, mean, sd, lower.tail, log.p)
+  pnorm(floor(q)+1, mean, sd, lower.tail[1L], log.p[1L])
 }
 
 

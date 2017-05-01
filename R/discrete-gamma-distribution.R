@@ -55,7 +55,7 @@ ddgamma <- function(x, shape, rate = 1, scale = 1/rate, log = FALSE) {
       warning("specify 'rate' or 'scale' but not both")
     else stop("specify 'rate' or 'scale' but not both")
   }
-  cpp_ddgamma(x, shape, scale, log)
+  cpp_ddgamma(x, shape, scale, log[1L])
 }
 
 
@@ -63,7 +63,7 @@ ddgamma <- function(x, shape, rate = 1, scale = 1/rate, log = FALSE) {
 #' @export
 
 pdgamma <- function(q, shape, rate = 1, scale = 1/rate, lower.tail = TRUE, log.p = FALSE) {
-  pgamma(floor(q)+1, shape, scale = scale, lower.tail = lower.tail, log.p = log.p)
+  pgamma(floor(q)+1, shape, scale = scale, lower.tail = lower.tail[1L], log.p = log.p[1L])
 }
 
 

@@ -57,7 +57,7 @@
 #' @export
 
 dpower <- function(x, alpha, beta, log = FALSE) {
-  cpp_dpower(x, alpha, beta, log)
+  cpp_dpower(x, alpha, beta, log[1L])
 }
 
 
@@ -65,7 +65,7 @@ dpower <- function(x, alpha, beta, log = FALSE) {
 #' @export
 
 ppower <- function(q, alpha, beta, lower.tail = TRUE, log.p = FALSE) {
-  cpp_ppower(q, alpha, beta, lower.tail, log.p)
+  cpp_ppower(q, alpha, beta, lower.tail[1L], log.p[1L])
 }
 
 
@@ -73,7 +73,7 @@ ppower <- function(q, alpha, beta, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qpower <- function(p, alpha, beta, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qpower(p, alpha, beta, lower.tail, log.p)
+  cpp_qpower(p, alpha, beta, lower.tail[1L], log.p[1L])
 }
 
 

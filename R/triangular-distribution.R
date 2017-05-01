@@ -83,7 +83,7 @@
 #' @export
 
 dtriang <- function(x, a = -1, b = 1, c = (a+b)/2, log = FALSE) {
-  cpp_dtriang(x, a, b, c, log)
+  cpp_dtriang(x, a, b, c, log[1L])
 }
 
 
@@ -91,7 +91,7 @@ dtriang <- function(x, a = -1, b = 1, c = (a+b)/2, log = FALSE) {
 #' @export
 
 ptriang <- function(q, a = -1, b = 1, c = (a+b)/2, lower.tail = TRUE, log.p = FALSE) {
-  cpp_ptriang(q, a, b, c, lower.tail, log.p)
+  cpp_ptriang(q, a, b, c, lower.tail[1L], log.p[1L])
 }
 
 
@@ -99,7 +99,7 @@ ptriang <- function(q, a = -1, b = 1, c = (a+b)/2, lower.tail = TRUE, log.p = FA
 #' @export
 
 qtriang <- function(p, a = -1, b = 1, c = (a+b)/2, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qtriang(p, a, b, c, lower.tail, log.p)
+  cpp_qtriang(p, a, b, c, lower.tail[1L], log.p[1L])
 }
 
 

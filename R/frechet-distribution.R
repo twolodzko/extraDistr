@@ -63,7 +63,7 @@
 #' @export
 
 dfrechet <- function(x, lambda = 1, mu = 0, sigma = 1, log = FALSE) {
-  cpp_dfrechet(x, lambda, mu, sigma, log)
+  cpp_dfrechet(x, lambda, mu, sigma, log[1L])
 }
 
 
@@ -71,7 +71,7 @@ dfrechet <- function(x, lambda = 1, mu = 0, sigma = 1, log = FALSE) {
 #' @export
 
 pfrechet <- function(q, lambda = 1, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pfrechet(q, lambda, mu, sigma, lower.tail, log.p)
+  cpp_pfrechet(q, lambda, mu, sigma, lower.tail[1L], log.p[1L])
 }
 
 
@@ -79,7 +79,7 @@ pfrechet <- function(q, lambda = 1, mu = 0, sigma = 1, lower.tail = TRUE, log.p 
 #' @export
 
 qfrechet <- function(p, lambda = 1, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qfrechet(p, lambda, mu, sigma, lower.tail, log.p)
+  cpp_qfrechet(p, lambda, mu, sigma, lower.tail[1L], log.p[1L])
 }
 
 

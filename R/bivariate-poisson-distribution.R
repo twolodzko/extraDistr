@@ -69,7 +69,7 @@ dbvpois <- function(x, y = NULL, a, b, c, log = FALSE) {
       stop("y is not provided while x is not a two-column matrix")
     }
   }
-  cpp_dbpois(x, y, a, b, c, log)
+  cpp_dbpois(x, y, a, b, c, log[1L])
 }
 
 

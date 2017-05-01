@@ -54,7 +54,7 @@ ddirmnom <- function(x, size, alpha, log = FALSE) {
     x <- as.matrix(x)
   else if (is.vector(x))
     x <- matrix(x, byrow = TRUE, nrow = 1)
-  cpp_ddirmnom(x, size, alpha, log)
+  cpp_ddirmnom(x, size, alpha, log[1L])
 }
 
 

@@ -59,7 +59,7 @@ dmnom <- function(x, size, prob, log = FALSE) {
   else if (!is.matrix(x))
     x <- as.matrix(x)
   
-  cpp_dmnom(x, size, prob, log)
+  cpp_dmnom(x, size, prob, log[1L])
 }
 
 

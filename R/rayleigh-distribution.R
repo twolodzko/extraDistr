@@ -65,7 +65,7 @@
 #' @export
 
 drayleigh <- function(x, sigma = 1, log = FALSE) {
-  cpp_drayleigh(x, sigma, log)
+  cpp_drayleigh(x, sigma, log[1L])
 }
 
 
@@ -73,7 +73,7 @@ drayleigh <- function(x, sigma = 1, log = FALSE) {
 #' @export
 
 prayleigh <- function(q, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_prayleigh(q, sigma, lower.tail, log.p)
+  cpp_prayleigh(q, sigma, lower.tail[1L], log.p[1L])
 }
 
 
@@ -81,7 +81,7 @@ prayleigh <- function(q, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qrayleigh <- function(p, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qrayleigh(p, sigma, lower.tail, log.p)
+  cpp_qrayleigh(p, sigma, lower.tail[1L], log.p[1L])
 }
 
 

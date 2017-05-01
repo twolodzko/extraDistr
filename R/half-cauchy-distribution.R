@@ -52,7 +52,7 @@
 #' @export
 
 dhcauchy <- function(x, sigma = 1, log = FALSE) {
-  cpp_dhcauchy(x, sigma, log)
+  cpp_dhcauchy(x, sigma, log[1L])
 }
 
 
@@ -60,7 +60,7 @@ dhcauchy <- function(x, sigma = 1, log = FALSE) {
 #' @export
 
 phcauchy <- function(q, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_phcauchy(q, sigma, lower.tail, log.p)
+  cpp_phcauchy(q, sigma, lower.tail[1L], log.p[1L])
 }
 
 
@@ -68,7 +68,7 @@ phcauchy <- function(q, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qhcauchy <- function(p, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qhcauchy(p, sigma, lower.tail, log.p)
+  cpp_qhcauchy(p, sigma, lower.tail[1L], log.p[1L])
 }
 
 

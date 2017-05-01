@@ -70,7 +70,7 @@
 #' @export
 
 dgpd <- function(x, mu = 0, sigma = 1, xi = 0, log = FALSE) {
-  cpp_dgpd(x, mu, sigma, xi, log)
+  cpp_dgpd(x, mu, sigma, xi, log[1L])
 }
 
 
@@ -78,7 +78,7 @@ dgpd <- function(x, mu = 0, sigma = 1, xi = 0, log = FALSE) {
 #' @export
 
 pgpd <- function(q, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pgpd(q, mu, sigma, xi, lower.tail, log.p)
+  cpp_pgpd(q, mu, sigma, xi, lower.tail[1L], log.p[1L])
 }
 
 
@@ -86,7 +86,7 @@ pgpd <- function(q, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE)
 #' @export
 
 qgpd <- function(p, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qgpd(p, mu, sigma, xi, lower.tail, log.p)
+  cpp_qgpd(p, mu, sigma, xi, lower.tail[1L], log.p[1L])
 }
 
 

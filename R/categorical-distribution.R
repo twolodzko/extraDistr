@@ -99,7 +99,7 @@ dcat <- function(x, prob, log = FALSE) {
     prob <- matrix(prob, nrow = 1L)
   else if (!is.matrix(prob))
     prob <- as.matrix(prob)
-  cpp_dcat(as.numeric(x), prob, log)
+  cpp_dcat(as.numeric(x), prob, log[1L])
 }
 
 
@@ -111,7 +111,7 @@ pcat <- function(q, prob, lower.tail = TRUE, log.p = FALSE) {
     prob <- matrix(prob, nrow = 1L)
   else if (!is.matrix(prob))
     prob <- as.matrix(prob)
-  cpp_pcat(as.numeric(q), prob, lower.tail, log.p)
+  cpp_pcat(as.numeric(q), prob, lower.tail[1L], log.p[1L])
 }
 
 
@@ -124,7 +124,7 @@ qcat <- function(p, prob, lower.tail = TRUE, log.p = FALSE, labels) {
   else if (!is.matrix(prob))
     prob <- as.matrix(prob)
   
-  x <- cpp_qcat(p, prob, lower.tail, log.p)
+  x <- cpp_qcat(p, prob, lower.tail[1L], log.p[1L])
   
   if (!missing(labels)) {
     if (length(labels) != ncol(prob))

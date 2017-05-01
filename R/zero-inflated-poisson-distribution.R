@@ -51,7 +51,7 @@
 #' @export
 
 dzip <- function(x, lambda, pi, log = FALSE) {
-  cpp_dzip(x, lambda, pi, log)
+  cpp_dzip(x, lambda, pi, log[1L])
 }
 
 
@@ -59,7 +59,7 @@ dzip <- function(x, lambda, pi, log = FALSE) {
 #' @export
 
 pzip <- function(q, lambda, pi, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pzip(q, lambda, pi, lower.tail, log.p)
+  cpp_pzip(q, lambda, pi, lower.tail[1L], log.p[1L])
 }
 
 
@@ -67,7 +67,7 @@ pzip <- function(q, lambda, pi, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qzip <- function(p, lambda, pi, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qzip(p, lambda, pi, lower.tail, log.p)
+  cpp_qzip(p, lambda, pi, lower.tail[1L], log.p[1L])
 }
 
 

@@ -51,7 +51,7 @@
 #' @export
 
 dht <- function(x, nu, sigma = 1, log = FALSE) {
-  cpp_dht(x, nu, sigma, log)
+  cpp_dht(x, nu, sigma, log[1L])
 }
 
 
@@ -59,7 +59,7 @@ dht <- function(x, nu, sigma = 1, log = FALSE) {
 #' @export
 
 pht <- function(q, nu, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pht(q, nu, sigma, lower.tail, log.p)
+  cpp_pht(q, nu, sigma, lower.tail[1L], log.p[1L])
 }
 
 
@@ -67,7 +67,7 @@ pht <- function(q, nu, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qht <- function(p, nu, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qht(p, nu, sigma, lower.tail, log.p)
+  cpp_qht(p, nu, sigma, lower.tail[1L], log.p[1L])
 }
 
 

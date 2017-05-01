@@ -87,7 +87,7 @@
 #' @export
 
 dprop <- function(x, size, mean, prior = 0, log = FALSE) {
-  cpp_dprop(x, size, mean, prior, log)
+  cpp_dprop(x, size, mean, prior, log[1L])
 }
 
 
@@ -95,7 +95,7 @@ dprop <- function(x, size, mean, prior = 0, log = FALSE) {
 #' @export
 
 pprop <- function(q, size, mean, prior = 0, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pprop(q, size, mean, prior, lower.tail, log.p)
+  cpp_pprop(q, size, mean, prior, lower.tail[1L], log.p[1L])
 }
 
 
@@ -103,7 +103,7 @@ pprop <- function(q, size, mean, prior = 0, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qprop <- function(p, size, mean, prior = 0, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qprop(p, size, mean, prior, lower.tail, log.p)
+  cpp_qprop(p, size, mean, prior, lower.tail[1L], log.p[1L])
 }
 
 

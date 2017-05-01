@@ -31,7 +31,7 @@
 #' @export
 
 dbern <- function(x, prob = 0.5, log = FALSE) {
-  cpp_dbern(x, prob, log)
+  cpp_dbern(x, prob, log[1L])
 }
 
 
@@ -39,7 +39,7 @@ dbern <- function(x, prob = 0.5, log = FALSE) {
 #' @export
 
 pbern <- function(q, prob = 0.5, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pbern(q, prob, lower.tail, log.p)
+  cpp_pbern(q, prob, lower.tail[1L], log.p[1L])
 }
 
 
@@ -47,7 +47,7 @@ pbern <- function(q, prob = 0.5, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qbern <- function(p, prob = 0.5, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qbern(p, prob, lower.tail, log.p)
+  cpp_qbern(p, prob, lower.tail[1L], log.p[1L])
 }
 
 

@@ -60,7 +60,7 @@
 #' @export
 
 dinvgamma <- function(x, alpha, beta = 1, log = FALSE) {
-  cpp_dinvgamma(x, alpha, 1/beta, log)
+  cpp_dinvgamma(x, alpha, 1/beta, log[1L])
 }
 
 
@@ -68,7 +68,7 @@ dinvgamma <- function(x, alpha, beta = 1, log = FALSE) {
 #' @export
 
 pinvgamma <- function(q, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE) {
-  pgamma(1/q, alpha, beta, lower.tail = !lower.tail, log.p = log.p)
+  pgamma(1/q, alpha, beta, lower.tail = !lower.tail[1L], log.p = log.p[1L])
 }
 
 
@@ -76,7 +76,7 @@ pinvgamma <- function(q, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qinvgamma <- function(p, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE) {
-  1/qgamma(p, alpha, beta, lower.tail = !lower.tail, log.p = log.p)
+  1/qgamma(p, alpha, beta, lower.tail = !lower.tail[1L], log.p = log.p[1L])
 }
 
 

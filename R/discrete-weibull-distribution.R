@@ -79,7 +79,7 @@
 #' @export
 
 ddweibull <- function(x, shape1, shape2, log = FALSE) {
-  cpp_ddweibull(x, shape1, shape2, log)
+  cpp_ddweibull(x, shape1, shape2, log[1L])
 }
 
 
@@ -87,7 +87,7 @@ ddweibull <- function(x, shape1, shape2, log = FALSE) {
 #' @export
 
 pdweibull <- function(q, shape1, shape2, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pdweibull(q, shape1, shape2, lower.tail, log.p)
+  cpp_pdweibull(q, shape1, shape2, lower.tail[1L], log.p[1L])
 }
 
 
@@ -95,7 +95,7 @@ pdweibull <- function(q, shape1, shape2, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qdweibull <- function(p, shape1, shape2, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qdweibull(p, shape1, shape2, lower.tail, log.p)
+  cpp_qdweibull(p, shape1, shape2, lower.tail[1L], log.p[1L])
 }
 
 

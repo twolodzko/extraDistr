@@ -37,7 +37,7 @@
 #' @export
 
 dnsbeta <- function(x, shape1, shape2, min = 0, max = 1, log = FALSE) {
-  cpp_dnsbeta(x, shape1, shape2, min, max, log)
+  cpp_dnsbeta(x, shape1, shape2, min, max, log[1L])
 }
 
 
@@ -45,7 +45,7 @@ dnsbeta <- function(x, shape1, shape2, min = 0, max = 1, log = FALSE) {
 #' @export
 
 pnsbeta <- function(q, shape1, shape2, min = 0, max = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pnsbeta(q, shape1, shape2, min, max, lower.tail, log.p)
+  cpp_pnsbeta(q, shape1, shape2, min, max, lower.tail[1L], log.p[1L])
 }
 
 
@@ -53,7 +53,7 @@ pnsbeta <- function(q, shape1, shape2, min = 0, max = 1, lower.tail = TRUE, log.
 #' @export
 
 qnsbeta <- function(p, shape1, shape2, min = 0, max = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qnsbeta(p, shape1, shape2, min, max, lower.tail, log.p)
+  cpp_qnsbeta(p, shape1, shape2, min, max, lower.tail[1L], log.p[1L])
 }
 
 

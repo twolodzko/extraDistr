@@ -65,7 +65,7 @@
 #' @export
 
 dbhatt <- function(x, mu = 0, sigma = 1, a = sigma, log = FALSE) {
-  cpp_dbhatt(x, mu, sigma, a, log)
+  cpp_dbhatt(x, mu, sigma, a, log[1L])
 }
 
 
@@ -73,7 +73,7 @@ dbhatt <- function(x, mu = 0, sigma = 1, a = sigma, log = FALSE) {
 #' @export
 
 pbhatt <- function(q, mu = 0, sigma = 1, a = sigma, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pbhatt(q, mu, sigma, a, lower.tail, log.p)
+  cpp_pbhatt(q, mu, sigma, a, lower.tail[1L], log.p[1L])
 }
 
 

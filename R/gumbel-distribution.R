@@ -61,7 +61,7 @@
 #' @export
 
 dgumbel <- function(x, mu = 0, sigma = 1, log = FALSE) {
-  cpp_dgumbel(x, mu, sigma, log)
+  cpp_dgumbel(x, mu, sigma, log[1L])
 }
 
 
@@ -69,7 +69,7 @@ dgumbel <- function(x, mu = 0, sigma = 1, log = FALSE) {
 #' @export
 
 pgumbel <- function(q, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pgumbel(q, mu, sigma, lower.tail, log.p)
+  cpp_pgumbel(q, mu, sigma, lower.tail[1L], log.p[1L])
 }
 
 
@@ -77,7 +77,7 @@ pgumbel <- function(q, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qgumbel <- function(p, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qgumbel(p, mu, sigma, lower.tail, log.p)
+  cpp_qgumbel(p, mu, sigma, lower.tail[1L], log.p[1L])
 }
 
 

@@ -56,7 +56,7 @@ ddirichlet <- function(x, alpha, log = FALSE) {
     x <- as.matrix(x)
   else if (is.vector(x))
     x <- matrix(x, byrow = TRUE, nrow = 1)
-  cpp_ddirichlet(x, alpha, log)
+  cpp_ddirichlet(x, alpha, log[1L])
 }
 
 

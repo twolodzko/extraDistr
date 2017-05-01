@@ -65,7 +65,7 @@
 #' @export
 
 dkumar <- function(x, a = 1, b = 1, log = FALSE) {
-  cpp_dkumar(x, a, b, log)
+  cpp_dkumar(x, a, b, log[1L])
 }
 
 
@@ -73,7 +73,7 @@ dkumar <- function(x, a = 1, b = 1, log = FALSE) {
 #' @export
 
 pkumar <- function(q, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pkumar(q, a, b, lower.tail, log.p)
+  cpp_pkumar(q, a, b, lower.tail[1L], log.p[1L])
 }
 
 
@@ -81,7 +81,7 @@ pkumar <- function(q, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qkumar <- function(p, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qkumar(p, a, b, lower.tail, log.p)
+  cpp_qkumar(p, a, b, lower.tail[1L], log.p[1L])
 }
 
 

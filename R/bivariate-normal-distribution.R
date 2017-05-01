@@ -67,7 +67,7 @@ dbvnorm <- function(x, y = NULL, mean1 = 0, mean2 = mean1, sd1 = 1, sd2 = sd1, c
       stop("y is not provided while x is not a two-column matrix")
     }
   }
-  cpp_dbnorm(x, y, mean1, mean2, sd1, sd2, cor, log)
+  cpp_dbnorm(x, y, mean1, mean2, sd1, sd2, cor, log[1L])
 }
 
 

@@ -51,7 +51,7 @@
 #' @export
 
 dskellam <- function(x, mu1, mu2, log = FALSE) {
-  cpp_dskellam(x, mu1, mu2, log)
+  cpp_dskellam(x, mu1, mu2, log[1L])
 }
 
 

@@ -58,9 +58,9 @@
 
 dinvchisq <- function(x, nu, tau, log = FALSE) {
   if (missing(tau))
-    dinvgamma(x, nu/2, 0.5, log = log)
+    dinvgamma(x, nu/2, 0.5, log = log[1L])
   else
-    dinvgamma(x, nu/2, (nu*tau)/2, log = log)
+    dinvgamma(x, nu/2, (nu*tau)/2, log = log[1L])
 }
 
 
@@ -69,9 +69,9 @@ dinvchisq <- function(x, nu, tau, log = FALSE) {
 
 pinvchisq <- function(q, nu, tau, lower.tail = TRUE, log.p = FALSE) {
   if (missing(tau))
-    pgamma(1/q, nu/2, 0.5, lower.tail = !lower.tail, log.p = log.p)
+    pgamma(1/q, nu/2, 0.5, lower.tail = !lower.tail[1L], log.p = log.p[1L])
   else
-    pgamma(1/q, nu/2, (nu*tau)/2, lower.tail = !lower.tail, log.p = log.p)
+    pgamma(1/q, nu/2, (nu*tau)/2, lower.tail = !lower.tail[1L], log.p = log.p[1L])
 }
 
 
@@ -80,9 +80,9 @@ pinvchisq <- function(q, nu, tau, lower.tail = TRUE, log.p = FALSE) {
 
 qinvchisq <- function(p, nu, tau, lower.tail = TRUE, log.p = FALSE) {
   if (missing(tau))
-    1/qchisq(p, nu, lower.tail = !lower.tail, log.p = log.p)
+    1/qchisq(p, nu, lower.tail = !lower.tail[1L], log.p = log.p[1L])
   else
-    1/qgamma(p, nu/2, (nu*tau)/2, lower.tail = !lower.tail, log.p = log.p)
+    1/qgamma(p, nu/2, (nu*tau)/2, lower.tail = !lower.tail[1L], log.p = log.p[1L])
 }
 
 

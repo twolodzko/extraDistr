@@ -57,7 +57,7 @@
 #' @export
 
 dlomax <- function(x, lambda, kappa, log = FALSE) {
-  cpp_dlomax(x, lambda, kappa, log)
+  cpp_dlomax(x, lambda, kappa, log[1L])
 }
 
 
@@ -65,7 +65,7 @@ dlomax <- function(x, lambda, kappa, log = FALSE) {
 #' @export
 
 plomax <- function(q, lambda, kappa, lower.tail = TRUE, log.p = FALSE) {
-  cpp_plomax(q, lambda, kappa, lower.tail, log.p)
+  cpp_plomax(q, lambda, kappa, lower.tail[1L], log.p[1L])
 }
 
 
@@ -73,7 +73,7 @@ plomax <- function(q, lambda, kappa, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qlomax <- function(p, lambda, kappa, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qlomax(p, lambda, kappa, lower.tail, log.p)
+  cpp_qlomax(p, lambda, kappa, lower.tail[1L], log.p[1L])
 }
 
 
