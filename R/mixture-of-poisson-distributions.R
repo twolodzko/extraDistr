@@ -68,7 +68,7 @@ dmixpois <- function(x, lambda, alpha, log = FALSE) {
   else if (!is.matrix(alpha))
     alpha <- as.matrix(alpha)
   
-  cpp_dmixpois(x, lambda, alpha, log)
+  cpp_dmixpois(x, lambda, alpha, log[1L])
 }
 
 
@@ -87,7 +87,7 @@ pmixpois <- function(q, lambda, alpha, lower.tail = TRUE, log.p = FALSE) {
   else if (!is.matrix(alpha))
     alpha <- as.matrix(alpha)
   
-  cpp_pmixpois(q, lambda, alpha, lower.tail, log.p)
+  cpp_pmixpois(q, lambda, alpha, lower.tail[1L], log.p[1L])
 }
 
 

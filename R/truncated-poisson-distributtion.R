@@ -76,7 +76,7 @@ dtpois <- function(x, lambda, a = -Inf, b = Inf, log = FALSE) {
 #' @export
 
 ptpois <- function(q, lambda, a = -Inf, b = Inf, lower.tail = TRUE, log.p = FALSE) {
-  cpp_ptpois(q, lambda, a, b, lower.tail, log.p)
+  cpp_ptpois(q, lambda, a, b, lower.tail[1L], log.p[1L])
 }
 
 
@@ -84,7 +84,7 @@ ptpois <- function(q, lambda, a = -Inf, b = Inf, lower.tail = TRUE, log.p = FALS
 #' @export
 
 qtpois <- function(p, lambda, a = -Inf, b = Inf, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qtpois(p, lambda, a, b, lower.tail, log.p)
+  cpp_qtpois(p, lambda, a, b, lower.tail[1L], log.p[1L])
 }
 
 

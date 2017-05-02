@@ -73,7 +73,7 @@ dmixnorm <- function(x, mean, sd, alpha, log = FALSE) {
   else if (!is.matrix(alpha))
     alpha <- as.matrix(alpha)
   
-  cpp_dmixnorm(x, mean, sd, alpha, log)
+  cpp_dmixnorm(x, mean, sd, alpha, log[1L])
 }
 
 
@@ -97,7 +97,7 @@ pmixnorm <- function(q, mean, sd, alpha, lower.tail = TRUE, log.p = FALSE) {
   else if (!is.matrix(alpha))
     alpha <- as.matrix(alpha)
   
-  cpp_pmixnorm(q, mean, sd, alpha, lower.tail, log.p)
+  cpp_pmixnorm(q, mean, sd, alpha, lower.tail[1L], log.p[1L])
 }
 
 

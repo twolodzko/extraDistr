@@ -1,4 +1,9 @@
 
+### 1.8.6
+
+* Now consistently with base R only the first elements of the logical
+  arguments are used (thanks to #5)
+  
 ### 1.8.5
 
 * Now `rmnom` and `rdirmnom` (issue #3) do not return `NaN`'s due to
