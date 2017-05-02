@@ -71,7 +71,7 @@
 #' @export
 
 dlaplace <- function(x, mu = 0, sigma = 1, log = FALSE) {
-  cpp_dlaplace(x, mu, sigma, log)
+  cpp_dlaplace(x, mu, sigma, log[1L])
 }
 
 
@@ -79,7 +79,7 @@ dlaplace <- function(x, mu = 0, sigma = 1, log = FALSE) {
 #' @export
 
 plaplace <- function(q, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_plaplace(q, mu, sigma, lower.tail, log.p)
+  cpp_plaplace(q, mu, sigma, lower.tail[1L], log.p[1L])
 }
 
 
@@ -87,7 +87,7 @@ plaplace <- function(q, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qlaplace <- function(p, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qlaplace(p, mu, sigma, lower.tail, log.p)
+  cpp_qlaplace(p, mu, sigma, lower.tail[1L], log.p[1L])
 }
 
 

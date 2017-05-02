@@ -75,7 +75,7 @@
 #' @export
 
 dsgomp <- function(x, b, eta, log = FALSE) {
-  cpp_dsgomp(x, b, eta, log)
+  cpp_dsgomp(x, b, eta, log[1L])
 }
 
 
@@ -83,7 +83,7 @@ dsgomp <- function(x, b, eta, log = FALSE) {
 #' @export
 
 psgomp <- function(q, b, eta, lower.tail = TRUE, log.p = FALSE) {
-  cpp_psgomp(q, b, eta, lower.tail, log.p)
+  cpp_psgomp(q, b, eta, lower.tail[1L], log.p[1L])
 }
 
 

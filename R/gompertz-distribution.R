@@ -62,7 +62,7 @@
 #' @export
 
 dgompertz <- function(x, a = 1, b = 1, log = FALSE) {
-  cpp_dgompertz(x, a, b, log)
+  cpp_dgompertz(x, a, b, log[1L])
 }
 
 
@@ -70,7 +70,7 @@ dgompertz <- function(x, a = 1, b = 1, log = FALSE) {
 #' @export
 
 pgompertz <- function(q, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pgompertz(q, a, b, lower.tail, log.p)
+  cpp_pgompertz(q, a, b, lower.tail[1L], log.p[1L])
 }
 
 
@@ -78,7 +78,7 @@ pgompertz <- function(q, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qgompertz <- function(p, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qgompertz(p, a, b, lower.tail, log.p)
+  cpp_qgompertz(p, a, b, lower.tail[1L], log.p[1L])
 }
 
 

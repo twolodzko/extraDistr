@@ -75,7 +75,7 @@
 #' @export
 
 dhuber <- function(x, mu = 0, sigma = 1, epsilon = 1.345, log = FALSE) {
-  cpp_dhuber(x, mu, sigma, epsilon, log)
+  cpp_dhuber(x, mu, sigma, epsilon, log[1L])
 }
 
 
@@ -83,7 +83,7 @@ dhuber <- function(x, mu = 0, sigma = 1, epsilon = 1.345, log = FALSE) {
 #' @export
 
 phuber <- function(q, mu = 0, sigma = 1, epsilon = 1.345, lower.tail = TRUE, log.p = FALSE) {
-  cpp_phuber(q, mu, sigma, epsilon, lower.tail, log.p)
+  cpp_phuber(q, mu, sigma, epsilon, lower.tail[1L], log.p[1L])
 }
 
 
@@ -91,7 +91,7 @@ phuber <- function(q, mu = 0, sigma = 1, epsilon = 1.345, lower.tail = TRUE, log
 #' @export
 
 qhuber <- function(p, mu = 0, sigma = 1, epsilon = 1.345, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qhuber(p, mu, sigma, epsilon, lower.tail, log.p)
+  cpp_qhuber(p, mu, sigma, epsilon, lower.tail[1L], log.p[1L])
 }
 
 

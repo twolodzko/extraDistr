@@ -41,7 +41,7 @@
 #' @export
 
 dtbinom <- function(x, size, prob, a = -Inf, b = Inf, log = FALSE) {
-  cpp_dtbinom(x, size, prob, a, b, log)
+  cpp_dtbinom(x, size, prob, a, b, log[1L])
 }
 
 
@@ -49,7 +49,7 @@ dtbinom <- function(x, size, prob, a = -Inf, b = Inf, log = FALSE) {
 #' @export
 
 ptbinom <- function(q, size, prob, a = -Inf, b = Inf, lower.tail = TRUE, log.p = FALSE) {
-  cpp_ptbinom(q, size, prob, a, b, lower.tail, log.p)
+  cpp_ptbinom(q, size, prob, a, b, lower.tail[1L], log.p[1L])
 }
 
 
@@ -57,7 +57,7 @@ ptbinom <- function(q, size, prob, a = -Inf, b = Inf, lower.tail = TRUE, log.p =
 #' @export
 
 qtbinom <- function(p, size, prob, a = -Inf, b = Inf, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qtbinom(p, size, prob, a, b, lower.tail, log.p)
+  cpp_qtbinom(p, size, prob, a, b, lower.tail[1L], log.p[1L])
 }
 
 

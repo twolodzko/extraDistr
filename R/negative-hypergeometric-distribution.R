@@ -91,7 +91,7 @@
 #' @export
 
 dnhyper <- function(x, n, m, r, log = FALSE) {
-  cpp_dnhyper(x, n, m, r, log)
+  cpp_dnhyper(x, n, m, r, log[1L])
 }
 
 
@@ -99,7 +99,7 @@ dnhyper <- function(x, n, m, r, log = FALSE) {
 #' @export
 
 pnhyper <- function(q, n, m, r, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pnhyper(q, n, m, r, lower.tail, log.p)
+  cpp_pnhyper(q, n, m, r, lower.tail[1L], log.p[1L])
 }
 
 
@@ -107,7 +107,7 @@ pnhyper <- function(q, n, m, r, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qnhyper <- function(p, n, m, r, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qnhyper(p, n, m, r, lower.tail, log.p)
+  cpp_qnhyper(p, n, m, r, lower.tail[1L], log.p[1L])
 }
 
 

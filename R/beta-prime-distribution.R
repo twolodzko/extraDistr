@@ -58,7 +58,7 @@
 #' @export
 
 dbetapr <- function(x, shape1, shape2, scale = 1, log = FALSE) {
-  cpp_dbetapr(x, shape1, shape2, scale, log)
+  cpp_dbetapr(x, shape1, shape2, scale, log[1L])
 }
 
 
@@ -66,7 +66,7 @@ dbetapr <- function(x, shape1, shape2, scale = 1, log = FALSE) {
 #' @export
 
 pbetapr <- function(q, shape1, shape2, scale = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pbetapr(q, shape1, shape2, scale, lower.tail, log.p)
+  cpp_pbetapr(q, shape1, shape2, scale, lower.tail[1L], log.p[1L])
 }
 
 
@@ -74,7 +74,7 @@ pbetapr <- function(q, shape1, shape2, scale = 1, lower.tail = TRUE, log.p = FAL
 #' @export
 
 qbetapr <- function(p, shape1, shape2, scale = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qbetapr(p, shape1, shape2, scale, lower.tail, log.p)
+  cpp_qbetapr(p, shape1, shape2, scale, lower.tail[1L], log.p[1L])
 }
 
 

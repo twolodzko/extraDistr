@@ -52,7 +52,7 @@
 #' @export
 
 dzib <- function(x, size, prob, pi, log = FALSE) {
-  cpp_dzib(x, size, prob, pi, log)
+  cpp_dzib(x, size, prob, pi, log[1L])
 }
 
 
@@ -60,7 +60,7 @@ dzib <- function(x, size, prob, pi, log = FALSE) {
 #' @export
 
 pzib <- function(q, size, prob, pi, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pzib(q, size, prob, pi, lower.tail, log.p)
+  cpp_pzib(q, size, prob, pi, lower.tail[1L], log.p[1L])
 }
 
 
@@ -68,7 +68,7 @@ pzib <- function(q, size, prob, pi, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qzib <- function(p, size, prob, pi, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qzib(p, size, prob, pi, lower.tail, log.p)
+  cpp_qzib(p, size, prob, pi, lower.tail[1L], log.p[1L])
 }
 
 

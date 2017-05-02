@@ -70,7 +70,7 @@
 #' @export
 
 dgev <- function(x, mu = 0, sigma = 1, xi = 0, log = FALSE) {
-  cpp_dgev(x, mu, sigma, xi, log)
+  cpp_dgev(x, mu, sigma, xi, log[1L])
 }
 
 
@@ -78,7 +78,7 @@ dgev <- function(x, mu = 0, sigma = 1, xi = 0, log = FALSE) {
 #' @export
 
 pgev <- function(q, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pgev(q, mu, sigma, xi, lower.tail, log.p)
+  cpp_pgev(q, mu, sigma, xi, lower.tail[1L], log.p[1L])
 }
 
 
@@ -86,7 +86,7 @@ pgev <- function(q, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE)
 #' @export
 
 qgev <- function(p, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qgev(p, mu, sigma, xi, lower.tail, log.p)
+  cpp_qgev(p, mu, sigma, xi, lower.tail[1L], log.p[1L])
 }
 
 

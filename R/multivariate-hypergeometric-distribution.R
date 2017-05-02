@@ -62,7 +62,7 @@ dmvhyper <- function(x, n, k, log = FALSE) {
   else if (!is.matrix(x))
     x <- as.matrix(x)
   
-  cpp_dmvhyper(x, n, k, log)
+  cpp_dmvhyper(x, n, k, log[1L])
 }
 
 

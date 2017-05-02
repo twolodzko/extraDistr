@@ -41,7 +41,7 @@
 #' @export
 
 dnst <- function(x, df, mu = 0, sigma = 1, log = FALSE) {
-  cpp_dnst(x, df, mu, sigma, log)
+  cpp_dnst(x, df, mu, sigma, log[1L])
 }
 
 
@@ -49,7 +49,7 @@ dnst <- function(x, df, mu = 0, sigma = 1, log = FALSE) {
 #' @export
 
 pnst <- function(q, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pnst(q, df, mu, sigma, lower.tail, log.p)
+  cpp_pnst(q, df, mu, sigma, lower.tail[1L], log.p[1L])
 }
 
 
@@ -57,7 +57,7 @@ pnst <- function(q, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qnst <- function(p, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qnst(p, df, mu, sigma, lower.tail, log.p)
+  cpp_qnst(p, df, mu, sigma, lower.tail[1L], log.p[1L])
 }
 
 

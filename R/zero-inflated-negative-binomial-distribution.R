@@ -55,7 +55,7 @@
 #' @export
 
 dzinb <- function(x, size, prob, pi, log = FALSE) {
-  cpp_dzinb(x, size, prob, pi, log)
+  cpp_dzinb(x, size, prob, pi, log[1L])
 }
 
 
@@ -63,7 +63,7 @@ dzinb <- function(x, size, prob, pi, log = FALSE) {
 #' @export
 
 pzinb <- function(q, size, prob, pi, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pzinb(q, size, prob, pi, lower.tail, log.p)
+  cpp_pzinb(q, size, prob, pi, lower.tail[1L], log.p[1L])
 }
 
 
@@ -71,7 +71,7 @@ pzinb <- function(q, size, prob, pi, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qzinb <- function(p, size, prob, pi, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qzinb(p, size, prob, pi, lower.tail, log.p)
+  cpp_qzinb(p, size, prob, pi, lower.tail[1L], log.p[1L])
 }
 
 

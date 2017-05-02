@@ -61,7 +61,7 @@
 #' @export
 
 dpareto <- function(x, a = 1, b = 1, log = FALSE) {
-  cpp_dpareto(x, a, b, log)
+  cpp_dpareto(x, a, b, log[1L])
 }
 
 
@@ -69,7 +69,7 @@ dpareto <- function(x, a = 1, b = 1, log = FALSE) {
 #' @export
 
 ppareto <- function(q, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_ppareto(q, a, b, lower.tail, log.p)
+  cpp_ppareto(q, a, b, lower.tail[1L], log.p[1L])
 }
 
 
@@ -77,7 +77,7 @@ ppareto <- function(q, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qpareto <- function(p, a = 1, b = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qpareto(p, a, b, lower.tail, log.p)
+  cpp_qpareto(p, a, b, lower.tail[1L], log.p[1L])
 }
 
 

@@ -71,7 +71,7 @@
 #' @export
 
 qtlambda <- function(p, lambda, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qtlambda(p, lambda, lower.tail, log.p)
+  cpp_qtlambda(p, lambda, lower.tail[1L], log.p[1L])
 }
 
 

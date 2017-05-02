@@ -73,7 +73,7 @@
 #' @export
 
 ddlaplace <- function(x, location, scale, log = FALSE) {
-  cpp_ddlaplace(x, location, scale, log)
+  cpp_ddlaplace(x, location, scale, log[1L])
 }
 
 
@@ -81,7 +81,7 @@ ddlaplace <- function(x, location, scale, log = FALSE) {
 #' @export
 
 pdlaplace <- function(q, location, scale, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pdlaplace(q, location, scale, lower.tail, log.p)
+  cpp_pdlaplace(q, location, scale, lower.tail[1L], log.p[1L])
 }
 
 

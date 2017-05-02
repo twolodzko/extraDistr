@@ -79,7 +79,7 @@
 #' @export
 
 dbnbinom <- function(x, size, alpha = 1, beta = 1, log = FALSE) {
-  cpp_dbnbinom(x, size, alpha, beta, log)
+  cpp_dbnbinom(x, size, alpha, beta, log[1L])
 }
 
 
@@ -87,7 +87,7 @@ dbnbinom <- function(x, size, alpha = 1, beta = 1, log = FALSE) {
 #' @export
 
 pbnbinom <- function(q, size, alpha = 1, beta = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pbnbinom(q, size, alpha, beta, lower.tail, log.p)
+  cpp_pbnbinom(q, size, alpha, beta, lower.tail[1L], log.p[1L])
 }
 
 

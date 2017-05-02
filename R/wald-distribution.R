@@ -61,7 +61,7 @@
 #' @export
 
 dwald <- function(x, mu, lambda, log = FALSE) {
-  cpp_dwald(x, mu, lambda, log)
+  cpp_dwald(x, mu, lambda, log[1L])
 }
 
 
@@ -69,7 +69,7 @@ dwald <- function(x, mu, lambda, log = FALSE) {
 #' @export
 
 pwald <- function(q, mu, lambda, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pwald(q, mu, lambda, lower.tail, log.p)
+  cpp_pwald(q, mu, lambda, lower.tail[1L], log.p[1L])
 }
 
 

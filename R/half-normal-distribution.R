@@ -52,7 +52,7 @@
 #' @export
 
 dhnorm <- function(x, sigma = 1, log = FALSE) {
-  cpp_dhnorm(x, sigma, log)
+  cpp_dhnorm(x, sigma, log[1L])
 }
 
 
@@ -60,7 +60,7 @@ dhnorm <- function(x, sigma = 1, log = FALSE) {
 #' @export
 
 phnorm <- function(q, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_phnorm(q, sigma, lower.tail, log.p)
+  cpp_phnorm(q, sigma, lower.tail[1L], log.p[1L])
 }
 
 
@@ -68,7 +68,7 @@ phnorm <- function(q, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qhnorm <- function(p, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qhnorm(p, sigma, lower.tail, log.p)
+  cpp_qhnorm(p, sigma, lower.tail[1L], log.p[1L])
 }
 
 

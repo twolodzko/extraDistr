@@ -84,7 +84,7 @@
 #' @export
 
 dfatigue <- function(x, alpha, beta = 1, mu = 0, log = FALSE) {
-  cpp_dfatigue(x, alpha, beta, mu, log)
+  cpp_dfatigue(x, alpha, beta, mu, log[1L])
 }
 
 
@@ -92,7 +92,7 @@ dfatigue <- function(x, alpha, beta = 1, mu = 0, log = FALSE) {
 #' @export
 
 pfatigue <- function(q, alpha, beta = 1, mu = 0, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pfatigue(q, alpha, beta, mu, lower.tail, log.p)
+  cpp_pfatigue(q, alpha, beta, mu, lower.tail[1L], log.p[1L])
 }
 
 
@@ -100,7 +100,7 @@ pfatigue <- function(q, alpha, beta = 1, mu = 0, lower.tail = TRUE, log.p = FALS
 #' @export
 
 qfatigue <- function(p, alpha, beta = 1, mu = 0, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qfatigue(p, alpha, beta, mu, lower.tail, log.p)
+  cpp_qfatigue(p, alpha, beta, mu, lower.tail[1L], log.p[1L])
 }
 
 

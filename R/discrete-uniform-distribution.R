@@ -40,7 +40,7 @@
 #' @export
 
 ddunif <- function(x, min, max, log = FALSE) {
-  cpp_ddunif(x, min, max, log)
+  cpp_ddunif(x, min, max, log[1L])
 }
 
 
@@ -48,7 +48,7 @@ ddunif <- function(x, min, max, log = FALSE) {
 #' @export
 
 pdunif <- function(q, min, max, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pdunif(q, min, max, lower.tail, log.p)
+  cpp_pdunif(q, min, max, lower.tail[1L], log.p[1L])
 }
 
 
@@ -56,7 +56,7 @@ pdunif <- function(q, min, max, lower.tail = TRUE, log.p = FALSE) {
 #' @export
 
 qdunif <- function(p, min, max, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qdunif(p, min, max, lower.tail, log.p)
+  cpp_qdunif(p, min, max, lower.tail[1L], log.p[1L])
 }
 
 

@@ -61,7 +61,7 @@
 #' @export
 
 dslash <- function(x, mu = 0, sigma = 1, log = FALSE) {
-  cpp_dslash(x, mu, sigma, log)
+  cpp_dslash(x, mu, sigma, log[1L])
 }
 
 
@@ -69,7 +69,7 @@ dslash <- function(x, mu = 0, sigma = 1, log = FALSE) {
 #' @export
 
 pslash <- function(q, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pslash(q, mu, sigma, lower.tail, log.p)
+  cpp_pslash(q, mu, sigma, lower.tail[1L], log.p[1L])
 }
 
 

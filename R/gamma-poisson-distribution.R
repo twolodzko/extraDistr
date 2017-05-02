@@ -75,7 +75,7 @@
 #' @export
 
 dgpois <- function(x, shape, rate, scale = 1/rate, log = FALSE) {
-  cpp_dgpois(x, shape, scale, log)
+  cpp_dgpois(x, shape, scale, log[1L])
 }
 
 
@@ -83,7 +83,7 @@ dgpois <- function(x, shape, rate, scale = 1/rate, log = FALSE) {
 #' @export
 
 pgpois <- function(q, shape, rate, scale = 1/rate, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pgpois(q, shape, scale, lower.tail, log.p)
+  cpp_pgpois(q, shape, scale, lower.tail[1L], log.p[1L])
 }
 
 
