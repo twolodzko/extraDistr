@@ -77,6 +77,8 @@ inline std::vector<double> cdf_gpois_table(double x, double alpha, double beta) 
   double dj;
   
   for (int j = 2; j <= ix; j++) {
+    if (j % 10000 == 0)
+      Rcpp::checkUserInterrupt();
     dj = to_dbl(j);
     gax += log(dj + alpha - 1.0);
     xf += log(dj);

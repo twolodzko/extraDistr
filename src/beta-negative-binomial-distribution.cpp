@@ -95,6 +95,8 @@ inline std::vector<double> cdf_bnbinom_table(double k, double r,
   double dj;
   
   for (int j = 2; j <= ik; j++) {
+    if (j % 10000 == 0)
+      Rcpp::checkUserInterrupt();
     dj = to_dbl(j);
     grx += log(r + dj - 1.0);
     gbx += log(beta + dj - 1.0);
