@@ -3,6 +3,8 @@
 # extraDistr::ddirichlet was compared to MCMCpack::ddirichlet
 
 test_that("Testing multivariate distributions", {
+  
+  skip_on_cran()
 
   expect_true(all.equal(rowSums(rmnom(5000, 50, c(2/10, 5/10, 3/10))), rep(50, 5000)))
   expect_true(all.equal(rowSums(rdirichlet(5000, c(2/10, 5/10, 3/10))), rep(1.0, 5000)))
@@ -51,6 +53,10 @@ test_that("Evaluate wrong parameters first", {
 
 
 test_that("Check if rmnom and rdirmnom deal with underflow", {
+  
+  skip_on_cran()
+  
   expect_false(anyNA(rmnom(5000, 100, c(0.504115095275327, 2.669522645838e-39, 0, 2.58539638831141, 0))))
   expect_false(anyNA(rdirmnom(5000, 100, c(1.480592e+00, 1.394943e-03, 4.529932e-06, 3.263573e+00, 4.554952e-06))))
+
 })

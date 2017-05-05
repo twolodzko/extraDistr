@@ -42,6 +42,8 @@ dkwtest <- function(stub = "norm", ...,
 
 test_that("p-r random tests", {
   
+  skip_on_cran()
+  
   expect_true(dkwtest("bbinom", 1, 1, 1))
   expect_true(dkwtest("bbinom", 10, 1, 1))
   expect_true(dkwtest("bbinom", 10, 100, 1))

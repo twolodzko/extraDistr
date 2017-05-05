@@ -1,6 +1,6 @@
 
 test_that("Discrete probabilities sum to unity", {
-  
+
   expect_equal(sum(ddunif(-2:10, -2, 10)), 1)
   
   expect_equal(sum(dbbinom(0:10, 10, 1, 1)), 1)
