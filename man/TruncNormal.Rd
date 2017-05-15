@@ -23,8 +23,8 @@ rtnorm(n, mean = 0, sd = 1, a = -Inf, b = Inf)
 
 \item{mean, sd}{location and scale parameters. Scale must be positive.}
 
-\item{a, b}{minimal and maximal boundries for truncation
-(\code{-Inf} and \code{Inf} by default).}
+\item{a, b}{lower and upper truncation points (\code{a < x <= b},
+with \code{a = -Inf} and \code{b = Inf} by default).}
 
 \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
 

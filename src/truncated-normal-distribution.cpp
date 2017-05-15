@@ -132,50 +132,50 @@ double rng_tnorm(double mu, double sigma, double a,
       (za == R_NegInf && zb > 0.0) ||
       (za != R_PosInf && zb != R_PosInf &&
        za < 0.0 && zb > 0.0 && zb-za > SQRT_2_PI)) {
-    while (!stop) {
+    do {
       r = R::norm_rand();
       if (r >= za && r <= zb)
         stop = true;
-    }
+    } while (!stop);
   } else if (za >= 0.0 && (zb > za + 2.0*sqrt(M_E) / (za + sqrt(za_sq + 4.0))
                       * exp((za*2.0 - za*sqrt(za_sq + 4.0)) / 4.0))) {
     aa = (za + sqrt(za_sq + 4.0)) / 2.0;
-    while (!stop) {
+    do {
       r = R::exp_rand() / aa + za;
       u = rng_unif();
       if ((u <= exp(-((r-aa)*(r-aa)) / 2.0)) && (r <= zb))
         stop = true;
-    }
+    } while (!stop);
   } else if (zb <= 0.0 && (-za > -zb + 2.0*sqrt(M_E) / (-zb + sqrt(zb_sq + 4.0))
                           * exp((zb*2.0 + zb*sqrt(zb_sq + 4.0)) / 4.0))) {
     aa = (-zb + sqrt(zb_sq + 4.0)) / 2.0;
-    while (!stop) {
+    do {
       r = R::exp_rand() / aa - zb;
       u = rng_unif();
-      if ((u <= exp(-((r-aa)*(r-aa)) / 2.0)) && (r >= za)) {
+      if ((u <= exp(-((r-aa)*(r-aa)) / 2.0)) && (r <= -za)) {
         r = -r;
         stop = true;
       }
-    }
+    } while (!stop);
   } else {
     if (0.0 < za) {
-      while (!stop) {
+      do {
         r = R::runif(za, zb);
         u = rng_unif();
         stop = (u <= exp((za_sq - r*r)/2.0));
-      }
+      } while (!stop);
     } else if (zb < 0.0) {
-      while (!stop) {
+      do {
         r = R::runif(za, zb);
         u = rng_unif();
         stop = (u <= exp((zb_sq - r*r)/2.0));
-      }
+      } while (!stop);
     } else {
-      while (!stop) {
+      do {
         r = R::runif(za, zb);
         u = rng_unif();
         stop = (u <= exp(-(r*r)/2.0));
-      }
+      } while (!stop);
     }
   }
 
@@ -323,7 +323,7 @@ NumericVector cpp_rtnorm(
     const NumericVector& lower,
     const NumericVector& upper
   ) {
-  
+
   if (std::min({mu.length(), sigma.length(),
                 lower.length(), upper.length()}) < 1) {
     Rcpp::warning("NAs produced");
