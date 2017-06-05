@@ -4,7 +4,7 @@
 * Now consistently with base R only the first elements of the logical
   arguments are used (thanks to #5)
 * Fixed bug in `rtnorm` (sampling from lower bound returned incorrect
-  values).
+  values)
   
 ### 1.8.5
 
