@@ -156,6 +156,7 @@ test_that("p-r random tests", {
   expect_true(dkwtest("tnorm", 0, 1, -Inf, -2))
   expect_true(dkwtest("tnorm", 0, 1, -Inf, -4))
   expect_true(dkwtest("tnorm", 0, 1, -6, -4))
+  expect_true(dkwtest("tnorm", 0, 1, 4, 6))
   
   expect_true(dkwtest("tpois", 5, 0))
   expect_true(dkwtest("tpois", 50, 45, 55))
