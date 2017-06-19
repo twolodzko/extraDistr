@@ -2,18 +2,18 @@
 ### 1.8.6
 
 * Now consistently with base R only the first elements of the logical
-  arguments are used (thanks to #5).
+  arguments are used (thanks to #5)
 * Fixed bug in `rtnorm` (sampling from lower bound returned incorrect
-  values).
+  values)
 * When computation becomes slow, now `pbnbinom`, `pbbinom`, `pgpois`
-  functions are easier to brake.
+  functions are easier to brake
   
 ### 1.8.5
 
 * Now `rmnom` and `rdirmnom` (issue #3) do not return `NaN`'s due to
-  underflow issues.
+  underflow issues
 * Fixed bug (issue #4) that resulted in hanging R if zero-length vectors
-  were provided as input.
+  were provided as input
 
 ### 1.8.4
 
