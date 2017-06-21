@@ -20,8 +20,8 @@ dkwtest <- function(stub = "norm", ...,
                     print.result = FALSE, print.detail = FALSE, # don't print by default
                     stop.on.failure = FALSE)                    # don't stop by default
 {
-  rfoo <- eval(as.name(paste("r", stub, sep="")))
-  pfoo <- eval(as.name(paste("p", stub, sep="")))
+  rfoo <- eval(as.name(paste0("r", stub)))
+  pfoo <- eval(as.name(paste0("p", stub)))
   s <- superror(rfoo, pfoo, sample.size, ...)
   if (print.result || print.detail) {
     printargs <- substitute(list(...))
@@ -173,3 +173,4 @@ test_that("p-r random tests", {
   expect_true(dkwtest("zinb", 1, 0.5, 0.5))
   
 })
+
