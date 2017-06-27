@@ -3,7 +3,7 @@
 * local Ubuntu and Windows, R (release)
 * ubuntu 12.04 (on travis-ci), R (oldrel, release, devel)
 * Windows (on AppVeyor), R (release)
-* win-builder, R (release, devel)
+* win-builder, R (devel)
 
 ## R CMD check results
 
