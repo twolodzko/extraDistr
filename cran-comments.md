@@ -18,7 +18,8 @@ checking installed package size ... NOTE
 Reverse imports: 	prophet
 Reverse suggests: 	greta
 
-The dependencies are not affected.
+The dependencies are not affected since none of
+the features used by the packages were changed.
 
 ## Comments
 
