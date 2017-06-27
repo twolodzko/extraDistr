@@ -40,7 +40,7 @@ the length is taken to be the number required.}
 }
 \description{
 Probability mass function and random generation
-for the zero-inflated nagative binomial distribution.
+for the zero-inflated negative binomial distribution.
 }
 \details{
 Probability density function

@@ -12,7 +12,7 @@ dbvnorm(x, y = NULL, mean1 = 0, mean2 = mean1, sd1 = 1, sd2 = sd1,
 rbvnorm(n, mean1 = 0, mean2 = mean1, sd1 = 1, sd2 = sd1, cor = 0)
 }
 \arguments{
-\item{x, y}{vectors of quantiles; alternativelly x may be a two-column
+\item{x, y}{vectors of quantiles; alternatively x may be a two-column
 matrix (or data.frame) and y may be omitted.}
 
 \item{mean1, mean2}{vectors of means.}

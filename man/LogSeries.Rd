@@ -6,7 +6,7 @@
 \alias{plgser}
 \alias{qlgser}
 \alias{rlgser}
-\title{Logarythmic series distribution}
+\title{Logarithmic series distribution}
 \usage{
 dlgser(x, theta, log = FALSE)
 
@@ -33,7 +33,7 @@ the length is taken to be the number required.}
 }
 \description{
 Density, distribution function, quantile function and random generation
-for the logarythmic series distribution.
+for the logarithmic series distribution.
 }
 \details{
 Probability mass function

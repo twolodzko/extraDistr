@@ -3,7 +3,7 @@
 #' Zero-inflated negative binomial distribution
 #'
 #' Probability mass function and random generation
-#' for the zero-inflated nagative binomial distribution.
+#' for the zero-inflated negative binomial distribution.
 #'
 #' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.

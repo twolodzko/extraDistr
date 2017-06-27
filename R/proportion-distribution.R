@@ -41,7 +41,7 @@
 #' uniform prior; \eqn{\pi = 1/2} corresponds to Jeffreys prior; \eqn{\pi = 0}
 #' corresponds to "uninformative" Haldane prior, this is also the re-parametrized
 #' distribution used in beta regression. With \eqn{\pi = 0} the distribution
-#' can be understood as a continous analog to binomial distribution dealing
+#' can be understood as a continuous analog to binomial distribution dealing
 #' with proportions rather then counts. Alternatively \eqn{\phi} may be
 #' understood as precision parameter (as in beta regression).
 #' 
@@ -58,7 +58,7 @@
 #' 
 #' @references 
 #' Smithson, M., & Verkuilen, J. (2006). A better lemon squeezer? Maximum-likelihood regression
-#' with beta-distribued dependent variables.
+#' with beta-distributed dependent variables.
 #' Psychological Methods, 11(1), 54-71.
 #' 
 #' @examples 

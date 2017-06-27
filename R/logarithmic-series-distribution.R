@@ -1,9 +1,9 @@
 
 
-#' Logarythmic series distribution
+#' Logarithmic series distribution
 #'
 #' Density, distribution function, quantile function and random generation
-#' for the logarythmic series distribution.
+#' for the logarithmic series distribution.
 #'
 #' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.

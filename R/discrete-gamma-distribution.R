@@ -17,7 +17,7 @@
 #' @details 
 #'                                 
 #' Probability mass function of discrete gamma distribution \eqn{f_Y(y)}{f}
-#' is defined by discretization of continous gamma distribution
+#' is defined by discretization of continuous gamma distribution
 #' \eqn{f_Y(y) = S_X(y) - S_X(y+1)}{f(y) = S(x) - S(x+1)}
 #' where \eqn{S_X}{S} is a survival function of continous gamma distribution.
 #' 
