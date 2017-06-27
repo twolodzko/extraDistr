@@ -349,6 +349,10 @@ cpp_dinvgamma <- function(x, alpha, beta, log_prob = FALSE) {
     .Call(extraDistr_cpp_dinvgamma, x, alpha, beta, log_prob)
 }
 
+cpp_pinvgamma <- function(x, alpha, beta, lower_tail = TRUE, log_prob = FALSE) {
+    .Call(extraDistr_cpp_pinvgamma, x, alpha, beta, lower_tail, log_prob)
+}
+
 cpp_dkumar <- function(x, a, b, log_prob = FALSE) {
     .Call(extraDistr_cpp_dkumar, x, a, b, log_prob)
 }

@@ -44,6 +44,20 @@ inline double pdf_invgamma(double x, double alpha, double beta,
          (R::gammafn(alpha) * pow(beta, alpha));
 }
 
+inline double cdf_invgamma(double x, double alpha, double beta,
+                           bool lower_tail, bool log_prob,
+                           bool& throw_warning) {
+  if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
+    return x+alpha+beta;
+  if (alpha <= 0.0 || beta <= 0.0) {
+    throw_warning = true;
+    return NAN;
+  }
+  if (x <= 0.0)
+    return 0.0;
+  return R::pgamma(1.0/x, alpha, 1.0/beta, !lower_tail, log_prob);
+}
+
 
 // [[Rcpp::export]]
 NumericVector cpp_dinvgamma(
@@ -76,6 +90,41 @@ NumericVector cpp_dinvgamma(
   if (throw_warning)
     Rcpp::warning("NaNs produced");
 
+  return p;
+}
+
+
+// [[Rcpp::export]]
+NumericVector cpp_pinvgamma(
+    const NumericVector& x,
+    const NumericVector& alpha,
+    const NumericVector& beta,
+    const bool& lower_tail = true,
+    const bool& log_prob = false
+  ) {
+  
+  if (std::min({x.length(), alpha.length(), beta.length()}) < 1) {
+    return NumericVector(0);
+  }
+  
+  int Nmax = std::max({
+    x.length(),
+    alpha.length(),
+    beta.length()
+  });
+  NumericVector p(Nmax);
+  
+  bool throw_warning = false;
+  
+  for (int i = 0; i < Nmax; i++)
+    p[i] = cdf_invgamma(GETV(x, i), GETV(alpha, i),
+                        GETV(beta, i),
+                        lower_tail, log_prob,
+                        throw_warning);
+  
+  if (throw_warning)
+    Rcpp::warning("NaNs produced");
+  
   return p;
 }
 

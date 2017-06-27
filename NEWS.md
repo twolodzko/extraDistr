@@ -7,6 +7,9 @@
   values)
 * When computation becomes slow, now `pbnbinom`, `pbbinom`, `pgpois`
   functions are easier to brake
+* Automatically registering routines via Rcpp
+* Fixed bug in `pinvgamma` (it returned non-zero probabilities for
+  q < 0)
   
 ### 1.8.5
 

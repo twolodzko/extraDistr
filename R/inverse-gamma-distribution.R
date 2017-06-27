@@ -68,7 +68,7 @@ dinvgamma <- function(x, alpha, beta = 1, log = FALSE) {
 #' @export
 
 pinvgamma <- function(q, alpha, beta = 1, lower.tail = TRUE, log.p = FALSE) {
-  pgamma(1/q, alpha, beta, lower.tail = !lower.tail[1L], log.p = log.p[1L])
+  cpp_pinvgamma(q, alpha, beta, lower.tail, log.p[1L])
 }
 
 

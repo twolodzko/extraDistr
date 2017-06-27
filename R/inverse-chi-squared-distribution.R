@@ -69,9 +69,9 @@ dinvchisq <- function(x, nu, tau, log = FALSE) {
 
 pinvchisq <- function(q, nu, tau, lower.tail = TRUE, log.p = FALSE) {
   if (missing(tau))
-    pgamma(1/q, nu/2, 0.5, lower.tail = !lower.tail[1L], log.p = log.p[1L])
+    cpp_pinvgamma(q, nu/2, 0.5, lower.tail, log.p[1L])
   else
-    pgamma(1/q, nu/2, (nu*tau)/2, lower.tail = !lower.tail[1L], log.p = log.p[1L])
+    cpp_pinvgamma(q, nu/2, (nu*tau)/2, lower.tail, log.p[1L])
 }
 
 
