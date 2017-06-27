@@ -22,4 +22,4 @@ The dependencies are not affected.
 
 ## Comments
 
-This is a bug fix release.
+This is a bug fix release (see NEWS).
