@@ -45,7 +45,6 @@ inline double pdf_invgamma(double x, double alpha, double beta,
 }
 
 inline double cdf_invgamma(double x, double alpha, double beta,
-                           bool lower_tail, bool log_prob,
                            bool& throw_warning) {
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
     return x+alpha+beta;
@@ -55,7 +54,7 @@ inline double cdf_invgamma(double x, double alpha, double beta,
   }
   if (x <= 0.0)
     return 0.0;
-  return R::pgamma(1.0/x, alpha, 1.0/beta, !lower_tail, log_prob);
+  return R::pgamma(1.0/x, alpha, 1.0/beta, false, false);
 }
 
 
@@ -118,9 +117,13 @@ NumericVector cpp_pinvgamma(
   
   for (int i = 0; i < Nmax; i++)
     p[i] = cdf_invgamma(GETV(x, i), GETV(alpha, i),
-                        GETV(beta, i),
-                        lower_tail, log_prob,
-                        throw_warning);
+                        GETV(beta, i), throw_warning);
+  
+  if (!lower_tail)
+    p = 1.0 - p;
+  
+  if (log_prob)
+    p = Rcpp::log(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");
