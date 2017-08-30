@@ -165,10 +165,12 @@ NumericMatrix cpp_rmnom(
     }
 
     for (int j = 0; j < k-1; j++) {
-      p_tmp = GETM(prob, i, j)/p_tot;
-      x(i, j) = R::rbinom(size_left, trunc_p(p_tmp/sum_p));
-      size_left -= x(i, j);
-      sum_p -= p_tmp;
+      if ( size_left > 0 ) {
+        p_tmp = GETM(prob, i, j)/p_tot;
+        x(i, j) = R::rbinom(size_left, trunc_p(p_tmp/sum_p));
+        size_left -= x(i, j);
+        sum_p -= p_tmp;
+      }
     }
     
     x(i, k-1) = size_left;

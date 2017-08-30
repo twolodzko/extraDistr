@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // cpp_dbern
 NumericVector cpp_dbern(const NumericVector& x, const NumericVector& prob, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dbern(SEXP xSEXP, SEXP probSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dbern(SEXP xSEXP, SEXP probSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -20,7 +20,7 @@ END_RCPP
 }
 // cpp_pbern
 NumericVector cpp_pbern(const NumericVector& x, const NumericVector& prob, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pbern(SEXP xSEXP, SEXP probSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pbern(SEXP xSEXP, SEXP probSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -34,7 +34,7 @@ END_RCPP
 }
 // cpp_qbern
 NumericVector cpp_qbern(const NumericVector& p, const NumericVector& prob, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qbern(SEXP pSEXP, SEXP probSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qbern(SEXP pSEXP, SEXP probSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -48,7 +48,7 @@ END_RCPP
 }
 // cpp_rbern
 NumericVector cpp_rbern(const int& n, const NumericVector& prob);
-RcppExport SEXP extraDistr_cpp_rbern(SEXP nSEXP, SEXP probSEXP) {
+RcppExport SEXP _extraDistr_cpp_rbern(SEXP nSEXP, SEXP probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -60,7 +60,7 @@ END_RCPP
 }
 // cpp_dbbinom
 NumericVector cpp_dbbinom(const NumericVector& x, const NumericVector& size, const NumericVector& alpha, const NumericVector& beta, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dbbinom(SEXP xSEXP, SEXP sizeSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dbbinom(SEXP xSEXP, SEXP sizeSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -75,7 +75,7 @@ END_RCPP
 }
 // cpp_pbbinom
 NumericVector cpp_pbbinom(const NumericVector& x, const NumericVector& size, const NumericVector& alpha, const NumericVector& beta, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pbbinom(SEXP xSEXP, SEXP sizeSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pbbinom(SEXP xSEXP, SEXP sizeSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -91,7 +91,7 @@ END_RCPP
 }
 // cpp_rbbinom
 NumericVector cpp_rbbinom(const int& n, const NumericVector& size, const NumericVector& alpha, const NumericVector& beta);
-RcppExport SEXP extraDistr_cpp_rbbinom(SEXP nSEXP, SEXP sizeSEXP, SEXP alphaSEXP, SEXP betaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rbbinom(SEXP nSEXP, SEXP sizeSEXP, SEXP alphaSEXP, SEXP betaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -105,7 +105,7 @@ END_RCPP
 }
 // cpp_dbnbinom
 NumericVector cpp_dbnbinom(const NumericVector& x, const NumericVector& size, const NumericVector& alpha, const NumericVector& beta, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dbnbinom(SEXP xSEXP, SEXP sizeSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dbnbinom(SEXP xSEXP, SEXP sizeSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -120,7 +120,7 @@ END_RCPP
 }
 // cpp_pbnbinom
 NumericVector cpp_pbnbinom(const NumericVector& x, const NumericVector& size, const NumericVector& alpha, const NumericVector& beta, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pbnbinom(SEXP xSEXP, SEXP sizeSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pbnbinom(SEXP xSEXP, SEXP sizeSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -136,7 +136,7 @@ END_RCPP
 }
 // cpp_rbnbinom
 NumericVector cpp_rbnbinom(const int& n, const NumericVector& size, const NumericVector& alpha, const NumericVector& beta);
-RcppExport SEXP extraDistr_cpp_rbnbinom(SEXP nSEXP, SEXP sizeSEXP, SEXP alphaSEXP, SEXP betaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rbnbinom(SEXP nSEXP, SEXP sizeSEXP, SEXP alphaSEXP, SEXP betaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -150,7 +150,7 @@ END_RCPP
 }
 // cpp_dbetapr
 NumericVector cpp_dbetapr(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const NumericVector& sigma, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dbetapr(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dbetapr(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -165,7 +165,7 @@ END_RCPP
 }
 // cpp_pbetapr
 NumericVector cpp_pbetapr(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pbetapr(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pbetapr(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -181,7 +181,7 @@ END_RCPP
 }
 // cpp_qbetapr
 NumericVector cpp_qbetapr(const NumericVector& p, const NumericVector& alpha, const NumericVector& beta, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qbetapr(SEXP pSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qbetapr(SEXP pSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -197,7 +197,7 @@ END_RCPP
 }
 // cpp_rbetapr
 NumericVector cpp_rbetapr(const int& n, const NumericVector& alpha, const NumericVector& beta, const NumericVector& sigma);
-RcppExport SEXP extraDistr_cpp_rbetapr(SEXP nSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP sigmaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rbetapr(SEXP nSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -211,7 +211,7 @@ END_RCPP
 }
 // cpp_dbhatt
 NumericVector cpp_dbhatt(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& a, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dbhatt(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP aSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dbhatt(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP aSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -226,7 +226,7 @@ END_RCPP
 }
 // cpp_pbhatt
 NumericVector cpp_pbhatt(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& a, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pbhatt(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP aSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pbhatt(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP aSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -242,7 +242,7 @@ END_RCPP
 }
 // cpp_rbhatt
 NumericVector cpp_rbhatt(const int& n, const NumericVector& mu, const NumericVector& sigma, const NumericVector& a);
-RcppExport SEXP extraDistr_cpp_rbhatt(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP aSEXP) {
+RcppExport SEXP _extraDistr_cpp_rbhatt(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP aSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -256,7 +256,7 @@ END_RCPP
 }
 // cpp_dfatigue
 NumericVector cpp_dfatigue(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const NumericVector& mu, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dfatigue(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP muSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dfatigue(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP muSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -271,7 +271,7 @@ END_RCPP
 }
 // cpp_pfatigue
 NumericVector cpp_pfatigue(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const NumericVector& mu, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pfatigue(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP muSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pfatigue(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP muSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -287,7 +287,7 @@ END_RCPP
 }
 // cpp_qfatigue
 NumericVector cpp_qfatigue(const NumericVector& p, const NumericVector& alpha, const NumericVector& beta, const NumericVector& mu, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qfatigue(SEXP pSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP muSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qfatigue(SEXP pSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP muSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -303,7 +303,7 @@ END_RCPP
 }
 // cpp_rfatigue
 NumericVector cpp_rfatigue(const int& n, const NumericVector& alpha, const NumericVector& beta, const NumericVector& mu);
-RcppExport SEXP extraDistr_cpp_rfatigue(SEXP nSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP muSEXP) {
+RcppExport SEXP _extraDistr_cpp_rfatigue(SEXP nSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP muSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -317,7 +317,7 @@ END_RCPP
 }
 // cpp_dbnorm
 NumericVector cpp_dbnorm(const NumericVector& x, const NumericVector& y, const NumericVector& mu1, const NumericVector& mu2, const NumericVector& sigma1, const NumericVector& sigma2, const NumericVector& rho, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dbnorm(SEXP xSEXP, SEXP ySEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigma1SEXP, SEXP sigma2SEXP, SEXP rhoSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dbnorm(SEXP xSEXP, SEXP ySEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigma1SEXP, SEXP sigma2SEXP, SEXP rhoSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -335,7 +335,7 @@ END_RCPP
 }
 // cpp_rbnorm
 NumericMatrix cpp_rbnorm(const int& n, const NumericVector& mu1, const NumericVector& mu2, const NumericVector& sigma1, const NumericVector& sigma2, const NumericVector& rho);
-RcppExport SEXP extraDistr_cpp_rbnorm(SEXP nSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigma1SEXP, SEXP sigma2SEXP, SEXP rhoSEXP) {
+RcppExport SEXP _extraDistr_cpp_rbnorm(SEXP nSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP sigma1SEXP, SEXP sigma2SEXP, SEXP rhoSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -351,7 +351,7 @@ END_RCPP
 }
 // cpp_dbpois
 NumericVector cpp_dbpois(const NumericVector& x, const NumericVector& y, const NumericVector& a, const NumericVector& b, const NumericVector& c, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dbpois(SEXP xSEXP, SEXP ySEXP, SEXP aSEXP, SEXP bSEXP, SEXP cSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dbpois(SEXP xSEXP, SEXP ySEXP, SEXP aSEXP, SEXP bSEXP, SEXP cSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -367,7 +367,7 @@ END_RCPP
 }
 // cpp_rbpois
 NumericMatrix cpp_rbpois(const int& n, const NumericVector& a, const NumericVector& b, const NumericVector& c);
-RcppExport SEXP extraDistr_cpp_rbpois(SEXP nSEXP, SEXP aSEXP, SEXP bSEXP, SEXP cSEXP) {
+RcppExport SEXP _extraDistr_cpp_rbpois(SEXP nSEXP, SEXP aSEXP, SEXP bSEXP, SEXP cSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -379,9 +379,21 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// cpp_rcatlp
+NumericVector cpp_rcatlp(const int& n, const NumericMatrix& log_prob);
+RcppExport SEXP _extraDistr_cpp_rcatlp(SEXP nSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_rcatlp(n, log_prob));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cpp_dcat
 NumericVector cpp_dcat(const NumericVector& x, const NumericMatrix& prob, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dcat(SEXP xSEXP, SEXP probSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dcat(SEXP xSEXP, SEXP probSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -394,7 +406,7 @@ END_RCPP
 }
 // cpp_pcat
 NumericVector cpp_pcat(const NumericVector& x, const NumericMatrix& prob, bool lower_tail, bool log_prob);
-RcppExport SEXP extraDistr_cpp_pcat(SEXP xSEXP, SEXP probSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pcat(SEXP xSEXP, SEXP probSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -408,7 +420,7 @@ END_RCPP
 }
 // cpp_qcat
 NumericVector cpp_qcat(const NumericVector& p, const NumericMatrix& prob, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qcat(SEXP pSEXP, SEXP probSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qcat(SEXP pSEXP, SEXP probSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -422,7 +434,7 @@ END_RCPP
 }
 // cpp_rcat
 NumericVector cpp_rcat(const int& n, const NumericMatrix& prob);
-RcppExport SEXP extraDistr_cpp_rcat(SEXP nSEXP, SEXP probSEXP) {
+RcppExport SEXP _extraDistr_cpp_rcat(SEXP nSEXP, SEXP probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -432,21 +444,9 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// cpp_rcatlp
-NumericVector cpp_rcatlp(const int& n, const NumericMatrix& log_prob);
-RcppExport SEXP extraDistr_cpp_rcatlp(SEXP nSEXP, SEXP log_probSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
-    Rcpp::traits::input_parameter< const NumericMatrix& >::type log_prob(log_probSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_rcatlp(n, log_prob));
-    return rcpp_result_gen;
-END_RCPP
-}
 // cpp_ddirichlet
 NumericVector cpp_ddirichlet(const NumericMatrix& x, const NumericMatrix& alpha, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_ddirichlet(SEXP xSEXP, SEXP alphaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_ddirichlet(SEXP xSEXP, SEXP alphaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -459,7 +459,7 @@ END_RCPP
 }
 // cpp_rdirichlet
 NumericMatrix cpp_rdirichlet(const int& n, const NumericMatrix& alpha);
-RcppExport SEXP extraDistr_cpp_rdirichlet(SEXP nSEXP, SEXP alphaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rdirichlet(SEXP nSEXP, SEXP alphaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -471,7 +471,7 @@ END_RCPP
 }
 // cpp_ddirmnom
 NumericVector cpp_ddirmnom(const NumericMatrix& x, const NumericVector& size, const NumericMatrix& alpha, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_ddirmnom(SEXP xSEXP, SEXP sizeSEXP, SEXP alphaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_ddirmnom(SEXP xSEXP, SEXP sizeSEXP, SEXP alphaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -485,7 +485,7 @@ END_RCPP
 }
 // cpp_rdirmnom
 NumericMatrix cpp_rdirmnom(const int& n, const NumericVector& size, const NumericMatrix& alpha);
-RcppExport SEXP extraDistr_cpp_rdirmnom(SEXP nSEXP, SEXP sizeSEXP, SEXP alphaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rdirmnom(SEXP nSEXP, SEXP sizeSEXP, SEXP alphaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -498,7 +498,7 @@ END_RCPP
 }
 // cpp_ddgamma
 NumericVector cpp_ddgamma(const NumericVector& x, const NumericVector& shape, const NumericVector& scale, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_ddgamma(SEXP xSEXP, SEXP shapeSEXP, SEXP scaleSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_ddgamma(SEXP xSEXP, SEXP shapeSEXP, SEXP scaleSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -512,7 +512,7 @@ END_RCPP
 }
 // cpp_ddlaplace
 NumericVector cpp_ddlaplace(const NumericVector& x, const NumericVector& location, const NumericVector& scale, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_ddlaplace(SEXP xSEXP, SEXP locationSEXP, SEXP scaleSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_ddlaplace(SEXP xSEXP, SEXP locationSEXP, SEXP scaleSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -526,7 +526,7 @@ END_RCPP
 }
 // cpp_pdlaplace
 NumericVector cpp_pdlaplace(const NumericVector& x, const NumericVector& location, const NumericVector& scale, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pdlaplace(SEXP xSEXP, SEXP locationSEXP, SEXP scaleSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pdlaplace(SEXP xSEXP, SEXP locationSEXP, SEXP scaleSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -541,7 +541,7 @@ END_RCPP
 }
 // cpp_rdlaplace
 NumericVector cpp_rdlaplace(const int& n, const NumericVector& location, const NumericVector& scale);
-RcppExport SEXP extraDistr_cpp_rdlaplace(SEXP nSEXP, SEXP locationSEXP, SEXP scaleSEXP) {
+RcppExport SEXP _extraDistr_cpp_rdlaplace(SEXP nSEXP, SEXP locationSEXP, SEXP scaleSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -554,7 +554,7 @@ END_RCPP
 }
 // cpp_ddnorm
 NumericVector cpp_ddnorm(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_ddnorm(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_ddnorm(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -568,7 +568,7 @@ END_RCPP
 }
 // cpp_ddunif
 NumericVector cpp_ddunif(const NumericVector& x, const NumericVector& min, const NumericVector& max, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_ddunif(SEXP xSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_ddunif(SEXP xSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -582,7 +582,7 @@ END_RCPP
 }
 // cpp_pdunif
 NumericVector cpp_pdunif(const NumericVector& x, const NumericVector& min, const NumericVector& max, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pdunif(SEXP xSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pdunif(SEXP xSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -597,7 +597,7 @@ END_RCPP
 }
 // cpp_qdunif
 NumericVector cpp_qdunif(const NumericVector& p, const NumericVector& min, const NumericVector& max, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qdunif(SEXP pSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qdunif(SEXP pSEXP, SEXP minSEXP, SEXP maxSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -612,7 +612,7 @@ END_RCPP
 }
 // cpp_rdunif
 NumericVector cpp_rdunif(const int& n, const NumericVector& min, const NumericVector& max);
-RcppExport SEXP extraDistr_cpp_rdunif(SEXP nSEXP, SEXP minSEXP, SEXP maxSEXP) {
+RcppExport SEXP _extraDistr_cpp_rdunif(SEXP nSEXP, SEXP minSEXP, SEXP maxSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -625,7 +625,7 @@ END_RCPP
 }
 // cpp_ddweibull
 NumericVector cpp_ddweibull(const NumericVector& x, const NumericVector& q, const NumericVector& beta, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_ddweibull(SEXP xSEXP, SEXP qSEXP, SEXP betaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_ddweibull(SEXP xSEXP, SEXP qSEXP, SEXP betaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -639,7 +639,7 @@ END_RCPP
 }
 // cpp_pdweibull
 NumericVector cpp_pdweibull(const NumericVector& x, const NumericVector& q, const NumericVector& beta, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pdweibull(SEXP xSEXP, SEXP qSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pdweibull(SEXP xSEXP, SEXP qSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -654,7 +654,7 @@ END_RCPP
 }
 // cpp_qdweibull
 NumericVector cpp_qdweibull(const NumericVector& p, const NumericVector& q, const NumericVector& beta, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qdweibull(SEXP pSEXP, SEXP qSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qdweibull(SEXP pSEXP, SEXP qSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -669,7 +669,7 @@ END_RCPP
 }
 // cpp_rdweibull
 NumericVector cpp_rdweibull(const int& n, const NumericVector& q, const NumericVector& beta);
-RcppExport SEXP extraDistr_cpp_rdweibull(SEXP nSEXP, SEXP qSEXP, SEXP betaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rdweibull(SEXP nSEXP, SEXP qSEXP, SEXP betaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -682,7 +682,7 @@ END_RCPP
 }
 // cpp_dfrechet
 NumericVector cpp_dfrechet(const NumericVector& x, const NumericVector& lambda, const NumericVector& mu, const NumericVector& sigma, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dfrechet(SEXP xSEXP, SEXP lambdaSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dfrechet(SEXP xSEXP, SEXP lambdaSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -697,7 +697,7 @@ END_RCPP
 }
 // cpp_pfrechet
 NumericVector cpp_pfrechet(const NumericVector& x, const NumericVector& lambda, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pfrechet(SEXP xSEXP, SEXP lambdaSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pfrechet(SEXP xSEXP, SEXP lambdaSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -713,7 +713,7 @@ END_RCPP
 }
 // cpp_qfrechet
 NumericVector cpp_qfrechet(const NumericVector& p, const NumericVector& lambda, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qfrechet(SEXP pSEXP, SEXP lambdaSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qfrechet(SEXP pSEXP, SEXP lambdaSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -729,7 +729,7 @@ END_RCPP
 }
 // cpp_rfrechet
 NumericVector cpp_rfrechet(const int& n, const NumericVector& lambda, const NumericVector& mu, const NumericVector& sigma);
-RcppExport SEXP extraDistr_cpp_rfrechet(SEXP nSEXP, SEXP lambdaSEXP, SEXP muSEXP, SEXP sigmaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rfrechet(SEXP nSEXP, SEXP lambdaSEXP, SEXP muSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -743,7 +743,7 @@ END_RCPP
 }
 // cpp_dgpois
 NumericVector cpp_dgpois(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dgpois(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dgpois(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -757,7 +757,7 @@ END_RCPP
 }
 // cpp_pgpois
 NumericVector cpp_pgpois(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pgpois(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pgpois(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -772,7 +772,7 @@ END_RCPP
 }
 // cpp_rgpois
 NumericVector cpp_rgpois(const int& n, const NumericVector& alpha, const NumericVector& beta);
-RcppExport SEXP extraDistr_cpp_rgpois(SEXP nSEXP, SEXP alphaSEXP, SEXP betaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rgpois(SEXP nSEXP, SEXP alphaSEXP, SEXP betaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -785,7 +785,7 @@ END_RCPP
 }
 // cpp_dgev
 NumericVector cpp_dgev(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& xi, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dgev(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dgev(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -800,7 +800,7 @@ END_RCPP
 }
 // cpp_pgev
 NumericVector cpp_pgev(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& xi, bool lower_tail, bool log_prob);
-RcppExport SEXP extraDistr_cpp_pgev(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pgev(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -816,7 +816,7 @@ END_RCPP
 }
 // cpp_qgev
 NumericVector cpp_qgev(const NumericVector& p, const NumericVector& mu, const NumericVector& sigma, const NumericVector& xi, bool lower_tail, bool log_prob);
-RcppExport SEXP extraDistr_cpp_qgev(SEXP pSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qgev(SEXP pSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -832,7 +832,7 @@ END_RCPP
 }
 // cpp_rgev
 NumericVector cpp_rgev(const int& n, const NumericVector& mu, const NumericVector& sigma, const NumericVector& xi);
-RcppExport SEXP extraDistr_cpp_rgev(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP) {
+RcppExport SEXP _extraDistr_cpp_rgev(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -846,7 +846,7 @@ END_RCPP
 }
 // cpp_dgompertz
 NumericVector cpp_dgompertz(const NumericVector& x, const NumericVector& a, const NumericVector& b, bool log_prob);
-RcppExport SEXP extraDistr_cpp_dgompertz(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dgompertz(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -860,7 +860,7 @@ END_RCPP
 }
 // cpp_pgompertz
 NumericVector cpp_pgompertz(const NumericVector& x, const NumericVector& a, const NumericVector& b, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pgompertz(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pgompertz(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -875,7 +875,7 @@ END_RCPP
 }
 // cpp_qgompertz
 NumericVector cpp_qgompertz(const NumericVector& p, const NumericVector& a, const NumericVector& b, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qgompertz(SEXP pSEXP, SEXP aSEXP, SEXP bSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qgompertz(SEXP pSEXP, SEXP aSEXP, SEXP bSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -890,7 +890,7 @@ END_RCPP
 }
 // cpp_rgompertz
 NumericVector cpp_rgompertz(const int& n, const NumericVector& a, const NumericVector& b);
-RcppExport SEXP extraDistr_cpp_rgompertz(SEXP nSEXP, SEXP aSEXP, SEXP bSEXP) {
+RcppExport SEXP _extraDistr_cpp_rgompertz(SEXP nSEXP, SEXP aSEXP, SEXP bSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -903,7 +903,7 @@ END_RCPP
 }
 // cpp_dgpd
 NumericVector cpp_dgpd(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& xi, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dgpd(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dgpd(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -918,7 +918,7 @@ END_RCPP
 }
 // cpp_pgpd
 NumericVector cpp_pgpd(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& xi, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pgpd(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pgpd(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -934,7 +934,7 @@ END_RCPP
 }
 // cpp_qgpd
 NumericVector cpp_qgpd(const NumericVector& p, const NumericVector& mu, const NumericVector& sigma, const NumericVector& xi, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qgpd(SEXP pSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qgpd(SEXP pSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -950,7 +950,7 @@ END_RCPP
 }
 // cpp_rgpd
 NumericVector cpp_rgpd(const int& n, const NumericVector& mu, const NumericVector& sigma, const NumericVector& xi);
-RcppExport SEXP extraDistr_cpp_rgpd(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP) {
+RcppExport SEXP _extraDistr_cpp_rgpd(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP xiSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -964,7 +964,7 @@ END_RCPP
 }
 // cpp_dgumbel
 NumericVector cpp_dgumbel(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dgumbel(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dgumbel(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -978,7 +978,7 @@ END_RCPP
 }
 // cpp_pgumbel
 NumericVector cpp_pgumbel(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pgumbel(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pgumbel(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -993,7 +993,7 @@ END_RCPP
 }
 // cpp_qgumbel
 NumericVector cpp_qgumbel(const NumericVector& p, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qgumbel(SEXP pSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qgumbel(SEXP pSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1008,7 +1008,7 @@ END_RCPP
 }
 // cpp_rgumbel
 NumericVector cpp_rgumbel(const int& n, const NumericVector& mu, const NumericVector& sigma);
-RcppExport SEXP extraDistr_cpp_rgumbel(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rgumbel(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1021,7 +1021,7 @@ END_RCPP
 }
 // cpp_dhcauchy
 NumericVector cpp_dhcauchy(const NumericVector& x, const NumericVector& sigma, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dhcauchy(SEXP xSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dhcauchy(SEXP xSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1034,7 +1034,7 @@ END_RCPP
 }
 // cpp_phcauchy
 NumericVector cpp_phcauchy(const NumericVector& x, const NumericVector& sigma, bool lower_tail, bool log_prob);
-RcppExport SEXP extraDistr_cpp_phcauchy(SEXP xSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_phcauchy(SEXP xSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1048,7 +1048,7 @@ END_RCPP
 }
 // cpp_qhcauchy
 NumericVector cpp_qhcauchy(const NumericVector& p, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qhcauchy(SEXP pSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qhcauchy(SEXP pSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1062,7 +1062,7 @@ END_RCPP
 }
 // cpp_rhcauchy
 NumericVector cpp_rhcauchy(const int& n, const NumericVector& sigma);
-RcppExport SEXP extraDistr_cpp_rhcauchy(SEXP nSEXP, SEXP sigmaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rhcauchy(SEXP nSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1074,7 +1074,7 @@ END_RCPP
 }
 // cpp_dhnorm
 NumericVector cpp_dhnorm(const NumericVector& x, const NumericVector& sigma, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dhnorm(SEXP xSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dhnorm(SEXP xSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1087,7 +1087,7 @@ END_RCPP
 }
 // cpp_phnorm
 NumericVector cpp_phnorm(const NumericVector& x, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_phnorm(SEXP xSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_phnorm(SEXP xSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1101,7 +1101,7 @@ END_RCPP
 }
 // cpp_qhnorm
 NumericVector cpp_qhnorm(const NumericVector& p, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qhnorm(SEXP pSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qhnorm(SEXP pSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1115,7 +1115,7 @@ END_RCPP
 }
 // cpp_rhnorm
 NumericVector cpp_rhnorm(const int& n, const NumericVector& sigma);
-RcppExport SEXP extraDistr_cpp_rhnorm(SEXP nSEXP, SEXP sigmaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rhnorm(SEXP nSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1127,7 +1127,7 @@ END_RCPP
 }
 // cpp_dht
 NumericVector cpp_dht(const NumericVector& x, const NumericVector& nu, const NumericVector& sigma, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dht(SEXP xSEXP, SEXP nuSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dht(SEXP xSEXP, SEXP nuSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1141,7 +1141,7 @@ END_RCPP
 }
 // cpp_pht
 NumericVector cpp_pht(const NumericVector& x, const NumericVector& nu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pht(SEXP xSEXP, SEXP nuSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pht(SEXP xSEXP, SEXP nuSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1156,7 +1156,7 @@ END_RCPP
 }
 // cpp_qht
 NumericVector cpp_qht(const NumericVector& p, const NumericVector& nu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qht(SEXP pSEXP, SEXP nuSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qht(SEXP pSEXP, SEXP nuSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1171,7 +1171,7 @@ END_RCPP
 }
 // cpp_rht
 NumericVector cpp_rht(const int& n, const NumericVector& nu, const NumericVector& sigma);
-RcppExport SEXP extraDistr_cpp_rht(SEXP nSEXP, SEXP nuSEXP, SEXP sigmaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rht(SEXP nSEXP, SEXP nuSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1184,7 +1184,7 @@ END_RCPP
 }
 // cpp_dhuber
 NumericVector cpp_dhuber(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& epsilon, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dhuber(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP epsilonSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dhuber(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP epsilonSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1199,7 +1199,7 @@ END_RCPP
 }
 // cpp_phuber
 NumericVector cpp_phuber(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& epsilon, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_phuber(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP epsilonSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_phuber(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP epsilonSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1215,7 +1215,7 @@ END_RCPP
 }
 // cpp_qhuber
 NumericVector cpp_qhuber(const NumericVector& p, const NumericVector& mu, const NumericVector& sigma, const NumericVector& epsilon, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qhuber(SEXP pSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP epsilonSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qhuber(SEXP pSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP epsilonSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1231,7 +1231,7 @@ END_RCPP
 }
 // cpp_rhuber
 NumericVector cpp_rhuber(const int& n, const NumericVector& mu, const NumericVector& sigma, const NumericVector& epsilon);
-RcppExport SEXP extraDistr_cpp_rhuber(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP epsilonSEXP) {
+RcppExport SEXP _extraDistr_cpp_rhuber(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP epsilonSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1245,7 +1245,7 @@ END_RCPP
 }
 // cpp_dinvgamma
 NumericVector cpp_dinvgamma(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dinvgamma(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dinvgamma(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1259,7 +1259,7 @@ END_RCPP
 }
 // cpp_pinvgamma
 NumericVector cpp_pinvgamma(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pinvgamma(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pinvgamma(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1274,7 +1274,7 @@ END_RCPP
 }
 // cpp_dkumar
 NumericVector cpp_dkumar(const NumericVector& x, const NumericVector& a, const NumericVector& b, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dkumar(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dkumar(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1288,7 +1288,7 @@ END_RCPP
 }
 // cpp_pkumar
 NumericVector cpp_pkumar(const NumericVector& x, const NumericVector& a, const NumericVector& b, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pkumar(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pkumar(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1303,7 +1303,7 @@ END_RCPP
 }
 // cpp_qkumar
 NumericVector cpp_qkumar(const NumericVector& p, const NumericVector& a, const NumericVector& b, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qkumar(SEXP pSEXP, SEXP aSEXP, SEXP bSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qkumar(SEXP pSEXP, SEXP aSEXP, SEXP bSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1318,7 +1318,7 @@ END_RCPP
 }
 // cpp_rkumar
 NumericVector cpp_rkumar(const int& n, const NumericVector& a, const NumericVector& b);
-RcppExport SEXP extraDistr_cpp_rkumar(SEXP nSEXP, SEXP aSEXP, SEXP bSEXP) {
+RcppExport SEXP _extraDistr_cpp_rkumar(SEXP nSEXP, SEXP aSEXP, SEXP bSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1331,7 +1331,7 @@ END_RCPP
 }
 // cpp_dlaplace
 NumericVector cpp_dlaplace(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dlaplace(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dlaplace(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1345,7 +1345,7 @@ END_RCPP
 }
 // cpp_plaplace
 NumericVector cpp_plaplace(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_plaplace(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_plaplace(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1360,7 +1360,7 @@ END_RCPP
 }
 // cpp_qlaplace
 NumericVector cpp_qlaplace(const NumericVector& p, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qlaplace(SEXP pSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qlaplace(SEXP pSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1375,7 +1375,7 @@ END_RCPP
 }
 // cpp_rlaplace
 NumericVector cpp_rlaplace(const int& n, const NumericVector& mu, const NumericVector& sigma);
-RcppExport SEXP extraDistr_cpp_rlaplace(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rlaplace(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1388,7 +1388,7 @@ END_RCPP
 }
 // cpp_dlgser
 NumericVector cpp_dlgser(const NumericVector& x, const NumericVector& theta, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dlgser(SEXP xSEXP, SEXP thetaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dlgser(SEXP xSEXP, SEXP thetaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1401,7 +1401,7 @@ END_RCPP
 }
 // cpp_plgser
 NumericVector cpp_plgser(const NumericVector& x, const NumericVector& theta, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_plgser(SEXP xSEXP, SEXP thetaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_plgser(SEXP xSEXP, SEXP thetaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1415,7 +1415,7 @@ END_RCPP
 }
 // cpp_qlgser
 NumericVector cpp_qlgser(const NumericVector& p, const NumericVector& theta, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qlgser(SEXP pSEXP, SEXP thetaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qlgser(SEXP pSEXP, SEXP thetaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1429,7 +1429,7 @@ END_RCPP
 }
 // cpp_rlgser
 NumericVector cpp_rlgser(const int& n, const NumericVector& theta);
-RcppExport SEXP extraDistr_cpp_rlgser(SEXP nSEXP, SEXP thetaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rlgser(SEXP nSEXP, SEXP thetaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1441,7 +1441,7 @@ END_RCPP
 }
 // cpp_dlomax
 NumericVector cpp_dlomax(const NumericVector& x, const NumericVector& lambda, const NumericVector& kappa, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dlomax(SEXP xSEXP, SEXP lambdaSEXP, SEXP kappaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dlomax(SEXP xSEXP, SEXP lambdaSEXP, SEXP kappaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1455,7 +1455,7 @@ END_RCPP
 }
 // cpp_plomax
 NumericVector cpp_plomax(const NumericVector& x, const NumericVector& lambda, const NumericVector& kappa, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_plomax(SEXP xSEXP, SEXP lambdaSEXP, SEXP kappaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_plomax(SEXP xSEXP, SEXP lambdaSEXP, SEXP kappaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1470,7 +1470,7 @@ END_RCPP
 }
 // cpp_qlomax
 NumericVector cpp_qlomax(const NumericVector& p, const NumericVector& lambda, const NumericVector& kappa, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qlomax(SEXP pSEXP, SEXP lambdaSEXP, SEXP kappaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qlomax(SEXP pSEXP, SEXP lambdaSEXP, SEXP kappaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1485,7 +1485,7 @@ END_RCPP
 }
 // cpp_rlomax
 NumericVector cpp_rlomax(const int& n, const NumericVector& lambda, const NumericVector& kappa);
-RcppExport SEXP extraDistr_cpp_rlomax(SEXP nSEXP, SEXP lambdaSEXP, SEXP kappaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rlomax(SEXP nSEXP, SEXP lambdaSEXP, SEXP kappaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1498,7 +1498,7 @@ END_RCPP
 }
 // cpp_dmixnorm
 NumericVector cpp_dmixnorm(const NumericVector& x, const NumericMatrix& mu, const NumericMatrix& sigma, const NumericMatrix& alpha, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dmixnorm(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP alphaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dmixnorm(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP alphaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1513,7 +1513,7 @@ END_RCPP
 }
 // cpp_pmixnorm
 NumericVector cpp_pmixnorm(const NumericVector& x, const NumericMatrix& mu, const NumericMatrix& sigma, const NumericMatrix& alpha, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pmixnorm(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP alphaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pmixnorm(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP alphaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1529,7 +1529,7 @@ END_RCPP
 }
 // cpp_rmixnorm
 NumericVector cpp_rmixnorm(const int& n, const NumericMatrix& mu, const NumericMatrix& sigma, const NumericMatrix& alpha);
-RcppExport SEXP extraDistr_cpp_rmixnorm(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP alphaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rmixnorm(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP alphaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1543,7 +1543,7 @@ END_RCPP
 }
 // cpp_dmixpois
 NumericVector cpp_dmixpois(const NumericVector& x, const NumericMatrix& lambda, const NumericMatrix& alpha, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dmixpois(SEXP xSEXP, SEXP lambdaSEXP, SEXP alphaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dmixpois(SEXP xSEXP, SEXP lambdaSEXP, SEXP alphaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1557,7 +1557,7 @@ END_RCPP
 }
 // cpp_pmixpois
 NumericVector cpp_pmixpois(const NumericVector& x, const NumericMatrix& lambda, const NumericMatrix& alpha, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pmixpois(SEXP xSEXP, SEXP lambdaSEXP, SEXP alphaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pmixpois(SEXP xSEXP, SEXP lambdaSEXP, SEXP alphaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1572,7 +1572,7 @@ END_RCPP
 }
 // cpp_rmixpois
 NumericVector cpp_rmixpois(const int& n, const NumericMatrix& lambda, const NumericMatrix& alpha);
-RcppExport SEXP extraDistr_cpp_rmixpois(SEXP nSEXP, SEXP lambdaSEXP, SEXP alphaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rmixpois(SEXP nSEXP, SEXP lambdaSEXP, SEXP alphaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1585,7 +1585,7 @@ END_RCPP
 }
 // cpp_dmnom
 NumericVector cpp_dmnom(const NumericMatrix& x, const NumericVector& size, const NumericMatrix& prob, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dmnom(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dmnom(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1599,7 +1599,7 @@ END_RCPP
 }
 // cpp_rmnom
 NumericMatrix cpp_rmnom(const int& n, const NumericVector& size, const NumericMatrix& prob);
-RcppExport SEXP extraDistr_cpp_rmnom(SEXP nSEXP, SEXP sizeSEXP, SEXP probSEXP) {
+RcppExport SEXP _extraDistr_cpp_rmnom(SEXP nSEXP, SEXP sizeSEXP, SEXP probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1612,7 +1612,7 @@ END_RCPP
 }
 // cpp_dmvhyper
 NumericVector cpp_dmvhyper(const NumericMatrix& x, const NumericMatrix& n, const NumericVector& k, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dmvhyper(SEXP xSEXP, SEXP nSEXP, SEXP kSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dmvhyper(SEXP xSEXP, SEXP nSEXP, SEXP kSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1626,7 +1626,7 @@ END_RCPP
 }
 // cpp_rmvhyper
 NumericMatrix cpp_rmvhyper(const int& nn, const NumericMatrix& n, const NumericVector& k);
-RcppExport SEXP extraDistr_cpp_rmvhyper(SEXP nnSEXP, SEXP nSEXP, SEXP kSEXP) {
+RcppExport SEXP _extraDistr_cpp_rmvhyper(SEXP nnSEXP, SEXP nSEXP, SEXP kSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1639,7 +1639,7 @@ END_RCPP
 }
 // cpp_dnhyper
 NumericVector cpp_dnhyper(const NumericVector& x, const NumericVector& n, const NumericVector& m, const NumericVector& r, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dnhyper(SEXP xSEXP, SEXP nSEXP, SEXP mSEXP, SEXP rSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dnhyper(SEXP xSEXP, SEXP nSEXP, SEXP mSEXP, SEXP rSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1654,7 +1654,7 @@ END_RCPP
 }
 // cpp_pnhyper
 NumericVector cpp_pnhyper(const NumericVector& x, const NumericVector& n, const NumericVector& m, const NumericVector& r, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pnhyper(SEXP xSEXP, SEXP nSEXP, SEXP mSEXP, SEXP rSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pnhyper(SEXP xSEXP, SEXP nSEXP, SEXP mSEXP, SEXP rSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1670,7 +1670,7 @@ END_RCPP
 }
 // cpp_qnhyper
 NumericVector cpp_qnhyper(const NumericVector& p, const NumericVector& n, const NumericVector& m, const NumericVector& r, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qnhyper(SEXP pSEXP, SEXP nSEXP, SEXP mSEXP, SEXP rSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qnhyper(SEXP pSEXP, SEXP nSEXP, SEXP mSEXP, SEXP rSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1686,7 +1686,7 @@ END_RCPP
 }
 // cpp_rnhyper
 NumericVector cpp_rnhyper(const int& nn, const NumericVector& n, const NumericVector& m, const NumericVector& r);
-RcppExport SEXP extraDistr_cpp_rnhyper(SEXP nnSEXP, SEXP nSEXP, SEXP mSEXP, SEXP rSEXP) {
+RcppExport SEXP _extraDistr_cpp_rnhyper(SEXP nnSEXP, SEXP nSEXP, SEXP mSEXP, SEXP rSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1700,7 +1700,7 @@ END_RCPP
 }
 // cpp_dnst
 NumericVector cpp_dnst(const NumericVector& x, const NumericVector& nu, const NumericVector& mu, const NumericVector& sigma, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dnst(SEXP xSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dnst(SEXP xSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1715,7 +1715,7 @@ END_RCPP
 }
 // cpp_pnst
 NumericVector cpp_pnst(const NumericVector& x, const NumericVector& nu, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pnst(SEXP xSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pnst(SEXP xSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1731,7 +1731,7 @@ END_RCPP
 }
 // cpp_qnst
 NumericVector cpp_qnst(const NumericVector& p, const NumericVector& nu, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qnst(SEXP pSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qnst(SEXP pSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1747,7 +1747,7 @@ END_RCPP
 }
 // cpp_rnst
 NumericVector cpp_rnst(const int& n, const NumericVector& nu, const NumericVector& mu, const NumericVector& sigma);
-RcppExport SEXP extraDistr_cpp_rnst(SEXP nSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP sigmaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rnst(SEXP nSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1761,7 +1761,7 @@ END_RCPP
 }
 // cpp_dnsbeta
 NumericVector cpp_dnsbeta(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const NumericVector& lower, const NumericVector& upper, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dnsbeta(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dnsbeta(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1777,7 +1777,7 @@ END_RCPP
 }
 // cpp_pnsbeta
 NumericVector cpp_pnsbeta(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const NumericVector& lower, const NumericVector& upper, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pnsbeta(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pnsbeta(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1794,7 +1794,7 @@ END_RCPP
 }
 // cpp_qnsbeta
 NumericVector cpp_qnsbeta(const NumericVector& p, const NumericVector& alpha, const NumericVector& beta, const NumericVector& lower, const NumericVector& upper, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qnsbeta(SEXP pSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qnsbeta(SEXP pSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1811,7 +1811,7 @@ END_RCPP
 }
 // cpp_rnsbeta
 NumericVector cpp_rnsbeta(const int& n, const NumericVector& alpha, const NumericVector& beta, const NumericVector& lower, const NumericVector& upper);
-RcppExport SEXP extraDistr_cpp_rnsbeta(SEXP nSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lowerSEXP, SEXP upperSEXP) {
+RcppExport SEXP _extraDistr_cpp_rnsbeta(SEXP nSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lowerSEXP, SEXP upperSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1826,7 +1826,7 @@ END_RCPP
 }
 // cpp_dpareto
 NumericVector cpp_dpareto(const NumericVector& x, const NumericVector& a, const NumericVector& b, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dpareto(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dpareto(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1840,7 +1840,7 @@ END_RCPP
 }
 // cpp_ppareto
 NumericVector cpp_ppareto(const NumericVector& x, const NumericVector& a, const NumericVector& b, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_ppareto(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_ppareto(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1855,7 +1855,7 @@ END_RCPP
 }
 // cpp_qpareto
 NumericVector cpp_qpareto(const NumericVector& p, const NumericVector& a, const NumericVector& b, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qpareto(SEXP pSEXP, SEXP aSEXP, SEXP bSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qpareto(SEXP pSEXP, SEXP aSEXP, SEXP bSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1870,7 +1870,7 @@ END_RCPP
 }
 // cpp_rpareto
 NumericVector cpp_rpareto(const int& n, const NumericVector& a, const NumericVector& b);
-RcppExport SEXP extraDistr_cpp_rpareto(SEXP nSEXP, SEXP aSEXP, SEXP bSEXP) {
+RcppExport SEXP _extraDistr_cpp_rpareto(SEXP nSEXP, SEXP aSEXP, SEXP bSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1883,7 +1883,7 @@ END_RCPP
 }
 // cpp_dpower
 NumericVector cpp_dpower(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dpower(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dpower(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1897,7 +1897,7 @@ END_RCPP
 }
 // cpp_ppower
 NumericVector cpp_ppower(const NumericVector& x, const NumericVector& alpha, const NumericVector& beta, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_ppower(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_ppower(SEXP xSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1912,7 +1912,7 @@ END_RCPP
 }
 // cpp_qpower
 NumericVector cpp_qpower(const NumericVector& p, const NumericVector& alpha, const NumericVector& beta, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qpower(SEXP pSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qpower(SEXP pSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1927,7 +1927,7 @@ END_RCPP
 }
 // cpp_rpower
 NumericVector cpp_rpower(const int& n, const NumericVector& alpha, const NumericVector& beta);
-RcppExport SEXP extraDistr_cpp_rpower(SEXP nSEXP, SEXP alphaSEXP, SEXP betaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rpower(SEXP nSEXP, SEXP alphaSEXP, SEXP betaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1940,7 +1940,7 @@ END_RCPP
 }
 // cpp_dprop
 NumericVector cpp_dprop(const NumericVector& x, const NumericVector& size, const NumericVector& mean, const NumericVector& prior, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dprop(SEXP xSEXP, SEXP sizeSEXP, SEXP meanSEXP, SEXP priorSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dprop(SEXP xSEXP, SEXP sizeSEXP, SEXP meanSEXP, SEXP priorSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1955,7 +1955,7 @@ END_RCPP
 }
 // cpp_pprop
 NumericVector cpp_pprop(const NumericVector& x, const NumericVector& size, const NumericVector& mean, const NumericVector& prior, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pprop(SEXP xSEXP, SEXP sizeSEXP, SEXP meanSEXP, SEXP priorSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pprop(SEXP xSEXP, SEXP sizeSEXP, SEXP meanSEXP, SEXP priorSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1971,7 +1971,7 @@ END_RCPP
 }
 // cpp_qprop
 NumericVector cpp_qprop(const NumericVector& p, const NumericVector& size, const NumericVector& mean, const NumericVector& prior, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qprop(SEXP pSEXP, SEXP sizeSEXP, SEXP meanSEXP, SEXP priorSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qprop(SEXP pSEXP, SEXP sizeSEXP, SEXP meanSEXP, SEXP priorSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -1987,7 +1987,7 @@ END_RCPP
 }
 // cpp_rprop
 NumericVector cpp_rprop(const int& n, const NumericVector& size, const NumericVector& mean, const NumericVector& prior);
-RcppExport SEXP extraDistr_cpp_rprop(SEXP nSEXP, SEXP sizeSEXP, SEXP meanSEXP, SEXP priorSEXP) {
+RcppExport SEXP _extraDistr_cpp_rprop(SEXP nSEXP, SEXP sizeSEXP, SEXP meanSEXP, SEXP priorSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2001,7 +2001,7 @@ END_RCPP
 }
 // cpp_rsign
 NumericVector cpp_rsign(const int& n);
-RcppExport SEXP extraDistr_cpp_rsign(SEXP nSEXP) {
+RcppExport SEXP _extraDistr_cpp_rsign(SEXP nSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2012,7 +2012,7 @@ END_RCPP
 }
 // cpp_drayleigh
 NumericVector cpp_drayleigh(const NumericVector& x, const NumericVector& sigma, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_drayleigh(SEXP xSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_drayleigh(SEXP xSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2025,7 +2025,7 @@ END_RCPP
 }
 // cpp_prayleigh
 NumericVector cpp_prayleigh(const NumericVector& x, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_prayleigh(SEXP xSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_prayleigh(SEXP xSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2039,7 +2039,7 @@ END_RCPP
 }
 // cpp_qrayleigh
 NumericVector cpp_qrayleigh(const NumericVector& p, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qrayleigh(SEXP pSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qrayleigh(SEXP pSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2053,7 +2053,7 @@ END_RCPP
 }
 // cpp_rrayleigh
 NumericVector cpp_rrayleigh(const int& n, const NumericVector& sigma);
-RcppExport SEXP extraDistr_cpp_rrayleigh(SEXP nSEXP, SEXP sigmaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rrayleigh(SEXP nSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2065,7 +2065,7 @@ END_RCPP
 }
 // cpp_dsgomp
 NumericVector cpp_dsgomp(const NumericVector& x, const NumericVector& b, const NumericVector& eta, bool log_prob);
-RcppExport SEXP extraDistr_cpp_dsgomp(SEXP xSEXP, SEXP bSEXP, SEXP etaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dsgomp(SEXP xSEXP, SEXP bSEXP, SEXP etaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2079,7 +2079,7 @@ END_RCPP
 }
 // cpp_psgomp
 NumericVector cpp_psgomp(const NumericVector& x, const NumericVector& b, const NumericVector& eta, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_psgomp(SEXP xSEXP, SEXP bSEXP, SEXP etaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_psgomp(SEXP xSEXP, SEXP bSEXP, SEXP etaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2094,7 +2094,7 @@ END_RCPP
 }
 // cpp_rsgomp
 NumericVector cpp_rsgomp(const int& n, const NumericVector& b, const NumericVector& eta);
-RcppExport SEXP extraDistr_cpp_rsgomp(SEXP nSEXP, SEXP bSEXP, SEXP etaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rsgomp(SEXP nSEXP, SEXP bSEXP, SEXP etaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2107,7 +2107,7 @@ END_RCPP
 }
 // cpp_dskellam
 NumericVector cpp_dskellam(const NumericVector& x, const NumericVector& mu1, const NumericVector& mu2, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dskellam(SEXP xSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dskellam(SEXP xSEXP, SEXP mu1SEXP, SEXP mu2SEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2121,7 +2121,7 @@ END_RCPP
 }
 // cpp_rskellam
 NumericVector cpp_rskellam(const int& n, const NumericVector& mu1, const NumericVector& mu2);
-RcppExport SEXP extraDistr_cpp_rskellam(SEXP nSEXP, SEXP mu1SEXP, SEXP mu2SEXP) {
+RcppExport SEXP _extraDistr_cpp_rskellam(SEXP nSEXP, SEXP mu1SEXP, SEXP mu2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2134,7 +2134,7 @@ END_RCPP
 }
 // cpp_dslash
 NumericVector cpp_dslash(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dslash(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dslash(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2148,7 +2148,7 @@ END_RCPP
 }
 // cpp_pslash
 NumericVector cpp_pslash(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pslash(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pslash(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2163,7 +2163,7 @@ END_RCPP
 }
 // cpp_rslash
 NumericVector cpp_rslash(const int& n, const NumericVector& mu, const NumericVector& sigma);
-RcppExport SEXP extraDistr_cpp_rslash(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rslash(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2176,7 +2176,7 @@ END_RCPP
 }
 // cpp_dtriang
 NumericVector cpp_dtriang(const NumericVector& x, const NumericVector& a, const NumericVector& b, const NumericVector& c, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dtriang(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP cSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dtriang(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP cSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2191,7 +2191,7 @@ END_RCPP
 }
 // cpp_ptriang
 NumericVector cpp_ptriang(const NumericVector& x, const NumericVector& a, const NumericVector& b, const NumericVector& c, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_ptriang(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP cSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_ptriang(SEXP xSEXP, SEXP aSEXP, SEXP bSEXP, SEXP cSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2207,7 +2207,7 @@ END_RCPP
 }
 // cpp_qtriang
 NumericVector cpp_qtriang(const NumericVector& p, const NumericVector& a, const NumericVector& b, const NumericVector& c, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qtriang(SEXP pSEXP, SEXP aSEXP, SEXP bSEXP, SEXP cSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qtriang(SEXP pSEXP, SEXP aSEXP, SEXP bSEXP, SEXP cSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2223,7 +2223,7 @@ END_RCPP
 }
 // cpp_rtriang
 NumericVector cpp_rtriang(const int& n, const NumericVector& a, const NumericVector& b, const NumericVector& c);
-RcppExport SEXP extraDistr_cpp_rtriang(SEXP nSEXP, SEXP aSEXP, SEXP bSEXP, SEXP cSEXP) {
+RcppExport SEXP _extraDistr_cpp_rtriang(SEXP nSEXP, SEXP aSEXP, SEXP bSEXP, SEXP cSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2237,7 +2237,7 @@ END_RCPP
 }
 // cpp_dtbinom
 NumericVector cpp_dtbinom(const NumericVector& x, const NumericVector& size, const NumericVector& prob, const NumericVector& lower, const NumericVector& upper, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dtbinom(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dtbinom(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2253,7 +2253,7 @@ END_RCPP
 }
 // cpp_ptbinom
 NumericVector cpp_ptbinom(const NumericVector& x, const NumericVector& size, const NumericVector& prob, const NumericVector& lower, const NumericVector& upper, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_ptbinom(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_ptbinom(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2270,7 +2270,7 @@ END_RCPP
 }
 // cpp_qtbinom
 NumericVector cpp_qtbinom(const NumericVector& p, const NumericVector& size, const NumericVector& prob, const NumericVector& lower, const NumericVector& upper, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qtbinom(SEXP pSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qtbinom(SEXP pSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2287,7 +2287,7 @@ END_RCPP
 }
 // cpp_rtbinom
 NumericVector cpp_rtbinom(const int& n, const NumericVector& size, const NumericVector& prob, const NumericVector& lower, const NumericVector& upper);
-RcppExport SEXP extraDistr_cpp_rtbinom(SEXP nSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP lowerSEXP, SEXP upperSEXP) {
+RcppExport SEXP _extraDistr_cpp_rtbinom(SEXP nSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP lowerSEXP, SEXP upperSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2302,7 +2302,7 @@ END_RCPP
 }
 // cpp_dtnorm
 NumericVector cpp_dtnorm(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& lower, const NumericVector& upper, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dtnorm(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dtnorm(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2318,7 +2318,7 @@ END_RCPP
 }
 // cpp_ptnorm
 NumericVector cpp_ptnorm(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& lower, const NumericVector& upper, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_ptnorm(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_ptnorm(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2335,7 +2335,7 @@ END_RCPP
 }
 // cpp_qtnorm
 NumericVector cpp_qtnorm(const NumericVector& p, const NumericVector& mu, const NumericVector& sigma, const NumericVector& lower, const NumericVector& upper, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qtnorm(SEXP pSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qtnorm(SEXP pSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2352,7 +2352,7 @@ END_RCPP
 }
 // cpp_rtnorm
 NumericVector cpp_rtnorm(const int& n, const NumericVector& mu, const NumericVector& sigma, const NumericVector& lower, const NumericVector& upper);
-RcppExport SEXP extraDistr_cpp_rtnorm(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lowerSEXP, SEXP upperSEXP) {
+RcppExport SEXP _extraDistr_cpp_rtnorm(SEXP nSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lowerSEXP, SEXP upperSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2367,7 +2367,7 @@ END_RCPP
 }
 // cpp_dtpois
 NumericVector cpp_dtpois(const NumericVector& x, const NumericVector& lambda, const NumericVector& lower, const NumericVector& upper, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dtpois(SEXP xSEXP, SEXP lambdaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dtpois(SEXP xSEXP, SEXP lambdaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2382,7 +2382,7 @@ END_RCPP
 }
 // cpp_ptpois
 NumericVector cpp_ptpois(const NumericVector& x, const NumericVector& lambda, const NumericVector& lower, const NumericVector& upper, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_ptpois(SEXP xSEXP, SEXP lambdaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_ptpois(SEXP xSEXP, SEXP lambdaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2398,7 +2398,7 @@ END_RCPP
 }
 // cpp_qtpois
 NumericVector cpp_qtpois(const NumericVector& p, const NumericVector& lambda, const NumericVector& lower, const NumericVector& upper, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qtpois(SEXP pSEXP, SEXP lambdaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qtpois(SEXP pSEXP, SEXP lambdaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2414,7 +2414,7 @@ END_RCPP
 }
 // cpp_rtpois
 NumericVector cpp_rtpois(const int& n, const NumericVector& lambda, const NumericVector& lower, const NumericVector& upper);
-RcppExport SEXP extraDistr_cpp_rtpois(SEXP nSEXP, SEXP lambdaSEXP, SEXP lowerSEXP, SEXP upperSEXP) {
+RcppExport SEXP _extraDistr_cpp_rtpois(SEXP nSEXP, SEXP lambdaSEXP, SEXP lowerSEXP, SEXP upperSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2428,7 +2428,7 @@ END_RCPP
 }
 // cpp_qtlambda
 NumericVector cpp_qtlambda(const NumericVector& p, const NumericVector& lambda, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qtlambda(SEXP pSEXP, SEXP lambdaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qtlambda(SEXP pSEXP, SEXP lambdaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2442,7 +2442,7 @@ END_RCPP
 }
 // cpp_rtlambda
 NumericVector cpp_rtlambda(const int& n, const NumericVector& lambda);
-RcppExport SEXP extraDistr_cpp_rtlambda(SEXP nSEXP, SEXP lambdaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rtlambda(SEXP nSEXP, SEXP lambdaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2454,7 +2454,7 @@ END_RCPP
 }
 // cpp_dwald
 NumericVector cpp_dwald(const NumericVector& x, const NumericVector& mu, const NumericVector& lambda, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dwald(SEXP xSEXP, SEXP muSEXP, SEXP lambdaSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dwald(SEXP xSEXP, SEXP muSEXP, SEXP lambdaSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2468,7 +2468,7 @@ END_RCPP
 }
 // cpp_pwald
 NumericVector cpp_pwald(const NumericVector& x, const NumericVector& mu, const NumericVector& lambda, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pwald(SEXP xSEXP, SEXP muSEXP, SEXP lambdaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pwald(SEXP xSEXP, SEXP muSEXP, SEXP lambdaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2483,7 +2483,7 @@ END_RCPP
 }
 // cpp_rwald
 NumericVector cpp_rwald(const int& n, const NumericVector& mu, const NumericVector& lambda);
-RcppExport SEXP extraDistr_cpp_rwald(SEXP nSEXP, SEXP muSEXP, SEXP lambdaSEXP) {
+RcppExport SEXP _extraDistr_cpp_rwald(SEXP nSEXP, SEXP muSEXP, SEXP lambdaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2496,7 +2496,7 @@ END_RCPP
 }
 // cpp_dzib
 NumericVector cpp_dzib(const NumericVector& x, const NumericVector& size, const NumericVector& prob, const NumericVector& pi, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dzib(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dzib(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2511,7 +2511,7 @@ END_RCPP
 }
 // cpp_pzib
 NumericVector cpp_pzib(const NumericVector& x, const NumericVector& size, const NumericVector& prob, const NumericVector& pi, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pzib(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pzib(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2527,7 +2527,7 @@ END_RCPP
 }
 // cpp_qzib
 NumericVector cpp_qzib(const NumericVector& p, const NumericVector& size, const NumericVector& prob, const NumericVector& pi, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qzib(SEXP pSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qzib(SEXP pSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2543,7 +2543,7 @@ END_RCPP
 }
 // cpp_rzib
 NumericVector cpp_rzib(const int& n, const NumericVector& size, const NumericVector& prob, const NumericVector& pi);
-RcppExport SEXP extraDistr_cpp_rzib(SEXP nSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP) {
+RcppExport SEXP _extraDistr_cpp_rzib(SEXP nSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2557,7 +2557,7 @@ END_RCPP
 }
 // cpp_dzinb
 NumericVector cpp_dzinb(const NumericVector& x, const NumericVector& size, const NumericVector& prob, const NumericVector& pi, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dzinb(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dzinb(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2572,7 +2572,7 @@ END_RCPP
 }
 // cpp_pzinb
 NumericVector cpp_pzinb(const NumericVector& x, const NumericVector& size, const NumericVector& prob, const NumericVector& pi, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pzinb(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pzinb(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2588,7 +2588,7 @@ END_RCPP
 }
 // cpp_qzinb
 NumericVector cpp_qzinb(const NumericVector& p, const NumericVector& size, const NumericVector& prob, const NumericVector& pi, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qzinb(SEXP pSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qzinb(SEXP pSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2604,7 +2604,7 @@ END_RCPP
 }
 // cpp_rzinb
 NumericVector cpp_rzinb(const int& n, const NumericVector& size, const NumericVector& prob, const NumericVector& pi);
-RcppExport SEXP extraDistr_cpp_rzinb(SEXP nSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP) {
+RcppExport SEXP _extraDistr_cpp_rzinb(SEXP nSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP piSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2618,7 +2618,7 @@ END_RCPP
 }
 // cpp_dzip
 NumericVector cpp_dzip(const NumericVector& x, const NumericVector& lambda, const NumericVector& pi, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_dzip(SEXP xSEXP, SEXP lambdaSEXP, SEXP piSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_dzip(SEXP xSEXP, SEXP lambdaSEXP, SEXP piSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2632,7 +2632,7 @@ END_RCPP
 }
 // cpp_pzip
 NumericVector cpp_pzip(const NumericVector& x, const NumericVector& lambda, const NumericVector& pi, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_pzip(SEXP xSEXP, SEXP lambdaSEXP, SEXP piSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_pzip(SEXP xSEXP, SEXP lambdaSEXP, SEXP piSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2647,7 +2647,7 @@ END_RCPP
 }
 // cpp_qzip
 NumericVector cpp_qzip(const NumericVector& p, const NumericVector& lambda, const NumericVector& pi, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP extraDistr_cpp_qzip(SEXP pSEXP, SEXP lambdaSEXP, SEXP piSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+RcppExport SEXP _extraDistr_cpp_qzip(SEXP pSEXP, SEXP lambdaSEXP, SEXP piSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2662,7 +2662,7 @@ END_RCPP
 }
 // cpp_rzip
 NumericVector cpp_rzip(const int& n, const NumericVector& lambda, const NumericVector& pi);
-RcppExport SEXP extraDistr_cpp_rzip(SEXP nSEXP, SEXP lambdaSEXP, SEXP piSEXP) {
+RcppExport SEXP _extraDistr_cpp_rzip(SEXP nSEXP, SEXP lambdaSEXP, SEXP piSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -2675,190 +2675,190 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"extraDistr_cpp_dbern", (DL_FUNC) &extraDistr_cpp_dbern, 3},
-    {"extraDistr_cpp_pbern", (DL_FUNC) &extraDistr_cpp_pbern, 4},
-    {"extraDistr_cpp_qbern", (DL_FUNC) &extraDistr_cpp_qbern, 4},
-    {"extraDistr_cpp_rbern", (DL_FUNC) &extraDistr_cpp_rbern, 2},
-    {"extraDistr_cpp_dbbinom", (DL_FUNC) &extraDistr_cpp_dbbinom, 5},
-    {"extraDistr_cpp_pbbinom", (DL_FUNC) &extraDistr_cpp_pbbinom, 6},
-    {"extraDistr_cpp_rbbinom", (DL_FUNC) &extraDistr_cpp_rbbinom, 4},
-    {"extraDistr_cpp_dbnbinom", (DL_FUNC) &extraDistr_cpp_dbnbinom, 5},
-    {"extraDistr_cpp_pbnbinom", (DL_FUNC) &extraDistr_cpp_pbnbinom, 6},
-    {"extraDistr_cpp_rbnbinom", (DL_FUNC) &extraDistr_cpp_rbnbinom, 4},
-    {"extraDistr_cpp_dbetapr", (DL_FUNC) &extraDistr_cpp_dbetapr, 5},
-    {"extraDistr_cpp_pbetapr", (DL_FUNC) &extraDistr_cpp_pbetapr, 6},
-    {"extraDistr_cpp_qbetapr", (DL_FUNC) &extraDistr_cpp_qbetapr, 6},
-    {"extraDistr_cpp_rbetapr", (DL_FUNC) &extraDistr_cpp_rbetapr, 4},
-    {"extraDistr_cpp_dbhatt", (DL_FUNC) &extraDistr_cpp_dbhatt, 5},
-    {"extraDistr_cpp_pbhatt", (DL_FUNC) &extraDistr_cpp_pbhatt, 6},
-    {"extraDistr_cpp_rbhatt", (DL_FUNC) &extraDistr_cpp_rbhatt, 4},
-    {"extraDistr_cpp_dfatigue", (DL_FUNC) &extraDistr_cpp_dfatigue, 5},
-    {"extraDistr_cpp_pfatigue", (DL_FUNC) &extraDistr_cpp_pfatigue, 6},
-    {"extraDistr_cpp_qfatigue", (DL_FUNC) &extraDistr_cpp_qfatigue, 6},
-    {"extraDistr_cpp_rfatigue", (DL_FUNC) &extraDistr_cpp_rfatigue, 4},
-    {"extraDistr_cpp_dbnorm", (DL_FUNC) &extraDistr_cpp_dbnorm, 8},
-    {"extraDistr_cpp_rbnorm", (DL_FUNC) &extraDistr_cpp_rbnorm, 6},
-    {"extraDistr_cpp_dbpois", (DL_FUNC) &extraDistr_cpp_dbpois, 6},
-    {"extraDistr_cpp_rbpois", (DL_FUNC) &extraDistr_cpp_rbpois, 4},
-    {"extraDistr_cpp_dcat", (DL_FUNC) &extraDistr_cpp_dcat, 3},
-    {"extraDistr_cpp_pcat", (DL_FUNC) &extraDistr_cpp_pcat, 4},
-    {"extraDistr_cpp_qcat", (DL_FUNC) &extraDistr_cpp_qcat, 4},
-    {"extraDistr_cpp_rcat", (DL_FUNC) &extraDistr_cpp_rcat, 2},
-    {"extraDistr_cpp_rcatlp", (DL_FUNC) &extraDistr_cpp_rcatlp, 2},
-    {"extraDistr_cpp_ddirichlet", (DL_FUNC) &extraDistr_cpp_ddirichlet, 3},
-    {"extraDistr_cpp_rdirichlet", (DL_FUNC) &extraDistr_cpp_rdirichlet, 2},
-    {"extraDistr_cpp_ddirmnom", (DL_FUNC) &extraDistr_cpp_ddirmnom, 4},
-    {"extraDistr_cpp_rdirmnom", (DL_FUNC) &extraDistr_cpp_rdirmnom, 3},
-    {"extraDistr_cpp_ddgamma", (DL_FUNC) &extraDistr_cpp_ddgamma, 4},
-    {"extraDistr_cpp_ddlaplace", (DL_FUNC) &extraDistr_cpp_ddlaplace, 4},
-    {"extraDistr_cpp_pdlaplace", (DL_FUNC) &extraDistr_cpp_pdlaplace, 5},
-    {"extraDistr_cpp_rdlaplace", (DL_FUNC) &extraDistr_cpp_rdlaplace, 3},
-    {"extraDistr_cpp_ddnorm", (DL_FUNC) &extraDistr_cpp_ddnorm, 4},
-    {"extraDistr_cpp_ddunif", (DL_FUNC) &extraDistr_cpp_ddunif, 4},
-    {"extraDistr_cpp_pdunif", (DL_FUNC) &extraDistr_cpp_pdunif, 5},
-    {"extraDistr_cpp_qdunif", (DL_FUNC) &extraDistr_cpp_qdunif, 5},
-    {"extraDistr_cpp_rdunif", (DL_FUNC) &extraDistr_cpp_rdunif, 3},
-    {"extraDistr_cpp_ddweibull", (DL_FUNC) &extraDistr_cpp_ddweibull, 4},
-    {"extraDistr_cpp_pdweibull", (DL_FUNC) &extraDistr_cpp_pdweibull, 5},
-    {"extraDistr_cpp_qdweibull", (DL_FUNC) &extraDistr_cpp_qdweibull, 5},
-    {"extraDistr_cpp_rdweibull", (DL_FUNC) &extraDistr_cpp_rdweibull, 3},
-    {"extraDistr_cpp_dfrechet", (DL_FUNC) &extraDistr_cpp_dfrechet, 5},
-    {"extraDistr_cpp_pfrechet", (DL_FUNC) &extraDistr_cpp_pfrechet, 6},
-    {"extraDistr_cpp_qfrechet", (DL_FUNC) &extraDistr_cpp_qfrechet, 6},
-    {"extraDistr_cpp_rfrechet", (DL_FUNC) &extraDistr_cpp_rfrechet, 4},
-    {"extraDistr_cpp_dgpois", (DL_FUNC) &extraDistr_cpp_dgpois, 4},
-    {"extraDistr_cpp_pgpois", (DL_FUNC) &extraDistr_cpp_pgpois, 5},
-    {"extraDistr_cpp_rgpois", (DL_FUNC) &extraDistr_cpp_rgpois, 3},
-    {"extraDistr_cpp_dgev", (DL_FUNC) &extraDistr_cpp_dgev, 5},
-    {"extraDistr_cpp_pgev", (DL_FUNC) &extraDistr_cpp_pgev, 6},
-    {"extraDistr_cpp_qgev", (DL_FUNC) &extraDistr_cpp_qgev, 6},
-    {"extraDistr_cpp_rgev", (DL_FUNC) &extraDistr_cpp_rgev, 4},
-    {"extraDistr_cpp_dgompertz", (DL_FUNC) &extraDistr_cpp_dgompertz, 4},
-    {"extraDistr_cpp_pgompertz", (DL_FUNC) &extraDistr_cpp_pgompertz, 5},
-    {"extraDistr_cpp_qgompertz", (DL_FUNC) &extraDistr_cpp_qgompertz, 5},
-    {"extraDistr_cpp_rgompertz", (DL_FUNC) &extraDistr_cpp_rgompertz, 3},
-    {"extraDistr_cpp_dgpd", (DL_FUNC) &extraDistr_cpp_dgpd, 5},
-    {"extraDistr_cpp_pgpd", (DL_FUNC) &extraDistr_cpp_pgpd, 6},
-    {"extraDistr_cpp_qgpd", (DL_FUNC) &extraDistr_cpp_qgpd, 6},
-    {"extraDistr_cpp_rgpd", (DL_FUNC) &extraDistr_cpp_rgpd, 4},
-    {"extraDistr_cpp_dgumbel", (DL_FUNC) &extraDistr_cpp_dgumbel, 4},
-    {"extraDistr_cpp_pgumbel", (DL_FUNC) &extraDistr_cpp_pgumbel, 5},
-    {"extraDistr_cpp_qgumbel", (DL_FUNC) &extraDistr_cpp_qgumbel, 5},
-    {"extraDistr_cpp_rgumbel", (DL_FUNC) &extraDistr_cpp_rgumbel, 3},
-    {"extraDistr_cpp_dhcauchy", (DL_FUNC) &extraDistr_cpp_dhcauchy, 3},
-    {"extraDistr_cpp_phcauchy", (DL_FUNC) &extraDistr_cpp_phcauchy, 4},
-    {"extraDistr_cpp_qhcauchy", (DL_FUNC) &extraDistr_cpp_qhcauchy, 4},
-    {"extraDistr_cpp_rhcauchy", (DL_FUNC) &extraDistr_cpp_rhcauchy, 2},
-    {"extraDistr_cpp_dhnorm", (DL_FUNC) &extraDistr_cpp_dhnorm, 3},
-    {"extraDistr_cpp_phnorm", (DL_FUNC) &extraDistr_cpp_phnorm, 4},
-    {"extraDistr_cpp_qhnorm", (DL_FUNC) &extraDistr_cpp_qhnorm, 4},
-    {"extraDistr_cpp_rhnorm", (DL_FUNC) &extraDistr_cpp_rhnorm, 2},
-    {"extraDistr_cpp_dht", (DL_FUNC) &extraDistr_cpp_dht, 4},
-    {"extraDistr_cpp_pht", (DL_FUNC) &extraDistr_cpp_pht, 5},
-    {"extraDistr_cpp_qht", (DL_FUNC) &extraDistr_cpp_qht, 5},
-    {"extraDistr_cpp_rht", (DL_FUNC) &extraDistr_cpp_rht, 3},
-    {"extraDistr_cpp_dhuber", (DL_FUNC) &extraDistr_cpp_dhuber, 5},
-    {"extraDistr_cpp_phuber", (DL_FUNC) &extraDistr_cpp_phuber, 6},
-    {"extraDistr_cpp_qhuber", (DL_FUNC) &extraDistr_cpp_qhuber, 6},
-    {"extraDistr_cpp_rhuber", (DL_FUNC) &extraDistr_cpp_rhuber, 4},
-    {"extraDistr_cpp_dinvgamma", (DL_FUNC) &extraDistr_cpp_dinvgamma, 4},
-    {"extraDistr_cpp_pinvgamma", (DL_FUNC) &extraDistr_cpp_pinvgamma, 5},
-    {"extraDistr_cpp_dkumar", (DL_FUNC) &extraDistr_cpp_dkumar, 4},
-    {"extraDistr_cpp_pkumar", (DL_FUNC) &extraDistr_cpp_pkumar, 5},
-    {"extraDistr_cpp_qkumar", (DL_FUNC) &extraDistr_cpp_qkumar, 5},
-    {"extraDistr_cpp_rkumar", (DL_FUNC) &extraDistr_cpp_rkumar, 3},
-    {"extraDistr_cpp_dlaplace", (DL_FUNC) &extraDistr_cpp_dlaplace, 4},
-    {"extraDistr_cpp_plaplace", (DL_FUNC) &extraDistr_cpp_plaplace, 5},
-    {"extraDistr_cpp_qlaplace", (DL_FUNC) &extraDistr_cpp_qlaplace, 5},
-    {"extraDistr_cpp_rlaplace", (DL_FUNC) &extraDistr_cpp_rlaplace, 3},
-    {"extraDistr_cpp_dlgser", (DL_FUNC) &extraDistr_cpp_dlgser, 3},
-    {"extraDistr_cpp_plgser", (DL_FUNC) &extraDistr_cpp_plgser, 4},
-    {"extraDistr_cpp_qlgser", (DL_FUNC) &extraDistr_cpp_qlgser, 4},
-    {"extraDistr_cpp_rlgser", (DL_FUNC) &extraDistr_cpp_rlgser, 2},
-    {"extraDistr_cpp_dlomax", (DL_FUNC) &extraDistr_cpp_dlomax, 4},
-    {"extraDistr_cpp_plomax", (DL_FUNC) &extraDistr_cpp_plomax, 5},
-    {"extraDistr_cpp_qlomax", (DL_FUNC) &extraDistr_cpp_qlomax, 5},
-    {"extraDistr_cpp_rlomax", (DL_FUNC) &extraDistr_cpp_rlomax, 3},
-    {"extraDistr_cpp_dmixnorm", (DL_FUNC) &extraDistr_cpp_dmixnorm, 5},
-    {"extraDistr_cpp_pmixnorm", (DL_FUNC) &extraDistr_cpp_pmixnorm, 6},
-    {"extraDistr_cpp_rmixnorm", (DL_FUNC) &extraDistr_cpp_rmixnorm, 4},
-    {"extraDistr_cpp_dmixpois", (DL_FUNC) &extraDistr_cpp_dmixpois, 4},
-    {"extraDistr_cpp_pmixpois", (DL_FUNC) &extraDistr_cpp_pmixpois, 5},
-    {"extraDistr_cpp_rmixpois", (DL_FUNC) &extraDistr_cpp_rmixpois, 3},
-    {"extraDistr_cpp_dmnom", (DL_FUNC) &extraDistr_cpp_dmnom, 4},
-    {"extraDistr_cpp_rmnom", (DL_FUNC) &extraDistr_cpp_rmnom, 3},
-    {"extraDistr_cpp_dmvhyper", (DL_FUNC) &extraDistr_cpp_dmvhyper, 4},
-    {"extraDistr_cpp_rmvhyper", (DL_FUNC) &extraDistr_cpp_rmvhyper, 3},
-    {"extraDistr_cpp_dnhyper", (DL_FUNC) &extraDistr_cpp_dnhyper, 5},
-    {"extraDistr_cpp_pnhyper", (DL_FUNC) &extraDistr_cpp_pnhyper, 6},
-    {"extraDistr_cpp_qnhyper", (DL_FUNC) &extraDistr_cpp_qnhyper, 6},
-    {"extraDistr_cpp_rnhyper", (DL_FUNC) &extraDistr_cpp_rnhyper, 4},
-    {"extraDistr_cpp_dnst", (DL_FUNC) &extraDistr_cpp_dnst, 5},
-    {"extraDistr_cpp_pnst", (DL_FUNC) &extraDistr_cpp_pnst, 6},
-    {"extraDistr_cpp_qnst", (DL_FUNC) &extraDistr_cpp_qnst, 6},
-    {"extraDistr_cpp_rnst", (DL_FUNC) &extraDistr_cpp_rnst, 4},
-    {"extraDistr_cpp_dnsbeta", (DL_FUNC) &extraDistr_cpp_dnsbeta, 6},
-    {"extraDistr_cpp_pnsbeta", (DL_FUNC) &extraDistr_cpp_pnsbeta, 7},
-    {"extraDistr_cpp_qnsbeta", (DL_FUNC) &extraDistr_cpp_qnsbeta, 7},
-    {"extraDistr_cpp_rnsbeta", (DL_FUNC) &extraDistr_cpp_rnsbeta, 5},
-    {"extraDistr_cpp_dpareto", (DL_FUNC) &extraDistr_cpp_dpareto, 4},
-    {"extraDistr_cpp_ppareto", (DL_FUNC) &extraDistr_cpp_ppareto, 5},
-    {"extraDistr_cpp_qpareto", (DL_FUNC) &extraDistr_cpp_qpareto, 5},
-    {"extraDistr_cpp_rpareto", (DL_FUNC) &extraDistr_cpp_rpareto, 3},
-    {"extraDistr_cpp_dpower", (DL_FUNC) &extraDistr_cpp_dpower, 4},
-    {"extraDistr_cpp_ppower", (DL_FUNC) &extraDistr_cpp_ppower, 5},
-    {"extraDistr_cpp_qpower", (DL_FUNC) &extraDistr_cpp_qpower, 5},
-    {"extraDistr_cpp_rpower", (DL_FUNC) &extraDistr_cpp_rpower, 3},
-    {"extraDistr_cpp_dprop", (DL_FUNC) &extraDistr_cpp_dprop, 5},
-    {"extraDistr_cpp_pprop", (DL_FUNC) &extraDistr_cpp_pprop, 6},
-    {"extraDistr_cpp_qprop", (DL_FUNC) &extraDistr_cpp_qprop, 6},
-    {"extraDistr_cpp_rprop", (DL_FUNC) &extraDistr_cpp_rprop, 4},
-    {"extraDistr_cpp_rsign", (DL_FUNC) &extraDistr_cpp_rsign, 1},
-    {"extraDistr_cpp_drayleigh", (DL_FUNC) &extraDistr_cpp_drayleigh, 3},
-    {"extraDistr_cpp_prayleigh", (DL_FUNC) &extraDistr_cpp_prayleigh, 4},
-    {"extraDistr_cpp_qrayleigh", (DL_FUNC) &extraDistr_cpp_qrayleigh, 4},
-    {"extraDistr_cpp_rrayleigh", (DL_FUNC) &extraDistr_cpp_rrayleigh, 2},
-    {"extraDistr_cpp_dsgomp", (DL_FUNC) &extraDistr_cpp_dsgomp, 4},
-    {"extraDistr_cpp_psgomp", (DL_FUNC) &extraDistr_cpp_psgomp, 5},
-    {"extraDistr_cpp_rsgomp", (DL_FUNC) &extraDistr_cpp_rsgomp, 3},
-    {"extraDistr_cpp_dskellam", (DL_FUNC) &extraDistr_cpp_dskellam, 4},
-    {"extraDistr_cpp_rskellam", (DL_FUNC) &extraDistr_cpp_rskellam, 3},
-    {"extraDistr_cpp_dslash", (DL_FUNC) &extraDistr_cpp_dslash, 4},
-    {"extraDistr_cpp_pslash", (DL_FUNC) &extraDistr_cpp_pslash, 5},
-    {"extraDistr_cpp_rslash", (DL_FUNC) &extraDistr_cpp_rslash, 3},
-    {"extraDistr_cpp_dtriang", (DL_FUNC) &extraDistr_cpp_dtriang, 5},
-    {"extraDistr_cpp_ptriang", (DL_FUNC) &extraDistr_cpp_ptriang, 6},
-    {"extraDistr_cpp_qtriang", (DL_FUNC) &extraDistr_cpp_qtriang, 6},
-    {"extraDistr_cpp_rtriang", (DL_FUNC) &extraDistr_cpp_rtriang, 4},
-    {"extraDistr_cpp_dtbinom", (DL_FUNC) &extraDistr_cpp_dtbinom, 6},
-    {"extraDistr_cpp_ptbinom", (DL_FUNC) &extraDistr_cpp_ptbinom, 7},
-    {"extraDistr_cpp_qtbinom", (DL_FUNC) &extraDistr_cpp_qtbinom, 7},
-    {"extraDistr_cpp_rtbinom", (DL_FUNC) &extraDistr_cpp_rtbinom, 5},
-    {"extraDistr_cpp_dtnorm", (DL_FUNC) &extraDistr_cpp_dtnorm, 6},
-    {"extraDistr_cpp_ptnorm", (DL_FUNC) &extraDistr_cpp_ptnorm, 7},
-    {"extraDistr_cpp_qtnorm", (DL_FUNC) &extraDistr_cpp_qtnorm, 7},
-    {"extraDistr_cpp_rtnorm", (DL_FUNC) &extraDistr_cpp_rtnorm, 5},
-    {"extraDistr_cpp_dtpois", (DL_FUNC) &extraDistr_cpp_dtpois, 5},
-    {"extraDistr_cpp_ptpois", (DL_FUNC) &extraDistr_cpp_ptpois, 6},
-    {"extraDistr_cpp_qtpois", (DL_FUNC) &extraDistr_cpp_qtpois, 6},
-    {"extraDistr_cpp_rtpois", (DL_FUNC) &extraDistr_cpp_rtpois, 4},
-    {"extraDistr_cpp_qtlambda", (DL_FUNC) &extraDistr_cpp_qtlambda, 4},
-    {"extraDistr_cpp_rtlambda", (DL_FUNC) &extraDistr_cpp_rtlambda, 2},
-    {"extraDistr_cpp_dwald", (DL_FUNC) &extraDistr_cpp_dwald, 4},
-    {"extraDistr_cpp_pwald", (DL_FUNC) &extraDistr_cpp_pwald, 5},
-    {"extraDistr_cpp_rwald", (DL_FUNC) &extraDistr_cpp_rwald, 3},
-    {"extraDistr_cpp_dzib", (DL_FUNC) &extraDistr_cpp_dzib, 5},
-    {"extraDistr_cpp_pzib", (DL_FUNC) &extraDistr_cpp_pzib, 6},
-    {"extraDistr_cpp_qzib", (DL_FUNC) &extraDistr_cpp_qzib, 6},
-    {"extraDistr_cpp_rzib", (DL_FUNC) &extraDistr_cpp_rzib, 4},
-    {"extraDistr_cpp_dzinb", (DL_FUNC) &extraDistr_cpp_dzinb, 5},
-    {"extraDistr_cpp_pzinb", (DL_FUNC) &extraDistr_cpp_pzinb, 6},
-    {"extraDistr_cpp_qzinb", (DL_FUNC) &extraDistr_cpp_qzinb, 6},
-    {"extraDistr_cpp_rzinb", (DL_FUNC) &extraDistr_cpp_rzinb, 4},
-    {"extraDistr_cpp_dzip", (DL_FUNC) &extraDistr_cpp_dzip, 4},
-    {"extraDistr_cpp_pzip", (DL_FUNC) &extraDistr_cpp_pzip, 5},
-    {"extraDistr_cpp_qzip", (DL_FUNC) &extraDistr_cpp_qzip, 5},
-    {"extraDistr_cpp_rzip", (DL_FUNC) &extraDistr_cpp_rzip, 3},
+    {"_extraDistr_cpp_dbern", (DL_FUNC) &_extraDistr_cpp_dbern, 3},
+    {"_extraDistr_cpp_pbern", (DL_FUNC) &_extraDistr_cpp_pbern, 4},
+    {"_extraDistr_cpp_qbern", (DL_FUNC) &_extraDistr_cpp_qbern, 4},
+    {"_extraDistr_cpp_rbern", (DL_FUNC) &_extraDistr_cpp_rbern, 2},
+    {"_extraDistr_cpp_dbbinom", (DL_FUNC) &_extraDistr_cpp_dbbinom, 5},
+    {"_extraDistr_cpp_pbbinom", (DL_FUNC) &_extraDistr_cpp_pbbinom, 6},
+    {"_extraDistr_cpp_rbbinom", (DL_FUNC) &_extraDistr_cpp_rbbinom, 4},
+    {"_extraDistr_cpp_dbnbinom", (DL_FUNC) &_extraDistr_cpp_dbnbinom, 5},
+    {"_extraDistr_cpp_pbnbinom", (DL_FUNC) &_extraDistr_cpp_pbnbinom, 6},
+    {"_extraDistr_cpp_rbnbinom", (DL_FUNC) &_extraDistr_cpp_rbnbinom, 4},
+    {"_extraDistr_cpp_dbetapr", (DL_FUNC) &_extraDistr_cpp_dbetapr, 5},
+    {"_extraDistr_cpp_pbetapr", (DL_FUNC) &_extraDistr_cpp_pbetapr, 6},
+    {"_extraDistr_cpp_qbetapr", (DL_FUNC) &_extraDistr_cpp_qbetapr, 6},
+    {"_extraDistr_cpp_rbetapr", (DL_FUNC) &_extraDistr_cpp_rbetapr, 4},
+    {"_extraDistr_cpp_dbhatt", (DL_FUNC) &_extraDistr_cpp_dbhatt, 5},
+    {"_extraDistr_cpp_pbhatt", (DL_FUNC) &_extraDistr_cpp_pbhatt, 6},
+    {"_extraDistr_cpp_rbhatt", (DL_FUNC) &_extraDistr_cpp_rbhatt, 4},
+    {"_extraDistr_cpp_dfatigue", (DL_FUNC) &_extraDistr_cpp_dfatigue, 5},
+    {"_extraDistr_cpp_pfatigue", (DL_FUNC) &_extraDistr_cpp_pfatigue, 6},
+    {"_extraDistr_cpp_qfatigue", (DL_FUNC) &_extraDistr_cpp_qfatigue, 6},
+    {"_extraDistr_cpp_rfatigue", (DL_FUNC) &_extraDistr_cpp_rfatigue, 4},
+    {"_extraDistr_cpp_dbnorm", (DL_FUNC) &_extraDistr_cpp_dbnorm, 8},
+    {"_extraDistr_cpp_rbnorm", (DL_FUNC) &_extraDistr_cpp_rbnorm, 6},
+    {"_extraDistr_cpp_dbpois", (DL_FUNC) &_extraDistr_cpp_dbpois, 6},
+    {"_extraDistr_cpp_rbpois", (DL_FUNC) &_extraDistr_cpp_rbpois, 4},
+    {"_extraDistr_cpp_rcatlp", (DL_FUNC) &_extraDistr_cpp_rcatlp, 2},
+    {"_extraDistr_cpp_dcat", (DL_FUNC) &_extraDistr_cpp_dcat, 3},
+    {"_extraDistr_cpp_pcat", (DL_FUNC) &_extraDistr_cpp_pcat, 4},
+    {"_extraDistr_cpp_qcat", (DL_FUNC) &_extraDistr_cpp_qcat, 4},
+    {"_extraDistr_cpp_rcat", (DL_FUNC) &_extraDistr_cpp_rcat, 2},
+    {"_extraDistr_cpp_ddirichlet", (DL_FUNC) &_extraDistr_cpp_ddirichlet, 3},
+    {"_extraDistr_cpp_rdirichlet", (DL_FUNC) &_extraDistr_cpp_rdirichlet, 2},
+    {"_extraDistr_cpp_ddirmnom", (DL_FUNC) &_extraDistr_cpp_ddirmnom, 4},
+    {"_extraDistr_cpp_rdirmnom", (DL_FUNC) &_extraDistr_cpp_rdirmnom, 3},
+    {"_extraDistr_cpp_ddgamma", (DL_FUNC) &_extraDistr_cpp_ddgamma, 4},
+    {"_extraDistr_cpp_ddlaplace", (DL_FUNC) &_extraDistr_cpp_ddlaplace, 4},
+    {"_extraDistr_cpp_pdlaplace", (DL_FUNC) &_extraDistr_cpp_pdlaplace, 5},
+    {"_extraDistr_cpp_rdlaplace", (DL_FUNC) &_extraDistr_cpp_rdlaplace, 3},
+    {"_extraDistr_cpp_ddnorm", (DL_FUNC) &_extraDistr_cpp_ddnorm, 4},
+    {"_extraDistr_cpp_ddunif", (DL_FUNC) &_extraDistr_cpp_ddunif, 4},
+    {"_extraDistr_cpp_pdunif", (DL_FUNC) &_extraDistr_cpp_pdunif, 5},
+    {"_extraDistr_cpp_qdunif", (DL_FUNC) &_extraDistr_cpp_qdunif, 5},
+    {"_extraDistr_cpp_rdunif", (DL_FUNC) &_extraDistr_cpp_rdunif, 3},
+    {"_extraDistr_cpp_ddweibull", (DL_FUNC) &_extraDistr_cpp_ddweibull, 4},
+    {"_extraDistr_cpp_pdweibull", (DL_FUNC) &_extraDistr_cpp_pdweibull, 5},
+    {"_extraDistr_cpp_qdweibull", (DL_FUNC) &_extraDistr_cpp_qdweibull, 5},
+    {"_extraDistr_cpp_rdweibull", (DL_FUNC) &_extraDistr_cpp_rdweibull, 3},
+    {"_extraDistr_cpp_dfrechet", (DL_FUNC) &_extraDistr_cpp_dfrechet, 5},
+    {"_extraDistr_cpp_pfrechet", (DL_FUNC) &_extraDistr_cpp_pfrechet, 6},
+    {"_extraDistr_cpp_qfrechet", (DL_FUNC) &_extraDistr_cpp_qfrechet, 6},
+    {"_extraDistr_cpp_rfrechet", (DL_FUNC) &_extraDistr_cpp_rfrechet, 4},
+    {"_extraDistr_cpp_dgpois", (DL_FUNC) &_extraDistr_cpp_dgpois, 4},
+    {"_extraDistr_cpp_pgpois", (DL_FUNC) &_extraDistr_cpp_pgpois, 5},
+    {"_extraDistr_cpp_rgpois", (DL_FUNC) &_extraDistr_cpp_rgpois, 3},
+    {"_extraDistr_cpp_dgev", (DL_FUNC) &_extraDistr_cpp_dgev, 5},
+    {"_extraDistr_cpp_pgev", (DL_FUNC) &_extraDistr_cpp_pgev, 6},
+    {"_extraDistr_cpp_qgev", (DL_FUNC) &_extraDistr_cpp_qgev, 6},
+    {"_extraDistr_cpp_rgev", (DL_FUNC) &_extraDistr_cpp_rgev, 4},
+    {"_extraDistr_cpp_dgompertz", (DL_FUNC) &_extraDistr_cpp_dgompertz, 4},
+    {"_extraDistr_cpp_pgompertz", (DL_FUNC) &_extraDistr_cpp_pgompertz, 5},
+    {"_extraDistr_cpp_qgompertz", (DL_FUNC) &_extraDistr_cpp_qgompertz, 5},
+    {"_extraDistr_cpp_rgompertz", (DL_FUNC) &_extraDistr_cpp_rgompertz, 3},
+    {"_extraDistr_cpp_dgpd", (DL_FUNC) &_extraDistr_cpp_dgpd, 5},
+    {"_extraDistr_cpp_pgpd", (DL_FUNC) &_extraDistr_cpp_pgpd, 6},
+    {"_extraDistr_cpp_qgpd", (DL_FUNC) &_extraDistr_cpp_qgpd, 6},
+    {"_extraDistr_cpp_rgpd", (DL_FUNC) &_extraDistr_cpp_rgpd, 4},
+    {"_extraDistr_cpp_dgumbel", (DL_FUNC) &_extraDistr_cpp_dgumbel, 4},
+    {"_extraDistr_cpp_pgumbel", (DL_FUNC) &_extraDistr_cpp_pgumbel, 5},
+    {"_extraDistr_cpp_qgumbel", (DL_FUNC) &_extraDistr_cpp_qgumbel, 5},
+    {"_extraDistr_cpp_rgumbel", (DL_FUNC) &_extraDistr_cpp_rgumbel, 3},
+    {"_extraDistr_cpp_dhcauchy", (DL_FUNC) &_extraDistr_cpp_dhcauchy, 3},
+    {"_extraDistr_cpp_phcauchy", (DL_FUNC) &_extraDistr_cpp_phcauchy, 4},
+    {"_extraDistr_cpp_qhcauchy", (DL_FUNC) &_extraDistr_cpp_qhcauchy, 4},
+    {"_extraDistr_cpp_rhcauchy", (DL_FUNC) &_extraDistr_cpp_rhcauchy, 2},
+    {"_extraDistr_cpp_dhnorm", (DL_FUNC) &_extraDistr_cpp_dhnorm, 3},
+    {"_extraDistr_cpp_phnorm", (DL_FUNC) &_extraDistr_cpp_phnorm, 4},
+    {"_extraDistr_cpp_qhnorm", (DL_FUNC) &_extraDistr_cpp_qhnorm, 4},
+    {"_extraDistr_cpp_rhnorm", (DL_FUNC) &_extraDistr_cpp_rhnorm, 2},
+    {"_extraDistr_cpp_dht", (DL_FUNC) &_extraDistr_cpp_dht, 4},
+    {"_extraDistr_cpp_pht", (DL_FUNC) &_extraDistr_cpp_pht, 5},
+    {"_extraDistr_cpp_qht", (DL_FUNC) &_extraDistr_cpp_qht, 5},
+    {"_extraDistr_cpp_rht", (DL_FUNC) &_extraDistr_cpp_rht, 3},
+    {"_extraDistr_cpp_dhuber", (DL_FUNC) &_extraDistr_cpp_dhuber, 5},
+    {"_extraDistr_cpp_phuber", (DL_FUNC) &_extraDistr_cpp_phuber, 6},
+    {"_extraDistr_cpp_qhuber", (DL_FUNC) &_extraDistr_cpp_qhuber, 6},
+    {"_extraDistr_cpp_rhuber", (DL_FUNC) &_extraDistr_cpp_rhuber, 4},
+    {"_extraDistr_cpp_dinvgamma", (DL_FUNC) &_extraDistr_cpp_dinvgamma, 4},
+    {"_extraDistr_cpp_pinvgamma", (DL_FUNC) &_extraDistr_cpp_pinvgamma, 5},
+    {"_extraDistr_cpp_dkumar", (DL_FUNC) &_extraDistr_cpp_dkumar, 4},
+    {"_extraDistr_cpp_pkumar", (DL_FUNC) &_extraDistr_cpp_pkumar, 5},
+    {"_extraDistr_cpp_qkumar", (DL_FUNC) &_extraDistr_cpp_qkumar, 5},
+    {"_extraDistr_cpp_rkumar", (DL_FUNC) &_extraDistr_cpp_rkumar, 3},
+    {"_extraDistr_cpp_dlaplace", (DL_FUNC) &_extraDistr_cpp_dlaplace, 4},
+    {"_extraDistr_cpp_plaplace", (DL_FUNC) &_extraDistr_cpp_plaplace, 5},
+    {"_extraDistr_cpp_qlaplace", (DL_FUNC) &_extraDistr_cpp_qlaplace, 5},
+    {"_extraDistr_cpp_rlaplace", (DL_FUNC) &_extraDistr_cpp_rlaplace, 3},
+    {"_extraDistr_cpp_dlgser", (DL_FUNC) &_extraDistr_cpp_dlgser, 3},
+    {"_extraDistr_cpp_plgser", (DL_FUNC) &_extraDistr_cpp_plgser, 4},
+    {"_extraDistr_cpp_qlgser", (DL_FUNC) &_extraDistr_cpp_qlgser, 4},
+    {"_extraDistr_cpp_rlgser", (DL_FUNC) &_extraDistr_cpp_rlgser, 2},
+    {"_extraDistr_cpp_dlomax", (DL_FUNC) &_extraDistr_cpp_dlomax, 4},
+    {"_extraDistr_cpp_plomax", (DL_FUNC) &_extraDistr_cpp_plomax, 5},
+    {"_extraDistr_cpp_qlomax", (DL_FUNC) &_extraDistr_cpp_qlomax, 5},
+    {"_extraDistr_cpp_rlomax", (DL_FUNC) &_extraDistr_cpp_rlomax, 3},
+    {"_extraDistr_cpp_dmixnorm", (DL_FUNC) &_extraDistr_cpp_dmixnorm, 5},
+    {"_extraDistr_cpp_pmixnorm", (DL_FUNC) &_extraDistr_cpp_pmixnorm, 6},
+    {"_extraDistr_cpp_rmixnorm", (DL_FUNC) &_extraDistr_cpp_rmixnorm, 4},
+    {"_extraDistr_cpp_dmixpois", (DL_FUNC) &_extraDistr_cpp_dmixpois, 4},
+    {"_extraDistr_cpp_pmixpois", (DL_FUNC) &_extraDistr_cpp_pmixpois, 5},
+    {"_extraDistr_cpp_rmixpois", (DL_FUNC) &_extraDistr_cpp_rmixpois, 3},
+    {"_extraDistr_cpp_dmnom", (DL_FUNC) &_extraDistr_cpp_dmnom, 4},
+    {"_extraDistr_cpp_rmnom", (DL_FUNC) &_extraDistr_cpp_rmnom, 3},
+    {"_extraDistr_cpp_dmvhyper", (DL_FUNC) &_extraDistr_cpp_dmvhyper, 4},
+    {"_extraDistr_cpp_rmvhyper", (DL_FUNC) &_extraDistr_cpp_rmvhyper, 3},
+    {"_extraDistr_cpp_dnhyper", (DL_FUNC) &_extraDistr_cpp_dnhyper, 5},
+    {"_extraDistr_cpp_pnhyper", (DL_FUNC) &_extraDistr_cpp_pnhyper, 6},
+    {"_extraDistr_cpp_qnhyper", (DL_FUNC) &_extraDistr_cpp_qnhyper, 6},
+    {"_extraDistr_cpp_rnhyper", (DL_FUNC) &_extraDistr_cpp_rnhyper, 4},
+    {"_extraDistr_cpp_dnst", (DL_FUNC) &_extraDistr_cpp_dnst, 5},
+    {"_extraDistr_cpp_pnst", (DL_FUNC) &_extraDistr_cpp_pnst, 6},
+    {"_extraDistr_cpp_qnst", (DL_FUNC) &_extraDistr_cpp_qnst, 6},
+    {"_extraDistr_cpp_rnst", (DL_FUNC) &_extraDistr_cpp_rnst, 4},
+    {"_extraDistr_cpp_dnsbeta", (DL_FUNC) &_extraDistr_cpp_dnsbeta, 6},
+    {"_extraDistr_cpp_pnsbeta", (DL_FUNC) &_extraDistr_cpp_pnsbeta, 7},
+    {"_extraDistr_cpp_qnsbeta", (DL_FUNC) &_extraDistr_cpp_qnsbeta, 7},
+    {"_extraDistr_cpp_rnsbeta", (DL_FUNC) &_extraDistr_cpp_rnsbeta, 5},
+    {"_extraDistr_cpp_dpareto", (DL_FUNC) &_extraDistr_cpp_dpareto, 4},
+    {"_extraDistr_cpp_ppareto", (DL_FUNC) &_extraDistr_cpp_ppareto, 5},
+    {"_extraDistr_cpp_qpareto", (DL_FUNC) &_extraDistr_cpp_qpareto, 5},
+    {"_extraDistr_cpp_rpareto", (DL_FUNC) &_extraDistr_cpp_rpareto, 3},
+    {"_extraDistr_cpp_dpower", (DL_FUNC) &_extraDistr_cpp_dpower, 4},
+    {"_extraDistr_cpp_ppower", (DL_FUNC) &_extraDistr_cpp_ppower, 5},
+    {"_extraDistr_cpp_qpower", (DL_FUNC) &_extraDistr_cpp_qpower, 5},
+    {"_extraDistr_cpp_rpower", (DL_FUNC) &_extraDistr_cpp_rpower, 3},
+    {"_extraDistr_cpp_dprop", (DL_FUNC) &_extraDistr_cpp_dprop, 5},
+    {"_extraDistr_cpp_pprop", (DL_FUNC) &_extraDistr_cpp_pprop, 6},
+    {"_extraDistr_cpp_qprop", (DL_FUNC) &_extraDistr_cpp_qprop, 6},
+    {"_extraDistr_cpp_rprop", (DL_FUNC) &_extraDistr_cpp_rprop, 4},
+    {"_extraDistr_cpp_rsign", (DL_FUNC) &_extraDistr_cpp_rsign, 1},
+    {"_extraDistr_cpp_drayleigh", (DL_FUNC) &_extraDistr_cpp_drayleigh, 3},
+    {"_extraDistr_cpp_prayleigh", (DL_FUNC) &_extraDistr_cpp_prayleigh, 4},
+    {"_extraDistr_cpp_qrayleigh", (DL_FUNC) &_extraDistr_cpp_qrayleigh, 4},
+    {"_extraDistr_cpp_rrayleigh", (DL_FUNC) &_extraDistr_cpp_rrayleigh, 2},
+    {"_extraDistr_cpp_dsgomp", (DL_FUNC) &_extraDistr_cpp_dsgomp, 4},
+    {"_extraDistr_cpp_psgomp", (DL_FUNC) &_extraDistr_cpp_psgomp, 5},
+    {"_extraDistr_cpp_rsgomp", (DL_FUNC) &_extraDistr_cpp_rsgomp, 3},
+    {"_extraDistr_cpp_dskellam", (DL_FUNC) &_extraDistr_cpp_dskellam, 4},
+    {"_extraDistr_cpp_rskellam", (DL_FUNC) &_extraDistr_cpp_rskellam, 3},
+    {"_extraDistr_cpp_dslash", (DL_FUNC) &_extraDistr_cpp_dslash, 4},
+    {"_extraDistr_cpp_pslash", (DL_FUNC) &_extraDistr_cpp_pslash, 5},
+    {"_extraDistr_cpp_rslash", (DL_FUNC) &_extraDistr_cpp_rslash, 3},
+    {"_extraDistr_cpp_dtriang", (DL_FUNC) &_extraDistr_cpp_dtriang, 5},
+    {"_extraDistr_cpp_ptriang", (DL_FUNC) &_extraDistr_cpp_ptriang, 6},
+    {"_extraDistr_cpp_qtriang", (DL_FUNC) &_extraDistr_cpp_qtriang, 6},
+    {"_extraDistr_cpp_rtriang", (DL_FUNC) &_extraDistr_cpp_rtriang, 4},
+    {"_extraDistr_cpp_dtbinom", (DL_FUNC) &_extraDistr_cpp_dtbinom, 6},
+    {"_extraDistr_cpp_ptbinom", (DL_FUNC) &_extraDistr_cpp_ptbinom, 7},
+    {"_extraDistr_cpp_qtbinom", (DL_FUNC) &_extraDistr_cpp_qtbinom, 7},
+    {"_extraDistr_cpp_rtbinom", (DL_FUNC) &_extraDistr_cpp_rtbinom, 5},
+    {"_extraDistr_cpp_dtnorm", (DL_FUNC) &_extraDistr_cpp_dtnorm, 6},
+    {"_extraDistr_cpp_ptnorm", (DL_FUNC) &_extraDistr_cpp_ptnorm, 7},
+    {"_extraDistr_cpp_qtnorm", (DL_FUNC) &_extraDistr_cpp_qtnorm, 7},
+    {"_extraDistr_cpp_rtnorm", (DL_FUNC) &_extraDistr_cpp_rtnorm, 5},
+    {"_extraDistr_cpp_dtpois", (DL_FUNC) &_extraDistr_cpp_dtpois, 5},
+    {"_extraDistr_cpp_ptpois", (DL_FUNC) &_extraDistr_cpp_ptpois, 6},
+    {"_extraDistr_cpp_qtpois", (DL_FUNC) &_extraDistr_cpp_qtpois, 6},
+    {"_extraDistr_cpp_rtpois", (DL_FUNC) &_extraDistr_cpp_rtpois, 4},
+    {"_extraDistr_cpp_qtlambda", (DL_FUNC) &_extraDistr_cpp_qtlambda, 4},
+    {"_extraDistr_cpp_rtlambda", (DL_FUNC) &_extraDistr_cpp_rtlambda, 2},
+    {"_extraDistr_cpp_dwald", (DL_FUNC) &_extraDistr_cpp_dwald, 4},
+    {"_extraDistr_cpp_pwald", (DL_FUNC) &_extraDistr_cpp_pwald, 5},
+    {"_extraDistr_cpp_rwald", (DL_FUNC) &_extraDistr_cpp_rwald, 3},
+    {"_extraDistr_cpp_dzib", (DL_FUNC) &_extraDistr_cpp_dzib, 5},
+    {"_extraDistr_cpp_pzib", (DL_FUNC) &_extraDistr_cpp_pzib, 6},
+    {"_extraDistr_cpp_qzib", (DL_FUNC) &_extraDistr_cpp_qzib, 6},
+    {"_extraDistr_cpp_rzib", (DL_FUNC) &_extraDistr_cpp_rzib, 4},
+    {"_extraDistr_cpp_dzinb", (DL_FUNC) &_extraDistr_cpp_dzinb, 5},
+    {"_extraDistr_cpp_pzinb", (DL_FUNC) &_extraDistr_cpp_pzinb, 6},
+    {"_extraDistr_cpp_qzinb", (DL_FUNC) &_extraDistr_cpp_qzinb, 6},
+    {"_extraDistr_cpp_rzinb", (DL_FUNC) &_extraDistr_cpp_rzinb, 4},
+    {"_extraDistr_cpp_dzip", (DL_FUNC) &_extraDistr_cpp_dzip, 4},
+    {"_extraDistr_cpp_pzip", (DL_FUNC) &_extraDistr_cpp_pzip, 5},
+    {"_extraDistr_cpp_qzip", (DL_FUNC) &_extraDistr_cpp_qzip, 5},
+    {"_extraDistr_cpp_rzip", (DL_FUNC) &_extraDistr_cpp_rzip, 3},
     {NULL, NULL, 0}
 };
 
