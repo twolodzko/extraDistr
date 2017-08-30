@@ -182,11 +182,13 @@ NumericMatrix cpp_rdirmnom(
     sum_p = 1.0;
     
     for (int j = 0; j < k-1; j++) {
-      if ( size_left > 0 ) {
+      if ( size_left > 0.0 ) {
         p_tmp = pi[j] / row_sum;
         x(i, j) = R::rbinom(size_left, trunc_p(p_tmp/sum_p));
         size_left -= x(i, j);
         sum_p -= p_tmp;
+      } else {
+        break;
       }
     }
     
