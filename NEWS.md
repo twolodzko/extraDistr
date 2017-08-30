@@ -1,4 +1,9 @@
 
+### 1.8.7
+
+* Fixed bug in `pinvgamma` (lower.tail and log.p didn't work)
+* Fixed underflow issues with `rmnom` and `rdirmnom` (#7)
+
 ### 1.8.6
 
 * Now consistently with base R only the first elements of the logical
