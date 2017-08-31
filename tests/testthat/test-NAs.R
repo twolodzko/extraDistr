@@ -199,6 +199,10 @@ test_that("Missing values in PDF and PMF functions", {
   expect_true(is.na(dpareto(1, NA, 1)))
   expect_true(is.na(dpareto(1, 1, NA)))
   
+  expect_true(is.na(dpower(NA, 1, 1)))
+  expect_true(is.na(dpower(1, NA, 1)))
+  expect_true(is.na(dpower(1, 1, NA)))
+  
   expect_true(is.na(dprop(NA, 10, 0.5)))
   expect_true(is.na(dprop(1, NA, 0.5)))
   expect_true(is.na(dprop(1, 10, NA)))
@@ -413,6 +417,10 @@ test_that("Wrong parameter values in CDF functions", {
   expect_true(is.na(ppareto(1, NA, 1)))
   expect_true(is.na(ppareto(1, 1, NA)))
   
+  expect_true(is.na(ppower(NA, 1, 1)))
+  expect_true(is.na(ppower(1, NA, 1)))
+  expect_true(is.na(ppower(1, 1, NA)))
+  
   expect_true(is.na(pprop(NA, 10, 0.5)))
   expect_true(is.na(pprop(1, NA, 0.5)))
   expect_true(is.na(pprop(1, 10, NA)))
@@ -572,6 +580,10 @@ test_that("Wrong parameter values in inverse CDF functions", {
   expect_true(is.na(qpareto(NA, 1, 1)))
   expect_true(is.na(qpareto(0.5, NA, 1)))
   expect_true(is.na(qpareto(0.5, 1, NA)))
+  
+  expect_true(is.na(dpower(NA, 1, 1)))
+  expect_true(is.na(dpower(0.5, NA, 1)))
+  expect_true(is.na(dpower(0.5, 1, NA)))
   
   expect_true(is.na(qprop(NA, 10, 0.5)))
   expect_true(is.na(qprop(0.5, NA, 0.5)))
@@ -769,6 +781,9 @@ test_that("Wrong parameter values in RNG functions", {
   
   expect_warning(expect_true(is.na(rpareto(1, NA, 1))))
   expect_warning(expect_true(is.na(rpareto(1, 1, NA))))
+  
+  expect_warning(expect_true(is.na(dpower(1, NA, 1))))
+  expect_warning(expect_true(is.na(dpower(1, 1, NA))))
   
   expect_warning(expect_true(is.na(rprop(1, NA, 0.5))))
   expect_warning(expect_true(is.na(rprop(1, 10, NA))))

@@ -19,4 +19,14 @@ test_that("other tests", {
   expect_silent(!anyNA(rtlambda(5000, 0)))
   expect_silent(!anyNA(rtlambda(5000, 1)))
   
+  expect_silent(dbvnorm(mtcars[, 1:2]))
+  expect_error(dbvnorm(mtcars))
+  
+  xx <- seq(-6, 6, by = 0.01)
+  expect_identical(dnorm(xx), dtnorm(xx))
+  expect_identical(pnorm(xx), ptnorm(xx))
+  
+  pp <- seq(0, 1, by = 0.01)
+  expect_identical(qnorm(pp), qtnorm(pp))
+  
 })
