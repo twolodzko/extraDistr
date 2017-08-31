@@ -782,8 +782,8 @@ test_that("Wrong parameter values in RNG functions", {
   expect_warning(expect_true(is.na(rpareto(1, NA, 1))))
   expect_warning(expect_true(is.na(rpareto(1, 1, NA))))
   
-  expect_warning(expect_true(is.na(dpower(1, NA, 1))))
-  expect_warning(expect_true(is.na(dpower(1, 1, NA))))
+  expect_warning(expect_true(is.na(rpower(1, NA, 1))))
+  expect_warning(expect_true(is.na(rpower(1, 1, NA))))
   
   expect_warning(expect_true(is.na(rprop(1, NA, 0.5))))
   expect_warning(expect_true(is.na(rprop(1, 10, NA))))
