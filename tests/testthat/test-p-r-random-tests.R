@@ -136,6 +136,9 @@ test_that("p-r random tests", {
   
   expect_true(dkwtest("pareto", 1, 1))
   
+  expect_true(dkwtest("power", 1, 1))
+  expect_true(dkwtest("power", 5, 16))
+  
   expect_true(dkwtest("prop", 10, 0.5))
   expect_true(dkwtest("prop", 100, 0.5))
   expect_true(dkwtest("prop", 1000, 0.5))
@@ -148,6 +151,9 @@ test_that("p-r random tests", {
   expect_true(dkwtest("sgomp", 0.4, 1))
   
   expect_true(dkwtest("slash", 1, 1))
+
+  expect_true(dkwtest("tbinom", 200, 0.5, a = 100))
+  expect_true(dkwtest("tbinom", 200, 0.5, b = 100))
   
   expect_true(dkwtest("tnorm", 0, 1, -1, 1))
   expect_true(dkwtest("tnorm", 0, 1, -2, 2))

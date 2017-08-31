@@ -46,6 +46,9 @@ test_that("cdf vs cumsum(pdf)", {
   expect_equal(dnhyper2(xx, 60, 35, 15), dnhyper(xx, 60, 35, 15), tolerance = epsilon)
   expect_equal(cumsum(dnhyper2(xx, 60, 35, 15)), pnhyper(xx, 60, 35, 15), tolerance = epsilon)
   
+  expect_equal(cumsum(dtbinom(xx, 200, 0.5, a = 100)), ptbinom(xx, 200, 0.5, a = 100), tolerance = epsilon)
+  expect_equal(cumsum(dtbinom(xx, 200, 0.5, b = 100)), ptbinom(xx, 200, 0.5, b = 100), tolerance = epsilon)
+  
   expect_equal(cumsum(dbbinom(xx, 200, 5, 13)), pbbinom(xx, 200, 5, 13), tolerance = epsilon)
   expect_equal(cumsum(dbnbinom(xx, 70, 5, 13)), pbnbinom(xx, 70, 5, 13), tolerance = epsilon)
   expect_equal(cumsum(dgpois(xx, 500, 16)), pgpois(xx, 500, 16), tolerance = epsilon)
