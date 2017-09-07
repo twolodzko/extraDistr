@@ -11,7 +11,7 @@ dbvpois(x, y = NULL, a, b, c, log = FALSE)
 rbvpois(n, a, b, c)
 }
 \arguments{
-\item{x, y}{vectors of quantiles; alternativelly x may be a two-column
+\item{x, y}{vectors of quantiles; alternatively x may be a two-column
 matrix (or data.frame) and y may be omitted.}
 
 \item{a, b, c}{positive valued parameters.}

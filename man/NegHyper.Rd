@@ -55,7 +55,7 @@ f(x) = choose(x-1, r-1)*choose(m+n-x, m-r)/choose(m+n, n)
 
 The algorithm used for calculating probability mass function,
 cumulative distribution function and quantile function is based
-on fortran program NHYPERG created by Berry and Mielke (1996, 1998).
+on Fortran program NHYPERG created by Berry and Mielke (1996, 1998).
 Random generation is done by inverse transform sampling.
 }
 \examples{
