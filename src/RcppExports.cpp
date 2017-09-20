@@ -1386,6 +1386,67 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// cpp_dlst
+NumericVector cpp_dlst(const NumericVector& x, const NumericVector& nu, const NumericVector& mu, const NumericVector& sigma, const bool& log_prob);
+RcppExport SEXP _extraDistr_cpp_dlst(SEXP xSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type nu(nuSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_dlst(x, nu, mu, sigma, log_prob));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_plst
+NumericVector cpp_plst(const NumericVector& x, const NumericVector& nu, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
+RcppExport SEXP _extraDistr_cpp_plst(SEXP xSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type nu(nuSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_plst(x, nu, mu, sigma, lower_tail, log_prob));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_qlst
+NumericVector cpp_qlst(const NumericVector& p, const NumericVector& nu, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
+RcppExport SEXP _extraDistr_cpp_qlst(SEXP pSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type nu(nuSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_qlst(p, nu, mu, sigma, lower_tail, log_prob));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_rlst
+NumericVector cpp_rlst(const int& n, const NumericVector& nu, const NumericVector& mu, const NumericVector& sigma);
+RcppExport SEXP _extraDistr_cpp_rlst(SEXP nSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP sigmaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type nu(nuSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_rlst(n, nu, mu, sigma));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cpp_dlgser
 NumericVector cpp_dlgser(const NumericVector& x, const NumericVector& theta, const bool& log_prob);
 RcppExport SEXP _extraDistr_cpp_dlgser(SEXP xSEXP, SEXP thetaSEXP, SEXP log_probSEXP) {
@@ -1695,67 +1756,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector& >::type m(mSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type r(rSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rnhyper(nn, n, m, r));
-    return rcpp_result_gen;
-END_RCPP
-}
-// cpp_dnst
-NumericVector cpp_dnst(const NumericVector& x, const NumericVector& nu, const NumericVector& mu, const NumericVector& sigma, const bool& log_prob);
-RcppExport SEXP _extraDistr_cpp_dnst(SEXP xSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP log_probSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type nu(nuSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_dnst(x, nu, mu, sigma, log_prob));
-    return rcpp_result_gen;
-END_RCPP
-}
-// cpp_pnst
-NumericVector cpp_pnst(const NumericVector& x, const NumericVector& nu, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP _extraDistr_cpp_pnst(SEXP xSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type nu(nuSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_pnst(x, nu, mu, sigma, lower_tail, log_prob));
-    return rcpp_result_gen;
-END_RCPP
-}
-// cpp_qnst
-NumericVector cpp_qnst(const NumericVector& p, const NumericVector& nu, const NumericVector& mu, const NumericVector& sigma, const bool& lower_tail, const bool& log_prob);
-RcppExport SEXP _extraDistr_cpp_qnst(SEXP pSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type nu(nuSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
-    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_qnst(p, nu, mu, sigma, lower_tail, log_prob));
-    return rcpp_result_gen;
-END_RCPP
-}
-// cpp_rnst
-NumericVector cpp_rnst(const int& n, const NumericVector& nu, const NumericVector& mu, const NumericVector& sigma);
-RcppExport SEXP _extraDistr_cpp_rnst(SEXP nSEXP, SEXP nuSEXP, SEXP muSEXP, SEXP sigmaSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type nu(nuSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type sigma(sigmaSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_rnst(n, nu, mu, sigma));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -2771,6 +2771,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_extraDistr_cpp_plaplace", (DL_FUNC) &_extraDistr_cpp_plaplace, 5},
     {"_extraDistr_cpp_qlaplace", (DL_FUNC) &_extraDistr_cpp_qlaplace, 5},
     {"_extraDistr_cpp_rlaplace", (DL_FUNC) &_extraDistr_cpp_rlaplace, 3},
+    {"_extraDistr_cpp_dlst", (DL_FUNC) &_extraDistr_cpp_dlst, 5},
+    {"_extraDistr_cpp_plst", (DL_FUNC) &_extraDistr_cpp_plst, 6},
+    {"_extraDistr_cpp_qlst", (DL_FUNC) &_extraDistr_cpp_qlst, 6},
+    {"_extraDistr_cpp_rlst", (DL_FUNC) &_extraDistr_cpp_rlst, 4},
     {"_extraDistr_cpp_dlgser", (DL_FUNC) &_extraDistr_cpp_dlgser, 3},
     {"_extraDistr_cpp_plgser", (DL_FUNC) &_extraDistr_cpp_plgser, 4},
     {"_extraDistr_cpp_qlgser", (DL_FUNC) &_extraDistr_cpp_qlgser, 4},
@@ -2793,10 +2797,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_extraDistr_cpp_pnhyper", (DL_FUNC) &_extraDistr_cpp_pnhyper, 6},
     {"_extraDistr_cpp_qnhyper", (DL_FUNC) &_extraDistr_cpp_qnhyper, 6},
     {"_extraDistr_cpp_rnhyper", (DL_FUNC) &_extraDistr_cpp_rnhyper, 4},
-    {"_extraDistr_cpp_dnst", (DL_FUNC) &_extraDistr_cpp_dnst, 5},
-    {"_extraDistr_cpp_pnst", (DL_FUNC) &_extraDistr_cpp_pnst, 6},
-    {"_extraDistr_cpp_qnst", (DL_FUNC) &_extraDistr_cpp_qnst, 6},
-    {"_extraDistr_cpp_rnst", (DL_FUNC) &_extraDistr_cpp_rnst, 4},
     {"_extraDistr_cpp_dnsbeta", (DL_FUNC) &_extraDistr_cpp_dnsbeta, 6},
     {"_extraDistr_cpp_pnsbeta", (DL_FUNC) &_extraDistr_cpp_pnsbeta, 7},
     {"_extraDistr_cpp_qnsbeta", (DL_FUNC) &_extraDistr_cpp_qnsbeta, 7},

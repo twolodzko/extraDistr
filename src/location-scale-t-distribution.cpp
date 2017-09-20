@@ -25,7 +25,7 @@ using Rcpp::NumericVector;
 *
 */
 
-inline double pdf_nst(double x, double nu, double mu, double sigma,
+inline double pdf_lst(double x, double nu, double mu, double sigma,
                       bool& throw_warning) {
   if (ISNAN(x) || ISNAN(nu) || ISNAN(mu) || ISNAN(sigma))
     return x+nu+mu+sigma;
@@ -37,7 +37,7 @@ inline double pdf_nst(double x, double nu, double mu, double sigma,
   return R::dt(z, nu, false)/sigma;
 }
 
-inline double cdf_nst(double x, double nu, double mu, double sigma,
+inline double cdf_lst(double x, double nu, double mu, double sigma,
                       bool& throw_warning) {
   if (ISNAN(x) || ISNAN(nu) || ISNAN(mu) || ISNAN(sigma))
     return x+nu+mu+sigma;
@@ -49,7 +49,7 @@ inline double cdf_nst(double x, double nu, double mu, double sigma,
   return R::pt(z, nu, true, false);
 }
 
-inline double invcdf_nst(double p, double nu, double mu, double sigma,
+inline double invcdf_lst(double p, double nu, double mu, double sigma,
                          bool& throw_warning) {
   if (ISNAN(p) || ISNAN(nu) || ISNAN(mu) || ISNAN(sigma))
     return p+nu+mu+sigma;
@@ -60,7 +60,7 @@ inline double invcdf_nst(double p, double nu, double mu, double sigma,
   return R::qt(p, nu, true, false)*sigma + mu;
 }
 
-inline double rng_nst(double nu, double mu, double sigma,
+inline double rng_lst(double nu, double mu, double sigma,
                       bool& throw_warning) {
   if (ISNAN(nu) || ISNAN(mu) || ISNAN(sigma) ||
       nu <= 0.0 || sigma <= 0.0) {
@@ -72,7 +72,7 @@ inline double rng_nst(double nu, double mu, double sigma,
 
 
 // [[Rcpp::export]]
-NumericVector cpp_dnst(
+NumericVector cpp_dlst(
     const NumericVector& x,
     const NumericVector& nu,
     const NumericVector& mu,
@@ -96,7 +96,7 @@ NumericVector cpp_dnst(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_nst(GETV(x, i), GETV(nu, i),
+    p[i] = pdf_lst(GETV(x, i), GETV(nu, i),
                    GETV(mu, i), GETV(sigma, i),
                    throw_warning);
   
@@ -111,7 +111,7 @@ NumericVector cpp_dnst(
 
 
 // [[Rcpp::export]]
-NumericVector cpp_pnst(
+NumericVector cpp_plst(
     const NumericVector& x,
     const NumericVector& nu,
     const NumericVector& mu,
@@ -136,7 +136,7 @@ NumericVector cpp_pnst(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_nst(GETV(x, i), GETV(nu, i),
+    p[i] = cdf_lst(GETV(x, i), GETV(nu, i),
                    GETV(mu, i), GETV(sigma, i),
                    throw_warning);
   
@@ -154,7 +154,7 @@ NumericVector cpp_pnst(
 
 
 // [[Rcpp::export]]
-NumericVector cpp_qnst(
+NumericVector cpp_qlst(
     const NumericVector& p,
     const NumericVector& nu,
     const NumericVector& mu,
@@ -186,7 +186,7 @@ NumericVector cpp_qnst(
     pp = 1.0 - pp;
   
   for (int i = 0; i < Nmax; i++)
-    x[i] = invcdf_nst(GETV(pp, i), GETV(nu, i),
+    x[i] = invcdf_lst(GETV(pp, i), GETV(nu, i),
                       GETV(mu, i), GETV(sigma, i),
                       throw_warning);
   
@@ -198,7 +198,7 @@ NumericVector cpp_qnst(
 
 
 // [[Rcpp::export]]
-NumericVector cpp_rnst(
+NumericVector cpp_rlst(
     const int& n,
     const NumericVector& nu,
     const NumericVector& mu,
@@ -215,7 +215,7 @@ NumericVector cpp_rnst(
   bool throw_warning = false;
   
   for (int i = 0; i < n; i++)
-    x[i] = rng_nst(GETV(nu, i), GETV(mu, i),
+    x[i] = rng_lst(GETV(nu, i), GETV(mu, i),
                    GETV(sigma, i), throw_warning);
   
   if (throw_warning)

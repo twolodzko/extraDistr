@@ -1,12 +1,12 @@
 
 
-#' Non-standard t-distribution
+#' Location-scale version of the t-distribution
 #' 
 #' Probability mass function, distribution function and random generation
-#' for non-standard t-distribution. Non-standard t-distribution besides
-#' degrees of freedom \eqn{\nu}, is parametrized using additional parameters
-#' \eqn{\mu} for location and \eqn{\sigma} for scale (\eqn{\mu=0} and
-#' \eqn{\sigma = 1} for standard t-distribution).
+#' for location-scale version of the t-distribution. Location-scale version
+#' of the t-distribution besides degrees of freedom \eqn{\nu}, is parametrized
+#' using additional parameters \eqn{\mu} for location and \eqn{\sigma} for
+#' scale (\eqn{\mu=0} and \eqn{\sigma = 1} for standard t-distribution).
 #'
 #' @param x,q	            vector of quantiles.
 #' @param p	              vector of probabilities.
@@ -30,8 +30,8 @@
 #' plot(ecdf(x))
 #' curve(pnst(x, 1000, 5, 13), -60, 60, col = "red", lwd = 2, add = TRUE)
 #' 
-#' @name NonStandardT
-#' @aliases NonStandardT
+#' @name LocationScaleT
+#' @aliases LocationScaleT
 #' @aliases dnst
 #' 
 #' @keywords distribution
@@ -41,31 +41,31 @@
 #' @export
 
 dnst <- function(x, df, mu = 0, sigma = 1, log = FALSE) {
-  cpp_dnst(x, df, mu, sigma, log[1L])
+  cpp_dlst(x, df, mu, sigma, log[1L])
 }
 
 
-#' @rdname NonStandardT
+#' @rdname LocationScaleT
 #' @export
 
 pnst <- function(q, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_pnst(q, df, mu, sigma, lower.tail[1L], log.p[1L])
+  cpp_plst(q, df, mu, sigma, lower.tail[1L], log.p[1L])
 }
 
 
-#' @rdname NonStandardT
+#' @rdname LocationScaleT
 #' @export
 
 qnst <- function(p, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
-  cpp_qnst(p, df, mu, sigma, lower.tail[1L], log.p[1L])
+  cpp_qlst(p, df, mu, sigma, lower.tail[1L], log.p[1L])
 }
 
 
-#' @rdname NonStandardT
+#' @rdname LocationScaleT
 #' @export
 
 rnst <- function(n, df, mu = 0, sigma = 1) {
   if (length(n) > 1) n <- length(n)
-  cpp_rnst(n, df, mu, sigma)
+  cpp_rlst(n, df, mu, sigma)
 }
 

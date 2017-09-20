@@ -385,6 +385,22 @@ cpp_rlaplace <- function(n, mu, sigma) {
     .Call(`_extraDistr_cpp_rlaplace`, n, mu, sigma)
 }
 
+cpp_dlst <- function(x, nu, mu, sigma, log_prob = FALSE) {
+    .Call(`_extraDistr_cpp_dlst`, x, nu, mu, sigma, log_prob)
+}
+
+cpp_plst <- function(x, nu, mu, sigma, lower_tail = TRUE, log_prob = FALSE) {
+    .Call(`_extraDistr_cpp_plst`, x, nu, mu, sigma, lower_tail, log_prob)
+}
+
+cpp_qlst <- function(p, nu, mu, sigma, lower_tail = TRUE, log_prob = FALSE) {
+    .Call(`_extraDistr_cpp_qlst`, p, nu, mu, sigma, lower_tail, log_prob)
+}
+
+cpp_rlst <- function(n, nu, mu, sigma) {
+    .Call(`_extraDistr_cpp_rlst`, n, nu, mu, sigma)
+}
+
 cpp_dlgser <- function(x, theta, log_prob = FALSE) {
     .Call(`_extraDistr_cpp_dlgser`, x, theta, log_prob)
 }
@@ -471,22 +487,6 @@ cpp_qnhyper <- function(p, n, m, r, lower_tail = TRUE, log_prob = FALSE) {
 
 cpp_rnhyper <- function(nn, n, m, r) {
     .Call(`_extraDistr_cpp_rnhyper`, nn, n, m, r)
-}
-
-cpp_dnst <- function(x, nu, mu, sigma, log_prob = FALSE) {
-    .Call(`_extraDistr_cpp_dnst`, x, nu, mu, sigma, log_prob)
-}
-
-cpp_pnst <- function(x, nu, mu, sigma, lower_tail = TRUE, log_prob = FALSE) {
-    .Call(`_extraDistr_cpp_pnst`, x, nu, mu, sigma, lower_tail, log_prob)
-}
-
-cpp_qnst <- function(p, nu, mu, sigma, lower_tail = TRUE, log_prob = FALSE) {
-    .Call(`_extraDistr_cpp_qnst`, p, nu, mu, sigma, lower_tail, log_prob)
-}
-
-cpp_rnst <- function(n, nu, mu, sigma) {
-    .Call(`_extraDistr_cpp_rnst`, n, nu, mu, sigma)
 }
 
 cpp_dnsbeta <- function(x, alpha, beta, lower, upper, log_prob = FALSE) {
