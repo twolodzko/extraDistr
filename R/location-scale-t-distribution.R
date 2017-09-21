@@ -79,7 +79,7 @@ rlst <- function(n, df, mu = 0, sigma = 1) {
 #' Deprecated functions
 #' 
 #' \emph{Warning}: the \code{dnst}, \code{pnst}, \code{qnst}, and \code{rnst}
-#' functions are now depreciated, please use \code{dlst}, \code{plst}, \code{qlst},
+#' functions are now depreciated, use \code{dlst}, \code{plst}, \code{qlst},
 #' and \code{rlst} functions instead.
 #'
 #' @param x,q	            vector of quantiles.
@@ -92,6 +92,8 @@ rlst <- function(n, df, mu = 0, sigma = 1) {
 #' @param log,log.p	      logical; if TRUE, probabilities p are given as log(p).
 #' @param lower.tail	    logical; if TRUE (default), probabilities are \eqn{P[X \le x]}
 #'                        otherwise, \eqn{P[X > x]}.
+#'                        
+#' @seealso \link{LocationScaleT}
 #' 
 #' @name extraDistr-deprecated
 #' @aliases dnst
