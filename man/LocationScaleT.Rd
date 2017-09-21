@@ -40,7 +40,7 @@ Probability mass function, distribution function and random generation
 for location-scale version of the t-distribution. Location-scale version
 of the t-distribution besides degrees of freedom \eqn{\nu}, is parametrized
 using additional parameters \eqn{\mu} for location and \eqn{\sigma} for
-scale (\eqn{\mu=0} and \eqn{\sigma = 1} for standard t-distribution).
+scale (\eqn{\mu = 0} and \eqn{\sigma = 1} for standard t-distribution).
 }
 \examples{
 
