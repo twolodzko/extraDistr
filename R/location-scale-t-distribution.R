@@ -23,16 +23,16 @@
 #' 
 #' @examples 
 #' 
-#' x <- rnst(1e5, 1000, 5, 13)
+#' x <- rlst(1e5, 1000, 5, 13)
 #' hist(x, 100, freq = FALSE)
-#' curve(dnst(x, 1000, 5, 13), -60, 60, col = "red", add = TRUE)
-#' hist(pnst(x, 1000, 5, 13))
+#' curve(dlst(x, 1000, 5, 13), -60, 60, col = "red", add = TRUE)
+#' hist(plst(x, 1000, 5, 13))
 #' plot(ecdf(x))
-#' curve(pnst(x, 1000, 5, 13), -60, 60, col = "red", lwd = 2, add = TRUE)
+#' curve(plst(x, 1000, 5, 13), -60, 60, col = "red", lwd = 2, add = TRUE)
 #' 
 #' @name LocationScaleT
 #' @aliases LocationScaleT
-#' @aliases dnst
+#' @aliases dlst
 #' 
 #' @keywords distribution
 #' @concept Univariate
@@ -40,7 +40,7 @@
 #' 
 #' @export
 
-dnst <- function(x, df, mu = 0, sigma = 1, log = FALSE) {
+dlst <- function(x, df, mu = 0, sigma = 1, log = FALSE) {
   cpp_dlst(x, df, mu, sigma, log[1L])
 }
 
@@ -48,7 +48,7 @@ dnst <- function(x, df, mu = 0, sigma = 1, log = FALSE) {
 #' @rdname LocationScaleT
 #' @export
 
-pnst <- function(q, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
+plst <- function(q, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
   cpp_plst(q, df, mu, sigma, lower.tail[1L], log.p[1L])
 }
 
@@ -56,7 +56,7 @@ pnst <- function(q, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @rdname LocationScaleT
 #' @export
 
-qnst <- function(p, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
+qlst <- function(p, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
   cpp_qlst(p, df, mu, sigma, lower.tail[1L], log.p[1L])
 }
 
@@ -64,8 +64,42 @@ qnst <- function(p, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
 #' @rdname LocationScaleT
 #' @export
 
-rnst <- function(n, df, mu = 0, sigma = 1) {
+rlst <- function(n, df, mu = 0, sigma = 1) {
   if (length(n) > 1) n <- length(n)
   cpp_rlst(n, df, mu, sigma)
 }
+
+
+# Depreciated since ver 1.8.7
+# To be removed in ver 1.8.8
+
+#' @export
+
+dnst <- function(x, df, mu = 0, sigma = 1, log = FALSE) {
+  .Deprecated("dlst")
+  dlst(x, df, mu, sigma, log[1L])
+}
+
+#' @export
+
+pnst <- function(q, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
+  .Deprecated("plst")
+  plst(q, df, mu, sigma, lower.tail[1L], log.p[1L])
+}
+
+#' @export
+
+qnst <- function(p, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE) {
+  .Deprecated("qlst")
+  qlst(p, df, mu, sigma, lower.tail[1L], log.p[1L])
+}
+
+#' @export
+
+rnst <- function(n, df, mu = 0, sigma = 1) {
+  .Deprecated("rlst")
+  rlst(n, df, mu, sigma)
+}
+
+
 

@@ -169,10 +169,10 @@ test_that("Zero-length in PDF and PMF functions", {
   expect_true(is_zero_length(dnsbeta(0.5, 1, 1, numeric(0), 2)))
   expect_true(is_zero_length(dnsbeta(0.5, 1, 1, -2, numeric(0))))
   
-  expect_true(is_zero_length(dnst(numeric(0), 2, 0, 1)))
-  expect_true(is_zero_length(dnst(1, numeric(0), 0, 1)))
-  expect_true(is_zero_length(dnst(1, 2, numeric(0), 1)))
-  expect_true(is_zero_length(dnst(1, 2, 0, numeric(0))))
+  expect_true(is_zero_length(dlst(numeric(0), 2, 0, 1)))
+  expect_true(is_zero_length(dlst(1, numeric(0), 0, 1)))
+  expect_true(is_zero_length(dlst(1, 2, numeric(0), 1)))
+  expect_true(is_zero_length(dlst(1, 2, 0, numeric(0))))
   
   expect_true(is_zero_length(dpareto(numeric(0), 1, 1)))
   expect_true(is_zero_length(dpareto(1, numeric(0), 1)))
@@ -374,10 +374,10 @@ test_that("Zero-length in CDF functions", {
   expect_true(is_zero_length(pnsbeta(0.5, 1, 1, numeric(0), 2)))
   expect_true(is_zero_length(pnsbeta(0.5, 1, 1, -2, numeric(0))))
   
-  expect_true(is_zero_length(pnst(numeric(0), 2, 0, 1)))
-  expect_true(is_zero_length(pnst(1, numeric(0), 0, 1)))
-  expect_true(is_zero_length(pnst(1, 2, numeric(0), 1)))
-  expect_true(is_zero_length(pnst(1, 2, 0, numeric(0))))
+  expect_true(is_zero_length(plst(numeric(0), 2, 0, 1)))
+  expect_true(is_zero_length(plst(1, numeric(0), 0, 1)))
+  expect_true(is_zero_length(plst(1, 2, numeric(0), 1)))
+  expect_true(is_zero_length(plst(1, 2, 0, numeric(0))))
   
   expect_true(is_zero_length(ppareto(numeric(0), 1, 1)))
   expect_true(is_zero_length(ppareto(1, numeric(0), 1)))
@@ -534,10 +534,10 @@ test_that("Zero-length in inverse CDF functions", {
   expect_true(is_zero_length(qnsbeta(0.5, 1, 1, numeric(0), 2)))
   expect_true(is_zero_length(qnsbeta(0.5, 1, 1, -2, numeric(0))))
   
-  expect_true(is_zero_length(qnst(numeric(0), 2, 0, 1)))
-  expect_true(is_zero_length(qnst(0.5, numeric(0), 0, 1)))
-  expect_true(is_zero_length(qnst(0.5, 2, numeric(0), 1)))
-  expect_true(is_zero_length(qnst(0.5, 2, 0, numeric(0))))
+  expect_true(is_zero_length(qlst(numeric(0), 2, 0, 1)))
+  expect_true(is_zero_length(qlst(0.5, numeric(0), 0, 1)))
+  expect_true(is_zero_length(qlst(0.5, 2, numeric(0), 1)))
+  expect_true(is_zero_length(qlst(0.5, 2, 0, numeric(0))))
   
   expect_true(is_zero_length(qpareto(numeric(0), 1, 1)))
   expect_true(is_zero_length(qpareto(0.5, numeric(0), 1)))
@@ -717,9 +717,9 @@ test_that("Zero-length in RNG functions", {
   expect_warning(expect_true(is.na(rnsbeta(1, 1, 1, numeric(0), 2))))
   expect_warning(expect_true(is.na(rnsbeta(1, 1, 1, -2, numeric(0)))))
   
-  expect_warning(expect_true(is.na(rnst(1, numeric(0), 0, 1))))
-  expect_warning(expect_true(is.na(rnst(1, 2, numeric(0), 1))))
-  expect_warning(expect_true(is.na(rnst(1, 2, 0, numeric(0)))))
+  expect_warning(expect_true(is.na(rlst(1, numeric(0), 0, 1))))
+  expect_warning(expect_true(is.na(rlst(1, 2, numeric(0), 1))))
+  expect_warning(expect_true(is.na(rlst(1, 2, 0, numeric(0)))))
   
   expect_warning(expect_true(is.na(rpareto(1, numeric(0), 1))))
   expect_warning(expect_true(is.na(rpareto(1, 1, numeric(0)))))

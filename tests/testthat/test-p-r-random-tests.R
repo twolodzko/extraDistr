@@ -132,7 +132,7 @@ test_that("p-r random tests", {
   
   expect_true(dkwtest("nsbeta", 1, 1, -2, 2))
   
-  expect_true(dkwtest("nst", 2, 0, 1))
+  expect_true(dkwtest("lst", 2, 0, 1))
   
   expect_true(dkwtest("pareto", 1, 1))
   

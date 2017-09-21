@@ -190,10 +190,10 @@ test_that("Missing values in PDF and PMF functions", {
   expect_true(is.na(dnsbeta(0.5, 1, 1, NA, 2)))
   expect_true(is.na(dnsbeta(0.5, 1, 1, -2, NA)))
 
-  expect_true(is.na(dnst(NA, 2, 0, 1)))
-  expect_true(is.na(dnst(1, NA, 0, 1)))
-  expect_true(is.na(dnst(1, 2, NA, 1)))
-  expect_true(is.na(dnst(1, 2, 0, NA)))
+  expect_true(is.na(dlst(NA, 2, 0, 1)))
+  expect_true(is.na(dlst(1, NA, 0, 1)))
+  expect_true(is.na(dlst(1, 2, NA, 1)))
+  expect_true(is.na(dlst(1, 2, 0, NA)))
 
   expect_true(is.na(dpareto(NA, 1, 1)))
   expect_true(is.na(dpareto(1, NA, 1)))
@@ -408,10 +408,10 @@ test_that("Wrong parameter values in CDF functions", {
   expect_true(is.na(pnsbeta(0.5, 1, 1, NA, 2)))
   expect_true(is.na(pnsbeta(0.5, 1, 1, -2, NA)))
   
-  expect_true(is.na(pnst(NA, 2, 0, 1)))
-  expect_true(is.na(pnst(1, NA, 0, 1)))
-  expect_true(is.na(pnst(1, 2, NA, 1)))
-  expect_true(is.na(pnst(1, 2, 0, NA)))
+  expect_true(is.na(plst(NA, 2, 0, 1)))
+  expect_true(is.na(plst(1, NA, 0, 1)))
+  expect_true(is.na(plst(1, 2, NA, 1)))
+  expect_true(is.na(plst(1, 2, 0, NA)))
   
   expect_true(is.na(ppareto(NA, 1, 1)))
   expect_true(is.na(ppareto(1, NA, 1)))
@@ -572,10 +572,10 @@ test_that("Wrong parameter values in inverse CDF functions", {
   expect_true(is.na(qnsbeta(0.5, 1, 1, NA, 2)))
   expect_true(is.na(qnsbeta(0.5, 1, 1, -2, NA)))
   
-  expect_true(is.na(qnst(NA, 2, 0, 1)))
-  expect_true(is.na(qnst(0.5, NA, 0, 1)))
-  expect_true(is.na(qnst(0.5, 2, NA, 1)))
-  expect_true(is.na(qnst(0.5, 2, 0, NA)))
+  expect_true(is.na(qlst(NA, 2, 0, 1)))
+  expect_true(is.na(qlst(0.5, NA, 0, 1)))
+  expect_true(is.na(qlst(0.5, 2, NA, 1)))
+  expect_true(is.na(qlst(0.5, 2, 0, NA)))
   
   expect_true(is.na(qpareto(NA, 1, 1)))
   expect_true(is.na(qpareto(0.5, NA, 1)))
@@ -775,9 +775,9 @@ test_that("Wrong parameter values in RNG functions", {
   expect_warning(expect_true(is.na(rnsbeta(1, 1, 1, NA, 2))))
   expect_warning(expect_true(is.na(rnsbeta(1, 1, 1, -2, NA))))
 
-  expect_warning(expect_true(is.na(rnst(1, NA, 0, 1))))
-  expect_warning(expect_true(is.na(rnst(1, 2, NA, 1))))
-  expect_warning(expect_true(is.na(rnst(1, 2, 0, NA))))
+  expect_warning(expect_true(is.na(rlst(1, NA, 0, 1))))
+  expect_warning(expect_true(is.na(rlst(1, 2, NA, 1))))
+  expect_warning(expect_true(is.na(rlst(1, 2, 0, NA))))
   
   expect_warning(expect_true(is.na(rpareto(1, NA, 1))))
   expect_warning(expect_true(is.na(rpareto(1, 1, NA))))

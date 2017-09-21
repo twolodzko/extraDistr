@@ -2,7 +2,7 @@ Package: extraDistr
 Type: Package
 Title: Additional Univariate and Multivariate Distributions
 Version: 1.8.7
-Date: 2017-08-30
+Date: 2017-09-21
 Author: Tymoteusz Wolodzko
 Maintainer: Tymoteusz Wolodzko <twolodzko+extraDistr@gmail.com>
 Description: Density, distribution function, quantile function

@@ -55,7 +55,7 @@ test_that("Coverage of RNG's", {
   
   expect_gte(probCoverage("nsbeta", 1, 1, -2, 2), 0.99)
   
-  expect_gte(probCoverage("nst", 2, 0, 1), 0.99)
+  expect_gte(probCoverage("lst", 2, 0, 1), 0.99)
   
   expect_gte(probCoverage("pareto", 1, 1), 0.99)
   

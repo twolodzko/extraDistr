@@ -2,19 +2,19 @@
 % Please edit documentation in R/location-scale-t-distribution.R
 \name{LocationScaleT}
 \alias{LocationScaleT}
-\alias{dnst}
-\alias{pnst}
-\alias{qnst}
-\alias{rnst}
+\alias{dlst}
+\alias{plst}
+\alias{qlst}
+\alias{rlst}
 \title{Location-scale version of the t-distribution}
 \usage{
-dnst(x, df, mu = 0, sigma = 1, log = FALSE)
+dlst(x, df, mu = 0, sigma = 1, log = FALSE)
 
-pnst(q, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE)
+plst(q, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE)
 
-qnst(p, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE)
+qlst(p, df, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE)
 
-rnst(n, df, mu = 0, sigma = 1)
+rlst(n, df, mu = 0, sigma = 1)
 }
 \arguments{
 \item{x, q}{vector of quantiles.}
@@ -44,12 +44,12 @@ scale (\eqn{\mu=0} and \eqn{\sigma = 1} for standard t-distribution).
 }
 \examples{
 
-x <- rnst(1e5, 1000, 5, 13)
+x <- rlst(1e5, 1000, 5, 13)
 hist(x, 100, freq = FALSE)
-curve(dnst(x, 1000, 5, 13), -60, 60, col = "red", add = TRUE)
-hist(pnst(x, 1000, 5, 13))
+curve(dlst(x, 1000, 5, 13), -60, 60, col = "red", add = TRUE)
+hist(plst(x, 1000, 5, 13))
 plot(ecdf(x))
-curve(pnst(x, 1000, 5, 13), -60, 60, col = "red", lwd = 2, add = TRUE)
+curve(plst(x, 1000, 5, 13), -60, 60, col = "red", lwd = 2, add = TRUE)
 
 }
 \seealso{
