@@ -9,19 +9,19 @@
 
 0 errors | 0 warnings | 1 note 
 checking installed package size ... NOTE
-  installed size is 20.4Mb
+  installed size is 20.5Mb
   sub-directories of 1Mb or more:
-    libs  20.1Mb
+    libs  20.2Mb
 
 ## Reverse dependencies
 
-Reverse imports: 	prophet
-Reverse suggests: 	greta
+Reverse depends: vfcp
+Reverse imports: prophet, trend
+Reverse suggests: greta
 
-The dependencies are not affected. This is bug fix
-release and the previous interface of the functions
-wa not altered.
+The dependencies are not affected.
 
 ## Comments
 
-This is a bug fix release (see NEWS).
+This is a bug fix release (see NEWS). One function was
+deprecated and renamed to more informative name.

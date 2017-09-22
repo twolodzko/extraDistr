@@ -2,7 +2,7 @@
 #' Deprecated functions
 #' 
 #' \emph{Warning}: the \code{dnst}, \code{pnst}, \code{qnst}, and \code{rnst}
-#' functions are now depreciated, use \code{dlst}, \code{plst}, \code{qlst},
+#' functions are now deprecated, use \code{dlst}, \code{plst}, \code{qlst},
 #' and \code{rlst} functions instead.
 #'
 #' @param x,q	            vector of quantiles.
