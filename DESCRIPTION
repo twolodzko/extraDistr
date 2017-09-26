@@ -1,8 +1,8 @@
 Package: extraDistr
 Type: Package
 Title: Additional Univariate and Multivariate Distributions
-Version: 1.8.7
-Date: 2017-09-22
+Version: 1.8.8
+Date: 2017-09-26
 Author: Tymoteusz Wolodzko
 Maintainer: Tymoteusz Wolodzko <twolodzko+extraDistr@gmail.com>
 Description: Density, distribution function, quantile function
@@ -16,8 +16,8 @@ Description: Density, distribution function, quantile function
     gamma-Poisson, generalized extreme value, Gompertz,
     generalized Pareto, Gumbel, half-Cauchy, half-normal, half-t,
     Huber density, inverse chi-squared, inverse-gamma, Kumaraswamy,
-    Laplace, logarithmic, Lomax, multivariate hypergeometric,
-    multinomial, negative hypergeometric, non-standard t,
+    Laplace, location-scale t, logarithmic, Lomax, multivariate
+    hypergeometric, multinomial, negative hypergeometric, 
     non-standard beta, normal mixture, Poisson mixture, Pareto,
     power, reparametrized beta, Rayleigh, shifted Gompertz, Skellam,
     slash, triangular, truncated binomial, truncated normal,
