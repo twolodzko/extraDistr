@@ -1,8 +1,8 @@
 
 
-#' Tuckey lambda distribution
+#' Tukey lambda distribution
 #'
-#' Quantile function, and random generation for the Tuckey lambda
+#' Quantile function, and random generation for the Tukey lambda
 #' distribution.
 #'
 #' @param p	              vector of probabilities.
@@ -60,8 +60,8 @@
 #' hist(rtlambda(1e5, 2), freq = FALSE, main = "lambda = 2 (uniform)")
 #' par(partmp)
 #'
-#' @name TuckeyLambda
-#' @aliases TuckeyLambda
+#' @name TukeyLambda
+#' @aliases TukeyLambda
 #' @aliases qtlambda
 #' 
 #' @keywords distribution
@@ -75,7 +75,7 @@ qtlambda <- function(p, lambda, lower.tail = TRUE, log.p = FALSE) {
 }
 
 
-#' @rdname TuckeyLambda
+#' @rdname TukeyLambda
 #' @export
 
 rtlambda <- function(n, lambda) {
