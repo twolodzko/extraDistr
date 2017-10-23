@@ -1,4 +1,8 @@
 
+### 1.8.8
+
+* Fixed typos in documentation (thanks to #8 by philchalmers)
+
 ### 1.8.7
 
 * Fixed bug in `pinvgamma` (`lower.tail` and `log.p` didn't work)
