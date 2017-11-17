@@ -22,7 +22,7 @@ inline double logpdf_tpois(double x, double lambda, double a,
   }
   
   if (!isInteger(x) || x < 0.0 || x <= a || x > b || !R_FINITE(x))
-    return 0.0;
+    return R_NegInf;
   
   // if (a == 0.0 && b == R_PosInf)
   //   return pow(lambda, x) / (factorial(x) * (exp(lambda) - 1.0));
