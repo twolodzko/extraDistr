@@ -35,9 +35,22 @@ inline double pdf_rayleigh(double x, double sigma,
     throw_warning = true;
     return NAN;
   }
-  if (x < 0.0 || !R_FINITE(x))
+  if (x <= 0.0 || !R_FINITE(x))
     return 0.0;
   return x/(sigma*sigma) * exp(-(x*x) / (2.0*(sigma*sigma)));
+}
+
+inline double logpdf_rayleigh(double x, double sigma,
+                              bool& throw_warning) {
+  if (ISNAN(x) || ISNAN(sigma))
+    return x+sigma;
+  if (sigma <= 0.0) {
+    throw_warning = true;
+    return NAN;
+  }
+  if (x <= 0.0 || !R_FINITE(x))
+    return R_NegInf;
+  return log(x) - 2 * log(sigma) - ((x*x) / (2.0*(sigma*sigma)));
 }
 
 inline double cdf_rayleigh(double x, double sigma,
@@ -96,11 +109,11 @@ NumericVector cpp_drayleigh(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_rayleigh(GETV(x, i), GETV(sigma, i),
-                        throw_warning);
+    p[i] = logpdf_rayleigh(GETV(x, i), GETV(sigma, i),
+                           throw_warning);
 
-  if (log_prob)
-    p = Rcpp::log(p);
+  if (!log_prob)
+    p = Rcpp::exp(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");

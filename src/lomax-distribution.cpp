@@ -53,7 +53,7 @@ inline double logpdf_lomax(double x, double lambda, double kappa,
   }
   if (x <= 0.0)
     return R_NegInf;
-  return log(lambda) + log(kappa) - log(1.0+lambda*x)*(kappa+1.0);
+  return log(lambda) + log(kappa) - log1p(lambda*x)*(kappa+1.0);
 }
 
 // inline double cdf_lomax(double x, double lambda, double kappa,

@@ -44,6 +44,37 @@ inline double pmf_bpois(double x, double y, double a, double b, double c,
   return tmp * xy;
 }
 
+inline double logpmf_bpois(double x, double y, double a, double b, double c,
+                           bool& throw_warning) {
+  
+  if (ISNAN(x) || ISNAN(y) || ISNAN(a) || ISNAN(b) || ISNAN(c))
+    return x+y+a+b+c;
+  
+  if (a < 0.0 || b < 0.0 || c < 0.0) {
+    throw_warning = true;
+    return NAN;
+  }
+  
+  if (!isInteger(x) || x < 0.0 || !R_FINITE(x) ||
+      !R_FINITE(y) || !isInteger(y))
+      return 0.0;
+  
+  if (y < 0.0)
+    return 0.0;
+  
+  double tmp = exp(-(a+b+c)); 
+  tmp *= (pow(a, x) / factorial(x)) * (pow(b, y) / factorial(y));
+  
+  double z = (x < y) ? x : y;
+  double c_ab = c/(a*b);
+  double xy = 0.0;
+  
+  for (double k = 0.0; k <= z; k += 1.0)
+    xy += exp(R::lchoose(x, k) + R::lchoose(y, k) + lfactorial(k) + log(c_ab) * k);
+  
+  return tmp * xy;
+}
+
 
 // [[Rcpp::export]]
 NumericVector cpp_dbpois(
@@ -76,11 +107,11 @@ NumericVector cpp_dbpois(
     Rcpp::stop("lengths of x and y differ");
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pmf_bpois(GETV(x, i), GETV(y, i), GETV(a, i),
-                     GETV(b, i), GETV(c, i), throw_warning);
+    p[i] = logpmf_bpois(GETV(x, i), GETV(y, i), GETV(a, i),
+                        GETV(b, i), GETV(c, i), throw_warning);
   
-  if (log_prob)
-    p = Rcpp::log(p);
+  if (!log_prob)
+    p = Rcpp::exp(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");
