@@ -44,8 +44,8 @@ inline double pmf_bpois(double x, double y, double a, double b, double c,
   return tmp * xy;
 }
 
-inline double logpmf_bpois(double x, double y, double a, double b, double c,
-                           bool& throw_warning) {
+inline double pmf_bpois2(double x, double y, double a, double b, double c,
+                         bool& throw_warning) {
   
   if (ISNAN(x) || ISNAN(y) || ISNAN(a) || ISNAN(b) || ISNAN(c))
     return x+y+a+b+c;
@@ -107,11 +107,11 @@ NumericVector cpp_dbpois(
     Rcpp::stop("lengths of x and y differ");
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpmf_bpois(GETV(x, i), GETV(y, i), GETV(a, i),
-                        GETV(b, i), GETV(c, i), throw_warning);
+    p[i] = pmf_bpois2(GETV(x, i), GETV(y, i), GETV(a, i),
+                      GETV(b, i), GETV(c, i), throw_warning);
   
-  if (!log_prob)
-    p = Rcpp::exp(p);
+  if (log_prob)
+    p = Rcpp::log(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");
