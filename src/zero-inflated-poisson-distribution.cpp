@@ -26,7 +26,7 @@ using std::log1p;
 *
 */
 
-inline double logpdf_zip(double x, double lambda, double pi,
+inline double pdf_zip(double x, double lambda, double pi,
                          bool& throw_warning) {
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(pi))
     return x+lambda+pi;
@@ -35,13 +35,11 @@ inline double logpdf_zip(double x, double lambda, double pi,
     return NAN;
   }
   if (x < 0.0 || !isInteger(x) || !R_FINITE(x))
-    return R_NegInf;
+    return 0.0;
   if (x == 0.0) {
-    // pi + (1.0-pi) * exp(-lambda);
-    return log(pi + (1.0-pi)) - lambda;
+    return pi + (1.0-pi) * exp(-lambda);
   } else {
-    // (1.0-pi) * R::dpois(x, lambda, false);
-    return log1p(-pi) + R::dpois(x, lambda, true);
+    return (1.0-pi) * R::dpois(x, lambda, false);
   }
 }
 
@@ -110,11 +108,11 @@ NumericVector cpp_dzip(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpdf_zip(GETV(x, i), GETV(lambda, i),
-                      GETV(pi, i), throw_warning);
+    p[i] = pdf_zip(GETV(x, i), GETV(lambda, i),
+                   GETV(pi, i), throw_warning);
   
-  if (!log_prob)
-    p = Rcpp::exp(p);
+  if (log_prob)
+    p = Rcpp::log(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");

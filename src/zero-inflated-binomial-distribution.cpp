@@ -25,8 +25,8 @@ using std::log1p;
 *
 */
 
-inline double logpdf_zib(double x, double n, double p,
-                         double pi, bool& throw_warning) {
+inline double pdf_zib(double x, double n, double p,
+                      double pi, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(n) || ISNAN(p) || ISNAN(pi))
     return x+n+p+pi;
   if (!VALID_PROB(p) || n < 0.0 || !VALID_PROB(pi) ||
@@ -35,13 +35,11 @@ inline double logpdf_zib(double x, double n, double p,
     return NAN;
   }
   if (x < 0.0 || !isInteger(x) || !R_FINITE(x))
-    return R_NegInf;
+    return 0.0;
   if (x == 0.0) {
-    // pi + (1.0-pi) * pow(1.0-p, n);
-    return log(pi + (1.0-pi)) + log1p(-p) * n;
+    return pi + (1.0-pi) * pow(1.0-p, n);
   } else {
-    // (1.0-pi) * R::dbinom(x, n, p, false);
-    return log1p(-pi) + R::dbinom(x, n, p, true);
+    return (1.0-pi) * R::dbinom(x, n, p, false);
   }
 }
 
@@ -116,12 +114,12 @@ NumericVector cpp_dzib(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpdf_zib(GETV(x, i), GETV(size, i),
-                      GETV(prob, i), GETV(pi, i),
-                      throw_warning);
+    p[i] = pdf_zib(GETV(x, i), GETV(size, i),
+                   GETV(prob, i), GETV(pi, i),
+                   throw_warning);
   
-  if (!log_prob)
-    p = Rcpp::exp(p);
+  if (log_prob)
+    p = Rcpp::log(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");
