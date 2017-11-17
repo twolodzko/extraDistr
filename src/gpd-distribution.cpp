@@ -37,27 +37,6 @@ using std::log1p;
 *
 */
 
-// inline double pdf_gpd(double x, double mu, double sigma, double xi,
-//                       bool& throw_warning) {
-//   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
-//     return x+mu+sigma+xi;
-//   if (sigma <= 0.0) {
-//     throw_warning = true;
-//     return NAN;
-//   }
-//   double z = (x-mu)/sigma;
-//   if (xi != 0.0) {
-//     if ((x >= mu && xi > 0) || (x >= mu && x <= (mu - sigma/xi) && xi < 0))
-//       return pow(1.0+xi*z, -(xi+1.0)/xi)/sigma;
-//     else
-//       return 0.0;
-//   } else {
-//     if (x >= mu)
-//       return exp(-z)/sigma;
-//     else
-//       return 0.0;
-//   }
-// }
 
 inline double logpdf_gpd(double x, double mu, double sigma, double xi,
                          bool& throw_warning) {
@@ -69,42 +48,24 @@ inline double logpdf_gpd(double x, double mu, double sigma, double xi,
   }
   double z = (x-mu)/sigma;
   if (xi != 0.0) {
-    if ((x >= mu && xi > 0) || (x >= mu && x <= (mu - sigma/xi) && xi < 0))
+    if ((x >= mu && xi > 0) || (x >= mu && x <= (mu - sigma/xi) && xi < 0)) {
+      // pow(1.0+xi*z, -(xi+1.0)/xi)/sigma;
       return log1p(xi*z) * (-(xi+1.0)/xi) - log(sigma); 
-    else
+    } else {
       return R_NegInf;
+    }
   } else {
-    if (x >= mu)
+    if (x >= mu) {
+      // exp(-z)/sigma;
       return -z - log(sigma);
-    else
+    } else {
       return R_NegInf;
+    }
   }
 }
 
-// inline double cdf_gpd(double x, double mu, double sigma, double xi,
-//                       bool& throw_warning) {
-//   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
-//     return x+mu+sigma+xi;
-//   if (sigma <= 0.0) {
-//     throw_warning = true;
-//     return NAN;
-//   }
-//   double z = (x-mu)/sigma;
-//   if (xi != 0.0) {
-//     if ((x >= mu && xi > 0) || (x >= mu && x <= (mu - sigma/xi) && xi < 0))
-//       return 1.0 - pow(1.0+xi*z, -1.0/xi);
-//     else
-//       return 0.0;
-//   } else {
-//     if (x >= mu)
-//       return 1.0 - exp(-z);
-//     else
-//       return 0.0;
-//   }
-// }
-
-inline double cdf_gpd2(double x, double mu, double sigma, double xi,
-                       bool& throw_warning) {
+inline double cdf_gpd(double x, double mu, double sigma, double xi,
+                      bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
     return x+mu+sigma+xi;
   if (sigma <= 0.0) {
@@ -113,15 +74,18 @@ inline double cdf_gpd2(double x, double mu, double sigma, double xi,
   }
   double z = (x-mu)/sigma;
   if (xi != 0.0) {
-    if ((x >= mu && xi > 0) || (x >= mu && x <= (mu - sigma/xi) && xi < 0))
+    if ((x >= mu && xi > 0) || (x >= mu && x <= (mu - sigma/xi) && xi < 0)) {
+      // 1.0 - pow(1.0+xi*z, -1.0/xi);
       return 1.0 - exp(log1p(xi*z) * (-1.0/xi));
-    else
+    } else {
       return 0.0;
+    }
   } else {
-    if (x >= mu)
+    if (x >= mu) {
       return 1.0 - exp(-z);
-    else
+    } else {
       return 0.0;
+    }
   }
 }
 
@@ -218,9 +182,9 @@ NumericVector cpp_pgpd(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_gpd2(GETV(x, i), GETV(mu, i),
-                    GETV(sigma, i), GETV(xi, i),
-                    throw_warning);
+    p[i] = cdf_gpd(GETV(x, i), GETV(mu, i),
+                   GETV(sigma, i), GETV(xi, i),
+                   throw_warning);
 
   if (!lower_tail)
     p = 1.0 - p;

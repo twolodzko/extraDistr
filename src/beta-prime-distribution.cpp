@@ -26,19 +26,6 @@ using std::log1p;
 *
 */
 
-inline double pdf_betapr(double x, double alpha, double beta,
-                         double sigma, bool& throw_warning) {
-  if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma))
-    return x+alpha+beta+sigma;
-  if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
-    throw_warning = true;
-    return NAN;
-  }
-  if (x <= 0.0 || !R_FINITE(x))
-    return 0.0;
-  double z = x / sigma;
-  return pow(z, alpha-1.0) * pow(z+1.0, -alpha-beta) / R::beta(alpha, beta) / sigma;
-}
 
 inline double logpdf_betapr(double x, double alpha, double beta,
                             double sigma, bool& throw_warning) {
@@ -51,6 +38,7 @@ inline double logpdf_betapr(double x, double alpha, double beta,
   if (x <= 0.0 || !R_FINITE(x))
     return R_NegInf;
   double z = x / sigma;
+  // pow(z, alpha-1.0) * pow(z+1.0, -alpha-beta) / R::beta(alpha, beta) / sigma;
   return log(z) * (alpha-1.0) + log1p(z) * (-alpha-beta) - R::lbeta(alpha, beta) - log(sigma);
 }
 

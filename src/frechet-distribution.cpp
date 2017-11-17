@@ -30,19 +30,6 @@ using Rcpp::NumericVector;
  *
  */
 
-// inline double pdf_frechet(double x, double lambda, double mu,
-//                           double sigma, bool& throw_warning) {
-//   if (ISNAN(x) || ISNAN(lambda) || ISNAN(mu) || ISNAN(sigma))
-//     return x+lambda+mu+sigma;
-//   if (lambda <= 0.0 || sigma <= 0.0) {
-//     throw_warning = true;
-//     return NAN;
-//   }
-//   if (x <= mu)
-//     return 0.0;
-//   double z = (x-mu)/sigma;
-//   return lambda/sigma * pow(z, -1.0-lambda) * exp(-pow(z, -lambda));
-// }
 
 inline double logpdf_frechet(double x, double lambda, double mu,
                              double sigma, bool& throw_warning) {
@@ -55,6 +42,7 @@ inline double logpdf_frechet(double x, double lambda, double mu,
   if (x <= mu)
     return R_NegInf;
   double z = (x-mu)/sigma;
+  // lambda/sigma * pow(z, -1.0-lambda) * exp(-pow(z, -lambda));
   return log(lambda) - log(sigma) + log(z) * (-1.0-lambda) - exp(log(z) * -lambda);
 }
 

@@ -11,9 +11,11 @@ using std::floor;
 using std::ceil;
 using Rcpp::NumericVector;
 
+using std::log1p;
 
-inline double pmf_dlaplace(double x, double p, double mu,
-                           bool& throw_warning) {
+
+inline double logpmf_dlaplace(double x, double p, double mu,
+                              bool& throw_warning) {
   if (ISNAN(x) || ISNAN(p) || ISNAN(mu))
     return x+p+mu;
   if (p <= 0.0 || p >= 1.0) {
@@ -22,7 +24,8 @@ inline double pmf_dlaplace(double x, double p, double mu,
   }
   if (!isInteger(x))
     return 0.0;
-  return (1.0-p)/(1.0+p) * pow(p, abs(x-mu));
+  // (1.0-p)/(1.0+p) * pow(p, abs(x-mu));
+  return log1p(-p) - log1p(p) + log(p) * abs(x-mu);
 } 
 
 inline double cdf_dlaplace(double x, double p, double mu,
@@ -33,10 +36,13 @@ inline double cdf_dlaplace(double x, double p, double mu,
     throw_warning = true;
     return NAN;
   }
-  if (x < 0.0)
-    return pow(p, -floor(x-mu))/(1.0+p);
-  else
-    return 1.0 - (pow(p, floor(x-mu)+1.0)/(1.0+p));
+  if (x < 0.0) {
+    // pow(p, -floor(x-mu))/(1.0+p);
+    return exp((log(p) * -floor(x-mu)) - log1p(p));
+  } else {
+    // 1.0 - (pow(p, floor(x-mu)+1.0)/(1.0+p))
+    return 1.0 - exp(log(p) * (floor(x-mu)+1.0) - log1p(p));
+  }
 } 
 
 inline double rng_dlaplace(double p, double mu,
@@ -75,11 +81,11 @@ NumericVector cpp_ddlaplace(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pmf_dlaplace(GETV(x, i), GETV(scale, i),
-                        GETV(location, i), throw_warning);
+    p[i] = logpmf_dlaplace(GETV(x, i), GETV(scale, i),
+                           GETV(location, i), throw_warning);
   
-  if (log_prob)
-    p = Rcpp::log(p);
+  if (!log_prob)
+    p = Rcpp::exp(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");

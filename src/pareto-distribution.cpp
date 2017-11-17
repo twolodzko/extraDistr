@@ -27,19 +27,6 @@ using Rcpp::NumericVector;
  *
  */
 
-inline double pdf_pareto(double x, double a, double b,
-                         bool& throw_warning) {
-  if (ISNAN(x) || ISNAN(a) || ISNAN(b))
-    return x+a+b;
-  if (a <= 0.0 || b <= 0.0) {
-    throw_warning = true;
-    return NAN;
-  }
-  if (x < b)
-    return 0.0;
-  return a * pow(b, a) / pow(x, a+1.0);
-}
-
 inline double logpdf_pareto(double x, double a, double b,
                             bool& throw_warning) {
   if (ISNAN(x) || ISNAN(a) || ISNAN(b))
@@ -50,6 +37,7 @@ inline double logpdf_pareto(double x, double a, double b,
   }
   if (x < b)
     return R_NegInf;
+  // a * pow(b, a) / pow(x, a+1.0);
   return log(a) + log(b)*a - log(x)*(a+1.0);
 }
 

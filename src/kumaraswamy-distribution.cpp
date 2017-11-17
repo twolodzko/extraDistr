@@ -77,18 +77,23 @@ inline double rng_kumar(double a, double b, bool& throw_warning) {
   return pow(1.0 - pow(u, 1.0/b), 1.0/a);
 }
 
-inline double logpdf_kumar(double x, double a, double b,
-                           bool& throw_warning) {
-  if (ISNAN(x) || ISNAN(a) || ISNAN(b))
-    return NA_REAL;
-  if (a <= 0.0 || b <= 0.0) {
-    throw_warning = true;
-    return NAN;
-  }
-  if (x < 0.0 || x > 1.0)
-    return R_NegInf;
-  return log(a) + log(b) + log(x)*(a-1.0) + log1p(-pow(x, a))*(b-1.0);
-}
+/*
+ * Is the support x in (0, 1) or [0, 1] ?
+ * 
+ */
+
+// inline double logpdf_kumar(double x, double a, double b,
+//                            bool& throw_warning) {
+//   if (ISNAN(x) || ISNAN(a) || ISNAN(b))
+//     return NA_REAL;
+//   if (a <= 0.0 || b <= 0.0) {
+//     throw_warning = true;
+//     return NAN;
+//   }
+//   if (x < 0.0 || x > 1.0)
+//     return R_NegInf;
+//   return log(a) + log(b) + log(x)*(a-1.0) + log1p(-pow(x, a))*(b-1.0);
+// }
 
 
 // [[Rcpp::export]]

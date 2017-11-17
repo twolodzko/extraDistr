@@ -27,18 +27,6 @@ using Rcpp::NumericVector;
 *
 */
 
-inline double pmf_bbinom(double k, double n, double alpha,
-                         double beta, bool& throw_warning) {
-  if (ISNAN(k) || ISNAN(n) || ISNAN(alpha) || ISNAN(beta))
-    return k+n+alpha+beta;
-  if (alpha < 0.0 || beta < 0.0 || n < 0.0 || !isInteger(n, false)) {
-    throw_warning = true;
-    return NAN;
-  }
-  if (!isInteger(k) || k < 0.0 || k > n)
-    return 0.0;
-  return R::choose(n, k) * R::beta(k+alpha, n-k+beta) / R::beta(alpha, beta);
-}
 
 inline double logpmf_bbinom(double k, double n, double alpha,
                             double beta, bool& throw_warning) {
@@ -50,6 +38,7 @@ inline double logpmf_bbinom(double k, double n, double alpha,
   }
   if (!isInteger(k) || k < 0.0 || k > n)
     return R_NegInf;
+  // R::choose(n, k) * R::beta(k+alpha, n-k+beta) / R::beta(alpha, beta);
   return R::lchoose(n, k) + R::lbeta(k+alpha, n-k+beta) - R::lbeta(alpha, beta);
 }
 

@@ -30,19 +30,6 @@ using Rcpp::NumericVector;
 *
 */
 
-// inline double pdf_invgamma(double x, double alpha, double beta,
-//                            bool& throw_warning) {
-//   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
-//     return x+alpha+beta;
-//   if (alpha <= 0.0 || beta <= 0.0) {
-//     throw_warning = true;
-//     return NAN;
-//   }
-//   if (x <= 0.0)
-//     return 0.0;
-//   return (pow(x, -alpha-1.0) * exp(-1.0/(beta*x))) /
-//          (R::gammafn(alpha) * pow(beta, alpha));
-// }
 
 inline double logpdf_invgamma(double x, double alpha, double beta,
                               bool& throw_warning) {
@@ -54,6 +41,8 @@ inline double logpdf_invgamma(double x, double alpha, double beta,
   }
   if (x <= 0.0)
     return R_NegInf;
+  // (pow(x, -alpha-1.0) * exp(-1.0/(beta*x))) /
+  //      (R::gammafn(alpha) * pow(beta, alpha));
   return (log(x) * (-alpha-1.0) + (-1.0/(beta*x))) -
          (R::lgammafn(alpha) + log(beta) * alpha);
 }

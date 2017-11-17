@@ -28,19 +28,6 @@ using std::log1p;
 */
 
 
-// double pdf_lgser(double x, double theta, bool& throw_warnin) {
-//   if (ISNAN(x) || ISNAN(theta))
-//     return x+theta;
-//   if (theta <= 0.0 || theta >= 1.0) {
-//     throw_warnin = true;
-//     return NAN;
-//   }
-//   if (!isInteger(x) || x < 1.0)
-//     return 0.0;
-//   double a = -1.0/log(1.0 - theta);
-//   return a * pow(theta, x) / x;
-// }
-
 double logpdf_lgser(double x, double theta, bool& throw_warnin) {
   if (ISNAN(x) || ISNAN(theta))
     return x+theta;
@@ -50,10 +37,11 @@ double logpdf_lgser(double x, double theta, bool& throw_warnin) {
   }
   if (!isInteger(x) || x < 1.0)
     return R_NegInf;
+  // a = -1.0/log(1.0 - theta);
   double a = -1.0/log1p(-theta);
+  // a * pow(theta, x) / x;
   return log(a) + (log(theta) * x) - log(x);
 }
-
 
 double cdf_lgser(double x, double theta, bool& throw_warnin) {
   if (ISNAN(x) || ISNAN(theta))
