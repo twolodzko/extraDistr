@@ -4,7 +4,7 @@
 * Fixed typos in documentation (thanks to #8 by philchalmers)
 * Converted number of pdf and cdf functions to more numerically stable
   versions using logs (see #9 and #10)
-* Fixed bug in `ppower`: `lower.tail = FALSE` returned wrong values
+* Fixed bug in `ppower`: with `lower.tail = FALSE` it returned wrong values
 
 ### 1.8.7
 

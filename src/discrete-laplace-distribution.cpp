@@ -23,7 +23,7 @@ inline double logpmf_dlaplace(double x, double p, double mu,
     return NAN;
   }
   if (!isInteger(x))
-    return 0.0;
+    return R_NegInf;
   // (1.0-p)/(1.0+p) * pow(p, abs(x-mu));
   return log1p(-p) - log1p(p) + log(p) * abs(x-mu);
 } 

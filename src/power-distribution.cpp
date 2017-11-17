@@ -44,9 +44,9 @@ inline double cdf_power(double x, double alpha, double beta,
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
     return x+alpha+beta;
   if (x <= 0.0)
-    return R_NegInf;
-  if (x >= alpha)
     return 0.0;
+  if (x >= alpha)
+    return 1.0;
   // pow(x, beta) / pow(alpha, beta);
   return exp(log(x)*beta - log(alpha)*beta);
 }
