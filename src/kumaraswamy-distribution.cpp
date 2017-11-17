@@ -113,11 +113,11 @@ NumericVector cpp_dkumar(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = logpdf_kumar(GETV(x, i), GETV(a, i),
-                        GETV(b, i), throw_warning);
+    p[i] = pdf_kumar(GETV(x, i), GETV(a, i),
+                     GETV(b, i), throw_warning);
 
-  if (!log_prob)
-    p = Rcpp::exp(p);
+  if (log_prob)
+    p = Rcpp::log(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");
