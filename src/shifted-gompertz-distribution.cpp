@@ -45,7 +45,7 @@ using Rcpp::NumericVector;
 
 
 inline double pdf_sgomp(double x, double b, double eta,
-                           bool& throw_warning) {
+                        bool& throw_warning) {
   if (ISNAN(x) || ISNAN(b) || ISNAN(eta))
     return x+b+eta;
   if (b <= 0.0 || eta <= 0.0) {
