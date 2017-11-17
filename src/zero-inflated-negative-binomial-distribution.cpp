@@ -11,6 +11,8 @@ using std::floor;
 using std::ceil;
 using Rcpp::NumericVector;
 
+using std::log1p;
+
 
 /*
 * Zero-inflated Poisson distribution
@@ -24,8 +26,8 @@ using Rcpp::NumericVector;
 *
 */
 
-inline double pdf_zinb(double x, double r, double p, double pi,
-                       bool& throw_warning) {
+inline double logpdf_zinb(double x, double r, double p, double pi,
+                          bool& throw_warning) {
   if (ISNAN(x) || ISNAN(r) || ISNAN(p) || ISNAN(pi))
     return x+r+p+pi;
   if (!VALID_PROB(p) || r < 0.0 || !VALID_PROB(pi) || !isInteger(r, false)) {
@@ -33,11 +35,14 @@ inline double pdf_zinb(double x, double r, double p, double pi,
     return NAN;
   }
   if (x < 0.0 || !isInteger(x) || !R_FINITE(x))
-    return 0.0;
-  if (x == 0.0)
-    return pi + (1.0-pi) * pow(p, r);
-  else
-    return (1.0-pi) * R::dnbinom(x, r, p, false);
+    return R_NegInf;
+  if (x == 0.0) {
+    // pi + (1.0-pi) * pow(p, r);
+    return log(pi + (1.0-pi)) + log(p) * r;
+  } else {
+    // (1.0-pi) * R::dnbinom(x, r, p, false);
+    return log1p(-pi) + R::dnbinom(x, r, p, true);
+  }
 }
 
 inline double cdf_zinb(double x, double r, double p, double pi,
@@ -110,12 +115,12 @@ NumericVector cpp_dzinb(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_zinb(GETV(x, i), GETV(size, i),
-                    GETV(prob, i), GETV(pi, i),
-                    throw_warning);
+    p[i] = logpdf_zinb(GETV(x, i), GETV(size, i),
+                       GETV(prob, i), GETV(pi, i),
+                       throw_warning);
   
-  if (log_prob)
-    p = Rcpp::log(p);
+  if (!log_prob)
+    p = Rcpp::exp(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");

@@ -63,7 +63,6 @@ inline double rng_slash(double mu, double sigma,
 }
 
 
-
 // [[Rcpp::export]]
 NumericVector cpp_dslash(
     const NumericVector& x,

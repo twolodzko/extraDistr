@@ -27,6 +27,7 @@ using Rcpp::NumericVector;
  *
  */
 
+
 inline double logpdf_rayleigh(double x, double sigma,
                               bool& throw_warning) {
   if (ISNAN(x) || ISNAN(sigma))
@@ -38,7 +39,8 @@ inline double logpdf_rayleigh(double x, double sigma,
   if (x <= 0.0 || !R_FINITE(x))
     return R_NegInf;
   // x/(sigma*sigma) * exp(-(x*x) / (2.0*(sigma*sigma)));
-  return log(x) - 2 * log(sigma) - ((x*x) / (2.0*(sigma*sigma)));
+  double sigmasq = sigma * sigma;
+  return log(x) - log(sigmasq) - ((x*x) / (2.0*sigmasq));
 }
 
 inline double cdf_rayleigh(double x, double sigma,

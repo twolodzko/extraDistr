@@ -11,6 +11,8 @@ using std::floor;
 using std::ceil;
 using Rcpp::NumericVector;
 
+using std::log1p;
+
 
 /*
 * Zero-inflated Poisson distribution
@@ -24,8 +26,8 @@ using Rcpp::NumericVector;
 *
 */
 
-inline double pdf_zip(double x, double lambda, double pi,
-                      bool& throw_warning) {
+inline double logpdf_zip(double x, double lambda, double pi,
+                         bool& throw_warning) {
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(pi))
     return x+lambda+pi;
   if (lambda <= 0.0 || !VALID_PROB(pi)) {
@@ -33,11 +35,14 @@ inline double pdf_zip(double x, double lambda, double pi,
     return NAN;
   }
   if (x < 0.0 || !isInteger(x) || !R_FINITE(x))
-    return 0.0;
-  if (x == 0.0)
-    return pi + (1.0-pi) * exp(-lambda);
-  else
-    return (1.0-pi) * R::dpois(x, lambda, false);
+    return R_NegInf;
+  if (x == 0.0) {
+    // pi + (1.0-pi) * exp(-lambda);
+    return log(pi + (1.0-pi)) - lambda;
+  } else {
+    // (1.0-pi) * R::dpois(x, lambda, false);
+    return log1p(-pi) + R::dpois(x, lambda, true);
+  }
 }
 
 inline double cdf_zip(double x, double lambda, double pi,
@@ -105,11 +110,11 @@ NumericVector cpp_dzip(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_zip(GETV(x, i), GETV(lambda, i),
-                   GETV(pi, i), throw_warning);
+    p[i] = logpdf_zip(GETV(x, i), GETV(lambda, i),
+                      GETV(pi, i), throw_warning);
   
-  if (log_prob)
-    p = Rcpp::log(p);
+  if (!log_prob)
+    p = Rcpp::exp(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");
