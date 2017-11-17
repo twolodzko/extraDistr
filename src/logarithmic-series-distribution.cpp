@@ -11,6 +11,7 @@ using std::floor;
 using std::ceil;
 using Rcpp::NumericVector;
 
+using std::log1p;
 
 /*
 *  Logarithmic Series distribution
@@ -27,7 +28,20 @@ using Rcpp::NumericVector;
 */
 
 
-double pdf_lgser(double x, double theta, bool& throw_warnin) {
+// double pdf_lgser(double x, double theta, bool& throw_warnin) {
+//   if (ISNAN(x) || ISNAN(theta))
+//     return x+theta;
+//   if (theta <= 0.0 || theta >= 1.0) {
+//     throw_warnin = true;
+//     return NAN;
+//   }
+//   if (!isInteger(x) || x < 1.0)
+//     return 0.0;
+//   double a = -1.0/log(1.0 - theta);
+//   return a * pow(theta, x) / x;
+// }
+
+double logpdf_lgser(double x, double theta, bool& throw_warnin) {
   if (ISNAN(x) || ISNAN(theta))
     return x+theta;
   if (theta <= 0.0 || theta >= 1.0) {
@@ -35,9 +49,9 @@ double pdf_lgser(double x, double theta, bool& throw_warnin) {
     return NAN;
   }
   if (!isInteger(x) || x < 1.0)
-    return 0.0;
-  double a = -1.0/log(1.0 - theta);
-  return a * pow(theta, x) / x;
+    return R_NegInf;
+  double a = -1.0/log1p(-theta);
+  return log(a) + (log(theta) * x) - log(x);
 }
 
 
@@ -134,11 +148,11 @@ NumericVector cpp_dlgser(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_lgser(GETV(x, i), GETV(theta, i),
-                     throw_warning);
+    p[i] = logpdf_lgser(GETV(x, i), GETV(theta, i),
+                        throw_warning);
  
- if (log_prob)
-   p = Rcpp::log(p);
+ if (!log_prob)
+   p = Rcpp::exp(p);
  
  if (throw_warning)
    Rcpp::warning("NaNs produced");

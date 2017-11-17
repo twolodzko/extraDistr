@@ -11,6 +11,7 @@ using std::floor;
 using std::ceil;
 using Rcpp::NumericVector;
 
+using std::log1p;
 
 /*
 *  Kumaraswamy distribution
@@ -86,7 +87,7 @@ inline double logpdf_kumar(double x, double a, double b,
   }
   if (x < 0.0 || x > 1.0)
     return R_NegInf;
-  return log(a) + log(b) + log(x)*(a-1.0) + log(1.0 - pow(x, a))*(b-1.0);
+  return log(a) + log(b) + log(x)*(a-1.0) + log1p(-pow(x, a))*(b-1.0);
 }
 
 
@@ -112,11 +113,11 @@ NumericVector cpp_dkumar(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_kumar(GETV(x, i), GETV(a, i),
-                     GETV(b, i), throw_warning);
+    p[i] = logpdf_kumar(GETV(x, i), GETV(a, i),
+                        GETV(b, i), throw_warning);
 
-  if (log_prob)
-    p = Rcpp::log(p);
+  if (!log_prob)
+    p = Rcpp::exp(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");

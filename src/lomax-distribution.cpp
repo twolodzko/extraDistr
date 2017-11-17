@@ -11,6 +11,8 @@ using std::floor;
 using std::ceil;
 using Rcpp::NumericVector;
 
+using std::log1p;
+
 
 /*
 *  Lomax distribution
@@ -54,8 +56,21 @@ inline double logpdf_lomax(double x, double lambda, double kappa,
   return log(lambda) + log(kappa) - log(1.0+lambda*x)*(kappa+1.0);
 }
 
-inline double cdf_lomax(double x, double lambda, double kappa,
-                        bool& throw_warning) {
+// inline double cdf_lomax(double x, double lambda, double kappa,
+//                         bool& throw_warning) {
+//   if (ISNAN(x) || ISNAN(lambda) || ISNAN(kappa))
+//     return x+lambda+kappa;
+//   if (lambda <= 0.0 || kappa <= 0.0) {
+//     throw_warning = true;
+//     return NAN;
+//   }
+//   if (x <= 0.0)
+//     return 0.0;
+//   return 1.0 - pow(1.0+lambda*x, -kappa);
+// }
+
+inline double cdf_lomax2(double x, double lambda, double kappa,
+                         bool& throw_warning) {
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(kappa))
     return x+lambda+kappa;
   if (lambda <= 0.0 || kappa <= 0.0) {
@@ -64,7 +79,7 @@ inline double cdf_lomax(double x, double lambda, double kappa,
   }
   if (x <= 0.0)
     return 0.0;
-  return 1.0 - pow(1.0+lambda*x, -kappa);
+  return 1.0 - exp(log1p(lambda*x) * (-kappa));
 }
 
 inline double invcdf_lomax(double p, double lambda, double kappa,
@@ -146,8 +161,8 @@ NumericVector cpp_plomax(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_lomax(GETV(x, i), GETV(lambda, i),
-                     GETV(kappa, i), throw_warning);
+    p[i] = cdf_lomax2(GETV(x, i), GETV(lambda, i),
+                      GETV(kappa, i), throw_warning);
 
   if (!lower_tail)
     p = 1.0 - p;

@@ -11,6 +11,7 @@ using std::floor;
 using std::ceil;
 using Rcpp::NumericVector;
 
+using std::log1p;
 
 /*
 *  Beta prime distribution
@@ -50,7 +51,7 @@ inline double logpdf_betapr(double x, double alpha, double beta,
   if (x <= 0.0 || !R_FINITE(x))
     return R_NegInf;
   double z = x / sigma;
-  return log(pow(z, alpha-1.0)) + log(pow(z+1.0, -alpha-beta)) - R::lbeta(alpha, beta) - log(sigma);
+  return log(z) * (alpha-1.0) + log1p(z) * (-alpha-beta) - R::lbeta(alpha, beta) - log(sigma);
 }
 
 inline double cdf_betapr(double x, double alpha, double beta,
@@ -122,12 +123,12 @@ NumericVector cpp_dbetapr(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_betapr(GETV(x, i), GETV(alpha, i),
-                      GETV(beta, i), GETV(sigma, i),
-                      throw_warning);
+    p[i] = logpdf_betapr(GETV(x, i), GETV(alpha, i),
+                         GETV(beta, i), GETV(sigma, i),
+                         throw_warning);
   
-  if (log_prob)
-    p = Rcpp::log(p);
+  if (!log_prob)
+    p = Rcpp::exp(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");

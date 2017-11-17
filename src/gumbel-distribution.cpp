@@ -43,6 +43,20 @@ inline double pdf_gumbel(double x, double mu, double sigma,
   return exp(-(z+exp(-z)))/sigma;
 }
 
+inline double logpdf_gumbel(double x, double mu, double sigma,
+                            bool& throw_warning) {
+  if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
+    return x+mu+sigma;
+  if (sigma <= 0.0) {
+    throw_warning = true;
+    return NAN;
+  }
+  if (!R_FINITE(x))
+    return R_NegInf;
+  double z = (x-mu)/sigma;
+  return -(z+exp(-z)) - log(sigma);
+}
+
 inline double cdf_gumbel(double x, double mu, double sigma,
                          bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
@@ -99,11 +113,11 @@ NumericVector cpp_dgumbel(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_gumbel(GETV(x, i), GETV(mu, i),
-                      GETV(sigma, i), throw_warning);
+    p[i] = logpdf_gumbel(GETV(x, i), GETV(mu, i),
+                         GETV(sigma, i), throw_warning);
 
-  if (log_prob)
-    p = Rcpp::log(p);
+  if (!log_prob)
+    p = Rcpp::exp(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");

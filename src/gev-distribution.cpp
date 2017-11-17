@@ -11,6 +11,8 @@ using std::floor;
 using std::ceil;
 using Rcpp::NumericVector;
 
+using std::log1p;
+
 
 /*
  *  Generalized extreme value distribution
@@ -35,8 +37,27 @@ using Rcpp::NumericVector;
  *
  */
 
-inline double pdf_gev(double x, double mu, double sigma,
-                      double xi, bool& throw_warning) {
+// inline double pdf_gev(double x, double mu, double sigma,
+//                       double xi, bool& throw_warning) {
+//   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
+//     return x+mu+sigma+xi;
+//   if (sigma <= 0.0) {
+//     Rcpp::warning("NaNs produced");
+//     return NAN;
+//   }
+//   double z = (x-mu)/sigma;
+//   if (1.0+xi*z > 0.0) {
+//     if (xi != 0.0)
+//       return 1.0/sigma * pow(1.0+xi*z, -1.0-(1.0/xi)) * exp(-pow(1.0+xi*z, -1.0/xi));
+//     else
+//       return 1.0/sigma * exp(-z) * exp(-exp(-z));
+//   } else {
+//     return 0.0;
+//   }
+// }
+
+inline double logpdf_gev(double x, double mu, double sigma,
+                         double xi, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
     return x+mu+sigma+xi;
   if (sigma <= 0.0) {
@@ -46,16 +67,35 @@ inline double pdf_gev(double x, double mu, double sigma,
   double z = (x-mu)/sigma;
   if (1.0+xi*z > 0.0) {
     if (xi != 0.0)
-      return 1.0/sigma * pow(1.0+xi*z, -1.0-(1.0/xi)) * exp(-pow(1.0+xi*z, -1.0/xi));
+      return -log(sigma) + log1p(xi*z) * (-1.0-(1.0/xi)) - exp(log1p(xi*z) * (-1.0/xi) );
     else
-      return 1.0/sigma * exp(-z) * exp(-exp(-z));
+      return -log(sigma) - z - exp(-z);
   } else {
-    return 0.0;
+    return R_NegInf;
   }
 }
 
-inline double cdf_gev(double x, double mu, double sigma,
-                      double xi, bool& throw_warning) {
+// inline double cdf_gev(double x, double mu, double sigma,
+//                       double xi, bool& throw_warning) {
+//   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
+//     return x+mu+sigma+xi;
+//   if (sigma <= 0.0) {
+//     Rcpp::warning("NaNs produced");
+//     return NAN;
+//   }
+//   double z = (x-mu)/sigma;
+//   if (1.0+xi*z > 0.0) {
+//     if (xi != 0.0)
+//       return exp(-pow(1.0+xi*z, -1.0/xi));
+//     else
+//       return exp(-exp(-z));
+//   } else {
+//     return 0.0;
+//   }
+// }
+
+inline double cdf_gev2(double x, double mu, double sigma,
+                       double xi, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
     return x+mu+sigma+xi;
   if (sigma <= 0.0) {
@@ -65,7 +105,7 @@ inline double cdf_gev(double x, double mu, double sigma,
   double z = (x-mu)/sigma;
   if (1.0+xi*z > 0.0) {
     if (xi != 0.0)
-      return exp(-pow(1.0+xi*z, -1.0/xi));
+      return exp(-exp(log1p(xi*z) * (-1.0/xi)));
     else
       return exp(-exp(-z));
   } else {
@@ -128,12 +168,12 @@ NumericVector cpp_dgev(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_gev(GETV(x, i), GETV(mu, i),
-                   GETV(sigma, i), GETV(xi, i),
-                   throw_warning);
+    p[i] = logpdf_gev(GETV(x, i), GETV(mu, i),
+                      GETV(sigma, i), GETV(xi, i),
+                      throw_warning);
 
-  if (log_prob)
-    p = Rcpp::log(p);
+  if (!log_prob)
+    p = Rcpp::exp(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");
@@ -167,9 +207,9 @@ NumericVector cpp_pgev(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = cdf_gev(GETV(x, i), GETV(mu, i),
-                   GETV(sigma, i), GETV(xi, i),
-                   throw_warning);
+    p[i] = cdf_gev2(GETV(x, i), GETV(mu, i),
+                    GETV(sigma, i), GETV(xi, i),
+                    throw_warning);
 
   if (!lower_tail)
     p = 1.0 - p;

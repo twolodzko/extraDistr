@@ -30,8 +30,22 @@ using Rcpp::NumericVector;
  *
  */
 
-inline double pdf_frechet(double x, double lambda, double mu,
-                          double sigma, bool& throw_warning) {
+// inline double pdf_frechet(double x, double lambda, double mu,
+//                           double sigma, bool& throw_warning) {
+//   if (ISNAN(x) || ISNAN(lambda) || ISNAN(mu) || ISNAN(sigma))
+//     return x+lambda+mu+sigma;
+//   if (lambda <= 0.0 || sigma <= 0.0) {
+//     throw_warning = true;
+//     return NAN;
+//   }
+//   if (x <= mu)
+//     return 0.0;
+//   double z = (x-mu)/sigma;
+//   return lambda/sigma * pow(z, -1.0-lambda) * exp(-pow(z, -lambda));
+// }
+
+inline double logpdf_frechet(double x, double lambda, double mu,
+                             double sigma, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(mu) || ISNAN(sigma))
     return x+lambda+mu+sigma;
   if (lambda <= 0.0 || sigma <= 0.0) {
@@ -39,9 +53,9 @@ inline double pdf_frechet(double x, double lambda, double mu,
     return NAN;
   }
   if (x <= mu)
-    return 0.0;
+    return R_NegInf;
   double z = (x-mu)/sigma;
-  return lambda/sigma * pow(z, -1.0-lambda) * exp(-pow(z, -lambda));
+  return log(lambda) - log(sigma) + log(z) * (-1.0-lambda) - exp(log(z) * -lambda);
 }
 
 inline double cdf_frechet(double x, double lambda, double mu,
@@ -108,12 +122,12 @@ NumericVector cpp_dfrechet(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_frechet(GETV(x, i), GETV(lambda, i),
-                       GETV(mu, i), GETV(sigma, i),
-                       throw_warning);
+    p[i] = logpdf_frechet(GETV(x, i), GETV(lambda, i),
+                          GETV(mu, i), GETV(sigma, i),
+                          throw_warning);
 
-  if (log_prob)
-    p = Rcpp::log(p);
+  if (!log_prob)
+    p = Rcpp::exp(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");

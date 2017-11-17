@@ -70,7 +70,7 @@ inline double logpdf_gpd(double x, double mu, double sigma, double xi,
   double z = (x-mu)/sigma;
   if (xi != 0.0) {
     if ((x >= mu && xi > 0) || (x >= mu && x <= (mu - sigma/xi) && xi < 0))
-      return log1p(xi*z) * -(xi+1.0)/xi - log(sigma); 
+      return log1p(xi*z) * (-(xi+1.0)/xi) - log(sigma); 
     else
       return R_NegInf;
   } else {
@@ -114,7 +114,7 @@ inline double cdf_gpd2(double x, double mu, double sigma, double xi,
   double z = (x-mu)/sigma;
   if (xi != 0.0) {
     if ((x >= mu && xi > 0) || (x >= mu && x <= (mu - sigma/xi) && xi < 0))
-      return 1.0 - exp(log1p(xi*z) * -1.0/xi);
+      return 1.0 - exp(log1p(xi*z) * (-1.0/xi));
     else
       return 0.0;
   } else {
