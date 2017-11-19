@@ -41,7 +41,7 @@ inline double logpdf_laplace(double x, double mu, double sigma,
   }
   double z = abs(x-mu)/sigma;
   // exp(-z)/(2.0*sigma);
-  return -z - log(2.0*sigma);
+  return -z - LOG_2F - log(sigma);
 }
 
 inline double cdf_laplace(double x, double mu, double sigma,
