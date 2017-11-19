@@ -39,7 +39,8 @@ inline double logpdf_betapr(double x, double alpha, double beta,
     return R_NegInf;
   double z = x / sigma;
   // pow(z, alpha-1.0) * pow(z+1.0, -alpha-beta) / R::beta(alpha, beta) / sigma;
-  return log(z) * (alpha-1.0) + log1p(z) * (-alpha-beta) - R::lbeta(alpha, beta) - log(sigma);
+  return log(z) * (alpha-1.0) + log1p(z) * (-alpha-beta) -
+    R::lbeta(alpha, beta) - log(sigma);
 }
 
 inline double cdf_betapr(double x, double alpha, double beta,

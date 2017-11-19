@@ -29,20 +29,6 @@ using Rcpp::NumericVector;
  *
  */
 
-inline double pdf_gumbel(double x, double mu, double sigma,
-                         bool& throw_warning) {
-  if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
-    return x+mu+sigma;
-  if (sigma <= 0.0) {
-    throw_warning = true;
-    return NAN;
-  }
-  if (!R_FINITE(x))
-    return 0.0;
-  double z = (x-mu)/sigma;
-  return exp(-(z+exp(-z)))/sigma;
-}
-
 inline double logpdf_gumbel(double x, double mu, double sigma,
                             bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
@@ -54,8 +40,10 @@ inline double logpdf_gumbel(double x, double mu, double sigma,
   if (!R_FINITE(x))
     return R_NegInf;
   double z = (x-mu)/sigma;
+  // exp(-(z+exp(-z)))/sigma;
   return -(z+exp(-z)) - log(sigma);
 }
+
 
 inline double cdf_gumbel(double x, double mu, double sigma,
                          bool& throw_warning) {

@@ -39,8 +39,8 @@ inline double logpdf_rayleigh(double x, double sigma,
   if (x <= 0.0 || !R_FINITE(x))
     return R_NegInf;
   // x/(sigma*sigma) * exp(-(x*x) / (2.0*(sigma*sigma)));
-  double sigmasq = sigma * sigma;
-  return log(x) - log(sigmasq) - ((x*x) / (2.0*sigmasq));
+  double lsigsq = 2.0 * log(sigma);
+  return log(x) - lsigsq - exp((2.0 * log(x)) - LOG_2F - lsigsq);
 }
 
 inline double cdf_rayleigh(double x, double sigma,

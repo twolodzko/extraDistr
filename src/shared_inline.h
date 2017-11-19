@@ -14,6 +14,10 @@ inline double phi(double x) {
   return R::dnorm(x, 0.0, 1.0, false);
 }
 
+inline double lphi(double x) {
+  return R::dnorm(x, 0.0, 1.0, true);
+}
+
 inline double Phi(double x) {
   return R::pnorm(x, 0.0, 1.0, true, false);
 }

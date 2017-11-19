@@ -12,8 +12,8 @@ using std::ceil;
 using Rcpp::NumericVector;
 
 
-inline double pdf_huber(double x, double mu, double sigma,
-                        double c, bool& throw_warning) {
+inline double logpdf_huber(double x, double mu, double sigma,
+                           double c, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(c))
     return x+mu+sigma+c;
   if (sigma <= 0.0 || c <= 0.0) {
@@ -23,14 +23,19 @@ inline double pdf_huber(double x, double mu, double sigma,
   
   double z, A, rho;
   z = abs((x - mu)/sigma);
-  A = 2.0*SQRT_2_PI * (Phi(c) + phi(c)/c - 0.5);
+  // A = 2.0*SQRT_2_PI * (Phi(c) + phi(c)/c - 0.5);
+  A = LOG_2F + log(SQRT_2_PI) + log(Phi(c) + phi(c)/c - 0.5);
 
-  if (z <= c)
-    rho = (z*z)/2.0;
-  else
+  if (z <= c) {
+    // rho = (z*z)/2.0;
+    rho = exp(2.0 * log(z) - LOG_2F);
+  } else {
+    // rho = c*z - (c*c)/2.0;
     rho = c*z - (c*c)/2.0;
+  }
 
-  return exp(-rho)/A/sigma;
+  // exp(-rho)/A/sigma;
+  return -rho - A - log(sigma);
 }
 
 inline double cdf_huber(double x, double mu, double sigma,
@@ -132,12 +137,12 @@ NumericVector cpp_dhuber(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_huber(GETV(x, i), GETV(mu, i),
-                     GETV(sigma, i), GETV(epsilon, i),
-                     throw_warning);
+    p[i] = logpdf_huber(GETV(x, i), GETV(mu, i),
+                        GETV(sigma, i), GETV(epsilon, i),
+                        throw_warning);
   
-  if (log_prob)
-    p = Rcpp::log(p);
+  if (!log_prob)
+    p = Rcpp::exp(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");

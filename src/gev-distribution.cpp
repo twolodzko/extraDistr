@@ -50,7 +50,8 @@ inline double logpdf_gev(double x, double mu, double sigma,
   if (1.0+xi*z > 0.0) {
     if (xi != 0.0) {
       // 1.0/sigma * pow(1.0+xi*z, -1.0-(1.0/xi)) * exp(-pow(1.0+xi*z, -1.0/xi));
-      return -log(sigma) + log1p(xi*z) * (-1.0-(1.0/xi)) - exp(log1p(xi*z) * (-1.0/xi) );
+      return -log(sigma) + log1p(xi*z) * (-1.0-(1.0/xi)) -
+        exp(log1p(xi*z) * (-1.0/xi) );
     } else {
       // 1.0/sigma * exp(-z) * exp(-exp(-z));
       return -log(sigma) - z - exp(-z);

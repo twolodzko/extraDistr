@@ -13,8 +13,8 @@ using Rcpp::NumericVector;
 using Rcpp::NumericMatrix;
 
 
-inline double pmf_bpois(double x, double y, double a, double b, double c,
-                        bool& throw_warning) {
+inline double logpmf_bpois(double x, double y, double a, double b, double c,
+                           bool& throw_warning) {
   
   if (ISNAN(x) || ISNAN(y) || ISNAN(a) || ISNAN(b) || ISNAN(c))
     return x+y+a+b+c;
@@ -25,25 +25,29 @@ inline double pmf_bpois(double x, double y, double a, double b, double c,
   }
   
   if (!isInteger(x) || x < 0.0 || !R_FINITE(x) ||
-      !R_FINITE(y) || !isInteger(y))
-      return 0.0;
+      !R_FINITE(y) || !isInteger(y)) {
+      return R_NegInf;
+  }
   
   if (y < 0.0)
-    return 0.0;
+    return R_NegInf;
   
-  double tmp = exp(-(a+b+c)); 
-  tmp *= (pow(a, x) / factorial(x)) * (pow(b, y) / factorial(y));
+  // exp(-(a+b+c))
+  double tmp = -(a+b+c); 
+  // tmp *= (pow(a, x) / factorial(x)) * (pow(b, y) / factorial(y));
+  tmp += (log(a) * x - lfactorial(x)) + (log(b) * y - lfactorial(y));
   
   double z = (x < y) ? x : y;
-  double c_ab = c/(a*b);
+  // c_ab = c/(a*b)
+  double c_ab = log(c) - log(a) - log(b);
   double xy = 0.0;
   
   for (double k = 0.0; k <= z; k += 1.0) {
     // xy += R::choose(x, k) * R::choose(y, k) * factorial(k) * pow(c_ab, k);
-    xy += exp(R::lchoose(x, k) + R::lchoose(y, k) + lfactorial(k) + log(c_ab) * k);
+    xy += exp(R::lchoose(x, k) + R::lchoose(y, k) + lfactorial(k) + c_ab * k);
   }
   
-  return tmp * xy;
+  return tmp + log(xy);
 }
 
 
@@ -78,11 +82,11 @@ NumericVector cpp_dbpois(
     Rcpp::stop("lengths of x and y differ");
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pmf_bpois(GETV(x, i), GETV(y, i), GETV(a, i),
-                     GETV(b, i), GETV(c, i), throw_warning);
+    p[i] = logpmf_bpois(GETV(x, i), GETV(y, i), GETV(a, i),
+                        GETV(b, i), GETV(c, i), throw_warning);
   
-  if (log_prob)
-    p = Rcpp::log(p);
+  if (!log_prob)
+    p = Rcpp::exp(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");

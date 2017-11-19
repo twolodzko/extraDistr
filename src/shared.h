@@ -6,8 +6,10 @@
 
 // Constants
 
-static const double SQRT_2_PI    = 2.506628274631000241612;
-static const double PHI_0        = 0.3989422804014327028632;
+static const double SQRT_2_PI    = 2.506628274631000241612;  // sqrt(2*pi)
+static const double PHI_0        = 0.3989422804014327028632; // dnorm(0)
+static const double LOG_2F       = 0.6931471805599452862268; // log(2)
+
 static const double MIN_DIFF_EPS = 1e-8;
 
 // MACROS
@@ -26,6 +28,7 @@ double rng_unif();         // standard uniform
 
 inline bool tol_equal(double x, double y);
 inline double phi(double x);
+inline double lphi(double x);
 inline double Phi(double x);
 inline double InvPhi(double x);
 inline double factorial(double x);
