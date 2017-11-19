@@ -74,8 +74,6 @@ dgumbelR <- function(x, mu, sigma) {
   1/sigma * exp(-(z+exp(-z)))
 }
 
-# dhuberR
-
 dinvgammaR <- function(x, alpha, beta) {
   ifelse(x<=0, 0, 
          (x^(-alpha-1) * exp(-1/(beta*x))) / (gamma(alpha)*beta^alpha))
@@ -147,6 +145,17 @@ test_that("Compare PDF's/PMF's to pure-R benchmarks", {
   expect_equal(dpower(x, 1, 1), dpowerR(x, 1, 1))
   expect_equal(drayleigh(x, 1), drayleighR(x, 1))
   # expect_equal(dsgomp(x, 0.5, 1), dsgompR(x, 0.5, 1)) # ???
+  
+})
+
+test_that("Compare dhuber to hoa implementation", {
+  
+  skip_if_not_installed("hoa")
+  
+  x <- c(-1e5, -100, -10, -5, -1, -0.5, 0.001, 0, 0.001, 0.5, 1, 5, 10, 100, 1e5)
+  
+  expect_equal(dhuber(x), hoa::dHuber(x))
+  expect_equal(phuber(x), hoa::pHuber(x))
   
 })
 
