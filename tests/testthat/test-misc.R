@@ -29,4 +29,11 @@ test_that("other tests", {
   pp <- seq(0, 1, by = 0.01)
   expect_identical(qnorm(pp), qtnorm(pp))
   
+  x <- c(-Inf, -100, -10, -5, -1, -0.5, 0, 0.5, 1, 5, 10, 100, Inf)
+  
+  expect_equal(pmixnorm(x, c(1,2,3), c(1,2,3), c(1/3,1/3,1/3), lower.tail = TRUE),
+               1 - pmixnorm(x, c(1,2,3), c(1,2,3), c(1/3,1/3,1/3), lower.tail = FALSE))
+  expect_equal(suppressWarnings(pmixpois(x, c(1,2,3), c(1/3,1/3,1/3), lower.tail = TRUE)),
+               1 - suppressWarnings(pmixpois(x, c(1,2,3), c(1/3,1/3,1/3), lower.tail = FALSE)))
+  
 })
