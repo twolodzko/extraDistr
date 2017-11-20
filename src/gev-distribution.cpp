@@ -27,8 +27,8 @@ using std::log1p;
  *
  *  z = (x-mu)/sigma
  *  where 1+xi*z > 0
- *
- *  f(x)    = { 1/sigma * (1-xi*z)^{-1-1/xi} * exp(-(1-xi*z)^{-1/xi})     if xi != 0
+ * 
+ *  f(x)    = { 1/sigma * (1+xi*z)^{-1/xi-1} * exp(-(1+xi*z)^{-1/xi})     if xi != 0
  *            { 1/sigma * exp(-z) * exp(-exp(-z))                         otherwise
  *  F(x)    = { exp(-(1+xi*z)^{1/xi})                                     if xi != 0
  *            { exp(-exp(-z))                                             otherwise
@@ -104,11 +104,11 @@ inline double rng_gev(double mu, double sigma, double xi,
     Rcpp::warning("NAs produced");
     return NA_REAL;
   }
-  double u = rng_unif();
+  double u = R::exp_rand();
   if (xi != 0.0)
-    return mu - sigma/xi * (1.0 - pow(-log(u), -xi));
+    return mu + sigma/xi * (pow(u, -xi) - 1.0);
   else
-    return mu - sigma * log(-log(u));
+    return mu - sigma * log(u);
 }
 
 

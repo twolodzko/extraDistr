@@ -49,9 +49,11 @@ dgpoisR <- function(x, alpha, beta) {
 dgevR <- function(x, mu, sigma, xi) {
   z <- (x-mu)/sigma
   if (xi != 0) {
-    1/sigma * (1-xi*z)^(-1-1/xi) * exp(-(1-xi*z)^(-1/xi))
+    ifelse((1.0+xi*z) <= 0.0, 0, 
+           1/sigma * (1+xi*z)^(-1/xi-1) * exp(-(1+xi*z)^(-1/xi)))
   } else {
-    1/sigma * exp(-z) * exp(-exp(-z)) 
+    ifelse((1.0+xi*z) <= 0.0, 0, 
+           1/sigma * exp(-z) * exp(-exp(-z)))
   }
 }
 
@@ -63,9 +65,11 @@ dgompertzR <- function(x, a, b) {
 dgpdR <- function(x, mu, sigma, xi) {
   z <- (x-mu)/sigma
   if (xi != 0) {
-    (1+xi*z)^(-(xi+1)/xi)/sigma
+    ifelse((1.0+xi*z) <= 0.0 | z <= 0, 0,
+           (1+xi*z)^(-(xi+1)/xi)/sigma)
   } else {
-    exp(-z)/sigma
+    ifelse((1.0+xi*z) <= 0.0 | z <= 0, 0,
+           exp(-z)/sigma)
   }
 }
 
@@ -133,9 +137,9 @@ test_that("Compare PDF's/PMF's to pure-R benchmarks", {
   expect_equal(dfrechet(x, 1, 1, 1), dfrechetR(x, 1, 1, 1))
   expect_warning(expect_equal(dgpois(x[1:(n-1)], 1, 1),
                               dgpoisR(x[1:(n-1)], 1, 1))) # numerical precission in R version
-  # expect_equal(dgev(x, 1, 1, 1), dgevR(x, 1, 1, 1)) # better rules
+  expect_equal(dgev(x, 1, 1, 1), dgevR(x, 1, 1, 1))
   expect_equal(dgompertz(x, 1, 1), dgompertzR(x, 1, 1))
-  # expect_equal(dgpd(x, 1, 1, 1), dgpdR(x, 1, 1, 1)) # better rules
+  expect_equal(dgpd(x, 1, 1, 1), dgpdR(x, 1, 1, 1))
   expect_equal(dgumbel(x, 1, 1), dgumbelR(x, 1, 1))
   expect_equal(dinvgamma(x, 1, 1), dinvgammaR(x, 1, 1))
   expect_equal(dlaplace(x, -1, 5), dlaplaceR(x, -1, 5))
@@ -156,6 +160,20 @@ test_that("Compare dhuber to hoa implementation", {
   
   expect_equal(dhuber(x), hoa::dHuber(x))
   expect_equal(phuber(x), hoa::pHuber(x))
+  
+})
+
+test_that("Compare GEV and GPD to evd implementation", {
+  
+  skip_if_not_installed("evd")
+  
+  x <- c(-1e5, -100, -10, -5, -1, -0.5, 0.001, 0, 0.001, 0.5, 1, 5, 10, 100, 1e5)
+  
+  expect_equal(dgev(x), evd::dgev(x))
+  expect_equal(pgev(x), evd::pgev(x))
+  
+  expect_equal(dgpd(x), evd::dgpd(x))
+  expect_equal(pgpd(x), evd::pgpd(x))
   
 })
 

@@ -48,14 +48,14 @@ inline double logpdf_gpd(double x, double mu, double sigma, double xi,
   }
   double z = (x-mu)/sigma;
   if (xi != 0.0) {
-    if ((x >= mu && xi > 0) || (x >= mu && x <= (mu - sigma/xi) && xi < 0)) {
+    if (z > 0 && 1.0+xi*z > 0.0) {
       // pow(1.0+xi*z, -(xi+1.0)/xi)/sigma;
       return log1p(xi*z) * (-(xi+1.0)/xi) - log(sigma); 
     } else {
       return R_NegInf;
     }
   } else {
-    if (x >= mu) {
+    if (z > 0 && 1.0+xi*z > 0.0) {
       // exp(-z)/sigma;
       return -z - log(sigma);
     } else {
@@ -74,14 +74,14 @@ inline double cdf_gpd(double x, double mu, double sigma, double xi,
   }
   double z = (x-mu)/sigma;
   if (xi != 0.0) {
-    if ((x >= mu && xi > 0) || (x >= mu && x <= (mu - sigma/xi) && xi < 0)) {
+    if (z > 0 && 1.0+xi*z > 0.0) {
       // 1.0 - pow(1.0+xi*z, -1.0/xi);
       return 1.0 - exp(log1p(xi*z) * (-1.0/xi));
     } else {
       return 0.0;
     }
   } else {
-    if (x >= mu) {
+    if (z > 0 && 1.0+xi*z > 0.0) {
       return 1.0 - exp(-z);
     } else {
       return 0.0;
@@ -109,11 +109,10 @@ inline double rng_gpd(double mu, double sigma, double xi,
     throw_warning = true;
     return NA_REAL;
   }
-  double u = rng_unif();
   if (xi != 0.0)
-    return mu + sigma * (pow(u, -xi)-1.0)/xi;
+    return mu + sigma * (pow(rng_unif(), -xi)-1.0)/xi;
   else
-    return mu - sigma * log(u);
+    return mu - sigma * R::exp_rand();
 }
 
 

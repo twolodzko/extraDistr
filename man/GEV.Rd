@@ -38,11 +38,11 @@ for the generalized extreme value distribution.
 \details{
 Probability density function
 \deqn{ f(x) = \left\{\begin{array}{ll}
-\frac{1}{\sigma} \left(1-\xi \frac{x-\mu}{\sigma}\right)^{-1-1/\xi} \exp\left(-\left(1-\xi \frac{x-\mu}{\sigma}\right)^{-1/\xi}\right) & \xi \neq 0 \\
+\frac{1}{\sigma} \left(1+\xi \frac{x-\mu}{\sigma}\right)^{-1/\xi-1} \exp\left(-\left(1+\xi \frac{x-\mu}{\sigma}\right)^{-1/\xi}\right) & \xi \neq 0 \\
 \frac{1}{\sigma} \exp\left(- \frac{x-\mu}{\sigma}\right) \exp\left(-\exp\left(- \frac{x-\mu}{\sigma}\right)\right)                       & \xi = 0
 \end{array}\right.
 }{
-f(x) = [if \xi != 0:] 1/\sigma * (1-\xi*(x-\mu)/\sigma)^{-1-1/\xi} * exp(-(1-\xi*(x-\mu)/\sigma)^{-1/\xi})
+f(x) = [if \xi != 0:] 1/\sigma * (1+\xi*(x-\mu)/\sigma)^{-1/\xi-1} * exp(-(1+\xi*(x-\mu)/\sigma)^{-1/\xi})
 [else:] 1/\sigma * exp(-(x-\mu)/\sigma) * exp(-exp(-(x-\mu)/\sigma))
 }
 
@@ -72,7 +72,7 @@ x <- rgev(1e5, 5, 2, .5)
 hist(x, 1000, freq = FALSE, xlim = c(0, 50))
 curve(dgev(x, 5, 2, .5), 0, 50, col = "red", add = TRUE)
 hist(pgev(x, 5, 2, .5))
-plot(ecdf(x))
+plot(ecdf(x), xlim = c(0, 50))
 curve(pgev(x, 5, 2, .5), 0, 50, col = "red", lwd = 2, add = TRUE)
 
 }

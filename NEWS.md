@@ -5,6 +5,10 @@
 * Converted number of pdf and cdf functions to more numerically stable
   versions using logs (see #9 and #10)
 * Fixed bug in `ppower`: with `lower.tail = FALSE` it returned wrong values
+* Fixed documentation for GEV, it gave incorrect formula for pdf
+* Fixed bug in `dgpd` and `pgpd`, they assumed slightly wrong support 
+* Improved the `rgev` and `rgpd`, now they give better random values since 
+  relying on exponential distribution random generator if possible
 
 ### 1.8.7
 
