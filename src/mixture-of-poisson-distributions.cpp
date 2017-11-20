@@ -72,18 +72,36 @@ NumericVector cpp_dmixpois(
     }
     
     if (GETV(x, i) < 0.0 || !isInteger(GETV(x, i))) {
-      p[i] = 0.0;
+      p[i] = R_NegInf;
       continue;
     }
     
-    for (int j = 0; j < k; j++) {
-      p[i] += (GETM(alpha, i, j) / alpha_tot) *
-        R::dpois(GETV(x, i), GETM(lambda, i, j), false);
+    if (!R_finite(GETV(x, i))) {
+      p[i] = R_NegInf;
+      continue;
     }
+    
+    double mx = R_NegInf;
+    std::vector<double> tmp(k);
+    
+    for (int j = 0; j < k; j++) {
+      // p[i] += (GETM(alpha, i, j) / alpha_tot) *
+      //   R::dpois(GETV(x, i), GETM(lambda, i, j), false);
+      tmp[j] = log(GETM(alpha, i, j)) - log(alpha_tot) +
+        R::dpois(GETV(x, i), GETM(lambda, i, j), true);
+      if (tmp[j] > mx)
+        mx = tmp[j];
+    }
+    
+    for (int j = 0; j < k; j++)
+      p[i] += exp(tmp[j] - mx);  // log-sum-exp trick
+    
+    p[i] = log(p[i]) + mx;
+    
   }
   
-  if (log_prob)
-    p = Rcpp::log(p);
+  if (!log_prob)
+    p = Rcpp::exp(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");
@@ -152,21 +170,39 @@ NumericVector cpp_pmixpois(
     }
     
     if (GETV(x, i) < 0.0) {
-      p[i] = 0.0;
+      p[i] = lower_tail ? R_NegInf : 0.0; // here
+      continue;
+    }
+
+    if (GETV(x, i) == R_PosInf) {
+      p[i] = !lower_tail ? R_NegInf : 0.0;
       continue;
     }
     
+    double mx = R_NegInf;
+    std::vector<double> tmp(k);
+    
     for (int j = 0; j < k; j++) {
-      p[i] += (GETM(alpha, i, j) / alpha_tot) *
-        R::ppois(GETV(x, i), GETM(lambda, i, j), true, false);
+      // p[i] += (GETM(alpha, i, j) / alpha_tot) *
+      //   R::ppois(GETV(x, i), GETM(lambda, i, j), true, false);
+      tmp[j] = log(GETM(alpha, i, j)) - log(alpha_tot) +
+        R::ppois(GETV(x, i), GETM(lambda, i, j), lower_tail, true);
+      if (tmp[j] > mx)
+        mx = tmp[j];
     }
+    
+    for (int j = 0; j < k; j++)
+      p[i] += exp(tmp[j] - mx);  // log-sum-exp trick
+    
+    p[i] = log(p[i]) + mx;
+    
   }
   
-  if (!lower_tail)
-    p = 1.0 - p;
+  // if (!lower_tail)
+  //   p = 1.0 - p;
   
-  if (log_prob)
-    p = Rcpp::log(p);
+  if (!log_prob)
+    p = Rcpp::exp(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");

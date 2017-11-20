@@ -156,6 +156,7 @@ test_that("Compare PDF's/PMF's to pure-R benchmarks", {
 
 test_that("Compare dhuber to hoa implementation", {
   
+  skip_on_cran()
   skip_if_not_installed("hoa")
 
   expect_equal(dhuber(x), hoa::dHuber(x))
@@ -165,6 +166,7 @@ test_that("Compare dhuber to hoa implementation", {
 
 test_that("Compare GEV and GPD to evd implementation", {
   
+  skip_on_cran()
   skip_if_not_installed("evd")
 
   expect_equal(dgev(x), evd::dgev(x))
@@ -172,6 +174,30 @@ test_that("Compare GEV and GPD to evd implementation", {
   
   expect_equal(dgpd(x), evd::dgpd(x))
   expect_equal(pgpd(x), evd::pgpd(x))
+  
+})
+
+test_that("Compare ddirichlet to Compositional implementation", {
+  
+  skip_on_cran()
+  skip_if_not_installed("Compositional")
+  
+  alpha <- runif(5, 0, 3)
+  x <- rdirichlet(5000, alpha)
+  
+  expect_equal(ddirichlet(x, alpha), Compositional::ddiri(x, alpha, logged = FALSE))
+  
+})
+
+test_that("Compare dmnom to dmultinom from base R", {
+
+  n <- 100
+  p <- runif(5)
+  p <- p/sum(p)
+  
+  x <- rmnom(5000, n, p)
+  
+  expect_equal(dmnom(x, n, p), apply(x, 1, dmultinom, n, p))
   
 })
 
