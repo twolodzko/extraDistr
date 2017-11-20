@@ -48,7 +48,7 @@ inline double logpmf_bpois(double x, double y, double a, double b, double c,
   for (int k = 0; k <= z; k++) {
     dk = static_cast<double>(k);
     // xy += R::choose(x, k) * R::choose(y, k) * factorial(k) * pow(c_ab, k);
-    ls[k] = R::lchoose(x, dk) + R::lchoose(y, dk) + lfactorial(dk) +lc_ab * dk;
+    ls[k] = R::lchoose(x, dk) + R::lchoose(y, dk) + lfactorial(dk) + lc_ab * dk;
     if (ls[k] > mx)
       mx = ls[k];
   }
