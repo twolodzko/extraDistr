@@ -27,10 +27,8 @@ inline double logpdf_huber(double x, double mu, double sigma,
   A = LOG_2F + log(SQRT_2_PI) + log(Phi(c) + phi(c)/c - 0.5);
 
   if (z <= c) {
-    // rho = (z*z)/2.0;
-    rho = exp(2.0 * log(z) - LOG_2F);
+    rho = (z*z)/2.0;
   } else {
-    // rho = c*z - (c*c)/2.0;
     rho = c*z - (c*c)/2.0;
   }
 
