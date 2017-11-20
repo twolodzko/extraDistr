@@ -37,17 +37,30 @@ inline double logpmf_bpois(double x, double y, double a, double b, double c,
   // tmp *= (pow(a, x) / factorial(x)) * (pow(b, y) / factorial(y));
   tmp += (log(a) * x - lfactorial(x)) + (log(b) * y - lfactorial(y));
   
-  double z = (x < y) ? x : y;
+  double z = static_cast<int>( (x < y) ? x : y );
   // c_ab = c/(a*b)
-  double c_ab = log(c) - log(a) - log(b);
-  double xy = 0.0;
+  double lc_ab = log(c) - log(a) - log(b);
   
-  for (double k = 0.0; k <= z; k += 1.0) {
+  double dk;
+  double mx = R_NegInf;
+  std::vector<double> ls(z+1);
+  
+  for (int k = 0; k <= z; k++) {
+    dk = static_cast<double>(k);
     // xy += R::choose(x, k) * R::choose(y, k) * factorial(k) * pow(c_ab, k);
-    xy += exp(R::lchoose(x, k) + R::lchoose(y, k) + lfactorial(k) + c_ab * k);
+    ls[k] = R::lchoose(x, dk) + R::lchoose(y, dk) + lfactorial(dk) +lc_ab * dk;
+    if (ls[k] > mx)
+      mx = ls[k];
   }
   
-  return tmp + log(xy);
+  double xy = 0.0;
+  
+  for (int k = 0; k <= z; k++)
+    xy += exp(ls[k] - mx);    // log-sum-exp trick
+  
+  xy = log(xy) + mx;
+  
+  return tmp + xy;
 }
 
 
