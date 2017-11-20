@@ -22,7 +22,7 @@ using Rcpp::NumericVector;
 *  b > 0
 *  eta > 0
 *
-*  f(x)    = b*exp(-b*x) * exp(-eta*exp(-b*x)) * exp(1 + eta*(1 - exp(-b*x)))
+*  f(x)    = b*exp(-b*x) * exp(-eta*exp(-b*x)) * (1 + eta*(1 - exp(-b*x)))
 *  F(x)    = (1-exp(-b*x)) * exp(-eta*exp(-b*x))
 *
 * References:

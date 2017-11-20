@@ -19,8 +19,8 @@ dbetaprR <- function(x, alpha, beta, sigma) {
 
 dfatigueR <- function(x, alpha, beta, mu) {
   z <- x-mu
-  zb <- sqrt(z/beta)
-  bz <- sqrt(beta/z)
+  zb <- suppressWarnings(sqrt(z/beta)) # warns when x <= mu
+  bz <- suppressWarnings(sqrt(beta/z)) # warns when x <= mu
   ifelse(x<=mu, 0, 
          (zb+bz)/(2.0*alpha*z) * dnorm((zb-bz)/alpha))
 }
@@ -114,24 +114,26 @@ drayleighR <- function(x, sigma) {
 }
 
 dsgompR <- function(x, b, eta) {
+  ebx <- exp(-b*x)
   ifelse(x<0, 0,
-         b*exp(-b*x) * exp(-eta*exp(-b*x)) * exp(1 + eta*(1 - exp(-b*x))))
+         b*ebx * exp(-eta*ebx) * (1 + eta*(1 - ebx)))
 }
 
 # ====================================================
 #                     TESTS
 # ====================================================
 
+x <- c(-1e5, -100, -10, -5.5, -5, -1.01, -1, -0.5, 0.001, 0, 0.001, 0.5, 1, 1.01, 5, 5.5, 10, 100, 1e5)
+n <- length(x)
+
+
 test_that("Compare PDF's/PMF's to pure-R benchmarks", {
-  
-  x <- c(-1e5, -100, -10, -5, -1, -0.5, 0.001, 0, 0.001, 0.5, 1, 5, 10, 100, 1e5)
-  n <- length(x)
   
   expect_warning(expect_equal(dbbinom(x, 100, 1, 10), dbbinomR(x, 100, 1, 10)))
   expect_warning(expect_equal(dbnbinom(x[1:(n-2)], 100, 1, 10),
                               dbnbinomR(x[1:(n-2)], 100, 1, 10))) # numerical precission in R version
   expect_equal(dbetapr(x, 1, 1, 1), dbetaprR(x, 1, 1, 1))
-  # expect_equal(dfatigue(x, 1, 1, 0), dfatigueR(x, 1, 1, 0)) # warning in R version?
+  expect_equal(dfatigue(x, 1, 1, 0), dfatigueR(x, 1, 1, 0))
   expect_warning(expect_equal(ddlaplace(x, 0, 0.5), ddlaplaceR(x, 0, 0.5)))
   expect_warning(expect_equal(ddweibull(x, 0.5, 1), ddweibullR(x, 0.5, 1)))
   expect_equal(dfrechet(x, 1, 1, 1), dfrechetR(x, 1, 1, 1))
@@ -148,16 +150,14 @@ test_that("Compare PDF's/PMF's to pure-R benchmarks", {
   expect_equal(dpareto(x, 1, 1), dparetoR(x, 1, 1))
   expect_equal(dpower(x, 1, 1), dpowerR(x, 1, 1))
   expect_equal(drayleigh(x, 1), drayleighR(x, 1))
-  # expect_equal(dsgomp(x, 0.5, 1), dsgompR(x, 0.5, 1)) # ???
+  expect_equal(dsgomp(x, 0.5, 1), dsgompR(x, 0.5, 1))
   
 })
 
 test_that("Compare dhuber to hoa implementation", {
   
   skip_if_not_installed("hoa")
-  
-  x <- c(-1e5, -100, -10, -5, -1, -0.5, 0.001, 0, 0.001, 0.5, 1, 5, 10, 100, 1e5)
-  
+
   expect_equal(dhuber(x), hoa::dHuber(x))
   expect_equal(phuber(x), hoa::pHuber(x))
   
@@ -166,9 +166,7 @@ test_that("Compare dhuber to hoa implementation", {
 test_that("Compare GEV and GPD to evd implementation", {
   
   skip_if_not_installed("evd")
-  
-  x <- c(-1e5, -100, -10, -5, -1, -0.5, 0.001, 0, 0.001, 0.5, 1, 5, 10, 100, 1e5)
-  
+
   expect_equal(dgev(x), evd::dgev(x))
   expect_equal(pgev(x), evd::pgev(x))
   
