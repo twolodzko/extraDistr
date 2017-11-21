@@ -101,10 +101,6 @@ cpp_rbpois <- function(n, a, b, c) {
     .Call(`_extraDistr_cpp_rbpois`, n, a, b, c)
 }
 
-cpp_rcatlp <- function(n, log_prob) {
-    .Call(`_extraDistr_cpp_rcatlp`, n, log_prob)
-}
-
 cpp_dcat <- function(x, prob, log_prob = FALSE) {
     .Call(`_extraDistr_cpp_dcat`, x, prob, log_prob)
 }
@@ -119,6 +115,10 @@ cpp_qcat <- function(p, prob, lower_tail = TRUE, log_prob = FALSE) {
 
 cpp_rcat <- function(n, prob) {
     .Call(`_extraDistr_cpp_rcat`, n, prob)
+}
+
+cpp_rcatlp <- function(n, log_prob) {
+    .Call(`_extraDistr_cpp_rcatlp`, n, log_prob)
 }
 
 cpp_ddirichlet <- function(x, alpha, log_prob = FALSE) {

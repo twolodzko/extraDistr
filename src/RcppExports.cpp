@@ -379,18 +379,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// cpp_rcatlp
-NumericVector cpp_rcatlp(const int& n, const NumericMatrix& log_prob);
-RcppExport SEXP _extraDistr_cpp_rcatlp(SEXP nSEXP, SEXP log_probSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
-    Rcpp::traits::input_parameter< const NumericMatrix& >::type log_prob(log_probSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_rcatlp(n, log_prob));
-    return rcpp_result_gen;
-END_RCPP
-}
 // cpp_dcat
 NumericVector cpp_dcat(const NumericVector& x, const NumericMatrix& prob, const bool& log_prob);
 RcppExport SEXP _extraDistr_cpp_dcat(SEXP xSEXP, SEXP probSEXP, SEXP log_probSEXP) {
@@ -441,6 +429,18 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< const NumericMatrix& >::type prob(probSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_rcat(n, prob));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_rcatlp
+NumericVector cpp_rcatlp(const int& n, const NumericMatrix& log_prob);
+RcppExport SEXP _extraDistr_cpp_rcatlp(SEXP nSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_rcatlp(n, log_prob));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -2700,11 +2700,11 @@ static const R_CallMethodDef CallEntries[] = {
     {"_extraDistr_cpp_rbnorm", (DL_FUNC) &_extraDistr_cpp_rbnorm, 6},
     {"_extraDistr_cpp_dbpois", (DL_FUNC) &_extraDistr_cpp_dbpois, 6},
     {"_extraDistr_cpp_rbpois", (DL_FUNC) &_extraDistr_cpp_rbpois, 4},
-    {"_extraDistr_cpp_rcatlp", (DL_FUNC) &_extraDistr_cpp_rcatlp, 2},
     {"_extraDistr_cpp_dcat", (DL_FUNC) &_extraDistr_cpp_dcat, 3},
     {"_extraDistr_cpp_pcat", (DL_FUNC) &_extraDistr_cpp_pcat, 4},
     {"_extraDistr_cpp_qcat", (DL_FUNC) &_extraDistr_cpp_qcat, 4},
     {"_extraDistr_cpp_rcat", (DL_FUNC) &_extraDistr_cpp_rcat, 2},
+    {"_extraDistr_cpp_rcatlp", (DL_FUNC) &_extraDistr_cpp_rcatlp, 2},
     {"_extraDistr_cpp_ddirichlet", (DL_FUNC) &_extraDistr_cpp_ddirichlet, 3},
     {"_extraDistr_cpp_rdirichlet", (DL_FUNC) &_extraDistr_cpp_rdirichlet, 2},
     {"_extraDistr_cpp_ddirmnom", (DL_FUNC) &_extraDistr_cpp_ddirmnom, 4},
