@@ -59,6 +59,20 @@ test_that("Compare dhuber to hoa implementation", {
 })
 
 
+test_that("Compare triangular to triangle implementation", {
+  
+  skip_on_cran()
+  skip_if_not_installed("triangle")
+  
+  expect_equal(dtriang(x, -1, 1), triangle::dtriangle(x, -1, 1))
+  expect_equal(dtriang(x, 0, 1, 0.8), triangle::dtriangle(x, 0, 1, 0.8))
+  
+  expect_equal(ptriang(x, -1, 1), triangle::ptriangle(x, -1, 1))
+  expect_equal(ptriang(x, 0, 1, 0.8), triangle::ptriangle(x, 0, 1, 0.8))
+  
+})
+
+
 test_that("Compare GEV and GPD to evd implementation", {
   
   skip_on_cran()
