@@ -121,10 +121,13 @@ inline double rng_gpd(double mu, double sigma, double xi,
     throw_warning = true;
     return NA_REAL;
   }
+  double u, v;
+  u = rng_unif();
+  v = R::exp_rand(); // -log(rng_unif())
   if (xi != 0.0)
-    return mu + sigma * (pow(rng_unif(), -xi)-1.0)/xi;
+    return mu + sigma * (pow(u, -xi)-1.0)/xi;
   else
-    return mu - sigma * R::exp_rand(); // -log(rng_unif())
+    return mu - sigma * v;
 }
 
 

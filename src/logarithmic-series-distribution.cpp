@@ -28,7 +28,7 @@ using std::log1p;
 */
 
 
-double logpdf_lgser(double x, double theta, bool& throw_warning) {
+inline double logpdf_lgser(double x, double theta, bool& throw_warning) {
 #ifdef IEEE_754
   if (ISNAN(x) || ISNAN(theta))
     return x+theta;
@@ -45,7 +45,7 @@ double logpdf_lgser(double x, double theta, bool& throw_warning) {
   return log(a) + (log(theta) * x) - log(x);
 }
 
-double cdf_lgser(double x, double theta, bool& throw_warning) {
+inline double cdf_lgser(double x, double theta, bool& throw_warning) {
 #ifdef IEEE_754
   if (ISNAN(x) || ISNAN(theta))
     return x+theta;
@@ -63,7 +63,7 @@ double cdf_lgser(double x, double theta, bool& throw_warning) {
     return NA_REAL;
   }
   
-  double a = -1.0/log(1.0 - theta);
+  double a = -1.0/log1p(-theta);
   double b = 0.0;
   double dk;
   int ix = to_pos_int(x);
@@ -76,7 +76,7 @@ double cdf_lgser(double x, double theta, bool& throw_warning) {
   return a * b;
 }
 
-double invcdf_lgser(double p, double theta, bool& throw_warning) {
+inline double invcdf_lgser(double p, double theta, bool& throw_warning) {
 #ifdef IEEE_754
   if (ISNAN(p) || ISNAN(theta))
     return p+theta;
@@ -102,7 +102,7 @@ double invcdf_lgser(double p, double theta, bool& throw_warning) {
   return k;
 }
 
-double rng_lgser(double theta, bool& throw_warning) {
+inline double rng_lgser(double theta, bool& throw_warning) {
   if (ISNAN(theta) || theta <= 0.0 || theta >= 1.0) {
     throw_warning = true;
     return NA_REAL;

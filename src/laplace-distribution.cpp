@@ -58,9 +58,9 @@ inline double cdf_laplace(double x, double mu, double sigma,
   }
   double z = (x-mu)/sigma;
   if (x < mu)
-    return exp(z)/2.0;
+    return exp(z - LOG_2F); // exp(z)/2.0
   else
-    return 1.0 - exp(-z)/2.0;
+    return 1.0 - exp(-z - LOG_2F); // 1.0 - exp(-z)/2.0
 }
 
 inline double invcdf_laplace(double p, double mu, double sigma,

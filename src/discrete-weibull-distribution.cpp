@@ -58,7 +58,8 @@ inline double cdf_dweibull(double x, double q, double beta,
   }
   if (x < 0.0)
     return 0.0;
-  return 1.0 - pow(q, pow(x+1.0, beta));
+  // 1.0 - pow(q, pow(x+1.0, beta))
+  return 1.0 - exp(log(q) * exp(log1p(x) * beta));
 }
 
 inline double invcdf_dweibull(double p, double q, double beta,

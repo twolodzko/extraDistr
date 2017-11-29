@@ -12,7 +12,8 @@ using std::ceil;
 using Rcpp::NumericVector;
 
 
-inline double pdf_hnorm(double x, double sigma, bool& throw_warning) {
+inline double logpdf_hnorm(double x, double sigma,
+                           bool& throw_warning) {
 #ifdef IEEE_754
   if (ISNAN(x) || ISNAN(sigma))
     return x+sigma;
@@ -22,8 +23,8 @@ inline double pdf_hnorm(double x, double sigma, bool& throw_warning) {
     return NAN;
   }
   if (x < 0.0)
-    return 0.0;
-  return 2.0 * R::dnorm(x, 0.0, sigma, false);
+    return R_NegInf;
+  return LOG_2F + R::dnorm(x, 0.0, sigma, true);
 }
 
 inline double cdf_hnorm(double x, double sigma, bool& throw_warning) {
@@ -81,11 +82,11 @@ NumericVector cpp_dhnorm(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_hnorm(GETV(x, i), GETV(sigma, i),
-                     throw_warning);
+    p[i] = logpdf_hnorm(GETV(x, i), GETV(sigma, i),
+                        throw_warning);
   
-  if (log_prob)
-    p = Rcpp::log(p);
+  if (!log_prob)
+    p = Rcpp::exp(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");

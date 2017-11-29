@@ -14,7 +14,8 @@ using std::tan;
 using std::atan;
 
 
-inline double pdf_hcauchy(double x, double sigma, bool& throw_warning) {
+inline double logpdf_hcauchy(double x, double sigma,
+                             bool& throw_warning) {
 #ifdef IEEE_754
   if (ISNAN(x) || ISNAN(sigma))
     return x+sigma;
@@ -24,11 +25,12 @@ inline double pdf_hcauchy(double x, double sigma, bool& throw_warning) {
     return NAN;
   }
   if (x < 0.0)
-    return 0.0;
-  return 2.0/(M_PI*(1.0 + pow(x/sigma, 2.0)))/sigma;
+    return R_NegInf;
+  // 2.0/(M_PI*(1.0 + pow(x/sigma, 2.0)))/sigma;
+  return LOG_2F - log(M_PI) - log1p(exp((log(x)-log(sigma)) * 2.0)) - log(sigma);
 }
 
-double cdf_hcauchy(double x, double sigma, bool& throw_warning) {
+inline double cdf_hcauchy(double x, double sigma, bool& throw_warning) {
 #ifdef IEEE_754
   if (ISNAN(x) || ISNAN(sigma))
     return x+sigma;
@@ -84,11 +86,11 @@ NumericVector cpp_dhcauchy(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_hcauchy(GETV(x, i), GETV(sigma, i),
-                       throw_warning);
+    p[i] = logpdf_hcauchy(GETV(x, i), GETV(sigma, i),
+                          throw_warning);
   
-  if (log_prob)
-    p = Rcpp::log(p);
+  if (!log_prob)
+    p = Rcpp::exp(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");

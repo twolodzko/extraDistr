@@ -25,8 +25,8 @@ using Rcpp::NumericVector;
  * 
  */
 
-inline double pdf_ht(double x, double nu, double sigma,
-                     bool& throw_warning) {
+inline double logpdf_ht(double x, double nu, double sigma,
+                        bool& throw_warning) {
 #ifdef IEEE_754
   if (ISNAN(x) || ISNAN(nu) || ISNAN(sigma))
     return x+nu+sigma;
@@ -36,8 +36,8 @@ inline double pdf_ht(double x, double nu, double sigma,
     return NAN;
   }
   if (x < 0.0)
-    return 0.0;
-  return 2.0 * R::dt(x/sigma, nu, false)/sigma;
+    return R_NegInf;
+  return LOG_2F + R::dt(x/sigma, nu, true) - log(sigma);
 }
 
 inline double cdf_ht(double x, double nu, double sigma,
@@ -99,11 +99,11 @@ NumericVector cpp_dht(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++) 
-    p[i] = pdf_ht(GETV(x, i), GETV(nu, i),
-                  GETV(sigma, i), throw_warning);
+    p[i] = logpdf_ht(GETV(x, i), GETV(nu, i),
+                     GETV(sigma, i), throw_warning);
   
-  if (log_prob)
-    p = Rcpp::log(p);
+  if (!log_prob)
+    p = Rcpp::exp(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");

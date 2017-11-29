@@ -32,8 +32,8 @@ using Rcpp::NumericVector;
 *            { b - sqrt((1-p)*(b-a)*(b-c));
 */
 
-inline double pdf_triangular(double x, double a, double b,
-                             double c, bool& throw_warning) {
+inline double logpdf_triangular(double x, double a, double b,
+                                double c, bool& throw_warning) {
 #ifdef IEEE_754
   if (ISNAN(x) || ISNAN(a) || ISNAN(b) || ISNAN(c))
     return x+a+b+c;
@@ -43,13 +43,16 @@ inline double pdf_triangular(double x, double a, double b,
     return NAN;
   }
   if (x < a || x > b) {
-    return 0.0;
+    return R_NegInf;
   } else if (x < c) {
-    return 2.0*(x-a) / ((b-a)*(c-a));
+    // 2.0*(x-a) / ((b-a)*(c-a));
+    return LOG_2F + log(x-a) - log(b-a) - log(c-a);
   } else if (x > c) {
-    return 2.0*(b-x) / ((b-a)*(b-c));
+    // 2.0*(b-x) / ((b-a)*(b-c));
+    return LOG_2F + log(b-x) - log(b-a) - log(b-c);
   } else {
-    return 2.0/(b-a);
+    // 2.0/(b-a);
+    return LOG_2F - log(b-a);
   }
 }
 
@@ -68,9 +71,11 @@ inline double cdf_triangular(double x, double a, double b,
   } else if (x >= b) {
     return 1.0;
   } else if (x <= c) {
-    return ((x-a)*(x-a)) / ((b-a)*(c-a));
+    // ((x-a)*(x-a)) / ((b-a)*(c-a));
+    return exp(log(x-a) * 2.0 - log(b-a) - log(c-a));
   } else {
-    return 1.0 - (((b-x)*(b-x)) / ((b-a)*(b-c)));
+    // 1.0 - (((b-x)*(b-x)) / ((b-a)*(b-c)));
+    return 1.0 - exp(log(b-x) * 2.0 - log(b-a) - log(b-c));
   }
 }
 
@@ -131,12 +136,12 @@ NumericVector cpp_dtriang(
   bool throw_warning = false;
 
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_triangular(GETV(x, i), GETV(a, i),
+    p[i] = logpdf_triangular(GETV(x, i), GETV(a, i),
                           GETV(b, i), GETV(c, i),
                           throw_warning);
 
-  if (log_prob)
-    p = Rcpp::log(p);
+  if (!log_prob)
+    p = Rcpp::exp(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");
