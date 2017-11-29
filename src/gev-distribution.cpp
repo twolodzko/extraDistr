@@ -113,7 +113,7 @@ inline double rng_gev(double mu, double sigma, double xi,
     Rcpp::warning("NAs produced");
     return NA_REAL;
   }
-  double u = R::exp_rand();
+  double u = R::exp_rand(); // -log(rng_unif())
   if (xi != 0.0)
     return mu + sigma/xi * (pow(u, -xi) - 1.0);
   else

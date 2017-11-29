@@ -85,10 +85,11 @@ inline double rng_sgomp(double b, double eta, bool& throw_warning) {
     throw_warning = true;
     return NA_REAL;
   }
-  double u, rg, re;
-  u = rng_unif();
-  rg = -log( -log(u)/eta ) / b;
-  re = exp_rand() / b;
+  double u, v, rg, re;
+  u = R::exp_rand(); // -log(rng_unif())
+  v = R::exp_rand(); // -log(rng_unif())
+  rg = -log(u/eta) / b;
+  re = v / b;
   return (rg>re) ? rg : re;
 }
 

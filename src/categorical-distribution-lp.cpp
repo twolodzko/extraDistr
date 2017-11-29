@@ -64,8 +64,8 @@ NumericVector cpp_rcatlp(
         break;
       }
       
-      u = rng_unif();
-      glp = -log(-log(u)) + GETM(log_prob, i, j);
+      u = R::exp_rand(); // -log(rng_unif())
+      glp = -log(u) + GETM(log_prob, i, j); 
       if (glp > max_val) {
         max_val = glp;
         jj = j;

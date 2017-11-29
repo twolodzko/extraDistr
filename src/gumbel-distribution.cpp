@@ -80,8 +80,8 @@ inline double rng_gumbel(double mu, double sigma,
     throw_warning = true;
     return NA_REAL;
   }
-  double u = rng_unif();
-  return mu - sigma * log(-log(u));
+  double u = R::exp_rand(); // -log(rng_unif())
+  return mu - sigma * log(u);
 }
 
 

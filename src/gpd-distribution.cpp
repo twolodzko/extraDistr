@@ -124,7 +124,7 @@ inline double rng_gpd(double mu, double sigma, double xi,
   if (xi != 0.0)
     return mu + sigma * (pow(rng_unif(), -xi)-1.0)/xi;
   else
-    return mu - sigma * R::exp_rand();
+    return mu - sigma * R::exp_rand(); // -log(rng_unif())
 }
 
 
