@@ -9,6 +9,7 @@
 * Improved the `rgev` and `rgpd`, now they give better random values since 
   relying on exponential distribution random generator if possible
 * Documentation was improved and corrected in several places
+* Power distribution functions now check if `alpha > 0` and `beta > 0`
 
 ### 1.8.7
 
