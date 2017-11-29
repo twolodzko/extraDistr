@@ -8,7 +8,7 @@ if (requireNamespace("rbenchmark", quietly = TRUE)) {
          0.001, 0.5, 1, 1.01, 5, 5.5, 10, 100, 1e5)
   n <- length(x)
   
-  nsim <- 25000
+  nsim <- 5000
 
   library(rbenchmark)
   library(extraDistr)
@@ -65,6 +65,17 @@ if (requireNamespace("rbenchmark", quietly = TRUE)) {
     print(benchmark(phuber(x), hoa::pHuber(x), 
           replications = nsim))
     
+  }
+  
+  
+  if (requireNamespace("triangle", quietly = TRUE)) {
+
+    print(benchmark(dtriang(x, -1, 1), triangle::dtriangle(x, -1, 1), 
+              replications = nsim))
+
+    print(benchmark(ptriang(x, -1, 1), triangle::ptriangle(x, -1, 1), 
+              replications = nsim))
+
   }
   
   
