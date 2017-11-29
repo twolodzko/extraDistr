@@ -68,6 +68,12 @@ F^-1(p) = [if \xi != 0:] \mu - \sigma/\xi * (1 - (-log(p))^\xi)
 }
 \examples{
 
+curve(dgev(x, xi = -1/2), -4, 4, col = "green", ylab = "")
+curve(dgev(x, xi = 0), -4, 4, col = "red", add = TRUE)
+curve(dgev(x, xi = 1/2), -4, 4, col = "blue", add = TRUE)
+legend("topleft", col = c("green", "red", "blue"), lty = 1,
+       legend = expression(xi == -1/2, xi == 0, xi == 1/2), bty = "n")
+
 x <- rgev(1e5, 5, 2, .5)
 hist(x, 1000, freq = FALSE, xlim = c(0, 50))
 curve(dgev(x, 5, 2, .5), 0, 50, col = "red", add = TRUE)
