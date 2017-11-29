@@ -28,8 +28,10 @@ using std::log1p;
 
 inline double pdf_zinb(double x, double r, double p, double pi,
                        bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(r) || ISNAN(p) || ISNAN(pi))
     return x+r+p+pi;
+#endif
   if (!VALID_PROB(p) || r < 0.0 || !VALID_PROB(pi) || !isInteger(r, false)) {
     throw_warning = true;
     return NAN;
@@ -47,8 +49,10 @@ inline double pdf_zinb(double x, double r, double p, double pi,
 
 inline double cdf_zinb(double x, double r, double p, double pi,
                        bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(r) || ISNAN(p) || ISNAN(pi))
     return x+r+p+pi;
+#endif
   if (!VALID_PROB(p) || r < 0.0 || !VALID_PROB(pi) || !isInteger(r, false)) {
     throw_warning = true;
     return NAN;
@@ -63,8 +67,10 @@ inline double cdf_zinb(double x, double r, double p, double pi,
 
 inline double invcdf_zinb(double pp, double r, double p, double pi,
                           bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(pp) || ISNAN(r) || ISNAN(p) || ISNAN(pi))
     return pp+r+p+pi;
+#endif
   if (!VALID_PROB(p) || r < 0.0 || !VALID_PROB(pi) ||
       !isInteger(r, false) || !VALID_PROB(pp)) {
     throw_warning = true;

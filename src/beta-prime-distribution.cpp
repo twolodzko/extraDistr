@@ -29,8 +29,10 @@ using std::log1p;
 
 inline double logpdf_betapr(double x, double alpha, double beta,
                             double sigma, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma))
     return x+alpha+beta+sigma;
+#endif
   if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -45,8 +47,10 @@ inline double logpdf_betapr(double x, double alpha, double beta,
 
 inline double cdf_betapr(double x, double alpha, double beta,
                          double sigma, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma))
     return x+alpha+beta+sigma;
+#endif
   if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -61,8 +65,10 @@ inline double cdf_betapr(double x, double alpha, double beta,
 
 inline double invcdf_betapr(double p, double alpha, double beta,
                             double sigma, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(alpha) || ISNAN(beta) || ISNAN(sigma))
     return p+alpha+beta+sigma;
+#endif
   if (alpha <= 0.0 || beta <= 0.0 || sigma <= 0.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;

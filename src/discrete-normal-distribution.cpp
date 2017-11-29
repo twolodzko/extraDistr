@@ -27,8 +27,10 @@ using Rcpp::NumericVector;
 
 inline double pmf_dnorm(double x, double mu, double sigma,
                         bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
     return x+mu+sigma;
+#endif
   if (sigma <= 0.0) {
     throw_warning = true;
     return NAN;

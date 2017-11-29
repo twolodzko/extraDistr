@@ -33,8 +33,10 @@ using Rcpp::NumericVector;
 
 inline double logpdf_laplace(double x, double mu, double sigma,
                              bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
     return x+mu+sigma;
+#endif
   if (sigma <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -46,8 +48,10 @@ inline double logpdf_laplace(double x, double mu, double sigma,
 
 inline double cdf_laplace(double x, double mu, double sigma,
                           bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
     return x+mu+sigma;
+#endif
   if (sigma <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -61,8 +65,10 @@ inline double cdf_laplace(double x, double mu, double sigma,
 
 inline double invcdf_laplace(double p, double mu, double sigma,
                              bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(mu) || ISNAN(sigma))
     return p+mu+sigma;
+#endif
   if (sigma <= 0.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;

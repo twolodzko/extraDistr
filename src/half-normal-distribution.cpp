@@ -13,8 +13,10 @@ using Rcpp::NumericVector;
 
 
 inline double pdf_hnorm(double x, double sigma, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(sigma))
     return x+sigma;
+#endif
   if (sigma <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -25,8 +27,10 @@ inline double pdf_hnorm(double x, double sigma, bool& throw_warning) {
 }
 
 inline double cdf_hnorm(double x, double sigma, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(sigma))
     return x+sigma;
+#endif
   if (sigma <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -37,8 +41,10 @@ inline double cdf_hnorm(double x, double sigma, bool& throw_warning) {
 }
 
 inline double invcdf_hnorm(double p, double sigma, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(sigma))
     return p+sigma;
+#endif
   if (sigma <= 0.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;

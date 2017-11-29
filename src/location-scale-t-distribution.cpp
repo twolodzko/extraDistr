@@ -27,8 +27,10 @@ using Rcpp::NumericVector;
 
 inline double pdf_lst(double x, double nu, double mu, double sigma,
                       bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(nu) || ISNAN(mu) || ISNAN(sigma))
     return x+nu+mu+sigma;
+#endif
   if (nu <= 0.0 || sigma <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -39,8 +41,10 @@ inline double pdf_lst(double x, double nu, double mu, double sigma,
 
 inline double cdf_lst(double x, double nu, double mu, double sigma,
                       bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(nu) || ISNAN(mu) || ISNAN(sigma))
     return x+nu+mu+sigma;
+#endif
   if (nu <= 0.0 || sigma <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -51,8 +55,10 @@ inline double cdf_lst(double x, double nu, double mu, double sigma,
 
 inline double invcdf_lst(double p, double nu, double mu, double sigma,
                          bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(nu) || ISNAN(mu) || ISNAN(sigma))
     return p+nu+mu+sigma;
+#endif
   if (nu <= 0.0 || sigma <= 0.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;

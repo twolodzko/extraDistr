@@ -24,8 +24,10 @@ The Annals of Mathematical Statistics, 413-426.
 
 inline double invcdf_tlambda(double p, double lambda,
                              bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(lambda))
     return p+lambda;
+#endif
   if (!VALID_PROB(p)) {
     throw_warning = true;
     return NAN;

@@ -36,8 +36,10 @@ using Rcpp::NumericVector;
 
 double pdf_tnorm(double x, double mu, double sigma,
                  double a, double b, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(a) || ISNAN(b))
     return x+mu+sigma+a+b;
+#endif
   if (sigma <= 0.0 || b <= a) {
     throw_warning = true;
     return NAN;
@@ -59,8 +61,10 @@ double pdf_tnorm(double x, double mu, double sigma,
 
 double cdf_tnorm(double x, double mu, double sigma,
                  double a, double b, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(a) || ISNAN(b))
     return x+mu+sigma+a+b;
+#endif
   if (sigma <= 0.0 || b <= a) {
     throw_warning = true;
     return NAN;
@@ -84,8 +88,10 @@ double cdf_tnorm(double x, double mu, double sigma,
 
 double invcdf_tnorm(double p, double mu, double sigma,
                     double a, double b, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(mu) || ISNAN(sigma) || ISNAN(a) || ISNAN(b))
     return p+mu+sigma+a+b;
+#endif
   if (sigma <= 0.0 || b <= a || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;

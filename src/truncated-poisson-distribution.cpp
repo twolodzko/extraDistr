@@ -14,8 +14,10 @@ using Rcpp::NumericVector;
 
 inline double logpdf_tpois(double x, double lambda, double a,
                            double b, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(a) || ISNAN(b))
     return x+lambda+a+b;
+#endif
   if (lambda < 0.0 || b < a) {
     throw_warning = true;
     return NAN;
@@ -36,8 +38,10 @@ inline double logpdf_tpois(double x, double lambda, double a,
 
 inline double cdf_tpois(double x, double lambda, double a,
                         double b, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(a) || ISNAN(b))
     return x+lambda+a+b;
+#endif
   if (lambda <= 0.0 || b < a) {
     throw_warning = true;
     return NAN;
@@ -60,8 +64,10 @@ inline double cdf_tpois(double x, double lambda, double a,
 
 inline double invcdf_tpois(double p, double lambda, double a,
                            double b, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(lambda) || ISNAN(a) || ISNAN(b))
     return p+lambda+a+b;
+#endif
   if (lambda < 0.0 || b < a || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;

@@ -36,9 +36,11 @@ inline double pdf_bnorm(double x, double y, double mu1, double mu2,
                         double sigma1, double sigma2, double rho,
                         bool& throw_warning) {
   
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(y) || ISNAN(mu1) || ISNAN(mu2) ||
       ISNAN(sigma1) || ISNAN(sigma2) || ISNAN(rho))
     return x+y+mu1+mu2+sigma1+sigma2+rho;
+#endif
   
   if (sigma1 <= 0.0 || sigma2 <= 0.0 || rho <= -1.0 || rho >= 1.0) {
     throw_warning = true;

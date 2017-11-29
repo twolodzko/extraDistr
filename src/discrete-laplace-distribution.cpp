@@ -16,8 +16,10 @@ using std::log1p;
 
 inline double logpmf_dlaplace(double x, double p, double mu,
                               bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(p) || ISNAN(mu))
     return x+p+mu;
+#endif
   if (p <= 0.0 || p >= 1.0) {
     throw_warning = true;
     return NAN;
@@ -30,8 +32,10 @@ inline double logpmf_dlaplace(double x, double p, double mu,
 
 inline double cdf_dlaplace(double x, double p, double mu,
                            bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(p) || ISNAN(mu))
     return x+p+mu;
+#endif
   if (p <= 0.0 || p >= 1.0) {
     throw_warning = true;
     return NAN;

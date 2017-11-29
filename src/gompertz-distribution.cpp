@@ -36,8 +36,10 @@ using Rcpp::NumericVector;
 
 inline double logpdf_gompertz(double x, double a, double b,
                               bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(a) || ISNAN(b))
     return x+a+b;
+#endif
   if (a <= 0.0 || b <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -50,8 +52,10 @@ inline double logpdf_gompertz(double x, double a, double b,
 
 inline double cdf_gompertz(double x, double a, double b,
                            bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(a) || ISNAN(b))
     return x+a+b;
+#endif
   if (a <= 0.0 || b <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -65,8 +69,10 @@ inline double cdf_gompertz(double x, double a, double b,
 
 inline double invcdf_gompertz(double p, double a, double b,
                               bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(a) || ISNAN(b))
     return p+a+b;
+#endif
   if (a <= 0.0 || b <= 0.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;

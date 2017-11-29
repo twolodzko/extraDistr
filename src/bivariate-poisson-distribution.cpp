@@ -16,8 +16,10 @@ using Rcpp::NumericMatrix;
 inline double logpmf_bpois(double x, double y, double a, double b, double c,
                            bool& throw_warning) {
   
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(y) || ISNAN(a) || ISNAN(b) || ISNAN(c))
     return x+y+a+b+c;
+#endif
   
   if (a < 0.0 || b < 0.0 || c < 0.0) {
     throw_warning = true;

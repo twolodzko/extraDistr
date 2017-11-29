@@ -27,8 +27,10 @@ using Rcpp::NumericVector;
 
 double pdf_nsbeta(double x, double alpha, double beta, double l,
                   double u, bool log_p, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(l) || ISNAN(u))
     return x+alpha+beta+l+u;
+#endif
   if (l >= u || alpha < 0.0 || beta < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -43,8 +45,10 @@ double pdf_nsbeta(double x, double alpha, double beta, double l,
 
 double cdf_nsbeta(double x, double alpha, double beta, double l,
                   double u, bool lower_tail, bool log_p, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(l) || ISNAN(u))
     return x+alpha+beta+l+u;
+#endif
   if (l >= u || alpha < 0.0 || beta < 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -54,8 +58,10 @@ double cdf_nsbeta(double x, double alpha, double beta, double l,
 
 double invcdf_nsbeta(double p, double alpha, double beta, double l,
                      double u, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(alpha) || ISNAN(beta) || ISNAN(l) || ISNAN(u))
     return p+alpha+beta+l+u;
+#endif
   if (l >= u || alpha < 0.0 || beta < 0.0 || !VALID_PROB(p)) {
     Rcpp::warning("NaNs produced");
     return NAN;

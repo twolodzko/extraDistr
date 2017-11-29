@@ -27,8 +27,10 @@ using Rcpp::NumericVector;
 
 inline double pdf_ht(double x, double nu, double sigma,
                      bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(nu) || ISNAN(sigma))
     return x+nu+sigma;
+#endif
   if (sigma <= 0.0 || nu <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -40,8 +42,10 @@ inline double pdf_ht(double x, double nu, double sigma,
 
 inline double cdf_ht(double x, double nu, double sigma,
                      bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(nu) || ISNAN(sigma))
     return x+nu+sigma;
+#endif
   if (sigma <= 0.0 || nu <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -53,8 +57,10 @@ inline double cdf_ht(double x, double nu, double sigma,
 
 inline double invcdf_ht(double p, double nu, double sigma,
                         bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(nu) || ISNAN(sigma))
     return p+nu+sigma;
+#endif
   if (sigma <= 0.0 || nu <= 0.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;

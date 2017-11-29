@@ -27,8 +27,10 @@ using Rcpp::NumericVector;
 
 inline double pdf_wald(double x, double mu, double lambda,
                        bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(mu) || ISNAN(lambda))
     return x+mu+lambda;
+#endif
   if (mu <= 0.0 || lambda <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -41,8 +43,10 @@ inline double pdf_wald(double x, double mu, double lambda,
 
 inline double cdf_wald(double x, double mu, double lambda,
                        bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(mu) || ISNAN(lambda))
     return x+mu+lambda;
+#endif
   if (mu <= 0.0 || lambda <= 0.0) {
     throw_warning = true;
     return NAN;

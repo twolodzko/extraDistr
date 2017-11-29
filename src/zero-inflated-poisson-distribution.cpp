@@ -28,8 +28,10 @@ using std::log1p;
 
 inline double pdf_zip(double x, double lambda, double pi,
                       bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(pi))
     return x+lambda+pi;
+#endif
   if (lambda <= 0.0 || !VALID_PROB(pi)) {
     throw_warning = true;
     return NAN;
@@ -47,8 +49,10 @@ inline double pdf_zip(double x, double lambda, double pi,
 
 inline double cdf_zip(double x, double lambda, double pi,
                       bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(pi))
     return x+lambda+pi;
+#endif
   if (lambda <= 0.0 || !VALID_PROB(pi)) {
     throw_warning = true;
     return NAN;
@@ -63,8 +67,10 @@ inline double cdf_zip(double x, double lambda, double pi,
 
 inline double invcdf_zip(double p, double lambda, double pi,
                          bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(lambda) || ISNAN(pi))
     return p+lambda+pi;
+#endif
   if (lambda <= 0.0 || !VALID_PROB(pi) || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;

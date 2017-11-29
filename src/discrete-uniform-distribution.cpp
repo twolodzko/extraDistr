@@ -26,8 +26,10 @@ using Rcpp::NumericVector;
 
 inline double pmf_dunif(double x, double min, double max,
                         bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(min) || ISNAN(max))
     return x+min+max;
+#endif
   if (min > max || !R_FINITE(min) || !R_FINITE(max) ||
       !isInteger(min, false) || !isInteger(max, false)) {
     throw_warning = true;
@@ -41,8 +43,10 @@ inline double pmf_dunif(double x, double min, double max,
 
 inline double cdf_dunif(double x, double min, double max,
                         bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(min) || ISNAN(max))
     return x+min+max;
+#endif
   if (min > max || !R_FINITE(min) || !R_FINITE(max) ||
       !isInteger(min, false) || !isInteger(max, false)) {
     throw_warning = true;
@@ -57,8 +61,10 @@ inline double cdf_dunif(double x, double min, double max,
 
 inline double invcdf_dunif(double p, double min, double max,
                            bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(min) || ISNAN(max))
     return p+min+max;
+#endif
   if (min > max || !R_FINITE(min) || !R_FINITE(max) ||
       !isInteger(min, false) || !isInteger(max, false) ||
       !VALID_PROB(p)) {

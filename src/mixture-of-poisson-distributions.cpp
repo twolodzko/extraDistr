@@ -60,10 +60,12 @@ NumericVector cpp_dmixpois(
       alpha_tot += GETM(alpha, i, j);
     }
     
+#ifdef IEEE_754
     if (ISNAN(nans_sum + alpha_tot + GETV(x, i))) {
       p[i] = nans_sum + alpha_tot + GETV(x, i);
       continue;
     }
+#endif
     
     if (wrong_param) {
       throw_warning = true;
@@ -158,10 +160,12 @@ NumericVector cpp_pmixpois(
       alpha_tot += GETM(alpha, i, j);
     }
     
+#ifdef IEEE_754
     if (ISNAN(nans_sum + alpha_tot + GETV(x, i))) {
       p[i] = nans_sum + alpha_tot + GETV(x, i);
       continue;
     }
+#endif
     
     if (wrong_param) {
       throw_warning = true;

@@ -33,8 +33,10 @@ using Rcpp::NumericVector;
 
 inline double logpdf_invgamma(double x, double alpha, double beta,
                               bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
     return x+alpha+beta;
+#endif
   if (alpha <= 0.0 || beta <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -49,8 +51,10 @@ inline double logpdf_invgamma(double x, double alpha, double beta,
 
 inline double cdf_invgamma(double x, double alpha, double beta,
                            bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
     return x+alpha+beta;
+#endif
   if (alpha <= 0.0 || beta <= 0.0) {
     throw_warning = true;
     return NAN;

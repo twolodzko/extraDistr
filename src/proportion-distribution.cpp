@@ -27,8 +27,10 @@ using Rcpp::NumericVector;
 
 inline double pdf_prop(double x, double size, double mean, double prior,
                        bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(size) || ISNAN(mean) || ISNAN(prior))
     return x+size+mean+prior;
+#endif
   if (size <= 0.0 || mean <= 0.0 || mean >= 1.0 || prior < 0) {
     throw_warning = true;
     return NAN;
@@ -38,8 +40,10 @@ inline double pdf_prop(double x, double size, double mean, double prior,
 
 inline double cdf_prop(double x, double size, double mean, double prior,
                        bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(size) || ISNAN(mean) || ISNAN(prior))
     return x+size+mean+prior;
+#endif
   if (size <= 0.0 || mean <= 0.0 || mean >= 1.0 || prior < 0) {
     throw_warning = true;
     return NAN;
@@ -49,8 +53,10 @@ inline double cdf_prop(double x, double size, double mean, double prior,
 
 inline double invcdf_prop(double p, double size, double mean, double prior,
                           bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(size) || ISNAN(mean) || ISNAN(prior))
     return p+size+mean+prior;
+#endif
   if (size <= 0.0 || mean <= 0.0 || mean >= 1.0 || prior < 0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;

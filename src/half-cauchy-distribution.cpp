@@ -15,8 +15,10 @@ using std::atan;
 
 
 inline double pdf_hcauchy(double x, double sigma, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(sigma))
     return x+sigma;
+#endif
   if (sigma <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -27,8 +29,10 @@ inline double pdf_hcauchy(double x, double sigma, bool& throw_warning) {
 }
 
 double cdf_hcauchy(double x, double sigma, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(sigma))
     return x+sigma;
+#endif
   if (sigma <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -40,8 +44,10 @@ double cdf_hcauchy(double x, double sigma, bool& throw_warning) {
 
 inline double invcdf_hcauchy(double p, double sigma,
                              bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(sigma))
     return p+sigma;
+#endif
   if (sigma <= 0.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;

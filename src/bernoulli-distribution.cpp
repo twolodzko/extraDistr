@@ -25,8 +25,10 @@ using Rcpp::NumericVector;
 
 inline double pdf_bernoulli(double x, double prob,
                             bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(prob))
     return x+prob;
+#endif
   if (!VALID_PROB(prob)) {
     throw_warning = true;
     return NAN;
@@ -45,8 +47,10 @@ inline double pdf_bernoulli(double x, double prob,
 
 inline double cdf_bernoulli(double x, double prob,
                             bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(prob))
     return x+prob;
+#endif
   if (!VALID_PROB(prob)) {
     throw_warning = true;
     return NAN;
@@ -60,8 +64,10 @@ inline double cdf_bernoulli(double x, double prob,
 
 inline double invcdf_bernoulli(double p, double prob,
                                bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(prob))
     return p+prob;
+#endif
   if (!VALID_PROB(prob) || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;

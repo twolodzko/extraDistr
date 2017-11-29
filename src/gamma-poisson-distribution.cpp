@@ -26,8 +26,10 @@ using Rcpp::NumericVector;
 
 inline double logpmf_gpois(double x, double alpha, double beta,
                            bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
     return x+alpha+beta;
+#endif
   if (alpha <= 0.0 || beta <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -163,9 +165,15 @@ NumericVector cpp_pgpois(
   for (int i = 0; i < Nmax; i++) {
     if (i % 100 == 0)
       Rcpp::checkUserInterrupt();
+    
+#ifdef IEEE_754
     if (ISNAN(GETV(x, i)) || ISNAN(GETV(alpha, i)) || ISNAN(GETV(beta, i))) {
       p[i] = GETV(x, i) + GETV(alpha, i) + GETV(beta, i);
-    } else if (GETV(alpha, i) <= 0.0 || GETV(beta, i) <= 0.0) {
+      continue;
+    }
+#endif
+    
+    if (GETV(alpha, i) <= 0.0 || GETV(beta, i) <= 0.0) {
       throw_warning = true;
       p[i] = NAN;
     } else if (GETV(x, i) < 0.0) {

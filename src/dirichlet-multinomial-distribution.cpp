@@ -84,10 +84,12 @@ NumericVector cpp_ddirmnom(
       sum_alpha += GETM(alpha, i, j);
     }
     
+#ifdef IEEE_754
     if (ISNAN(sum_x + sum_alpha + GETV(size, i))) {
       p[i] = sum_x + sum_alpha + GETV(size, i);
       continue;
     } 
+#endif
     
     if (wrong_param || GETV(size, i) < 0.0 || !isInteger(GETV(size, i), false)) {
       throw_warning = true;

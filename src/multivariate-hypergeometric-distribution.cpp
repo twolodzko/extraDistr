@@ -75,10 +75,12 @@ NumericVector cpp_dmvhyper(
       n_tot += GETM(n, i, j);
     }
     
+#ifdef IEEE_754
     if (ISNAN(sum_x + n_tot + GETV(k, i))) {
       p[i] = sum_x + n_tot + GETV(k, i);
       continue;
     } 
+#endif
     
     if (wrong_n || GETV(k, i) < 0.0 || GETV(k, i) > n_tot ||
         !isInteger(GETV(k, i), false)) {

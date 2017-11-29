@@ -30,8 +30,10 @@ using Rcpp::NumericVector;
 
 inline double logpdf_rayleigh(double x, double sigma,
                               bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(sigma))
     return x+sigma;
+#endif
   if (sigma <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -45,8 +47,10 @@ inline double logpdf_rayleigh(double x, double sigma,
 
 inline double cdf_rayleigh(double x, double sigma,
                            bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(sigma))
     return x+sigma;
+#endif
   if (sigma <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -60,8 +64,10 @@ inline double cdf_rayleigh(double x, double sigma,
 
 inline double invcdf_rayleigh(double p, double sigma,
                               bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(sigma))
     return p+sigma;
+#endif
   if (!VALID_PROB(p) || sigma <= 0.0) {
     throw_warning = true;
     return NAN;

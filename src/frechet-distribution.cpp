@@ -33,8 +33,10 @@ using Rcpp::NumericVector;
 
 inline double logpdf_frechet(double x, double lambda, double mu,
                              double sigma, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(mu) || ISNAN(sigma))
     return x+lambda+mu+sigma;
+#endif
   if (lambda <= 0.0 || sigma <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -48,8 +50,10 @@ inline double logpdf_frechet(double x, double lambda, double mu,
 
 inline double cdf_frechet(double x, double lambda, double mu,
                           double sigma, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(mu) || ISNAN(sigma))
     return x+lambda+mu+sigma;
+#endif
   if (lambda <= 0.0 || sigma <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -62,8 +66,10 @@ inline double cdf_frechet(double x, double lambda, double mu,
 
 inline double invcdf_frechet(double p, double lambda, double mu,
                              double sigma, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(lambda) || ISNAN(mu) || ISNAN(sigma))
     return p+lambda+mu+sigma;
+#endif
   if (lambda <= 0.0 || sigma <= 0.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;

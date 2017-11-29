@@ -31,8 +31,10 @@ using Rcpp::NumericVector;
 
 inline double logpdf_power(double x, double alpha, double beta,
                            bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
     return x+alpha+beta;
+#endif
   if (x <= 0.0 || x >= alpha)
     return R_NegInf;
   // beta * pow(x, beta-1.0) / pow(alpha, beta);
@@ -41,8 +43,10 @@ inline double logpdf_power(double x, double alpha, double beta,
 
 inline double cdf_power(double x, double alpha, double beta,
                         bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta))
     return x+alpha+beta;
+#endif
   if (x <= 0.0)
     return 0.0;
   if (x >= alpha)
@@ -53,8 +57,10 @@ inline double cdf_power(double x, double alpha, double beta,
 
 inline double invcdf_power(double p, double alpha, double beta,
                            bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(alpha) || ISNAN(beta))
     return p+alpha+beta;
+#endif
   if (!VALID_PROB(p)) {
     throw_warning = true;
     return NAN;

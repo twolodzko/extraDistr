@@ -74,9 +74,14 @@ NumericVector cpp_ddirichlet(
         wrong_x = true;
     }
     
+#ifdef IEEE_754
     if (ISNAN(sum_x + sum_alpha)) {
       p[i] = sum_x + sum_alpha;
-    } else if (wrong_alpha) {
+      continue;
+    }
+#endif
+    
+    if (wrong_alpha) {
       throw_warning = true;
       p[i] = NAN;
     } else if (wrong_x) {

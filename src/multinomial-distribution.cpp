@@ -72,10 +72,12 @@ NumericVector cpp_dmnom(
       sum_x += GETM(x, i, j);
     }
     
+#ifdef IEEE_754
     if (ISNAN(p_tot + sum_x + GETV(size, i))) {
       p[i] = p_tot + sum_x + GETV(size, i);
       continue;
     } 
+#endif
     
     if (wrong_param || GETV(size, i) < 0.0 ||
         !isInteger(GETV(size, i), false)) {

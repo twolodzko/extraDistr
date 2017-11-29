@@ -22,8 +22,10 @@ using Rcpp::NumericVector;
 
 inline double pmf_skellam(double x, double mu1, double mu2,
                           bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(mu1) || ISNAN(mu2))
     return x+mu1+mu2;
+#endif
   if (mu1 < 0.0 || mu2 < 0.0) {
     throw_warning = true;
     return NAN;

@@ -40,8 +40,10 @@ using std::log1p;
 
 inline double logpdf_gev(double x, double mu, double sigma,
                          double xi, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
     return x+mu+sigma+xi;
+#endif
   if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -63,8 +65,10 @@ inline double logpdf_gev(double x, double mu, double sigma,
 
 inline double cdf_gev(double x, double mu, double sigma,
                       double xi, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
     return x+mu+sigma+xi;
+#endif
   if (sigma <= 0.0) {
     Rcpp::warning("NaNs produced");
     return NAN;
@@ -84,8 +88,10 @@ inline double cdf_gev(double x, double mu, double sigma,
 
 inline double invcdf_gev(double p, double mu, double sigma,
                          double xi, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(mu) || ISNAN(sigma) || ISNAN(xi))
     return p+mu+sigma+xi;
+#endif
   if (sigma <= 0.0 || !VALID_PROB(p)) {
     Rcpp::warning("NaNs produced");
     return NAN;

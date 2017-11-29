@@ -27,8 +27,10 @@ using Rcpp::NumericVector;
 
 inline double pmf_dgamma(double x, double shape, double scale,
                          bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(shape) || ISNAN(scale))
     return x+shape+scale;
+#endif
   if (shape <= 0.0 || scale <= 0) {
     throw_warning = true;
     return NAN;

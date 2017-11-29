@@ -46,8 +46,10 @@ using Rcpp::NumericVector;
 
 inline double pdf_sgomp(double x, double b, double eta,
                         bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(b) || ISNAN(eta))
     return x+b+eta;
+#endif
   if (b <= 0.0 || eta <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -60,8 +62,10 @@ inline double pdf_sgomp(double x, double b, double eta,
 
 inline double cdf_sgomp(double x, double b, double eta,
                            bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(b) || ISNAN(eta))
     return x+b+eta;
+#endif
   if (b <= 0.0 || eta <= 0.0) {
     throw_warning = true;
     return NAN;

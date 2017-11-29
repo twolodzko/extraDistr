@@ -33,8 +33,10 @@ using std::log1p;
 
 inline double logpdf_lomax(double x, double lambda, double kappa,
                            bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(kappa))
     return x+lambda+kappa;
+#endif
   if (lambda <= 0.0 || kappa <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -47,8 +49,10 @@ inline double logpdf_lomax(double x, double lambda, double kappa,
 
 inline double cdf_lomax(double x, double lambda, double kappa,
                         bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(kappa))
     return x+lambda+kappa;
+#endif
   if (lambda <= 0.0 || kappa <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -61,8 +65,10 @@ inline double cdf_lomax(double x, double lambda, double kappa,
 
 inline double invcdf_lomax(double p, double lambda, double kappa,
                            bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(lambda) || ISNAN(kappa))
     return p+lambda+kappa;
+#endif
   if (lambda <= 0.0 || kappa <= 0.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;

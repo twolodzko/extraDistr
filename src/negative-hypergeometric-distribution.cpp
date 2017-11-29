@@ -80,10 +80,15 @@ NumericVector cpp_dnhyper(
     if (i % 100 == 0)
       Rcpp::checkUserInterrupt();
     
+#ifdef IEEE_754
     if (ISNAN(GETV(x, i)) || ISNAN(GETV(n, i)) ||
         ISNAN(GETV(m, i)) || ISNAN(GETV(r, i))) {
       p[i] = GETV(x, i) + GETV(n, i) + GETV(m, i) + GETV(r, i);
-    } else if (GETV(r, i) > GETV(m, i) || GETV(n, i) < 0.0 ||
+      continue;
+    }  
+#endif
+      
+    if (GETV(r, i) > GETV(m, i) || GETV(n, i) < 0.0 ||
                GETV(m, i) < 0.0 || GETV(r, i) < 0.0 ||
                !isInteger(GETV(n, i), false) ||
                !isInteger(GETV(m, i), false) ||
@@ -153,10 +158,15 @@ NumericVector cpp_pnhyper(
     if (i % 100 == 0)
       Rcpp::checkUserInterrupt();
     
+#ifdef IEEE_754
     if (ISNAN(GETV(x, i)) || ISNAN(GETV(n, i)) ||
         ISNAN(GETV(m, i)) || ISNAN(GETV(r, i))) {
       p[i] = GETV(x, i) + GETV(n, i) + GETV(m, i) + GETV(r, i);
-    } else if (GETV(r, i) > GETV(m, i) || GETV(n, i) < 0.0 ||
+      continue;
+    }
+#endif
+    
+    if (GETV(r, i) > GETV(m, i) || GETV(n, i) < 0.0 ||
                GETV(m, i) < 0.0 || GETV(r, i) < 0.0 ||
                !isInteger(GETV(n, i), false) ||
                !isInteger(GETV(m, i), false) ||
@@ -237,10 +247,15 @@ NumericVector cpp_qnhyper(
     if (i % 100 == 0)
       Rcpp::checkUserInterrupt();
     
+#ifdef IEEE_754
     if (ISNAN(GETV(pp, i)) || ISNAN(GETV(n, i)) ||
         ISNAN(GETV(m, i)) || ISNAN(GETV(r, i))) {
       x[i] = GETV(pp, i) + GETV(n, i) + GETV(m, i) + GETV(r, i);
-    } else if (!VALID_PROB(GETV(pp, i)) ||
+      continue;
+    }
+#endif
+    
+    if (!VALID_PROB(GETV(pp, i)) ||
                GETV(r, i) > GETV(m, i) || GETV(n, i) < 0.0 ||
                GETV(m, i) < 0.0 || GETV(r, i) < 0.0 ||
                !isInteger(GETV(n, i), false) ||

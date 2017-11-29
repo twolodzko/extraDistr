@@ -32,8 +32,10 @@ inline double G(double x) {
 
 inline double pdf_bhattacharjee(double x, double mu, double sigma,
                                 double a, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(a))
     return x+mu+sigma+a;
+#endif
   if (sigma < 0.0 || a < 0.0) {
     throw_warning = true;
     return NAN;
@@ -48,8 +50,10 @@ inline double pdf_bhattacharjee(double x, double mu, double sigma,
 
 inline double cdf_bhattacharjee(double x, double mu, double sigma,
                                 double a, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma) || ISNAN(a))
     return x+mu+sigma+a;
+#endif
   if (sigma < 0.0 || a < 0.0) {
     throw_warning = true;
     return NAN;

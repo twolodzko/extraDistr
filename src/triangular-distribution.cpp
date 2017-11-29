@@ -34,8 +34,10 @@ using Rcpp::NumericVector;
 
 inline double pdf_triangular(double x, double a, double b,
                              double c, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(a) || ISNAN(b) || ISNAN(c))
     return x+a+b+c;
+#endif
   if (a > c || c > b || a == b) {
     throw_warning = true;
     return NAN;
@@ -53,8 +55,10 @@ inline double pdf_triangular(double x, double a, double b,
 
 inline double cdf_triangular(double x, double a, double b,
                              double c, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(a) || ISNAN(b) || ISNAN(c))
     return x+a+b+c;
+#endif
   if (a > c || c > b || a == b) {
     throw_warning = true;
     return NAN;
@@ -72,8 +76,10 @@ inline double cdf_triangular(double x, double a, double b,
 
 inline double invcdf_triangular(double p, double a, double b,
                                 double c, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(a) || ISNAN(b) || ISNAN(c))
     return p+a+b+c;
+#endif
   if (a > c || c > b || a == b || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;

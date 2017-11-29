@@ -14,8 +14,10 @@ using Rcpp::NumericVector;
 
 inline double logpdf_tbinom(double x, double size, double prob, double a,
                             double b, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(size) || ISNAN(prob) || ISNAN(a) || ISNAN(b))
     return x+size+prob+a+b;
+#endif
   if (size < 0.0 || !VALID_PROB(prob) || b < a || !isInteger(size, false)) {
     throw_warning = true;
     return NAN;
@@ -33,8 +35,10 @@ inline double logpdf_tbinom(double x, double size, double prob, double a,
 
 inline double cdf_tbinom(double x, double size, double prob, double a,
                          double b, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(size) || ISNAN(prob) || ISNAN(a) || ISNAN(b))
     return x+size+prob+a+b;
+#endif
   if (size < 0.0 || !VALID_PROB(prob) || b < a ||
       !isInteger(size, false)) {
     throw_warning = true;
@@ -55,8 +59,10 @@ inline double cdf_tbinom(double x, double size, double prob, double a,
 
 inline double invcdf_tbinom(double p, double size, double prob,
                             double a, double b, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(size) || ISNAN(prob) || ISNAN(a) || ISNAN(b))
     return p+size+prob+a+b;
+#endif
   if (size < 0.0 || !VALID_PROB(prob) || b < a ||
       !isInteger(size, false) || !VALID_PROB(p)) {
     throw_warning = true;

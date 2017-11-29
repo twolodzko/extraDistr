@@ -28,8 +28,10 @@ using Rcpp::NumericVector;
 
 inline double logpdf_fatigue(double x, double alpha, double beta,
                              double mu, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(mu))
     return x+alpha+beta+mu;
+#endif
   if (alpha <= 0.0 || beta <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -46,8 +48,10 @@ inline double logpdf_fatigue(double x, double alpha, double beta,
 
 inline double cdf_fatigue(double x, double alpha, double beta,
                           double mu, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(alpha) || ISNAN(beta) || ISNAN(mu))
     return x+alpha+beta+mu;
+#endif
   if (alpha <= 0.0 || beta <= 0.0) {
     throw_warning = true;
     return NAN;
@@ -63,8 +67,10 @@ inline double cdf_fatigue(double x, double alpha, double beta,
 
 inline double invcdf_fatigue(double p, double alpha, double beta,
                              double mu, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(alpha) || ISNAN(beta) || ISNAN(mu))
     return p+alpha+beta+mu;
+#endif
   if (alpha <= 0.0 || beta <= 0.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;

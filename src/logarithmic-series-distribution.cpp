@@ -29,8 +29,10 @@ using std::log1p;
 
 
 double logpdf_lgser(double x, double theta, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(theta))
     return x+theta;
+#endif
   if (theta <= 0.0 || theta >= 1.0) {
     throw_warning = true;
     return NAN;
@@ -44,8 +46,10 @@ double logpdf_lgser(double x, double theta, bool& throw_warning) {
 }
 
 double cdf_lgser(double x, double theta, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(x) || ISNAN(theta))
     return x+theta;
+#endif
   if (theta <= 0.0 || theta >= 1.0) {
     throw_warning = true;
     return NAN;
@@ -73,8 +77,10 @@ double cdf_lgser(double x, double theta, bool& throw_warning) {
 }
 
 double invcdf_lgser(double p, double theta, bool& throw_warning) {
+#ifdef IEEE_754
   if (ISNAN(p) || ISNAN(theta))
     return p+theta;
+#endif
   if (theta <= 0.0 || theta >= 1.0 || !VALID_PROB(p)) {
     throw_warning = true;
     return NAN;
