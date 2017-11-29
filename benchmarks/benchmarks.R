@@ -38,7 +38,7 @@ if (requireNamespace("rbenchmark", quietly = TRUE)) {
             replications = nsim))
   print(benchmark(dgpd(x, 1, 1, 1), dgpdR(x, 1, 1, 1), 
             replications = nsim))
-  print(benchmark(dgumbel(x, 1, 1), dgumbelR(x, 1, 1), 
+  print(benchmark(dgumbel(x, 1, 1), dgumbelR(x, 1, 1), dgumbelR_log(x, 1, 1),
             replications = nsim))
   print(benchmark(dinvgamma(x, 1, 1), dinvgammaR(x, 1, 1), 
             replications = nsim))

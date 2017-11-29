@@ -82,13 +82,19 @@ inline double cdf_gpd(double x, double mu, double sigma, double xi,
       // 1.0 - pow(1.0+xi*z, -1.0/xi);
       return 1.0 - exp(log1p(xi*z) * (-1.0/xi));
     } else {
-      return 0.0;
+      if (z > 0 && z >= -1/xi)
+        return 1.0;
+      else
+        return 0.0;
     }
   } else {
     if (z > 0 && 1.0+xi*z > 0.0) {
       return 1.0 - exp(-z);
     } else {
-      return 0.0;
+      if (z > 0 && z >= -1/xi)
+        return 1.0;
+      else
+        return 0.0;
     }
   }
 }

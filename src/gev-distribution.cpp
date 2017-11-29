@@ -82,7 +82,10 @@ inline double cdf_gev(double x, double mu, double sigma,
       return exp(-exp(-z));
     }
   } else {
-    return 0.0;
+    if (z > 0 && z >= -1/xi)
+      return 1.0;
+    else
+      return 0.0;
   }
 }
 

@@ -78,6 +78,11 @@ dgumbelR <- function(x, mu, sigma) {
   1/sigma * exp(-(z+exp(-z)))
 }
 
+dgumbelR_log <- function(x, mu, sigma) {
+  z <- (x-mu)/sigma
+  exp(-(z+exp(-z)) - log(sigma))
+}
+
 dinvgammaR <- function(x, alpha, beta) {
   ifelse(x<=0, 0, 
          (x^(-alpha-1) * exp(-1/(beta*x))) / (gamma(alpha)*beta^alpha))

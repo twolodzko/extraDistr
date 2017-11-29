@@ -44,8 +44,8 @@ using Rcpp::NumericVector;
 */
 
 
-inline double pdf_sgomp(double x, double b, double eta,
-                        bool& throw_warning) {
+inline double logpdf_sgomp(double x, double b, double eta,
+                           bool& throw_warning) {
 #ifdef IEEE_754
   if (ISNAN(x) || ISNAN(b) || ISNAN(eta))
     return x+b+eta;
@@ -55,9 +55,10 @@ inline double pdf_sgomp(double x, double b, double eta,
     return NAN;
   }
   if (x < 0.0 || !R_FINITE(x))
-    return 0.0;
+    return R_NegInf;
   double ebx = exp(-b*x);
-  return b*ebx * exp(-eta*ebx) * (1+eta*(1-ebx));
+  // b*ebx * exp(-eta*ebx) * (1+eta*(1-ebx));
+  return log(b) + log(ebx) - eta*ebx + log1p(eta*(1-ebx));
 }
 
 inline double cdf_sgomp(double x, double b, double eta,
@@ -75,7 +76,8 @@ inline double cdf_sgomp(double x, double b, double eta,
   if (x == R_PosInf)
     return 1.0;
   double ebx = exp(-b*x);
-  return (1-ebx) * exp(-eta*ebx);
+  // (1-ebx) * exp(-eta*ebx)
+  return exp(log1p(-ebx) - eta*ebx);
 }
 
 inline double rng_sgomp(double b, double eta, bool& throw_warning) {
@@ -113,11 +115,11 @@ NumericVector cpp_dsgomp(
   bool throw_warning = false;
   
   for (int i = 0; i < Nmax; i++)
-    p[i] = pdf_sgomp(GETV(x, i), GETV(b, i),
-                     GETV(eta, i), throw_warning);
+    p[i] = logpdf_sgomp(GETV(x, i), GETV(b, i),
+                        GETV(eta, i), throw_warning);
   
-  if (log_prob)
-    p = Rcpp::log(p);
+  if (!log_prob)
+    p = Rcpp::exp(p);
   
   if (throw_warning)
     Rcpp::warning("NaNs produced");
