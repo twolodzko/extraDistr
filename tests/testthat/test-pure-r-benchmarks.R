@@ -1,11 +1,10 @@
 
 
-x <- c(-1e5, -100, -10, -5.5, -5, -1.01, -1, -0.5, 0.001, 0,
-       0.001, 0.5, 1, 1.01, 5, 5.5, 10, 100, 1e5)
-n <- length(x)
-
-
 test_that("Compare PDF's/PMF's to pure-R benchmarks", {
+  
+  x <- c(-1e5, -100, -10, -5.5, -5, -1.01, -1, -0.5, 0.001, 0,
+         0.001, 0.5, 1, 1.01, 5, 5.5, 10, 100, 1e5)
+  n <- length(x)
   
   expect_warning(expect_equal(dbbinom(x, 100, 1, 10), dbbinomR(x, 100, 1, 10)))
   expect_warning(expect_equal(dbbinom(x, 100, 1000, 0.001), dbbinomR(x, 100, 1000, 0.001)))
@@ -50,6 +49,10 @@ test_that("Compare PDF's/PMF's to pure-R benchmarks", {
 
 test_that("Compare dhuber to hoa implementation", {
   
+  x <- c(-1e5, -100, -10, -5.5, -5, -1.01, -1, -0.5, 0.001, 0,
+         0.001, 0.5, 1, 1.01, 5, 5.5, 10, 100, 1e5)
+  n <- length(x)
+  
   skip_on_cran()
   skip_if_not_installed("hoa")
 
@@ -60,6 +63,10 @@ test_that("Compare dhuber to hoa implementation", {
 
 
 test_that("Compare triangular to triangle implementation", {
+  
+  x <- c(-1e5, -100, -10, -5.5, -5, -1.01, -1, -0.5, 0.001, 0,
+         0.001, 0.5, 1, 1.01, 5, 5.5, 10, 100, 1e5)
+  n <- length(x)
   
   skip_on_cran()
   skip_if_not_installed("triangle")
@@ -74,6 +81,10 @@ test_that("Compare triangular to triangle implementation", {
 
 
 test_that("Compare GEV and GPD to evd implementation", {
+  
+  x <- c(-1e5, -100, -10, -5.5, -5, -1.01, -1, -0.5, 0.001, 0,
+         0.001, 0.5, 1, 1.01, 5, 5.5, 10, 100, 1e5)
+  n <- length(x)
   
   skip_on_cran()
   skip_if_not_installed("evd")
@@ -97,7 +108,11 @@ test_that("Compare GEV and GPD to evd implementation", {
 })
 
 
-test_that("Compare zero-inflated distributions to actuar implementation", {
+test_that("Compare to distributions from VGAM package", {
+  
+  x <- c(-1e5, -100, -10, -5.5, -5, -1.01, -1, -0.5, 0.001, 0,
+         0.001, 0.5, 1, 1.01, 5, 5.5, 10, 100, 1e5)
+  n <- length(x)
   
   skip_on_cran()
   skip_if_not_installed("VGAM")
@@ -123,6 +138,45 @@ test_that("Compare zero-inflated distributions to actuar implementation", {
   expect_equal(pzip(x, 7, 0.0001), VGAM::pzipois(x, 7, 0.0001))
   expect_equal(pzip(x, 7, 0.9999), VGAM::pzipois(x, 7, 0.9999))
   
+  expect_equal(dlaplace(x), VGAM::dlaplace(x))
+  expect_equal(plaplace(x), VGAM::plaplace(x))
+  
+  expect_equal(dpareto(x, 1, 1), VGAM::dpareto(x, 1, 1))
+  expect_equal(ppareto(x, 1, 1), suppressWarnings(VGAM::ppareto(x, 1, 1)))
+  
+  expect_warning(expect_equal(dbbinom(x, 100, 2, 7), VGAM::dbetabinom.ab(x, 100, 2, 7)))
+  expect_equal(pbbinom(x, 100, 2, 7), VGAM::pbetabinom.ab(x, 100, 2, 7))
+  
+  expect_equal(dfrechet(x, 1, 0, 1), VGAM::dfrechet(x, 0, 1, 1))
+  expect_equal(pfrechet(x, 1, 0, 1), VGAM::pfrechet(x, 0, 1, 1))
+  
+  expect_equal(dgumbel(x, 0, 1), VGAM::dgumbel(x, 0, 1))
+  expect_equal(pgumbel(x, 0, 1), VGAM::pgumbel(x, 0, 1))
+  
+  expect_equal(dgompertz(x, 1, 1), VGAM::dgompertz(x, 1, 1))
+  expect_equal(pgompertz(x, 1, 1), VGAM::pgompertz(x, 1, 1))  
+  
+  expect_equal(dkumar(x, 3, 7), VGAM::dkumar(x, 3, 7))
+  expect_equal(pkumar(x, 3, 7), suppressWarnings(VGAM::pkumar(x, 3, 7)))
+  
+  expect_equal(dslash(x), VGAM::dslash(x))
+  # expect_equal(pslash(x), VGAM::pslash(x))
+  
+  expect_equal(dhuber(x), VGAM::dhuber(x, 1.345))
+  expect_equal(phuber(x), VGAM::phuber(x, 1.345))
+  
+  expect_warning(expect_equal(dlgser(x, 0.5), VGAM::dlog(x, 0.5)))
+  expect_warning(expect_equal(dlgser(x, 0.0001), VGAM::dlog(x, 0.0001)))
+  expect_warning(expect_equal(dlgser(x, 0.9999), VGAM::dlog(x, 0.9999)))
+  
+  expect_equal(drayleigh(x), VGAM::drayleigh(x))
+  expect_equal(prayleigh(x), VGAM::prayleigh(x))
+  
+  expect_warning(expect_equal(
+    extraDistr::dskellam(x, 7, 8),
+    VGAM::dskellam(x, 7, 8)
+  ))
+
 })
 
 
