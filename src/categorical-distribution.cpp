@@ -56,8 +56,10 @@ NumericVector cpp_dcat(
     p_tot = 0.0;
     for (int j = 0; j < k; j++) {
       p_tot += prob_tab(i, j);
+#ifdef IEEE_754
       if (ISNAN(p_tot))
         break;
+#endif
       if (prob_tab(i, j) < 0.0) {
         p_tot = NAN;
         throw_warning = true;
@@ -69,10 +71,12 @@ NumericVector cpp_dcat(
   }
   
   for (int i = 0; i < Nmax; i++) {
+#ifdef IEEE_754
     if (ISNAN(GETV(x, i))) {
       p[i] = GETV(x, i);
       continue;
     }
+#endif
     if (!isInteger(GETV(x, i)) || GETV(x, i) < 1.0 ||
         GETV(x, i) > to_dbl(k)) {
       p[i] = 0.0;
@@ -125,8 +129,10 @@ NumericVector cpp_pcat(
     p_tot = 0.0;
     for (int j = 0; j < k; j++) {
       p_tot += prob_tab(i, j);
+#ifdef IEEE_754
       if (ISNAN(p_tot))
         break;
+#endif
       if (prob_tab(i, j) < 0.0) {
         p_tot = NAN;
         throw_warning = true;
@@ -141,10 +147,12 @@ NumericVector cpp_pcat(
   }
   
   for (int i = 0; i < Nmax; i++) {
+#ifdef IEEE_754
     if (ISNAN(GETV(x, i))) {
       p[i] = GETV(x, i);
       continue;
     }
+#endif
     if (GETV(x, i) < 1.0) {
       p[i] = 0.0;
       continue;
@@ -212,8 +220,10 @@ NumericVector cpp_qcat(
     p_tot = 0.0;
     for (int j = 0; j < k; j++) {
       p_tot += prob_tab(i, j);
+#ifdef IEEE_754
       if (ISNAN(p_tot))
         break;
+#endif
       if (prob_tab(i, j) < 0.0) {
         p_tot = NAN;
         throw_warning = true;
@@ -228,10 +238,12 @@ NumericVector cpp_qcat(
   }
   
   for (int i = 0; i < Nmax; i++) {
+#ifdef IEEE_754
     if (ISNAN(GETV(p, i))) {
       x[i] = GETV(p, i);
       continue;
     }
+#endif
     if (ISNAN(GETM(prob_tab, i, 0))) {
       x[i] = GETM(prob_tab, i, 0);
       continue;
