@@ -61,22 +61,16 @@ test_that("Compare GEV and GPD to evd implementation", {
 test_that("Compare zero-inflated distributions to actuar implementation", {
   
   skip_on_cran()
-  skip_if_not_installed("actuar")
+  skip_if_not_installed("VGAM")
   
-  expect_equal(dzib(x, 45, 0.7, 0.2), actuar::dzmbinom(x, 45, 0.7, 0.2),
-               tolerance = 1e-4)
-  expect_equal(pzib(x, 45, 0.7, 0.2), actuar::pzmbinom(x, 45, 0.7, 0.2),
-               tolerance = 1e-4)
+  expect_warning(expect_equal(dzib(x, 45, 0.7, 0.2), VGAM::dzibinom(x, 45, 0.7, 0.2)))
+  expect_equal(pzib(x, 45, 0.7, 0.2), VGAM::pzibinom(x, 45, 0.7, 0.2))
   
-  expect_equal(dzinb(x, 45, 0.7, 0.2), actuar::dzmnbinom(x, 45, 0.7, 0.2),
-               tolerance = 1e-4)
-  expect_equal(pzinb(x, 45, 0.7, 0.2), actuar::pzmnbinom(x, 45, 0.7, 0.2),
-               tolerance = 1e-4)
+  expect_warning(expect_equal(dzinb(x, 45, 0.7, 0.2), VGAM::dzinegbin(x, 45, 0.7, NULL, 0.2)))
+  expect_equal(pzinb(x, 45, 0.7, 0.2), VGAM::pzinegbin(x, 45, 0.7, NULL, 0.2))
   
-  expect_equal(dzip(x, 7, 0.2), actuar::dzmpois(x, 7, 0.2),
-               tolerance = 1e-3)
-  expect_equal(pzip(x, 7, 0.2), actuar::pzmpois(x, 7, 0.2),
-               tolerance = 1e-3)
+  expect_warning(expect_equal(dzip(x, 7, 0.2), VGAM::dzipois(x, 7, 0.2)))
+  expect_equal(pzip(x, 7, 0.2), VGAM::pzipois(x, 7, 0.2))
   
 })
 

@@ -27,7 +27,7 @@ using std::log1p;
 */
 
 inline double pdf_zip(double x, double lambda, double pi,
-                         bool& throw_warning) {
+                      bool& throw_warning) {
   if (ISNAN(x) || ISNAN(lambda) || ISNAN(pi))
     return x+lambda+pi;
   if (lambda <= 0.0 || !VALID_PROB(pi)) {
@@ -37,9 +37,11 @@ inline double pdf_zip(double x, double lambda, double pi,
   if (x < 0.0 || !isInteger(x) || !R_FINITE(x))
     return 0.0;
   if (x == 0.0) {
-    return pi + (1.0-pi) * exp(-lambda);
+    // pi + (1.0-pi) * exp(-lambda);
+    return pi + exp(log1p(-pi) - lambda);
   } else {
-    return (1.0-pi) * R::dpois(x, lambda, false);
+    // (1.0-pi) * R::dpois(x, lambda, false);
+    return exp(log1p(-pi) + R::dpois(x, lambda, true));
   }
 }
 
@@ -55,7 +57,8 @@ inline double cdf_zip(double x, double lambda, double pi,
     return 0.0;
   if (!R_FINITE(x))
     return 1.0;
-  return pi + (1.0-pi) * R::ppois(x, lambda, true, false);
+  // pi + (1.0-pi) * R::ppois(x, lambda, true, false);
+  return pi + exp(log1p(-pi) + R::ppois(x, lambda, true, true));
 }
 
 inline double invcdf_zip(double p, double lambda, double pi,

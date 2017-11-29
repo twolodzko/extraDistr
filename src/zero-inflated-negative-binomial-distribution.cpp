@@ -37,9 +37,11 @@ inline double pdf_zinb(double x, double r, double p, double pi,
   if (x < 0.0 || !isInteger(x) || !R_FINITE(x))
     return 0.0;
   if (x == 0.0) {
-    return pi + (1.0-pi) * pow(p, r);
+    // pi + (1.0-pi) * pow(p, r);
+    return pi + exp(log1p(-pi) + log(p) * r);
   } else {
-    return (1.0-pi) * R::dnbinom(x, r, p, false);
+    // (1.0-pi) * R::dnbinom(x, r, p, false);
+    return exp(log1p(-pi) + R::dnbinom(x, r, p, true));
   }
 }
 
@@ -55,7 +57,8 @@ inline double cdf_zinb(double x, double r, double p, double pi,
     return 0.0;
   if (!R_FINITE(x))
     return 1.0;
-  return pi + (1.0-pi) * R::pnbinom(x, r, p, true, false);
+  // pi + (1.0-pi) * R::pnbinom(x, r, p, true, false);
+  return pi + exp(log1p(-pi) + R::pnbinom(x, r, p, true, true));
 }
 
 inline double invcdf_zinb(double pp, double r, double p, double pi,

@@ -28,11 +28,11 @@ using std::log1p;
 */
 
 
-double logpdf_lgser(double x, double theta, bool& throw_warnin) {
+double logpdf_lgser(double x, double theta, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(theta))
     return x+theta;
   if (theta <= 0.0 || theta >= 1.0) {
-    throw_warnin = true;
+    throw_warning = true;
     return NAN;
   }
   if (!isInteger(x) || x < 1.0)
@@ -43,11 +43,11 @@ double logpdf_lgser(double x, double theta, bool& throw_warnin) {
   return log(a) + (log(theta) * x) - log(x);
 }
 
-double cdf_lgser(double x, double theta, bool& throw_warnin) {
+double cdf_lgser(double x, double theta, bool& throw_warning) {
   if (ISNAN(x) || ISNAN(theta))
     return x+theta;
   if (theta <= 0.0 || theta >= 1.0) {
-    throw_warnin = true;
+    throw_warning = true;
     return NAN;
   }
   if (x < 1.0)
@@ -72,11 +72,11 @@ double cdf_lgser(double x, double theta, bool& throw_warnin) {
   return a * b;
 }
 
-double invcdf_lgser(double p, double theta, bool& throw_warnin) {
+double invcdf_lgser(double p, double theta, bool& throw_warning) {
   if (ISNAN(p) || ISNAN(theta))
     return p+theta;
   if (theta <= 0.0 || theta >= 1.0 || !VALID_PROB(p)) {
-    throw_warnin = true;
+    throw_warning = true;
     return NAN;
   }
   if (p == 0.0)
@@ -96,9 +96,9 @@ double invcdf_lgser(double p, double theta, bool& throw_warnin) {
   return k;
 }
 
-double rng_lgser(double theta, bool& throw_warnin) {
+double rng_lgser(double theta, bool& throw_warning) {
   if (ISNAN(theta) || theta <= 0.0 || theta >= 1.0) {
-    throw_warnin = true;
+    throw_warning = true;
     return NA_REAL;
   }
 

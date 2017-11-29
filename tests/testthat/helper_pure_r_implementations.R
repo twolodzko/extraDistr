@@ -88,12 +88,21 @@ dlaplaceR <- function(x, mu, sigma) {
   1/(2*sigma) * exp(-abs(z))
 }
 
+dlaplaceR_log <- function(x, mu, sigma) {
+  LOG_2F <- 0.6931471805599452862268
+  z <- abs(x-mu)/sigma
+  exp(-z - LOG_2F - log(sigma))
+}
+
 dlgserR <- function(x, theta) {
-  # a <- suppressWarnings(-1.0/log1p(-theta))
-  # ifelse(x<1 | !is_int(x), 0, 
-  #        exp(log(a) + (log(theta) * x) - log(x)))
   ifelse(x<1 | !is_int(x), 0,
          (-1/log(1-theta)*theta^x) / x)
+}
+
+dlgserR_log <- function(x, theta) {
+  a <- suppressWarnings(-1.0/log1p(-theta))
+  ifelse(x<1 | !is_int(x), 0,
+         exp(log(a) + (log(theta) * x) - log(x)))
 }
 
 dlomaxR <- function(x, lambda, kappa) {
