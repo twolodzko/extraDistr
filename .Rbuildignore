@@ -6,7 +6,6 @@
 cran-comments.md
 ^\.travis\.yml$
 ^appveyor\.yml$
-working/
 Readme.rmd
 Readme.md
-benchmarks/
+misc/

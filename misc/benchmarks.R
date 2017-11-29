@@ -83,18 +83,6 @@ if (requireNamespace("rbenchmark", quietly = TRUE)) {
   }
   
   
-  if (requireNamespace("Compositional", quietly = TRUE)) {
-    
-    alpha <- runif(5, 0, 3)
-    x <- rdirichlet(5000, alpha)
-    
-    print(benchmark(ddirichlet(x, alpha),
-                    Compositional::ddiri(x, alpha, logged = FALSE), 
-          replications = 500))
-    
-  }
-  
-  
   if (requireNamespace("VGAM", quietly = TRUE)) {
 
     print(benchmark(dzib(x, 45, 0.7, 0.2), VGAM::dzibinom(x, 45, 0.7, 0.2), 
@@ -115,6 +103,18 @@ if (requireNamespace("rbenchmark", quietly = TRUE)) {
   }
   
   
+  if (requireNamespace("Compositional", quietly = TRUE)) {
+    
+    alpha <- runif(5, 0, 3)
+    x <- rdirichlet(5000, alpha)
+    
+    print(benchmark(ddirichlet(x, alpha),
+                    Compositional::ddiri(x, alpha, logged = FALSE), 
+                    replications = 500))
+    
+  }
+  
+  
   if (requireNamespace("skellam", quietly = TRUE)) {
 
     x <- extraDistr::rskellam(5000, 7, 8)
@@ -122,7 +122,7 @@ if (requireNamespace("rbenchmark", quietly = TRUE)) {
     print(benchmark(
       extraDistr::dskellam(x, 7, 8),
       skellam::dskellam(x, 7, 8),
-      replications = 5000
+      replications = 500
     ))
     
   }
