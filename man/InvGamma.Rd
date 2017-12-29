@@ -54,10 +54,10 @@ F(x) = \gamma(\alpha, 1/(\beta*x)) / \Gamma(\alpha)
 
 x <- rinvgamma(1e5, 20, 3)
 hist(x, 100, freq = FALSE)
-curve(dinvgamma(x, 20, 3), 0, 1, col = "red", add = TRUE)
+curve(dinvgamma(x, 20, 3), 0, 1, col = "red", add = TRUE, n = 5000)
 hist(pinvgamma(x, 20, 3))
 plot(ecdf(x))
-curve(pinvgamma(x, 20, 3), 0, 1, col = "red", lwd = 2, add = TRUE) 
+curve(pinvgamma(x, 20, 3), 0, 1, col = "red", lwd = 2, add = TRUE, n = 5000) 
 
 }
 \references{
