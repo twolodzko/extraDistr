@@ -42,10 +42,10 @@ inline double cdf_dlaplace(double x, double p, double mu,
   }
   if (x < 0.0) {
     // pow(p, -floor(x-mu))/(1.0+p);
-    return exp((log(p) * -floor(x-mu)) - log1p(p));
+    return exp( (log(p) * -floor(x-mu)) - log1p(p) );
   } else {
     // 1.0 - (pow(p, floor(x-mu)+1.0)/(1.0+p))
-    return 1.0 - exp(log(p) * (floor(x-mu)+1.0) - log1p(p));
+    return 1.0 - exp( log(p) * (floor(x-mu)+1.0) - log1p(p) );
   }
 } 
 

@@ -60,7 +60,7 @@ inline double cdf_power(double x, double alpha, double beta,
   if (x >= alpha)
     return 1.0;
   // pow(x, beta) / pow(alpha, beta);
-  return exp(log(x)*beta - log(alpha)*beta);
+  return exp( log(x)*beta - log(alpha)*beta );
 }
 
 inline double invcdf_power(double p, double alpha, double beta,

@@ -40,10 +40,10 @@ inline double pdf_zip(double x, double lambda, double pi,
     return 0.0;
   if (x == 0.0) {
     // pi + (1.0-pi) * exp(-lambda);
-    return pi + exp(log1p(-pi) - lambda);
+    return pi + exp( log1p(-pi) - lambda );
   } else {
     // (1.0-pi) * R::dpois(x, lambda, false);
-    return exp(log1p(-pi) + R::dpois(x, lambda, true));
+    return exp( log1p(-pi) + R::dpois(x, lambda, true) );
   }
 }
 

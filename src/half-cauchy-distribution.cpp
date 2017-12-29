@@ -27,7 +27,7 @@ inline double logpdf_hcauchy(double x, double sigma,
   if (x < 0.0)
     return R_NegInf;
   // 2.0/(M_PI*(1.0 + pow(x/sigma, 2.0)))/sigma;
-  return LOG_2F - log(M_PI) - log1p(exp((log(x)-log(sigma)) * 2.0)) - log(sigma);
+  return LOG_2F - log(M_PI) - log1p(exp( (log(x)-log(sigma)) * 2.0 )) - log(sigma);
 }
 
 inline double cdf_hcauchy(double x, double sigma, bool& throw_warning) {

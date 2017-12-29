@@ -42,7 +42,8 @@ inline double logpdf_rayleigh(double x, double sigma,
     return R_NegInf;
   // x/(sigma*sigma) * exp(-(x*x) / (2.0*(sigma*sigma)));
   double lsigsq = 2.0 * log(sigma);
-  return log(x) - lsigsq - exp((2.0 * log(x)) - LOG_2F - lsigsq);
+  double lxsq = 2.0 * log(x);
+  return log(x) - lsigsq - exp( lxsq - LOG_2F - lsigsq );
 }
 
 inline double cdf_rayleigh(double x, double sigma,

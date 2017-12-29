@@ -35,7 +35,7 @@ inline double pdf_slash(double x, double mu, double sigma,
   }
   double z = (x - mu)/sigma;
   if (z == 0.0)
-    return 1.0/(2.0 * SQRT_2_PI);
+    return 0.19947114020071635; // 1.0/(2.0 * SQRT_2_PI);
   return ((PHI_0 - phi(z))/(z*z))/sigma;
 }
 

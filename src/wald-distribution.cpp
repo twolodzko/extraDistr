@@ -38,7 +38,7 @@ inline double pdf_wald(double x, double mu, double lambda,
   if (x <= 0.0 || !R_FINITE(x))
     return 0.0;
   return sqrt(lambda/(2.0*PI*(x*x*x))) *
-         exp((-lambda*(x-mu)*(x-mu))/(2.0*(mu*mu)*x));
+         exp( (-lambda*(x-mu)*(x-mu))/(2.0*(mu*mu)*x) );
 }
 
 inline double cdf_wald(double x, double mu, double lambda,

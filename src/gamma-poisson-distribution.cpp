@@ -36,8 +36,9 @@ inline double logpmf_gpois(double x, double alpha, double beta,
   }
   if (!isInteger(x) || x < 0.0 || !R_FINITE(x))
     return R_NegInf;
-  double p = beta/(1.0+beta);
-  return R::lgammafn(alpha+x) - (lfactorial(x) + R::lgammafn(alpha)) +
+  // p = beta/(1.0+beta);
+  double p = exp( log(beta) - log1p(beta) );
+  return R::lgammafn(alpha+x) - lfactorial(x) - R::lgammafn(alpha) +
     log(p)*x + log(1.0-p)*alpha;
 }
 

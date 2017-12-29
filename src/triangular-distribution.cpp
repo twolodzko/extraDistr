@@ -72,10 +72,10 @@ inline double cdf_triangular(double x, double a, double b,
     return 1.0;
   } else if (x <= c) {
     // ((x-a)*(x-a)) / ((b-a)*(c-a));
-    return exp(log(x-a) * 2.0 - log(b-a) - log(c-a));
+    return exp( log(x-a) * 2.0 - log(b-a) - log(c-a) );
   } else {
     // 1.0 - (((b-x)*(b-x)) / ((b-a)*(b-c)));
-    return 1.0 - exp(log(b-x) * 2.0 - log(b-a) - log(b-c));
+    return 1.0 - exp( log(b-x) * 2.0 - log(b-a) - log(b-c) );
   }
 }
 
