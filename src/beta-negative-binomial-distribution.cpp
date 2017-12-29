@@ -42,7 +42,7 @@ inline double logpmf_bnbinom(double k, double r, double alpha,
     return R_NegInf;
   // (R::gammafn(r+k) / (R::gammafn(k+1.0) * R::gammafn(r))) *
   //     R::beta(alpha+r, beta+k) / R::beta(alpha, beta);
-  return (R::lgammafn(r+k) - (R::lgammafn(k+1.0) + R::lgammafn(r))) +
+  return (R::lgammafn(r+k) - R::lgammafn(k+1.0) - R::lgammafn(r)) +
     R::lbeta(alpha+r, beta+k) - R::lbeta(alpha, beta);
 }
 
