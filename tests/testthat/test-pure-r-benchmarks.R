@@ -180,6 +180,31 @@ test_that("Compare to distributions from VGAM package", {
 })
 
 
+test_that("Check against the parameter values tested in greta", {
+  
+  x <- c(-1e5, -100, -10, -5.5, -5, -1.01, -1, -0.5, 0.001, 0,
+         0.001, 0.5, 1, 1.01, 5, 5.5, 10, 100, 1e5)
+  n <- length(x)
+  
+  skip_on_cran()
+  skip_if_not_installed("VGAM")
+
+  expect_warning(expect_equal(dbbinom(x, 10, 0.8, 1.2),
+                              VGAM::dbetabinom.ab(x, 10, 0.8, 1.2)))
+  
+  expect_equal(dinvgamma(x, 1.2, 0.9), dinvgammaR(x, 1.2, 0.9))
+  
+  expect_equal(dpareto(x, 1.9, 2.3), VGAM::dpareto(x, 1.9, 2.3))
+  
+  expect_equal(dlst(x, 3, -0.9, 2), dt((x+0.9)/2, df = 3)/2)
+  
+  expect_equal(dlaplace(x, -0.9, 2), VGAM::dlaplace(x, -0.9, 2))
+  
+  expect_warning(expect_equal(dbern(x, 0.3), dbinom(x, 1, 0.3)))
+
+})
+
+
 test_that("Compare ddirichlet to Compositional implementation", {
   
   skip_on_cran()

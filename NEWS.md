@@ -1,6 +1,7 @@
 
 ### 1.8.8
 
+* Deprecated functions: `dnst`, `pnst`, `qnst` and `rnst` were removed
 * Fixed typos in documentation (thanks to #8 by philchalmers)
 * Converted a number of pdf and cdf functions to more numerically stable
   versions using logs (see #9 and #10)
