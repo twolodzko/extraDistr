@@ -44,6 +44,9 @@ test_that("Compare PDF's/PMF's to pure-R benchmarks", {
   expect_equal(drayleigh(x, 1), drayleighR(x, 1))
   expect_equal(dsgomp(x, 0.5, 1), dsgompR(x, 0.5, 1))
   
+  expect_equal(dinvgamma(x, 1.2, 0.9), dinvgammaR(x, 1.2, 0.9))
+  expect_equal(dinvgammaR(x, 1.2, 0.9), actuar::dinvgamma(x, 1.2, 0.9))
+  
 })
 
 
@@ -192,9 +195,8 @@ test_that("Check against the parameter values tested in VGAM", {
   expect_warning(expect_equal(dbbinom(x, 10, 0.8, 1.2),
                               VGAM::dbetabinom.ab(x, 10, 0.8, 1.2)))
   
-  expect_equal(dinvgamma(x, 1.2, 0.9), dinvgammaR(x, 1.2, 0.9))
-  
-  expect_equal(dpareto(x, 1.9, 2.3), VGAM::dpareto(x, 1.9, 2.3))
+  expect_equal(dpareto(x, 1.9, 2.3), dparetoR(x, 1.9, 2.3))
+  expect_equal(dpareto(x, 2.3, 1.9), VGAM::dpareto(x, 1.9, 2.3)) # reverse order of params!
   
   expect_equal(dlst(x, 3, -0.9, 2), dt((x+0.9)/2, df = 3)/2)
   
