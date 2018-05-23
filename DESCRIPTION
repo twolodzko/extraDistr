@@ -1,8 +1,8 @@
 Package: extraDistr
 Type: Package
 Title: Additional Univariate and Multivariate Distributions
-Version: 1.8.8
-Date: 2018-01-04
+Version: 1.8.9
+Date: 2018-05-23
 Author: Tymoteusz Wolodzko
 Maintainer: Tymoteusz Wolodzko <twolodzko+extraDistr@gmail.com>
 Description: Density, distribution function, quantile function
@@ -31,6 +31,6 @@ LazyData: TRUE
 Depends: R (>= 3.1.0)
 LinkingTo: Rcpp
 Imports: Rcpp
-Suggests: testthat
+Suggests: testthat, Compositional, VGAM, evd, hoa, skellam, triangle
 SystemRequirements: C++11
 RoxygenNote: 6.0.1

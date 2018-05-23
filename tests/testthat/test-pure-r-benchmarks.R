@@ -180,7 +180,7 @@ test_that("Compare to distributions from VGAM package", {
 })
 
 
-test_that("Check against the parameter values tested in greta", {
+test_that("Check against the parameter values tested in VGAM", {
   
   x <- c(-1e5, -100, -10, -5.5, -5, -1.01, -1, -0.5, 0.001, 0,
          0.001, 0.5, 1, 1.01, 5, 5.5, 10, 100, 1e5)
