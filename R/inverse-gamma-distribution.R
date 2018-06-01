@@ -18,16 +18,16 @@
 #'
 #' Probability mass function
 #' \deqn{
-#' f(x) = \frac{x^{-\alpha-1} \exp(-\frac{1}{\beta x})}{\Gamma(\alpha) \beta^\alpha}
+#' f(x) = \frac{\beta^\alpha x^{-\alpha-1} \exp(-\frac{\beta}{x})}{\Gamma(\alpha)}
 #' }{
-#' f(x) = (x^(-\alpha-1) * exp(-1/(\beta*x))) / (\Gamma(\alpha)*\beta^\alpha)
+#' f(x) = (\beta^\alpha * x^(-\alpha-1) * exp(-\beta/x)) / \Gamma(\alpha)
 #' }
 #'
 #' Cumulative distribution function
 #' \deqn{
-#' F(x) = \frac{\gamma(\alpha, \frac{1}{\beta x})}{\Gamma(\alpha)}
+#' F(x) = \frac{\gamma(\alpha, \frac{\beta}{x})}{\Gamma(\alpha)}
 #' }{
-#' F(x) = \gamma(\alpha, 1/(\beta*x)) / \Gamma(\alpha)
+#' F(x) = \gamma(\alpha, \beta/x) / \Gamma(\alpha)
 #' }
 #'
 #' @references

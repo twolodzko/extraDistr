@@ -43,10 +43,9 @@ inline double logpdf_invgamma(double x, double alpha, double beta,
   }
   if (x <= 0.0)
     return R_NegInf;
-  // (pow(x, -alpha-1.0) * exp(-1.0/(beta*x))) /
-  //      (R::gammafn(alpha) * pow(beta, alpha));
-  return ( log(x) * (-alpha-1.0) + (-1.0/(beta*x)) ) -
-         R::lgammafn(alpha) - log(beta) * alpha;
+  
+  return log(beta) * -alpha - R::lgammafn(alpha) + log(x) *
+           (-alpha-1.0) - 1.0/(beta*x);
 }
 
 inline double cdf_invgamma(double x, double alpha, double beta,

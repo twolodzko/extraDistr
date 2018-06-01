@@ -85,7 +85,7 @@ dgumbelR_log <- function(x, mu, sigma) {
 
 dinvgammaR <- function(x, alpha, beta) {
   ifelse(x<=0, 0, 
-         (x^(-alpha-1) * exp(-1/(beta*x))) / (gamma(alpha)*beta^alpha))
+         (beta^alpha * x^(-alpha-1) * exp(-beta/x)) / gamma(alpha))
 }
 
 dlaplaceR <- function(x, mu, sigma) {

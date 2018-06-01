@@ -33,6 +33,7 @@ test_that("Compare PDF's/PMF's to pure-R benchmarks", {
   expect_equal(dgpd(x, 1, 1, -1), dgpdR(x, 1, 1, -1))
   expect_equal(dgumbel(x, 1, 1), dgumbelR(x, 1, 1))
   expect_equal(dinvgamma(x, 1, 1), dinvgammaR(x, 1, 1))
+  expect_equal(dinvgamma(x, 1.2, 0.9), dinvgammaR(x, 1.2, 0.9))
   expect_equal(dlaplace(x, -1, 5), dlaplaceR(x, -1, 5))
   expect_equal(dlaplace(x, 9999, 0.000001), dlaplaceR(x, 9999, 0.000001))
   expect_warning(expect_equal(dlgser(x, 0.5), dlgserR(x, 0.5)))
@@ -44,8 +45,19 @@ test_that("Compare PDF's/PMF's to pure-R benchmarks", {
   expect_equal(drayleigh(x, 1), drayleighR(x, 1))
   expect_equal(dsgomp(x, 0.5, 1), dsgompR(x, 0.5, 1))
   
-  expect_equal(dinvgamma(x, 1.2, 0.9), dinvgammaR(x, 1.2, 0.9))
-  expect_equal(dinvgammaR(x, 1.2, 0.9), actuar::dinvgamma(x, 1.2, 0.9))
+})
+
+
+test_that("Compare dinvgamma to actuar implementation", {
+  
+  skip_on_cran()
+  skip_if_not_installed("actuar")
+  
+  x <- c(-1e5, -100, -10, -5.5, -5, -1.01, -1, -0.5, 0.001, 0,
+         0.001, 0.5, 1, 1.01, 5, 5.5, 10, 100, 1e5)
+  
+  expect_equal(dinvgamma(x, 1.2, 0.9), actuar::dinvgamma(x, 1.2, scale=0.9))
+  expect_equal(pinvgamma(x, 1.2, 0.9), actuar::pinvgamma(x, 1.2, scale=0.9))
   
 })
 
