@@ -16,13 +16,6 @@ r_binary_packages:
  - Rcpp
  - testthat
  - devtools
- - Compositional
- - VGAM
- - evd
- - hoa
- - skellam
- - triangle
- - actuar
  
 r_packages:
  - covr
