@@ -219,31 +219,46 @@ test_that("Check against the parameter values tested in VGAM", {
 })
 
 
-test_that("Compare ddirichlet to Compositional implementation", {
+test_that("Compare with LaplacesDemon package implementations", {
   
   skip_on_cran()
-  skip_if_not_installed("Compositional")
+  skip_if_not_installed("LaplacesDemon")
   
   alpha <- runif(5, 0, 3)
   x <- rdirichlet(5000, alpha)
   
   expect_equal(ddirichlet(x, alpha),
-               Compositional::ddiri(x, alpha, logged = FALSE))
+               LaplacesDemon::ddirichlet(x, alpha))
   
   alpha <- c(0.0001, 0.0001, 0.0001, 0.0001, 0.0001)
   
   expect_equal(ddirichlet(x, alpha),
-               Compositional::ddiri(x, alpha, logged = FALSE))
+               LaplacesDemon::ddirichlet(x, alpha))
   
   alpha <- c(1000, 1000, 1000, 1000, 1000)
   
   expect_equal(ddirichlet(x, alpha),
-               Compositional::ddiri(x, alpha, logged = FALSE))
+               LaplacesDemon::ddirichlet(x, alpha))
   
   alpha <- c(1e-4, 10000, 100, 1e-5, 1000)
   
   expect_equal(ddirichlet(x, alpha),
-               Compositional::ddiri(x, alpha, logged = FALSE))
+               LaplacesDemon::ddirichlet(x, alpha))
+  
+  # x <- c(-1e5, -100, -10, -5.5, -5, -1.01, -1, -0.5, 0.001, 0,
+  #        0.001, 0.5, 1, 1.01, 5, 5.5, 10, 100, 1e5)
+  # 
+  # expect_equal(dbern(x, 0.32), LaplacesDemon::dbern(x, 0.32))
+  # expect_equal(dgpd(x, 0.2, 3.4, 1.4), LaplacesDemon::dgpd(x, 0.2, 3.4, 1.4))
+  # expect_equal(dhcauchy(x, 2.6), LaplacesDemon::dhalfcauchy(x, 2.6))
+  # expect_equal(dhnorm(x, 8.3), LaplacesDemon::dhalfnorm(x, 8.3))
+  # expect_equal(dht(x, sigma=3.4, nu=7), LaplacesDemon::dhalft(x, scale=3.4, nu=7))
+  # expect_equal(dinvchisq(x, 2.3, 5), LaplacesDemon::dinvchisq(x, 2.3, 5))
+  # expect_equal(dinvgamma(x, 7.6, 3), LaplacesDemon::dinvgamma(x, 7.6, 3))
+  # expect_equal(dwald(x, -2, 6), LaplacesDemon::dinvgaussian(x, -2, 6))
+  # expect_equal(dpareto(x, 5, 6), LaplacesDemon::dpareto(x, 5, 6))
+  # 
+  # expect_equal(dcat(), LaplacesDemon::dcat())
   
 })
 

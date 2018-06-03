@@ -31,6 +31,6 @@ LazyData: TRUE
 Depends: R (>= 3.1.0)
 LinkingTo: Rcpp
 Imports: Rcpp
-Suggests: testthat
+Suggests: testthat, LaplacesDemon, VGAM, evd, hoa, skellam, triangle
 SystemRequirements: C++11
 RoxygenNote: 6.0.1
