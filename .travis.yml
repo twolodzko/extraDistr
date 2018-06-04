@@ -10,7 +10,6 @@ warnings_are_errors: true
 r:
  - release
  - devel
- - oldrel
 
 r_binary_packages:
  - Rcpp
@@ -23,9 +22,7 @@ r_binary_packages:
  - triangle
  - actuar
  - covr
- 
- r_packages:
-  - VGAM
+ - VGAM
  
 r_build_args: "--no-build-vignettes"
 r_check_args: "--no-build-vignettes --as-cran"
