@@ -8,22 +8,24 @@ cache: packages
 warnings_are_errors: true
 
 r:
- - oldrel
  - release
  - devel
+ - oldrel
 
 r_binary_packages:
  - Rcpp
  - testthat
  - devtools
  - LaplacesDemon
- - VGAM
  - evd
  - hoa
  - skellam
  - triangle
  - actuar
  - covr
+ 
+ r_packages:
+  - VGAM
  
 r_build_args: "--no-build-vignettes"
 r_check_args: "--no-build-vignettes --as-cran"
