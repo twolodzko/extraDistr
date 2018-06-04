@@ -16,8 +16,13 @@ r_binary_packages:
  - Rcpp
  - testthat
  - devtools
- 
-r_packages:
+ - LaplacesDemon
+ - VGAM
+ - evd
+ - hoa
+ - skellam
+ - triangle
+ - actuar
  - covr
  
 r_build_args: "--no-build-vignettes"
