@@ -1,4 +1,10 @@
 
+### 1.8.9
+
+* Fixed bug in `dinvgamma` function
+* Updated the DESCRIPTION file by mentioning the packages used in
+  optional unit tests for CRAN compatibility
+
 ### 1.8.8
 
 * Deprecated functions: `dnst`, `pnst`, `qnst` and `rnst` were removed

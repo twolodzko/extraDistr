@@ -35,9 +35,7 @@ and didn't lead to any errors.
 
 ## Comments
 
-This is a bug fix release (see NEWS).
-
-The deprecated functions from pervious version of the package
-were removed in this version.
+Updated the DESCRPTION file to mention packages used in
+unit tests in "Suggests". Fixed a bug in one function.
 
 
