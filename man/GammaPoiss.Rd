@@ -9,7 +9,8 @@
 \usage{
 dgpois(x, shape, rate, scale = 1/rate, log = FALSE)
 
-pgpois(q, shape, rate, scale = 1/rate, lower.tail = TRUE, log.p = FALSE)
+pgpois(q, shape, rate, scale = 1/rate, lower.tail = TRUE,
+  log.p = FALSE)
 
 rgpois(n, shape, rate, scale = 1/rate)
 }
@@ -83,9 +84,6 @@ lines(xx, pgpois(xx, 7, 0.002), col = "red", lwd = 2)
 \seealso{
 \code{\link[stats]{Gamma}}, \code{\link[stats]{Poisson}}
 }
-\concept{
-Univariate
-
-Discrete
-}
+\concept{Discrete}
+\concept{Univariate}
 \keyword{distribution}

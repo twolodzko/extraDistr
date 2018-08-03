@@ -10,9 +10,11 @@
 \usage{
 dbetapr(x, shape1, shape2, scale = 1, log = FALSE)
 
-pbetapr(q, shape1, shape2, scale = 1, lower.tail = TRUE, log.p = FALSE)
+pbetapr(q, shape1, shape2, scale = 1, lower.tail = TRUE,
+  log.p = FALSE)
 
-qbetapr(p, shape1, shape2, scale = 1, lower.tail = TRUE, log.p = FALSE)
+qbetapr(p, shape1, shape2, scale = 1, lower.tail = TRUE,
+  log.p = FALSE)
 
 rbetapr(n, shape1, shape2, scale = 1)
 }
@@ -70,9 +72,6 @@ curve(pbetapr(x, 5, 3, 2), 0, 100, col = "red", add = TRUE, n = 500)
 \seealso{
 \code{\link[stats]{Beta}}
 }
-\concept{
-Univariate
-
-Continuous
-}
+\concept{Continuous}
+\concept{Univariate}
 \keyword{distribution}

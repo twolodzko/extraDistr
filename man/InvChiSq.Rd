@@ -69,9 +69,6 @@ curve(pinvchisq(x, 10, 5), 0, 150, n = 501, col = "red", lwd = 2, add = TRUE)
 \seealso{
 \code{\link[stats]{Chisquare}}, \code{\link[stats]{GammaDist}}
 }
-\concept{
-Univariate
-
-Continuous
-}
+\concept{Continuous}
+\concept{Univariate}
 \keyword{distribution}

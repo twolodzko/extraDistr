@@ -10,9 +10,11 @@
 \usage{
 dtpois(x, lambda, a = -Inf, b = Inf, log = FALSE)
 
-ptpois(q, lambda, a = -Inf, b = Inf, lower.tail = TRUE, log.p = FALSE)
+ptpois(q, lambda, a = -Inf, b = Inf, lower.tail = TRUE,
+  log.p = FALSE)
 
-qtpois(p, lambda, a = -Inf, b = Inf, lower.tail = TRUE, log.p = FALSE)
+qtpois(p, lambda, a = -Inf, b = Inf, lower.tail = TRUE,
+  log.p = FALSE)
 
 rtpois(n, lambda, a = -Inf, b = Inf)
 }
@@ -78,9 +80,6 @@ Dalgaard, P. (May 1, 2005). [R] simulate zero-truncated Poisson distribution.
 R-help mailing list.
 \url{https://stat.ethz.ch/pipermail/r-help/2005-May/070680.html}
 }
-\concept{
-Univariate
-
-Discrete
-}
+\concept{Discrete}
+\concept{Univariate}
 \keyword{distribution}

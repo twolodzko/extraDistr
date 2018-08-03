@@ -66,9 +66,6 @@ curve(pmixnorm(x, c(0.5, 3, 6), c(3, 1, 1), c(1/3, 1/3, 1/3)),
       -20, 20, n = 500, col = "red", lwd = 2, add = TRUE)
 
 }
-\concept{
-Univariate
-
-Continuous
-}
+\concept{Continuous}
+\concept{Univariate}
 \keyword{distribution}

@@ -45,7 +45,7 @@ f(x) = \left\{\begin{array}{ll}
 (1 - \pi) \frac{\lambda^{x} e^{-\lambda}} {x!} & x > 0 \\
 \end{array}\right.
 }{
-f(x) = [if x = 0:] (1-\pi)+\pi * exp(-\lambda) [else:] (1-\pi) * dpois(x, lambda)
+f(x) = [if x = 0:] \pi + (1-\pi) * exp(-\lambda) [else:] (1-\pi) * dpois(x, lambda)
 }
 }
 \examples{
@@ -63,9 +63,6 @@ lines(xx, pzip(xx, 6, 0.33), col = "red")
 \seealso{
 \code{\link[stats]{Poisson}}
 }
-\concept{
-Univariate
-
-Discrete
-}
+\concept{Discrete}
+\concept{Univariate}
 \keyword{distribution}

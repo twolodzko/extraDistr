@@ -79,9 +79,6 @@ The Laplace distribution and generalizations: a revisit with applications
 to communications, economics, engineering, and finance.
 Springer Science & Business Media.
 }
-\concept{
-Univariate
-
-Discrete
-}
+\concept{Discrete}
+\concept{Univariate}
 \keyword{distribution}

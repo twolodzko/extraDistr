@@ -24,7 +24,7 @@
 #' (1 - \pi) \frac{\lambda^{x} e^{-\lambda}} {x!} & x > 0 \\
 #' \end{array}\right.
 #' }{
-#' f(x) = [if x = 0:] (1-\pi)+\pi * exp(-\lambda) [else:] (1-\pi) * dpois(x, lambda)
+#' f(x) = [if x = 0:] \pi + (1-\pi) * exp(-\lambda) [else:] (1-\pi) * dpois(x, lambda)
 #' }
 #' 
 #' @seealso \code{\link[stats]{Poisson}}

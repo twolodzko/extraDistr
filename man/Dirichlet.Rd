@@ -50,9 +50,6 @@ rdirichlet(10, alpha)
 \references{
 Devroye, L. (1986). Non-Uniform Random Variate Generation. Springer-Verlag.
 }
-\concept{
-Multivariate
-
-Continuous
-}
+\concept{Continuous}
+\concept{Multivariate}
 \keyword{distribution}

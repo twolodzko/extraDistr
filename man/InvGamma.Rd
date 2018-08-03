@@ -70,9 +70,6 @@ Relationships. American Statistician 62(1): 45-53.
 \seealso{
 \code{\link[stats]{GammaDist}}
 }
-\concept{
-Univariate
-
-Continuous
-}
+\concept{Continuous}
+\concept{Univariate}
 \keyword{distribution}

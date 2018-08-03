@@ -67,9 +67,6 @@ plot(ecdf(x))
 curve(ppower(x, 5, 16), 2, 6, col = "red", lwd = 2, add = TRUE)
 
 }
-\concept{
-Univariate
-
-Continuous
-}
+\concept{Continuous}
+\concept{Univariate}
 \keyword{distribution}

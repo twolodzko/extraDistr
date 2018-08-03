@@ -72,9 +72,6 @@ Bhattacharjee, G.P., Pandit, S.N.N., and Mohan, R. (1963).
 Dimensional chains involving rectangular and normal error-distributions.
 Technometrics, 5, 404-406.
 }
-\concept{
-Univariate
-
-Continuous
-}
+\concept{Continuous}
+\concept{Univariate}
 \keyword{distribution}

@@ -55,9 +55,6 @@ curve(plst(x, 1000, 5, 13), -60, 60, col = "red", lwd = 2, add = TRUE)
 \seealso{
 \code{\link[stats]{TDist}}
 }
-\concept{
-Univariate
-
-Continuous
-}
+\concept{Continuous}
+\concept{Univariate}
 \keyword{distribution}

@@ -71,9 +71,6 @@ curve(pgumbel(x, 5, 2), 0, 25, col = "red", lwd = 2, add = TRUE)
 Bury, K. (1999). Statistical Distributions in Engineering.
 Cambridge University Press.
 }
-\concept{
-Univariate
-
-Continuous
-}
+\concept{Continuous}
+\concept{Univariate}
 \keyword{distribution}

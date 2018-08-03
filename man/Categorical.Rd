@@ -110,9 +110,6 @@ Maddison, C. J., Tarlow, D., & Minka, T. (2014). A* sampling.
 [In:] Advances in Neural Information Processing Systems (pp. 3086-3094).
 \url{https://arxiv.org/abs/1411.0030}
 }
-\concept{
-Univariate
-
-Discrete
-}
+\concept{Discrete}
+\concept{Univariate}
 \keyword{distribution}

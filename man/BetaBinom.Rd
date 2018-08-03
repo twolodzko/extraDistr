@@ -9,7 +9,8 @@
 \usage{
 dbbinom(x, size, alpha = 1, beta = 1, log = FALSE)
 
-pbbinom(q, size, alpha = 1, beta = 1, lower.tail = TRUE, log.p = FALSE)
+pbbinom(q, size, alpha = 1, beta = 1, lower.tail = TRUE,
+  log.p = FALSE)
 
 rbbinom(n, size, alpha = 1, beta = 1)
 }
@@ -90,9 +91,6 @@ lines(xx, pbbinom(xx, 1000, 5, 13), col = "red", lwd = 2)
 \seealso{
 \code{\link[stats]{Beta}}, \code{\link[stats]{Binomial}}
 }
-\concept{
-Univariate
-
-Discrete
-}
+\concept{Discrete}
+\concept{Univariate}
 \keyword{distribution}

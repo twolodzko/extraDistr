@@ -94,9 +94,6 @@ Stein, W. E., & Keblis, M. F. (2009).
 A new method to simulate the triangular distribution.
 Mathematical and computer modelling, 49(5), 1143-1147.
 }
-\concept{
-Univariate
-
-Continuous
-}
+\concept{Continuous}
+\concept{Univariate}
 \keyword{distribution}

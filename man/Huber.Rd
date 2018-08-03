@@ -77,9 +77,6 @@ Huber, P.J. (1981). Robust Statistics. Wiley.
 
 Schumann, D. (2009). Robust Variable Selection. ProQuest.
 }
-\concept{
-Univariate
-
-Continuous
-}
+\concept{Continuous}
+\concept{Univariate}
 \keyword{distribution}

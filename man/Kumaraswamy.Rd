@@ -74,9 +74,6 @@ some tractability advantages. Statistical Methodology, 6, 70-81.
 Cordeiro, G.M. and de Castro, M. (2009). A new family of generalized distributions.
 Journal of Statistical Computation & Simulation, 1-17.
 }
-\concept{
-Univariate
-
-Continuous
-}
+\concept{Continuous}
+\concept{Univariate}
 \keyword{distribution}

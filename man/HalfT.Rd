@@ -62,9 +62,6 @@ International Journal of Statistika and Mathematika, 3(2), 77-81.
 \seealso{
 \code{\link{HalfNormal}}, \code{\link{HalfCauchy}}
 }
-\concept{
-Univariate
-
-Continuous
-}
+\concept{Continuous}
+\concept{Univariate}
 \keyword{distribution}

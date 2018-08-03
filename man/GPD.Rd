@@ -10,9 +10,11 @@
 \usage{
 dgpd(x, mu = 0, sigma = 1, xi = 0, log = FALSE)
 
-pgpd(q, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE)
+pgpd(q, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE,
+  log.p = FALSE)
 
-qgpd(p, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE)
+qgpd(p, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE,
+  log.p = FALSE)
 
 rgpd(n, mu = 0, sigma = 1, xi = 0)
 }
@@ -80,9 +82,6 @@ curve(pgpd(x, 5, 2, .1), 0, 50, col = "red", lwd = 2, add = TRUE)
 Coles, S. (2001). An Introduction to Statistical Modeling of Extreme Values.
 Springer.
 }
-\concept{
-Univariate
-
-Continuous
-}
+\concept{Continuous}
+\concept{Univariate}
 \keyword{distribution}

@@ -52,9 +52,6 @@ Skellam, J.G. (1946). The frequency distribution of the difference between
 two Poisson variates belonging to different populations.
 Journal of the Royal Statistical Society, series A, 109(3), 26.
 }
-\concept{
-Univariate
-
-Discrete
-}
+\concept{Discrete}
+\concept{Univariate}
 \keyword{distribution}

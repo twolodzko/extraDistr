@@ -80,9 +80,6 @@ with Applications. Chapman & Hall/CRC
 Forbes, C., Evans, M. Hastings, N., & Peacock, B. (2011).
 Statistical Distributions. John Wiley & Sons.
 }
-\concept{
-Univariate
-
-Continuous
-}
+\concept{Continuous}
+\concept{Univariate}
 \keyword{distribution}

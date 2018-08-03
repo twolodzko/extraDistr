@@ -75,9 +75,6 @@ lines(xx, pfrechet(xx, 5, 2, 1.5), col = "red", lwd = 2)
 Bury, K. (1999). Statistical Distributions in Engineering.
 Cambridge University Press.
 }
-\concept{
-Univariate
-
-Continuous
-}
+\concept{Continuous}
+\concept{Univariate}
 \keyword{distribution}

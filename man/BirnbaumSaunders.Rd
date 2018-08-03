@@ -10,9 +10,11 @@
 \usage{
 dfatigue(x, alpha, beta = 1, mu = 0, log = FALSE)
 
-pfatigue(q, alpha, beta = 1, mu = 0, lower.tail = TRUE, log.p = FALSE)
+pfatigue(q, alpha, beta = 1, mu = 0, lower.tail = TRUE,
+  log.p = FALSE)
 
-qfatigue(p, alpha, beta = 1, mu = 0, lower.tail = TRUE, log.p = FALSE)
+qfatigue(p, alpha, beta = 1, mu = 0, lower.tail = TRUE,
+  log.p = FALSE)
 
 rfatigue(n, alpha, beta = 1, mu = 0)
 }
@@ -91,9 +93,6 @@ Leiva, V., Sanhueza, A., Sen, P. K., and Paula, G. A. (2008).
 Random number generators for the generalized Birnbaum-Saunders distribution.
 Journal of Statistical Computation and Simulation, 78(11), 1105-1118.
 }
-\concept{
-Univariate
-
-Continuous
-}
+\concept{Continuous}
+\concept{Univariate}
 \keyword{distribution}

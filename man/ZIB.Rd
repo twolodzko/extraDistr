@@ -65,9 +65,6 @@ lines(xx, pzib(xx, 10, 0.6, 0.33), col = "red")
 \seealso{
 \code{\link[stats]{Binomial}}
 }
-\concept{
-Univariate
-
-Discrete
-}
+\concept{Discrete}
+\concept{Univariate}
 \keyword{distribution}
