@@ -17,7 +17,7 @@ rbnbinom(n, size, alpha = 1, beta = 1)
 \arguments{
 \item{x, q}{vector of quantiles.}
 
-\item{size}{number of trials (zero or more).}
+\item{size}{number of trials (zero or more). Must be strictly positive, need not be integer.}
 
 \item{alpha, beta}{non-negative parameters of the beta distribution.}
 
