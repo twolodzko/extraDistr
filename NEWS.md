@@ -1,4 +1,10 @@
 
+### 1.8.10
+
+* Now zero-inflated negative-binomial (#12) and beta negative-binomial distributions (#14)
+  do not have integer-only constraint on `size` parameter.
+* Fixed mistake in zero-inflated Poisson distribution documentation (#15).
+
 ### 1.8.9
 
 * Fixed bug in `dinvgamma` function

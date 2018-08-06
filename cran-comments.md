@@ -9,9 +9,9 @@
 
 0 errors | 0 warnings | 1 note 
 checking installed package size ... NOTE
-  installed size is 20.7Mb
+  installed size is 21.0Mb
   sub-directories of 1Mb or more:
-    libs  20.3Mb
+    libs  20.6Mb
 
 ## Reverse dependencies
 
@@ -20,18 +20,6 @@ Reverse imports: 	prophet, trend
 Reverse suggests: 	greta, SimDesign
 
 The dependencies should not be affected.
-
-The revdep tests on greta resulted in warnings and errors,
-but to the best of my knowledge, this is not due to changes
-in my package. Greta uses my package as a benchmark
-for testing implementation of few of the distributions.
-In the current version of my package I added more tests, 
-including tests comparing my package to naive pure-R
-implementations and tested it by comparing it to 
-other popular packages (e.g. VGAM, evd). The functions
-from greta package that were tested against functions
-in my package were tested against the VGAM implementations
-and didn't lead to any errors.
 
 ## Comments
 
