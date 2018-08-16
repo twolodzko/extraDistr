@@ -3,7 +3,8 @@
 
 * Now zero-inflated negative-binomial (#12) and beta negative-binomial distributions (#14)
   do not have integer-only constraint on `size` parameter.
-* Fixed mistake in zero-inflated Poisson distribution documentation (#15).
+* Fixed mistakes in the zero-inflated Poisson distribution documentation (#15) and
+  negative hypergeometric distribution documentation.
 
 ### 1.8.9
 

@@ -5,7 +5,7 @@
 #' Probability mass function, distribution function, quantile function and random generation
 #' for the negative hypergeometric distribution.
 #'
-#' @param x,q        vector of quantiles representing the number of white balls drawn without
+#' @param x,q        vector of quantiles representing the number of balls drawn without
 #'                   replacement from an urn which contains both black and white balls.
 #' @param p	         vector of probabilities.
 #' @param nn         number of observations. If \code{length(n) > 1},
