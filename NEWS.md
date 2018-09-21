@@ -5,6 +5,7 @@
   do not have integer-only constraint on `size` parameter.
 * Fixed mistakes in the zero-inflated Poisson distribution documentation (#15) and
   negative hypergeometric distribution documentation.
+* Minor changes towards future Rcpp STRICT_R_HEADERS compatibility.
 
 ### 1.8.9
 

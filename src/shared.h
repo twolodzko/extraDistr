@@ -2,6 +2,7 @@
 #ifndef EDCPP_SHARED_H
 #define EDCPP_SHARED_H
 
+#define STRICT_R_HEADERS
 #include <Rcpp.h>
 
 // Constants
