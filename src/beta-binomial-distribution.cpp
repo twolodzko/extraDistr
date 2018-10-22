@@ -171,7 +171,7 @@ NumericVector cpp_pbbinom(
   bool throw_warning = false;
   
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
-  double mx = std::min(finite_max_int(x), finite_max_int(size));
+  double mx = finite_max_int(x);
   
   for (int i = 0; i < Nmax; i++) {
     
@@ -206,7 +206,8 @@ NumericVector cpp_pbbinom(
       )];
       
       if (!tmp.size()) {
-        tmp = cdf_bbinom_table(mx, GETV(size, i), GETV(alpha, i), GETV(beta, i));
+        double mxi = std::min(mx, GETV(size, i));
+        tmp = cdf_bbinom_table(mxi, GETV(size, i), GETV(alpha, i), GETV(beta, i));
       }
       p[i] = tmp[to_pos_int(GETV(x, i))];
       
