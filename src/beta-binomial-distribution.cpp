@@ -171,7 +171,16 @@ NumericVector cpp_pbbinom(
   bool throw_warning = false;
   
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
-  double mx = finite_max_int(x);
+
+  // maximum modulo size.length(), bounded in [0, size]
+  int n = x.length();
+  int k = size.length();
+  NumericVector mx(k, 0.0);
+  for (int i = 0; i < std::max(n, k); i++) {
+    if (mx[i % k] < GETV(x, i)) {
+      mx[i % k] = std::min(GETV(x, i), GETV(size, i));
+    }
+  }
   
   for (int i = 0; i < Nmax; i++) {
     
@@ -187,7 +196,7 @@ NumericVector cpp_pbbinom(
 #endif
     
     if (GETV(alpha, i) <= 0.0 || GETV(beta, i) <= 0.0 ||
-               GETV(size, i) < 0.0 || !isInteger(GETV(size, i), false)) {
+        GETV(size, i) < 0.0 || !isInteger(GETV(size, i), false)) {
       throw_warning = true;
       p[i] = NAN;
     } else if (GETV(x, i) < 0.0) {
@@ -206,8 +215,8 @@ NumericVector cpp_pbbinom(
       )];
       
       if (!tmp.size()) {
-        double mxi = std::min(mx, GETV(size, i));
-        tmp = cdf_bbinom_table(mxi, GETV(size, i), GETV(alpha, i), GETV(beta, i));
+        double mxi = std::min(mx[i % size.length()], GETV(size, i));
+        tmp = cdf_bbinom_table(mx[i % size.length()], GETV(size, i), GETV(alpha, i), GETV(beta, i));
       }
       p[i] = tmp[to_pos_int(GETV(x, i))];
       

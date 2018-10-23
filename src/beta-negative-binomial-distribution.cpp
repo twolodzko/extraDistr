@@ -176,7 +176,17 @@ NumericVector cpp_pbnbinom(
   bool throw_warning = false;
 
   std::map<std::tuple<int, int, int>, std::vector<double>> memo;
-  double mx = finite_max_int(x);
+  
+  // maximum modulo size.length(), > 0
+  int n = x.length();
+  int k = size.length();
+  NumericVector mx(k, 0.0);
+  for (int i = 0; i < std::max(n, k); i++) {
+    double xi = GETV(x, i);
+    if (mx[i % k] < xi && R_FINITE(xi)) {
+      mx[i % k] = xi;
+    }
+  }
   
   for (int i = 0; i < Nmax; i++) {
     
@@ -210,7 +220,8 @@ NumericVector cpp_pbnbinom(
       )];
       
       if (!tmp.size()) {
-        tmp = cdf_bnbinom_table(mx, GETV(size, i), GETV(alpha, i), GETV(beta, i));
+        //double mxi = std::min(mx[i % size.length()], GETV(size, i));
+        tmp = cdf_bnbinom_table(mx[i % size.length()], GETV(size, i), GETV(alpha, i), GETV(beta, i));
       }
       p[i] = tmp[to_pos_int(GETV(x, i))];
       
