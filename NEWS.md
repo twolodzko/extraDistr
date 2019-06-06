@@ -1,4 +1,8 @@
 
+### 1.8.11
+
+* Fixed bugs in Frechet distribution implementations (`pfrechet`).
+
 ### 1.8.10
 
 * Now zero-inflated negative-binomial (#12) and beta negative-binomial distributions (#14)

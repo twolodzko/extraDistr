@@ -7,7 +7,7 @@
 
 ## Comments
 
-Fixed several minor bugs and added some minor improvements. Fixes have no effect
+Fixed minor bug. Fixes have no effect
 on backward compatibility. All unit tests passed.
 
 

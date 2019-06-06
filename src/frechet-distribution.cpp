@@ -61,7 +61,7 @@ inline double cdf_frechet(double x, double lambda, double mu,
   if (x <= mu)
     return 0.0;
   double z = (x-mu)/sigma;
-  return exp(pow(-z, -lambda));
+  return exp(-pow(z, -lambda));
 }
 
 inline double invcdf_frechet(double p, double lambda, double mu,
