@@ -10,3 +10,4 @@ Readme.rmd
 Readme.md
 misc/
 revdep/
+^.github*$
