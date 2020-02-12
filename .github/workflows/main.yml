@@ -6,15 +6,14 @@ jobs:
   test:
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@master
       - name: Setup R
         uses: r-lib/actions/setup-r@v1
+      - name: Install dependencies
+        run: Rscript -e 'install.packages(c("devtools", "testthat", "LaplacesDemon", "VGAM", "evd", "hoa", "skellam", "triangle", "actuar"))'
       - name: Run unit tests
-        if: runner.os != 'Windows'
-        run: Rscript -e 'install.packages(c("devtools", "testthat", "LaplacesDemon", "VGAM", "evd", "hoa", "skellam", "triangle", "actuar")); devtools::test()'
-      - name: Run unit tests
-        if: runner.os == 'Windows'
-        run: Rscript.exe -e 'install.packages(c("devtools", "testthat", "LaplacesDemon", "VGAM", "evd", "hoa", "skellam", "triangle", "actuar")); devtools::test()'
+        run: Rscript -e 'devtools::test()'
