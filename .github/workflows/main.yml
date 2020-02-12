@@ -4,9 +4,7 @@ on: [push]
 
 jobs:
   test:
-    runs-on: 
-      matrix:
-        platform: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: "ubuntu-latest"
     steps:
       - uses: actions/checkout@master
       - uses: r-lib/actions/setup-r@v1
