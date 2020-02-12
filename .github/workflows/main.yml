@@ -14,6 +14,6 @@ jobs:
       - name: Setup R
         uses: r-lib/actions/setup-r@v1
       - name: Install dependencies
-        run: Rscript -e 'install.packages(c("devtools", "testthat", "LaplacesDemon", "VGAM", "evd", "hoa", "skellam", "triangle", "actuar"))'
+        run: Rscript -e 'install.packages(c("testthat", "LaplacesDemon", "VGAM", "evd", "hoa", "skellam", "triangle", "actuar"))'
       - name: Run unit tests
         run: Rscript -e 'devtools::test()'
