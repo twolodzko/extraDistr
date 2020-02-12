@@ -3,8 +3,7 @@ name: CI
 on: [push]
 
 jobs:
-  
-  test-unix:
+  test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -14,13 +13,8 @@ jobs:
       - name: Setup R
         uses: r-lib/actions/setup-r@v1
       - name: Run unit tests
+        if: runner.os != 'Windows'
         run: Rscript -e 'install.packages(c("devtools", "testthat", "LaplacesDemon", "VGAM", "evd", "hoa", "skellam", "triangle", "actuar")); devtools::test()'
-  
-  test-windws:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: Setup R
-        uses: r-lib/actions/setup-r@v1
-      - name: Install dependencies
+      - name: Run unit tests
+        if: runner.os == 'Windows'
         run: Rscript.exe -e 'install.packages(c("devtools", "testthat", "LaplacesDemon", "VGAM", "evd", "hoa", "skellam", "triangle", "actuar")); devtools::test()'
