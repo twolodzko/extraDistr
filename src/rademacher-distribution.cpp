@@ -1,5 +1,6 @@
 #include <Rcpp.h>
 #include "shared.h"
+// [[Rcpp::interfaces(r, cpp)]]
 // [[Rcpp::plugins(cpp11)]]
 
 using Rcpp::NumericVector;

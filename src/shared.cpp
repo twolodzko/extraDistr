@@ -1,7 +1,6 @@
 #include <Rcpp.h>
 #include "shared.h"
 
-
 bool isInteger(double x, bool warn) {
   if (ISNAN(x))
     return false;
