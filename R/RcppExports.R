@@ -737,3 +737,7 @@ cpp_rzip <- function(n, lambda, pi) {
     .Call(`_extraDistr_cpp_rzip`, n, lambda, pi)
 }
 
+# Register entry points for exported C++ functions
+methods::setLoadAction(function(ns) {
+    .Call('_extraDistr_RcppExport_registerCCallable', PACKAGE = 'extraDistr')
+})
