@@ -1,4 +1,4 @@
-### 1.8.2
+### 1.9.1
 
 * Generated header file, `inst/include/extraDistr.h`, to make C++ code callable 
   from C++ code in other R packages (#23, contribution from Jon Fintzi, @fintzij).
