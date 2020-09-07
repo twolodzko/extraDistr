@@ -9,8 +9,7 @@
 \usage{
 dbhatt(x, mu = 0, sigma = 1, a = sigma, log = FALSE)
 
-pbhatt(q, mu = 0, sigma = 1, a = sigma, lower.tail = TRUE,
-  log.p = FALSE)
+pbhatt(q, mu = 0, sigma = 1, a = sigma, lower.tail = TRUE, log.p = FALSE)
 
 rbhatt(n, mu = 0, sigma = 1, a = sigma)
 }

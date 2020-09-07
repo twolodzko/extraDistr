@@ -9,8 +9,7 @@
 \usage{
 dbnbinom(x, size, alpha = 1, beta = 1, log = FALSE)
 
-pbnbinom(q, size, alpha = 1, beta = 1, lower.tail = TRUE,
-  log.p = FALSE)
+pbnbinom(q, size, alpha = 1, beta = 1, lower.tail = TRUE, log.p = FALSE)
 
 rbnbinom(n, size, alpha = 1, beta = 1)
 }

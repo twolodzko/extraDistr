@@ -33,4 +33,4 @@ LinkingTo: Rcpp
 Imports: Rcpp
 Suggests: testthat, LaplacesDemon, VGAM, evd, hoa, skellam, triangle, actuar
 SystemRequirements: C++11
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1

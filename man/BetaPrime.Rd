@@ -10,11 +10,9 @@
 \usage{
 dbetapr(x, shape1, shape2, scale = 1, log = FALSE)
 
-pbetapr(q, shape1, shape2, scale = 1, lower.tail = TRUE,
-  log.p = FALSE)
+pbetapr(q, shape1, shape2, scale = 1, lower.tail = TRUE, log.p = FALSE)
 
-qbetapr(p, shape1, shape2, scale = 1, lower.tail = TRUE,
-  log.p = FALSE)
+qbetapr(p, shape1, shape2, scale = 1, lower.tail = TRUE, log.p = FALSE)
 
 rbetapr(n, shape1, shape2, scale = 1)
 }

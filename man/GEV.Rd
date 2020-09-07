@@ -10,11 +10,9 @@
 \usage{
 dgev(x, mu = 0, sigma = 1, xi = 0, log = FALSE)
 
-pgev(q, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE,
-  log.p = FALSE)
+pgev(q, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE)
 
-qgev(p, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE,
-  log.p = FALSE)
+qgev(p, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE, log.p = FALSE)
 
 rgev(n, mu = 0, sigma = 1, xi = 0)
 }

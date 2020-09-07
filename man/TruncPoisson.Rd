@@ -10,11 +10,9 @@
 \usage{
 dtpois(x, lambda, a = -Inf, b = Inf, log = FALSE)
 
-ptpois(q, lambda, a = -Inf, b = Inf, lower.tail = TRUE,
-  log.p = FALSE)
+ptpois(q, lambda, a = -Inf, b = Inf, lower.tail = TRUE, log.p = FALSE)
 
-qtpois(p, lambda, a = -Inf, b = Inf, lower.tail = TRUE,
-  log.p = FALSE)
+qtpois(p, lambda, a = -Inf, b = Inf, lower.tail = TRUE, log.p = FALSE)
 
 rtpois(n, lambda, a = -Inf, b = Inf)
 }

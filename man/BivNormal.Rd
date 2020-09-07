@@ -6,8 +6,16 @@
 \alias{rbvnorm}
 \title{Bivariate normal distribution}
 \usage{
-dbvnorm(x, y = NULL, mean1 = 0, mean2 = mean1, sd1 = 1,
-  sd2 = sd1, cor = 0, log = FALSE)
+dbvnorm(
+  x,
+  y = NULL,
+  mean1 = 0,
+  mean2 = mean1,
+  sd1 = 1,
+  sd2 = sd1,
+  cor = 0,
+  log = FALSE
+)
 
 rbvnorm(n, mean1 = 0, mean2 = mean1, sd1 = 1, sd2 = sd1, cor = 0)
 }

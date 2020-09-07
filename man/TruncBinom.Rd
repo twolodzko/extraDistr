@@ -10,11 +10,9 @@
 \usage{
 dtbinom(x, size, prob, a = -Inf, b = Inf, log = FALSE)
 
-ptbinom(q, size, prob, a = -Inf, b = Inf, lower.tail = TRUE,
-  log.p = FALSE)
+ptbinom(q, size, prob, a = -Inf, b = Inf, lower.tail = TRUE, log.p = FALSE)
 
-qtbinom(p, size, prob, a = -Inf, b = Inf, lower.tail = TRUE,
-  log.p = FALSE)
+qtbinom(p, size, prob, a = -Inf, b = Inf, lower.tail = TRUE, log.p = FALSE)
 
 rtbinom(n, size, prob, a = -Inf, b = Inf)
 }

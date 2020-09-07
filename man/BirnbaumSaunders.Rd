@@ -10,11 +10,9 @@
 \usage{
 dfatigue(x, alpha, beta = 1, mu = 0, log = FALSE)
 
-pfatigue(q, alpha, beta = 1, mu = 0, lower.tail = TRUE,
-  log.p = FALSE)
+pfatigue(q, alpha, beta = 1, mu = 0, lower.tail = TRUE, log.p = FALSE)
 
-qfatigue(p, alpha, beta = 1, mu = 0, lower.tail = TRUE,
-  log.p = FALSE)
+qfatigue(p, alpha, beta = 1, mu = 0, lower.tail = TRUE, log.p = FALSE)
 
 rfatigue(n, alpha, beta = 1, mu = 0)
 }

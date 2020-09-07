@@ -9,8 +9,7 @@
 \usage{
 dbbinom(x, size, alpha = 1, beta = 1, log = FALSE)
 
-pbbinom(q, size, alpha = 1, beta = 1, lower.tail = TRUE,
-  log.p = FALSE)
+pbbinom(q, size, alpha = 1, beta = 1, lower.tail = TRUE, log.p = FALSE)
 
 rbbinom(n, size, alpha = 1, beta = 1)
 }

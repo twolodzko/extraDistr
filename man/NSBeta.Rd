@@ -3,6 +3,7 @@
 \name{NSBeta}
 \alias{NSBeta}
 \alias{dnsbeta}
+\alias{dgbeta}
 \alias{pnsbeta}
 \alias{qnsbeta}
 \alias{rnsbeta}
@@ -10,11 +11,9 @@
 \usage{
 dnsbeta(x, shape1, shape2, min = 0, max = 1, log = FALSE)
 
-pnsbeta(q, shape1, shape2, min = 0, max = 1, lower.tail = TRUE,
-  log.p = FALSE)
+pnsbeta(q, shape1, shape2, min = 0, max = 1, lower.tail = TRUE, log.p = FALSE)
 
-qnsbeta(p, shape1, shape2, min = 0, max = 1, lower.tail = TRUE,
-  log.p = FALSE)
+qnsbeta(p, shape1, shape2, min = 0, max = 1, lower.tail = TRUE, log.p = FALSE)
 
 rnsbeta(n, shape1, shape2, min = 0, max = 1)
 }

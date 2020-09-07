@@ -3,7 +3,6 @@
 \docType{package}
 \name{extraDistr}
 \alias{extraDistr}
-\alias{extraDistr-package}
 \title{Additional univariate and multivariate distributions}
 \description{
 Density, distribution function, quantile function and random

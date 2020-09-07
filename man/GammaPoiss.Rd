@@ -9,8 +9,7 @@
 \usage{
 dgpois(x, shape, rate, scale = 1/rate, log = FALSE)
 
-pgpois(q, shape, rate, scale = 1/rate, lower.tail = TRUE,
-  log.p = FALSE)
+pgpois(q, shape, rate, scale = 1/rate, lower.tail = TRUE, log.p = FALSE)
 
 rgpois(n, shape, rate, scale = 1/rate)
 }

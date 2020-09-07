@@ -10,11 +10,9 @@
 \usage{
 dfrechet(x, lambda = 1, mu = 0, sigma = 1, log = FALSE)
 
-pfrechet(q, lambda = 1, mu = 0, sigma = 1, lower.tail = TRUE,
-  log.p = FALSE)
+pfrechet(q, lambda = 1, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE)
 
-qfrechet(p, lambda = 1, mu = 0, sigma = 1, lower.tail = TRUE,
-  log.p = FALSE)
+qfrechet(p, lambda = 1, mu = 0, sigma = 1, lower.tail = TRUE, log.p = FALSE)
 
 rfrechet(n, lambda = 1, mu = 0, sigma = 1)
 }

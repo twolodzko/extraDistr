@@ -10,11 +10,9 @@
 \usage{
 dtriang(x, a = -1, b = 1, c = (a + b)/2, log = FALSE)
 
-ptriang(q, a = -1, b = 1, c = (a + b)/2, lower.tail = TRUE,
-  log.p = FALSE)
+ptriang(q, a = -1, b = 1, c = (a + b)/2, lower.tail = TRUE, log.p = FALSE)
 
-qtriang(p, a = -1, b = 1, c = (a + b)/2, lower.tail = TRUE,
-  log.p = FALSE)
+qtriang(p, a = -1, b = 1, c = (a + b)/2, lower.tail = TRUE, log.p = FALSE)
 
 rtriang(n, a = -1, b = 1, c = (a + b)/2)
 }

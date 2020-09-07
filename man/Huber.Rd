@@ -10,11 +10,9 @@
 \usage{
 dhuber(x, mu = 0, sigma = 1, epsilon = 1.345, log = FALSE)
 
-phuber(q, mu = 0, sigma = 1, epsilon = 1.345, lower.tail = TRUE,
-  log.p = FALSE)
+phuber(q, mu = 0, sigma = 1, epsilon = 1.345, lower.tail = TRUE, log.p = FALSE)
 
-qhuber(p, mu = 0, sigma = 1, epsilon = 1.345, lower.tail = TRUE,
-  log.p = FALSE)
+qhuber(p, mu = 0, sigma = 1, epsilon = 1.345, lower.tail = TRUE, log.p = FALSE)
 
 rhuber(n, mu = 0, sigma = 1, epsilon = 1.345)
 }

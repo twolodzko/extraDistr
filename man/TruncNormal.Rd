@@ -10,11 +10,25 @@
 \usage{
 dtnorm(x, mean = 0, sd = 1, a = -Inf, b = Inf, log = FALSE)
 
-ptnorm(q, mean = 0, sd = 1, a = -Inf, b = Inf, lower.tail = TRUE,
-  log.p = FALSE)
+ptnorm(
+  q,
+  mean = 0,
+  sd = 1,
+  a = -Inf,
+  b = Inf,
+  lower.tail = TRUE,
+  log.p = FALSE
+)
 
-qtnorm(p, mean = 0, sd = 1, a = -Inf, b = Inf, lower.tail = TRUE,
-  log.p = FALSE)
+qtnorm(
+  p,
+  mean = 0,
+  sd = 1,
+  a = -Inf,
+  b = Inf,
+  lower.tail = TRUE,
+  log.p = FALSE
+)
 
 rtnorm(n, mean = 0, sd = 1, a = -Inf, b = Inf)
 }
@@ -109,10 +123,10 @@ par(partmp)
 }
 \references{
 Robert, C.P. (1995). Simulation of truncated normal variables.
-Statistics and Computing 5(2): 121-125. \url{http://arxiv.org/abs/0907.4010}
+Statistics and Computing 5(2): 121-125. \url{https://arxiv.org/abs/0907.4010}
 
 Burkardt, J. (17 October 2014). The Truncated Normal Distribution. Florida State University.
-\url{http://people.sc.fsu.edu/~jburkardt/presentations/truncated_normal.pdf}
+\url{https://people.sc.fsu.edu/~jburkardt/presentations/truncated_normal.pdf}
 }
 \concept{Continuous}
 \concept{Univariate}

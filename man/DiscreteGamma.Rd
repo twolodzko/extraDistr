@@ -9,8 +9,7 @@
 \usage{
 ddgamma(x, shape, rate = 1, scale = 1/rate, log = FALSE)
 
-pdgamma(q, shape, rate = 1, scale = 1/rate, lower.tail = TRUE,
-  log.p = FALSE)
+pdgamma(q, shape, rate = 1, scale = 1/rate, lower.tail = TRUE, log.p = FALSE)
 
 rdgamma(n, shape, rate = 1, scale = 1/rate)
 }
