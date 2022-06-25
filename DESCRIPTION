@@ -1,10 +1,18 @@
 Package: extraDistr
 Type: Package
 Title: Additional Univariate and Multivariate Distributions
-Version: 1.9.1
-Date: 2020-08-20
-Author: Tymoteusz Wolodzko
-Maintainer: Tymoteusz Wolodzko <twolodzko+extraDistr@gmail.com>
+Version: 1.9.2
+Date: 2022-06-25
+Author@R:  
+    c(person(given = "Tymoteusz",
+             family = "Wolodzko",
+             role = c("aut", "cre")
+             email = "twolodzko+extraDistr@gmail.com"),
+      person(given = "Mervin",
+             family = "Fansler",
+             role = c("aut"),
+             email = "mef3005@med.cornell.edu",
+             comment = c(ORCID = "0000-0002-4108-4218")) 
 Description: Density, distribution function, quantile function
     and random generation for a number of univariate
     and multivariate distributions. This package implements the
