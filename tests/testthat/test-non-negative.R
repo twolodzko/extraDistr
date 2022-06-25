@@ -35,6 +35,8 @@ test_that("Zero probabilities for values <0", {
   
   expect_equal(0, dmixpois(-1, c(1,2,3), c(1/3,1/3,1/3)))
   expect_equal(0, dtpois(-1, lambda = 5, a = 6))
+  expect_equal(0, dtnbinom(-1, size = 5, prob = 0.5, a = 6))
+  expect_equal(0, dtnbinom(-1, size = 5, mu = 10, a = 6))
   
   expect_equal(0, dnhyper(-1, 60, 35, 15))
   
@@ -55,6 +57,8 @@ test_that("Zero probabilities for values < 1", {
   expect_equal(c(0, 0), dlgser(c(-1, 0), 0.5))
   expect_equal(c(0, 0), dpareto(c(-1, 0), 1, 1))
   expect_equal(c(0, 0), dtpois(c(-1, 0), lambda = 5, a = 0))
+  expect_equal(c(0, 0), dtnbinom(c(-1, 0), size = 5, prob = 0.5, a = 0))
+  expect_equal(c(0, 0), dtnbinom(c(-1, 0), size = 5, mu = 10, a = 0))
   
 })
 

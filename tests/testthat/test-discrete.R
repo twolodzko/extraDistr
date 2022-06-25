@@ -18,6 +18,7 @@ test_that("Zero probabilities for non-integers", {
   expect_warning(expect_equal(0, dskellam(0.5, 1, 1)))
   expect_warning(expect_equal(0, dtpois(0.5, lambda = 25, a = 0)))
   expect_warning(expect_equal(0, dtbinom(0.5, 100, 0.56, a = 0)))
+  expect_warning(expect_equal(0, dtnbinom(0.5, 100, prob = 0.56, a = 0)))
   expect_warning(expect_equal(0, dzip(0.5, 1, 0.5)))
   expect_warning(expect_equal(0, dzib(0.5, 1, 0.5, 0.5)))
   expect_warning(expect_equal(0, dzinb(0.5, 1, 0.5, 0.5)))
@@ -48,6 +49,9 @@ test_that("cdf vs cumsum(pdf)", {
   
   expect_equal(cumsum(dtbinom(xx, 200, 0.5, a = 100)), ptbinom(xx, 200, 0.5, a = 100), tolerance = epsilon)
   expect_equal(cumsum(dtbinom(xx, 200, 0.5, b = 100)), ptbinom(xx, 200, 0.5, b = 100), tolerance = epsilon)
+  
+  expect_equal(cumsum(dtnbinom(xx, 200, 0.5, a = 100)), ptnbinom(xx, 200, 0.5, a = 100), tolerance = epsilon)
+  expect_equal(cumsum(dtnbinom(xx, 200, 0.5, b = 100)), ptnbinom(xx, 200, 0.5, b = 100), tolerance = epsilon)
   
   expect_equal(cumsum(dbbinom(xx, 200, 5, 13)), pbbinom(xx, 200, 5, 13), tolerance = epsilon)
   expect_equal(cumsum(dbnbinom(xx, 70, 5, 13)), pbnbinom(xx, 70, 5, 13), tolerance = epsilon)

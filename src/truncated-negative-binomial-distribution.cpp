@@ -19,7 +19,7 @@ inline double logpdf_tnbinom(double x, double size, double prob,
   if (ISNAN(x) || ISNAN(size) || ISNAN(prob) || ISNAN(a) || ISNAN(b))
     return x+size+prob+a+b;
 #endif
-  if (size <= 0.0 || !VALID_PROB(prob), b < a) {
+  if (size <= 0.0 || !VALID_PROB(prob) || b < a) {
     throw_warning = true;
     return NAN;
   }
@@ -40,7 +40,7 @@ inline double logpdf_tnbinom_mu(double x, double size, double mu,
   if (ISNAN(x) || ISNAN(size) || ISNAN(mu) || ISNAN(a) || ISNAN(b))
     return x+size+mu+a+b;
 #endif
-  if (size <= 0.0 || mu < 0.0, b < a) {
+  if (size <= 0.0 || mu < 0.0 || b < a) {
     throw_warning = true;
     return NAN;
   }

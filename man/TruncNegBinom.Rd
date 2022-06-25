@@ -65,31 +65,38 @@ for the truncated negative binomial distribution.
 }
 \examples{
 
-x <- rtnbinom(1e5, 14, 16)
-xx <- seq(-1, 50)
+# Right-truncated negative binomial
+## random sample
+x <- rtnbinom(n=1e5, size=2, prob=0.1, b=25)
 plot(prop.table(table(x)))
-lines(xx, dtpois(xx, 14, 16), col = "red")
-hist(ptpois(x, 14, 16))
 
-xx <- seq(0, 50, by = 0.01)
+## distribution
+xx <- seq(-1, 30)
+lines(xx, dtnbinom(xx, size=2, prob=0.1, b=25), col = "red")
+
+hist(ptnbinom(x, size=2, prob=0.1, b=25), breaks=35)
+
+xx <- seq(0, 30, by = 0.01)
 plot(ecdf(x))
-lines(xx, ptpois(xx, 14, 16), col = "red", lwd = 2)
+lines(xx, ptnbinom(xx, size=2, prob=0.1, b=25), col = "red", lwd = 2)
 
 uu <- seq(0, 1, by = 0.001)
-lines(qtpois(uu, 14, 16), uu, col = "blue", lty = 2)
+lines(qtnbinom(uu, size=2, prob=0.1, b=25), uu, col = "blue", lty = 2)
 
-# Zero-truncated Poisson
-
-x <- rtpois(1e5, 5, 0)
-xx <- seq(-1, 50)
+# Zero-truncated negative binomial (mu parameterization)
+## random sample
+x <- rtnbinom(1e5, size=2, mu=5, a=0)
 plot(prop.table(table(x)))
-lines(xx, dtpois(xx, 5, 0), col = "red")
-hist(ptpois(x, 5, 0))
+
+## distribution
+xx <- seq(-1, 50)
+lines(xx, dtnbinom(xx, size=2, mu=5, a=0), col = "red")
+hist(ptnbinom(x, size=2, mu=5, a=0))
 
 xx <- seq(0, 50, by = 0.01)
 plot(ecdf(x))
-lines(xx, ptpois(xx, 5, 0), col = "red", lwd = 2)
-lines(qtpois(uu, 5, 0), uu, col = "blue", lty = 2)
+lines(xx, ptnbinom(xx, size=2, mu=5, a=0), col = "red", lwd = 2)
+lines(qtnbinom(uu, size=2, mu=5, a=0), uu, col = "blue", lty = 2)
 
 }
 \references{

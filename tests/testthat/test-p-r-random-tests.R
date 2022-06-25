@@ -167,6 +167,11 @@ test_that("p-r random tests", {
   expect_true(dkwtest("tpois", 5, 0))
   expect_true(dkwtest("tpois", 50, 45, 55))
   
+  expect_true(dkwtest("tnbinom", 5, prob = 0.5, a = 0))
+  expect_true(dkwtest("tnbinom", 5, mu = 10, a = 0))
+  expect_true(dkwtest("tnbinom", 5, prob = 0.5, a = 10, b = 50))
+  expect_true(dkwtest("tnbinom", 5, mu = 10, a = 10, b = 50))
+  
   expect_true(dkwtest("triang"))
   expect_true(dkwtest("triang", 0, 1, 0.5))
   

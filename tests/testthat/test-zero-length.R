@@ -207,6 +207,15 @@ test_that("Zero-length in PDF and PMF functions", {
   expect_true(is_zero_length(dtpois(1, numeric(0), 0)))
   expect_true(is_zero_length(dtpois(1, 5, numeric(0))))
   
+  expect_true(is_zero_length(dtnbinom(numeric(0), 5, prob = 0.5, a = 0)))
+  expect_true(is_zero_length(dtnbinom(1, numeric(0), prob = 0.5, a = 0)))
+  expect_true(is_zero_length(dtnbinom(1, 5, prob = numeric(0), a = 0)))
+  expect_true(is_zero_length(dtnbinom(1, 5, prob = 0.5, a = numeric(0))))
+  expect_true(is_zero_length(dtnbinom(numeric(0), 5, mu = 0.5, a = 0)))
+  expect_true(is_zero_length(dtnbinom(1, numeric(0), mu = 0.5, a = 0)))
+  expect_true(is_zero_length(dtnbinom(1, 5, mu = numeric(0), a = 0)))
+  expect_true(is_zero_length(dtnbinom(1, 5, mu = 10, a = numeric(0))))
+  
   expect_true(is_zero_length(dtriang(numeric(0), 0, 1, 0.5)))
   expect_true(is_zero_length(dtriang(0.5, numeric(0), 1, 0.5)))
   expect_true(is_zero_length(dtriang(0.5, 0, numeric(0), 0.5)))

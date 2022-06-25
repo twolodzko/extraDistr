@@ -227,10 +227,17 @@ test_that("Missing values in PDF and PMF functions", {
   expect_true(is.na(dtnorm(1, 0, NA, -2, 2)))
   expect_true(is.na(dtnorm(1, 0, 1, NA, 2)))
   expect_true(is.na(dtnorm(1, 0, 1, -2, NA)))
-
+  
   expect_true(is.na(dtpois(NA, 5, 0)))
   expect_true(is.na(dtpois(1, NA, 0)))
   expect_true(is.na(dtpois(1, 5, NA)))
+  
+  expect_true(is.na(dtnbinom(NA, 5, prob = 0.5, a = 0, b = 10)))
+  expect_true(is.na(dtnbinom(1, NA, prob = 0.5, a = 0, b = 10)))
+  expect_true(is.na(dtnbinom(1, 5, prob = NA, a = 0, b = 10)))
+  expect_true(is.na(dtnbinom(1, 5, mu = NA, a = 0, b = 10)))
+  expect_true(is.na(dtnbinom(1, 5, prob = 0.5, a = NA, b = 10)))
+  expect_true(is.na(dtnbinom(1, 5, prob = 0.5, a = 0, b = NA)))
 
   expect_true(is.na(dtriang(NA, 0, 1, 0.5)))
   expect_true(is.na(dtriang(0.5, NA, 1, 0.5)))
@@ -446,6 +453,13 @@ test_that("Wrong parameter values in CDF functions", {
   expect_true(is.na(ptpois(1, NA, 0)))
   expect_true(is.na(ptpois(1, 5, NA)))
   
+  expect_true(is.na(ptnbinom(NA, 5, prob = 0.5, a = 0, b = 10)))
+  expect_true(is.na(ptnbinom(1, NA, prob = 0.5, a = 0, b = 10)))
+  expect_true(is.na(ptnbinom(1, 5, prob = NA, a = 0, b = 10)))
+  expect_true(is.na(ptnbinom(1, 5, mu = NA, a = 0, b = 10)))
+  expect_true(is.na(ptnbinom(1, 5, prob = 0.5, a = NA, b = 10)))
+  expect_true(is.na(ptnbinom(1, 5, prob = 0.5, a = 0, b = NA)))
+  
   expect_true(is.na(ptriang(NA, 0, 1, 0.5)))
   expect_true(is.na(ptriang(0.5, NA, 1, 0.5)))
   expect_true(is.na(ptriang(0.5, 0, NA, 0.5)))
@@ -604,6 +618,13 @@ test_that("Wrong parameter values in inverse CDF functions", {
   expect_true(is.na(qtpois(NA, 5, 0)))
   expect_true(is.na(qtpois(0.5, NA, 0)))
   expect_true(is.na(qtpois(0.5, 5, NA)))
+  
+  expect_true(is.na(qtnbinom(NA, 5, prob = 0.5, a = 0, b = 10)))
+  expect_true(is.na(qtnbinom(0.5, NA, prob = 0.5, a = 0, b = 10)))
+  expect_true(is.na(qtnbinom(0.5, 5, prob = NA, a = 0, b = 10)))
+  expect_true(is.na(qtnbinom(0.5, 5, mu = NA, a = 0, b = 10)))
+  expect_true(is.na(qtnbinom(0.5, 5, prob = 0.5, a = NA, b = 10)))
+  expect_true(is.na(qtnbinom(0.5, 5, prob = 0.5, a = 0, b = NA)))
   
   expect_true(is.na(qtriang(NA, 0, 1, 0.5)))
   expect_true(is.na(qtriang(0.5, NA, 1, 0.5)))
@@ -808,6 +829,12 @@ test_that("Wrong parameter values in RNG functions", {
 
   expect_warning(expect_true(is.na(rtpois(1, NA, 0))))
   expect_warning(expect_true(is.na(rtpois(1, 5, NA))))
+  
+  expect_true(is.na(ptnbinom(1, NA, prob = 0.5, a = 0, b = 10)))
+  expect_true(is.na(ptnbinom(1, 5, prob = NA, a = 0, b = 10)))
+  expect_true(is.na(ptnbinom(1, 5, mu = NA, a = 0, b = 10)))
+  expect_true(is.na(ptnbinom(1, 5, prob = 0.5, a = NA, b = 10)))
+  expect_true(is.na(ptnbinom(1, 5, prob = 0.5, a = 0, b = NA)))
   
   expect_warning(expect_true(is.na(rtriang(1, NA, 1, 0.5))))
   expect_warning(expect_true(is.na(rtriang(1, 0, NA, 0.5))))

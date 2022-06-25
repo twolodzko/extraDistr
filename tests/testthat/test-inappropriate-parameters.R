@@ -170,11 +170,16 @@ test_that("Wrong parameter values in PDF and PMF functions", {
   
   expect_warning(expect_true(is.nan(dtnorm(1, 0, -1, -2, 2))))
   expect_warning(expect_true(is.nan(dtnorm(1, 0, 1, 2, -2))))
-  expect_warning(expect_true(is.nan(dtnorm(1, 0, 1, 0, 0)))) 
+  expect_warning(expect_true(is.nan(dtnorm(1, 0, 1, 0, 0))))
   
   expect_warning(expect_true(is.nan(dtpois(1, lambda = -5, a = 0))))
   expect_warning(expect_true(is.nan(dtpois(1, lambda = -5, a = 6))))
   expect_warning(expect_true(is.nan(dtpois(1, lambda = -5, a = 6, b = 5))))
+  
+  expect_warning(expect_true(is.nan(dtnbinom(1, size = -5, prob = 0.5, a = 0))))
+  expect_warning(expect_true(is.nan(dtnbinom(1, size = 1, prob = -0.5, a = 6))))
+  expect_warning(expect_true(is.nan(dtnbinom(1, size = 1, mu = 10, a = 6, b = 5))))
+  expect_warning(expect_true(is.nan(dtnbinom(1, size = 1, mu = -10, a = 0, b = 5))))
 
   expect_warning(expect_true(is.nan(dtriang(1, 0, 0, 0))))
   expect_warning(expect_true(is.nan(dtriang(1, 1, -1, 0))))
@@ -348,6 +353,11 @@ test_that("Wrong parameter values in CDF functions", {
   expect_warning(expect_true(is.nan(ptpois(1, lambda = -5, a = 0))))
   expect_warning(expect_true(is.nan(ptpois(1, lambda = -5, a = 6))))
   expect_warning(expect_true(is.nan(ptpois(1, lambda = -5, a = 6, b = 5))))
+  
+  expect_warning(expect_true(is.nan(ptnbinom(1, size = -5, prob = 0.5, a = 0))))
+  expect_warning(expect_true(is.nan(ptnbinom(1, size = 1, prob = -0.5, a = 6))))
+  expect_warning(expect_true(is.nan(ptnbinom(1, size = 1, mu = 10, a = 6, b = 5))))
+  expect_warning(expect_true(is.nan(ptnbinom(1, size = 1, mu = -10, a = 0, b = 5))))
 
   expect_warning(expect_true(is.nan(ptriang(1, 0, 0, 0))))
   expect_warning(expect_true(is.nan(ptriang(1, 1, -1, 0))))
@@ -470,6 +480,11 @@ test_that("Wrong parameter values in quantile functions", {
   expect_warning(expect_true(is.nan(qtpois(0.5, lambda = -5, a = 0))))
   expect_warning(expect_true(is.nan(qtpois(0.5, lambda = -5, a = 6))))
   expect_warning(expect_true(is.nan(qtpois(0.5, lambda = -5, a = 6, b = 5))))
+  
+  expect_warning(expect_true(is.nan(qtnbinom(0.5, size = -5, prob = 0.5, a = 0))))
+  expect_warning(expect_true(is.nan(qtnbinom(0.5, size = 1, prob = -0.5, a = 6))))
+  expect_warning(expect_true(is.nan(qtnbinom(0.5, size = 1, mu = 10, a = 6, b = 5))))
+  expect_warning(expect_true(is.nan(qtnbinom(0.5, size = 1, mu = -10, a = 0, b = 5))))
 
   expect_warning(expect_true(is.nan(qtriang(0.5, 0, 0, 0))))
   expect_warning(expect_true(is.nan(qtriang(0.5, 1, -1, 0))))
@@ -663,6 +678,11 @@ test_that("Wrong parameter values in RNG functions", {
   expect_warning(expect_true(is.na(rtpois(1, lambda = -5, a = 0))))
   expect_warning(expect_true(is.na(rtpois(1, lambda = -5, a = 6))))
   expect_warning(expect_true(is.na(rtpois(1, lambda = -5, a = 6, b = 5))))
+  
+  expect_warning(expect_true(is.na(rtnbinom(1, size = -5, prob = 0.5, a = 0))))
+  expect_warning(expect_true(is.na(rtnbinom(1, size = 1, prob = -0.5, a = 6))))
+  expect_warning(expect_true(is.na(rtnbinom(1, size = 1, mu = 10, a = 6, b = 5))))
+  expect_warning(expect_true(is.na(rtnbinom(1, size = 1, mu = -10, a = 0, b = 5))))
 
   expect_warning(expect_true(is.na(rtriang(1, 0, 0, 0))))
   expect_warning(expect_true(is.na(rtriang(1, 1, -1, 0))))
