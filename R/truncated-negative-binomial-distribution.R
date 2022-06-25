@@ -31,36 +31,36 @@
 #' 
 #' # Right-truncated negative binomial
 #' ## random sample
-#' x <- rtnbinom(n=1e5, size=2, prob=0.1, b=25)
+#' x <- rtnbinom(1e5, size = 2, prob = 0.1, b = 25)
 #' plot(prop.table(table(x)))
 #' 
 #' ## distribution
 #' xx <- seq(-1, 30)
-#' lines(xx, dtnbinom(xx, size=2, prob=0.1, b=25), col = "red")
+#' lines(xx, dtnbinom(xx, size = 2, prob = 0.1, b = 25), col = "red")
 #' 
-#' hist(ptnbinom(x, size=2, prob=0.1, b=25), breaks=35)
+#' hist(ptnbinom(x, size = 2, prob = 0.1, b = 25), breaks = 35)
 #' 
 #' xx <- seq(0, 30, by = 0.01)
 #' plot(ecdf(x))
-#' lines(xx, ptnbinom(xx, size=2, prob=0.1, b=25), col = "red", lwd = 2)
+#' lines(xx, ptnbinom(xx, size = 2, prob = 0.1, b = 25), col = "red", lwd = 2)
 #' 
 #' uu <- seq(0, 1, by = 0.001)
-#' lines(qtnbinom(uu, size=2, prob=0.1, b=25), uu, col = "blue", lty = 2)
+#' lines(qtnbinom(uu, size = 2, prob = 0.1, b = 25), uu, col = "blue", lty = 2)
 #' 
 #' # Zero-truncated negative binomial (mu parameterization)
 #' ## random sample
-#' x <- rtnbinom(1e5, size=2, mu=5, a=0)
+#' x <- rtnbinom(1e5, size = 2, mu = 5, a = 0)
 #' plot(prop.table(table(x)))
 #' 
 #' ## distribution
 #' xx <- seq(-1, 50)
-#' lines(xx, dtnbinom(xx, size=2, mu=5, a=0), col = "red")
-#' hist(ptnbinom(x, size=2, mu=5, a=0))
+#' lines(xx, dtnbinom(xx, size = 2, mu = 5, a = 0), col = "red")
+#' hist(ptnbinom(x, size = 2, mu = 5, a = 0))
 #' 
 #' xx <- seq(0, 50, by = 0.01)
 #' plot(ecdf(x))
-#' lines(xx, ptnbinom(xx, size=2, mu=5, a=0), col = "red", lwd = 2)
-#' lines(qtnbinom(uu, size=2, mu=5, a=0), uu, col = "blue", lty = 2)
+#' lines(xx, ptnbinom(xx, size = 2, mu = 5, a = 0), col = "red", lwd = 2)
+#' lines(qtnbinom(uu, size = 2, mu = 5, a = 0), uu, col = "blue", lty = 2)
 #'
 #' @name TruncNegBinom
 #' @aliases TruncNegBinom

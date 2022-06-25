@@ -55,11 +55,11 @@ test_that("Discrete probabilities sum to unity", {
   expect_equal(sum(dtbinom(0:100, 100, 0.5, a = -Inf, b = 32)), 1)
   expect_equal(sum(dtbinom(0:100, 100, 0.5, a = 25, b = 32)), 1)
   
-  expect_equal(sum(dtnbinom(0:100, size=10, mu=10, a = -Inf, b = Inf)), 1)
-  expect_equal(sum(dtnbinom(0:100, size=10, mu=10, a = 0, b = Inf)), 1)
-  expect_equal(sum(dtnbinom(0:100, size=10, mu=10, a = 5, b = Inf)), 1)
-  expect_equal(sum(dtnbinom(0:100, size=10, mu=10, a = -Inf, b = 25)), 1)
-  expect_equal(sum(dtnbinom(0:100, size=10, mu=10, a = 5, b = 25)), 1)
+  expect_equal(sum(dtnbinom(0:100, size = 10, mu = 10, a = -Inf, b = Inf)), 1)
+  expect_equal(sum(dtnbinom(0:100, size = 10, mu = 10, a = 0, b = Inf)), 1)
+  expect_equal(sum(dtnbinom(0:100, size = 10, mu = 10, a = 5, b = Inf)), 1)
+  expect_equal(sum(dtnbinom(0:100, size = 10, mu = 10, a = -Inf, b = 25)), 1)
+  expect_equal(sum(dtnbinom(0:100, size = 10, mu = 10, a = 5, b = 25)), 1)
   
   expect_equal(sum(dlgser(0:100, 0.6)), 1)
   expect_equal(sum(dlgser(0:100, 0.1)), 1)
