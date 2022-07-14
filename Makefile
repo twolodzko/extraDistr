@@ -3,6 +3,10 @@
 test: ## Run unit tests
 	R --vanilla --silent -e "devtools::test()"
 
+.PHONY: run-examples
+run-examples: ## Run all examples from the docs
+	R --vanilla --silent -e "devtools::run_examples()"
+
 .PHONY: coverage
 coverage: ## Generate test coverage report
 	R --vanilla --silent -e "devtools::test_coverage()"
