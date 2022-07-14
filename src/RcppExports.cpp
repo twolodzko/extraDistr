@@ -8,6 +8,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // cpp_dbern
 NumericVector cpp_dbern(const NumericVector& x, const NumericVector& prob, const bool& log_prob);
 static SEXP _extraDistr_cpp_dbern_try(SEXP xSEXP, SEXP probSEXP, SEXP log_probSEXP) {
