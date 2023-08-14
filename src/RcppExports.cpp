@@ -5965,6 +5965,320 @@ RcppExport SEXP _extraDistr_cpp_rtbinom(SEXP nSEXP, SEXP sizeSEXP, SEXP probSEXP
     UNPROTECT(1);
     return rcpp_result_gen;
 }
+// cpp_dtnbinom
+NumericVector cpp_dtnbinom(const NumericVector& x, const NumericVector& size, const NumericVector& prob, const NumericVector& lower, const NumericVector& upper, const bool& log_prob);
+static SEXP _extraDistr_cpp_dtnbinom_try(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type prob(probSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type upper(upperSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_dtnbinom(x, size, prob, lower, upper, log_prob));
+    return rcpp_result_gen;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP _extraDistr_cpp_dtnbinom(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP log_probSEXP) {
+    SEXP rcpp_result_gen;
+    {
+        Rcpp::RNGScope rcpp_rngScope_gen;
+        rcpp_result_gen = PROTECT(_extraDistr_cpp_dtnbinom_try(xSEXP, sizeSEXP, probSEXP, lowerSEXP, upperSEXP, log_probSEXP));
+    }
+    Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
+    if (rcpp_isInterrupt_gen) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    bool rcpp_isLongjump_gen = Rcpp::internal::isLongjumpSentinel(rcpp_result_gen);
+    if (rcpp_isLongjump_gen) {
+        Rcpp::internal::resumeJump(rcpp_result_gen);
+    }
+    Rboolean rcpp_isError_gen = Rf_inherits(rcpp_result_gen, "try-error");
+    if (rcpp_isError_gen) {
+        SEXP rcpp_msgSEXP_gen = Rf_asChar(rcpp_result_gen);
+        UNPROTECT(1);
+        Rf_error(CHAR(rcpp_msgSEXP_gen));
+    }
+    UNPROTECT(1);
+    return rcpp_result_gen;
+}
+// cpp_dtnbinom_mu
+NumericVector cpp_dtnbinom_mu(const NumericVector& x, const NumericVector& size, const NumericVector& mu, const NumericVector& lower, const NumericVector& upper, const bool& log_prob);
+static SEXP _extraDistr_cpp_dtnbinom_mu_try(SEXP xSEXP, SEXP sizeSEXP, SEXP muSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type upper(upperSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_dtnbinom_mu(x, size, mu, lower, upper, log_prob));
+    return rcpp_result_gen;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP _extraDistr_cpp_dtnbinom_mu(SEXP xSEXP, SEXP sizeSEXP, SEXP muSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP log_probSEXP) {
+    SEXP rcpp_result_gen;
+    {
+        Rcpp::RNGScope rcpp_rngScope_gen;
+        rcpp_result_gen = PROTECT(_extraDistr_cpp_dtnbinom_mu_try(xSEXP, sizeSEXP, muSEXP, lowerSEXP, upperSEXP, log_probSEXP));
+    }
+    Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
+    if (rcpp_isInterrupt_gen) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    bool rcpp_isLongjump_gen = Rcpp::internal::isLongjumpSentinel(rcpp_result_gen);
+    if (rcpp_isLongjump_gen) {
+        Rcpp::internal::resumeJump(rcpp_result_gen);
+    }
+    Rboolean rcpp_isError_gen = Rf_inherits(rcpp_result_gen, "try-error");
+    if (rcpp_isError_gen) {
+        SEXP rcpp_msgSEXP_gen = Rf_asChar(rcpp_result_gen);
+        UNPROTECT(1);
+        Rf_error(CHAR(rcpp_msgSEXP_gen));
+    }
+    UNPROTECT(1);
+    return rcpp_result_gen;
+}
+// cpp_ptnbinom
+NumericVector cpp_ptnbinom(const NumericVector& x, const NumericVector& size, const NumericVector& prob, const NumericVector& lower, const NumericVector& upper, const bool& lower_tail, const bool& log_prob);
+static SEXP _extraDistr_cpp_ptnbinom_try(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type prob(probSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type upper(upperSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_ptnbinom(x, size, prob, lower, upper, lower_tail, log_prob));
+    return rcpp_result_gen;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP _extraDistr_cpp_ptnbinom(SEXP xSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+    SEXP rcpp_result_gen;
+    {
+        Rcpp::RNGScope rcpp_rngScope_gen;
+        rcpp_result_gen = PROTECT(_extraDistr_cpp_ptnbinom_try(xSEXP, sizeSEXP, probSEXP, lowerSEXP, upperSEXP, lower_tailSEXP, log_probSEXP));
+    }
+    Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
+    if (rcpp_isInterrupt_gen) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    bool rcpp_isLongjump_gen = Rcpp::internal::isLongjumpSentinel(rcpp_result_gen);
+    if (rcpp_isLongjump_gen) {
+        Rcpp::internal::resumeJump(rcpp_result_gen);
+    }
+    Rboolean rcpp_isError_gen = Rf_inherits(rcpp_result_gen, "try-error");
+    if (rcpp_isError_gen) {
+        SEXP rcpp_msgSEXP_gen = Rf_asChar(rcpp_result_gen);
+        UNPROTECT(1);
+        Rf_error(CHAR(rcpp_msgSEXP_gen));
+    }
+    UNPROTECT(1);
+    return rcpp_result_gen;
+}
+// cpp_ptnbinom_mu
+NumericVector cpp_ptnbinom_mu(const NumericVector& x, const NumericVector& size, const NumericVector& mu, const NumericVector& lower, const NumericVector& upper, const bool& lower_tail, const bool& log_prob);
+static SEXP _extraDistr_cpp_ptnbinom_mu_try(SEXP xSEXP, SEXP sizeSEXP, SEXP muSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type upper(upperSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_ptnbinom_mu(x, size, mu, lower, upper, lower_tail, log_prob));
+    return rcpp_result_gen;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP _extraDistr_cpp_ptnbinom_mu(SEXP xSEXP, SEXP sizeSEXP, SEXP muSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+    SEXP rcpp_result_gen;
+    {
+        Rcpp::RNGScope rcpp_rngScope_gen;
+        rcpp_result_gen = PROTECT(_extraDistr_cpp_ptnbinom_mu_try(xSEXP, sizeSEXP, muSEXP, lowerSEXP, upperSEXP, lower_tailSEXP, log_probSEXP));
+    }
+    Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
+    if (rcpp_isInterrupt_gen) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    bool rcpp_isLongjump_gen = Rcpp::internal::isLongjumpSentinel(rcpp_result_gen);
+    if (rcpp_isLongjump_gen) {
+        Rcpp::internal::resumeJump(rcpp_result_gen);
+    }
+    Rboolean rcpp_isError_gen = Rf_inherits(rcpp_result_gen, "try-error");
+    if (rcpp_isError_gen) {
+        SEXP rcpp_msgSEXP_gen = Rf_asChar(rcpp_result_gen);
+        UNPROTECT(1);
+        Rf_error(CHAR(rcpp_msgSEXP_gen));
+    }
+    UNPROTECT(1);
+    return rcpp_result_gen;
+}
+// cpp_qtnbinom
+NumericVector cpp_qtnbinom(const NumericVector& p, const NumericVector& size, const NumericVector& prob, const NumericVector& lower, const NumericVector& upper, const bool& lower_tail, const bool& log_prob);
+static SEXP _extraDistr_cpp_qtnbinom_try(SEXP pSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type prob(probSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type upper(upperSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_qtnbinom(p, size, prob, lower, upper, lower_tail, log_prob));
+    return rcpp_result_gen;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP _extraDistr_cpp_qtnbinom(SEXP pSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+    SEXP rcpp_result_gen;
+    {
+        Rcpp::RNGScope rcpp_rngScope_gen;
+        rcpp_result_gen = PROTECT(_extraDistr_cpp_qtnbinom_try(pSEXP, sizeSEXP, probSEXP, lowerSEXP, upperSEXP, lower_tailSEXP, log_probSEXP));
+    }
+    Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
+    if (rcpp_isInterrupt_gen) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    bool rcpp_isLongjump_gen = Rcpp::internal::isLongjumpSentinel(rcpp_result_gen);
+    if (rcpp_isLongjump_gen) {
+        Rcpp::internal::resumeJump(rcpp_result_gen);
+    }
+    Rboolean rcpp_isError_gen = Rf_inherits(rcpp_result_gen, "try-error");
+    if (rcpp_isError_gen) {
+        SEXP rcpp_msgSEXP_gen = Rf_asChar(rcpp_result_gen);
+        UNPROTECT(1);
+        Rf_error(CHAR(rcpp_msgSEXP_gen));
+    }
+    UNPROTECT(1);
+    return rcpp_result_gen;
+}
+// cpp_qtnbinom_mu
+NumericVector cpp_qtnbinom_mu(const NumericVector& p, const NumericVector& size, const NumericVector& mu, const NumericVector& lower, const NumericVector& upper, const bool& lower_tail, const bool& log_prob);
+static SEXP _extraDistr_cpp_qtnbinom_mu_try(SEXP pSEXP, SEXP sizeSEXP, SEXP muSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type upper(upperSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_qtnbinom_mu(p, size, mu, lower, upper, lower_tail, log_prob));
+    return rcpp_result_gen;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP _extraDistr_cpp_qtnbinom_mu(SEXP pSEXP, SEXP sizeSEXP, SEXP muSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+    SEXP rcpp_result_gen;
+    {
+        Rcpp::RNGScope rcpp_rngScope_gen;
+        rcpp_result_gen = PROTECT(_extraDistr_cpp_qtnbinom_mu_try(pSEXP, sizeSEXP, muSEXP, lowerSEXP, upperSEXP, lower_tailSEXP, log_probSEXP));
+    }
+    Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
+    if (rcpp_isInterrupt_gen) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    bool rcpp_isLongjump_gen = Rcpp::internal::isLongjumpSentinel(rcpp_result_gen);
+    if (rcpp_isLongjump_gen) {
+        Rcpp::internal::resumeJump(rcpp_result_gen);
+    }
+    Rboolean rcpp_isError_gen = Rf_inherits(rcpp_result_gen, "try-error");
+    if (rcpp_isError_gen) {
+        SEXP rcpp_msgSEXP_gen = Rf_asChar(rcpp_result_gen);
+        UNPROTECT(1);
+        Rf_error(CHAR(rcpp_msgSEXP_gen));
+    }
+    UNPROTECT(1);
+    return rcpp_result_gen;
+}
+// cpp_rtnbinom
+NumericVector cpp_rtnbinom(const int& n, const NumericVector& size, const NumericVector& prob, const NumericVector& lower, const NumericVector& upper);
+static SEXP _extraDistr_cpp_rtnbinom_try(SEXP nSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP lowerSEXP, SEXP upperSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type prob(probSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type upper(upperSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_rtnbinom(n, size, prob, lower, upper));
+    return rcpp_result_gen;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP _extraDistr_cpp_rtnbinom(SEXP nSEXP, SEXP sizeSEXP, SEXP probSEXP, SEXP lowerSEXP, SEXP upperSEXP) {
+    SEXP rcpp_result_gen;
+    {
+        Rcpp::RNGScope rcpp_rngScope_gen;
+        rcpp_result_gen = PROTECT(_extraDistr_cpp_rtnbinom_try(nSEXP, sizeSEXP, probSEXP, lowerSEXP, upperSEXP));
+    }
+    Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
+    if (rcpp_isInterrupt_gen) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    bool rcpp_isLongjump_gen = Rcpp::internal::isLongjumpSentinel(rcpp_result_gen);
+    if (rcpp_isLongjump_gen) {
+        Rcpp::internal::resumeJump(rcpp_result_gen);
+    }
+    Rboolean rcpp_isError_gen = Rf_inherits(rcpp_result_gen, "try-error");
+    if (rcpp_isError_gen) {
+        SEXP rcpp_msgSEXP_gen = Rf_asChar(rcpp_result_gen);
+        UNPROTECT(1);
+        Rf_error(CHAR(rcpp_msgSEXP_gen));
+    }
+    UNPROTECT(1);
+    return rcpp_result_gen;
+}
+// cpp_rtnbinom_mu
+NumericVector cpp_rtnbinom_mu(const int& n, const NumericVector& size, const NumericVector& mu, const NumericVector& lower, const NumericVector& upper);
+static SEXP _extraDistr_cpp_rtnbinom_mu_try(SEXP nSEXP, SEXP sizeSEXP, SEXP muSEXP, SEXP lowerSEXP, SEXP upperSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type size(sizeSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type upper(upperSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_rtnbinom_mu(n, size, mu, lower, upper));
+    return rcpp_result_gen;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP _extraDistr_cpp_rtnbinom_mu(SEXP nSEXP, SEXP sizeSEXP, SEXP muSEXP, SEXP lowerSEXP, SEXP upperSEXP) {
+    SEXP rcpp_result_gen;
+    {
+        Rcpp::RNGScope rcpp_rngScope_gen;
+        rcpp_result_gen = PROTECT(_extraDistr_cpp_rtnbinom_mu_try(nSEXP, sizeSEXP, muSEXP, lowerSEXP, upperSEXP));
+    }
+    Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
+    if (rcpp_isInterrupt_gen) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    bool rcpp_isLongjump_gen = Rcpp::internal::isLongjumpSentinel(rcpp_result_gen);
+    if (rcpp_isLongjump_gen) {
+        Rcpp::internal::resumeJump(rcpp_result_gen);
+    }
+    Rboolean rcpp_isError_gen = Rf_inherits(rcpp_result_gen, "try-error");
+    if (rcpp_isError_gen) {
+        SEXP rcpp_msgSEXP_gen = Rf_asChar(rcpp_result_gen);
+        UNPROTECT(1);
+        Rf_error(CHAR(rcpp_msgSEXP_gen));
+    }
+    UNPROTECT(1);
+    return rcpp_result_gen;
+}
 // cpp_dtnorm
 NumericVector cpp_dtnorm(const NumericVector& x, const NumericVector& mu, const NumericVector& sigma, const NumericVector& lower, const NumericVector& upper, const bool& log_prob);
 static SEXP _extraDistr_cpp_dtnorm_try(SEXP xSEXP, SEXP muSEXP, SEXP sigmaSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP log_probSEXP) {
@@ -7077,6 +7391,14 @@ static int _extraDistr_RcppExport_validate(const char* sig) {
         signatures.insert("NumericVector(*cpp_ptbinom)(const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const bool&,const bool&)");
         signatures.insert("NumericVector(*cpp_qtbinom)(const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const bool&,const bool&)");
         signatures.insert("NumericVector(*cpp_rtbinom)(const int&,const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&)");
+        signatures.insert("NumericVector(*cpp_dtnbinom)(const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const bool&)");
+        signatures.insert("NumericVector(*cpp_dtnbinom_mu)(const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const bool&)");
+        signatures.insert("NumericVector(*cpp_ptnbinom)(const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const bool&,const bool&)");
+        signatures.insert("NumericVector(*cpp_ptnbinom_mu)(const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const bool&,const bool&)");
+        signatures.insert("NumericVector(*cpp_qtnbinom)(const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const bool&,const bool&)");
+        signatures.insert("NumericVector(*cpp_qtnbinom_mu)(const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const bool&,const bool&)");
+        signatures.insert("NumericVector(*cpp_rtnbinom)(const int&,const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&)");
+        signatures.insert("NumericVector(*cpp_rtnbinom_mu)(const int&,const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&)");
         signatures.insert("NumericVector(*cpp_dtnorm)(const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const bool&)");
         signatures.insert("NumericVector(*cpp_ptnorm)(const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const bool&,const bool&)");
         signatures.insert("NumericVector(*cpp_qtnorm)(const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const bool&,const bool&)");
@@ -7267,6 +7589,14 @@ RcppExport SEXP _extraDistr_RcppExport_registerCCallable() {
     R_RegisterCCallable("extraDistr", "_extraDistr_cpp_ptbinom", (DL_FUNC)_extraDistr_cpp_ptbinom_try);
     R_RegisterCCallable("extraDistr", "_extraDistr_cpp_qtbinom", (DL_FUNC)_extraDistr_cpp_qtbinom_try);
     R_RegisterCCallable("extraDistr", "_extraDistr_cpp_rtbinom", (DL_FUNC)_extraDistr_cpp_rtbinom_try);
+    R_RegisterCCallable("extraDistr", "_extraDistr_cpp_dtnbinom", (DL_FUNC)_extraDistr_cpp_dtnbinom_try);
+    R_RegisterCCallable("extraDistr", "_extraDistr_cpp_dtnbinom_mu", (DL_FUNC)_extraDistr_cpp_dtnbinom_mu_try);
+    R_RegisterCCallable("extraDistr", "_extraDistr_cpp_ptnbinom", (DL_FUNC)_extraDistr_cpp_ptnbinom_try);
+    R_RegisterCCallable("extraDistr", "_extraDistr_cpp_ptnbinom_mu", (DL_FUNC)_extraDistr_cpp_ptnbinom_mu_try);
+    R_RegisterCCallable("extraDistr", "_extraDistr_cpp_qtnbinom", (DL_FUNC)_extraDistr_cpp_qtnbinom_try);
+    R_RegisterCCallable("extraDistr", "_extraDistr_cpp_qtnbinom_mu", (DL_FUNC)_extraDistr_cpp_qtnbinom_mu_try);
+    R_RegisterCCallable("extraDistr", "_extraDistr_cpp_rtnbinom", (DL_FUNC)_extraDistr_cpp_rtnbinom_try);
+    R_RegisterCCallable("extraDistr", "_extraDistr_cpp_rtnbinom_mu", (DL_FUNC)_extraDistr_cpp_rtnbinom_mu_try);
     R_RegisterCCallable("extraDistr", "_extraDistr_cpp_dtnorm", (DL_FUNC)_extraDistr_cpp_dtnorm_try);
     R_RegisterCCallable("extraDistr", "_extraDistr_cpp_ptnorm", (DL_FUNC)_extraDistr_cpp_ptnorm_try);
     R_RegisterCCallable("extraDistr", "_extraDistr_cpp_qtnorm", (DL_FUNC)_extraDistr_cpp_qtnorm_try);
@@ -7456,6 +7786,14 @@ static const R_CallMethodDef CallEntries[] = {
     {"_extraDistr_cpp_ptbinom", (DL_FUNC) &_extraDistr_cpp_ptbinom, 7},
     {"_extraDistr_cpp_qtbinom", (DL_FUNC) &_extraDistr_cpp_qtbinom, 7},
     {"_extraDistr_cpp_rtbinom", (DL_FUNC) &_extraDistr_cpp_rtbinom, 5},
+    {"_extraDistr_cpp_dtnbinom", (DL_FUNC) &_extraDistr_cpp_dtnbinom, 6},
+    {"_extraDistr_cpp_dtnbinom_mu", (DL_FUNC) &_extraDistr_cpp_dtnbinom_mu, 6},
+    {"_extraDistr_cpp_ptnbinom", (DL_FUNC) &_extraDistr_cpp_ptnbinom, 7},
+    {"_extraDistr_cpp_ptnbinom_mu", (DL_FUNC) &_extraDistr_cpp_ptnbinom_mu, 7},
+    {"_extraDistr_cpp_qtnbinom", (DL_FUNC) &_extraDistr_cpp_qtnbinom, 7},
+    {"_extraDistr_cpp_qtnbinom_mu", (DL_FUNC) &_extraDistr_cpp_qtnbinom_mu, 7},
+    {"_extraDistr_cpp_rtnbinom", (DL_FUNC) &_extraDistr_cpp_rtnbinom, 5},
+    {"_extraDistr_cpp_rtnbinom_mu", (DL_FUNC) &_extraDistr_cpp_rtnbinom_mu, 5},
     {"_extraDistr_cpp_dtnorm", (DL_FUNC) &_extraDistr_cpp_dtnorm, 6},
     {"_extraDistr_cpp_ptnorm", (DL_FUNC) &_extraDistr_cpp_ptnorm, 7},
     {"_extraDistr_cpp_qtnorm", (DL_FUNC) &_extraDistr_cpp_qtnorm, 7},

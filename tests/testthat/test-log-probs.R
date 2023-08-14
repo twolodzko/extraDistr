@@ -198,6 +198,10 @@ test_that("Check if log-probabilities are logs of probabilities (CDF's)", {
                log(ptnorm(x, 0, 1, 1, 2)))
   expect_equal(suppressWarnings(ptpois(x, lambda = 25, a = 0, log.p = TRUE)),
                log(suppressWarnings(ptpois(x, lambda = 25, a = 0))))
+  expect_equal(suppressWarnings(ptnbinom(x, size = 5, prob = 0.5, a = 0, log.p = TRUE)),
+               log(suppressWarnings(ptnbinom(x, size = 5, prob = 0.5, a = 0))))
+  expect_equal(suppressWarnings(ptnbinom(x, size = 5, mu = 10, a = 0, log.p = TRUE)),
+               log(suppressWarnings(ptnbinom(x, size = 5, mu = 10, a = 0))))
   expect_equal(suppressWarnings(ptbinom(x, 100, 0.67, a = 60, b = 70, log.p = TRUE)),
                log(suppressWarnings(ptbinom(x, 100, 0.67, a = 60, b = 70))))
   expect_equal(ptriang(x, 1, 2, 1.5, log.p = TRUE),

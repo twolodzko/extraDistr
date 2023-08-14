@@ -36,4 +36,5 @@ test_that("other tests", {
   expect_equal(suppressWarnings(pmixpois(x, c(1,2,3), c(1/3,1/3,1/3), lower.tail = TRUE)),
                1 - suppressWarnings(pmixpois(x, c(1,2,3), c(1/3,1/3,1/3), lower.tail = FALSE)))
   
+  expect_error(rtnbinom(1, 1, mu = 10, prob = 0.5))
 })

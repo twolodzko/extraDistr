@@ -1,10 +1,18 @@
 Package: extraDistr
 Type: Package
 Title: Additional Univariate and Multivariate Distributions
-Version: 1.9.1
-Date: 2020-08-20
-Author: Tymoteusz Wolodzko
-Maintainer: Tymoteusz Wolodzko <twolodzko+extraDistr@gmail.com>
+Version: 1.9.2
+Date: 2022-06-25
+Authors@R:  
+    c(person(given = "Tymoteusz",
+             family = "Wolodzko",
+             role = c("aut", "cre"),
+             email = "twolodzko+extraDistr@gmail.com"),
+      person(given = "Mervin",
+             family = "Fansler",
+             role = c("aut"),
+             email = "mef3005@med.cornell.edu",
+             comment = c(ORCID = "0000-0002-4108-4218"))) 
 Description: Density, distribution function, quantile function
     and random generation for a number of univariate
     and multivariate distributions. This package implements the
@@ -20,9 +28,10 @@ Description: Density, distribution function, quantile function
     hypergeometric, multinomial, negative hypergeometric, 
     non-standard beta, normal mixture, Poisson mixture, Pareto,
     power, reparametrized beta, Rayleigh, shifted Gompertz, Skellam,
-    slash, triangular, truncated binomial, truncated normal,
-    truncated Poisson, Tukey lambda, Wald, zero-inflated binomial,
-    zero-inflated negative binomial, zero-inflated Poisson.
+    slash, triangular, truncated binomial, truncated negative binomial,
+    truncated normal, truncated Poisson, Tukey lambda, Wald, 
+    zero-inflated binomial, zero-inflated negative binomial, 
+    zero-inflated Poisson.
 License: GPL-2
 URL: https://github.com/twolodzko/extraDistr
 BugReports: https://github.com/twolodzko/extraDistr/issues
@@ -33,4 +42,4 @@ LinkingTo: Rcpp
 Imports: Rcpp
 Suggests: testthat, LaplacesDemon, VGAM, evd, hoa, skellam, triangle, actuar
 SystemRequirements: C++11
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.0

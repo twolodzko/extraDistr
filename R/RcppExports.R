@@ -637,6 +637,38 @@ cpp_rtbinom <- function(n, size, prob, lower, upper) {
     .Call(`_extraDistr_cpp_rtbinom`, n, size, prob, lower, upper)
 }
 
+cpp_dtnbinom <- function(x, size, prob, lower, upper, log_prob = FALSE) {
+    .Call(`_extraDistr_cpp_dtnbinom`, x, size, prob, lower, upper, log_prob)
+}
+
+cpp_dtnbinom_mu <- function(x, size, mu, lower, upper, log_prob = FALSE) {
+    .Call(`_extraDistr_cpp_dtnbinom_mu`, x, size, mu, lower, upper, log_prob)
+}
+
+cpp_ptnbinom <- function(x, size, prob, lower, upper, lower_tail = TRUE, log_prob = FALSE) {
+    .Call(`_extraDistr_cpp_ptnbinom`, x, size, prob, lower, upper, lower_tail, log_prob)
+}
+
+cpp_ptnbinom_mu <- function(x, size, mu, lower, upper, lower_tail = TRUE, log_prob = FALSE) {
+    .Call(`_extraDistr_cpp_ptnbinom_mu`, x, size, mu, lower, upper, lower_tail, log_prob)
+}
+
+cpp_qtnbinom <- function(p, size, prob, lower, upper, lower_tail = TRUE, log_prob = FALSE) {
+    .Call(`_extraDistr_cpp_qtnbinom`, p, size, prob, lower, upper, lower_tail, log_prob)
+}
+
+cpp_qtnbinom_mu <- function(p, size, mu, lower, upper, lower_tail = TRUE, log_prob = FALSE) {
+    .Call(`_extraDistr_cpp_qtnbinom_mu`, p, size, mu, lower, upper, lower_tail, log_prob)
+}
+
+cpp_rtnbinom <- function(n, size, prob, lower, upper) {
+    .Call(`_extraDistr_cpp_rtnbinom`, n, size, prob, lower, upper)
+}
+
+cpp_rtnbinom_mu <- function(n, size, mu, lower, upper) {
+    .Call(`_extraDistr_cpp_rtnbinom_mu`, n, size, mu, lower, upper)
+}
+
 cpp_dtnorm <- function(x, mu, sigma, lower, upper, log_prob = FALSE) {
     .Call(`_extraDistr_cpp_dtnorm`, x, mu, sigma, lower, upper, log_prob)
 }
