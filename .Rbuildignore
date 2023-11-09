@@ -11,5 +11,6 @@ Readme.md
 misc/
 revdep/
 ^.github*$
-^CRAN-RELEASE$
 Justfile
+CRAN-RELEASE
+CRAN-SUBMISSION

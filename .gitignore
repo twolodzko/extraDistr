@@ -8,4 +8,5 @@ src/*.dll
 inst/doc
 revdep/*
 *.pdf
-^CRAN-RELEASE$
+CRAN-RELEASE
+CRAN-SUBMISSION

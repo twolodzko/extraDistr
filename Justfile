@@ -47,6 +47,7 @@ dev:
 	devtools::install_deps()
 	devtools::install_dev_deps()
 
+# Remove build files
 clean:
 	rm -rf man/*.Rd
 	rm -rf src/*.o
