@@ -1,4 +1,4 @@
-### 1.9.2
+### 1.10.0
 
 * Fixed bug in `rgpd` which produced negative samples.
 
