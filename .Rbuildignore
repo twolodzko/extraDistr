@@ -12,3 +12,4 @@ misc/
 revdep/
 ^.github*$
 ^CRAN-RELEASE$
+Justfile

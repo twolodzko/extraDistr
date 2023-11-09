@@ -1,3 +1,7 @@
+### 1.9.2
+
+* Fixed bug in `rgpd` which produced negative samples.
+
 ### 1.9.1
 
 * Generated header file, `inst/include/extraDistr.h`, to make C++ code callable 
