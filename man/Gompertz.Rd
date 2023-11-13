@@ -70,7 +70,7 @@ curve(pgompertz(x, 5, 2), 0, 1, col = "red", lwd = 2, add = TRUE)
 \references{
 Lenart, A. (2012). The Gompertz distribution and Maximum Likelihood Estimation
 of its parameters - a revision. MPIDR WORKING PAPER WP 2012-008.
-\url{http://www.demogr.mpg.de/papers/working/wp-2012-008.pdf}
+\url{https://www.demogr.mpg.de/papers/working/wp-2012-008.pdf}
 }
 \concept{Continuous}
 \concept{Univariate}

@@ -76,13 +76,13 @@ Berry, K. J., & Mielke, P. W. (1998).
 The negative hypergeometric probability distribution:
 Sampling without replacement from a finite population.
 Perceptual and motor skills, 86(1), 207-210.
-\url{http://pms.sagepub.com/content/86/1/207.full.pdf}
+\url{https://journals.sagepub.com/doi/10.2466/pms.1998.86.1.207}
 
 Berry, K. J., & Mielke, P. W. (1996).
 Exact confidence limits for population proportions based on the negative
 hypergeometric probability distribution.
 Perceptual and motor skills, 83(3 suppl), 1216-1218.
-\url{http://pms.sagepub.com/content/83/3_suppl/1216.full.pdf}
+\url{https://journals.sagepub.com/doi/10.2466/pms.1996.83.3f.1216}
 
 Schuster, E. F., & Sype, W. R. (1987).
 On the negative hypergeometric distribution.
@@ -94,7 +94,7 @@ International Journal of Mathematical Education in Science and Technology, 24(4)
 
 Jones, S.N. (2013). A Gaming Application of the Negative Hypergeometric Distribution.
 UNLV Theses, Dissertations, Professional Papers, and Capstones. Paper 1846.
-\url{http://digitalscholarship.unlv.edu/cgi/viewcontent.cgi?article=2847&context=thesesdissertations}
+\url{https://digitalscholarship.unlv.edu/cgi/viewcontent.cgi?referer=&httpsredir=1&article=2847&context=thesesdissertations}
 }
 \seealso{
 \code{\link[stats]{Hypergeometric}}

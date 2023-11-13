@@ -1,5 +1,3 @@
-
-
 #' Gompertz distribution
 #'
 #' Density, distribution function, quantile function and random generation
@@ -40,10 +38,10 @@
 #' @references
 #' Lenart, A. (2012). The Gompertz distribution and Maximum Likelihood Estimation
 #' of its parameters - a revision. MPIDR WORKING PAPER WP 2012-008.
-#' \url{http://www.demogr.mpg.de/papers/working/wp-2012-008.pdf}
-#' 
-#' @examples 
-#' 
+#' \url{https://www.demogr.mpg.de/papers/working/wp-2012-008.pdf}
+#'
+#' @examples
+#'
 #' x <- rgompertz(1e5, 5, 2)
 #' hist(x, 100, freq = FALSE)
 #' curve(dgompertz(x, 5, 2), 0, 1, col = "red", add = TRUE)
@@ -54,7 +52,7 @@
 #' @name Gompertz
 #' @aliases Gompertz
 #' @aliases dgompertz
-#' 
+#'
 #' @keywords distribution
 #' @concept Univariate
 #' @concept Continuous
@@ -89,4 +87,3 @@ rgompertz <- function(n, a = 1, b = 1) {
   if (length(n) > 1) n <- length(n)
   cpp_rgompertz(n, a, b)
 }
-
