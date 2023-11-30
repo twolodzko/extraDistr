@@ -4,7 +4,7 @@ test:
 	devtools::test()
 
 # CRAN checks
-check:
+r-cmd-check:
 	R CMD check --as-cran .
 
 # Run all examples from the docs
