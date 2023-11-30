@@ -3,6 +3,10 @@ test:
 	#!/usr/bin/env -S Rscript --no-save --no-restore
 	devtools::test()
 
+# CRAN checks
+check:
+	R CMD check --as-cran .
+
 # Run all examples from the docs
 run-examples:
 	#!/usr/bin/env -S Rscript --no-save --no-restore
@@ -19,15 +23,15 @@ check-pacakge:
 	devtools::check()
 
 # Deploy to CRAN
-cran-release:
+cran-release: document build check-pacakge
 	#!/usr/bin/env -S Rscript --no-save --no-restore
 	devtools::release()
 
 # Build docs
-document:
+docs:
 	#!/usr/bin/env -S Rscript --no-save --no-restore
 	devtools::document()
-	devtools::build_manual()
+	# devtools::build_manual()
 
 # Install a local development package
 install:

@@ -3,8 +3,8 @@
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/extraDistr)](https://CRAN.R-project.org/package=extraDistr)
 [![GitHub Actions CI](https://github.com/twolodzko/extraDistr/workflows/CI/badge.svg)](https://github.com/twolodzko/extraDistr/actions?query=workflow%3ACI)
-[![Coverage Status](https://img.shields.io/codecov/c/github/twolodzko/extraDistr/master.svg)](https://codecov.io/github/twolodzko/extraDistr?branch=master)
-[![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/extraDistr)](http://cran.rstudio.com/web/packages/extraDistr/index.html)
+[![Coverage Status](https://img.shields.io/codecov/c/github/twolodzko/extraDistr/master.svg)](https://app.codecov.io/github/twolodzko/extraDistr?branch=master)
+[![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/extraDistr)](https://cran.rstudio.com/web/packages/extraDistr/index.html)
 
 
 Density, distribution function, quantile function and random
@@ -21,4 +21,4 @@ for values beyond function support 0's are returned
 (e.g. for non-integers in discrete distributions, or for
 negative values in functions with non-negative support).
 
-All the functions vectorized and coded in C++11 using [Rcpp](http://www.rcpp.org/).
+All the functions vectorized and coded in C++11 using [Rcpp](https://www.rcpp.org/).

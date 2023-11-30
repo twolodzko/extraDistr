@@ -10,3 +10,5 @@ revdep/*
 *.pdf
 CRAN-RELEASE
 CRAN-SUBMISSION
+..Rcheck/
+src/symbols.rds

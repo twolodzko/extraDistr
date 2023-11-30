@@ -10,8 +10,11 @@ Readme.rmd
 Readme.md
 misc/
 revdep/
-^.github*$
 Justfile
 CRAN-RELEASE
 CRAN-SUBMISSION
-^CRAN-SUBMISSION$
+extraDistr.Rproj
+.git/
+.github/
+..Rcheck/
+^.*\.o$
