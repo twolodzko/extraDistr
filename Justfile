@@ -23,7 +23,7 @@ check-pacakge:
 	devtools::check()
 
 # Deploy to CRAN
-cran-release: document build check-pacakge
+cran-release: build docs manual check-pacakge
 	#!/usr/bin/env -S Rscript --no-save --no-restore
 	devtools::release()
 
@@ -31,7 +31,11 @@ cran-release: document build check-pacakge
 docs:
 	#!/usr/bin/env -S Rscript --no-save --no-restore
 	devtools::document()
-	# devtools::build_manual()
+
+# Build the PDF manual
+manual:
+	#!/usr/bin/env -S Rscript --no-save --no-restore
+	devtools::build_manual()
 
 # Install a local development package
 install:
@@ -47,9 +51,10 @@ build:
 # Setup development environment
 dev:
 	#!/usr/bin/env -S Rscript --no-save --no-restore
-	install.packages('devtools')
+	install.packages(c('devtools', 'tinytex'))
 	devtools::install_deps()
 	devtools::install_dev_deps()
+	tinytex::install_tinytex()
 
 # Remove build files
 clean:
