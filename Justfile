@@ -23,7 +23,7 @@ check-pacakge:
 	devtools::check()
 
 # Deploy to CRAN
-cran-release: build docs manual check-pacakge
+cran-release: build docs manual _check-for-docs check-pacakge
 	#!/usr/bin/env -S Rscript --no-save --no-restore
 	devtools::release()
 
@@ -31,6 +31,13 @@ cran-release: build docs manual check-pacakge
 docs:
 	#!/usr/bin/env -S Rscript --no-save --no-restore
 	devtools::document()
+
+_check-for-docs:
+	#!/bin/bash
+	if [ -z "$(ls -A ./man)" ]; then
+		echo "./man directory is empty"
+		exit 30
+	fi
 
 # Build the PDF manual
 manual:
