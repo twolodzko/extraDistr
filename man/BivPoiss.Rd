@@ -27,10 +27,10 @@ Probability mass function and random generation for the bivariate Poisson distri
 \details{
 Probability mass function
 \deqn{
-f(x) = \exp \{-(a+b+c)\} \frac{a^x}{x!} \frac{b^y}{y!} \sum_{k=0}^{\min(x,y)}
+f(x,y) = \exp \{-(a+b+c)\} \frac{a^x}{x!} \frac{b^y}{y!} \sum_{k=0}^{\min(x,y)}
 {x \choose k} {y \choose k} k! \left( \frac{c}{ab} \right)^k
 }{
-f(x) = exp(-(a+b+c)) * (a^x)/x! * (b^y)/y! *
+f(x,y) = exp(-(a+b+c)) * (a^x)/x! * (b^y)/y! *
 sum(choose(x,k)*choose(y,k)*k!*(c/(a*b))^k)
 }
 }

@@ -18,3 +18,4 @@ extraDistr.Rproj
 .github/
 ..Rcheck/
 ^.*\.o$
+^CRAN-SUBMISSION$

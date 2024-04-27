@@ -15,35 +15,35 @@
 #'
 #' Probability mass function
 #' \deqn{
-#' f(x) = \exp \{-(a+b+c)\} \frac{a^x}{x!} \frac{b^y}{y!} \sum_{k=0}^{\min(x,y)}
+#' f(x,y) = \exp \{-(a+b+c)\} \frac{a^x}{x!} \frac{b^y}{y!} \sum_{k=0}^{\min(x,y)}
 #' {x \choose k} {y \choose k} k! \left( \frac{c}{ab} \right)^k
 #' }{
-#' f(x) = exp(-(a+b+c)) * (a^x)/x! * (b^y)/y! *
+#' f(x,y) = exp(-(a+b+c)) * (a^x)/x! * (b^y)/y! *
 #' sum(choose(x,k)*choose(y,k)*k!*(c/(a*b))^k)
 #' }
-#' 
-#' @references 
+#'
+#' @references
 #' Karlis, D. and Ntzoufras, I. (2003). Analysis of sports data by using bivariate Poisson models.
 #' Journal of the Royal Statistical Society: Series D (The Statistician), 52(3), 381-393.
-#' 
-#' @references 
+#'
+#' @references
 #' Kocherlakota, S. and Kocherlakota, K. (1992) Bivariate Discrete Distributions.
 #' New York: Dekker.
-#' 
-#' @references 
+#'
+#' @references
 #' Johnson, N., Kotz, S. and Balakrishnan, N. (1997). Discrete Multivariate Distributions.
 #' New York: Wiley.
-#' 
-#' @references 
+#'
+#' @references
 #' Holgate, P. (1964). Estimation for the bivariate Poisson distribution.
 #' Biometrika, 51(1-2), 241-287.
-#' 
-#' @references 
+#'
+#' @references
 #' Kawamura, K. (1984). Direct calculation of maximum likelihood estimator for the bivariate
 #' Poisson distribution. Kodai mathematical journal, 7(2), 211-221.
-#' 
-#' @examples 
-#' 
+#'
+#' @examples
+#'
 #' x <- rbvpois(5000, 7, 8, 5)
 #' image(prop.table(table(x[,1], x[,2])))
 #' colMeans(x)
@@ -53,7 +53,7 @@
 #' @name BivPoiss
 #' @aliases BivPoiss
 #' @aliases dbvpois
-#' 
+#'
 #' @keywords distribution
 #' @concept Multivariate
 #' @concept Discrete
