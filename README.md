@@ -1,5 +1,9 @@
 
-# extraDistr
+# Warning: this repository is not activelly maintained anymore
+
+If you have a feature request or bug report, feel free to send a pull request.
+
+---
 
 Density, distribution function, quantile function and random
 generation for a number of univariate and multivariate distributions.
