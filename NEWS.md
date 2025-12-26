@@ -1,3 +1,7 @@
+### 1.10.1
+
+* Changes in DESCRIPTION as required by CRAN.
+
 ### 1.10.0
 
 * Fixed bug in `rgpd` which produced negative samples.

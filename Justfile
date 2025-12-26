@@ -18,12 +18,12 @@ coverage:
 	devtools::test_coverage()
 
 # Run additional checks for the package
-check-pacakge:
+check-package:
 	#!/usr/bin/env -S Rscript --no-save --no-restore
 	devtools::check()
 
 # Deploy to CRAN
-cran-release: build docs manual _check-for-docs check-pacakge
+cran-release: build docs manual _check-for-docs check-package
 	#!/usr/bin/env -S Rscript --no-save --no-restore
 	devtools::release()
 
@@ -56,12 +56,18 @@ build:
 	devtools::build_manual()
 
 # Setup development environment
-dev:
+dev: sys-deps
 	#!/usr/bin/env -S Rscript --no-save --no-restore
 	install.packages(c('devtools', 'tinytex'))
 	devtools::install_deps()
 	devtools::install_dev_deps()
 	tinytex::install_tinytex()
+
+[linux]
+sys-deps:
+	sudo apt install \
+		libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev libwebp-dev libharfbuzz-dev \
+		libfribidi-dev libfontconfig1-dev libxml2-dev libssl-dev libcurl4-openssl-dev
 
 # Remove build files
 clean:
