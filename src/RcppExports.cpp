@@ -4420,6 +4420,155 @@ RcppExport SEXP _extraDistr_cpp_rmvhyper(SEXP nnSEXP, SEXP nSEXP, SEXP kSEXP) {
     UNPROTECT(1);
     return rcpp_result_gen;
 }
+// cpp_dnaka
+NumericVector cpp_dnaka(const NumericVector& x, const NumericVector& m, const NumericVector& w, const bool& log_prob);
+static SEXP _extraDistr_cpp_dnaka_try(SEXP xSEXP, SEXP mSEXP, SEXP wSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type m(mSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_dnaka(x, m, w, log_prob));
+    return rcpp_result_gen;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP _extraDistr_cpp_dnaka(SEXP xSEXP, SEXP mSEXP, SEXP wSEXP, SEXP log_probSEXP) {
+    SEXP rcpp_result_gen;
+    {
+        Rcpp::RNGScope rcpp_rngScope_gen;
+        rcpp_result_gen = PROTECT(_extraDistr_cpp_dnaka_try(xSEXP, mSEXP, wSEXP, log_probSEXP));
+    }
+    Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
+    if (rcpp_isInterrupt_gen) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    bool rcpp_isLongjump_gen = Rcpp::internal::isLongjumpSentinel(rcpp_result_gen);
+    if (rcpp_isLongjump_gen) {
+        Rcpp::internal::resumeJump(rcpp_result_gen);
+    }
+    Rboolean rcpp_isError_gen = Rf_inherits(rcpp_result_gen, "try-error");
+    if (rcpp_isError_gen) {
+        SEXP rcpp_msgSEXP_gen = Rf_asChar(rcpp_result_gen);
+        UNPROTECT(1);
+        Rf_error("%s", CHAR(rcpp_msgSEXP_gen));
+    }
+    UNPROTECT(1);
+    return rcpp_result_gen;
+}
+// cpp_pnaka
+NumericVector cpp_pnaka(const NumericVector& x, const NumericVector& m, const NumericVector& w, const bool& lower_tail, const bool& log_prob);
+static SEXP _extraDistr_cpp_pnaka_try(SEXP xSEXP, SEXP mSEXP, SEXP wSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type m(mSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_pnaka(x, m, w, lower_tail, log_prob));
+    return rcpp_result_gen;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP _extraDistr_cpp_pnaka(SEXP xSEXP, SEXP mSEXP, SEXP wSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+    SEXP rcpp_result_gen;
+    {
+        Rcpp::RNGScope rcpp_rngScope_gen;
+        rcpp_result_gen = PROTECT(_extraDistr_cpp_pnaka_try(xSEXP, mSEXP, wSEXP, lower_tailSEXP, log_probSEXP));
+    }
+    Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
+    if (rcpp_isInterrupt_gen) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    bool rcpp_isLongjump_gen = Rcpp::internal::isLongjumpSentinel(rcpp_result_gen);
+    if (rcpp_isLongjump_gen) {
+        Rcpp::internal::resumeJump(rcpp_result_gen);
+    }
+    Rboolean rcpp_isError_gen = Rf_inherits(rcpp_result_gen, "try-error");
+    if (rcpp_isError_gen) {
+        SEXP rcpp_msgSEXP_gen = Rf_asChar(rcpp_result_gen);
+        UNPROTECT(1);
+        Rf_error("%s", CHAR(rcpp_msgSEXP_gen));
+    }
+    UNPROTECT(1);
+    return rcpp_result_gen;
+}
+// cpp_qnaka
+NumericVector cpp_qnaka(const NumericVector& p, const NumericVector& m, const NumericVector& w, const bool& lower_tail, const bool& log_prob);
+static SEXP _extraDistr_cpp_qnaka_try(SEXP pSEXP, SEXP mSEXP, SEXP wSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type p(pSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type m(mSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type lower_tail(lower_tailSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type log_prob(log_probSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_qnaka(p, m, w, lower_tail, log_prob));
+    return rcpp_result_gen;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP _extraDistr_cpp_qnaka(SEXP pSEXP, SEXP mSEXP, SEXP wSEXP, SEXP lower_tailSEXP, SEXP log_probSEXP) {
+    SEXP rcpp_result_gen;
+    {
+        Rcpp::RNGScope rcpp_rngScope_gen;
+        rcpp_result_gen = PROTECT(_extraDistr_cpp_qnaka_try(pSEXP, mSEXP, wSEXP, lower_tailSEXP, log_probSEXP));
+    }
+    Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
+    if (rcpp_isInterrupt_gen) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    bool rcpp_isLongjump_gen = Rcpp::internal::isLongjumpSentinel(rcpp_result_gen);
+    if (rcpp_isLongjump_gen) {
+        Rcpp::internal::resumeJump(rcpp_result_gen);
+    }
+    Rboolean rcpp_isError_gen = Rf_inherits(rcpp_result_gen, "try-error");
+    if (rcpp_isError_gen) {
+        SEXP rcpp_msgSEXP_gen = Rf_asChar(rcpp_result_gen);
+        UNPROTECT(1);
+        Rf_error("%s", CHAR(rcpp_msgSEXP_gen));
+    }
+    UNPROTECT(1);
+    return rcpp_result_gen;
+}
+// cpp_rnaka
+NumericVector cpp_rnaka(const int& n, const NumericVector& m, const NumericVector& w);
+static SEXP _extraDistr_cpp_rnaka_try(SEXP nSEXP, SEXP mSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type m(mSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_rnaka(n, m, w));
+    return rcpp_result_gen;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP _extraDistr_cpp_rnaka(SEXP nSEXP, SEXP mSEXP, SEXP wSEXP) {
+    SEXP rcpp_result_gen;
+    {
+        Rcpp::RNGScope rcpp_rngScope_gen;
+        rcpp_result_gen = PROTECT(_extraDistr_cpp_rnaka_try(nSEXP, mSEXP, wSEXP));
+    }
+    Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
+    if (rcpp_isInterrupt_gen) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    bool rcpp_isLongjump_gen = Rcpp::internal::isLongjumpSentinel(rcpp_result_gen);
+    if (rcpp_isLongjump_gen) {
+        Rcpp::internal::resumeJump(rcpp_result_gen);
+    }
+    Rboolean rcpp_isError_gen = Rf_inherits(rcpp_result_gen, "try-error");
+    if (rcpp_isError_gen) {
+        SEXP rcpp_msgSEXP_gen = Rf_asChar(rcpp_result_gen);
+        UNPROTECT(1);
+        Rf_error("%s", CHAR(rcpp_msgSEXP_gen));
+    }
+    UNPROTECT(1);
+    return rcpp_result_gen;
+}
 // cpp_dnhyper
 NumericVector cpp_dnhyper(const NumericVector& x, const NumericVector& n, const NumericVector& m, const NumericVector& r, const bool& log_prob);
 static SEXP _extraDistr_cpp_dnhyper_try(SEXP xSEXP, SEXP nSEXP, SEXP mSEXP, SEXP rSEXP, SEXP log_probSEXP) {
@@ -7036,6 +7185,10 @@ static int _extraDistr_RcppExport_validate(const char* sig) {
         signatures.insert("NumericMatrix(*cpp_rmnom)(const int&,const NumericVector&,const NumericMatrix&)");
         signatures.insert("NumericVector(*cpp_dmvhyper)(const NumericMatrix&,const NumericMatrix&,const NumericVector&,const bool&)");
         signatures.insert("NumericMatrix(*cpp_rmvhyper)(const int&,const NumericMatrix&,const NumericVector&)");
+        signatures.insert("NumericVector(*cpp_dnaka)(const NumericVector&,const NumericVector&,const NumericVector&,const bool&)");
+        signatures.insert("NumericVector(*cpp_pnaka)(const NumericVector&,const NumericVector&,const NumericVector&,const bool&,const bool&)");
+        signatures.insert("NumericVector(*cpp_qnaka)(const NumericVector&,const NumericVector&,const NumericVector&,const bool&,const bool&)");
+        signatures.insert("NumericVector(*cpp_rnaka)(const int&,const NumericVector&,const NumericVector&)");
         signatures.insert("NumericVector(*cpp_dnhyper)(const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const bool&)");
         signatures.insert("NumericVector(*cpp_pnhyper)(const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const bool&,const bool&)");
         signatures.insert("NumericVector(*cpp_qnhyper)(const NumericVector&,const NumericVector&,const NumericVector&,const NumericVector&,const bool&,const bool&)");
@@ -7226,6 +7379,10 @@ RcppExport SEXP _extraDistr_RcppExport_registerCCallable() {
     R_RegisterCCallable("extraDistr", "_extraDistr_cpp_rmnom", (DL_FUNC)_extraDistr_cpp_rmnom_try);
     R_RegisterCCallable("extraDistr", "_extraDistr_cpp_dmvhyper", (DL_FUNC)_extraDistr_cpp_dmvhyper_try);
     R_RegisterCCallable("extraDistr", "_extraDistr_cpp_rmvhyper", (DL_FUNC)_extraDistr_cpp_rmvhyper_try);
+    R_RegisterCCallable("extraDistr", "_extraDistr_cpp_dnaka", (DL_FUNC)_extraDistr_cpp_dnaka_try);
+    R_RegisterCCallable("extraDistr", "_extraDistr_cpp_pnaka", (DL_FUNC)_extraDistr_cpp_pnaka_try);
+    R_RegisterCCallable("extraDistr", "_extraDistr_cpp_qnaka", (DL_FUNC)_extraDistr_cpp_qnaka_try);
+    R_RegisterCCallable("extraDistr", "_extraDistr_cpp_rnaka", (DL_FUNC)_extraDistr_cpp_rnaka_try);
     R_RegisterCCallable("extraDistr", "_extraDistr_cpp_dnhyper", (DL_FUNC)_extraDistr_cpp_dnhyper_try);
     R_RegisterCCallable("extraDistr", "_extraDistr_cpp_pnhyper", (DL_FUNC)_extraDistr_cpp_pnhyper_try);
     R_RegisterCCallable("extraDistr", "_extraDistr_cpp_qnhyper", (DL_FUNC)_extraDistr_cpp_qnhyper_try);
@@ -7415,6 +7572,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_extraDistr_cpp_rmnom", (DL_FUNC) &_extraDistr_cpp_rmnom, 3},
     {"_extraDistr_cpp_dmvhyper", (DL_FUNC) &_extraDistr_cpp_dmvhyper, 4},
     {"_extraDistr_cpp_rmvhyper", (DL_FUNC) &_extraDistr_cpp_rmvhyper, 3},
+    {"_extraDistr_cpp_dnaka", (DL_FUNC) &_extraDistr_cpp_dnaka, 4},
+    {"_extraDistr_cpp_pnaka", (DL_FUNC) &_extraDistr_cpp_pnaka, 5},
+    {"_extraDistr_cpp_qnaka", (DL_FUNC) &_extraDistr_cpp_qnaka, 5},
+    {"_extraDistr_cpp_rnaka", (DL_FUNC) &_extraDistr_cpp_rnaka, 3},
     {"_extraDistr_cpp_dnhyper", (DL_FUNC) &_extraDistr_cpp_dnhyper, 5},
     {"_extraDistr_cpp_pnhyper", (DL_FUNC) &_extraDistr_cpp_pnhyper, 6},
     {"_extraDistr_cpp_qnhyper", (DL_FUNC) &_extraDistr_cpp_qnhyper, 6},

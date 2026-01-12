@@ -24,6 +24,7 @@ test_that("Zeros in quantile functions", {
   expect_true(!is.nan(qpareto(0)))
   expect_true(!is.nan(qpower(0, 1, 1)))
   expect_true(!is.nan(qprop(0, 10, 0.5)))
+  expect_true(!is.nan(qnaka(0, 1, 1)))
   expect_true(!is.nan(qrayleigh(0)))
   expect_true(!is.nan(qtlambda(0, 0.5)))
   expect_true(!is.nan(qtbinom(0, 100, 0.83, 76, 86)))
@@ -63,6 +64,7 @@ test_that("Ones in quantile functions", {
   expect_true(!is.nan(qpareto(1)))
   expect_true(!is.nan(qpower(1, 1, 1)))
   expect_true(!is.nan(qprop(1, 10, 0.5)))
+  expect_true(!is.nan(qnaka(1, 1, 1)))
   expect_true(!is.nan(qrayleigh(1)))
   expect_true(!is.nan(qtlambda(1, 0.5)))
   expect_true(!is.nan(qtbinom(1, 100, 0.83, 76, 86)))
@@ -101,6 +103,7 @@ test_that("Checking p = F(F^-1(p))", {
   expect_equal(pp, ppareto(qpareto(pp)))
   expect_equal(pp, ppower(qpower(pp, 1, 1), 1, 1))
   expect_equal(pp, pprop(qprop(pp, 10, 0.5), 10, 0.5))
+  expect_equal(pp, pnaka(qnaka(pp, 1, 1), 1, 1))
   expect_equal(pp, prayleigh(qrayleigh(pp)))
 
 })

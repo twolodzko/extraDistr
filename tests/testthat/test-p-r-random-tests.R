@@ -146,8 +146,11 @@ test_that("p-r random tests", {
   expect_true(dkwtest("prop", 10, 0.5))
   expect_true(dkwtest("prop", 10, 0.99))
   
+  expect_true(dkwtest("naka", 1, 1))
+  expect_true(dkwtest("naka", 2, 1))
+
   expect_true(dkwtest("rayleigh", 1))
-  
+
   expect_true(dkwtest("sgomp", 0.4, 1))
   
   expect_true(dkwtest("slash", 1, 1))

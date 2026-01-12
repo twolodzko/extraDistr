@@ -158,8 +158,11 @@ test_that("Wrong parameter values in PDF and PMF functions", {
   expect_warning(expect_true(is.nan(dprop(1, 10, -1))))
   expect_warning(expect_true(is.nan(dprop(1, 10, 2))))
   
+  expect_warning(expect_true(is.nan(dnaka(0, -1, 1))))
+  expect_warning(expect_true(is.nan(dnaka(0, 1, -1))))
+
   expect_warning(expect_true(is.nan(drayleigh(0, -1))))
-  
+
   expect_warning(expect_true(is.nan(dsgomp(1, -0.4, 1))))
   expect_warning(expect_true(is.nan(dsgomp(1, 0.4, -1))))
   
@@ -334,8 +337,11 @@ test_that("Wrong parameter values in CDF functions", {
   expect_warning(expect_true(is.nan(pprop(1, 10, -1))))
   expect_warning(expect_true(is.nan(pprop(1, 10, 2))))
   
+  expect_warning(expect_true(is.nan(pnaka(0, -1, 1))))
+  expect_warning(expect_true(is.nan(pnaka(0, 1, -1))))
+
   expect_warning(expect_true(is.nan(prayleigh(0, -1))))
-  
+
   expect_warning(expect_true(is.nan(psgomp(1, -0.4, 1))))
   expect_warning(expect_true(is.nan(psgomp(1, 0.4, -1))))
 
@@ -461,6 +467,9 @@ test_that("Wrong parameter values in quantile functions", {
   expect_warning(expect_true(is.nan(qprop(0.5, 10, -1))))
   expect_warning(expect_true(is.nan(qprop(0.5, 10, 2))))
   
+  expect_warning(expect_true(is.nan(qnaka(0.5, -1, 1))))
+  expect_warning(expect_true(is.nan(qnaka(0.5, 1, -1))))
+
   expect_warning(expect_true(is.nan(qrayleigh(0, -1))))
 
   expect_warning(expect_true(is.nan(qtnorm(0.5, 0, -1, -2, 2))))
@@ -646,8 +655,11 @@ test_that("Wrong parameter values in RNG functions", {
   expect_warning(expect_true(is.na(rprop(1, 10, -1))))
   expect_warning(expect_true(is.na(rprop(1, 10, 2))))
   
+  expect_warning(expect_true(is.na(rnaka(1, -1, 1))))
+  expect_warning(expect_true(is.na(rnaka(1, 1, -1))))
+
   expect_warning(expect_true(is.na(rrayleigh(1, -1))))
-  
+
   expect_warning(expect_true(is.na(rsgomp(1, -0.4, 1))))
   expect_warning(expect_true(is.na(rsgomp(1, 0.4, -1))))
   

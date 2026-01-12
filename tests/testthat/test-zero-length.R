@@ -182,9 +182,13 @@ test_that("Zero-length in PDF and PMF functions", {
   expect_true(is_zero_length(dprop(1, numeric(0), 0.5)))
   expect_true(is_zero_length(dprop(1, 10, numeric(0))))
   
+  expect_true(is_zero_length(dnaka(numeric(0), 1, 1)))
+  expect_true(is_zero_length(dnaka(1, numeric(0), 1)))
+  expect_true(is_zero_length(dnaka(1, 1, numeric(0))))
+
   expect_true(is_zero_length(drayleigh(numeric(0), 1)))
   expect_true(is_zero_length(drayleigh(1, numeric(0))))
-  
+
   expect_true(is_zero_length(dskellam(numeric(0), 1, 1)))
   expect_true(is_zero_length(dskellam(1, numeric(0), 1)))
   expect_true(is_zero_length(dskellam(1, 1, numeric(0))))
@@ -387,9 +391,13 @@ test_that("Zero-length in CDF functions", {
   expect_true(is_zero_length(pprop(1, numeric(0), 0.5)))
   expect_true(is_zero_length(pprop(1, 10, numeric(0))))
   
+  expect_true(is_zero_length(pnaka(numeric(0), 1, 1)))
+  expect_true(is_zero_length(pnaka(1, numeric(0), 1)))
+  expect_true(is_zero_length(pnaka(1, 1, numeric(0))))
+
   expect_true(is_zero_length(prayleigh(numeric(0), 1)))
   expect_true(is_zero_length(prayleigh(1, numeric(0))))
-  
+
   expect_true(is_zero_length(psgomp(numeric(0), 0.4, 1)))
   expect_true(is_zero_length(psgomp(1, numeric(0), 1)))
   expect_true(is_zero_length(psgomp(1, 0.4, numeric(0))))
@@ -547,9 +555,13 @@ test_that("Zero-length in inverse CDF functions", {
   expect_true(is_zero_length(qprop(0.5, numeric(0), 0.5)))
   expect_true(is_zero_length(qprop(0.5, 10, numeric(0))))
   
+  expect_true(is_zero_length(qnaka(numeric(0), 1, 1)))
+  expect_true(is_zero_length(qnaka(0.5, numeric(0), 1)))
+  expect_true(is_zero_length(qnaka(0.5, 1, numeric(0))))
+
   expect_true(is_zero_length(qrayleigh(numeric(0), 1)))
   expect_true(is_zero_length(qrayleigh(0.5, numeric(0))))
-  
+
   expect_true(is_zero_length(qtlambda(numeric(0), 0.5)))
   expect_true(is_zero_length(qtlambda(0, numeric(0))))
   
@@ -727,8 +739,11 @@ test_that("Zero-length in RNG functions", {
   expect_warning(expect_true(is.na(rprop(1, numeric(0), 0.5))))
   expect_warning(expect_true(is.na(rprop(1, 10, numeric(0)))))
   
+  expect_warning(expect_true(is.na(rnaka(1, numeric(0), 1))))
+  expect_warning(expect_true(is.na(rnaka(1, 1, numeric(0)))))
+
   expect_warning(expect_true(is.na(rrayleigh(1, numeric(0)))))
-  
+
   expect_warning(expect_true(is.na(rtlambda(1, numeric(0)))))
   
   expect_warning(expect_true(is.na(rsgomp(1, numeric(0), 1))))

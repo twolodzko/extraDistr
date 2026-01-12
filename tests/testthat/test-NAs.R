@@ -207,6 +207,10 @@ test_that("Missing values in PDF and PMF functions", {
   expect_true(is.na(dprop(1, NA, 0.5)))
   expect_true(is.na(dprop(1, 10, NA)))
 
+  expect_true(is.na(dnaka(NA, 1, 1)))
+  expect_true(is.na(dnaka(1, NA, 1)))
+  expect_true(is.na(dnaka(1, 1, NA)))
+
   expect_true(is.na(drayleigh(NA, 1)))
   expect_true(is.na(drayleigh(1, NA)))
 
@@ -425,9 +429,13 @@ test_that("Wrong parameter values in CDF functions", {
   expect_true(is.na(pprop(1, NA, 0.5)))
   expect_true(is.na(pprop(1, 10, NA)))
   
+  expect_true(is.na(pnaka(NA, 1, 1)))
+  expect_true(is.na(pnaka(1, NA, 1)))
+  expect_true(is.na(pnaka(1, 1, NA)))
+
   expect_true(is.na(prayleigh(NA, 1)))
   expect_true(is.na(prayleigh(1, NA)))
-  
+
   expect_true(is.na(psgomp(NA, 0.4, 1)))
   expect_true(is.na(psgomp(1, NA, 1)))
   expect_true(is.na(psgomp(1, 0.4, NA)))
@@ -589,9 +597,13 @@ test_that("Wrong parameter values in inverse CDF functions", {
   expect_true(is.na(qprop(0.5, NA, 0.5)))
   expect_true(is.na(qprop(0.5, 10, NA)))
   
+  expect_true(is.na(qnaka(NA, 1, 1)))
+  expect_true(is.na(qnaka(0.5, NA, 1)))
+  expect_true(is.na(qnaka(0.5, 1, NA)))
+
   expect_true(is.na(qrayleigh(NA, 1)))
   expect_true(is.na(qrayleigh(0.5, NA)))
-  
+
   expect_true(is.na(qtlambda(NA, 0.5)))
   expect_true(is.na(qtlambda(0, NA)))
 
@@ -788,8 +800,11 @@ test_that("Wrong parameter values in RNG functions", {
   expect_warning(expect_true(is.na(rprop(1, NA, 0.5))))
   expect_warning(expect_true(is.na(rprop(1, 10, NA))))
   
+  expect_warning(expect_true(is.na(rnaka(1, NA, 1))))
+  expect_warning(expect_true(is.na(rnaka(1, 1, NA))))
+
   expect_warning(expect_true(is.na(rrayleigh(1, NA))))
-  
+
   expect_warning(expect_true(is.na(rtlambda(1, NA))))
   
   expect_warning(expect_true(is.na(rsgomp(1, NA, 1))))
