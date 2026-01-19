@@ -2502,6 +2502,90 @@ namespace extraDistr {
         return Rcpp::as<NumericMatrix >(rcpp_result_gen);
     }
 
+    inline NumericVector cpp_dnaka(const NumericVector& x, const NumericVector& m, const NumericVector& w, const bool& log_prob = false) {
+        typedef SEXP(*Ptr_cpp_dnaka)(SEXP,SEXP,SEXP,SEXP);
+        static Ptr_cpp_dnaka p_cpp_dnaka = NULL;
+        if (p_cpp_dnaka == NULL) {
+            validateSignature("NumericVector(*cpp_dnaka)(const NumericVector&,const NumericVector&,const NumericVector&,const bool&)");
+            p_cpp_dnaka = (Ptr_cpp_dnaka)R_GetCCallable("extraDistr", "_extraDistr_cpp_dnaka");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_cpp_dnaka(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(m)), Shield<SEXP>(Rcpp::wrap(w)), Shield<SEXP>(Rcpp::wrap(log_prob)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<NumericVector >(rcpp_result_gen);
+    }
+
+    inline NumericVector cpp_pnaka(const NumericVector& x, const NumericVector& m, const NumericVector& w, const bool& lower_tail = true, const bool& log_prob = false) {
+        typedef SEXP(*Ptr_cpp_pnaka)(SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_cpp_pnaka p_cpp_pnaka = NULL;
+        if (p_cpp_pnaka == NULL) {
+            validateSignature("NumericVector(*cpp_pnaka)(const NumericVector&,const NumericVector&,const NumericVector&,const bool&,const bool&)");
+            p_cpp_pnaka = (Ptr_cpp_pnaka)R_GetCCallable("extraDistr", "_extraDistr_cpp_pnaka");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_cpp_pnaka(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(m)), Shield<SEXP>(Rcpp::wrap(w)), Shield<SEXP>(Rcpp::wrap(lower_tail)), Shield<SEXP>(Rcpp::wrap(log_prob)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<NumericVector >(rcpp_result_gen);
+    }
+
+    inline NumericVector cpp_qnaka(const NumericVector& p, const NumericVector& m, const NumericVector& w, const bool& lower_tail = true, const bool& log_prob = false) {
+        typedef SEXP(*Ptr_cpp_qnaka)(SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_cpp_qnaka p_cpp_qnaka = NULL;
+        if (p_cpp_qnaka == NULL) {
+            validateSignature("NumericVector(*cpp_qnaka)(const NumericVector&,const NumericVector&,const NumericVector&,const bool&,const bool&)");
+            p_cpp_qnaka = (Ptr_cpp_qnaka)R_GetCCallable("extraDistr", "_extraDistr_cpp_qnaka");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_cpp_qnaka(Shield<SEXP>(Rcpp::wrap(p)), Shield<SEXP>(Rcpp::wrap(m)), Shield<SEXP>(Rcpp::wrap(w)), Shield<SEXP>(Rcpp::wrap(lower_tail)), Shield<SEXP>(Rcpp::wrap(log_prob)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<NumericVector >(rcpp_result_gen);
+    }
+
+    inline NumericVector cpp_rnaka(const int& n, const NumericVector& m, const NumericVector& w) {
+        typedef SEXP(*Ptr_cpp_rnaka)(SEXP,SEXP,SEXP);
+        static Ptr_cpp_rnaka p_cpp_rnaka = NULL;
+        if (p_cpp_rnaka == NULL) {
+            validateSignature("NumericVector(*cpp_rnaka)(const int&,const NumericVector&,const NumericVector&)");
+            p_cpp_rnaka = (Ptr_cpp_rnaka)R_GetCCallable("extraDistr", "_extraDistr_cpp_rnaka");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_cpp_rnaka(Shield<SEXP>(Rcpp::wrap(n)), Shield<SEXP>(Rcpp::wrap(m)), Shield<SEXP>(Rcpp::wrap(w)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<NumericVector >(rcpp_result_gen);
+    }
+
     inline NumericVector cpp_dnhyper(const NumericVector& x, const NumericVector& n, const NumericVector& m, const NumericVector& r, const bool& log_prob = false) {
         typedef SEXP(*Ptr_cpp_dnhyper)(SEXP,SEXP,SEXP,SEXP,SEXP);
         static Ptr_cpp_dnhyper p_cpp_dnhyper = NULL;

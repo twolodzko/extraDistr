@@ -473,6 +473,22 @@ cpp_rmvhyper <- function(nn, n, k) {
     .Call(`_extraDistr_cpp_rmvhyper`, nn, n, k)
 }
 
+cpp_dnaka <- function(x, m, w, log_prob = FALSE) {
+    .Call(`_extraDistr_cpp_dnaka`, x, m, w, log_prob)
+}
+
+cpp_pnaka <- function(x, m, w, lower_tail = TRUE, log_prob = FALSE) {
+    .Call(`_extraDistr_cpp_pnaka`, x, m, w, lower_tail, log_prob)
+}
+
+cpp_qnaka <- function(p, m, w, lower_tail = TRUE, log_prob = FALSE) {
+    .Call(`_extraDistr_cpp_qnaka`, p, m, w, lower_tail, log_prob)
+}
+
+cpp_rnaka <- function(n, m, w) {
+    .Call(`_extraDistr_cpp_rnaka`, n, m, w)
+}
+
 cpp_dnhyper <- function(x, n, m, r, log_prob = FALSE) {
     .Call(`_extraDistr_cpp_dnhyper`, x, n, m, r, log_prob)
 }
