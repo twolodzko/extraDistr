@@ -1,7 +1,8 @@
 
-# ⚠️ Warning: this repository is not activelly maintained anymore
+# ⚠️ This project has changed ownership
 
-If you have a feature request or bug report, feel free to send a pull request.
+After several years of maintaining it, I decided to retire and pass over the maintainance of it to the community.
+You can find the [contact to the new maintainer(s) on CRAN](https://cran.r-project.org/web/packages/extraDistr/index.html).
 
 ---
 
